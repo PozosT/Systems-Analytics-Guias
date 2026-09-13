@@ -1,0 +1,166 @@
+/* componentes.css — Cajas didácticas, visor paso a paso y preguntas.
+   Paleta del curso (mise-notas.sty y mise_sd.graficas). */
+:root {
+  --mise-azul: #003366;
+  --mise-azul-suave: #e8f0f8;
+  --mise-verde: #00693e;
+  --mise-verde-suave: #ebf6ee;
+  --mise-ambar: #b26c00;
+  --mise-ambar-suave: #fff8e3;
+  --mise-violeta: #5434a0;
+  --mise-violeta-suave: #f3f0fb;
+  --mise-gris: #5f5f5f;
+  --mise-gris-suave: #f5f5f5;
+  --mise-rojo: #ce1126;
+  --mise-amarillo-co: #fcd116;
+  --mise-azul-co: #003893;
+}
+
+/* ---------------- Cajas ---------------- */
+.caja {
+  border-radius: 6px;
+  padding: 0.9rem 1.1rem 0.4rem;
+  margin: 1.4rem 0;
+  border: 1px solid var(--mise-gris-suave);
+  background: #fff;
+}
+.caja-titulo { margin-bottom: 0.6rem; font-size: 0.95rem; line-height: 1.4; }
+.caja-etiqueta {
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  font-size: 0.75rem; margin-right: 0.6rem;
+}
+.caja-texto-titulo { font-weight: 600; }
+.caja-nivel {
+  font-size: 0.78rem; border-radius: 999px; padding: 0.05rem 0.55rem;
+  margin-right: 0.6rem; background: #fff; border: 1px solid currentColor; white-space: nowrap;
+}
+
+.intuicion { background: var(--mise-gris-suave); border-left: 5px solid var(--mise-gris); }
+.intuicion .caja-etiqueta::before { content: "💡 "; }
+.definicion { background: var(--mise-azul-suave); border-left: 6px solid var(--mise-azul); }
+.definicion .caja-etiqueta { color: var(--mise-azul); }
+.ejemplo { background: var(--mise-verde-suave); border-left: 5px solid var(--mise-verde); }
+.ejemplo .caja-etiqueta, .ejemplo .caja-nivel { color: var(--mise-verde); }
+.error-comun { background: var(--mise-ambar-suave); border-left: 5px solid var(--mise-ambar); }
+.error-comun .caja-etiqueta { color: var(--mise-ambar); }
+.error-comun .caja-etiqueta::before { content: "⚠ "; }
+.caso-colombia {
+  border-left: 6px solid transparent;
+  border-image: linear-gradient(to bottom, var(--mise-amarillo-co) 0 50%, var(--mise-azul-co) 50% 75%, var(--mise-rojo) 75% 100%) 1;
+  background: #fbfbf7;
+}
+.idea-clave { background: var(--mise-azul); color: #fff; border: none; }
+.idea-clave .caja-etiqueta { color: var(--mise-amarillo-co); }
+.idea-clave p { font-size: 1.08rem; }
+.resumen { background: var(--mise-violeta-suave); border-left: 5px solid var(--mise-violeta); }
+.resumen .caja-etiqueta { color: var(--mise-violeta); }
+.objetivos { background: #fff; border: 1px solid #d9e2ec; border-top: 4px solid var(--mise-azul); }
+.objetivos .caja-etiqueta { color: var(--mise-azul); }
+.simulador { background: #fff; border: 2px solid var(--mise-azul); }
+.simulador .caja-etiqueta { color: var(--mise-azul); }
+.simulador .caja-etiqueta::before { content: "🎛 "; }
+.simulador form, .simulador .observablehq--inspect { font-size: 0.9rem; }
+/* Observable Inputs fija --label-width: 120px en cada formulario */
+.simulador form[class^="oi-"] { --label-width: 13rem; }
+@media (max-width: 36rem) { .simulador form[class^="oi-"] { --label-width: 100%; } }
+.lectura-simulador {
+  display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.6rem 0 0.8rem;
+}
+.lectura-simulador > div {
+  background: var(--mise-azul-suave); border-radius: 6px; padding: 0.35rem 0.7rem; min-width: 9rem;
+}
+.lectura-simulador b { display: block; font-size: 1.15rem; color: var(--mise-azul); }
+.nota-datos { font-size: 0.8rem; color: var(--mise-gris); margin-top: 0.2rem; }
+
+/* ---------------- Visor paso a paso ---------------- */
+.pasos { background: #fff; border: 1px solid #d9e2ec; border-top: 4px solid var(--mise-verde); }
+.pasos .caja-etiqueta { color: var(--mise-verde); }
+.paso img { display: block; margin: 0.4rem auto 0.8rem; width: 100%; max-width: 48rem; height: auto; }
+.diagrama img, img.diagrama { width: 100%; max-width: 48rem; height: auto; }
+.pasos-activo .paso { min-height: 6rem; }
+.pasos-activo .paso::before,
+.pasos-todos-visibles .paso::before {
+  content: attr(data-numero); display: block; font-size: 0.75rem; font-weight: 700;
+  color: var(--mise-verde); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem;
+}
+.pasos-todos-visibles .paso { border-bottom: 1px dashed #d9e2ec; padding-bottom: 0.6rem; margin-bottom: 0.9rem; }
+.pasos-barra {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 0.6rem; border-top: 1px solid #e5e9ee; padding: 0.7rem 0 0.5rem; margin-top: 0.4rem;
+}
+.pasos-puntos { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.pasos-punto {
+  width: 0.8rem; height: 0.8rem; border-radius: 50%; padding: 0;
+  border: 2px solid var(--mise-verde); background: #fff; cursor: pointer;
+}
+.pasos-punto.visto { background: #9fcfb5; border-color: #9fcfb5; }
+.pasos-punto.actual { background: var(--mise-verde); }
+.pasos-navegacion { display: flex; align-items: center; gap: 0.6rem; }
+.pasos-contador { font-size: 0.85rem; color: var(--mise-gris); min-width: 6.5rem; text-align: center; }
+.pasos-boton {
+  border: 1px solid var(--mise-verde); color: var(--mise-verde); background: #fff;
+  border-radius: 5px; padding: 0.3rem 0.8rem; font-size: 0.9rem; cursor: pointer;
+}
+.pasos-boton.pasos-principal { background: var(--mise-verde); color: #fff; }
+.pasos-boton:disabled { opacity: 0.35; cursor: default; }
+.pasos-boton { white-space: nowrap; }
+@media (max-width: 36rem) {
+  .pasos-navegacion { width: 100%; justify-content: space-between; }
+  .pasos-boton { padding: 0.3rem 0.55rem; }
+  .pasos-contador { min-width: 0; }
+  .caja { padding-left: 0.8rem; padding-right: 0.8rem; }
+}
+.pasos-todos {
+  border: none; background: none; color: var(--mise-gris); font-size: 0.8rem;
+  text-decoration: underline; cursor: pointer;
+}
+
+/* ---------------- Preguntas y predicciones ---------------- */
+.quiz { background: #fff; border: 1px solid #d9e2ec; border-top: 4px solid var(--mise-violeta); }
+.quiz .caja-etiqueta { color: var(--mise-violeta); }
+.prediccion { background: #fff; border: 1px dashed var(--mise-ambar); border-top: 4px solid var(--mise-ambar); }
+.prediccion .caja-etiqueta { color: var(--mise-ambar); }
+.opcion {
+  border: 1px solid #d9e2ec; border-radius: 6px; padding: 0.45rem 0.75rem 0.1rem 2.6rem;
+  margin: 0.45rem 0; position: relative;
+}
+.quiz-activo .opcion { cursor: pointer; }
+.quiz-activo .opcion:hover, .quiz-activo .opcion:focus { border-color: var(--mise-azul); outline: none; }
+.opcion-letra {
+  position: absolute; left: 0.6rem; top: 0.45rem; width: 1.4rem; height: 1.4rem; border-radius: 50%;
+  background: var(--mise-gris-suave); font-size: 0.8rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.opcion.elegida { border-color: var(--mise-ambar); background: var(--mise-ambar-suave); }
+.opcion.acierto { border-color: var(--mise-verde); background: var(--mise-verde-suave); }
+.opcion.acierto .opcion-letra { background: var(--mise-verde); color: #fff; }
+.opcion.fallo { border-color: var(--mise-rojo); background: #fdecee; }
+.opcion.fallo .opcion-letra { background: var(--mise-rojo); color: #fff; }
+.porque { font-size: 0.9rem; color: #333; border-top: 1px dotted #ccc; padding-top: 0.3rem; }
+.quiz-aviso { font-weight: 600; font-size: 0.9rem; min-height: 1.2rem; margin: 0.3rem 0; }
+.explicacion { border-left: 3px solid var(--mise-verde); padding-left: 0.8rem; }
+.mi-prediccion { font-weight: 600; color: var(--mise-ambar); }
+
+/* ---------------- Contraste lado a lado ---------------- */
+.lado-a-lado { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+.lado-a-lado > .mal, .lado-a-lado > .bien { border-radius: 6px; padding: 0.6rem 0.8rem 0.1rem; }
+.lado-a-lado > .mal { background: #fdecee; border-top: 3px solid var(--mise-rojo); }
+.lado-a-lado > .bien { background: var(--mise-verde-suave); border-top: 3px solid var(--mise-verde); }
+.lado-a-lado > .mal::before { content: "✗ Así no"; font-weight: 700; color: var(--mise-rojo); }
+.lado-a-lado > .bien::before { content: "✓ Así sí"; font-weight: 700; color: var(--mise-verde); }
+
+/* ---------------- Ficha de la página ---------------- */
+.ficha-pagina { display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; font-size: 0.9rem; color: var(--mise-gris); margin-bottom: 1rem; }
+.ficha-pagina span::before { margin-right: 0.3rem; }
+
+/* ---------------- Impresión: todo desplegado ---------------- */
+@media print {
+  .paso[hidden], .porque[hidden], .explicacion[hidden] { display: block !important; }
+  .pasos-barra, .quiz-aviso { display: none !important; }
+  .caja { break-inside: avoid; }
+}
+
+/* ---------------- Teléfonos: tablas con desplazamiento propio ---------------- */
+@media (max-width: 36rem) {
+  main table { display: block; overflow-x: auto; max-width: 100%; }
+}
