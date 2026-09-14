@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Las tres pruebas mínimas de un modelo antes de mostrar resultados: unidades, condiciones extremas y réplica del modo de referencia, practicadas con auditorías de modelos que traen errores.">
+
+<title>Consistencia dimensional y validación: someter el modelo a pruebas para romperlo – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana4/06-retardos.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/07-consistencia-validacion.html">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-la-revisión-técnico-mecánica" id="toc-la-intuición-la-revisión-técnico-mecánica" class="nav-link" data-scroll-target="#la-intuición-la-revisión-técnico-mecánica">2. La intuición: la revisión técnico-mecánica</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#tres-auditorías" id="toc-tres-auditorías" class="nav-link" data-scroll-target="#tres-auditorías">4. Tres auditorías</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/07-consistencia-validacion.html">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</h1>
+<p class="subtitle lead">Semana 4 · Concepto 7 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    Las tres pruebas mínimas de un modelo antes de mostrar resultados: unidades, condiciones extremas y réplica del modo de referencia, practicadas con auditorías de modelos que traen errores.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> tinaConFuga<span class="op">,</span> despachoTermico<span class="op">,</span> formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 50 a 60 minutos</span> <span class="dato">📚 Requiere los conceptos <a href="../semana4/02-stocks-flujos.html">2</a> a <a href="../semana4/05-polaridad-lazos.html">5</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 3</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Auditar las unidades de una ecuación término a término y corregirla.</li>
+<li>Aplicar la prueba de condiciones extremas y escribir los topes que faltan.</li>
+<li>Decidir si un modelo reproduce el modo de referencia por las razones estructurales correctas.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Un modelo produce números con la misma fluidez esté bien o mal construido. Antes de mostrar resultados se somete a tres pruebas diseñadas para romperlo: unidades, condiciones extremas y réplica del modo de referencia.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>En consultoría los modelos se presentan ante clientes escépticos, pares exigentes y reguladores con abogados. El descrédito rara vez llega por una gran discusión conceptual: llega porque alguien encuentra una unidad rota o un stock que se vuelve negativo, y a partir de ahí nadie vuelve a creer ninguna gráfica. <strong>¿Cómo se sabe si un modelo merece confianza antes de creerle sus resultados?</strong></p>
+</section>
+<section id="la-intuición-la-revisión-técnico-mecánica" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-la-revisión-técnico-mecánica">2. La intuición: la revisión técnico-mecánica</h2>
+<p>Nadie puede garantizar que un carro usado nunca fallará, pero una lista corta de revisiones (frenos, luces, emisiones) detecta la mayoría de los desastres antes de salir a la vía. Con los modelos pasa igual.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Tres revisiones antes de mostrar resultados</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-07-revision-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s4-07-revision-1.svg" class="img-fluid" alt="Un modelo frente a tres estaciones de revisión: unidades, extremos y réplica."></a></p>
+<p><strong>Un modelo siempre corre.</strong> Suma megavatios con pesos sin protestar. Por eso, antes de mostrar resultados, pasa por tres revisiones ordenadas de la más barata a la más costosa.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-07-revision-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s4-07-revision-2.svg" class="img-fluid" alt="La estación de unidades resaltada, con una balanza que iguala MW por año con MW sobre años."></a></p>
+<p><strong>Revisión 1: unidades.</strong> Cada ecuación debe cerrar término a término. Solo cuesta lápiz y papel, y es la que más errores atrapa.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-07-revision-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s4-07-revision-3.svg" class="img-fluid" alt="La estación de extremos resaltada, con un indicador llevado a cero y a un valor enorme."></a></p>
+<p><strong>Revisión 2: condiciones extremas.</strong> Lleve cada entrada a cero y a valores enormes. Con capacidad cero no hay generación; con el embalse vacío no se turbina; ningún precio es negativo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-07-revision-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s4-07-revision-4.svg" class="img-fluid" alt="La estación de réplica resaltada, con una curva histórica y la curva del modelo con la misma forma."></a></p>
+<p><strong>Revisión 3: réplica del modo de referencia.</strong> El modelo debe producir la misma <strong>clase</strong> de comportamiento que la historia (oscilación, crecimiento, búsqueda de meta), por las razones estructurales correctas. No se exige calco punto a punto.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-07-revision-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s4-07-revision-5.svg" class="img-fluid" alt="Las tres estaciones aprobadas y la conclusión: la validación demuestra que el modelo sobrevive a las maneras conocidas de estar mal."></a></p>
+<p><strong>Lea el alcance.</strong> La validación no demuestra que el modelo sea verdadero, porque ningún modelo lo es. Demuestra que sobrevive a las maneras conocidas de estar mal.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Prueba de consistencia dimensional</span>
+</div>
+<p>Toda ecuación debe ser <strong>dimensionalmente homogénea</strong>: las unidades del lado izquierdo igualan las del derecho, término a término, usando solo las unidades declaradas. Todo parámetro tiene un significado físico o económico nombrable; un «factor de ajuste» sin unidades ni interpretación es un defecto.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Prueba de condiciones extremas</span>
+</div>
+<p>Para cada ecuación se evalúa el comportamiento cuando cada insumo vale cero, cuando es enorme y cuando los stocks se agotan. El modelo debe responder de forma físicamente posible. Cada violación delata una ecuación que solo vale cerca de lo normal.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Réplica del modo de referencia</span>
+</div>
+<p>El modelo reproduce cualitativamente el patrón histórico que motivó su construcción (forma, orden de magnitud del periodo y de las amplitudes) con parámetros dentro de rangos defendibles.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Auditar las unidades de una ecuación</span>
+</div>
+<div class="paso">
+<p><strong>Escriba las unidades debajo de cada símbolo.</strong></p>
+<p><span class="math display">\underbrace{\text{puesta en servicio}}_{[\text{MW/año}]} = \frac{\overbrace{P}^{[\text{MW}]}}{\underbrace{\tau_c}_{[\text{años}]}}</span></p>
+</div>
+<div class="paso">
+<p><strong>Opere las unidades como álgebra y verifique.</strong> <span class="math inline">\text{MW}/\text{años} = \text{MW/año}</span>: la ecuación cierra. De paso, revela su supuesto: un drenaje proporcional, el retardo de primer orden.</p>
+</div>
+<div class="paso">
+<p><strong>Detecte una que no cierra.</strong> <span class="math inline">\text{retiros} = K \cdot \tau_v</span>, con <span class="math inline">K</span> [MW] y <span class="math inline">\tau_v</span> [años], da MW·año, que no es un flujo. La corrección es <span class="math inline">\text{retiros} = K/\tau_v</span> [MW/año].</p>
+</div>
+<div class="paso">
+<p><strong>Declare las conversiones.</strong> <span class="math inline">\text{ingreso} = p \cdot G</span>, con <span class="math inline">p</span> [COP/kWh] y <span class="math inline">G</span> [GWh/año], cierra solo con la conversión explícita <span class="math inline">10^6</span> kWh/GWh: <span class="math inline">\text{ingreso} = 10^6\, p\, G</span> [COP/año]. Si necesita una constante sin nombre para que las unidades cierren, deténgase: ahí suele estar el error conceptual.</p>
+</div>
+</div>
+</section>
+<section id="tres-auditorías" class="level2">
+<h2 class="anchored" data-anchor-id="tres-auditorías">4. Tres auditorías</h2>
+<p>Cada modelo de esta sección trae errores sembrados. Intente encontrarlos antes de avanzar a la solución.</p>
+<section id="la-tina-con-fuga" class="level3">
+<h3 class="anchored" data-anchor-id="la-tina-con-fuga">La tina con fuga</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Auditar el modelo de un estudiante</span>
+</div>
+<p><strong>Planteamiento.</strong> Un estudiante entrega este modelo de una tina con desagüe y fuga:</p>
+<p><span class="math display">\frac{dN}{dt} = q - \frac{N}{\tau} - f, \qquad N(0) = 80 \text{ L},\; q = 5 \text{ L/min},\; \tau = 40 \text{ min},\; f = 0{,}02.</span></p>
+<p>En su informe describe <span class="math inline">f</span> como «la fracción del nivel que se fuga por minuto». ¿Pasa la prueba de unidades?</p>
+</div>
+<div id="pred-fuga" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Dónde está el error del modelo?</p>
+<div class="opcion">
+<p>En el término <span class="math inline">N/\tau</span>.</p>
+</div>
+<div class="opcion">
+<p>En el término <span class="math inline">f</span>.</p>
+</div>
+<div class="opcion">
+<p>No hay error de unidades.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Veredicto de la tina con fuga</span>
+</div>
+<div class="paso">
+<p><strong>Revise el desagüe.</strong> <span class="math inline">N/\tau</span> da [L]/[min] = [L/min]: cierra con <span class="math inline">dN/dt</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Revise la fuga.</strong> Si <span class="math inline">f</span> es una fracción por minuto, sus unidades son [1/min]. Restar [1/min] de [L/min] no tiene sentido: la ecuación resta números con unidades distintas. Usted anotó <span class="mi-prediccion" data-para="pred-fuga"></span>; el error está en <span class="math inline">f</span>, la respuesta B.</p>
+</div>
+<div class="paso">
+<p><strong>Corrija.</strong> La fuga es <span class="math inline">f\,N</span> [1/min · L = L/min]:</p>
+<p><span class="math display">\frac{dN}{dt} = q - \frac{N}{\tau} - f\,N.</span></p>
+</div>
+<div class="paso">
+<p><strong>Mida la consecuencia.</strong> En equilibrio la entrada iguala a las salidas. Con la ecuación corregida, <span class="math inline">N^* = q/(1/\tau + f) = 5/0{,}045 = 111{,}1</span> L. Con la del estudiante, <span class="math inline">N^* = \tau\,(q - f) = 199{,}2</span> L. Un error de unidades casi duplica el nivel de equilibrio, y es el más frecuente en los avances de cohortes anteriores: tasas fraccionales usadas como flujos absolutos.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La tina del estudiante contra la corregida</span>
+</div>
+<p>Cambie entre las dos ecuaciones y compare las trayectorias.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="168" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 167;"><span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>viewof versionF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"corregida: f · N"</span><span class="op">,</span> <span class="st">"del estudiante: f solo"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"del estudiante: f solo"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Ecuación de la fuga"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="173" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 172;"><span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>tinaF <span class="op">=</span> {</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (proporcional) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">tinaConFuga</span>({<span class="dt">fuga_proporcional</span><span class="op">:</span> proporcional})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">240</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.1</span>})<span class="op">;</span></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> proporcional <span class="op">=</span> versionF<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"corregida"</span>)<span class="op">;</span></span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">correr</span>(proporcional)<span class="op">;</span></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> otra <span class="op">=</span> <span class="fu">correr</span>(<span class="op">!</span>proporcional)<span class="op">;</span></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nivel <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">nivel</span><span class="op">;</span></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> equilibrio <span class="op">=</span> proporcional <span class="op">?</span> <span class="dv">5</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">/</span> <span class="dv">40</span> <span class="op">+</span> <span class="fl">0.02</span>) <span class="op">:</span> <span class="dv">40</span> <span class="op">*</span> (<span class="dv">5</span> <span class="op">-</span> <span class="fl">0.02</span>)<span class="op">;</span></span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">N</span><span class="op">:</span> nivel[k]}))<span class="op">,</span></span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>    <span class="dt">otra</span><span class="op">:</span> otra<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">N</span><span class="op">:</span> otra<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">nivel</span>[k]}))<span class="op">,</span></span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>    <span class="dt">n60</span><span class="op">:</span> nivel[<span class="dv">600</span>]<span class="op">,</span> equilibrio<span class="op">,</span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="190" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 189;"><span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [min]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">240</span>]}<span class="op">,</span></span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Nivel [L]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">60</span><span class="op">,</span> <span class="dv">210</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tinaF<span class="op">.</span><span class="at">otra</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"N"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tinaF<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"N"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> versionF<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"corregida"</span>) <span class="op">?</span> COLORES<span class="op">.</span><span class="at">verde</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="203" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 202;"><span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Nivel a los 60 minutos&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tinaF<span class="op">.</span><span class="at">n60</span>)<span class="sc">}</span><span class="vs"> L&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Nivel de equilibrio&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tinaF<span class="op">.</span><span class="at">equilibrio</span>)<span class="sc">}</span><span class="vs"> L&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo <code>mise_sd.modelos.tina_con_fuga</code>. Línea gris: la otra ecuación.</p>
+</div>
+</div>
+</section>
+<section id="el-despacho-térmico" class="level3">
+<h3 class="anchored" data-anchor-id="el-despacho-térmico">El despacho térmico</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Unidades impecables, extremos imposibles</span>
+</div>
+<p><strong>Planteamiento.</strong> Un modelo simplificado del despacho propone que la generación térmica cubre lo que falta después de la hidráulica:</p>
+<p><span class="math display">G_T = c\,(D - G_H),</span></p>
+<p>con demanda <span class="math inline">D</span> y generación hidráulica <span class="math inline">G_H</span> en [GWh/día] y un «factor de pérdidas» <span class="math inline">c = 1{,}05</span> adimensional. La demanda media diaria del SIN en 2024 fue de unos 225 GWh/día (82 084,9 GWh en el año, XM). Suponga una capacidad térmica máxima de 120 GWh/día, una cifra ilustrativa. ¿Pasa las pruebas?</p>
+</div>
+<div id="pred-despacho" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Una madrugada muy lluviosa la hidráulica llega a 250 GWh/día con la demanda en 225. ¿Qué despacha el modelo?</p>
+<div class="opcion">
+<p>Cero térmica, porque sobra agua.</p>
+</div>
+<div class="opcion">
+<p>−26,25 GWh/día de térmica.</p>
+</div>
+<div class="opcion">
+<p>Un error de Python.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El despacho en los extremos</span>
+</div>
+<p>Lleve la hidráulica de 0 a 300 GWh/día. Después active los topes.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="245" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 244;"><span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>viewof hidraulicaD <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">300</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Generación hidráulica [GWh/día]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="250" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 249;"><span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a>viewof topesD <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">toggle</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Con topes: entre 0 y la capacidad térmica"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="kw">false</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="255" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 254;"><span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>despachoD <span class="op">=</span> {</span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> curva <span class="op">=</span> (con_topes) <span class="kw">=&gt;</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">61</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> {</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> h <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> k<span class="op">;</span></span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {h<span class="op">,</span> <span class="dt">g</span><span class="op">:</span> <span class="fu">despachoTermico</span>({<span class="dt">demanda</span><span class="op">:</span> <span class="dv">225</span><span class="op">,</span> <span class="dt">hidraulica</span><span class="op">:</span> h<span class="op">,</span> <span class="dt">maximo_termico</span><span class="op">:</span> <span class="dv">120</span><span class="op">,</span> con_topes})}<span class="op">;</span></span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>    <span class="dt">original</span><span class="op">:</span> <span class="fu">curva</span>(<span class="kw">false</span>)<span class="op">,</span> <span class="dt">corregida</span><span class="op">:</span> <span class="fu">curva</span>(<span class="kw">true</span>)<span class="op">,</span></span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>    <span class="dt">actual</span><span class="op">:</span> <span class="fu">despachoTermico</span>({<span class="dt">demanda</span><span class="op">:</span> <span class="dv">225</span><span class="op">,</span> <span class="dt">hidraulica</span><span class="op">:</span> hidraulicaD<span class="op">,</span> <span class="dt">maximo_termico</span><span class="op">:</span> <span class="dv">120</span><span class="op">,</span> <span class="dt">con_topes</span><span class="op">:</span> topesD})<span class="op">,</span></span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>    <span class="dt">sinTopes</span><span class="op">:</span> <span class="fu">despachoTermico</span>({<span class="dt">demanda</span><span class="op">:</span> <span class="dv">225</span><span class="op">,</span> <span class="dt">hidraulica</span><span class="op">:</span> hidraulicaD})<span class="op">,</span></span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="270" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 269;"><span id="cb9-270"><a href="#cb9-270" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-271"><a href="#cb9-271" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb9-272"><a href="#cb9-272" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Generación hidráulica [GWh/día]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">300</span>]}<span class="op">,</span></span>
+<span id="cb9-273"><a href="#cb9-273" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Generación térmica [GWh/día]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">90</span><span class="op">,</span> <span class="dv">250</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb9-274"><a href="#cb9-274" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-275"><a href="#cb9-275" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectY</span>([{<span class="dt">x1</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="dv">300</span>}]<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="op">-</span><span class="dv">90</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.07</span>})<span class="op">,</span></span>
+<span id="cb9-276"><a href="#cb9-276" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">120</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb9-277"><a href="#cb9-277" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">h</span><span class="op">:</span> <span class="dv">295</span><span class="op">,</span> <span class="dt">g</span><span class="op">:</span> <span class="dv">120</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"h"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"g"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"capacidad térmica"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"end"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span>})<span class="op">,</span></span>
+<span id="cb9-278"><a href="#cb9-278" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(despachoD<span class="op">.</span><span class="at">original</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"h"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"g"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> topesD <span class="op">?</span> <span class="st">"#9E9E9E"</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> topesD <span class="op">?</span> <span class="st">"5 4"</span> <span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb9-279"><a href="#cb9-279" aria-hidden="true" tabindex="-1"></a>    topesD <span class="op">?</span> Plot<span class="op">.</span><span class="fu">line</span>(despachoD<span class="op">.</span><span class="at">corregida</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"h"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"g"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>}) <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb9-280"><a href="#cb9-280" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">h</span><span class="op">:</span> hidraulicaD<span class="op">,</span> <span class="dt">g</span><span class="op">:</span> despachoD<span class="op">.</span><span class="at">actual</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"h"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"g"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">7</span>})<span class="op">,</span></span>
+<span id="cb9-281"><a href="#cb9-281" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-282"><a href="#cb9-282" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="287" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 286;"><span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Térmica sin topes&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(despachoD<span class="op">.</span><span class="at">sinTopes</span>)<span class="sc">}</span><span class="vs"> GWh/día&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Térmica con topes&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(<span class="fu">despachoTermico</span>({<span class="dt">demanda</span><span class="op">:</span> <span class="dv">225</span><span class="op">,</span> <span class="dt">hidraulica</span><span class="op">:</span> hidraulicaD<span class="op">,</span> <span class="dt">maximo_termico</span><span class="op">:</span> <span class="dv">120</span><span class="op">,</span> <span class="dt">con_topes</span><span class="op">:</span> <span class="kw">true</span>}))<span class="sc">}</span><span class="vs"> GWh/día&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Función <code>mise_sd.modelos.despacho_termico</code>. Demanda media diaria de 2024 según XM; capacidad térmica y factor de pérdidas ilustrativos.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Veredicto del despacho</span>
+</div>
+<div class="paso">
+<p><strong>Pruebe las unidades.</strong> Los dos lados están en GWh/día y <span class="math inline">c</span> es adimensional: la ecuación cierra.</p>
+</div>
+<div class="paso">
+<p><strong>Pruebe el extremo húmedo.</strong> Con <span class="math inline">G_H = 250</span> y <span class="math inline">D = 225</span>, <span class="math inline">G_T = 1{,}05 \times (-25) = -26{,}25</span> GWh/día: plantas de gas absorbiendo energía de la red. Usted anotó <span class="mi-prediccion" data-para="pred-despacho"></span>; el modelo sin topes despacha la respuesta B.</p>
+</div>
+<div class="paso">
+<p><strong>Pruebe el extremo seco.</strong> Con <span class="math inline">G_H = 0</span> el modelo pide 236,25 GWh/día de térmica, casi el doble de la capacidad de 120: despacha plantas que no existen.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba los topes.</strong></p>
+<p><span class="math display">G_T = \min\big(G_T^{\max},\; \max(0,\; c\,(D - G_H))\big).</span></p>
+<p>Cada tope es una decisión de modelado que la prueba de extremos obligó a hacer consciente. La prueba de unidades atrapa errores de escritura; la de extremos atrapa errores de razonamiento.</p>
+</div>
+</div>
+</section>
+<section id="un-modelo-ajeno-del-ciclo-de-inversión" class="level3">
+<h3 class="anchored" data-anchor-id="un-modelo-ajeno-del-ciclo-de-inversión">Un modelo ajeno del ciclo de inversión</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Cuatro defectos sin simular</span>
+</div>
+<p><strong>Planteamiento.</strong> Una consultora presenta esta variante del modelo del curso, con <span class="math inline">K</span> y <span class="math inline">D</span> en MW:</p>
+<p><span class="math display">\begin{aligned}
+\text{(a)}\quad &amp; m = K - D &amp;&amp; \text{«margen de reserva» [MW]}\\
+\text{(b)}\quad &amp; p = 150 - 400\,m &amp;&amp; \text{«precio» [COP/kWh]}\\
+\text{(c)}\quad &amp; \text{inicios} = 0{,}06\,K\,(p/150)^{2} &amp;&amp; \text{[MW/año]}\\
+\text{(d)}\quad &amp; dK/dt = \text{inicios} - K/25 &amp;&amp; \text{[MW/año]}
+\end{aligned}</span></p>
+<p>Busque los defectos antes de avanzar.</p>
+</div>
+<div id="pred-precio-ajeno" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Con <span class="math inline">K = 12\,000</span> MW y <span class="math inline">D = 8\,000</span> MW, ¿qué precio calcula la ecuación (b)?</p>
+<div class="opcion">
+<p>Cerca de 150 COP/kWh, el precio de referencia.</p>
+</div>
+<div class="opcion">
+<p>Algo menos de 150 COP/kWh, porque sobra capacidad.</p>
+</div>
+<div class="opcion">
+<p>Cerca de −1,6 millones de COP/kWh.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Veredicto del modelo ajeno</span>
+</div>
+<div class="paso">
+<p><strong>Defecto 1, unidades en (b).</strong> <span class="math inline">m</span> quedó en MW, así que <span class="math inline">400\,m</span> tiene unidades de COP·MW/kWh y no se puede restar de 150 COP/kWh. El margen debió ser adimensional, <span class="math inline">m = (K - D)/D</span>, que además es lo que observan los actores.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule la primera fila.</strong> <span class="math inline">m = 4\,000</span> MW y <span class="math inline">p = 150 - 400 \times 4\,000 = -1\,599\,850</span> COP/kWh. Usted anotó <span class="mi-prediccion" data-para="pred-precio-ajeno"></span>; la respuesta es la C. El modelo corre sin errores de Python y produce un disparate.</p>
+</div>
+<div class="paso">
+<p><strong>Defecto 2, extremos en (b).</strong> Aun con el margen corregido, una recta decreciente da precios negativos cuando sobra capacidad. Falta el piso del costo variable.</p>
+</div>
+<div class="paso">
+<p><strong>Defecto 3, errores encadenados en (c).</strong> Un precio negativo elevado al cuadrado se vuelve positivo: <span class="math inline">(-1\,599\,850/150)^2 \approx 1{,}1 \times 10^{8}</span>, e inicios de <span class="math inline">8{,}2 \times 10^{10}</span> MW/año. La inversión <strong>crece</strong> cuando el mercado se derrumba.</p>
+</div>
+<div class="paso">
+<p><strong>Defecto 4, estructura en (d).</strong> Desapareció la cartera de proyectos en construcción: los inicios se vuelven capacidad al instante y el retardo constructor quedó en cero. Por la página de <a href="../semana4/05-polaridad-lazos.html">polaridad y lazos</a>, un lazo de balance sin retardo busca su meta sin oscilar: este modelo falla la réplica del modo de referencia y recomendaría políticas para un mercado que se autorregula sin sobresaltos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="La primera fila del modelo ajeno, en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>La primera fila del modelo ajeno, en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="a41496cd" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>capacidad, demanda <span class="op">=</span> <span class="fl">12_000.0</span>, <span class="fl">8_000.0</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>margen <span class="op">=</span> capacidad <span class="op">-</span> demanda                      <span class="co"># (a) queda en MW: defecto 1</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>precio <span class="op">=</span> <span class="dv">150</span> <span class="op">-</span> <span class="dv">400</span> <span class="op">*</span> margen                       <span class="co"># (b) sin piso: defecto 2</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>inicios <span class="op">=</span> <span class="fl">0.06</span> <span class="op">*</span> capacidad <span class="op">*</span> (precio <span class="op">/</span> <span class="dv">150</span>) <span class="op">**</span> <span class="dv">2</span>  <span class="co"># (c) el cuadrado borra el signo: defecto 3</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"margen = </span><span class="sc">{</span>margen<span class="sc">:,.0f}</span><span class="ss"> MW"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"precio = </span><span class="sc">{</span>precio<span class="sc">:,.0f}</span><span class="ss"> COP/kWh"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"inicios = </span><span class="sc">{</span>inicios<span class="sc">:,.3e}</span><span class="ss"> MW/año"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>margen = 4,000 MW
+precio = -1,599,850 COP/kWh
+inicios = 8.190e+10 MW/año</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Validar solo con el ajuste a los datos</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«El modelo calca la serie histórica, así que está bien.» Con parámetros suficientes, una estructura absurda puede calcar cualquier serie y fallar fuera de muestra.</p>
+</div>
+<div class="bien">
+<p>Primero unidades y extremos, después números. La validación estructural es previa e independiente del ajuste.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Parámetros sin nombre físico</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Multiplico por 0,83 porque así ajusta.»</p>
+</div>
+<div class="bien">
+<p>Cada número del modelo se presenta en una frase: qué es, en qué unidades y de dónde sale su rango. Si no se puede, la estructura tiene una deuda que la sección de limitaciones debe declarar.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir «el modelo corre» con «el modelo está bien»</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Python no marcó errores, así que el modelo funciona.»</p>
+</div>
+<div class="bien">
+<p>El integrador integra; no valida. Corra la batería completa (unidades, extremos, réplica) y documéntela en una tabla corta del informe: ecuación, prueba, hallazgo y corrección.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué le pasa a la ecuación <span class="math inline">dD/dt = g + D</span>, con <span class="math inline">g</span> [1/año] y <span class="math inline">D</span> [MW]?</p>
+<div class="opcion">
+<p>Cierra, porque los dos términos son positivos.</p>
+<p><span class="porque">El signo no importa; revise las unidades de cada término.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>No cierra: suma [1/año] con [MW]. La corrección es <span class="math inline">dD/dt = g\,D</span>.</p>
+<p><span class="porque">Correcto: el error suele nacer de escribir el interés simple donde iba el crecimiento proporcional.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué prueba detecta que un modelo despacha térmicas con generación negativa?</p>
+<div class="opcion">
+<p>La de unidades.</p>
+<p><span class="porque">Las unidades de <span class="math inline">c\,(D - G_H)</span> cierran; el problema aparece en los extremos.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>La de condiciones extremas.</p>
+<p><span class="porque">Correcto: con hidráulica mayor que la demanda la ecuación da un valor imposible.</span></p>
+</div>
+<div class="opcion">
+<p>La de réplica del modo de referencia.</p>
+<p><span class="porque">Podría pasar desapercibido si la historia nunca tuvo esa situación.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un modelo del ciclo de inversión no tiene cartera de proyectos en construcción. ¿Qué prueba falla con seguridad?</p>
+<div class="opcion">
+<p>La de unidades.</p>
+<p><span class="porque">Las ecuaciones pueden cerrar perfectamente.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>La réplica del modo de referencia: sin retardo, el lazo de balance no puede oscilar.</p>
+<p><span class="porque">Correcto: el patrón histórico de holgura y estrechez queda fuera de su alcance.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué exige la réplica del modo de referencia?</p>
+<div class="opcion">
+<p>Que el modelo calque cada punto de la serie histórica.</p>
+<p><span class="porque">Eso huele a sobreajuste.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>La misma clase de comportamiento, con periodo y amplitudes del orden correcto, por las razones estructurales correctas.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la tina con fuga, ¿por qué el error del estudiante cambia tanto el resultado?</p>
+<div class="opcion" data-correcta="si">
+<p>Porque resta una fuga casi nula en lugar de una proporcional al nivel, y el equilibrio pasa de 111 a 199 L.</p>
+<p><span class="porque">Correcto: el error de unidades cambió el mecanismo, no solo el número.</span></p>
+</div>
+<div class="opcion">
+<p>Porque el integrador pierde precisión con fugas pequeñas.</p>
+<p><span class="porque">El integrador no tiene la culpa; la ecuación es la que está mal.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-tres-ecuaciones-para-auditar" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-tres-ecuaciones-para-auditar">Ejercicio 1 ●○○ · Tres ecuaciones para auditar</h4>
+<p>Audite las unidades y corrija las que fallen: (a) generación anual <span class="math inline">= K \cdot f_p</span>, con <span class="math inline">K</span> [MW] y el factor de planta <span class="math inline">f_p</span> adimensional; (b) <span class="math inline">dE/dt = A - G</span>, con <span class="math inline">E</span> [GWh], <span class="math inline">A</span> [GWh/día] y <span class="math inline">G</span> [MW]; (c) <span class="math inline">m = (K - D)/D</span>, con <span class="math inline">K</span> y <span class="math inline">D</span> [MW].</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><strong>Falla.</strong> MW por un número adimensional da MW, una potencia, y la generación anual es energía [MWh/año]. Corrección: <span class="math inline">\text{generación anual} = 8\,760\ \text{h/año} \cdot K \cdot f_p</span> [MWh/año].</p></li>
+<li><p><strong>Falla.</strong> <span class="math inline">G</span> está en MW y el balance está en GWh/día. Corrección: <span class="math inline">G</span> [GWh/día] <span class="math inline">= 24\ \text{h/día} \cdot G_{\text{MW}} / 1\,000</span>, o declarar el turbinamiento directamente en GWh/día.</p></li>
+<li><p><strong>Cierra.</strong> MW/MW es adimensional, como corresponde a un margen.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-extremos-del-embalse" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-extremos-del-embalse">Ejercicio 2 ●●○ · Extremos del embalse</h4>
+<p>Aplique la prueba de condiciones extremas al embalse agregado con turbinamiento constante: ¿qué hace el turbinamiento cuando el nivel llega a cero? ¿Qué hace el nivel si los aportes se anulan durante un año? Proponga la corrección mínima y escríbala con unidades.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Recuerde el simulador del embalse de la <a href="../semana4/02-stocks-flujos.html">página de stocks y flujos</a>. ¿Qué debería limitar el turbinamiento cuando queda poca agua?</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Con turbinamiento constante el embalse se vacía y la energía embalsada se vuelve negativa: el modelo sigue turbinando agua que no existe. Si los aportes se anulan un año, el nivel cae en línea recta hasta cero y sigue de largo.</p>
+<p>Corrección mínima: <span class="math inline">G = \min\big(G_{\text{plan}},\; E/\Delta t_{\min}\big)</span> [GWh/día], con <span class="math inline">E</span> [GWh] y <span class="math inline">\Delta t_{\min}</span> [días] el tiempo mínimo en que el operador vaciaría el embalse. Cerca de cero, el turbinamiento pasa a ser proporcional al nivel y el embalse se acerca a cero sin cruzarlo. Una función de tabla que se aplane cerca de cero sirve igual, con la ventaja de poder representar el nivel mínimo técnico.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>La batería mínima tiene tres pruebas, de la más barata a la más costosa: <strong>unidades</strong>, <strong>condiciones extremas</strong> y <strong>réplica del modo de referencia</strong>.</li>
+<li>Unidades: escriba las unidades debajo de cada símbolo, opere y verifique. Las conversiones se declaran; una constante sin nombre es una alarma.</li>
+<li>Extremos: lleve cada entrada a cero y a valores enormes. Los topes que aparecen son decisiones de modelado conscientes.</li>
+<li>Réplica: la misma clase de comportamiento por las razones estructurales correctas, sin calcar la serie.</li>
+<li>Un error de unidades puede cambiar el mecanismo (la tina con fuga) y los errores se encadenan (el modelo ajeno).</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Consistencia dimensional y validación estructural» de las notas de la semana 4 propone escribir una función que verifique las unidades declaradas en <code>mise_sd</code>. En el Laboratorio 3, antes de los experimentos, usted correrá esta batería sobre el modelo entregado y la consignará en tres filas.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgdGluYUNvbkZ1Z2EsIGRlc3BhY2hvVGVybWljbywgZm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiB2ZXJzaW9uRiA9IElucHV0cy5yYWRpbyhbXCJjb3JyZWdpZGE6IGYgwrcgTlwiLCBcImRlbCBlc3R1ZGlhbnRlOiBmIHNvbG9cIl0sIHt2YWx1ZTogXCJkZWwgZXN0dWRpYW50ZTogZiBzb2xvXCIsIGxhYmVsOiBcIkVjdWFjacOzbiBkZSBsYSBmdWdhXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidGluYUYgPSB7XG4gIGNvbnN0IGNvcnJlciA9IChwcm9wb3JjaW9uYWwpID0+IHNpbXVsYXIodGluYUNvbkZ1Z2Eoe2Z1Z2FfcHJvcG9yY2lvbmFsOiBwcm9wb3JjaW9uYWx9KSwge3RGaW5hbDogMjQwLCBwYXNvOiAwLjF9KTtcbiAgY29uc3QgcHJvcG9yY2lvbmFsID0gdmVyc2lvbkYuc3RhcnRzV2l0aChcImNvcnJlZ2lkYVwiKTtcbiAgY29uc3QgciA9IGNvcnJlcihwcm9wb3JjaW9uYWwpO1xuICBjb25zdCBvdHJhID0gY29ycmVyKCFwcm9wb3JjaW9uYWwpO1xuICBjb25zdCBuaXZlbCA9IHIudmFyaWFibGVzLm5pdmVsO1xuICBjb25zdCBlcXVpbGlicmlvID0gcHJvcG9yY2lvbmFsID8gNSAvICgxIC8gNDAgKyAwLjAyKSA6IDQwICogKDUgLSAwLjAyKTtcbiAgcmV0dXJuIHtcbiAgICBmaWxhczogci50aWVtcG8ubWFwKCh0LCBrKSA9PiAoe3QsIE46IG5pdmVsW2tdfSkpLFxuICAgIG90cmE6IG90cmEudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBOOiBvdHJhLnZhcmlhYmxlcy5uaXZlbFtrXX0pKSxcbiAgICBuNjA6IG5pdmVsWzYwMF0sIGVxdWlsaWJyaW8sXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjgwLCBtYXJnaW5MZWZ0OiA1MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbbWluXVwiLCBkb21haW46IFswLCAyNDBdfSxcbiAgeToge2xhYmVsOiBcIk5pdmVsIFtMXVwiLCBkb21haW46IFs2MCwgMjEwXSwgZ3JpZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKHRpbmFGLm90cmEsIHt4OiBcInRcIiwgeTogXCJOXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pLFxuICAgIFBsb3QubGluZSh0aW5hRi5maWxhcywge3g6IFwidFwiLCB5OiBcIk5cIiwgc3Ryb2tlOiB2ZXJzaW9uRi5zdGFydHNXaXRoKFwiY29ycmVnaWRhXCIpID8gQ09MT1JFUy52ZXJkZSA6IENPTE9SRVMucm9qbywgc3Ryb2tlV2lkdGg6IDIuNH0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+Tml2ZWwgYSBsb3MgNjAgbWludXRvczxiPiR7Zm9ybWF0b051bWVybygxKSh0aW5hRi5uNjApfSBMPC9iPjwvZGl2PlxuICA8ZGl2Pk5pdmVsIGRlIGVxdWlsaWJyaW88Yj4ke2Zvcm1hdG9OdW1lcm8oMSkodGluYUYuZXF1aWxpYnJpbyl9IEw8L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgaGlkcmF1bGljYUQgPSBJbnB1dHMucmFuZ2UoWzAsIDMwMF0sIHt2YWx1ZTogMjUwLCBzdGVwOiA1LCBsYWJlbDogXCJHZW5lcmFjacOzbiBoaWRyw6F1bGljYSBbR1doL2TDrWFdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHRvcGVzRCA9IElucHV0cy50b2dnbGUoe2xhYmVsOiBcIkNvbiB0b3BlczogZW50cmUgMCB5IGxhIGNhcGFjaWRhZCB0w6lybWljYVwiLCB2YWx1ZTogZmFsc2V9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZGVzcGFjaG9EID0ge1xuICBjb25zdCBjdXJ2YSA9IChjb25fdG9wZXMpID0+IEFycmF5LmZyb20oe2xlbmd0aDogNjF9LCAoXywgaykgPT4ge1xuICAgIGNvbnN0IGggPSA1ICogaztcbiAgICByZXR1cm4ge2gsIGc6IGRlc3BhY2hvVGVybWljbyh7ZGVtYW5kYTogMjI1LCBoaWRyYXVsaWNhOiBoLCBtYXhpbW9fdGVybWljbzogMTIwLCBjb25fdG9wZXN9KX07XG4gIH0pO1xuICByZXR1cm4ge1xuICAgIG9yaWdpbmFsOiBjdXJ2YShmYWxzZSksIGNvcnJlZ2lkYTogY3VydmEodHJ1ZSksXG4gICAgYWN0dWFsOiBkZXNwYWNob1Rlcm1pY28oe2RlbWFuZGE6IDIyNSwgaGlkcmF1bGljYTogaGlkcmF1bGljYUQsIG1heGltb190ZXJtaWNvOiAxMjAsIGNvbl90b3BlczogdG9wZXNEfSksXG4gICAgc2luVG9wZXM6IGRlc3BhY2hvVGVybWljbyh7ZGVtYW5kYTogMjI1LCBoaWRyYXVsaWNhOiBoaWRyYXVsaWNhRH0pLFxuICB9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC05IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDI4MCwgbWFyZ2luTGVmdDogNTUsXG4gIHg6IHtsYWJlbDogXCJHZW5lcmFjacOzbiBoaWRyw6F1bGljYSBbR1doL2TDrWFdXCIsIGRvbWFpbjogWzAsIDMwMF19LFxuICB5OiB7bGFiZWw6IFwiR2VuZXJhY2nDs24gdMOpcm1pY2EgW0dXaC9kw61hXVwiLCBkb21haW46IFstOTAsIDI1MF0sIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdFkoW3t4MTogMCwgeDI6IDMwMH1dLCB7eDE6IFwieDFcIiwgeDI6IFwieDJcIiwgeTE6IC05MCwgeTI6IDAsIGZpbGw6IENPTE9SRVMucm9qbywgZmlsbE9wYWNpdHk6IDAuMDd9KSxcbiAgICBQbG90LnJ1bGVZKFsxMjBdLCB7c3Ryb2tlOiBDT0xPUkVTLmFtYmFyLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LnRleHQoW3toOiAyOTUsIGc6IDEyMH1dLCB7eDogXCJoXCIsIHk6IFwiZ1wiLCB0ZXh0OiAoKSA9PiBcImNhcGFjaWRhZCB0w6lybWljYVwiLCB0ZXh0QW5jaG9yOiBcImVuZFwiLCBkeTogLTgsIGZpbGw6IENPTE9SRVMuYW1iYXJ9KSxcbiAgICBQbG90LmxpbmUoZGVzcGFjaG9ELm9yaWdpbmFsLCB7eDogXCJoXCIsIHk6IFwiZ1wiLCBzdHJva2U6IHRvcGVzRCA/IFwiIzlFOUU5RVwiIDogQ09MT1JFUy5yb2pvLCBzdHJva2VEYXNoYXJyYXk6IHRvcGVzRCA/IFwiNSA0XCIgOiBudWxsLCBzdHJva2VXaWR0aDogMn0pLFxuICAgIHRvcGVzRCA/IFBsb3QubGluZShkZXNwYWNob0QuY29ycmVnaWRhLCB7eDogXCJoXCIsIHk6IFwiZ1wiLCBzdHJva2U6IENPTE9SRVMuYXp1bCwgc3Ryb2tlV2lkdGg6IDIuNH0pIDogbnVsbCxcbiAgICBQbG90LmRvdChbe2g6IGhpZHJhdWxpY2FELCBnOiBkZXNwYWNob0QuYWN0dWFsfV0sIHt4OiBcImhcIiwgeTogXCJnXCIsIGZpbGw6IENPTE9SRVMuYW1iYXIsIHI6IDd9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5Uw6lybWljYSBzaW4gdG9wZXM8Yj4ke2Zvcm1hdG9OdW1lcm8oMikoZGVzcGFjaG9ELnNpblRvcGVzKX0gR1doL2TDrWE8L2I+PC9kaXY+XG4gIDxkaXY+VMOpcm1pY2EgY29uIHRvcGVzPGI+JHtmb3JtYXRvTnVtZXJvKDIpKGRlc3BhY2hvVGVybWljbyh7ZGVtYW5kYTogMjI1LCBoaWRyYXVsaWNhOiBoaWRyYXVsaWNhRCwgbWF4aW1vX3Rlcm1pY286IDEyMCwgY29uX3RvcGVzOiB0cnVlfSkpfSBHV2gvZMOtYTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgndmVyc2lvbkYnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnaGlkcmF1bGljYUQnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgndG9wZXNEJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana4";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana4/06-retardos.html" class="pagination-link" aria-label="Retardos: por qué el sistema llega tarde">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Retardos: por qué el sistema llega tarde</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

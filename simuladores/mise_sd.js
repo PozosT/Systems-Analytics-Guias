@@ -342,6 +342,29 @@ export function poblacion({poblacion_inicial = 1000, natalidad = 0.02, esperanza
   };
 }
 
+/** Tina con fuga, correcta o con el error de unidades (réplica de mise_sd.modelos.tina_con_fuga). */
+export function tinaConFuga({nivel_inicial = 80, caudal_grifo = 5, tau_desague = 40, fuga = 0.02, fuga_proporcional = true} = {}) {
+  return {
+    nombre: "tina_con_fuga",
+    constantes: {caudal_grifo, tau_desague, fuga},
+    stocks: [{nombre: "nivel", inicial: nivel_inicial, entradas: ["entrada"], salidas: ["desague", "perdida"]}],
+    auxiliares: [],
+    flujos: [
+      ["entrada", (t, e) => e.caudal_grifo],
+      ["desague", (t, e) => e.nivel / e.tau_desague],
+      ["perdida", fuga_proporcional ? (t, e) => e.fuga * e.nivel : (t, e) => e.fuga],
+    ],
+  };
+}
+
+/** Generación térmica de un despacho simplificado [GWh/día] (réplica de mise_sd.modelos.despacho_termico). */
+export function despachoTermico({demanda, hidraulica, factor = 1.05, maximo_termico = null, con_topes = false}) {
+  const bruta = factor * (demanda - hidraulica);
+  if (!con_topes) return bruta;
+  const acotada = Math.max(0, bruta);
+  return maximo_termico === null ? acotada : Math.min(maximo_termico, acotada);
+}
+
 /** Precio de bolsa como función del margen (auxiliar del modelo del curso). */
 export const precioMargen = (margen, {precio_referencia = 150, margen_objetivo = 0.30, sensibilidad_precio = 4} = {}) =>
   precio_referencia * Math.exp(-sensibilidad_precio * (margen - margen_objetivo));
