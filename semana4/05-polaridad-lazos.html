@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Cómo asignar la polaridad de un enlace, clasificar un lazo como de refuerzo o de balance y anticipar el comportamiento del sistema antes de simularlo.">
+
+<title>Polaridad y lazos: deducir el comportamiento sin simular – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana4/06-retardos.html" rel="next">
+<link href="../semana4/04-auxiliares-no-linealidad.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/05-polaridad-lazos.html">Polaridad y lazos: deducir el comportamiento sin simular</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-la-bola-de-nieve-y-el-termostato" id="toc-la-intuición-la-bola-de-nieve-y-el-termostato" class="nav-link" data-scroll-target="#la-intuición-la-bola-de-nieve-y-el-termostato">2. La intuición: la bola de nieve y el termostato</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-con-el-mercado-eléctrico" id="toc-ejemplos-con-el-mercado-eléctrico" class="nav-link" data-scroll-target="#ejemplos-con-el-mercado-eléctrico">4. Ejemplos con el mercado eléctrico</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/05-polaridad-lazos.html">Polaridad y lazos: deducir el comportamiento sin simular</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Polaridad y lazos: deducir el comportamiento sin simular</h1>
+<p class="subtitle lead">Semana 4 · Concepto 5 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    Cómo asignar la polaridad de un enlace, clasificar un lazo como de refuerzo o de balance y anticipar el comportamiento del sistema antes de simularlo.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> poblacion<span class="op">,</span> cicloInversionCapacidad<span class="op">,</span> valles<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 minutos</span> <span class="dato">📚 Requiere <a href="../semana4/01-del-cld-al-modelo.html">el concepto 1</a> y <a href="../semana4/04-auxiliares-no-linealidad.html">auxiliares y funciones de tabla</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 3</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Asignar la polaridad de un enlace con el experimento mental de «todo lo demás constante».</li>
+<li>Clasificar un lazo como de refuerzo o de balance contando sus enlaces negativos.</li>
+<li>Anticipar desde la estructura si un sistema crecerá, buscará una meta u oscilará, y comprobarlo con un simulador.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Hay dos tipos de lazos: el de refuerzo amplifica y el de balance corrige. Se distinguen contando los enlaces negativos (número par: refuerzo; impar: balance), y la estructura dominante anticipa el comportamiento antes de simular.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>En una junta directiva o en una audiencia de la CREG nadie espera a que alguien corra quinientas simulaciones. Un analista con experiencia mira el diagrama de un mecanismo propuesto y dice en un minuto: «esto agrega un lazo de balance con retardo largo; espere sobrecorrección». Y suele acertar. <strong>¿Cómo se lee el comportamiento de un sistema en su estructura, antes de simular?</strong></p>
+</section>
+<section id="la-intuición-la-bola-de-nieve-y-el-termostato" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-la-bola-de-nieve-y-el-termostato">2. La intuición: la bola de nieve y el termostato</h2>
+<p>Todo lazo causal es de uno de dos tipos. Recórralos con el dedo, flecha por flecha, y cuente cuántos enlaces van en contra (signo −).</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Recorrer y contar</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-intuicion-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s4-05-intuicion-1.svg" class="img-fluid" alt="Una bola de nieve: el tamaño de la bola aumenta la nieve que recoge."></a></p>
+<p><strong>Primer enlace de la bola de nieve.</strong> Una bola más grande recoge más nieve en cada vuelta: tamaño → nieve que recoge, signo +.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-intuicion-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s4-05-intuicion-2.svg" class="img-fluid" alt="Se cierra el lazo: la nieve recogida aumenta el tamaño. Lazo R1 con cero enlaces negativos: refuerzo."></a></p>
+<p><strong>Cierre el lazo y cuente.</strong> Más nieve recogida hace una bola más grande: signo +. Cero enlaces negativos, un número par: es un lazo de <strong>refuerzo</strong>, R1. Cada vuelta amplifica la anterior.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-intuicion-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s4-05-intuicion-3.svg" class="img-fluid" alt="El termostato: la temperatura reduce la brecha frente a la consigna, y la brecha aumenta la calefacción."></a></p>
+<p><strong>Recorra el termostato.</strong> Si la sala se calienta, la brecha frente a la consigna se achica: signo −. Una brecha mayor enciende más calefacción: signo +.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-intuicion-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s4-05-intuicion-4.svg" class="img-fluid" alt="Se cierra el lazo: la calefacción aumenta la temperatura. Lazo B1 con un enlace negativo: balance."></a></p>
+<p><strong>Cierre el lazo y cuente.</strong> Más calefacción sube la temperatura: signo +. Un enlace negativo, un número impar: es un lazo de <strong>balance</strong>, B1. Cada vuelta corrige lo que la anterior dejó torcido.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-intuicion-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s4-05-intuicion-5.svg" class="img-fluid" alt="Debajo de cada lazo, su trayectoria típica: crecimiento que se acelera para el refuerzo y acercamiento a una meta para el balance."></a></p>
+<p><strong>Multiplique los signos.</strong> <span class="math inline">(+)(+) = +</span>: refuerzo, que produce crecimiento acelerado. <span class="math inline">(-)(+)(+) = -</span>: balance, que produce acercamiento a una meta. La regla no necesita intuición: basta contar.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-intuicion-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s4-05-intuicion-6.svg" class="img-fluid" alt="Los mismos lazos con etiquetas del sector: adopción de solar distribuida para el refuerzo y margen de reserva del mercado para el balance."></a></p>
+<p><strong>Busque los dos lazos en el sector.</strong> La adopción de solar distribuida tiene una bola de nieve (más hogares con paneles, más vecinos que los ven, más instalaciones). El mercado eléctrico tiene un termostato (margen bajo, precio alto, más inversión, más margen).</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Polaridad de un enlace</span>
+</div>
+<p>Un enlace <span class="math inline">X \to Y</span> es <strong>positivo</strong> si, con todo lo demás constante, un aumento de <span class="math inline">X</span> hace que <span class="math inline">Y</span> sea mayor de lo que habría sido sin ese aumento. Es <strong>negativo</strong> si el efecto va en dirección contraria. La polaridad es una propiedad de la estructura, no una correlación observada en los datos.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Polaridad de un lazo</span>
+</div>
+<p>La polaridad de un lazo es el producto de las polaridades de sus enlaces. Con un número <strong>par</strong> de enlaces negativos el lazo es de <strong>refuerzo</strong> (R) y amplifica perturbaciones; con un número <strong>impar</strong> es de <strong>balance</strong> (B) y las corrige empujando el sistema hacia una meta, explícita u oculta.</p>
+</div>
+<p>Tres reglas conectan la estructura con el comportamiento:</p>
+<ol type="1">
+<li><strong>Refuerzo dominante</strong> → crecimiento (o colapso) exponencial: la tasa de cambio es proporcional al nivel.</li>
+<li><strong>Balance dominante sin retardos</strong> → búsqueda de meta: acercamiento suave al objetivo.</li>
+<li><strong>Balance con retardo apreciable</strong> → candidato firme a oscilación: la corrección llega tarde y se pasa.</li>
+</ol>
+<p>En los diagramas del curso cada lazo lleva su etiqueta (R1, B1…) con una flecha circular, y cada enlace lleva su polaridad junto a la punta. Un diagrama sin polaridades es un borrador.</p>
+<section id="ejemplo-básico-la-población-un-lazo-contra-otro" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-básico-la-población-un-lazo-contra-otro">Ejemplo básico: la población, un lazo contra otro</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Quién gana, la natalidad o la mortalidad?</span>
+</div>
+<p><strong>Planteamiento.</strong> Una población <span class="math inline">N</span> tiene nacimientos <span class="math inline">b\,N</span> y muertes <span class="math inline">N/\tau_e</span>, con natalidad <span class="math inline">b</span> [1/año] y esperanza de vida <span class="math inline">\tau_e</span> [años]. Hay un lazo de refuerzo (más población, más nacimientos, más población) y uno de balance (más población, más muertes, menos población). ¿Cuál domina?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la competencia entre lazos</span>
+</div>
+<div class="paso">
+<p><strong>Cuente signos en cada lazo.</strong> R1: población → nacimientos (+), nacimientos → población (+): cero negativos, refuerzo. B1: población → muertes (+), muertes → población (−): un negativo, balance.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba la ecuación.</strong> Los dos lazos actúan sobre el mismo stock:</p>
+<p><span class="math display">\frac{dN}{dt} = b\,N - \frac{N}{\tau_e} = \left(b - \frac{1}{\tau_e}\right) N \quad [\text{personas/año}].</span></p>
+</div>
+<div class="paso">
+<p><strong>Lea el signo de la tasa neta.</strong> Si <span class="math inline">b &gt; 1/\tau_e</span> domina R1 y la población crece exponencialmente. Si <span class="math inline">b &lt; 1/\tau_e</span> domina B1 y la población decae hacia su meta oculta, que es cero. La frontera es <span class="math inline">b = 1/\tau_e</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Ponga números.</strong> Con <span class="math inline">b = 0{,}02</span> y <span class="math inline">\tau_e = 70</span> años, la tasa neta es <span class="math inline">0{,}02 - 1/70 = 0{,}0057</span> por año: domina R1 y la población se duplica en <span class="math inline">\ln 2 / 0{,}0057 = 121</span> años. Con <span class="math inline">b = 0{,}012</span> la tasa neta es −0,0023 y la población se reduce a la mitad en 303 años.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Natalidad contra mortalidad</span>
+</div>
+<p>Mueva la natalidad alrededor de la frontera <span class="math inline">b = 1/\tau_e</span> y observe cómo cambia el lazo dominante.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="132" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>viewof natalidadP <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">0.04</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.02</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.001</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Natalidad b [1/año]"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">3</span>)(d)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="137" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 136;"><span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>viewof vidaP <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">40</span><span class="op">,</span> <span class="dv">90</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">70</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Esperanza de vida τe [años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="142" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 141;"><span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>poblacionP <span class="op">=</span> {</span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">poblacion</span>({<span class="dt">natalidad</span><span class="op">:</span> natalidadP<span class="op">,</span> <span class="dt">esperanza_vida</span><span class="op">:</span> vidaP})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">200</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.5</span>})<span class="op">;</span></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> neta <span class="op">=</span> natalidadP <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> vidaP<span class="op">;</span></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {<span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">N</span><span class="op">:</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">poblacion</span>[k]}))<span class="op">,</span> neta<span class="op">,</span> <span class="dt">final</span><span class="op">:</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">poblacion</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)}<span class="op">;</span></span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="151" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 150;"><span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">200</span>]}<span class="op">,</span></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Población [personas]"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">1000</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(poblacionP<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"N"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> poblacionP<span class="op">.</span><span class="at">neta</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">azul</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="164" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 163;"><span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Tasa neta&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(<span class="dv">100</span> <span class="op">*</span> poblacionP<span class="op">.</span><span class="at">neta</span>)<span class="sc">}</span><span class="vs"> % por año&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Lazo dominante&lt;b&gt;</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(poblacionP<span class="op">.</span><span class="at">neta</span>) <span class="op">&lt;</span> <span class="fl">1e-9</span> <span class="op">?</span> <span class="st">"ninguno: equilibrio"</span> <span class="op">:</span> poblacionP<span class="op">.</span><span class="at">neta</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"R1, natalidad"</span> <span class="op">:</span> <span class="st">"B1, mortalidad"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;</span><span class="sc">${</span>poblacionP<span class="op">.</span><span class="at">neta</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"Tiempo de duplicación"</span> <span class="op">:</span> <span class="st">"Tiempo de reducción a la mitad"</span><span class="sc">}</span><span class="vs">&lt;b&gt;</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(poblacionP<span class="op">.</span><span class="at">neta</span>) <span class="op">&lt;</span> <span class="fl">1e-9</span> <span class="op">?</span> <span class="st">"—"</span> <span class="op">:</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="dv">2</span>) <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(poblacionP<span class="op">.</span><span class="at">neta</span>))<span class="sc">}</span><span class="vs"> años`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Población en 200 años&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(poblacionP<span class="op">.</span><span class="at">final</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo <code>mise_sd.modelos.poblacion</code> con 1 000 personas iniciales. Cifras ilustrativas.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplos-con-el-mercado-eléctrico" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-con-el-mercado-eléctrico">4. Ejemplos con el mercado eléctrico</h2>
+<section id="el-termostato-del-mercado" class="level3">
+<h3 class="anchored" data-anchor-id="el-termostato-del-mercado">El termostato del mercado</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Recorrer el lazo central del caso de la semana</span>
+</div>
+<p><strong>Planteamiento.</strong> La reforma de 1994 apostó a que el mercado se autorregularía: si la capacidad escasea, el precio sube y los inversionistas construyen. Recorra ese circuito enlace por enlace. ¿Qué tipo de lazo es y qué comportamiento anticipa?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El lazo del mercado, enlace por enlace</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-mercado-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s4-05-mercado-1.svg" class="img-fluid" alt="Capacidad instalada aumenta el margen de reserva, signo positivo."></a></p>
+<p><strong>Capacidad → margen.</strong> Con la demanda constante, más capacidad es más margen de reserva: signo +.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-mercado-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s4-05-mercado-2.svg" class="img-fluid" alt="Margen de reserva disminuye el precio de bolsa, signo negativo."></a></p>
+<p><strong>Margen → precio.</strong> Más margen abarata la energía, por la curva precio-margen: signo −. Primer negativo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-mercado-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s4-05-mercado-3.svg" class="img-fluid" alt="Precio de bolsa aumenta el inicio de proyectos, signo positivo."></a></p>
+<p><strong>Precio → inicio de proyectos.</strong> Un precio más alto atrae más inversión: signo +.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-mercado-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s4-05-mercado-4.svg" class="img-fluid" alt="Inicio de proyectos aumenta la capacidad instalada con retardo, marcado con doble raya, signo positivo."></a></p>
+<p><strong>Inicio de proyectos → capacidad.</strong> Los proyectos terminan agregando capacidad, pero años después: signo + con doble raya de retardo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-mercado-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s4-05-mercado-5.svg" class="img-fluid" alt="Lazo B1 completo con un enlace negativo, balance, y la nota de que tiene retardo."></a></p>
+<p><strong>Cuente y aplique las reglas.</strong> Un solo enlace negativo: el lazo es de <strong>balance</strong>, B1. El mercado es un termostato de capacidad. Por la regla 2 buscaría su meta; pero la doble raya del retardo constructor activa la regla 3: la búsqueda no será suave.</p>
+</div>
+</div>
+<div id="pred-retardo-lazo" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Si el retardo constructor fuera de medio año en lugar de 4 años, el margen de reserva…</p>
+<div class="opcion">
+<p>oscilaría igual, porque el lazo sigue siendo de balance.</p>
+</div>
+<div class="opcion">
+<p>se acercaría a su meta casi sin oscilar.</p>
+</div>
+<div class="opcion">
+<p>crecería sin límite, porque la inversión llega antes.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Balance con y sin retardo</span>
+</div>
+<p>Compare el retardo corto con el de 4 años. La curva gris es la otra opción.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="240" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 239;"><span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a>viewof retardoL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="fl">0.5</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Retardo constructor [años]"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">1</span>)(d)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="245" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 244;"><span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>mercadoL <span class="op">=</span> {</span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (tau) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">cicloInversionCapacidad</span>({<span class="dt">retardo_constructor</span><span class="op">:</span> tau})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">correr</span>(retardoL)<span class="op">;</span></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> otro <span class="op">=</span> <span class="fu">correr</span>(retardoL <span class="op">===</span> <span class="dv">4</span> <span class="op">?</span> <span class="fl">0.5</span> <span class="op">:</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> m <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span><span class="op">;</span></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nValles <span class="op">=</span> <span class="fu">valles</span>(r<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> m)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> m[k]}))<span class="op">,</span></span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>    <span class="dt">otro</span><span class="op">:</span> otro<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> otro<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]}))<span class="op">,</span></span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>    <span class="dt">minimo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>m)<span class="op">,</span> nValles<span class="op">,</span></span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>    <span class="dt">lectura</span><span class="op">:</span> nValles <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"búsqueda de meta"</span> <span class="op">:</span> <span class="st">"oscilación amortiguada"</span><span class="op">,</span></span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="262" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 261;"><span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
+<span id="cb9-265"><a href="#cb9-265" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.22</span><span class="op">,</span> <span class="fl">0.52</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb9-266"><a href="#cb9-266" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-267"><a href="#cb9-267" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.30</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb9-268"><a href="#cb9-268" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(mercadoL<span class="op">.</span><span class="at">otro</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb9-269"><a href="#cb9-269" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(mercadoL<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb9-270"><a href="#cb9-270" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-271"><a href="#cb9-271" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="276" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 275;"><span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Margen mínimo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(mercadoL<span class="op">.</span><span class="at">minimo</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Valles en 60 años&lt;b&gt;</span><span class="sc">${</span>mercadoL<span class="op">.</span><span class="at">nValles</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Comportamiento&lt;b&gt;</span><span class="sc">${</span>mercadoL<span class="op">.</span><span class="at">lectura</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.ciclo_inversion_capacidad</code>, con datos sintéticos con fines didácticos.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-retardo-lazo"></span>. Con medio año de retardo el margen baja desde 50 % y se acomoda cerca del objetivo sin valles (mínimo de 29,7 %): búsqueda de meta, la respuesta B. Con 4 años el mismo lazo produce dos valles y un mínimo de 25,0 %. La estructura de lazos no cambió; el retardo decidió cuál de las reglas manda.</p>
+</section>
+<section id="los-lazos-acoplados-del-caso-de-la-semana" class="level3">
+<h3 class="anchored" data-anchor-id="los-lazos-acoplados-del-caso-de-la-semana">Los lazos acoplados del caso de la semana</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Tres lazos de balance y un solo culpable del ciclo</span>
+</div>
+<p><strong>Planteamiento.</strong> El modelo completo de la semana tiene tres lazos de balance. ¿Qué hace cada uno y cuál explica que el sector oscile?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer los lazos acoplados</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-acoplados-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s4-05-acoplados-1.svg" class="img-fluid" alt="Lazo B1: capacidad, margen, precio, inicio de proyectos, proyectos en construcción y de vuelta a capacidad, con retardo."></a></p>
+<p><strong>B1, el termostato del mercado.</strong> Es el lazo del ejemplo anterior, ahora con los proyectos en construcción visibles. Un enlace negativo: balance.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-acoplados-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s4-05-acoplados-2.svg" class="img-fluid" alt="Se agrega el lazo B2: capacidad aumenta retiros y retiros disminuyen capacidad."></a></p>
+<p><strong>B2, el drenaje de retiros.</strong> Más capacidad es más plantas envejeciendo, más retiros y menos capacidad: un negativo, balance. Actúa sin espera y en proporción a la capacidad.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-acoplados-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s4-05-acoplados-3.svg" class="img-fluid" alt="Se agrega el lazo B3: precio disminuye el crecimiento de la demanda y el crecimiento de la demanda disminuye el margen."></a></p>
+<p><strong>B3, la demanda elástica.</strong> Precio alto → la demanda crece menos (−) → menos crecimiento de la demanda es más margen (−) → más margen es menos precio (−). Tres negativos, un número impar: balance. Solo existe si la demanda responde al precio.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-acoplados-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s4-05-acoplados-4.svg" class="img-fluid" alt="Se resalta el enlace de proyectos en construcción a capacidad: el único retardo largo está en B1."></a></p>
+<p><strong>Ubique el retardo.</strong> El único retardo largo está en B1: la obra tarda de 3 a 5 años. B2 y B3 corrigen sin espera.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-05-acoplados-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s4-05-acoplados-5.svg" class="img-fluid" alt="Nota final: B1 es lento y causa el ciclo; B2 y B3 son rápidos y solo amortiguan."></a></p>
+<p><strong>Responda la pregunta de la semana.</strong> El sector oscila porque su lazo corrector dominante, B1, mide la escasez de hoy pero entrega capacidad años después. Cuando el margen se recupera, la inversión decidida en los años caros sigue saliendo de la tubería y la capacidad se pasa. B2 y B3 solo amortiguan.</p>
+</div>
+</div>
+<div id="pred-b1-debil" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Suponga que los inversionistas casi dejan de responder al precio, de modo que B1 se debilita mucho. ¿Qué hace el margen de reserva?</p>
+<div class="opcion">
+<p>Se estabiliza en el objetivo, porque B2 sigue corrigiendo.</p>
+</div>
+<div class="opcion">
+<p>Cae año tras año, porque la demanda sigue creciendo y nadie repone la capacidad a tiempo.</p>
+</div>
+<div class="opcion">
+<p>Oscila con más fuerza.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Apague y encienda lazos</span>
+</div>
+<p>Baje la respuesta de la inversión al precio (fuerza de B1) de 3 a 0,2. Después active la demanda elástica (B3) y observe si alcanza para sostener el margen.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="351" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 350;"><span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a>viewof fuerzaB1 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="dv">3</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="fl">0.2</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.2</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Elasticidad de la inversión (fuerza de B1)"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">1</span>)(d)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="356" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 355;"><span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a>viewof activarB3 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"sin B3"</span><span class="op">,</span> <span class="st">"con B3 (elasticidad de la demanda 0,3)"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sin B3"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Lazo de la demanda"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="361" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 360;"><span id="cb13-361"><a href="#cb13-361" aria-hidden="true" tabindex="-1"></a>lazosA <span class="op">=</span> {</span>
+<span id="cb13-362"><a href="#cb13-362" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (p) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">cicloInversionCapacidad</span>(p)<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb13-363"><a href="#cb13-363" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">correr</span>({<span class="dt">elasticidad_inversion</span><span class="op">:</span> fuerzaB1<span class="op">,</span> <span class="dt">elasticidad_demanda</span><span class="op">:</span> activarB3 <span class="op">===</span> <span class="st">"sin B3"</span> <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="fl">0.3</span>})<span class="op">;</span></span>
+<span id="cb13-364"><a href="#cb13-364" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">correr</span>({})<span class="op">;</span></span>
+<span id="cb13-365"><a href="#cb13-365" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> m <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span><span class="op">;</span></span>
+<span id="cb13-366"><a href="#cb13-366" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb13-367"><a href="#cb13-367" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> m[k]}))<span class="op">,</span></span>
+<span id="cb13-368"><a href="#cb13-368" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]}))<span class="op">,</span></span>
+<span id="cb13-369"><a href="#cb13-369" aria-hidden="true" tabindex="-1"></a>    <span class="dt">final</span><span class="op">:</span> m<span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">,</span> <span class="dt">minimo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>m)<span class="op">,</span> <span class="dt">precioMax</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">precio_bolsa</span>)<span class="op">,</span></span>
+<span id="cb13-370"><a href="#cb13-370" aria-hidden="true" tabindex="-1"></a>    <span class="dt">nValles</span><span class="op">:</span> <span class="fu">valles</span>(r<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> m)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb13-371"><a href="#cb13-371" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb13-372"><a href="#cb13-372" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="377" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 376;"><span id="cb14-377"><a href="#cb14-377" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb14-378"><a href="#cb14-378" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb14-379"><a href="#cb14-379" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
+<span id="cb14-380"><a href="#cb14-380" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.1</span><span class="op">,</span> <span class="fl">0.52</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb14-381"><a href="#cb14-381" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb14-382"><a href="#cb14-382" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.30</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb14-383"><a href="#cb14-383" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lazosA<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb14-384"><a href="#cb14-384" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lazosA<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb14-385"><a href="#cb14-385" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb14-386"><a href="#cb14-386" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="391" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 390;"><span id="cb15-391"><a href="#cb15-391" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb15-392"><a href="#cb15-392" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Margen en el año 60&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(lazosA<span class="op">.</span><span class="at">final</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-393"><a href="#cb15-393" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Margen mínimo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(lazosA<span class="op">.</span><span class="at">minimo</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-394"><a href="#cb15-394" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Precio máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(lazosA<span class="op">.</span><span class="at">precioMax</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-395"><a href="#cb15-395" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Valles&lt;b&gt;</span><span class="sc">${</span>lazosA<span class="op">.</span><span class="at">nValles</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-396"><a href="#cb15-396" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-15" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.ciclo_inversion_capacidad</code>, con datos sintéticos con fines didácticos. Línea gris: caso base (elasticidad de la inversión 3, sin B3).</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-b1-debil"></span>. Con la inversión casi sorda al precio (0,2), el margen cae sin valles hasta 16,8 % en el año 60 y el precio llega a 255 COP/kWh: la respuesta B. Con B1 casi apagado, la capacidad solo obedece a B2, que la drena, mientras la demanda sigue creciendo. B3 amortigua la caída (22,4 % en el año 60 y precio máximo de 204 COP/kWh), pero no la detiene: sin inversión que responda, ningún lazo repone capacidad. Con elasticidad de 1 el ciclo pierde fuerza y queda un solo valle, en el año 13,1.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo experimento en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo experimento en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="ff2c4868" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> ciclo_inversion_capacidad</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fuerza_b1 <span class="kw">in</span> (<span class="fl">3.0</span>, <span class="fl">1.0</span>, <span class="fl">0.2</span>):</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> elasticidad_demanda <span class="kw">in</span> (<span class="fl">0.0</span>, <span class="fl">0.3</span>):</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> integrar(ciclo_inversion_capacidad(elasticidad_inversion<span class="op">=</span>fuerza_b1, elasticidad_demanda<span class="op">=</span>elasticidad_demanda),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                     t_final<span class="op">=</span><span class="fl">60.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"B1 = </span><span class="sc">{</span>fuerza_b1<span class="sc">:.1f}</span><span class="ss">   B3 = </span><span class="sc">{</span>elasticidad_demanda<span class="sc">:.1f}</span><span class="ss">   margen en el año 60 = </span><span class="sc">{</span>r[<span class="st">'margen_reserva'</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>B1 = 3.0   B3 = 0.0   margen en el año 60 = 0.291
+B1 = 3.0   B3 = 0.3   margen en el año 60 = 0.291
+B1 = 1.0   B3 = 0.0   margen en el año 60 = 0.272
+B1 = 1.0   B3 = 0.3   margen en el año 60 = 0.276
+B1 = 0.2   B3 = 0.0   margen en el año 60 = 0.168
+B1 = 0.2   B3 = 0.3   margen en el año 60 = 0.224</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Contar «cosas malas» en lugar de signos</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Menos margen, menos confianza, menos inversión: suena todo negativo, así que es un lazo de balance.»</p>
+</div>
+<div class="bien">
+<p>Los tres enlaces son <strong>positivos</strong> (menos causa, menos efecto). Cero negativos: es un lazo de <strong>refuerzo</strong>, una espiral. Lo que cuenta es la dirección del cambio, no el tono de las palabras.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer la polaridad en los datos</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«En 2015 el precio subió y la inversión bajó; luego el enlace precio → inversión es negativo.»</p>
+</div>
+<div class="bien">
+<p>Otras causas movieron la inversión al mismo tiempo (tasas de interés, riesgo regulatorio). La polaridad se decide con el experimento mental de «todo lo demás constante»: con todo igual, un precio más alto atrae más inversión, signo +.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Moralizar los lazos</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Los lazos de refuerzo son peligrosos y los de balance son buenos.»</p>
+</div>
+<div class="bien">
+<p>El refuerzo de la adopción de renovables es una buena noticia para la transición, y un lazo de balance puede frenar un proyecto legítimo durante años. R y B describen mecánica; el juicio de valor pertenece al análisis de política.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un lazo tiene cuatro enlaces, dos de ellos negativos. ¿De qué tipo es?</p>
+<div class="opcion" data-correcta="si">
+<p>Refuerzo.</p>
+<p><span class="porque">Correcto: dos negativos es un número par; los signos se cancelan.</span></p>
+</div>
+<div class="opcion">
+<p>Balance, porque tiene enlaces negativos.</p>
+<p><span class="porque">La regla es la paridad, no la presencia de negativos.</span></p>
+</div>
+<div class="opcion">
+<p>No se puede saber sin simular.</p>
+<p><span class="porque">La polaridad del lazo se lee en la estructura.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué comportamiento anticipa un lazo de balance con un retardo largo?</p>
+<div class="opcion">
+<p>Crecimiento exponencial.</p>
+<p><span class="porque">Esa es la regla del refuerzo dominante.</span></p>
+</div>
+<div class="opcion">
+<p>Acercamiento suave a la meta.</p>
+<p><span class="porque">Eso ocurre sin retardos apreciables.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Oscilación: la corrección llega tarde y se pasa.</p>
+<p><span class="porque">Correcto: es la regla 3, la del caso de la semana.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En una población, la natalidad es 1,5 % anual y la esperanza de vida es de 80 años. ¿Qué lazo domina?</p>
+<div class="opcion" data-correcta="si">
+<p>El de refuerzo: la población crece.</p>
+<p><span class="porque">Correcto: <span class="math inline">0{,}015 - 1/80 = 0{,}0025</span> por año, positiva.</span></p>
+</div>
+<div class="opcion">
+<p>El de balance: la población decrece.</p>
+<p><span class="porque">Compare <span class="math inline">b</span> con <span class="math inline">1/\tau_e = 0{,}0125</span>.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Cuál es la polaridad del enlace «margen de reserva → precio de bolsa»?</p>
+<div class="opcion">
+<p>Positiva: los dos se mueven con el ciclo.</p>
+<p><span class="porque">Moverse juntos no define la polaridad; haga el experimento mental.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Negativa: con todo lo demás constante, más margen abarata la energía.</p>
+<p><span class="porque">Correcto: es el único negativo del lazo B1.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el modelo del curso, ¿cuál lazo explica que el sector oscile?</p>
+<div class="opcion">
+<p>B2, los retiros, porque vacían la capacidad.</p>
+<p><span class="porque">B2 actúa sin espera y solo amortigua.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>B1, el termostato del mercado, porque su corrección llega años después.</p>
+<p><span class="porque">Correcto: es el único lazo con retardo largo.</span></p>
+</div>
+<div class="opcion">
+<p>B3, la demanda elástica.</p>
+<p><span class="porque">B3 corrige sin retardo; reduce la oscilación.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-tres-lazos-para-clasificar" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-tres-lazos-para-clasificar">Ejercicio 1 ●○○ · Tres lazos para clasificar</h4>
+<p>Determine la polaridad (R o B) de cada lazo y el comportamiento que insinúa: (i) congestión vial → (−) atractivo del carro → (+) carros en la vía → (+) congestión; (ii) pérdidas técnicas → (+) tarifas → (−) pago oportuno → (+) ingresos del distribuidor → (+) mantenimiento → (−) pérdidas técnicas; (iii) temperatura del planeta → (+) deshielo ártico → (−) albedo → (−) temperatura del planeta.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="i">
+<li><p>Un negativo, impar: <strong>balance</strong>. La propia congestión raciona el uso de la vía, con meta oculta en una congestión «tolerable».</p></li>
+<li><p>Dos negativos, par: <strong>refuerzo</strong>. Más pérdidas, más tarifas, menos recaudo, menos mantenimiento y más pérdidas: el círculo vicioso de un distribuidor en crisis, que también puede girar como círculo virtuoso.</p></li>
+<li><p>Dos negativos, par: <strong>refuerzo</strong>. Es la retroalimentación hielo-albedo que amplifica el calentamiento del Ártico.</p></li>
+</ol>
+<p>La paridad se cuenta, y los lazos de refuerzo no siempre crecen hacia algo bueno.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-el-lazo-del-cargo-por-confiabilidad" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-el-lazo-del-cargo-por-confiabilidad">Ejercicio 2 ●●○ · El lazo del Cargo por Confiabilidad</h4>
+<p>El Cargo por Confiabilidad paga un ingreso fijo por energía firme comprometida, asignado por subasta con años de anticipación. Agregue este mecanismo al diagrama de los lazos acoplados como un lazo nuevo (margen esperado bajo → subasta asigna obligaciones → proyectos → capacidad), etiquételo, clasifíquelo y marque sus retardos. ¿Ataca la causa del ciclo o suaviza el síntoma?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>El primer enlace es negativo: a <strong>menor</strong> margen esperado, <strong>más</strong> obligaciones asignadas. Luego pregunte si el mecanismo elimina el retardo constructor.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Margen esperado → (−) obligaciones asignadas → (+) proyectos con ingreso garantizado → (+) capacidad futura → (+) margen esperado. Un negativo, impar: <strong>balance</strong>, B4. Tiene dos retardos: la subasta ocurre años antes de la obligación y la construcción sigue tomando de 3 a 5 años.</p>
+<p>Ataca ambas cosas a medias. B4 no elimina el retardo constructor, que es la causa estructural del ciclo, pero cambia la señal de inversión: ya no es el precio de hoy sino una proyección administrada con años de anticipación, lo que reduce la amplitud. Si el remedio crea sus propios ciclos (subastas por oleadas, dependencia de las térmicas) es la pregunta central de la semana 5.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Un enlace es <strong>positivo</strong> si, con todo lo demás constante, más causa produce más efecto; <strong>negativo</strong> si produce menos. La polaridad es estructura, no correlación.</li>
+<li>La polaridad de un lazo es el producto de las de sus enlaces: número <strong>par</strong> de negativos, <strong>refuerzo</strong>; <strong>impar</strong>, <strong>balance</strong>.</li>
+<li>Reglas de lectura: refuerzo dominante → crecimiento exponencial; balance sin retardo → búsqueda de meta; balance con retardo → oscilación.</li>
+<li>En el caso de la semana hay tres lazos de balance. B1 tiene el retardo constructor y causa el ciclo; B2 (retiros) y B3 (demanda elástica) actúan sin espera y amortiguan.</li>
+<li>R y B describen mecánica, no virtud.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Polaridad y lazos» de las notas de la semana 4 trae el diagrama causal completo del caso con sus tres lazos. En el Laboratorio 3 usted etiquetará los lazos del modelo antes de simular y contrastará sus predicciones con las trayectorias. La <a href="../semana4/06-retardos.html">página de retardos</a> pone bajo el microscopio al culpable del ciclo.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgcG9ibGFjaW9uLCBjaWNsb0ludmVyc2lvbkNhcGFjaWRhZCwgdmFsbGVzLCBmb3JtYXRvTnVtZXJvLCBmb3JtYXRvUG9yY2VudGFqZX0gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBuYXRhbGlkYWRQID0gSW5wdXRzLnJhbmdlKFswLCAwLjA0XSwge3ZhbHVlOiAwLjAyLCBzdGVwOiAwLjAwMSwgbGFiZWw6IFwiTmF0YWxpZGFkIGIgWzEvYcOxb11cIiwgZm9ybWF0OiAoZCkgPT4gZm9ybWF0b051bWVybygzKShkKX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgdmlkYVAgPSBJbnB1dHMucmFuZ2UoWzQwLCA5MF0sIHt2YWx1ZTogNzAsIHN0ZXA6IDUsIGxhYmVsOiBcIkVzcGVyYW56YSBkZSB2aWRhIM+EZSBbYcOxb3NdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoicG9ibGFjaW9uUCA9IHtcbiAgY29uc3QgciA9IHNpbXVsYXIocG9ibGFjaW9uKHtuYXRhbGlkYWQ6IG5hdGFsaWRhZFAsIGVzcGVyYW56YV92aWRhOiB2aWRhUH0pLCB7dEZpbmFsOiAyMDAsIHBhc286IDAuNX0pO1xuICBjb25zdCBuZXRhID0gbmF0YWxpZGFkUCAtIDEgLyB2aWRhUDtcbiAgcmV0dXJuIHtmaWxhczogci50aWVtcG8ubWFwKCh0LCBrKSA9PiAoe3QsIE46IHIudmFyaWFibGVzLnBvYmxhY2lvbltrXX0pKSwgbmV0YSwgZmluYWw6IHIudmFyaWFibGVzLnBvYmxhY2lvbi5hdCgtMSl9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDI4MCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJUaWVtcG8gW2HDsW9zXVwiLCBkb21haW46IFswLCAyMDBdfSxcbiAgeToge2xhYmVsOiBcIlBvYmxhY2nDs24gW3BlcnNvbmFzXVwiLCBncmlkOiB0cnVlLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVZKFsxMDAwXSwge3N0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI0IDNcIn0pLFxuICAgIFBsb3QubGluZShwb2JsYWNpb25QLmZpbGFzLCB7eDogXCJ0XCIsIHk6IFwiTlwiLCBzdHJva2U6IHBvYmxhY2lvblAubmV0YSA+PSAwID8gQ09MT1JFUy5henVsIDogQ09MT1JFUy52ZXJkZSwgc3Ryb2tlV2lkdGg6IDIuNH0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+VGFzYSBuZXRhPGI+JHtmb3JtYXRvTnVtZXJvKDIpKDEwMCAqIHBvYmxhY2lvblAubmV0YSl9ICUgcG9yIGHDsW88L2I+PC9kaXY+XG4gIDxkaXY+TGF6byBkb21pbmFudGU8Yj4ke01hdGguYWJzKHBvYmxhY2lvblAubmV0YSkgPCAxZS05ID8gXCJuaW5ndW5vOiBlcXVpbGlicmlvXCIgOiBwb2JsYWNpb25QLm5ldGEgPiAwID8gXCJSMSwgbmF0YWxpZGFkXCIgOiBcIkIxLCBtb3J0YWxpZGFkXCJ9PC9iPjwvZGl2PlxuICA8ZGl2PiR7cG9ibGFjaW9uUC5uZXRhID49IDAgPyBcIlRpZW1wbyBkZSBkdXBsaWNhY2nDs25cIiA6IFwiVGllbXBvIGRlIHJlZHVjY2nDs24gYSBsYSBtaXRhZFwifTxiPiR7TWF0aC5hYnMocG9ibGFjaW9uUC5uZXRhKSA8IDFlLTkgPyBcIuKAlFwiIDogYCR7Zm9ybWF0b051bWVybygwKShNYXRoLmxvZygyKSAvIE1hdGguYWJzKHBvYmxhY2lvblAubmV0YSkpfSBhw7Fvc2B9PC9iPjwvZGl2PlxuICA8ZGl2PlBvYmxhY2nDs24gZW4gMjAwIGHDsW9zPGI+JHtmb3JtYXRvTnVtZXJvKDApKHBvYmxhY2lvblAuZmluYWwpfTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiByZXRhcmRvTCA9IElucHV0cy5yYWRpbyhbMC41LCA0XSwge3ZhbHVlOiAwLjUsIGxhYmVsOiBcIlJldGFyZG8gY29uc3RydWN0b3IgW2HDsW9zXVwiLCBmb3JtYXQ6IChkKSA9PiBmb3JtYXRvTnVtZXJvKDEpKGQpfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Im1lcmNhZG9MID0ge1xuICBjb25zdCBjb3JyZXIgPSAodGF1KSA9PiBzaW11bGFyKGNpY2xvSW52ZXJzaW9uQ2FwYWNpZGFkKHtyZXRhcmRvX2NvbnN0cnVjdG9yOiB0YXV9KSwge3RGaW5hbDogNjAsIHBhc286IDAuMDV9KTtcbiAgY29uc3QgciA9IGNvcnJlcihyZXRhcmRvTCk7XG4gIGNvbnN0IG90cm8gPSBjb3JyZXIocmV0YXJkb0wgPT09IDQgPyAwLjUgOiA0KTtcbiAgY29uc3QgbSA9IHIudmFyaWFibGVzLm1hcmdlbl9yZXNlcnZhO1xuICBjb25zdCBuVmFsbGVzID0gdmFsbGVzKHIudGllbXBvLCBtKS5sZW5ndGg7XG4gIHJldHVybiB7XG4gICAgZmlsYXM6IHIudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBtOiBtW2tdfSkpLFxuICAgIG90cm86IG90cm8udGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBtOiBvdHJvLnZhcmlhYmxlcy5tYXJnZW5fcmVzZXJ2YVtrXX0pKSxcbiAgICBtaW5pbW86IE1hdGgubWluKC4uLm0pLCBuVmFsbGVzLFxuICAgIGxlY3R1cmE6IG5WYWxsZXMgPT09IDAgPyBcImLDunNxdWVkYSBkZSBtZXRhXCIgOiBcIm9zY2lsYWNpw7NuIGFtb3J0aWd1YWRhXCIsXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjgwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDYwXX0sXG4gIHk6IHtsYWJlbDogXCJNYXJnZW4gZGUgcmVzZXJ2YVwiLCBncmlkOiB0cnVlLCBkb21haW46IFswLjIyLCAwLjUyXSwgdGlja0Zvcm1hdDogKGQpID0+IGZvcm1hdG9Qb3JjZW50YWplKGQpfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVZKFswLjMwXSwge3N0cm9rZTogQ09MT1JFUy52ZXJkZSwgc3Ryb2tlRGFzaGFycmF5OiBcIjQgM1wifSksXG4gICAgUGxvdC5saW5lKG1lcmNhZG9MLm90cm8sIHt4OiBcInRcIiwgeTogXCJtXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pLFxuICAgIFBsb3QubGluZShtZXJjYWRvTC5maWxhcywge3g6IFwidFwiLCB5OiBcIm1cIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5NYXJnZW4gbcOtbmltbzxiPiR7Zm9ybWF0b1BvcmNlbnRhamUobWVyY2Fkb0wubWluaW1vLCAxKX08L2I+PC9kaXY+XG4gIDxkaXY+VmFsbGVzIGVuIDYwIGHDsW9zPGI+JHttZXJjYWRvTC5uVmFsbGVzfTwvYj48L2Rpdj5cbiAgPGRpdj5Db21wb3J0YW1pZW50bzxiPiR7bWVyY2Fkb0wubGVjdHVyYX08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGZ1ZXJ6YUIxID0gSW5wdXRzLnJhZGlvKFszLCAxLCAwLjJdLCB7dmFsdWU6IDAuMiwgbGFiZWw6IFwiRWxhc3RpY2lkYWQgZGUgbGEgaW52ZXJzacOzbiAoZnVlcnphIGRlIEIxKVwiLCBmb3JtYXQ6IChkKSA9PiBmb3JtYXRvTnVtZXJvKDEpKGQpfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgYWN0aXZhckIzID0gSW5wdXRzLnJhZGlvKFtcInNpbiBCM1wiLCBcImNvbiBCMyAoZWxhc3RpY2lkYWQgZGUgbGEgZGVtYW5kYSAwLDMpXCJdLCB7dmFsdWU6IFwic2luIEIzXCIsIGxhYmVsOiBcIkxhem8gZGUgbGEgZGVtYW5kYVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJsYXpvc0EgPSB7XG4gIGNvbnN0IGNvcnJlciA9IChwKSA9PiBzaW11bGFyKGNpY2xvSW52ZXJzaW9uQ2FwYWNpZGFkKHApLCB7dEZpbmFsOiA2MCwgcGFzbzogMC4wNX0pO1xuICBjb25zdCByID0gY29ycmVyKHtlbGFzdGljaWRhZF9pbnZlcnNpb246IGZ1ZXJ6YUIxLCBlbGFzdGljaWRhZF9kZW1hbmRhOiBhY3RpdmFyQjMgPT09IFwic2luIEIzXCIgPyAwIDogMC4zfSk7XG4gIGNvbnN0IGJhc2UgPSBjb3JyZXIoe30pO1xuICBjb25zdCBtID0gci52YXJpYWJsZXMubWFyZ2VuX3Jlc2VydmE7XG4gIHJldHVybiB7XG4gICAgZmlsYXM6IHIudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBtOiBtW2tdfSkpLFxuICAgIGJhc2U6IGJhc2UudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBtOiBiYXNlLnZhcmlhYmxlcy5tYXJnZW5fcmVzZXJ2YVtrXX0pKSxcbiAgICBmaW5hbDogbS5hdCgtMSksIG1pbmltbzogTWF0aC5taW4oLi4ubSksIHByZWNpb01heDogTWF0aC5tYXgoLi4uci52YXJpYWJsZXMucHJlY2lvX2JvbHNhKSxcbiAgICBuVmFsbGVzOiB2YWxsZXMoci50aWVtcG8sIG0pLmxlbmd0aCxcbiAgfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjgwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDYwXX0sXG4gIHk6IHtsYWJlbDogXCJNYXJnZW4gZGUgcmVzZXJ2YVwiLCBncmlkOiB0cnVlLCBkb21haW46IFswLjEsIDAuNTJdLCB0aWNrRm9ybWF0OiAoZCkgPT4gZm9ybWF0b1BvcmNlbnRhamUoZCl9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVkoWzAuMzBdLCB7c3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LmxpbmUobGF6b3NBLmJhc2UsIHt4OiBcInRcIiwgeTogXCJtXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pLFxuICAgIFBsb3QubGluZShsYXpvc0EuZmlsYXMsIHt4OiBcInRcIiwgeTogXCJtXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi40fSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+TWFyZ2VuIGVuIGVsIGHDsW8gNjA8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKGxhem9zQS5maW5hbCwgMSl9PC9iPjwvZGl2PlxuICA8ZGl2Pk1hcmdlbiBtw61uaW1vPGI+JHtmb3JtYXRvUG9yY2VudGFqZShsYXpvc0EubWluaW1vLCAxKX08L2I+PC9kaXY+XG4gIDxkaXY+UHJlY2lvIG3DoXhpbW88Yj4ke2Zvcm1hdG9OdW1lcm8oMCkobGF6b3NBLnByZWNpb01heCl9IENPUC9rV2g8L2I+PC9kaXY+XG4gIDxkaXY+VmFsbGVzPGI+JHtsYXpvc0EublZhbGxlc308L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ25hdGFsaWRhZFAnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgndmlkYVAnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncmV0YXJkb0wnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnZnVlcnphQjEnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYWN0aXZhckIzJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana4";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana4/04-auxiliares-no-linealidad.html" class="pagination-link" aria-label="Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana4/06-retardos.html" class="pagination-link" aria-label="Retardos: por qué el sistema llega tarde">
+        <span class="nav-page-text">Retardos: por qué el sistema llega tarde</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

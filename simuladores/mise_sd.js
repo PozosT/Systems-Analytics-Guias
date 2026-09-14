@@ -328,6 +328,20 @@ export function termostato({temperatura_inicial = 20, temperatura_exterior = 10,
   };
 }
 
+/** Población con natalidad y mortalidad (réplica de mise_sd.modelos.poblacion). */
+export function poblacion({poblacion_inicial = 1000, natalidad = 0.02, esperanza_vida = 70} = {}) {
+  return {
+    nombre: "poblacion",
+    constantes: {natalidad, esperanza_vida},
+    stocks: [{nombre: "poblacion", inicial: poblacion_inicial, entradas: ["nacimientos"], salidas: ["muertes"]}],
+    auxiliares: [],
+    flujos: [
+      ["nacimientos", (t, e) => e.natalidad * e.poblacion],
+      ["muertes", (t, e) => e.poblacion / e.esperanza_vida],
+    ],
+  };
+}
+
 /** Precio de bolsa como función del margen (auxiliar del modelo del curso). */
 export const precioMargen = (margen, {precio_referencia = 150, margen_objetivo = 0.30, sensibilidad_precio = 4} = {}) =>
   precio_referencia * Math.exp(-sensibilidad_precio * (margen - margen_objetivo));
