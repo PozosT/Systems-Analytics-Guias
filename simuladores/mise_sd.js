@@ -147,6 +147,35 @@ export function retardoPipeline(tiempo, entrada, tau, valorPrevio = null) {
   });
 }
 
+/** Interpolación lineal de una serie en los instantes pedidos (como np.interp). */
+export function interpolar(instantes, tiempo, serie) {
+  return instantes.map((x) => {
+    if (x <= tiempo[0]) return serie[0];
+    if (x >= tiempo[tiempo.length - 1]) return serie[serie.length - 1];
+    let izq = 0, der = tiempo.length - 1;
+    while (der - izq > 1) { const medio = (izq + der) >> 1; if (tiempo[medio] <= x) izq = medio; else der = medio; }
+    const f = (x - tiempo[izq]) / (tiempo[der] - tiempo[izq]);
+    return serie[izq] + f * (serie[der] - serie[izq]);
+  });
+}
+
+/** Recta de mínimos cuadrados y = intercepto + pendiente · x (como np.polyfit de grado 1). */
+export function regresionLineal(x, y) {
+  const n = x.length;
+  const mx = x.reduce((a, v) => a + v, 0) / n;
+  const my = y.reduce((a, v) => a + v, 0) / n;
+  let sxy = 0, sxx = 0;
+  for (let k = 0; k < n; k++) { sxy += (x[k] - mx) * (y[k] - my); sxx += (x[k] - mx) ** 2; }
+  const pendiente = sxy / sxx;
+  return {pendiente, intercepto: my - pendiente * mx};
+}
+
+/** Raíz del error cuadrático medio entre dos series de igual longitud. */
+export function rmse(modelo, observado) {
+  const suma = modelo.reduce((a, v, k) => a + (v - observado[k]) ** 2, 0);
+  return Math.sqrt(suma / modelo.length);
+}
+
 /** Área bajo una serie muestreada (regla del trapecio). */
 export function area(tiempo, serie) {
   let total = 0;
