@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Las piezas de la semana ensambladas en el modelo del Laboratorio 3: estructura, ecuaciones, la película del ciclo, su equilibrio y qué parámetro gobierna cada rasgo del comportamiento.">
+
+<title>El modelo completo: anatomía del ciclo inversión-capacidad – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana4/08-calibracion.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/09-modelo-completo.html">El modelo completo: anatomía del ciclo inversión-capacidad</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-la-película-del-ciclo" id="toc-la-intuición-la-película-del-ciclo" class="nav-link" data-scroll-target="#la-intuición-la-película-del-ciclo">2. La intuición: la película del ciclo</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/09-modelo-completo.html">El modelo completo: anatomía del ciclo inversión-capacidad</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">El modelo completo: anatomía del ciclo inversión-capacidad</h1>
+<p class="subtitle lead">Semana 4 · Concepto 9 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    Las piezas de la semana ensambladas en el modelo del Laboratorio 3: estructura, ecuaciones, la película del ciclo, su equilibrio y qué parámetro gobierna cada rasgo del comportamiento.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="50" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 49;"><span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> cicloInversionCapacidad<span class="op">,</span> valles<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 80 a 90 minutos</span> <span class="dato">📚 Requiere los conceptos 1 a 8 de la semana</span> <span class="dato">🧪 Es el modelo del Laboratorio 3</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Leer el diagrama de Forrester completo del modelo y escribir sus ecuaciones con unidades.</li>
+<li>Narrar la secuencia de acontecimientos que produce el ciclo y derivar el equilibrio del modelo.</li>
+<li>Distinguir con simulaciones qué parámetro gobierna la profundidad de las escaseces y cuál su frecuencia.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Tres stocks, cuatro flujos y dos auxiliares bastan para reproducir el vaivén del sector. El ciclo nace de una inversión que responde al precio de hoy, ignora lo que ya viene en camino y entrega capacidad años después.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Al comienzo de la semana quedó abierta una pregunta: ¿por qué los mercados eléctricos alternan períodos largos de holgura y de estrechez, como documentan Arango y Larsen (2011) en Inglaterra y Gales, Chile y el Nord Pool? Las ocho páginas anteriores entregaron las piezas. <strong>¿Alcanza un modelo mínimo, defendible pieza por pieza, para reproducir ese patrón por las razones estructurales correctas?</strong></p>
+</section>
+<section id="la-intuición-la-película-del-ciclo" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-la-película-del-ciclo">2. La intuición: la película del ciclo</h2>
+<p>Siga los cuatro paneles a la vez. El orden de los acontecimientos es la explicación del ciclo.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Treinta años del modelo, en siete fotogramas</span>
+</div>
+<div class="paso">
+<div id="dec8de49" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="09-modelo-completo_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="09-modelo-completo_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" alt="Cuatro paneles en el año 0: capacidad muy por encima de la demanda, cartera de 2,5 GW, margen de 50 % y precio de 67 COP/kWh."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Año 0: sobreoferta.</strong> La capacidad supera en 50 % a la demanda y el precio cae a 67 COP/kWh. Con ese precio casi nadie inicia proyectos: 69 MW/año.</p>
+</div>
+<div class="paso">
+<div id="c80c4eaf" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="09-modelo-completo_files/figure-html/cell-4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="09-modelo-completo_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img" alt="Cursor en el año 3,6: la cartera de proyectos llega a su mínimo."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Año 3,6: la tubería se vacía.</strong> Las obras terminan y casi no entran nuevas: la cartera toca su mínimo, 1 441 MW. Mientras tanto, la demanda sigue creciendo al 3 % anual.</p>
+</div>
+<div class="paso">
+<div id="b1e6cab5" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="09-modelo-completo_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="09-modelo-completo_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" alt="Cursor en el año 5,2: el margen cruza hacia abajo el objetivo de 30 % y el precio supera la referencia de 150 COP/kWh."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Año 5,2: la holgura se agota.</strong> El margen perfora el objetivo de 30 % y el precio supera su referencia. Los inversionistas reaccionan, pero sus megavatios tardan cuatro años en promedio.</p>
+</div>
+<div class="paso">
+<div id="87d23876" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="09-modelo-completo_files/figure-html/cell-6-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="09-modelo-completo_files/figure-html/cell-6-output-1.svg" class="img-fluid figure-img" alt="Cursor en el año 7,7: margen mínimo de 25 % y precio máximo de 183 COP/kWh."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Año 7,7: escasez.</strong> El margen llega a su mínimo, 25,0 %, y el precio a su máximo, 183 COP/kWh. Los inicios de proyectos alcanzan su pico poco después, en el año 7,9 (1 456 MW/año).</p>
+</div>
+<div class="paso">
+<div id="9aff996f" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="09-modelo-completo_files/figure-html/cell-7-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="09-modelo-completo_files/figure-html/cell-7-output-1.svg" class="img-fluid figure-img" alt="Cursor en el año 10,9: la cartera llega a su máximo de 4,2 GW."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Año 10,9: la tubería rebosa.</strong> La cartera llega a su máximo, 4 210 MW, y las puestas en servicio también (1 052 MW/año). El precio ya bajó, pero lo decidido en los años caros sigue saliendo de la tubería.</p>
+</div>
+<div class="paso">
+<div id="6d8db090" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="09-modelo-completo_files/figure-html/cell-8-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="09-modelo-completo_files/figure-html/cell-8-output-1.svg" class="img-fluid figure-img" alt="Cursor en el año 13,7: margen máximo de 30,6 % y precio mínimo de 146 COP/kWh."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Año 13,7: sobreoferta otra vez.</strong> La capacidad se pasa: el margen sube a 30,6 % y el precio baja a 146 COP/kWh. La inversión se frena y siembra la escasez siguiente.</p>
+</div>
+<div class="paso">
+<div id="423ef3c8" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="09-modelo-completo_files/figure-html/cell-9-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="09-modelo-completo_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img" alt="Cursor en el año 20,2: segunda escasez, con margen de 28,6 %, más leve que la primera."></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Año 20,2: segunda escasez, más leve.</strong> El margen baja a 28,6 %. Cada vuelta es más suave porque el modelo no recibe choques que lo reactiven; el sector real, en cambio, recibe El Niño, crisis y reformas.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El modelo pieza a pieza, con su código</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-09-forrester-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s4-09-forrester-1.svg" class="img-fluid" alt="La cartera de proyectos en construcción con su flujo de inicios."></a></p>
+<p><strong>La cartera.</strong> Los proyectos entran por los inicios <span class="math inline">I</span> y salen al terminar la obra:</p>
+<p><span class="math display">\frac{dP}{dt} = I - \frac{P}{\tau_c} \quad [\text{MW/año}]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>modelo.stock(<span class="st">"proyectos_en_construccion"</span>, <span class="fl">2_500.0</span>, entradas<span class="op">=</span>(<span class="st">"inicio_proyectos"</span>,),</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>             salidas<span class="op">=</span>(<span class="st">"puesta_en_servicio"</span>,), unidades<span class="op">=</span><span class="st">"MW"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-09-forrester-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s4-09-forrester-2.svg" class="img-fluid" alt="Se agrega la capacidad instalada alimentada por la puesta en servicio, que depende de la cartera."></a></p>
+<p><strong>La capacidad y la puesta en servicio.</strong> Un retardo de primer orden: sale cada año una fracción <span class="math inline">1/\tau_c</span> de la cartera, con <span class="math inline">\tau_c = 4</span> años.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>modelo.flujo(<span class="st">"puesta_en_servicio"</span>, <span class="kw">lambda</span> t, e: e[<span class="st">"proyectos_en_construccion"</span>] <span class="op">/</span> e[<span class="st">"retardo_constructor"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-09-forrester-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s4-09-forrester-3.svg" class="img-fluid" alt="Se agregan los retiros de capacidad, que dependen de la capacidad instalada."></a></p>
+<p><strong>Los retiros.</strong> Con vida útil <span class="math inline">\tau_v = 30</span> años:</p>
+<p><span class="math display">\frac{dK}{dt} = \frac{P}{\tau_c} - \frac{K}{\tau_v} \quad [\text{MW/año}]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>modelo.flujo(<span class="st">"retiros"</span>, <span class="kw">lambda</span> t, e: e[<span class="st">"capacidad_instalada"</span>] <span class="op">/</span> e[<span class="st">"vida_util"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-09-forrester-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s4-09-forrester-4.svg" class="img-fluid" alt="Se agrega la demanda pico con su crecimiento proporcional."></a></p>
+<p><strong>La demanda.</strong> Crece en proporción a sí misma, con <span class="math inline">g = 0{,}03</span> por año:</p>
+<p><span class="math display">\frac{dD}{dt} = g\,D \quad [\text{MW/año}]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>modelo.flujo(<span class="st">"crecimiento_demanda"</span>, <span class="kw">lambda</span> t, e: e[<span class="st">"crecimiento_demanda_anual"</span>] <span class="op">*</span> e[<span class="st">"demanda"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-09-forrester-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s4-09-forrester-5.svg" class="img-fluid" alt="Se agrega el margen de reserva, calculado con la capacidad y la demanda."></a></p>
+<p><strong>El margen de reserva</strong>, un auxiliar sin memoria:</p>
+<p><span class="math display">m = \frac{K - D}{D} \quad [\text{adimensional}]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>modelo.auxiliar(<span class="st">"margen_reserva"</span>, <span class="kw">lambda</span> t, e: (e[<span class="st">"capacidad_instalada"</span>] <span class="op">-</span> e[<span class="st">"demanda"</span>]) <span class="op">/</span> e[<span class="st">"demanda"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-09-forrester-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s4-09-forrester-6.svg" class="img-fluid" alt="Se agrega el precio de bolsa, calculado con el margen."></a></p>
+<p><strong>El precio de bolsa</strong>, la función que se dobla:</p>
+<p><span class="math display">p = p_{\text{ref}}\; e^{-\alpha\,(m - m^*)} \quad [\text{COP/kWh}]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>modelo.auxiliar(<span class="st">"precio_bolsa"</span>, <span class="kw">lambda</span> t, e: e[<span class="st">"precio_referencia"</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                <span class="op">*</span> np.exp(<span class="op">-</span>e[<span class="st">"sensibilidad_precio"</span>] <span class="op">*</span> (e[<span class="st">"margen_reserva"</span>] <span class="op">-</span> e[<span class="st">"margen_objetivo"</span>])))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-09-forrester-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s4-09-forrester-7.svg" class="img-fluid" alt="El precio y la capacidad se conectan a la válvula de inicios, cerrando el lazo B1; los retiros forman el lazo B2."></a></p>
+<p><strong>La regla de inversión cierra los lazos.</strong></p>
+<p><span class="math display">I = \iota\,K \left(\frac{p}{p_{\text{ref}}}\right)^{\epsilon_I} \quad [\text{MW/año}], \qquad \iota = \frac{1}{\tau_v} + g</span></p>
+<p>Con el precio en su referencia, los inicios reponen retiros y crecimiento. Los inversionistas miran el precio de hoy e <strong>ignoran la cartera</strong>: nadie descuenta los proyectos que ya vienen en camino. Ese olvido, documentado en experimentos por Sterman (2000), alimenta el ciclo.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>modelo.flujo(<span class="st">"inicio_proyectos"</span>, <span class="kw">lambda</span> t, e: e[<span class="st">"tasa_inversion_referencia"</span>] <span class="op">*</span> e[<span class="st">"capacidad_instalada"</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="op">*</span> (e[<span class="st">"precio_bolsa"</span>] <span class="op">/</span> e[<span class="st">"precio_referencia"</span>]) <span class="op">**</span> e[<span class="st">"elasticidad_inversion"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tabla de parámetros con su fuente">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tabla de parámetros con su fuente
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>parámetro</th>
+<th>valor</th>
+<th>unidades</th>
+<th>fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">K(0)</span></td>
+<td>12 000</td>
+<td>MW</td>
+<td>estilizado</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">P(0)</span></td>
+<td>2 500</td>
+<td>MW</td>
+<td>estilizado, cercano al equilibrio del modelo</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">D(0)</span></td>
+<td>8 000</td>
+<td>MW</td>
+<td>demanda pico hacia 2000, estilizada</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">g</span></td>
+<td>0,03</td>
+<td>1/año</td>
+<td>regresión sobre demanda; XM registra ≈2,7 % en 2019–2024</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\tau_c</span></td>
+<td>4</td>
+<td>años</td>
+<td>cronogramas de obra, rango de 3 a 5</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\tau_v</span></td>
+<td>30</td>
+<td>años</td>
+<td>vida económica estilizada; la física de un parque hidráulico supera los 50</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">m^*</span></td>
+<td>0,30</td>
+<td>—</td>
+<td>margen objetivo estilizado</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">p_{\text{ref}}</span></td>
+<td>150</td>
+<td>COP/kWh</td>
+<td>escala normalizada del precio</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\alpha</span></td>
+<td>4</td>
+<td>—</td>
+<td>ajuste; solo el producto <span class="math inline">\alpha\,\epsilon_I</span> es identificable con la capacidad</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\epsilon_I</span></td>
+<td>3</td>
+<td>—</td>
+<td>ajuste</td>
+</tr>
+</tbody>
+</table>
+<p>Varios valores son estilizados a propósito. No cambian la lección estructural, que depende del retardo, de la regla miope y de la no linealidad del precio, pero importan si se quiere pronosticar. El ejemplo avanzado de esta página los acerca a los datos.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-equilibrio-del-modelo" class="level3">
+<h3 class="anchored" data-anchor-id="el-equilibrio-del-modelo">El equilibrio del modelo</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Hacia dónde converge el ciclo?</span>
+</div>
+<p><strong>Planteamiento.</strong> En la película, el margen termina cerca de 29 % y no exactamente en el objetivo de 30 %. Con la demanda creciendo al 3 % anual, busque el estado en que capacidad, cartera y demanda crecen al mismo ritmo. ¿Cuánto vale el margen en ese estado y cuántos megavatios hay «en tubería»?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Derivar el crecimiento balanceado</span>
+</div>
+<div class="paso">
+<p><strong>Imponga que todo crece a la tasa g.</strong> En crecimiento balanceado <span class="math inline">dK/dt = g\,K</span> y <span class="math inline">dP/dt = g\,P</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Despeje la cartera.</strong> De <span class="math inline">g\,K = P/\tau_c - K/\tau_v</span> sale</p>
+<p><span class="math display">P^* = \tau_c\left(\frac{1}{\tau_v} + g\right) K^* = 4 \times (0{,}0333 + 0{,}03)\, K^* = 0{,}253\, K^*.</span></p>
+<p>Con 20 000 MW de capacidad, lo normal es tener 5 067 MW en construcción.</p>
+</div>
+<div class="paso">
+<p><strong>Despeje los inicios.</strong> De <span class="math inline">g\,P = I - P/\tau_c</span> sale <span class="math inline">I = P\,(g + 1/\tau_c) = \iota\,K\,(1 + g\,\tau_c)</span>. Con la regla de inversión:</p>
+<p><span class="math display">\left(\frac{p}{p_{\text{ref}}}\right)^{\epsilon_I} = 1 + g\,\tau_c = 1{,}12.</span></p>
+</div>
+<div class="paso">
+<p><strong>Calcule el precio y el margen.</strong> <span class="math inline">p = 150 \times 1{,}12^{1/3} = 155{,}8</span> COP/kWh. Con la curva del precio, <span class="math inline">m = m^* - \ln(1 + g\,\tau_c)/(\alpha\,\epsilon_I) = 0{,}30 - 0{,}1133/12 = 0{,}2906</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Interprete.</strong> En un sistema que crece, la cartera tiene que crecer también, y para sostener esos inicios el precio debe quedar un poco por encima de la referencia. Por eso el margen de largo plazo es 29,06 % y no 30 %. Las simulaciones desde el equilibrio, desde 20 % de sobrecapacidad y desde 20 % de déficit terminan en ese mismo valor.</p>
+</div>
+</div>
+</section>
+<section id="qué-parámetro-gobierna-qué-rasgo" class="level3">
+<h3 class="anchored" data-anchor-id="qué-parámetro-gobierna-qué-rasgo">¿Qué parámetro gobierna qué rasgo?</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Profundidad y frecuencia de las escaseces</span>
+</div>
+<p><strong>Planteamiento.</strong> Dos candidatos compiten por explicar el ciclo: el retardo constructor <span class="math inline">\tau_c</span> y la sensibilidad del precio <span class="math inline">\alpha</span>, que fija la ganancia del lazo B1 junto con la elasticidad de la inversión. ¿Cuál gobierna la profundidad de la primera escasez y cuál la frecuencia de las siguientes?</p>
+</div>
+<div id="pred-ganancia" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Si la sensibilidad del precio pasa de 4 a 8, con el retardo en 4 años, la primera escasez…</p>
+<div class="opcion">
+<p>es mucho más profunda, porque la inversión reacciona con más violencia.</p>
+</div>
+<div class="opcion">
+<p>es casi igual de profunda, y las escaseces siguientes llegan más seguido.</p>
+</div>
+<div class="opcion">
+<p>desaparece, porque la inversión corrige antes.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Retardo contra ganancia del lazo</span>
+</div>
+<p>Mueva primero la sensibilidad de 4 a 8 con el retardo fijo. Después vuelva a 4 y mueva el retardo de 4 a 8. Compare en qué lectura cambia más cada uno. El plano de fase muestra el ciclo como una espiral: cada vuelta es una escasez seguida de una sobreoferta.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="317" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 316;"><span id="cb9-317"><a href="#cb9-317" aria-hidden="true" tabindex="-1"></a>viewof tauM <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">10</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Retardo constructor τc [años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="322" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 321;"><span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a>viewof alfaM <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">10</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">8</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Sensibilidad del precio α"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="327" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 326;"><span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a>modeloM <span class="op">=</span> {</span>
+<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (p) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">cicloInversionCapacidad</span>(p)<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">correr</span>({<span class="dt">retardo_constructor</span><span class="op">:</span> tauM<span class="op">,</span> <span class="dt">sensibilidad_precio</span><span class="op">:</span> alfaM})<span class="op">;</span></span>
+<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">correr</span>({})<span class="op">;</span></span>
+<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> m <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span><span class="op">;</span></span>
+<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v <span class="op">=</span> <span class="fu">valles</span>(r<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> m)<span class="op">;</span></span>
+<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> m[k]<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">precio_bolsa</span>[k]}))<span class="op">,</span></span>
+<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">precio_bolsa</span>[k]}))<span class="op">,</span></span>
+<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a>    v<span class="op">,</span> <span class="dt">precioMax</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">precio_bolsa</span>)<span class="op">,</span></span>
+<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="343" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 342;"><span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.15</span><span class="op">,</span> <span class="fl">0.52</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.30</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(modeloM<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(modeloM<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span>})<span class="op">,</span></span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(modeloM<span class="op">.</span><span class="at">v</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"tiempo"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">4</span>})<span class="op">,</span></span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="358" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 357;"><span id="cb13-358"><a href="#cb13-358" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb13-359"><a href="#cb13-359" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb13-360"><a href="#cb13-360" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb13-361"><a href="#cb13-361" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Precio de bolsa [COP/kWh]"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb13-362"><a href="#cb13-362" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb13-363"><a href="#cb13-363" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(modeloM<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">t</span> <span class="op">&gt;=</span> <span class="dv">3</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">violeta</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.8</span><span class="op">,</span> <span class="dt">marker</span><span class="op">:</span> <span class="kw">null</span>})<span class="op">,</span></span>
+<span id="cb13-364"><a href="#cb13-364" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([modeloM<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span>})<span class="op">,</span></span>
+<span id="cb13-365"><a href="#cb13-365" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb13-366"><a href="#cb13-366" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="371" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 370;"><span id="cb14-371"><a href="#cb14-371" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb14-372"><a href="#cb14-372" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Primera escasez&lt;b&gt;</span><span class="sc">${</span>modeloM<span class="op">.</span><span class="at">v</span><span class="op">.</span><span class="at">length</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(modeloM<span class="op">.</span><span class="at">v</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">valor</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">, año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(modeloM<span class="op">.</span><span class="at">v</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">tiempo</span>)<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> <span class="st">"sin valle"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-373"><a href="#cb14-373" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Entre las dos primeras escaseces&lt;b&gt;</span><span class="sc">${</span>modeloM<span class="op">.</span><span class="at">v</span><span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">1</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(modeloM<span class="op">.</span><span class="at">v</span>[<span class="dv">1</span>]<span class="op">.</span><span class="at">tiempo</span> <span class="op">-</span> modeloM<span class="op">.</span><span class="at">v</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">tiempo</span>)<span class="sc">}</span><span class="vs"> años`</span> <span class="op">:</span> <span class="st">"—"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-374"><a href="#cb14-374" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Escaseces en 60 años&lt;b&gt;</span><span class="sc">${</span>modeloM<span class="op">.</span><span class="at">v</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-375"><a href="#cb14-375" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Precio máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(modeloM<span class="op">.</span><span class="at">precioMax</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-376"><a href="#cb14-376" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.ciclo_inversion_capacidad</code>, con datos sintéticos con fines didácticos. Línea gris: caso base (<span class="math inline">\tau_c = 4</span>, <span class="math inline">\alpha = 4</span>). El plano de fase omite los tres primeros años, dominados por la sobreoferta inicial; el punto verde es el año 60.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer los dos experimentos</span>
+</div>
+<div class="paso">
+<p><strong>Lea la ganancia.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-ganancia"></span>. Con <span class="math inline">\alpha = 8</span> la primera escasez es de 25,6 %, casi igual al 25,0 % del caso base, pero llega antes (año 6,3) y el modelo muestra tres escaseces en lugar de dos, separadas 8,7 años. El precio máximo sube de 183 a 213 COP/kWh: la respuesta B.</p>
+</div>
+<div class="paso">
+<p><strong>Lea el retardo.</strong> Con <span class="math inline">\alpha = 4</span>, llevar el retardo de 2 a 8 años hunde la primera escasez de 26,8 % a 21,2 % y alarga el tiempo entre escaseces hasta 16,6 años.</p>
+</div>
+<div class="paso">
+<p><strong>Asigne rasgos a parámetros.</strong> En este modelo el retardo constructor gobierna sobre todo la <strong>profundidad</strong> y la duración de las escaseces; la ganancia del lazo gobierna sobre todo su <strong>frecuencia</strong> y la altura de los picos de precio.</p>
+</div>
+<div class="paso">
+<p><strong>Lleve la lectura a la política.</strong> Las medidas que acortan retardos (tecnologías de obra rápida, trámites ágiles) apuntan a la profundidad de las escaseces. Las que moderan la reacción de la inversión al precio cambian el ritmo del ciclo y los picos de precio. La semana 5 pone a prueba esta lectura con el Cargo por Confiabilidad.</p>
+</div>
+</div>
+</section>
+<section id="recalibrar-con-valores-del-sin" class="level3">
+<h3 class="anchored" data-anchor-id="recalibrar-con-valores-del-sin">Recalibrar con valores del SIN</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Qué pasa con el ciclo si el modelo se acerca a los datos?</span>
+</div>
+<p><strong>Planteamiento.</strong> Tres valores del modelo son estilizados: el crecimiento de 3 % (XM registra una tasa compuesta de cerca de 2,7 % anual entre 2019 y 2024), la vida útil de 30 años (la de un parque con predominio hidráulico supera los 50) y la cartera inicial de 2 500 MW (los grandes proyectos en obra hacia el año 2000 sumaban del orden de 1 100 a 1 500 MW, según prensa de archivo). ¿Cómo cambia el ciclo con <span class="math inline">g = 0{,}027</span>, <span class="math inline">\tau_v = 45</span> años y <span class="math inline">P(0) = 1\,500</span> MW?</p>
+</div>
+<div id="pred-recalibrar" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Con los tres valores más cercanos a los datos, el tiempo entre las dos primeras escaseces…</p>
+<div class="opcion">
+<p>se acorta, porque hay menos proyectos al inicio.</p>
+</div>
+<div class="opcion">
+<p>se alarga, porque se retira y se necesita invertir menos cada año.</p>
+</div>
+<div class="opcion">
+<p>no cambia, porque el retardo constructor sigue en 4 años.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Del modelo estilizado a valores del SIN</span>
+</div>
+<p>Cambie los valores uno por uno y observe cuál mueve más el tiempo entre escaseces.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="431" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 430;"><span id="cb15-431"><a href="#cb15-431" aria-hidden="true" tabindex="-1"></a>viewof gR <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"3,0 % (estilizado)"</span><span class="op">,</span> <span class="st">"2,7 % (XM 2019–2024)"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"2,7 % (XM 2019–2024)"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Crecimiento de la demanda"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="436" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 435;"><span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a>viewof vidaR <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"30 años (estilizada)"</span><span class="op">,</span> <span class="st">"45 años"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"45 años"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Vida útil"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb17" data-startfrom="441" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 440;"><span id="cb17-441"><a href="#cb17-441" aria-hidden="true" tabindex="-1"></a>viewof carteraR <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"2 500 MW (estilizada)"</span><span class="op">,</span> <span class="st">"1 500 MW"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"1 500 MW"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Cartera inicial"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb18" data-startfrom="446" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 445;"><span id="cb18-446"><a href="#cb18-446" aria-hidden="true" tabindex="-1"></a>recalR <span class="op">=</span> {</span>
+<span id="cb18-447"><a href="#cb18-447" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> parametros <span class="op">=</span> {</span>
+<span id="cb18-448"><a href="#cb18-448" aria-hidden="true" tabindex="-1"></a>    <span class="dt">crecimiento_demanda</span><span class="op">:</span> gR<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"2,7"</span>) <span class="op">?</span> <span class="fl">0.027</span> <span class="op">:</span> <span class="fl">0.03</span><span class="op">,</span></span>
+<span id="cb18-449"><a href="#cb18-449" aria-hidden="true" tabindex="-1"></a>    <span class="dt">vida_util</span><span class="op">:</span> vidaR<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"45"</span>) <span class="op">?</span> <span class="dv">45</span> <span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb18-450"><a href="#cb18-450" aria-hidden="true" tabindex="-1"></a>    <span class="dt">proyectos_iniciales</span><span class="op">:</span> carteraR<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"1 500"</span>) <span class="op">?</span> <span class="dv">1500</span> <span class="op">:</span> <span class="dv">2500</span><span class="op">,</span></span>
+<span id="cb18-451"><a href="#cb18-451" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb18-452"><a href="#cb18-452" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">cicloInversionCapacidad</span>(parametros)<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb18-453"><a href="#cb18-453" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">cicloInversionCapacidad</span>()<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb18-454"><a href="#cb18-454" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> m <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span><span class="op">;</span></span>
+<span id="cb18-455"><a href="#cb18-455" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v <span class="op">=</span> <span class="fu">valles</span>(r<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> m)<span class="op">;</span></span>
+<span id="cb18-456"><a href="#cb18-456" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb18-457"><a href="#cb18-457" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> m[k]}))<span class="op">,</span></span>
+<span id="cb18-458"><a href="#cb18-458" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]}))<span class="op">,</span></span>
+<span id="cb18-459"><a href="#cb18-459" aria-hidden="true" tabindex="-1"></a>    v<span class="op">,</span> <span class="dt">precioMax</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">precio_bolsa</span>)<span class="op">,</span></span>
+<span id="cb18-460"><a href="#cb18-460" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb18-461"><a href="#cb18-461" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb19" data-startfrom="466" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 465;"><span id="cb19-466"><a href="#cb19-466" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb19-467"><a href="#cb19-467" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb19-468"><a href="#cb19-468" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
+<span id="cb19-469"><a href="#cb19-469" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.52</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb19-470"><a href="#cb19-470" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb19-471"><a href="#cb19-471" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.30</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb19-472"><a href="#cb19-472" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(recalR<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb19-473"><a href="#cb19-473" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(recalR<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span>})<span class="op">,</span></span>
+<span id="cb19-474"><a href="#cb19-474" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(recalR<span class="op">.</span><span class="at">v</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"tiempo"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">4</span>})<span class="op">,</span></span>
+<span id="cb19-475"><a href="#cb19-475" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb19-476"><a href="#cb19-476" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb20" data-startfrom="481" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 480;"><span id="cb20-481"><a href="#cb20-481" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb20-482"><a href="#cb20-482" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Primera escasez&lt;b&gt;</span><span class="sc">${</span>recalR<span class="op">.</span><span class="at">v</span><span class="op">.</span><span class="at">length</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(recalR<span class="op">.</span><span class="at">v</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">valor</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">, año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(recalR<span class="op">.</span><span class="at">v</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">tiempo</span>)<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> <span class="st">"sin valle"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb20-483"><a href="#cb20-483" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Entre las dos primeras escaseces&lt;b&gt;</span><span class="sc">${</span>recalR<span class="op">.</span><span class="at">v</span><span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">1</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(recalR<span class="op">.</span><span class="at">v</span>[<span class="dv">1</span>]<span class="op">.</span><span class="at">tiempo</span> <span class="op">-</span> recalR<span class="op">.</span><span class="at">v</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">tiempo</span>)<span class="sc">}</span><span class="vs"> años`</span> <span class="op">:</span> <span class="st">"—"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb20-484"><a href="#cb20-484" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Precio máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(recalR<span class="op">.</span><span class="at">precioMax</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb20-485"><a href="#cb20-485" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.ciclo_inversion_capacidad</code>. Crecimiento de 2019–2024 según XM; vida útil y cartera inicial como órdenes de magnitud, pendientes de verificación fina. Línea gris: caso estilizado.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la recalibración</span>
+</div>
+<div class="paso">
+<p><strong>Lea el efecto conjunto.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-recalibrar"></span>. Con los tres valores juntos, las escaseces llegan en los años 8,3 y 22,7: separadas 14,4 años frente a 12,5 del modelo estilizado. La primera escasez es de 25,4 %. La respuesta es la B.</p>
+</div>
+<div class="paso">
+<p><strong>Separe los efectos.</strong> La vida útil es la que más mueve el ciclo: sola, lleva el tiempo entre escaseces a 13,9 años y retrasa la primera hasta el año 9,5. El crecimiento de 2,7 % lo lleva a 12,9 años. La cartera de 1 500 MW no cambia ese tiempo, pero adelanta la primera escasez al año 6,4 y la hace más profunda (24,4 %), porque hay menos capacidad en camino.</p>
+</div>
+<div class="paso">
+<p><strong>Explique la vida útil.</strong> Con plantas que duran más, los retiros bajan y el ritmo de inversión que el sistema necesita para mantener el margen también baja. La corrección del lazo B1 es más lenta y el ciclo, más largo.</p>
+</div>
+<div class="paso">
+<p><strong>Revise la conclusión estructural.</strong> El ciclo sigue ahí, con otro periodo. La lección de la semana depende del retardo, de la regla miope y de la no linealidad del precio, no de los valores estilizados. Si además se reajusta la ganancia (por ejemplo, <span class="math inline">\alpha = 8</span>), el tiempo entre escaseces baja a 9,9 años: calibrar el periodo exige datos de precios e inversiones, como mostró la página de calibración.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="La recalibración en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>La recalibración en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="bff13db8" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.signal <span class="im">import</span> find_peaks</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>casos <span class="op">=</span> {</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"estilizado"</span>: {},</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"vida útil de 45 años"</span>: {<span class="st">"vida_util"</span>: <span class="fl">45.0</span>},</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"crecimiento de 2,7 %"</span>: {<span class="st">"crecimiento_demanda"</span>: <span class="fl">0.027</span>},</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cartera de 1 500 MW"</span>: {<span class="st">"proyectos_iniciales"</span>: <span class="fl">1500.0</span>},</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"los tres valores"</span>: {<span class="st">"vida_util"</span>: <span class="fl">45.0</span>, <span class="st">"crecimiento_demanda"</span>: <span class="fl">0.027</span>, <span class="st">"proyectos_iniciales"</span>: <span class="fl">1500.0</span>},</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, parametros <span class="kw">in</span> casos.items():</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> integrar(ciclo_inversion_capacidad(<span class="op">**</span>parametros), t_final<span class="op">=</span><span class="fl">60.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    margen <span class="op">=</span> r[<span class="st">"margen_reserva"</span>]</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    indices, _ <span class="op">=</span> find_peaks(<span class="op">-</span>margen, prominence<span class="op">=</span><span class="fl">0.003</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    escaseces <span class="op">=</span> r.tiempo[indices]</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nombre<span class="sc">:22s}</span><span class="ss"> escaseces en los años </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(escaseces, <span class="dv">1</span>)<span class="sc">}</span><span class="ss">   separación = </span><span class="sc">{</span>escaseces[<span class="dv">1</span>] <span class="op">-</span> escaseces[<span class="dv">0</span>]<span class="sc">:.1f}</span><span class="ss"> años"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>estilizado             escaseces en los años [ 7.7 20.2]   separación = 12.5 años
+vida útil de 45 años   escaseces en los años [ 9.5 23.3]   separación = 13.8 años
+crecimiento de 2,7 %   escaseces en los años [ 8.2 21. ]   separación = 12.8 años
+cartera de 1 500 MW    escaseces en los años [ 6.4 18.8]   separación = 12.5 años
+los tres valores       escaseces en los años [ 8.3 22.7]   separación = 14.4 años</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer la amortiguación como «el ciclo desaparece»</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«En el modelo la oscilación se apaga en 40 años; el sector se estabilizará solo.»</p>
+</div>
+<div class="bien">
+<p>El modelo es determinista y no recibe empujones. El sector real recibe El Niño, crisis financieras y reformas que reexcitan el ciclo. La amortiguación dice que la estructura es estable ante perturbaciones de estado, no que los ciclos terminen.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Pronosticar años con un modelo estilizado</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«La próxima escasez del SIN será en 2033, porque el modelo marca un valle en el año 8.»</p>
+</div>
+<div class="bien">
+<p>Con valores estilizados el modelo explica mecanismos y compara políticas. Para pronosticar fechas hace falta calibrarlo con series reales (XM, UPME) y reportar la incertidumbre, como en la página de calibración.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Asignar rasgos a parámetros sin simular</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Una inversión más agresiva hará más profundas las escaseces.» Suena razonable y en este modelo no ocurre: con <span class="math inline">\alpha = 8</span> la primera escasez es casi igual.</p>
+</div>
+<div class="bien">
+<p>Formule la hipótesis con la estructura y compruébela con un experimento controlado: un parámetro a la vez, midiendo varios rasgos (profundidad, frecuencia, picos de precio).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué la capacidad se pasa del objetivo después de una escasez?</p>
+<div class="opcion">
+<p>Porque la demanda cae después de los precios altos.</p>
+<p><span class="porque">En el modelo base la demanda crece siempre al 3 %.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque los proyectos decididos en los años caros siguen entrando aunque el precio ya bajó.</p>
+<p><span class="porque">Correcto: la regla de inversión ignora la cartera en camino.</span></p>
+</div>
+<div class="opcion">
+<p>Porque el integrador acumula error.</p>
+<p><span class="porque">El sobrepaso aparece también con el integrador de referencia.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Cuántos megavatios en construcción son normales en crecimiento balanceado para 10 000 MW de capacidad?</p>
+<div class="opcion" data-correcta="si">
+<p>Unos 2 533 MW.</p>
+<p><span class="porque">Correcto: <span class="math inline">P^* = 4 \times (1/30 + 0{,}03) \times 10\,000</span>.</span></p>
+</div>
+<div class="opcion">
+<p>Unos 400 MW.</p>
+<p><span class="porque">Ese sería el valor sin multiplicar por el retardo constructor.</span></p>
+</div>
+<div class="opcion">
+<p>10 000 MW.</p>
+<p><span class="porque">La cartera es una fracción de la capacidad.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el modelo, ¿qué parámetro hunde más la primera escasez?</p>
+<div class="opcion" data-correcta="si">
+<p>El retardo constructor.</p>
+<p><span class="porque">Correcto: de 26,8 % con 2 años a 21,2 % con 8 años.</span></p>
+</div>
+<div class="opcion">
+<p>La sensibilidad del precio.</p>
+<p><span class="porque">Cambia sobre todo la frecuencia; revise el ejemplo intermedio.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué el margen de largo plazo del modelo es 29,06 % y no el objetivo de 30 %?</p>
+<div class="opcion">
+<p>Por error numérico del integrador.</p>
+<p><span class="porque">El valor sale igual con la derivación analítica.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque la demanda crece: la cartera debe crecer y el precio queda algo por encima de la referencia.</p>
+<p><span class="porque">Correcto: <span class="math inline">m = m^* - \ln(1 + g\,\tau_c)/(\alpha\,\epsilon_I)</span>.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una política acorta el retardo constructor promedio de 4 a 2 años. ¿Qué espera en el modelo?</p>
+<div class="opcion" data-correcta="si">
+<p>Escaseces menos profundas y un ciclo que casi desaparece.</p>
+<p><span class="porque">Correcto: con 2 años queda una escasez de 26,8 % y no aparece una segunda.</span></p>
+</div>
+<div class="opcion">
+<p>Escaseces más frecuentes y profundas.</p>
+<p><span class="porque">Revise el efecto del retardo en el simulador.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-el-equilibrio-con-otros-parámetros" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-el-equilibrio-con-otros-parámetros">Ejercicio 1 ●●○ · El equilibrio con otros parámetros</h4>
+<p>Con <span class="math inline">\tau_c = 6</span> años, <span class="math inline">\tau_v = 40</span> años, <span class="math inline">g = 0{,}02</span> y <span class="math inline">\alpha\,\epsilon_I = 12</span>, calcule la cartera normal para 20 000 MW de capacidad, el precio y el margen de crecimiento balanceado.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">P^* = 6 \times (1/40 + 0{,}02) \times 20\,000 = 6 \times 0{,}045 \times 20\,000 = 5\,400</span> MW.</p>
+<p><span class="math inline">1 + g\,\tau_c = 1{,}12</span>, igual que en el caso base, porque <span class="math inline">0{,}02 \times 6 = 0{,}03 \times 4</span>. Con <span class="math inline">\epsilon_I = 3</span>, <span class="math inline">p = 150 \times 1{,}12^{1/3} = 155{,}8</span> COP/kWh y <span class="math inline">m = 0{,}30 - \ln(1{,}12)/12 = 0{,}2906</span>.</p>
+<p>El margen de largo plazo depende del producto <span class="math inline">g\,\tau_c</span> y de la ganancia <span class="math inline">\alpha\,\epsilon_I</span>; la cartera normal depende además de la vida útil.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-inversionistas-que-miran-la-cartera" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-inversionistas-que-miran-la-cartera">Ejercicio 2 ●●● · Inversionistas que miran la cartera</h4>
+<p>Modifique una sola ecuación: que los inversionistas usen el margen esperado <span class="math inline">m_e = (K + P - D)/D</span> en lugar del margen actual para decidir. Prediga qué pasa con el ciclo, impleméntelo con <code>mise_sd</code> y compare. ¿Qué supone esta regla sobre la información de los inversionistas?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Declare un auxiliar nuevo, <code>margen_esperado</code>, y un precio esperado que lo use, y haga que <code>inicio_proyectos</code> lea ese precio. Antes de simular, piense en la ducha del hotel: ¿qué pasa si la persona cuenta el agua que ya viene por la tubería? Tenga en cuenta que el margen esperado incluye la cartera, así que su objetivo también cambia.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>El modelo tiene tres stocks (<span class="math inline">P</span>, <span class="math inline">K</span>, <span class="math inline">D</span>), cuatro flujos (inicios, puesta en servicio, retiros, crecimiento) y dos auxiliares (margen y precio). Cada ecuación cierra en unidades.</li>
+<li><strong>La película del ciclo</strong>: sobreoferta, tubería vacía, holgura agotada, escasez (año 7,7), tubería rebosada, sobreoferta (año 13,7) y una segunda escasez más leve.</li>
+<li><strong>Equilibrio con crecimiento</strong>: cartera normal de 0,253 veces la capacidad y margen de largo plazo de 29,06 %.</li>
+<li><strong>Qué gobierna qué</strong>: el retardo constructor, la profundidad de las escaseces; la ganancia del lazo, su frecuencia y los picos de precio.</li>
+<li>Acercar los parámetros a los datos del SIN alarga el ciclo (14,4 años) sin cambiar la conclusión estructural.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección integradora de las notas de la semana 4 trae el diagrama y las ecuaciones completas y propone un choque de El Niño y una política de una sola ecuación. Este modelo es el Laboratorio 3; la semana 5 le agrega el Cargo por Confiabilidad y las FNCER.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgY2ljbG9JbnZlcnNpb25DYXBhY2lkYWQsIHZhbGxlcywgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgdGF1TSA9IElucHV0cy5yYW5nZShbMSwgMTBdLCB7dmFsdWU6IDQsIHN0ZXA6IDAuNSwgbGFiZWw6IFwiUmV0YXJkbyBjb25zdHJ1Y3RvciDPhGMgW2HDsW9zXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBhbGZhTSA9IElucHV0cy5yYW5nZShbMSwgMTBdLCB7dmFsdWU6IDgsIHN0ZXA6IDEsIGxhYmVsOiBcIlNlbnNpYmlsaWRhZCBkZWwgcHJlY2lvIM6xXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibW9kZWxvTSA9IHtcbiAgY29uc3QgY29ycmVyID0gKHApID0+IHNpbXVsYXIoY2ljbG9JbnZlcnNpb25DYXBhY2lkYWQocCksIHt0RmluYWw6IDYwLCBwYXNvOiAwLjA1fSk7XG4gIGNvbnN0IHIgPSBjb3JyZXIoe3JldGFyZG9fY29uc3RydWN0b3I6IHRhdU0sIHNlbnNpYmlsaWRhZF9wcmVjaW86IGFsZmFNfSk7XG4gIGNvbnN0IGJhc2UgPSBjb3JyZXIoe30pO1xuICBjb25zdCBtID0gci52YXJpYWJsZXMubWFyZ2VuX3Jlc2VydmE7XG4gIGNvbnN0IHYgPSB2YWxsZXMoci50aWVtcG8sIG0pO1xuICByZXR1cm4ge1xuICAgIGZpbGFzOiByLnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgbTogbVtrXSwgcDogci52YXJpYWJsZXMucHJlY2lvX2JvbHNhW2tdfSkpLFxuICAgIGJhc2U6IGJhc2UudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBtOiBiYXNlLnZhcmlhYmxlcy5tYXJnZW5fcmVzZXJ2YVtrXSwgcDogYmFzZS52YXJpYWJsZXMucHJlY2lvX2JvbHNhW2tdfSkpLFxuICAgIHYsIHByZWNpb01heDogTWF0aC5tYXgoLi4uci52YXJpYWJsZXMucHJlY2lvX2JvbHNhKSxcbiAgfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAyNTAsIG1hcmdpbkxlZnQ6IDU1LFxuICB4OiB7bGFiZWw6IFwiVGllbXBvIFthw7Fvc11cIiwgZG9tYWluOiBbMCwgNjBdfSxcbiAgeToge2xhYmVsOiBcIk1hcmdlbiBkZSByZXNlcnZhXCIsIGdyaWQ6IHRydWUsIGRvbWFpbjogWzAuMTUsIDAuNTJdLCB0aWNrRm9ybWF0OiAoZCkgPT4gZm9ybWF0b1BvcmNlbnRhamUoZCl9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVkoWzAuMzBdLCB7c3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LmxpbmUobW9kZWxvTS5iYXNlLCB7eDogXCJ0XCIsIHk6IFwibVwiLCBzdHJva2U6IFwiIzlFOUU5RVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNSA0XCIsIHN0cm9rZVdpZHRoOiAxLjR9KSxcbiAgICBQbG90LmxpbmUobW9kZWxvTS5maWxhcywge3g6IFwidFwiLCB5OiBcIm1cIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjJ9KSxcbiAgICBQbG90LmRvdChtb2RlbG9NLnYsIHt4OiBcInRpZW1wb1wiLCB5OiBcInZhbG9yXCIsIGZpbGw6IENPTE9SRVMucm9qbywgcjogNH0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAyNjAsIG1hcmdpbkxlZnQ6IDU1LFxuICB4OiB7bGFiZWw6IFwiTWFyZ2VuIGRlIHJlc2VydmFcIiwgdGlja0Zvcm1hdDogKGQpID0+IGZvcm1hdG9Qb3JjZW50YWplKGQpfSxcbiAgeToge2xhYmVsOiBcIlByZWNpbyBkZSBib2xzYSBbQ09QL2tXaF1cIiwgZ3JpZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKG1vZGVsb00uZmlsYXMuZmlsdGVyKChkKSA9PiBkLnQgPj0gMyksIHt4OiBcIm1cIiwgeTogXCJwXCIsIHN0cm9rZTogQ09MT1JFUy52aW9sZXRhLCBzdHJva2VXaWR0aDogMS44LCBtYXJrZXI6IG51bGx9KSxcbiAgICBQbG90LmRvdChbbW9kZWxvTS5maWxhcy5hdCgtMSldLCB7eDogXCJtXCIsIHk6IFwicFwiLCBmaWxsOiBDT0xPUkVTLnZlcmRlLCByOiA1fSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5QcmltZXJhIGVzY2FzZXo8Yj4ke21vZGVsb00udi5sZW5ndGggPyBgJHtmb3JtYXRvUG9yY2VudGFqZShtb2RlbG9NLnZbMF0udmFsb3IsIDEpfSwgYcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkobW9kZWxvTS52WzBdLnRpZW1wbyl9YCA6IFwic2luIHZhbGxlXCJ9PC9iPjwvZGl2PlxuICA8ZGl2PkVudHJlIGxhcyBkb3MgcHJpbWVyYXMgZXNjYXNlY2VzPGI+JHttb2RlbG9NLnYubGVuZ3RoID4gMSA/IGAke2Zvcm1hdG9OdW1lcm8oMSkobW9kZWxvTS52WzFdLnRpZW1wbyAtIG1vZGVsb00udlswXS50aWVtcG8pfSBhw7Fvc2AgOiBcIuKAlFwifTwvYj48L2Rpdj5cbiAgPGRpdj5Fc2Nhc2VjZXMgZW4gNjAgYcOxb3M8Yj4ke21vZGVsb00udi5sZW5ndGh9PC9iPjwvZGl2PlxuICA8ZGl2PlByZWNpbyBtw6F4aW1vPGI+JHtmb3JtYXRvTnVtZXJvKDApKG1vZGVsb00ucHJlY2lvTWF4KX0gQ09QL2tXaDwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBnUiA9IElucHV0cy5yYWRpbyhbXCIzLDAgJSAoZXN0aWxpemFkbylcIiwgXCIyLDcgJSAoWE0gMjAxOeKAkzIwMjQpXCJdLCB7dmFsdWU6IFwiMiw3ICUgKFhNIDIwMTnigJMyMDI0KVwiLCBsYWJlbDogXCJDcmVjaW1pZW50byBkZSBsYSBkZW1hbmRhXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC05IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHZpZGFSID0gSW5wdXRzLnJhZGlvKFtcIjMwIGHDsW9zIChlc3RpbGl6YWRhKVwiLCBcIjQ1IGHDsW9zXCJdLCB7dmFsdWU6IFwiNDUgYcOxb3NcIiwgbGFiZWw6IFwiVmlkYSDDunRpbFwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTAiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgY2FydGVyYVIgPSBJbnB1dHMucmFkaW8oW1wiMiA1MDAgTVcgKGVzdGlsaXphZGEpXCIsIFwiMSA1MDAgTVdcIl0sIHt2YWx1ZTogXCIxIDUwMCBNV1wiLCBsYWJlbDogXCJDYXJ0ZXJhIGluaWNpYWxcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoicmVjYWxSID0ge1xuICBjb25zdCBwYXJhbWV0cm9zID0ge1xuICAgIGNyZWNpbWllbnRvX2RlbWFuZGE6IGdSLnN0YXJ0c1dpdGgoXCIyLDdcIikgPyAwLjAyNyA6IDAuMDMsXG4gICAgdmlkYV91dGlsOiB2aWRhUi5zdGFydHNXaXRoKFwiNDVcIikgPyA0NSA6IDMwLFxuICAgIHByb3llY3Rvc19pbmljaWFsZXM6IGNhcnRlcmFSLnN0YXJ0c1dpdGgoXCIxIDUwMFwiKSA/IDE1MDAgOiAyNTAwLFxuICB9O1xuICBjb25zdCByID0gc2ltdWxhcihjaWNsb0ludmVyc2lvbkNhcGFjaWRhZChwYXJhbWV0cm9zKSwge3RGaW5hbDogNjAsIHBhc286IDAuMDV9KTtcbiAgY29uc3QgYmFzZSA9IHNpbXVsYXIoY2ljbG9JbnZlcnNpb25DYXBhY2lkYWQoKSwge3RGaW5hbDogNjAsIHBhc286IDAuMDV9KTtcbiAgY29uc3QgbSA9IHIudmFyaWFibGVzLm1hcmdlbl9yZXNlcnZhO1xuICBjb25zdCB2ID0gdmFsbGVzKHIudGllbXBvLCBtKTtcbiAgcmV0dXJuIHtcbiAgICBmaWxhczogci50aWVtcG8ubWFwKCh0LCBrKSA9PiAoe3QsIG06IG1ba119KSksXG4gICAgYmFzZTogYmFzZS50aWVtcG8ubWFwKCh0LCBrKSA9PiAoe3QsIG06IGJhc2UudmFyaWFibGVzLm1hcmdlbl9yZXNlcnZhW2tdfSkpLFxuICAgIHYsIHByZWNpb01heDogTWF0aC5tYXgoLi4uci52YXJpYWJsZXMucHJlY2lvX2JvbHNhKSxcbiAgfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjgwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDYwXX0sXG4gIHk6IHtsYWJlbDogXCJNYXJnZW4gZGUgcmVzZXJ2YVwiLCBncmlkOiB0cnVlLCBkb21haW46IFswLjIsIDAuNTJdLCB0aWNrRm9ybWF0OiAoZCkgPT4gZm9ybWF0b1BvcmNlbnRhamUoZCl9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVkoWzAuMzBdLCB7c3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LmxpbmUocmVjYWxSLmJhc2UsIHt4OiBcInRcIiwgeTogXCJtXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pLFxuICAgIFBsb3QubGluZShyZWNhbFIuZmlsYXMsIHt4OiBcInRcIiwgeTogXCJtXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi4yfSksXG4gICAgUGxvdC5kb3QocmVjYWxSLnYsIHt4OiBcInRpZW1wb1wiLCB5OiBcInZhbG9yXCIsIGZpbGw6IENPTE9SRVMucm9qbywgcjogNH0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PlByaW1lcmEgZXNjYXNlejxiPiR7cmVjYWxSLnYubGVuZ3RoID8gYCR7Zm9ybWF0b1BvcmNlbnRhamUocmVjYWxSLnZbMF0udmFsb3IsIDEpfSwgYcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkocmVjYWxSLnZbMF0udGllbXBvKX1gIDogXCJzaW4gdmFsbGVcIn08L2I+PC9kaXY+XG4gIDxkaXY+RW50cmUgbGFzIGRvcyBwcmltZXJhcyBlc2Nhc2VjZXM8Yj4ke3JlY2FsUi52Lmxlbmd0aCA+IDEgPyBgJHtmb3JtYXRvTnVtZXJvKDEpKHJlY2FsUi52WzFdLnRpZW1wbyAtIHJlY2FsUi52WzBdLnRpZW1wbyl9IGHDsW9zYCA6IFwi4oCUXCJ9PC9iPjwvZGl2PlxuICA8ZGl2PlByZWNpbyBtw6F4aW1vPGI+JHtmb3JtYXRvTnVtZXJvKDApKHJlY2FsUi5wcmVjaW9NYXgpfSBDT1Ava1doPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCd0YXVNJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2FsZmFNJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2dSJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3ZpZGFSJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NhcnRlcmFSJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana4";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana4/08-calibracion.html" class="pagination-link" aria-label="Calibración: afinar el modelo clavija por clavija">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Calibración: afinar el modelo clavija por clavija</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
