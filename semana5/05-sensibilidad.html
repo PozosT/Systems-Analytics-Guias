@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Cómo mover una perilla a la vez sin engañarse: diagrama de tornado, barridos locales y globales, interacciones entre parámetros y por qué la jerarquía de parámetros cambia con la métrica.">
+
+<title>Análisis de sensibilidad – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana5/04-politicas-apalancamiento.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/05-sensibilidad.html">Análisis de sensibilidad</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-mover-una-perilla-a-la-vez" id="toc-la-intuición-mover-una-perilla-a-la-vez" class="nav-link" data-scroll-target="#la-intuición-mover-una-perilla-a-la-vez">2. La intuición: mover una perilla a la vez</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/05-sensibilidad.html">Análisis de sensibilidad</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Análisis de sensibilidad</h1>
+<p class="subtitle lead">Semana 5 · Concepto 5 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Cómo mover una perilla a la vez sin engañarse: diagrama de tornado, barridos locales y globales, interacciones entre parámetros y por qué la jerarquía de parámetros cambia con la métrica.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> mercadoConPoliticas<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>capacidadFncer40 <span class="op">=</span> (parametros) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>(parametros)<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">capacidad_fncer</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 55 a 65 minutos</span> <span class="dato">📚 Requiere <a href="../semana4/08-calibracion.html">calibración</a> y <a href="../semana5/04-politicas-apalancamiento.html">políticas y apalancamiento</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4 y en el Avance 2</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Construir y leer un diagrama de tornado declarando métrica, caso base y rangos.</li>
+<li>Distinguir un barrido local de uno global y reconocer cuándo un barrido estrecho esconde un umbral.</li>
+<li>Detectar una interacción entre dos parámetros y explicar por qué el tornado no la ve.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>El análisis de sensibilidad mueve los parámetros inciertos y mide cuánto cambia la métrica que importa para la decisión. El tornado ordena los parámetros, el barrido muestra la forma de la respuesta y la malla de dos parámetros revela si conversan entre sí.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Varios parámetros del modelo de la semana tienen rangos anchos. El curso usa una tasa de aprendizaje FNCER de 20 %, pero entre 2010 y 2020 la solar mostró tasas de 34 a 39 % (IRENA). La obra física de una planta solar tarda de 12 a 18 meses, y los permisos en Colombia, de 3,4 a 6,4 años (SEI, 2025). Un evaluador del Avance 2 preguntará qué pasa si el valor real está en la otra punta del rango. <strong>¿Qué parámetro merece más esfuerzo de medición, y cómo saber si las conclusiones sobreviven a la incertidumbre de los demás?</strong></p>
+</section>
+<section id="la-intuición-mover-una-perilla-a-la-vez" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-mover-una-perilla-a-la-vez">2. La intuición: mover una perilla a la vez</h2>
+<p>Un técnico de sonido frente a una mesa de mezclas no sube todas las perillas a la vez: mueve una, escucha, la devuelve y pasa a la siguiente. Haga lo mismo con cinco parámetros del modelo y una métrica, el margen de reserva mínimo después del año 5 (los primeros años los decide la cartera que ya estaba en obra).</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Construir el tornado barra por barra</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-perillas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-05-perillas-1.svg" class="img-fluid" alt="Primera perilla, el retardo constructor, movida al 75 y al 125 por ciento: el margen mínimo pasa de 28,02 a 27,06 por ciento."></a></p>
+<p><strong>Retardo constructor.</strong> Con el caso base el margen mínimo es 27,53 %. Con el retardo al 75 % (3 años) sube a 28,02 %; al 125 % (5 años) baja a 27,06 %. Anote la barra y devuelva la perilla a 4 años.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-perillas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-05-perillas-2.svg" class="img-fluid" alt="Segunda perilla, la sensibilidad del precio: de 27,77 a 27,20 por ciento."></a></p>
+<p><strong>Sensibilidad del precio.</strong> Al 75 %, 27,77 %; al 125 %, 27,20 %. Una barra más corta que la del retardo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-perillas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-05-perillas-3.svg" class="img-fluid" alt="Tercera perilla, la elasticidad de inversión: la misma barra que la sensibilidad del precio."></a></p>
+<p><strong>Elasticidad de inversión.</strong> Exactamente la misma barra: 27,77 % y 27,20 %. No es casualidad: en la regla de inversión los dos parámetros solo aparecen multiplicados, como descubrió al <a href="../semana4/08-calibracion.html">calibrar</a>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-perillas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-05-perillas-4.svg" class="img-fluid" alt="Cuarta perilla, el crecimiento de la demanda: de 27,85 a 27,23 por ciento."></a></p>
+<p><strong>Crecimiento de la demanda.</strong> De 27,85 % a 27,23 %: pesa un poco más que la ganancia del lazo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-perillas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-05-perillas-5.svg" class="img-fluid" alt="Quinta perilla, la vida útil: la barra apunta al revés, de 27,30 a 27,67 por ciento."></a></p>
+<p><strong>Vida útil.</strong> La barra apunta al revés: con más vida útil el margen mínimo <strong>sube</strong> (27,67 %). Menos retiros drenan menos capacidad durante la escasez.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-perillas-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-05-perillas-6.svg" class="img-fluid" alt="Las cinco barras ordenadas de la más larga a la más corta: retardo, demanda, sensibilidad del precio, elasticidad y vida útil."></a></p>
+<p><strong>Ordene las barras.</strong> De la más larga a la más corta, la figura toma forma de tornado. Para esta métrica, el primer dato que conviene mejorar es el retardo constructor. Once simulaciones bastaron: el caso base y dos por perilla.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Sensibilidad local, barrido e interacción</span>
+</div>
+<p>Sea <span class="math inline">M(\theta_1, \dots, \theta_k)</span> una métrica escalar del modelo y <span class="math inline">\theta^0</span> el caso base.</p>
+<ul>
+<li>El análisis <strong>local</strong> perturba cada parámetro alrededor de <span class="math inline">\theta^0</span>, por ejemplo al 75 % y al 125 %, con los demás fijos. Su resumen es el <strong>tornado</strong>: una barra de <span class="math inline">M(\theta_i^-)</span> a <span class="math inline">M(\theta_i^+)</span> por parámetro, ordenadas por longitud.</li>
+<li>Un <strong>barrido global</strong> recorre el rango plausible completo de un parámetro y muestra la forma de la respuesta: umbrales, saturaciones, cambios de dirección.</li>
+<li>Hay <strong>interacción</strong> entre <span class="math inline">\theta_i</span> y <span class="math inline">\theta_j</span> cuando el efecto de uno depende del valor del otro:</li>
+</ul>
+<p><span class="math display">\Delta M(\theta_i \mid \theta_j^{+}) \neq \Delta M(\theta_i \mid \theta_j^{-}).</span></p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Lo que el tornado no puede ver</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-interaccion-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s5-05-interaccion-1.svg" class="img-fluid" alt="Una recta de la métrica contra el parámetro theta i, con theta j bajo; se marca el efecto Delta M."></a></p>
+<p><strong>Mida un efecto.</strong> Con <span class="math inline">\theta_j</span> bajo, llevar <span class="math inline">\theta_i</span> de <span class="math inline">\theta_i^-</span> a <span class="math inline">\theta_i^+</span> cambia la métrica en <span class="math inline">\Delta M</span>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-interaccion-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s5-05-interaccion-2.svg" class="img-fluid" alt="Una segunda recta paralela con theta j alto: sin interacción."></a></p>
+<p><strong>Repita con <span class="math inline">\theta_j</span> alto.</strong> Si la recta es paralela, el efecto de <span class="math inline">\theta_i</span> es el mismo en los dos casos: no hay interacción y cada parámetro se puede estudiar por separado.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-interaccion-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s5-05-interaccion-3.svg" class="img-fluid" alt="La segunda recta se abre respecto de la primera: interacción."></a></p>
+<p><strong>Mire si las rectas se abren.</strong> Si con <span class="math inline">\theta_j</span> alto la pendiente cambia, el efecto de <span class="math inline">\theta_i</span> depende de <span class="math inline">\theta_j</span>. Hay interacción.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-05-interaccion-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s5-05-interaccion-4.svg" class="img-fluid" alt="El tornado evalúa solo tres puntos sobre la recta del caso base."></a></p>
+<p><strong>Ubique el tornado.</strong> El tornado evalúa <span class="math inline">\theta_i</span> con <span class="math inline">\theta_j</span> en el caso base: tres puntos sobre una sola recta. Por construcción no puede saber si las rectas se abren; para eso hay que mover dos perillas a la vez.</p>
+</div>
+</div>
+<p>El protocolo del curso tiene cuatro pasos y una regla de reporte:</p>
+<ol type="1">
+<li><strong>Elija la métrica mirando la decisión</strong>: margen mínimo, amplitud del ciclo, capacidad FNCER en el año 40, costo para la demanda.</li>
+<li><strong>Haga un tornado</strong> con rangos que reflejen la incertidumbre real de cada parámetro; el 75–125 % es un punto de partida.</li>
+<li><strong>Barra el rango plausible completo</strong> de los dos o tres parámetros que ganan el tornado y lea la forma.</li>
+<li><strong>Cruce en una malla de 2 × 2</strong>, como mínimo, las parejas sospechosas de interactuar.</li>
+</ol>
+<p>Todo análisis de sensibilidad declara su métrica, su caso base y sus rangos. Un tornado sin esos tres datos no se puede interpretar.</p>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="una-perilla-el-barrido-local-y-el-global" class="level3">
+<h3 class="anchored" data-anchor-id="una-perilla-el-barrido-local-y-el-global">Una perilla: el barrido local y el global</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">La tasa de aprendizaje sin subasta</span>
+</div>
+<p><strong>Planteamiento.</strong> En el modelo sin políticas, la capacidad FNCER del año 40 es de 116 MW con la tasa de aprendizaje del caso base, 20 %. Con 15 % es de 97 MW y con 25 %, de 152 MW. ¿Se puede concluir que la tasa de aprendizaje casi no importa?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer un barrido estrecho</span>
+</div>
+<div class="paso">
+<p><strong>Mida el efecto local.</strong> Entre el 75 % y el 125 % del caso base, la capacidad va de 97 a 152 MW. Frente a un sistema de más de 40 000 MW firmes, las FNCER siguen siendo marginales en los dos extremos.</p>
+</div>
+<div class="paso">
+<p><strong>Delimite la conclusión.</strong> Lo que el barrido permite afirmar es que <em>entre 15 % y 25 %</em> la tasa de aprendizaje no cambia el destino de las FNCER. Fuera de ese rango, el barrido no dice nada.</p>
+</div>
+<div class="paso">
+<p><strong>Compare con el rango plausible.</strong> La solar mostró tasas de 34 a 39 % entre 2010 y 2020. El rango de incertidumbre real llega bastante más lejos que el 125 % del caso base, así que hay que barrerlo.</p>
+</div>
+</div>
+<div id="pred-barrido" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Si amplía el barrido de la tasa de aprendizaje hasta cubrir de 4 % a 36 %, ¿qué espera ver?</p>
+<div class="opcion">
+<p>Lo mismo: una curva casi plana, porque el tramo de 15 a 25 % ya lo mostró.</p>
+</div>
+<div class="opcion">
+<p>Una recta más larga, con la misma pendiente.</p>
+</div>
+<div class="opcion">
+<p>Un salto brusco en algún punto del rango.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Del barrido local al global</span>
+</div>
+<p>Empiece con ±25 % y amplíe el rango explorado alrededor de 20 %. ¿Desde qué ancho aparece el salto?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="176" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 175;"><span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>viewof anchoB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">5</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">25</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Rango explorado alrededor de 20 % [± %]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="181" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 180;"><span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>barridoB <span class="op">=</span> {</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> minimo <span class="op">=</span> <span class="fl">0.20</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> anchoB <span class="op">/</span> <span class="dv">100</span>)<span class="op">,</span> maximo <span class="op">=</span> <span class="fl">0.20</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> anchoB <span class="op">/</span> <span class="dv">100</span>)<span class="op">;</span></span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">21</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> minimo <span class="op">+</span> (maximo <span class="op">-</span> minimo) <span class="op">*</span> k <span class="op">/</span> <span class="dv">20</span>)<span class="op">;</span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> puntos<span class="op">.</span><span class="fu">map</span>((lr) <span class="kw">=&gt;</span> ({lr<span class="op">,</span> <span class="dt">F</span><span class="op">:</span> <span class="fu">capacidadFncer40</span>({<span class="dt">tasa_aprendizaje</span><span class="op">:</span> lr})}))<span class="op">;</span></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> valores <span class="op">=</span> filas<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">F</span>)<span class="op">;</span></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {filas<span class="op">,</span> minimo<span class="op">,</span> maximo<span class="op">,</span> <span class="dt">fMin</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>valores)<span class="op">,</span> <span class="dt">fMax</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>valores)}<span class="op">;</span></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="192" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 191;"><span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tasa de aprendizaje"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">0.40</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad FNCER en el año 40 [MW, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">50</span><span class="op">,</span> <span class="dv">100000</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="fl">0.20</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectX</span>([{<span class="dt">x1</span><span class="op">:</span> <span class="fl">0.34</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="fl">0.39</span>}]<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="dv">100000</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.12</span>})<span class="op">,</span></span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(barridoB<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lr"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"F"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(barridoB<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lr"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"F"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span>})<span class="op">,</span></span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="207" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 206;"><span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Rango explorado&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(barridoB<span class="op">.</span><span class="at">minimo</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> a </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(barridoB<span class="op">.</span><span class="at">maximo</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capacidad FNCER mínima en el rango&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(barridoB<span class="op">.</span><span class="at">fMin</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capacidad FNCER máxima en el rango&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(barridoB<span class="op">.</span><span class="at">fMax</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code> sin políticas; datos sintéticos con fines didácticos. Franja ámbar: tasas de aprendizaje de la solar observadas entre 2010 y 2020 (IRENA). Línea gris: caso base del curso.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-barrido"></span>. Con ±80 %, de 4 % a 36 %, la capacidad FNCER va de 74 a 46 114 MW; la respuesta es la C. Entre 35 % y 36 % la capacidad salta de 4 406 a 46 114 MW: por encima de ese umbral el aprendizaje abarata el costo más rápido de lo que la canibalización erosiona el precio capturado, y el refuerzo se enciende sin subasta. El umbral cae dentro del rango observado para la solar. Un barrido local concluye «no importa» con toda razón en su tramo y se equivoca en el que interesa.</p>
+</section>
+<section id="dos-perillas-que-conversan" class="level3">
+<h3 class="anchored" data-anchor-id="dos-perillas-que-conversan">Dos perillas que conversan</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">¿Rinde igual la subasta con cualquier tasa de aprendizaje?</span>
+</div>
+<p><strong>Planteamiento.</strong> La tabla da la capacidad FNCER del año 40 [MW] para dos tamaños de subasta y dos tasas de aprendizaje:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Aprendizaje 10 %</th>
+<th style="text-align: center;">Aprendizaje 25 %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Subasta 100 MW/año</td>
+<td style="text-align: center;">3 114</td>
+<td style="text-align: center;">33 685</td>
+</tr>
+<tr class="even">
+<td>Subasta 300 MW/año</td>
+<td style="text-align: center;">7 948</td>
+<td style="text-align: center;">35 316</td>
+</tr>
+</tbody>
+</table>
+<p>¿Hay interacción? ¿Qué implica para el tamaño de la subasta?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la malla de 2 × 2</span>
+</div>
+<div class="paso">
+<p><strong>Calcule el efecto de la subasta con aprendizaje bajo.</strong> Triplicarla suma <span class="math inline">7\,948 - 3\,114 = 4\,834</span> MW: multiplica la capacidad por 2,55.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule el mismo efecto con aprendizaje alto.</strong> Suma <span class="math inline">35\,316 - 33\,685 = 1\,631</span> MW: apenas un 5 % más.</p>
+</div>
+<div class="paso">
+<p><strong>Aplique la definición.</strong> <span class="math inline">\Delta M(\text{subasta} \mid LR = 10\,\%) = 4\,834</span> y <span class="math inline">\Delta M(\text{subasta} \mid LR = 25\,\%) = 1\,631</span>. Los efectos difieren: hay interacción.</p>
+</div>
+<div class="paso">
+<p><strong>Explíquela con los lazos.</strong> Con aprendizaje pobre, la subasta es casi la única fuente de inicios: más subasta, más capacidad. Con aprendizaje rico, el refuerzo se enciende con poca subasta y la canibalización pone el techo: la subasta adicional aporta poco.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la consecuencia de diseño.</strong> El tamaño conveniente de la subasta depende de la tasa de aprendizaje local, una cantidad muy incierta. Ningún tornado lo habría mostrado, y es el tipo de hallazgo que lleva al análisis de escenarios.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La curva de la subasta según el aprendizaje</span>
+</div>
+<p>Mueva la tasa de aprendizaje y observe cómo cambia la forma de la curva. La línea gris es el caso base de 20 %.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="263" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 262;"><span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>viewof aprendizajeI <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.05</span><span class="op">,</span> <span class="fl">0.35</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.10</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tasa de aprendizaje FNCER"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="268" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 267;"><span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a>interaccionI <span class="op">=</span> {</span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> subastas <span class="op">=</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">150</span><span class="op">,</span> <span class="dv">200</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="dv">400</span><span class="op">,</span> <span class="dv">500</span>]<span class="op">;</span></span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> curva <span class="op">=</span> (lr) <span class="kw">=&gt;</span> subastas<span class="op">.</span><span class="fu">map</span>((s) <span class="kw">=&gt;</span> ({s<span class="op">,</span> <span class="dt">F</span><span class="op">:</span> <span class="fu">capacidadFncer40</span>({<span class="dt">subasta_fncer</span><span class="op">:</span> s<span class="op">,</span> <span class="dt">tasa_aprendizaje</span><span class="op">:</span> lr})}))<span class="op">;</span></span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> <span class="fu">curva</span>(aprendizajeI)<span class="op">;</span></span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> leer <span class="op">=</span> (s) <span class="kw">=&gt;</span> filas<span class="op">.</span><span class="fu">find</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">s</span> <span class="op">===</span> s)<span class="op">.</span><span class="at">F</span><span class="op">;</span></span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {filas<span class="op">,</span> <span class="dt">base</span><span class="op">:</span> <span class="fu">curva</span>(<span class="fl">0.20</span>)<span class="op">,</span> <span class="dt">f100</span><span class="op">:</span> <span class="fu">leer</span>(<span class="dv">100</span>)<span class="op">,</span> <span class="dt">f300</span><span class="op">:</span> <span class="fu">leer</span>(<span class="dv">300</span>)}<span class="op">;</span></span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="279" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 278;"><span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Subasta FNCER [MW/año]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">500</span>]}<span class="op">,</span></span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad FNCER en el año 40 [MW]"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">70000</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(interaccionI<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"s"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"F"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(interaccionI<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"s"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"F"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(interaccionI<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"s"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"F"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="fl">3.5</span>})<span class="op">,</span></span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="293" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 292;"><span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Con subasta de 100 MW/año&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(interaccionI<span class="op">.</span><span class="at">f100</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Con subasta de 300 MW/año&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(interaccionI<span class="op">.</span><span class="at">f300</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Triplicar la subasta multiplica la capacidad por&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(interaccionI<span class="op">.</span><span class="at">f300</span> <span class="op">/</span> interaccionI<span class="op">.</span><span class="at">f100</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code>; datos sintéticos con fines didácticos. Si las curvas fueran paralelas, no habría interacción.</p>
+</div>
+</div>
+<p>Con 20 % triplicar la subasta multiplica la capacidad por 1,25, y con 30 %, por 1,02. Las curvas se aplanan a medida que el aprendizaje sube: esa es la interacción.</p>
+</section>
+<section id="el-tornado-cambia-con-la-métrica" class="level3">
+<h3 class="anchored" data-anchor-id="el-tornado-cambia-con-la-métrica">El tornado cambia con la métrica</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Seis parámetros, tres métricas</span>
+</div>
+<p><strong>Planteamiento.</strong> Un equipo prepara el Avance 2 con el modelo de la semana y seis parámetros inciertos: retardo constructor firme, sensibilidad del precio, elasticidad de inversión, crecimiento de la demanda, vida útil firme y tasa de aprendizaje. Construya el tornado al 75–125 % con tres métricas: la amplitud del margen después del año 5, el margen mínimo después del año 5 y la capacidad FNCER del año 40 con una subasta de 300 MW/año.</p>
+</div>
+<div id="pred-tornado" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Qué pasará con la jerarquía de parámetros al cambiar de métrica?</p>
+<div class="opcion">
+<p>Será la misma, porque los parámetros importantes del modelo son siempre los mismos.</p>
+</div>
+<div class="opcion">
+<p>Cambiará de orden, y algún parámetro que no mueve una métrica dominará otra.</p>
+</div>
+<div class="opcion">
+<p>Se invertirá exactamente.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tornado con métrica seleccionable</span>
+</div>
+<p>Cambie de métrica y compare el orden de las barras. Después amplíe el rango a ±50 % con la métrica FNCER.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="334" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 333;"><span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a>viewof metricaT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"amplitud del margen después del año 5"</span><span class="op">,</span> <span class="st">"margen mínimo después del año 5"</span><span class="op">,</span> <span class="st">"capacidad FNCER en el año 40 (subasta 300)"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"amplitud del margen después del año 5"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Métrica"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="339" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 338;"><span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a>viewof rangoT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">10</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">25</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Rango de cada parámetro [± %]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="344" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 343;"><span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a>tornadoT <span class="op">=</span> {</span>
+<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> caso <span class="op">=</span> {<span class="dt">retardo_constructor_firme</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">sensibilidad_precio</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">elasticidad_inversion</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">crecimiento_demanda</span><span class="op">:</span> <span class="fl">0.03</span><span class="op">,</span> <span class="dt">vida_util_firme</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">tasa_aprendizaje</span><span class="op">:</span> <span class="fl">0.20</span>}<span class="op">;</span></span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nombres <span class="op">=</span> {<span class="dt">retardo_constructor_firme</span><span class="op">:</span> <span class="st">"retardo constructor"</span><span class="op">,</span> <span class="dt">sensibilidad_precio</span><span class="op">:</span> <span class="st">"sensibilidad del precio"</span><span class="op">,</span> <span class="dt">elasticidad_inversion</span><span class="op">:</span> <span class="st">"elasticidad de inversión"</span><span class="op">,</span> <span class="dt">crecimiento_demanda</span><span class="op">:</span> <span class="st">"crecimiento de la demanda"</span><span class="op">,</span> <span class="dt">vida_util_firme</span><span class="op">:</span> <span class="st">"vida útil firme"</span><span class="op">,</span> <span class="dt">tasa_aprendizaje</span><span class="op">:</span> <span class="st">"tasa de aprendizaje"</span>}<span class="op">;</span></span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fncer <span class="op">=</span> metricaT<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"capacidad"</span>)<span class="op">;</span></span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> extra <span class="op">=</span> fncer <span class="op">?</span> {<span class="dt">subasta_fncer</span><span class="op">:</span> <span class="dv">300</span>} <span class="op">:</span> {}<span class="op">;</span></span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> medir <span class="op">=</span> (parametros) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>({<span class="op">...</span>caso<span class="op">,</span> <span class="op">...</span>extra<span class="op">,</span> <span class="op">...</span>parametros})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (fncer) <span class="cf">return</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">capacidad_fncer</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> m <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span><span class="op">.</span><span class="fu">filter</span>((_<span class="op">,</span> k) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">tiempo</span>[k] <span class="op">&gt;=</span> <span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> metricaT<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"amplitud"</span>) <span class="op">?</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>m) <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>m) <span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>m)<span class="op">;</span></span>
+<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">medir</span>({})<span class="op">;</span></span>
+<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> f <span class="op">=</span> rangoT <span class="op">/</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(caso)<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> bajo <span class="op">=</span> <span class="fu">medir</span>({[p]<span class="op">:</span> caso[p] <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> f)})<span class="op">,</span> alto <span class="op">=</span> <span class="fu">medir</span>({[p]<span class="op">:</span> caso[p] <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> f)})<span class="op">;</span></span>
+<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="dt">parametro</span><span class="op">:</span> nombres[p]<span class="op">,</span> bajo<span class="op">,</span> alto<span class="op">,</span> <span class="dt">ancho</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(alto <span class="op">-</span> bajo)}<span class="op">;</span></span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">ancho</span> <span class="op">-</span> a<span class="op">.</span><span class="at">ancho</span>)<span class="op">;</span></span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> formato <span class="op">=</span> fncer <span class="op">?</span> (x) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(x)<span class="sc">}</span><span class="vs"> MW`</span> <span class="op">:</span> (x) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(x<span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {base<span class="op">,</span> filas<span class="op">,</span> formato<span class="op">,</span> fncer}<span class="op">;</span></span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="368" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 367;"><span id="cb13-368"><a href="#cb13-368" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb13-369"><a href="#cb13-369" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">290</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">170</span><span class="op">,</span></span>
+<span id="cb13-370"><a href="#cb13-370" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> metricaT<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> tornadoT<span class="op">.</span><span class="at">fncer</span> <span class="op">?</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>) <span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">1</span>)}<span class="op">,</span></span>
+<span id="cb13-371"><a href="#cb13-371" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> tornadoT<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">parametro</span>)<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb13-372"><a href="#cb13-372" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb13-373"><a href="#cb13-373" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barX</span>(tornadoT<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">y</span><span class="op">:</span> <span class="st">"parametro"</span><span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> tornadoT<span class="op">.</span><span class="at">base</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"bajo"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#BDBDBD"</span>})<span class="op">,</span></span>
+<span id="cb13-374"><a href="#cb13-374" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barX</span>(tornadoT<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">y</span><span class="op">:</span> <span class="st">"parametro"</span><span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> tornadoT<span class="op">.</span><span class="at">base</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"alto"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.85</span>})<span class="op">,</span></span>
+<span id="cb13-375"><a href="#cb13-375" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([tornadoT<span class="op">.</span><span class="at">base</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb13-376"><a href="#cb13-376" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb13-377"><a href="#cb13-377" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="382" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 381;"><span id="cb14-382"><a href="#cb14-382" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb14-383"><a href="#cb14-383" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Caso base&lt;b&gt;</span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="fu">formato</span>(tornadoT<span class="op">.</span><span class="at">base</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-384"><a href="#cb14-384" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Primer lugar&lt;b&gt;</span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="at">filas</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">parametro</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="fu">formato</span>(tornadoT<span class="op">.</span><span class="at">filas</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">bajo</span>)<span class="sc">}</span><span class="vs"> a </span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="fu">formato</span>(tornadoT<span class="op">.</span><span class="at">filas</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">alto</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-385"><a href="#cb14-385" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Segundo lugar&lt;b&gt;</span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="at">filas</span>[<span class="dv">1</span>]<span class="op">.</span><span class="at">parametro</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="fu">formato</span>(tornadoT<span class="op">.</span><span class="at">filas</span>[<span class="dv">1</span>]<span class="op">.</span><span class="at">bajo</span>)<span class="sc">}</span><span class="vs"> a </span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="fu">formato</span>(tornadoT<span class="op">.</span><span class="at">filas</span>[<span class="dv">1</span>]<span class="op">.</span><span class="at">alto</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-386"><a href="#cb14-386" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Último lugar&lt;b&gt;</span><span class="sc">${</span>tornadoT<span class="op">.</span><span class="at">filas</span>[<span class="dv">5</span>]<span class="op">.</span><span class="at">parametro</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-387"><a href="#cb14-387" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code>; datos sintéticos con fines didácticos. Gris: parámetro en el extremo bajo del rango; azul: extremo alto. Trece simulaciones por tornado.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer los tres tornados</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-tornado"></span>. La respuesta es la B: con cada métrica gana un parámetro distinto.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la amplitud.</strong> Base de 6,83 %. Ganan, empatadas, la sensibilidad del precio y la elasticidad de inversión (de 4,77 % a 8,97 %): la amplitud vive en la ganancia del lazo. Siguen el retardo (6,11 % a 7,63 %) y la vida útil, que apunta al revés. La tasa de aprendizaje no mueve nada.</p>
+</div>
+<div class="paso">
+<p><strong>Lea el margen mínimo.</strong> Base de 27,53 %. Gana el retardo constructor (28,02 % a 27,06 %), seguido del crecimiento de la demanda. La ganancia del lazo baja al tercer lugar. Es el tornado de la intuición.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la capacidad FNCER.</strong> Base de 21 931 MW. Gana la tasa de aprendizaje (12 080 a 35 316 MW), seguida del crecimiento de la demanda (15 501 a 31 704 MW). La sensibilidad del precio, empatada en primer lugar para la amplitud, queda de última.</p>
+</div>
+<div class="paso">
+<p><strong>Mire el empate que se rompe.</strong> En las dos métricas del margen, la sensibilidad del precio y la elasticidad de inversión tienen barras idénticas, porque en la regla de inversión firme solo aparece su producto. En la métrica FNCER se separan: la sensibilidad del precio también mueve el precio que capturan las renovables. Dos parámetros indistinguibles para una métrica pueden distinguirse con otra, y esa es una pista para calibrarlos.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la regla.</strong> «Los parámetros importantes del modelo» no existen a secas: existen los importantes para una métrica. Todo tornado lleva su métrica en el título, y un proyecto con varias decisiones necesita varios tornados.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="El tornado en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El tornado en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="3367546d" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>caso <span class="op">=</span> {<span class="st">"retardo_constructor_firme"</span>: <span class="fl">4.0</span>, <span class="st">"sensibilidad_precio"</span>: <span class="fl">4.0</span>, <span class="st">"elasticidad_inversion"</span>: <span class="fl">3.0</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"crecimiento_demanda"</span>: <span class="fl">0.03</span>, <span class="st">"vida_util_firme"</span>: <span class="fl">30.0</span>, <span class="st">"tasa_aprendizaje"</span>: <span class="fl">0.20</span>}</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> margen_minimo_despues_del_5(<span class="op">**</span>cambios):</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> integrar(mercado_con_politicas(<span class="op">**</span>{<span class="op">**</span>caso, <span class="op">**</span>cambios}), t_final<span class="op">=</span><span class="fl">40.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r[<span class="st">"margen_reserva"</span>][r.tiempo <span class="op">&gt;=</span> <span class="dv">5</span>].<span class="bu">min</span>()</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> margen_minimo_despues_del_5()</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>barras <span class="op">=</span> {p: (margen_minimo_despues_del_5(<span class="op">**</span>{p: <span class="fl">0.75</span> <span class="op">*</span> v}), margen_minimo_despues_del_5(<span class="op">**</span>{p: <span class="fl">1.25</span> <span class="op">*</span> v}))</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> p, v <span class="kw">in</span> caso.items()}</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"caso base: </span><span class="sc">{</span>base<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p, (bajo, alto) <span class="kw">in</span> <span class="bu">sorted</span>(barras.items(), key<span class="op">=</span><span class="kw">lambda</span> kv: <span class="op">-</span><span class="bu">abs</span>(kv[<span class="dv">1</span>][<span class="dv">1</span>] <span class="op">-</span> kv[<span class="dv">1</span>][<span class="dv">0</span>])):</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>p<span class="sc">:28s}</span><span class="ss"> </span><span class="sc">{</span>bajo<span class="sc">:.2%}</span><span class="ss"> a </span><span class="sc">{</span>alto<span class="sc">:.2%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>caso base: 27.53%
+retardo_constructor_firme    28.02% a 27.06%
+crecimiento_demanda          27.85% a 27.23%
+elasticidad_inversion        27.77% a 27.20%
+sensibilidad_precio          27.77% a 27.20%
+vida_util_firme              27.30% a 27.67%
+tasa_aprendizaje             27.53% a 27.53%</code></pre>
+</div>
+</div>
+<p><code>mise_sd.graficas.tornado</code> dibuja estas barras con el estilo del curso.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Medir la sensibilidad sobre la variable equivocada</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Según el tornado, lo que más importa es la ganancia del lazo; recomendamos medir mejor la elasticidad.» El tornado usaba la amplitud del ciclo, y la decisión era el tamaño de una subasta FNCER.</p>
+</div>
+<div class="bien">
+<p>Para dimensionar la subasta, la métrica es la capacidad FNCER, y ahí manda la tasa de aprendizaje. La métrica se elige mirando la decisión; en el simulador del tornado, cambie la métrica y compruébelo.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Usar rangos porcentuales ciegos</span>
+</div>
+<p>El 75–125 % es cómodo, pero algunos parámetros se conocen con un margen del 5 % (la vida útil contable) y otros apenas dentro de un factor de dos. Con la tasa de aprendizaje, el 75–125 % de 20 % termina en 25 % y deja por fuera las tasas de 34 a 39 % observadas para la solar, justo donde está el umbral del modelo. Un tornado honesto usa para cada parámetro el rango de su incertidumbre real, y si ese rango se desconoce, ese desconocimiento es un hallazgo.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir sensibilidad con incertidumbre profunda</span>
+</div>
+<p>El tornado supone que el parámetro tiene un valor verdadero cercano al caso base. Para cantidades cuyo futuro nadie puede acotar con probabilidades, como el costo del hidrógeno en 2040 o la geopolítica del gas, mover el 25 % alrededor de un número inventado aporta poco. Esas variables pasan a los ejes de los escenarios, que son el tema de las páginas siguientes.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con la métrica «margen mínimo después del año 5», ¿qué dato conviene mejorar primero?</p>
+<div class="opcion" data-correcta="si">
+<p>El retardo constructor.</p>
+<p><span class="porque">Correcto: tiene la barra más larga en ese tornado.</span></p>
+</div>
+<div class="opcion">
+<p>La elasticidad de inversión.</p>
+<p><span class="porque">Esa barra gana en la amplitud del ciclo, no en el margen mínimo. Revise el tornado de la intuición.</span></p>
+</div>
+<div class="opcion">
+<p>La tasa de aprendizaje.</p>
+<p><span class="porque">No mueve el margen mínimo sin subasta.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En los tornados del margen, la sensibilidad del precio y la elasticidad de inversión tienen barras idénticas. ¿Qué significa?</p>
+<div class="opcion">
+<p>Que los dos parámetros tienen el mismo valor.</p>
+<p><span class="porque">Valen 4 y 3. Busque cómo entran en la regla de inversión.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que en esas métricas solo influye su producto, así que no se pueden distinguir con ellas.</p>
+<p><span class="porque">Correcto: la métrica FNCER sí los separa.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un barrido de ±25 % muestra que un parámetro casi no mueve la métrica. ¿Qué puede concluir?</p>
+<div class="opcion">
+<p>Que el parámetro no importa y se puede fijar en el caso base.</p>
+<p><span class="porque">Eso vale solo dentro del tramo explorado. Revise el barrido de la tasa de aprendizaje.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que no importa dentro de ese tramo; si el rango plausible es mayor, hay que barrerlo completo.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con aprendizaje de 10 %, triplicar la subasta multiplica la capacidad FNCER por 2,55; con 25 %, por 1,05. ¿Qué muestra?</p>
+<div class="opcion">
+<p>Que la subasta no sirve.</p>
+<p><span class="porque">Con aprendizaje bajo es la principal fuente de capacidad.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Una interacción: el efecto de la subasta depende de la tasa de aprendizaje.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Un error del modelo, porque los efectos deberían sumarse.</p>
+<p><span class="porque">Los efectos se suman solo sin interacción. Revise las rectas que se abren.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Dónde conviene tratar el costo del almacenamiento en 2045 en un proyecto del curso?</p>
+<div class="opcion">
+<p>En el tornado, con un rango de ±25 %.</p>
+<p><span class="porque">Nadie puede acotar ese costo con probabilidades. Revise el tercer error común.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Como eje de escenarios.</p>
+<p><span class="porque">Correcto: es incertidumbre profunda.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-leer-tres-tornados" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-leer-tres-tornados">Ejercicio 1 ●○○ · Leer tres tornados</h4>
+<p>Con los tres tornados del ejemplo avanzado: (a) ¿qué parámetro compraría con mejor dato primero para cada métrica? (b) El crecimiento de la demanda casi no mueve la amplitud, pero ocupa el segundo lugar en las otras dos métricas. ¿Significa que la demanda «no importa» para el ciclo?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Amplitud: el producto de la sensibilidad del precio y la elasticidad de inversión, que se estima con la serie de precios, como en la calibración de la semana 4. Margen mínimo: el retardo constructor. Capacidad FNCER: la tasa de aprendizaje.</p></li>
+<li><p>No.&nbsp;La demanda gobierna el nivel y la tendencia: cuánto margen queda en la escasez y cuánto espacio tienen las renovables. La amplitud mide el vaivén alrededor de ese nivel, y la demanda apenas lo cambia. Una barra corta dice que el parámetro no mueve esa métrica, nada más.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-la-forma-de-un-barrido" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-la-forma-de-un-barrido">Ejercicio 2 ●●○ · La forma de un barrido</h4>
+<p>Con una subasta de 200 MW/año, la capacidad FNCER del año 40 vale 4 610 MW con aprendizaje de 5 %; 5 758 con 10 %; 9 739 con 15 %; 20 515 con 20 %; 34 675 con 25 %; 49 713 con 30 % y 66 059 con 35 %. Calcule el aumento por cada 5 puntos, describa la forma y compárela con el barrido sin subasta del ejemplo básico.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Sin subasta, el salto ocurre entre 35 % y 36 %. Piense en qué hace la subasta con el umbral del refuerzo.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Los aumentos son 1 148, 3 981, 10 776, 14 160, 15 038 y 16 346 MW. La curva es casi plana hasta 10 %, se empina entre 10 % y 25 % y después crece casi en línea recta, unos 15 000 MW por cada 5 puntos.</p>
+<p>Sin subasta, la respuesta es plana hasta 35 % y salta de golpe. Con subasta, el salto se reparte en una subida gradual que empieza mucho antes: la subasta mantiene la capacidad acumulada creciendo, así que cada punto de aprendizaje se traduce en costo más bajo desde el principio. La subasta cambió la forma de la respuesta, otro ejemplo de interacción.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Todo análisis de sensibilidad declara <strong>métrica, caso base y rangos</strong>.</li>
+<li>El <strong>tornado</strong> mueve una perilla a la vez y ordena los parámetros; se construye con <span class="math inline">2k + 1</span> simulaciones.</li>
+<li>El <strong>barrido global</strong> muestra la forma de la respuesta; un barrido local puede esconder un umbral, como el de la tasa de aprendizaje entre 35 % y 36 %.</li>
+<li>Hay <strong>interacción</strong> cuando el efecto de un parámetro depende de otro; el tornado no la ve y la malla de 2 × 2 sí.</li>
+<li>La jerarquía <strong>cambia con la métrica</strong>: la ganancia del lazo manda en la amplitud, el retardo en el margen mínimo y el aprendizaje en la capacidad FNCER.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Análisis de sensibilidad» de las notas de la semana 5 trae la figura del barrido y del tornado, y el ejercicio de la malla de 5 × 5 con mapa de calor. El Avance 2 exige métrica declarada, tornado con rangos justificados, un barrido con lectura de forma y una interacción explorada.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgbWVyY2Fkb0NvblBvbGl0aWNhcywgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG5jYXBhY2lkYWRGbmNlcjQwID0gKHBhcmFtZXRyb3MpID0+IHNpbXVsYXIobWVyY2Fkb0NvblBvbGl0aWNhcyhwYXJhbWV0cm9zKSwge3RGaW5hbDogNDAsIHBhc286IDAuMDV9KS52YXJpYWJsZXMuY2FwYWNpZGFkX2ZuY2VyLmF0KC0xKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGFuY2hvQiA9IElucHV0cy5yYW5nZShbNSwgMTAwXSwge3ZhbHVlOiAyNSwgc3RlcDogNSwgbGFiZWw6IFwiUmFuZ28gZXhwbG9yYWRvIGFscmVkZWRvciBkZSAyMCAlIFvCsSAlXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImJhcnJpZG9CID0ge1xuICBjb25zdCBtaW5pbW8gPSAwLjIwICogKDEgLSBhbmNob0IgLyAxMDApLCBtYXhpbW8gPSAwLjIwICogKDEgKyBhbmNob0IgLyAxMDApO1xuICBjb25zdCBwdW50b3MgPSBBcnJheS5mcm9tKHtsZW5ndGg6IDIxfSwgKF8sIGspID0+IG1pbmltbyArIChtYXhpbW8gLSBtaW5pbW8pICogayAvIDIwKTtcbiAgY29uc3QgZmlsYXMgPSBwdW50b3MubWFwKChscikgPT4gKHtsciwgRjogY2FwYWNpZGFkRm5jZXI0MCh7dGFzYV9hcHJlbmRpemFqZTogbHJ9KX0pKTtcbiAgY29uc3QgdmFsb3JlcyA9IGZpbGFzLm1hcCgoZikgPT4gZi5GKTtcbiAgcmV0dXJuIHtmaWxhcywgbWluaW1vLCBtYXhpbW8sIGZNaW46IE1hdGgubWluKC4uLnZhbG9yZXMpLCBmTWF4OiBNYXRoLm1heCguLi52YWxvcmVzKX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRhc2EgZGUgYXByZW5kaXphamVcIiwgZG9tYWluOiBbMCwgMC40MF0sIHRpY2tGb3JtYXQ6IChkKSA9PiBmb3JtYXRvUG9yY2VudGFqZShkLCAwKX0sXG4gIHk6IHtsYWJlbDogXCJDYXBhY2lkYWQgRk5DRVIgZW4gZWwgYcOxbyA0MCBbTVcsIGVzY2FsYSBsb2ddXCIsIHR5cGU6IFwibG9nXCIsIGRvbWFpbjogWzUwLCAxMDAwMDBdLCBncmlkOiB0cnVlLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVYKFswLjIwXSwge3N0cm9rZTogQ09MT1JFUy5ncmlzLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LnJlY3RYKFt7eDE6IDAuMzQsIHgyOiAwLjM5fV0sIHt4MTogXCJ4MVwiLCB4MjogXCJ4MlwiLCB5MTogNTAsIHkyOiAxMDAwMDAsIGZpbGw6IENPTE9SRVMuYW1iYXIsIGZpbGxPcGFjaXR5OiAwLjEyfSksXG4gICAgUGxvdC5saW5lKGJhcnJpZG9CLmZpbGFzLCB7eDogXCJsclwiLCB5OiBcIkZcIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyfSksXG4gICAgUGxvdC5kb3QoYmFycmlkb0IuZmlsYXMsIHt4OiBcImxyXCIsIHk6IFwiRlwiLCBmaWxsOiBDT0xPUkVTLmF6dWwsIHI6IDN9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PlJhbmdvIGV4cGxvcmFkbzxiPiR7Zm9ybWF0b1BvcmNlbnRhamUoYmFycmlkb0IubWluaW1vLCAxKX0gYSAke2Zvcm1hdG9Qb3JjZW50YWplKGJhcnJpZG9CLm1heGltbywgMSl9PC9iPjwvZGl2PlxuICA8ZGl2PkNhcGFjaWRhZCBGTkNFUiBtw61uaW1hIGVuIGVsIHJhbmdvPGI+JHtmb3JtYXRvTnVtZXJvKDApKGJhcnJpZG9CLmZNaW4pfSBNVzwvYj48L2Rpdj5cbiAgPGRpdj5DYXBhY2lkYWQgRk5DRVIgbcOheGltYSBlbiBlbCByYW5nbzxiPiR7Zm9ybWF0b051bWVybygwKShiYXJyaWRvQi5mTWF4KX0gTVc8L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgYXByZW5kaXphamVJID0gSW5wdXRzLnJhbmdlKFswLjA1LCAwLjM1XSwge3ZhbHVlOiAwLjEwLCBzdGVwOiAwLjA1LCBsYWJlbDogXCJUYXNhIGRlIGFwcmVuZGl6YWplIEZOQ0VSXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaW50ZXJhY2Npb25JID0ge1xuICBjb25zdCBzdWJhc3RhcyA9IFswLCA1MCwgMTAwLCAxNTAsIDIwMCwgMzAwLCA0MDAsIDUwMF07XG4gIGNvbnN0IGN1cnZhID0gKGxyKSA9PiBzdWJhc3Rhcy5tYXAoKHMpID0+ICh7cywgRjogY2FwYWNpZGFkRm5jZXI0MCh7c3ViYXN0YV9mbmNlcjogcywgdGFzYV9hcHJlbmRpemFqZTogbHJ9KX0pKTtcbiAgY29uc3QgZmlsYXMgPSBjdXJ2YShhcHJlbmRpemFqZUkpO1xuICBjb25zdCBsZWVyID0gKHMpID0+IGZpbGFzLmZpbmQoKGYpID0+IGYucyA9PT0gcykuRjtcbiAgcmV0dXJuIHtmaWxhcywgYmFzZTogY3VydmEoMC4yMCksIGYxMDA6IGxlZXIoMTAwKSwgZjMwMDogbGVlcigzMDApfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAyNjAsIG1hcmdpbkxlZnQ6IDYwLFxuICB4OiB7bGFiZWw6IFwiU3ViYXN0YSBGTkNFUiBbTVcvYcOxb11cIiwgZG9tYWluOiBbMCwgNTAwXX0sXG4gIHk6IHtsYWJlbDogXCJDYXBhY2lkYWQgRk5DRVIgZW4gZWwgYcOxbyA0MCBbTVddXCIsIGdyaWQ6IHRydWUsIGRvbWFpbjogWzAsIDcwMDAwXSwgdGlja0Zvcm1hdDogZm9ybWF0b051bWVybygwKX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKGludGVyYWNjaW9uSS5iYXNlLCB7eDogXCJzXCIsIHk6IFwiRlwiLCBzdHJva2U6IFwiIzlFOUU5RVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNSA0XCIsIHN0cm9rZVdpZHRoOiAxLjR9KSxcbiAgICBQbG90LmxpbmUoaW50ZXJhY2Npb25JLmZpbGFzLCB7eDogXCJzXCIsIHk6IFwiRlwiLCBzdHJva2U6IENPTE9SRVMudmVyZGUsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgICBQbG90LmRvdChpbnRlcmFjY2lvbkkuZmlsYXMsIHt4OiBcInNcIiwgeTogXCJGXCIsIGZpbGw6IENPTE9SRVMudmVyZGUsIHI6IDMuNX0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+Q29uIHN1YmFzdGEgZGUgMTAwIE1XL2HDsW88Yj4ke2Zvcm1hdG9OdW1lcm8oMCkoaW50ZXJhY2Npb25JLmYxMDApfSBNVzwvYj48L2Rpdj5cbiAgPGRpdj5Db24gc3ViYXN0YSBkZSAzMDAgTVcvYcOxbzxiPiR7Zm9ybWF0b051bWVybygwKShpbnRlcmFjY2lvbkkuZjMwMCl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PlRyaXBsaWNhciBsYSBzdWJhc3RhIG11bHRpcGxpY2EgbGEgY2FwYWNpZGFkIHBvcjxiPiR7Zm9ybWF0b051bWVybygyKShpbnRlcmFjY2lvbkkuZjMwMCAvIGludGVyYWNjaW9uSS5mMTAwKX08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIG1ldHJpY2FUID0gSW5wdXRzLnJhZGlvKFtcImFtcGxpdHVkIGRlbCBtYXJnZW4gZGVzcHXDqXMgZGVsIGHDsW8gNVwiLCBcIm1hcmdlbiBtw61uaW1vIGRlc3B1w6lzIGRlbCBhw7FvIDVcIiwgXCJjYXBhY2lkYWQgRk5DRVIgZW4gZWwgYcOxbyA0MCAoc3ViYXN0YSAzMDApXCJdLCB7dmFsdWU6IFwiYW1wbGl0dWQgZGVsIG1hcmdlbiBkZXNwdcOpcyBkZWwgYcOxbyA1XCIsIGxhYmVsOiBcIk3DqXRyaWNhXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiByYW5nb1QgPSBJbnB1dHMucmFuZ2UoWzEwLCA1MF0sIHt2YWx1ZTogMjUsIHN0ZXA6IDUsIGxhYmVsOiBcIlJhbmdvIGRlIGNhZGEgcGFyw6FtZXRybyBbwrEgJV1cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEyIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidG9ybmFkb1QgPSB7XG4gIGNvbnN0IGNhc28gPSB7cmV0YXJkb19jb25zdHJ1Y3Rvcl9maXJtZTogNCwgc2Vuc2liaWxpZGFkX3ByZWNpbzogNCwgZWxhc3RpY2lkYWRfaW52ZXJzaW9uOiAzLCBjcmVjaW1pZW50b19kZW1hbmRhOiAwLjAzLCB2aWRhX3V0aWxfZmlybWU6IDMwLCB0YXNhX2FwcmVuZGl6YWplOiAwLjIwfTtcbiAgY29uc3Qgbm9tYnJlcyA9IHtyZXRhcmRvX2NvbnN0cnVjdG9yX2Zpcm1lOiBcInJldGFyZG8gY29uc3RydWN0b3JcIiwgc2Vuc2liaWxpZGFkX3ByZWNpbzogXCJzZW5zaWJpbGlkYWQgZGVsIHByZWNpb1wiLCBlbGFzdGljaWRhZF9pbnZlcnNpb246IFwiZWxhc3RpY2lkYWQgZGUgaW52ZXJzacOzblwiLCBjcmVjaW1pZW50b19kZW1hbmRhOiBcImNyZWNpbWllbnRvIGRlIGxhIGRlbWFuZGFcIiwgdmlkYV91dGlsX2Zpcm1lOiBcInZpZGEgw7p0aWwgZmlybWVcIiwgdGFzYV9hcHJlbmRpemFqZTogXCJ0YXNhIGRlIGFwcmVuZGl6YWplXCJ9O1xuICBjb25zdCBmbmNlciA9IG1ldHJpY2FULnN0YXJ0c1dpdGgoXCJjYXBhY2lkYWRcIik7XG4gIGNvbnN0IGV4dHJhID0gZm5jZXIgPyB7c3ViYXN0YV9mbmNlcjogMzAwfSA6IHt9O1xuICBjb25zdCBtZWRpciA9IChwYXJhbWV0cm9zKSA9PiB7XG4gICAgY29uc3QgciA9IHNpbXVsYXIobWVyY2Fkb0NvblBvbGl0aWNhcyh7Li4uY2FzbywgLi4uZXh0cmEsIC4uLnBhcmFtZXRyb3N9KSwge3RGaW5hbDogNDAsIHBhc286IDAuMDV9KTtcbiAgICBpZiAoZm5jZXIpIHJldHVybiByLnZhcmlhYmxlcy5jYXBhY2lkYWRfZm5jZXIuYXQoLTEpO1xuICAgIGNvbnN0IG0gPSByLnZhcmlhYmxlcy5tYXJnZW5fcmVzZXJ2YS5maWx0ZXIoKF8sIGspID0+IHIudGllbXBvW2tdID49IDUpO1xuICAgIHJldHVybiBtZXRyaWNhVC5zdGFydHNXaXRoKFwiYW1wbGl0dWRcIikgPyBNYXRoLm1heCguLi5tKSAtIE1hdGgubWluKC4uLm0pIDogTWF0aC5taW4oLi4ubSk7XG4gIH07XG4gIGNvbnN0IGJhc2UgPSBtZWRpcih7fSk7XG4gIGNvbnN0IGYgPSByYW5nb1QgLyAxMDA7XG4gIGNvbnN0IGZpbGFzID0gT2JqZWN0LmtleXMoY2FzbykubWFwKChwKSA9PiB7XG4gICAgY29uc3QgYmFqbyA9IG1lZGlyKHtbcF06IGNhc29bcF0gKiAoMSAtIGYpfSksIGFsdG8gPSBtZWRpcih7W3BdOiBjYXNvW3BdICogKDEgKyBmKX0pO1xuICAgIHJldHVybiB7cGFyYW1ldHJvOiBub21icmVzW3BdLCBiYWpvLCBhbHRvLCBhbmNobzogTWF0aC5hYnMoYWx0byAtIGJham8pfTtcbiAgfSkuc29ydCgoYSwgYikgPT4gYi5hbmNobyAtIGEuYW5jaG8pO1xuICBjb25zdCBmb3JtYXRvID0gZm5jZXIgPyAoeCkgPT4gYCR7Zm9ybWF0b051bWVybygwKSh4KX0gTVdgIDogKHgpID0+IGZvcm1hdG9Qb3JjZW50YWplKHgsIDIpO1xuICByZXR1cm4ge2Jhc2UsIGZpbGFzLCBmb3JtYXRvLCBmbmNlcn07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEzIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDI5MCwgbWFyZ2luTGVmdDogMTcwLFxuICB4OiB7bGFiZWw6IG1ldHJpY2FULCBncmlkOiB0cnVlLCB0aWNrRm9ybWF0OiB0b3JuYWRvVC5mbmNlciA/IGZvcm1hdG9OdW1lcm8oMCkgOiAoZCkgPT4gZm9ybWF0b1BvcmNlbnRhamUoZCwgMSl9LFxuICB5OiB7ZG9tYWluOiB0b3JuYWRvVC5maWxhcy5tYXAoKGYpID0+IGYucGFyYW1ldHJvKSwgbGFiZWw6IG51bGx9LFxuICBtYXJrczogW1xuICAgIFBsb3QuYmFyWCh0b3JuYWRvVC5maWxhcywge3k6IFwicGFyYW1ldHJvXCIsIHgxOiB0b3JuYWRvVC5iYXNlLCB4MjogXCJiYWpvXCIsIGZpbGw6IFwiI0JEQkRCRFwifSksXG4gICAgUGxvdC5iYXJYKHRvcm5hZG9ULmZpbGFzLCB7eTogXCJwYXJhbWV0cm9cIiwgeDE6IHRvcm5hZG9ULmJhc2UsIHgyOiBcImFsdG9cIiwgZmlsbDogQ09MT1JFUy5henVsLCBmaWxsT3BhY2l0eTogMC44NX0pLFxuICAgIFBsb3QucnVsZVgoW3Rvcm5hZG9ULmJhc2VdLCB7c3Ryb2tlOiBDT0xPUkVTLmdyaXMsIHN0cm9rZURhc2hhcnJheTogXCI0IDNcIn0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkNhc28gYmFzZTxiPiR7dG9ybmFkb1QuZm9ybWF0byh0b3JuYWRvVC5iYXNlKX08L2I+PC9kaXY+XG4gIDxkaXY+UHJpbWVyIGx1Z2FyPGI+JHt0b3JuYWRvVC5maWxhc1swXS5wYXJhbWV0cm99OiAke3Rvcm5hZG9ULmZvcm1hdG8odG9ybmFkb1QuZmlsYXNbMF0uYmFqbyl9IGEgJHt0b3JuYWRvVC5mb3JtYXRvKHRvcm5hZG9ULmZpbGFzWzBdLmFsdG8pfTwvYj48L2Rpdj5cbiAgPGRpdj5TZWd1bmRvIGx1Z2FyPGI+JHt0b3JuYWRvVC5maWxhc1sxXS5wYXJhbWV0cm99OiAke3Rvcm5hZG9ULmZvcm1hdG8odG9ybmFkb1QuZmlsYXNbMV0uYmFqbyl9IGEgJHt0b3JuYWRvVC5mb3JtYXRvKHRvcm5hZG9ULmZpbGFzWzFdLmFsdG8pfTwvYj48L2Rpdj5cbiAgPGRpdj7Dmmx0aW1vIGx1Z2FyPGI+JHt0b3JuYWRvVC5maWxhc1s1XS5wYXJhbWV0cm99PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhbmNob0InKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYXByZW5kaXphamVJJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ21ldHJpY2FUJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3JhbmdvVCcpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana5";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana5/04-politicas-apalancamiento.html" class="pagination-link" aria-label="Políticas y puntos de apalancamiento">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Políticas y puntos de apalancamiento</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
