@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="El método de Euler a mano, el error que introduce el paso de integración, cómo elegirlo y cómo distinguir un comportamiento del sistema de un artefacto numérico.">
+
+<title>La ecuación del stock y la integración numérica: la contabilidad paso a paso – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana4/06-retardos.html" rel="next">
+<link href="../semana4/02-stocks-flujos.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/03-formalismo-integracion.html">La ecuación del stock y la integración numérica: la contabilidad paso a paso</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-caminar-mirando-la-pendiente" id="toc-la-intuición-caminar-mirando-la-pendiente" class="nav-link" data-scroll-target="#la-intuición-caminar-mirando-la-pendiente">2. La intuición: caminar mirando la pendiente</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li><li class="breadcrumb-item"><a href="../semana4/03-formalismo-integracion.html">La ecuación del stock y la integración numérica: la contabilidad paso a paso</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">La ecuación del stock y la integración numérica: la contabilidad paso a paso</h1>
+<p class="subtitle lead">Semana 4 · Concepto 3 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    El método de Euler a mano, el error que introduce el paso de integración, cómo elegirlo y cómo distinguir un comportamiento del sistema de un artefacto numérico.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> ajustePrimerOrden<span class="op">,</span> embalseAgregado<span class="op">,</span> cicloInversionCapacidad<span class="op">,</span> valles<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana4/02-stocks-flujos.html">stocks y flujos</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 3</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Aplicar a mano el método de Euler y construir la tabla de una simulación.</li>
+<li>Elegir el paso de integración y comprobar la convergencia partiendo el paso.</li>
+<li>Distinguir un comportamiento del sistema de un artefacto del método numérico.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Integrar es llevar la contabilidad de la tina en cámara lenta: se congelan los flujos durante un paso corto, se actualizan los stocks y se vuelve a mirar. Con pasos más cortos el error es menor, y la única manera de saber si el paso es suficiente es partirlo y comparar.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Cuando la UPME proyecta la expansión del parque generador o XM evalúa el riesgo de desabastecimiento del próximo verano, detrás de cada gráfica hay un sistema de ecuaciones diferenciales resuelto por un computador. El computador entrega números con el paso de integración que usted le dé, sean razonables o disparatados. Un paso demasiado grueso puede inventar oscilaciones que el sistema no tiene. <strong>¿Cómo sabe usted si la oscilación de una gráfica es del sistema o del método?</strong></p>
+</section>
+<section id="la-intuición-caminar-mirando-la-pendiente" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-caminar-mirando-la-pendiente">2. La intuición: caminar mirando la pendiente</h2>
+<p>Una cartera de 100 MW en construcción se drena sin inicios nuevos, con un retardo constructor de 4 años: <span class="math inline">dP/dt = -P/4</span>. El método de Euler no conoce la trayectoria verdadera (línea punteada). Solo sabe dónde está y hacia dónde apunta la pendiente en ese punto.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Euler, un paso a la vez</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-03-euler-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s4-03-euler-1.svg" class="img-fluid" alt="Gráfica de la cartera P contra el tiempo; punto inicial en 100 MW y una flecha con la pendiente de menos 25 MW por año."></a></p>
+<p><strong>Mire la pendiente donde está.</strong> Con <span class="math inline">P = 100</span> MW, la cartera baja a razón de <span class="math inline">100/4 = 25</span> MW/año.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-03-euler-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s4-03-euler-2.svg" class="img-fluid" alt="Un tramo recto de 2 años lleva de 100 a 50 MW; una barra roja marca la distancia de 10,65 MW con la trayectoria verdadera."></a></p>
+<p><strong>Camine dos años con esa pendiente fija.</strong> <span class="math inline">P(2) = 100 - 25 \times 2 = 50</span> MW. La trayectoria verdadera pasa por 60,65 MW: Euler se equivocó en 10,65 MW porque la pendiente se suavizaba mientras caminaba.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-03-euler-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s4-03-euler-3.svg" class="img-fluid" alt="Desde 50 MW, una nueva pendiente de menos 12,5 lleva a 25 MW en el año 4; el error es de 11,79 MW."></a></p>
+<p><strong>Vuelva a mirar y repita.</strong> En 50 MW la pendiente es −12,5 MW/año, y dos años después llega a 25 MW. La trayectoria verdadera pasa por 36,79 MW.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-03-euler-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s4-03-euler-4.svg" class="img-fluid" alt="Euler con paso de 2 años llega a 6,25 MW en el año 8, frente a 13,53 MW de la trayectoria verdadera."></a></p>
+<p><strong>Complete el recorrido.</strong> En el año 8 Euler marca 6,25 MW y la verdad es 13,53 MW. Siempre queda por debajo, porque en un proceso que se frena usa la pendiente más empinada del comienzo de cada tramo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-03-euler-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s4-03-euler-5.svg" class="img-fluid" alt="Se agrega Euler con paso de 1 año, en ámbar, que llega a 10,01 MW en el año 8."></a></p>
+<p><strong>Parta el paso por la mitad.</strong> Con <span class="math inline">\Delta t = 1</span> año, Euler llega a 10,01 MW. El error en el año 8 bajó de 7,28 a 3,52 MW, casi a la mitad.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-03-euler-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s4-03-euler-6.svg" class="img-fluid" alt="Se agrega Euler con paso de medio año, en violeta, que llega a 11,81 MW, más cerca de la trayectoria verdadera."></a></p>
+<p><strong>Pártalo otra vez.</strong> Con <span class="math inline">\Delta t = 0{,}5</span> años llega a 11,81 MW y el error baja a 1,72 MW. Cada vez que el paso se parte, el error se reduce más o menos a la mitad. El módulo <code>mise_sd</code> hace esta caminata miles de veces por usted, y los métodos más finos solo corrigen la pendiente con más astucia.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Sistema dinámico y método de Euler</span>
+</div>
+<p>Un modelo con <span class="math inline">n</span> stocks es el sistema</p>
+<p><span class="math display">\frac{dS_i}{dt} = f_i(S_1, \dots, S_n, t), \qquad S_i(t_0) = S_{i,0},</span></p>
+<p>donde cada <span class="math inline">f_i</span> suma las entradas y resta las salidas del stock <span class="math inline">i</span>. El <strong>método de Euler explícito</strong>, con paso <span class="math inline">\Delta t</span>, aproxima la trayectoria con</p>
+<p><span class="math display">S_i(t + \Delta t) \approx S_i(t) + \Delta t \cdot f_i\big(S_1(t), \dots, S_n(t), t\big).</span></p>
+<p>Su error en un instante fijo es proporcional a <span class="math inline">\Delta t</span>: con la mitad del paso, más o menos la mitad del error.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Anatomía de un paso de Euler</span>
+</div>
+<div class="paso">
+<p><strong>Lea el estado.</strong> Anote el valor de cada stock en el instante <span class="math inline">t</span>. En la cartera: <span class="math inline">P(2) = 50</span> MW.</p>
+</div>
+<div class="paso">
+<p><strong>Evalúe los flujos con ese estado.</strong> Calcule auxiliares y flujos con los stocks de ese instante: <span class="math inline">\text{puesta en servicio} = 50/4 = 12{,}5</span> MW/año.</p>
+</div>
+<div class="paso">
+<p><strong>Congele los flujos durante el paso y actualice.</strong> <span class="math inline">P(4) = 50 + 2 \times (-12{,}5) = 25</span> MW. Las unidades cierran: años por MW/año dan MW.</p>
+</div>
+<div class="paso">
+<p><strong>Avance el reloj y repita.</strong> Con <span class="math inline">t = 4</span> vuelva al primer paso. Una simulación es esta tabla repetida hasta el horizonte.</p>
+</div>
+</div>
+<p>Dos reglas prácticas gobiernan el uso del método:</p>
+<ul>
+<li><strong>Regla del paso.</strong> <span class="math inline">\Delta t</span> debe ser claramente menor que la constante de tiempo más rápida del modelo. En el curso se usa como punto de partida <span class="math inline">\Delta t \le \tau/4</span>, y <strong>siempre</strong> se verifica que al partir el paso los resultados no cambien de manera apreciable.</li>
+<li><strong>Criterio de herramienta.</strong> Euler con paso fino sirve para entender y depurar. Para producir resultados se usa <code>scipy.integrate.solve_ivp</code>, que estima su propio error y ajusta el paso. En <code>mise_sd</code> los dos caminos tienen la misma forma: <code>integrar_euler(modelo, t_final, paso)</code> e <code>integrar(modelo, t_final)</code>.</li>
+</ul>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El paso de integración</span>
+</div>
+<p>La cartera se drena con <span class="math inline">\tau = 4</span> años. Suba el paso y observe cuatro regímenes: preciso, impreciso, con cambio de signo y con oscilación que crece. ¿A partir de qué paso el resultado deja de tener sentido físico?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="125" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 124;"><span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>viewof pasoI <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="fl">0.25</span><span class="op">,</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">10</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Paso Δt [años]"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">2</span>)(d)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="130" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 129;"><span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>eulerI <span class="op">=</span> {</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tau <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">ajustePrimerOrden</span>({<span class="dt">valor_inicial</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">meta</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> tau})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> pasoI<span class="op">,</span> <span class="dt">metodo</span><span class="op">:</span> <span class="st">"euler"</span>})<span class="op">;</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">P</span><span class="op">:</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">stock</span>[k]}))<span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">t</span> <span class="op">&lt;=</span> <span class="dv">24</span> <span class="op">+</span> <span class="fl">1e-9</span>)<span class="op">;</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> exacta <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">241</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> ({<span class="dt">t</span><span class="op">:</span> k <span class="op">/</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">P</span><span class="op">:</span> <span class="dv">100</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>(k <span class="op">/</span> <span class="dv">10</span>) <span class="op">/</span> tau)}))<span class="op">;</span></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> lectura <span class="op">=</span> puntos<span class="op">.</span><span class="fu">find</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">t</span> <span class="op">&gt;=</span> <span class="dv">8</span> <span class="op">-</span> <span class="fl">1e-9</span>)<span class="op">;</span></span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> razon <span class="op">=</span> pasoI <span class="op">/</span> tau<span class="op">;</span></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> veredicto <span class="op">=</span> razon <span class="op">&lt;=</span> <span class="fl">0.25</span> <span class="op">?</span> <span class="st">"Paso fino: confirme partiéndolo antes de reportar"</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> razon <span class="op">&lt;</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"Paso grueso: error apreciable"</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> razon <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"Vacía la cartera en un solo paso"</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> razon <span class="op">&lt;</span> <span class="dv">2</span> <span class="op">?</span> <span class="st">"Cambia de signo: sin sentido físico"</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> razon <span class="op">===</span> <span class="dv">2</span> <span class="op">?</span> <span class="st">"Oscila sin amortiguarse: artefacto numérico"</span></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="st">"Inestable: la oscilación crece"</span><span class="op">;</span></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {puntos<span class="op">,</span> exacta<span class="op">,</span> lectura<span class="op">,</span> <span class="dt">verdad</span><span class="op">:</span> <span class="dv">100</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>lectura<span class="op">.</span><span class="at">t</span> <span class="op">/</span> tau)<span class="op">,</span> razon<span class="op">,</span> veredicto}<span class="op">;</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="149" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 148;"><span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">24</span>]}<span class="op">,</span></span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Cartera P [MW]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">160</span><span class="op">,</span> <span class="dv">160</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>})<span class="op">,</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(eulerI<span class="op">.</span><span class="at">exacta</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"P"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.6</span>})<span class="op">,</span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(eulerI<span class="op">.</span><span class="at">puntos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">-</span><span class="dv">160</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">160</span><span class="op">,</span> d<span class="op">.</span><span class="at">P</span>))<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span>})<span class="op">,</span></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(eulerI<span class="op">.</span><span class="at">puntos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">-</span><span class="dv">160</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">160</span><span class="op">,</span> d<span class="op">.</span><span class="at">P</span>))<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="fl">3.5</span>})<span class="op">,</span></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="164" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 163;"><span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Euler en t = </span><span class="sc">${</span><span class="fu">formatoNumero</span>(eulerI<span class="op">.</span><span class="at">lectura</span><span class="op">.</span><span class="at">t</span> <span class="op">%</span> <span class="dv">1</span> <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">2</span>)(eulerI<span class="op">.</span><span class="at">lectura</span><span class="op">.</span><span class="at">t</span>)<span class="sc">}</span><span class="vs"> años&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(eulerI<span class="op">.</span><span class="at">lectura</span><span class="op">.</span><span class="at">P</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Trayectoria verdadera&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(eulerI<span class="op">.</span><span class="at">verdad</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Δt / τ&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(eulerI<span class="op">.</span><span class="at">razon</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Diagnóstico&lt;b&gt;</span><span class="sc">${</span>eulerI<span class="op">.</span><span class="at">veredicto</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo <code>mise_sd.modelos.ajuste_primer_orden</code> con meta cero, integrado con Euler (<code>metodo: "euler"</code>). La gráfica recorta los valores fuera de ±160 MW.</p>
+</div>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="la-cuenta-de-ahorros-a-mano" class="level3">
+<h3 class="anchored" data-anchor-id="la-cuenta-de-ahorros-a-mano">La cuenta de ahorros, a mano</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Cinco años de interés con Euler</span>
+</div>
+<p><strong>Planteamiento.</strong> Una cuenta con 100 (en millones de pesos) paga interés continuo del 5 % anual: <span class="math inline">dS/dt = 0{,}05\,S</span>. Integre a mano con <span class="math inline">\Delta t = 1</span> año durante cinco años y compare con la solución exacta <span class="math inline">S(t) = 100\,e^{0{,}05\,t}</span>.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La tabla de Euler, fila por fila</span>
+</div>
+<div class="paso">
+<p><strong>Escriba la recurrencia.</strong> Con <span class="math inline">\Delta t = 1</span>, cada fila multiplica el saldo por <span class="math inline">1 + 0{,}05 \times 1 = 1{,}05</span>:</p>
+<p><span class="math display">S(t+1) = S(t) + 1 \times 0{,}05\,S(t).</span></p>
+</div>
+<div class="paso">
+<p><strong>Calcule las dos primeras filas.</strong> En <span class="math inline">t = 0</span> el flujo es <span class="math inline">0{,}05 \times 100 = 5</span>, así que <span class="math inline">S(1) = 105</span>. En <span class="math inline">t = 1</span> el flujo es <span class="math inline">0{,}05 \times 105 = 5{,}25</span> y <span class="math inline">S(2) = 110{,}25</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">t</span> [años]</th>
+<th style="text-align: center;"><span class="math inline">S</span> Euler</th>
+<th style="text-align: center;">flujo <span class="math inline">0{,}05\,S</span></th>
+<th style="text-align: center;"><span class="math inline">S</span> exacta</th>
+<th style="text-align: center;">error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100,00</td>
+<td style="text-align: center;">5,00</td>
+<td style="text-align: center;">100,00</td>
+<td style="text-align: center;">0,00</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">105,00</td>
+<td style="text-align: center;">5,25</td>
+<td style="text-align: center;">105,13</td>
+<td style="text-align: center;">0,13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">110,25</td>
+<td style="text-align: center;">5,51</td>
+<td style="text-align: center;">110,52</td>
+<td style="text-align: center;">0,27</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Complete la tabla.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">t</span> [años]</th>
+<th style="text-align: center;"><span class="math inline">S</span> Euler</th>
+<th style="text-align: center;">flujo <span class="math inline">0{,}05\,S</span></th>
+<th style="text-align: center;"><span class="math inline">S</span> exacta</th>
+<th style="text-align: center;">error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">115,76</td>
+<td style="text-align: center;">5,79</td>
+<td style="text-align: center;">116,18</td>
+<td style="text-align: center;">0,42</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">121,55</td>
+<td style="text-align: center;">6,08</td>
+<td style="text-align: center;">122,14</td>
+<td style="text-align: center;">0,59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">127,63</td>
+<td style="text-align: center;">6,38</td>
+<td style="text-align: center;">128,40</td>
+<td style="text-align: center;">0,77</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Explique el signo del error.</strong> Euler queda siempre por debajo. Congela el interés del comienzo de cada año, cuando el saldo era menor; en un proceso que crece, subestima. En la cartera que se drenaba ocurría lo mismo por la razón simétrica: usaba la pendiente más empinada del comienzo del tramo.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Verifique la tabla con Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Verifique la tabla con Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="a611465f" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> Modelo, integrar_euler</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>cuenta <span class="op">=</span> Modelo(<span class="st">"cuenta"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>cuenta.stock(<span class="st">"saldo"</span>, <span class="fl">100.0</span>, entradas<span class="op">=</span>(<span class="st">"interes"</span>,))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>cuenta.flujo(<span class="st">"interes"</span>, <span class="kw">lambda</span> t, e: <span class="fl">0.05</span> <span class="op">*</span> e[<span class="st">"saldo"</span>])</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> integrar_euler(cuenta, t_final<span class="op">=</span><span class="fl">5.0</span>, paso<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t, s <span class="kw">in</span> <span class="bu">zip</span>(r.tiempo, r[<span class="st">"saldo"</span>]):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    exacta <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> math.exp(<span class="fl">0.05</span> <span class="op">*</span> t)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"t = </span><span class="sc">{</span>t<span class="sc">:.0f}</span><span class="ss">   Euler = </span><span class="sc">{</span>s<span class="sc">:7.2f}</span><span class="ss">   exacta = </span><span class="sc">{</span>exacta<span class="sc">:7.2f}</span><span class="ss">   error = </span><span class="sc">{</span>exacta <span class="op">-</span> s<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t = 0   Euler =  100.00   exacta =  100.00   error = 0.00
+t = 1   Euler =  105.00   exacta =  105.13   error = 0.13
+t = 2   Euler =  110.25   exacta =  110.52   error = 0.27
+t = 3   Euler =  115.76   exacta =  116.18   error = 0.42
+t = 4   Euler =  121.55   exacta =  122.14   error = 0.59
+t = 5   Euler =  127.63   exacta =  128.40   error = 0.77</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="el-embalse-con-aportes-estacionales" class="level3">
+<h3 class="anchored" data-anchor-id="el-embalse-con-aportes-estacionales">El embalse con aportes estacionales</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">¿Cuándo está más lleno el embalse?</span>
+</div>
+<p><strong>Planteamiento.</strong> El embalse agregado arranca con 8 000 GWh. Los aportes siguen una estacionalidad simplificada, <span class="math inline">A(t) = 150 + 60\,\text{sen}(2\pi t/365)</span> [GWh/día], con el máximo el día 91; el turbinamiento es constante, <span class="math inline">G = 150</span> GWh/día. ¿Qué día alcanza el embalse su nivel máximo y cuánto oscila?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el embalse antes de simular</span>
+</div>
+<div class="paso">
+<p><strong>Escriba el flujo neto.</strong> <span class="math inline">\dfrac{dE}{dt} = A - G = 60\,\text{sen}(2\pi t/365)</span> [GWh/día]. Es positivo durante la primera mitad del año y negativo en la segunda.</p>
+</div>
+<div class="paso">
+<p><strong>Aplique lo que sabe de stocks.</strong> El nivel sube mientras el flujo neto es positivo y baja cuando se vuelve negativo. El máximo del stock está donde el flujo neto cruza cero hacia abajo.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule la amplitud.</strong> Integrando, <span class="math inline">E(t) = 8\,000 + \dfrac{60 \times 365}{2\pi}\big(1 - \cos(2\pi t/365)\big)</span>. El factor <span class="math inline">60 \times 365 / (2\pi) = 3\,485</span> GWh es la amplitud de la oscilación del nivel.</p>
+</div>
+</div>
+<div id="pred-maximo-embalse" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Qué día del año alcanza el embalse su nivel máximo?</p>
+<div class="opcion">
+<p>Hacia el día 91, cuando los aportes son máximos.</p>
+</div>
+<div class="opcion">
+<p>Hacia el día 182, cuando los aportes caen por debajo del turbinamiento.</p>
+</div>
+<div class="opcion">
+<p>El día 365, al cerrar el año.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Embalse estacional e integrador</span>
+</div>
+<p>Con el integrador de referencia, lea el día del máximo y compare con su predicción. Después cambie a Euler con pasos de 30 y de 91 días: ¿qué le hace un paso grueso al día del máximo y a la amplitud?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="279" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 278;"><span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>viewof periodoS <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"anual (365 días)"</span><span class="op">,</span> <span class="st">"semestral (182,5 días)"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"anual (365 días)"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Periodo de los aportes"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="284" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 283;"><span id="cb9-284"><a href="#cb9-284" aria-hidden="true" tabindex="-1"></a>viewof integradorS <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"RK4, paso de medio día"</span><span class="op">,</span> <span class="st">"Euler, paso de 30 días"</span><span class="op">,</span> <span class="st">"Euler, paso de 91 días"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"RK4, paso de medio día"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Integrador"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="289" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 288;"><span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a>embalseS <span class="op">=</span> {</span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> periodo <span class="op">=</span> periodoS<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"anual"</span>) <span class="op">?</span> <span class="dv">365</span> <span class="op">:</span> <span class="fl">182.5</span><span class="op">;</span></span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> [metodo<span class="op">,</span> paso] <span class="op">=</span> integradorS<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"RK4"</span>) <span class="op">?</span> [<span class="st">"rk4"</span><span class="op">,</span> <span class="fl">0.5</span>] <span class="op">:</span> [<span class="st">"euler"</span><span class="op">,</span> integradorS<span class="op">.</span><span class="fu">includes</span>(<span class="st">"30"</span>) <span class="op">?</span> <span class="dv">30</span> <span class="op">:</span> <span class="dv">91</span>]<span class="op">;</span></span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> modelo <span class="op">=</span> (m<span class="op">,</span> p) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">embalseAgregado</span>({<span class="dt">energia_inicial</span><span class="op">:</span> <span class="dv">8000</span><span class="op">,</span> <span class="dt">aportes_medios</span><span class="op">:</span> <span class="dv">150</span><span class="op">,</span> <span class="dt">amplitud_aportes</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">periodo_aportes</span><span class="op">:</span> periodo<span class="op">,</span> <span class="dt">turbinamiento</span><span class="op">:</span> <span class="dv">150</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">730</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> p<span class="op">,</span> <span class="dt">metodo</span><span class="op">:</span> m})<span class="op">;</span></span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">modelo</span>(metodo<span class="op">,</span> paso)<span class="op">;</span></span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> referencia <span class="op">=</span> <span class="fu">modelo</span>(<span class="st">"rk4"</span><span class="op">,</span> <span class="fl">0.5</span>)<span class="op">;</span></span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> e <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">energia_embalsada</span><span class="op">;</span></span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> primerAnio <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">e</span><span class="op">:</span> e[k]}))<span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">t</span> <span class="op">&lt;=</span> periodo <span class="op">+</span> paso <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> maximo <span class="op">=</span> primerAnio<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> d) <span class="kw">=&gt;</span> (d<span class="op">.</span><span class="at">e</span> <span class="op">&gt;</span> a<span class="op">.</span><span class="at">e</span> <span class="op">?</span> d <span class="op">:</span> a)<span class="op">,</span> primerAnio[<span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">e</span><span class="op">:</span> e[k]}))<span class="op">,</span></span>
+<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a>    <span class="dt">referencia</span><span class="op">:</span> referencia<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">e</span><span class="op">:</span> referencia<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">energia_embalsada</span>[k]}))<span class="op">,</span></span>
+<span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a>    maximo<span class="op">,</span> <span class="dt">amplitud</span><span class="op">:</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>e) <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>e)) <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> metodo<span class="op">,</span></span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="308" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 307;"><span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [días]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">730</span>]}<span class="op">,</span></span>
+<span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Energía embalsada [GWh]"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">6000</span><span class="op">,</span> <span class="dv">16000</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a>    embalseS<span class="op">.</span><span class="at">metodo</span> <span class="op">===</span> <span class="st">"euler"</span> <span class="op">?</span> Plot<span class="op">.</span><span class="fu">line</span>(embalseS<span class="op">.</span><span class="at">referencia</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"e"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>}) <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(embalseS<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"e"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a>    embalseS<span class="op">.</span><span class="at">metodo</span> <span class="op">===</span> <span class="st">"euler"</span> <span class="op">?</span> Plot<span class="op">.</span><span class="fu">dot</span>(embalseS<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"e"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span>}) <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([embalseS<span class="op">.</span><span class="at">maximo</span>]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"e"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">6</span>})<span class="op">,</span></span>
+<span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="323" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 322;"><span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Día del primer máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(embalseS<span class="op">.</span><span class="at">maximo</span><span class="op">.</span><span class="at">t</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Nivel máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(embalseS<span class="op">.</span><span class="at">maximo</span><span class="op">.</span><span class="at">e</span>)<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Amplitud de la oscilación&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(embalseS<span class="op">.</span><span class="at">amplitud</span>)<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-327"><a href="#cb12-327" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo <code>mise_sd.modelos.embalse_agregado</code> con aportes senoidales y números redondos con fines didácticos. Con Euler, la línea gris es la referencia RK4.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-maximo-embalse"></span>. El nivel máximo llega el día 182,5, cuando los aportes cruzan hacia abajo el turbinamiento, un cuarto de periodo después del pico de lluvias: la respuesta B. El nivel sube a 14 971 GWh y la amplitud es de 3 485 GWh, como anticipaba la cuenta. Con aportes semestrales la amplitud se reduce a la mitad (1 743 GWh), porque el stock tiene menos tiempo para acumular cada desbalance. Con Euler el cuadro se deforma: con paso de 30 días el máximo aparece el día 210, y con 91 días aparece el día 273 y la amplitud cae a 2 800 GWh. Un paso de un cuarto de periodo es demasiado grueso para una oscilación.</p>
+</section>
+<section id="las-tres-ecuaciones-del-ciclo-inversión-capacidad" class="level3">
+<h3 class="anchored" data-anchor-id="las-tres-ecuaciones-del-ciclo-inversión-capacidad">Las tres ecuaciones del ciclo inversión-capacidad</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Euler grueso contra el integrador de referencia</span>
+</div>
+<p><strong>Planteamiento.</strong> El modelo del curso tiene tres stocks acoplados, capacidad instalada <span class="math inline">K</span>, proyectos en construcción <span class="math inline">P</span> y demanda <span class="math inline">D</span> [MW]:</p>
+<p><span class="math display">\frac{dK}{dt} = \frac{P}{\tau_c} - \frac{K}{\tau_v}, \qquad \frac{dP}{dt} = I(K, D) - \frac{P}{\tau_c}, \qquad \frac{dD}{dt} = g\,D,</span></p>
+<p>con retardo constructor <span class="math inline">\tau_c = 4</span> años, vida útil <span class="math inline">\tau_v = 30</span> años, crecimiento <span class="math inline">g = 0{,}03</span> por año y una regla de inversión <span class="math inline">I</span> [MW/año] no lineal, porque pasa por el precio. ¿Qué paso de Euler es aceptable para este modelo?</p>
+</div>
+<div id="pred-euler-ciclo" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Con Euler y un paso de un año, el margen de reserva mínimo en 60 años…</p>
+<div class="opcion">
+<p>coincide con el de referencia (25,0 %), porque un año es poco frente a 60.</p>
+</div>
+<div class="opcion">
+<p>queda varios puntos por debajo y el ciclo sigue oscilando cuando la referencia ya se calmó.</p>
+</div>
+<div class="opcion">
+<p>se vuelve negativo, porque el método es inestable.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Convergencia del modelo del curso</span>
+</div>
+<p>Recorra los pasos de mayor a menor y observe cómo el margen mínimo se acerca a la referencia (línea gris, RK4 con paso de 0,05 años).</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="368" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 367;"><span id="cb13-368"><a href="#cb13-368" aria-hidden="true" tabindex="-1"></a>viewof pasoC <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.25</span><span class="op">,</span> <span class="fl">0.05</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Paso de Euler [años]"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">2</span>)(d)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="373" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 372;"><span id="cb14-373"><a href="#cb14-373" aria-hidden="true" tabindex="-1"></a>cicloC <span class="op">=</span> {</span>
+<span id="cb14-374"><a href="#cb14-374" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ref <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">cicloInversionCapacidad</span>()<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb14-375"><a href="#cb14-375" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> eu <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">cicloInversionCapacidad</span>()<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> pasoC<span class="op">,</span> <span class="dt">metodo</span><span class="op">:</span> <span class="st">"euler"</span>})<span class="op">;</span></span>
+<span id="cb14-376"><a href="#cb14-376" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> minimo <span class="op">=</span> (v) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>v)<span class="op">;</span></span>
+<span id="cb14-377"><a href="#cb14-377" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb14-378"><a href="#cb14-378" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ref</span><span class="op">:</span> ref<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> ref<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]}))<span class="op">,</span></span>
+<span id="cb14-379"><a href="#cb14-379" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eu</span><span class="op">:</span> eu<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> eu<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]}))<span class="op">,</span></span>
+<span id="cb14-380"><a href="#cb14-380" aria-hidden="true" tabindex="-1"></a>    <span class="dt">minEu</span><span class="op">:</span> <span class="fu">minimo</span>(eu<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>)<span class="op">,</span> <span class="dt">minRef</span><span class="op">:</span> <span class="fu">minimo</span>(ref<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>)<span class="op">,</span></span>
+<span id="cb14-381"><a href="#cb14-381" aria-hidden="true" tabindex="-1"></a>    <span class="dt">vallesEu</span><span class="op">:</span> <span class="fu">valles</span>(eu<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> eu<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb14-382"><a href="#cb14-382" aria-hidden="true" tabindex="-1"></a>    <span class="dt">vallesRef</span><span class="op">:</span> <span class="fu">valles</span>(ref<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> ref<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb14-383"><a href="#cb14-383" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb14-384"><a href="#cb14-384" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="389" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 388;"><span id="cb15-389"><a href="#cb15-389" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb15-390"><a href="#cb15-390" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb15-391"><a href="#cb15-391" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
+<span id="cb15-392"><a href="#cb15-392" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">0.9</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb15-393"><a href="#cb15-393" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb15-394"><a href="#cb15-394" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.30</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb15-395"><a href="#cb15-395" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(cicloC<span class="op">.</span><span class="at">ref</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.8</span>})<span class="op">,</span></span>
+<span id="cb15-396"><a href="#cb15-396" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(cicloC<span class="op">.</span><span class="at">eu</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span>})<span class="op">,</span></span>
+<span id="cb15-397"><a href="#cb15-397" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb15-398"><a href="#cb15-398" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="403" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 402;"><span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Margen mínimo con Euler&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(cicloC<span class="op">.</span><span class="at">minEu</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Margen mínimo de referencia&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(cicloC<span class="op">.</span><span class="at">minRef</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Diferencia&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(<span class="dv">100</span> <span class="op">*</span> (cicloC<span class="op">.</span><span class="at">minEu</span> <span class="op">-</span> cicloC<span class="op">.</span><span class="at">minRef</span>))<span class="sc">}</span><span class="vs"> puntos&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Valles en 60 años&lt;b&gt;</span><span class="sc">${</span>cicloC<span class="op">.</span><span class="at">vallesEu</span><span class="sc">}</span><span class="vs"> con Euler, </span><span class="sc">${</span>cicloC<span class="op">.</span><span class="at">vallesRef</span><span class="sc">}</span><span class="vs"> de referencia&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.ciclo_inversion_capacidad</code>, con datos sintéticos con fines didácticos.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la prueba de convergencia</span>
+</div>
+<div class="paso">
+<p><strong>Tabule el error.</strong> La diferencia del margen mínimo con la referencia es de −14,46 puntos con <span class="math inline">\Delta t = 2</span>; −3,93 con 1; −1,59 con 0,5; −0,73 con 0,25, y −0,14 con 0,05. Por debajo de un año, cada vez que el paso se parte, el error se reduce más o menos a la mitad.</p>
+</div>
+<div class="paso">
+<p><strong>Detecte el artefacto.</strong> Con <span class="math inline">\Delta t = 1</span> año el margen muestra cinco valles en 60 años, mientras que la referencia muestra dos y se calma. Euler grueso le agrega al ciclo una oscilación persistente que el modelo no tiene.</p>
+</div>
+<div class="paso">
+<p><strong>Aplique la regla del paso.</strong> La constante de tiempo más rápida es <span class="math inline">\tau_c = 4</span> años, así que <span class="math inline">\tau_c/4 = 1</span> año es el límite para explorar. Para reportar, <span class="math inline">\Delta t = 1</span> queda descartado: cambia el mínimo en casi cuatro puntos.</p>
+</div>
+<div class="paso">
+<p><strong>Contraste con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-euler-ciclo"></span>. Con paso de un año el margen mínimo es de 21,1 % frente a 25,0 % y el ciclo sigue oscilando: la respuesta B. En el informe basta una frase: «integrado con RK45 (<code>solve_ivp</code>); con Euler, pasar de 0,5 a 0,25 años cambia el margen mínimo en menos de un punto».</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="La misma prueba en Python, como en el Laboratorio 3">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>La misma prueba en Python, como en el Laboratorio 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="d854aa4c" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar, integrar_euler</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> ciclo_inversion_capacidad</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>referencia <span class="op">=</span> integrar(ciclo_inversion_capacidad(), t_final<span class="op">=</span><span class="fl">60.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>minimo_ref <span class="op">=</span> referencia[<span class="st">"margen_reserva"</span>].<span class="bu">min</span>()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paso <span class="kw">in</span> (<span class="fl">2.0</span>, <span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">0.25</span>, <span class="fl">0.05</span>):</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    euler <span class="op">=</span> integrar_euler(ciclo_inversion_capacidad(), t_final<span class="op">=</span><span class="fl">60.0</span>, paso<span class="op">=</span>paso)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    diferencia <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> (euler[<span class="st">"margen_reserva"</span>].<span class="bu">min</span>() <span class="op">-</span> minimo_ref)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"paso = </span><span class="sc">{</span>paso<span class="sc">:4.2f}</span><span class="ss"> años   margen mínimo = </span><span class="sc">{</span>euler[<span class="st">'margen_reserva'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.3f}</span><span class="ss">   diferencia = </span><span class="sc">{</span>diferencia<span class="sc">:+.2f}</span><span class="ss"> puntos"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>paso = 2.00 años   margen mínimo = 0.106   diferencia = -14.46 puntos
+paso = 1.00 años   margen mínimo = 0.211   diferencia = -3.93 puntos
+paso = 0.50 años   margen mínimo = 0.234   diferencia = -1.59 puntos
+paso = 0.25 años   margen mínimo = 0.243   diferencia = -0.73 puntos
+paso = 0.05 años   margen mínimo = 0.249   diferencia = -0.14 puntos</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Usar un paso demasiado grande</span>
+</div>
+<p>Los síntomas son oscilaciones en diente de sierra o stocks que cambian de signo sin razón física. En un proceso de primer orden con constante <span class="math inline">\tau</span>, Euler cambia el signo del stock cuando <span class="math inline">\Delta t &gt; \tau</span> y se vuelve inestable cuando <span class="math inline">\Delta t &gt; 2\tau</span>.</p>
+<div id="84ce4331" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="03-formalismo-integracion_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Cartera que se drena con τ = 4 años, integrada con Euler y pasos de 6 y 10 años."><img src="03-formalismo-integracion_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" alt="Cartera que se drena con τ = 4 años, integrada con Euler y pasos de 6 y 10 años."></a></p>
+<figcaption>Cartera que se drena con τ = 4 años, integrada con Euler y pasos de 6 y 10 años.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Ante cualquier comportamiento sospechoso, lo primero es partir el paso por la mitad y comparar.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Reportar sin prueba de convergencia</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Lo corrí con paso de un año y el margen mínimo fue de 21,1 %.»</p>
+</div>
+<div class="bien">
+<p>«Integrado con RK45 (<code>solve_ivp</code>), margen mínimo de 25,0 %. Con Euler, pasar de 0,5 a 0,25 años cambia el mínimo en menos de un punto.»</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Mezclar unidades de tiempo</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>El crecimiento mensual de la demanda (0,25 %) se escribe en un modelo anual como <span class="math inline">g = 0{,}0025</span> por año. En 10 años la demanda crece 2,5 %.</p>
+</div>
+<div class="bien">
+<p>Con el tiempo en años, <span class="math inline">g = 0{,}03</span> por año (unos 0,25 % mensuales). En 10 años la demanda crece 35 %. Escriba las unidades junto a cada parámetro y el error salta a la vista.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué hace el método de Euler en cada paso?</p>
+<div class="opcion" data-correcta="si">
+<p>Evalúa los flujos con el estado actual, los mantiene fijos durante <span class="math inline">\Delta t</span> y actualiza los stocks.</p>
+<p><span class="porque">Correcto: es la contabilidad de la tina en cámara lenta.</span></p>
+</div>
+<div class="opcion">
+<p>Calcula la solución exacta y la muestrea cada <span class="math inline">\Delta t</span>.</p>
+<p><span class="porque">Euler no conoce la solución exacta; solo la pendiente del punto donde está.</span></p>
+</div>
+<div class="opcion">
+<p>Promedia los flujos del inicio y del final del paso.</p>
+<p><span class="porque">Eso hacen métodos más finos; Euler usa solo los del inicio.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con Euler, un modelo da un error de 4 puntos con paso de 1 año. ¿Qué error espera con paso de 0,5 años?</p>
+<div class="opcion">
+<p>4 puntos, porque el error depende del modelo y no del paso.</p>
+<p><span class="porque">Revise la definición: el error de Euler es proporcional al paso.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Unos 2 puntos.</p>
+<p><span class="porque">Correcto: en el modelo del curso, de −3,93 a −1,59 puntos.</span></p>
+</div>
+<div class="opcion">
+<p>Unos 1 punto, porque el error cae con el cuadrado del paso.</p>
+<p><span class="porque">Esa convergencia corresponde a métodos de segundo orden, no a Euler.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un proceso tiene constante de tiempo <span class="math inline">\tau = 4</span> años y lo integra con Euler y <span class="math inline">\Delta t = 6</span> años. ¿Qué espera?</p>
+<div class="opcion">
+<p>Un resultado impreciso pero con el signo correcto.</p>
+<p><span class="porque">Con <span class="math inline">\Delta t &gt; \tau</span> el primer paso drena más de lo que hay.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Un stock que cambia de signo en el primer paso.</p>
+<p><span class="porque">Correcto: <span class="math inline">100 \times (1 - 6/4) = -50</span>.</span></p>
+</div>
+<div class="opcion">
+<p>Una oscilación que crece sin límite.</p>
+<p><span class="porque">Eso ocurre con <span class="math inline">\Delta t &gt; 2\tau = 8</span> años.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Los aportes a un embalse son máximos el día 91 y cruzan hacia abajo el turbinamiento el día 182. ¿Cuándo es máximo el nivel?</p>
+<div class="opcion">
+<p>El día 91.</p>
+<p><span class="porque">Mientras los aportes superen al turbinamiento, el nivel sigue subiendo.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>El día 182.</p>
+<p><span class="porque">Correcto: el máximo del stock coincide con el cruce por cero del flujo neto.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Su simulación muestra una oscilación que no se calma. ¿Qué hace primero?</p>
+<div class="opcion">
+<p>La reporta como un hallazgo sobre el sistema.</p>
+<p><span class="porque">Antes de interpretarla hay que descartar un artefacto numérico.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Parte el paso por la mitad, o usa <code>solve_ivp</code>, y compara.</p>
+<p><span class="porque">Correcto: si la oscilación desaparece o cambia mucho, era del método.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-euler-a-mano" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-euler-a-mano">Ejercicio 1 ●○○ · Euler a mano</h4>
+<p>Complete la tabla de Euler para <span class="math inline">dS/dt = -S/5</span> con <span class="math inline">S(0) = 100</span> y <span class="math inline">\Delta t = 1</span> año, hasta <span class="math inline">t = 4</span>. Compare con la solución exacta <span class="math inline">100\,e^{-t/5}</span> y calcule el error porcentual en <span class="math inline">t = 4</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Cada paso multiplica por <span class="math inline">1 - 1/5 = 0{,}8</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">t</span></th>
+<th style="text-align: center;">Euler</th>
+<th style="text-align: center;">exacta</th>
+<th style="text-align: center;">error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100,00</td>
+<td style="text-align: center;">100,00</td>
+<td style="text-align: center;">0,00</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">80,00</td>
+<td style="text-align: center;">81,87</td>
+<td style="text-align: center;">1,87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">64,00</td>
+<td style="text-align: center;">67,03</td>
+<td style="text-align: center;">3,03</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">51,20</td>
+<td style="text-align: center;">54,88</td>
+<td style="text-align: center;">3,68</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">40,96</td>
+<td style="text-align: center;">44,93</td>
+<td style="text-align: center;">3,97</td>
+</tr>
+</tbody>
+</table>
+<p>En <span class="math inline">t = 4</span> el error es <span class="math inline">3{,}97/44{,}93 \approx 8{,}8</span> % por debajo de la solución exacta. Con <span class="math inline">\Delta t/\tau = 0{,}2</span> el paso cumple la regla del cuarto, pero el error sigue siendo apreciable: por eso la regla es un punto de partida y la prueba de convergencia es obligatoria.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-la-amplitud-del-embalse" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-la-amplitud-del-embalse">Ejercicio 2 ●●○ · La amplitud del embalse</h4>
+<p>Para el embalse con <span class="math inline">dE/dt = 60\,\text{sen}(2\pi t/T)</span>, deduzca la amplitud de la oscilación del nivel para <span class="math inline">T = 365</span> y <span class="math inline">T = 182{,}5</span> días. ¿Por qué los stocks amortiguan mejor las perturbaciones rápidas que las lentas?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Integre el seno: <span class="math inline">\int 60\,\text{sen}(2\pi t/T)\,dt = -\dfrac{60\,T}{2\pi}\cos(2\pi t/T)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">E(t) = E_0 + \dfrac{60\,T}{2\pi}\big(1 - \cos(2\pi t/T)\big)</span>, así que la amplitud es <span class="math inline">60\,T/(2\pi)</span>: 3 485 GWh con <span class="math inline">T = 365</span> días y 1 743 GWh con <span class="math inline">T = 182{,}5</span> días.</p>
+<p>La amplitud es proporcional al periodo. Un desbalance que dura poco se acumula poco antes de invertirse; uno que dura mucho se acumula durante más tiempo. Por eso el embalse absorbe con facilidad las variaciones de una semana y sufre con una sequía de varios meses como El Niño.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Un modelo es un sistema <span class="math inline">dS_i/dt = f_i(S, t)</span>. <strong>Euler</strong> lo resuelve congelando los flujos durante un paso: <span class="math inline">S(t + \Delta t) \approx S(t) + \Delta t \cdot f(S(t), t)</span>.</li>
+<li>El error de Euler es proporcional al paso. Partir el paso y comparar es la <strong>prueba de convergencia</strong>, obligatoria antes de reportar.</li>
+<li>Punto de partida: <span class="math inline">\Delta t \le \tau/4</span> de la constante de tiempo más rápida. Con <span class="math inline">\Delta t &gt; \tau</span> un stock de primer orden cambia de signo, y con <span class="math inline">\Delta t &gt; 2\tau</span> la oscilación crece.</li>
+<li>Un paso grueso puede <strong>inventar</strong> oscilaciones: en el modelo del curso, Euler con paso de un año muestra cinco valles donde la referencia muestra dos.</li>
+<li>Para producir resultados, <code>solve_ivp</code> (<code>mise_sd.integrar</code>); para entender y depurar, Euler (<code>mise_sd.integrar_euler</code>).</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «El formalismo dS/dt y la integración numérica» de las notas de la semana 4 incluye el ejercicio de graficar el error contra el paso en escala logarítmica. La primera media hora del Laboratorio 3 es el ejemplo avanzado de esta página.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgYWp1c3RlUHJpbWVyT3JkZW4sIGVtYmFsc2VBZ3JlZ2FkbywgY2ljbG9JbnZlcnNpb25DYXBhY2lkYWQsIHZhbGxlcywgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgcGFzb0kgPSBJbnB1dHMuc2VsZWN0KFswLjI1LCAwLjUsIDEsIDIsIDQsIDYsIDgsIDEwXSwge3ZhbHVlOiAyLCBsYWJlbDogXCJQYXNvIM6UdCBbYcOxb3NdXCIsIGZvcm1hdDogKGQpID0+IGZvcm1hdG9OdW1lcm8oMikoZCl9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZXVsZXJJID0ge1xuICBjb25zdCB0YXUgPSA0O1xuICBjb25zdCByID0gc2ltdWxhcihhanVzdGVQcmltZXJPcmRlbih7dmFsb3JfaW5pY2lhbDogMTAwLCBtZXRhOiAwLCB0YXV9KSwge3RGaW5hbDogNDAsIHBhc286IHBhc29JLCBtZXRvZG86IFwiZXVsZXJcIn0pO1xuICBjb25zdCBwdW50b3MgPSByLnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgUDogci52YXJpYWJsZXMuc3RvY2tba119KSkuZmlsdGVyKChkKSA9PiBkLnQgPD0gMjQgKyAxZS05KTtcbiAgY29uc3QgZXhhY3RhID0gQXJyYXkuZnJvbSh7bGVuZ3RoOiAyNDF9LCAoXywgaykgPT4gKHt0OiBrIC8gMTAsIFA6IDEwMCAqIE1hdGguZXhwKC0oayAvIDEwKSAvIHRhdSl9KSk7XG4gIGNvbnN0IGxlY3R1cmEgPSBwdW50b3MuZmluZCgoZCkgPT4gZC50ID49IDggLSAxZS05KTtcbiAgY29uc3QgcmF6b24gPSBwYXNvSSAvIHRhdTtcbiAgY29uc3QgdmVyZWRpY3RvID0gcmF6b24gPD0gMC4yNSA/IFwiUGFzbyBmaW5vOiBjb25maXJtZSBwYXJ0acOpbmRvbG8gYW50ZXMgZGUgcmVwb3J0YXJcIlxuICAgIDogcmF6b24gPCAxID8gXCJQYXNvIGdydWVzbzogZXJyb3IgYXByZWNpYWJsZVwiXG4gICAgOiByYXpvbiA9PT0gMSA/IFwiVmFjw61hIGxhIGNhcnRlcmEgZW4gdW4gc29sbyBwYXNvXCJcbiAgICA6IHJhem9uIDwgMiA/IFwiQ2FtYmlhIGRlIHNpZ25vOiBzaW4gc2VudGlkbyBmw61zaWNvXCJcbiAgICA6IHJhem9uID09PSAyID8gXCJPc2NpbGEgc2luIGFtb3J0aWd1YXJzZTogYXJ0ZWZhY3RvIG51bcOpcmljb1wiXG4gICAgOiBcIkluZXN0YWJsZTogbGEgb3NjaWxhY2nDs24gY3JlY2VcIjtcbiAgcmV0dXJuIHtwdW50b3MsIGV4YWN0YSwgbGVjdHVyYSwgdmVyZGFkOiAxMDAgKiBNYXRoLmV4cCgtbGVjdHVyYS50IC8gdGF1KSwgcmF6b24sIHZlcmVkaWN0b307XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMzAwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDI0XX0sXG4gIHk6IHtsYWJlbDogXCJDYXJ0ZXJhIFAgW01XXVwiLCBkb21haW46IFstMTYwLCAxNjBdLCBncmlkOiB0cnVlfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVZKFswXSwge3N0cm9rZTogQ09MT1JFUy5ncmlzfSksXG4gICAgUGxvdC5saW5lKGV1bGVySS5leGFjdGEsIHt4OiBcInRcIiwgeTogXCJQXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNn0pLFxuICAgIFBsb3QubGluZShldWxlckkucHVudG9zLCB7eDogXCJ0XCIsIHk6IChkKSA9PiBNYXRoLm1heCgtMTYwLCBNYXRoLm1pbigxNjAsIGQuUCkpLCBzdHJva2U6IENPTE9SRVMuYXp1bCwgc3Ryb2tlV2lkdGg6IDIuMn0pLFxuICAgIFBsb3QuZG90KGV1bGVySS5wdW50b3MsIHt4OiBcInRcIiwgeTogKGQpID0+IE1hdGgubWF4KC0xNjAsIE1hdGgubWluKDE2MCwgZC5QKSksIGZpbGw6IENPTE9SRVMuYXp1bCwgcjogMy41fSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5FdWxlciBlbiB0ID0gJHtmb3JtYXRvTnVtZXJvKGV1bGVySS5sZWN0dXJhLnQgJSAxID09PSAwID8gMCA6IDIpKGV1bGVySS5sZWN0dXJhLnQpfSBhw7FvczxiPiR7Zm9ybWF0b051bWVybygyKShldWxlckkubGVjdHVyYS5QKX0gTVc8L2I+PC9kaXY+XG4gIDxkaXY+VHJheWVjdG9yaWEgdmVyZGFkZXJhPGI+JHtmb3JtYXRvTnVtZXJvKDIpKGV1bGVySS52ZXJkYWQpfSBNVzwvYj48L2Rpdj5cbiAgPGRpdj7OlHQgLyDPhDxiPiR7Zm9ybWF0b051bWVybygyKShldWxlckkucmF6b24pfTwvYj48L2Rpdj5cbiAgPGRpdj5EaWFnbsOzc3RpY288Yj4ke2V1bGVySS52ZXJlZGljdG99PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHBlcmlvZG9TID0gSW5wdXRzLnJhZGlvKFtcImFudWFsICgzNjUgZMOtYXMpXCIsIFwic2VtZXN0cmFsICgxODIsNSBkw61hcylcIl0sIHt2YWx1ZTogXCJhbnVhbCAoMzY1IGTDrWFzKVwiLCBsYWJlbDogXCJQZXJpb2RvIGRlIGxvcyBhcG9ydGVzXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGludGVncmFkb3JTID0gSW5wdXRzLnJhZGlvKFtcIlJLNCwgcGFzbyBkZSBtZWRpbyBkw61hXCIsIFwiRXVsZXIsIHBhc28gZGUgMzAgZMOtYXNcIiwgXCJFdWxlciwgcGFzbyBkZSA5MSBkw61hc1wiXSwge3ZhbHVlOiBcIlJLNCwgcGFzbyBkZSBtZWRpbyBkw61hXCIsIGxhYmVsOiBcIkludGVncmFkb3JcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTgiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJlbWJhbHNlUyA9IHtcbiAgY29uc3QgcGVyaW9kbyA9IHBlcmlvZG9TLnN0YXJ0c1dpdGgoXCJhbnVhbFwiKSA/IDM2NSA6IDE4Mi41O1xuICBjb25zdCBbbWV0b2RvLCBwYXNvXSA9IGludGVncmFkb3JTLnN0YXJ0c1dpdGgoXCJSSzRcIikgPyBbXCJyazRcIiwgMC41XSA6IFtcImV1bGVyXCIsIGludGVncmFkb3JTLmluY2x1ZGVzKFwiMzBcIikgPyAzMCA6IDkxXTtcbiAgY29uc3QgbW9kZWxvID0gKG0sIHApID0+IHNpbXVsYXIoZW1iYWxzZUFncmVnYWRvKHtlbmVyZ2lhX2luaWNpYWw6IDgwMDAsIGFwb3J0ZXNfbWVkaW9zOiAxNTAsIGFtcGxpdHVkX2Fwb3J0ZXM6IDYwLCBwZXJpb2RvX2Fwb3J0ZXM6IHBlcmlvZG8sIHR1cmJpbmFtaWVudG86IDE1MH0pLCB7dEZpbmFsOiA3MzAsIHBhc286IHAsIG1ldG9kbzogbX0pO1xuICBjb25zdCByID0gbW9kZWxvKG1ldG9kbywgcGFzbyk7XG4gIGNvbnN0IHJlZmVyZW5jaWEgPSBtb2RlbG8oXCJyazRcIiwgMC41KTtcbiAgY29uc3QgZSA9IHIudmFyaWFibGVzLmVuZXJnaWFfZW1iYWxzYWRhO1xuICBjb25zdCBwcmltZXJBbmlvID0gci50aWVtcG8ubWFwKCh0LCBrKSA9PiAoe3QsIGU6IGVba119KSkuZmlsdGVyKChkKSA9PiBkLnQgPD0gcGVyaW9kbyArIHBhc28gLyAyKTtcbiAgY29uc3QgbWF4aW1vID0gcHJpbWVyQW5pby5yZWR1Y2UoKGEsIGQpID0+IChkLmUgPiBhLmUgPyBkIDogYSksIHByaW1lckFuaW9bMF0pO1xuICByZXR1cm4ge1xuICAgIGZpbGFzOiByLnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgZTogZVtrXX0pKSxcbiAgICByZWZlcmVuY2lhOiByZWZlcmVuY2lhLnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgZTogcmVmZXJlbmNpYS52YXJpYWJsZXMuZW5lcmdpYV9lbWJhbHNhZGFba119KSksXG4gICAgbWF4aW1vLCBhbXBsaXR1ZDogKE1hdGgubWF4KC4uLmUpIC0gTWF0aC5taW4oLi4uZSkpIC8gMiwgbWV0b2RvLFxuICB9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC05IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDI4MCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJUaWVtcG8gW2TDrWFzXVwiLCBkb21haW46IFswLCA3MzBdfSxcbiAgeToge2xhYmVsOiBcIkVuZXJnw61hIGVtYmFsc2FkYSBbR1doXVwiLCBncmlkOiB0cnVlLCBkb21haW46IFs2MDAwLCAxNjAwMF0sIHRpY2tGb3JtYXQ6IGZvcm1hdG9OdW1lcm8oMCl9LFxuICBtYXJrczogW1xuICAgIGVtYmFsc2VTLm1ldG9kbyA9PT0gXCJldWxlclwiID8gUGxvdC5saW5lKGVtYmFsc2VTLnJlZmVyZW5jaWEsIHt4OiBcInRcIiwgeTogXCJlXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pIDogbnVsbCxcbiAgICBQbG90LmxpbmUoZW1iYWxzZVMuZmlsYXMsIHt4OiBcInRcIiwgeTogXCJlXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi40fSksXG4gICAgZW1iYWxzZVMubWV0b2RvID09PSBcImV1bGVyXCIgPyBQbG90LmRvdChlbWJhbHNlUy5maWxhcywge3g6IFwidFwiLCB5OiBcImVcIiwgZmlsbDogQ09MT1JFUy5henVsLCByOiAzfSkgOiBudWxsLFxuICAgIFBsb3QuZG90KFtlbWJhbHNlUy5tYXhpbW9dLCB7eDogXCJ0XCIsIHk6IFwiZVwiLCBmaWxsOiBDT0xPUkVTLmFtYmFyLCByOiA2fSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+RMOtYSBkZWwgcHJpbWVyIG3DoXhpbW88Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoZW1iYWxzZVMubWF4aW1vLnQpfTwvYj48L2Rpdj5cbiAgPGRpdj5OaXZlbCBtw6F4aW1vPGI+JHtmb3JtYXRvTnVtZXJvKDApKGVtYmFsc2VTLm1heGltby5lKX0gR1doPC9iPjwvZGl2PlxuICA8ZGl2PkFtcGxpdHVkIGRlIGxhIG9zY2lsYWNpw7NuPGI+JHtmb3JtYXRvTnVtZXJvKDApKGVtYmFsc2VTLmFtcGxpdHVkKX0gR1doPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBwYXNvQyA9IElucHV0cy5yYWRpbyhbMiwgMSwgMC41LCAwLjI1LCAwLjA1XSwge3ZhbHVlOiAxLCBsYWJlbDogXCJQYXNvIGRlIEV1bGVyIFthw7Fvc11cIiwgZm9ybWF0OiAoZCkgPT4gZm9ybWF0b051bWVybygyKShkKX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEyIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY2ljbG9DID0ge1xuICBjb25zdCByZWYgPSBzaW11bGFyKGNpY2xvSW52ZXJzaW9uQ2FwYWNpZGFkKCksIHt0RmluYWw6IDYwLCBwYXNvOiAwLjA1fSk7XG4gIGNvbnN0IGV1ID0gc2ltdWxhcihjaWNsb0ludmVyc2lvbkNhcGFjaWRhZCgpLCB7dEZpbmFsOiA2MCwgcGFzbzogcGFzb0MsIG1ldG9kbzogXCJldWxlclwifSk7XG4gIGNvbnN0IG1pbmltbyA9ICh2KSA9PiBNYXRoLm1pbiguLi52KTtcbiAgcmV0dXJuIHtcbiAgICByZWY6IHJlZi50aWVtcG8ubWFwKCh0LCBrKSA9PiAoe3QsIG06IHJlZi52YXJpYWJsZXMubWFyZ2VuX3Jlc2VydmFba119KSksXG4gICAgZXU6IGV1LnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgbTogZXUudmFyaWFibGVzLm1hcmdlbl9yZXNlcnZhW2tdfSkpLFxuICAgIG1pbkV1OiBtaW5pbW8oZXUudmFyaWFibGVzLm1hcmdlbl9yZXNlcnZhKSwgbWluUmVmOiBtaW5pbW8ocmVmLnZhcmlhYmxlcy5tYXJnZW5fcmVzZXJ2YSksXG4gICAgdmFsbGVzRXU6IHZhbGxlcyhldS50aWVtcG8sIGV1LnZhcmlhYmxlcy5tYXJnZW5fcmVzZXJ2YSkubGVuZ3RoLFxuICAgIHZhbGxlc1JlZjogdmFsbGVzKHJlZi50aWVtcG8sIHJlZi52YXJpYWJsZXMubWFyZ2VuX3Jlc2VydmEpLmxlbmd0aCxcbiAgfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMzAwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDYwXX0sXG4gIHk6IHtsYWJlbDogXCJNYXJnZW4gZGUgcmVzZXJ2YVwiLCBncmlkOiB0cnVlLCBkb21haW46IFswLCAwLjldLCB0aWNrRm9ybWF0OiAoZCkgPT4gZm9ybWF0b1BvcmNlbnRhamUoZCl9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVkoWzAuMzBdLCB7c3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LmxpbmUoY2ljbG9DLnJlZiwge3g6IFwidFwiLCB5OiBcIm1cIiwgc3Ryb2tlOiBcIiM5RTlFOUVcIiwgc3Ryb2tlV2lkdGg6IDEuOH0pLFxuICAgIFBsb3QubGluZShjaWNsb0MuZXUsIHt4OiBcInRcIiwgeTogXCJtXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi4yfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+TWFyZ2VuIG3DrW5pbW8gY29uIEV1bGVyPGI+JHtmb3JtYXRvUG9yY2VudGFqZShjaWNsb0MubWluRXUsIDEpfTwvYj48L2Rpdj5cbiAgPGRpdj5NYXJnZW4gbcOtbmltbyBkZSByZWZlcmVuY2lhPGI+JHtmb3JtYXRvUG9yY2VudGFqZShjaWNsb0MubWluUmVmLCAxKX08L2I+PC9kaXY+XG4gIDxkaXY+RGlmZXJlbmNpYTxiPiR7Zm9ybWF0b051bWVybygyKSgxMDAgKiAoY2ljbG9DLm1pbkV1IC0gY2ljbG9DLm1pblJlZikpfSBwdW50b3M8L2I+PC9kaXY+XG4gIDxkaXY+VmFsbGVzIGVuIDYwIGHDsW9zPGI+JHtjaWNsb0MudmFsbGVzRXV9IGNvbiBFdWxlciwgJHtjaWNsb0MudmFsbGVzUmVmfSBkZSByZWZlcmVuY2lhPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdwYXNvSScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdwZXJpb2RvUycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdpbnRlZ3JhZG9yUycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdwYXNvQycpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana4";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana4/02-stocks-flujos.html" class="pagination-link" aria-label="Stocks y flujos: el criterio de la fotografía">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Stocks y flujos: el criterio de la fotografía</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana4/06-retardos.html" class="pagination-link" aria-label="Retardos: por qué el sistema llega tarde">
+        <span class="nav-page-text">Retardos: por qué el sistema llega tarde</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

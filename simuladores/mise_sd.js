@@ -293,6 +293,17 @@ export function acumular(inicial, flujos) {
   return stock;
 }
 
+/** Ajuste de primer orden hacia una meta (réplica de mise_sd.modelos.ajuste_primer_orden). */
+export function ajustePrimerOrden({valor_inicial = 100, meta = 0, tau = 4} = {}) {
+  return {
+    nombre: "ajuste_primer_orden",
+    constantes: {meta, tau},
+    stocks: [{nombre: "stock", inicial: valor_inicial, entradas: ["ajuste"], salidas: []}],
+    auxiliares: [["brecha", (t, e) => e.meta - e.stock]],
+    flujos: [["ajuste", (t, e) => e.brecha / e.tau]],
+  };
+}
+
 /** Primer instante desde el cual la serie queda dentro de ±tolerancia de la meta. */
 export function tiempoAsentamiento(tiempo, serie, meta, tolerancia = 1) {
   let ultimoFuera = -1;
