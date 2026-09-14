@@ -304,12 +304,44 @@ export function ajustePrimerOrden({valor_inicial = 100, meta = 0, tau = 4} = {})
   };
 }
 
+/** Termostato con banda muerta [°C, h] (réplica de mise_sd.modelos.termostato). */
+export function termostato({temperatura_inicial = 20, temperatura_exterior = 10, consigna = 20, media_banda = 1,
+  calentamiento_maximo = 6, coeficiente_perdidas = 0.4, velocidad_conmutacion = 60} = {}) {
+  return {
+    nombre: "termostato",
+    constantes: {temperatura_exterior, limite_inferior: consigna - media_banda, limite_superior: consigna + media_banda,
+      calentamiento_maximo, coeficiente_perdidas, velocidad_conmutacion},
+    stocks: [
+      {nombre: "temperatura", inicial: temperatura_inicial, entradas: ["calefaccion"], salidas: ["perdidas"]},
+      {nombre: "quemador", inicial: 0, entradas: ["conmutacion"], salidas: []},
+    ],
+    auxiliares: [],
+    flujos: [
+      ["conmutacion", (t, e) => {
+        const objetivo = e.temperatura < e.limite_inferior ? 1
+          : e.temperatura > e.limite_superior ? 0 : (e.quemador >= 0.5 ? 1 : 0);
+        return e.velocidad_conmutacion * (objetivo - e.quemador);
+      }],
+      ["calefaccion", (t, e) => e.calentamiento_maximo * e.quemador],
+      ["perdidas", (t, e) => e.coeficiente_perdidas * (e.temperatura - e.temperatura_exterior)],
+    ],
+  };
+}
+
+/** Precio de bolsa como función del margen (auxiliar del modelo del curso). */
+export const precioMargen = (margen, {precio_referencia = 150, margen_objetivo = 0.30, sensibilidad_precio = 4} = {}) =>
+  precio_referencia * Math.exp(-sensibilidad_precio * (margen - margen_objetivo));
+
 /** Primer instante desde el cual la serie queda dentro de ±tolerancia de la meta. */
 export function tiempoAsentamiento(tiempo, serie, meta, tolerancia = 1) {
   let ultimoFuera = -1;
   serie.forEach((v, k) => { if (Math.abs(v - meta) > tolerancia) ultimoFuera = k; });
   return ultimoFuera + 1 < tiempo.length ? tiempo[ultimoFuera + 1] : null;
 }
+
+/** Picos (máximos locales) con prominencia mínima: valles de la serie reflejada. */
+export const picos = (tiempo, serie, prominencia = 0.003) =>
+  valles(tiempo, serie.map((v) => -v), prominencia).map((d) => ({tiempo: d.tiempo, valor: -d.valor}));
 
 /**
  * Valles (mínimos locales) de una serie con una prominencia mínima.
