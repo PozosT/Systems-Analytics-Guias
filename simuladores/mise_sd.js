@@ -356,6 +356,17 @@ export function reservaConDosMetas({reserva_inicial = 5000, meta_operador = 9000
   };
 }
 
+/** VPN esperado según la probabilidad anual de El Niño (réplica de mise_sd.modelos.vpn_con_nino). */
+export function vpnConNino(probabilidad_nino, {inversion, margen_normal, margen_nino, tasa_descuento = 0.10, anios = 20}) {
+  const factor = (1 - (1 + tasa_descuento) ** (-anios)) / tasa_descuento;
+  return -inversion + factor * (probabilidad_nino * margen_nino + (1 - probabilidad_nino) * margen_normal);
+}
+
+/** Costo futuro con curva de Wright y despliegue exponencial (réplica de mise_sd.modelos.costo_wright). */
+export function costoWright(anios, tasa_aprendizaje, crecimiento_despliegue, costo_inicial = 100) {
+  return costo_inicial * Math.exp(-crecimiento_despliegue * anios * Math.log2(1 / (1 - tasa_aprendizaje)));
+}
+
 /** Telaraña del ciclo del cerdo en tiempo discreto (réplica de mise_sd.modelos.telarana). */
 export function telarana({rondas = 16, oferta_inicial = 80, sensibilidad_oferta = 0.4, pendiente_demanda = 2,
   precio_equilibrio = 100, oferta_equilibrio = 100} = {}) {
