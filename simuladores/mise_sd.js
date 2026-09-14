@@ -325,15 +325,16 @@ export const COSTO_RACIONAMIENTO = 1500;
 export const RELACION_FACTORES_CARGA = 0.30;
 
 /** Costo medio para la demanda [COP/kWh] de una corrida (réplica de escenarios_lab4.costo_para_demanda). */
-export function costoParaDemanda(resultado, {prima_cxc = 0, subasta_fncer = 0} = {}) {
+export function costoParaDemanda(resultado, {prima_cxc = 0, subasta_fncer = 0, costo_racionamiento = COSTO_RACIONAMIENTO,
+  relacion_factores_carga = RELACION_FACTORES_CARGA, margen_critico = MARGEN_CRITICO} = {}) {
   const v = resultado.variables;
   const media = (serie) => serie.reduce((a, x) => a + x, 0) / serie.length;
-  const racionamiento = COSTO_RACIONAMIENTO * media(v.margen_reserva.map((m) => Math.max(0, MARGEN_CRITICO - m)));
+  const racionamiento = costo_racionamiento * media(v.margen_reserva.map((m) => Math.max(0, margen_critico - m)));
   let sobrecosto = 0;
   if (subasta_fncer > 0) {
     sobrecosto = media(resultado.tiempo.map((t, k) => {
       const subastada = Math.min(v.capacidad_fncer[k], subasta_fncer * t);
-      const porcion = RELACION_FACTORES_CARGA * subastada / v.demanda[k];
+      const porcion = relacion_factores_carga * subastada / v.demanda[k];
       return Math.max(0, v.costo_fncer[k] - v.precio_bolsa[k]) * porcion;
     }));
   }
@@ -354,6 +355,16 @@ export function reservaConDosMetas({reserva_inicial = 5000, meta_operador = 9000
         ? (t, e) => Math.max(0, e.reserva - e.meta_comercial) / e.tiempo_ajuste_comercial : () => 0],
     ],
   };
+}
+
+/** Arrepentimiento, maximin y minimax regret de una matriz estrategias × escenarios (réplica de mise_sd.modelos.criterios_robustez). */
+export function criteriosRobustez(matriz) {
+  const minimos = matriz[0].map((_, j) => Math.min(...matriz.map((fila) => fila[j])));
+  const arrepentimiento = matriz.map((fila) => fila.map((c, j) => c - minimos[j]));
+  const peorCaso = matriz.map((fila) => Math.max(...fila));
+  const arrepentimientoMaximo = arrepentimiento.map((fila) => Math.max(...fila));
+  return {arrepentimiento, peorCaso, arrepentimientoMaximo,
+    maximin: peorCaso.indexOf(Math.min(...peorCaso)), minimaxRegret: arrepentimientoMaximo.indexOf(Math.min(...arrepentimientoMaximo))};
 }
 
 /** VPN esperado según la probabilidad anual de El Niño (réplica de mise_sd.modelos.vpn_con_nino). */

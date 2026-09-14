@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla del Laboratorio 4 con la métrica sometida a prueba de estrés.">
+
+<title>Robustez y arrepentimiento máximo – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana5/07-escenarios.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/08-robustez-regret.html">Robustez y arrepentimiento máximo</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-el-paraguas-con-números" id="toc-la-intuición-el-paraguas-con-números" class="nav-link" data-scroll-target="#la-intuición-el-paraguas-con-números">2. La intuición: el paraguas, con números</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/08-robustez-regret.html">Robustez y arrepentimiento máximo</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Robustez y arrepentimiento máximo</h1>
+<p class="subtitle lead">Semana 5 · Concepto 8 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla del Laboratorio 4 con la métrica sometida a prueba de estrés.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> mercadoConPoliticas<span class="op">,</span> costoParaDemanda<span class="op">,</span> criteriosRobustez<span class="op">,</span> ESCENARIOS_LAB4<span class="op">,</span> ESTRATEGIAS_LAB4<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana5/06-incertidumbre-profunda.html">incertidumbre profunda</a> y <a href="../semana5/07-escenarios.html">diseño de escenarios</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4 y en el informe final</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Construir la tabla de desempeño y la de arrepentimiento de un conjunto de estrategias frente a varios escenarios.</li>
+<li>Aplicar los criterios maximin y minimax regret y explicar por qué pueden discrepar.</li>
+<li>Someter la métrica a una prueba de estrés y redactar una recomendación con condiciones de validez y señal de cambio.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Sin probabilidades para los mundos, se renuncia a ganar en el futuro correcto a cambio de no perder demasiado en ninguno. El arrepentimiento mide, en cada mundo, la distancia de cada estrategia al campeón de ese mundo; la estrategia robusta es la que nunca queda lejos.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>El informe final del curso exige una tabla de robustez con al menos cuatro escenarios y tres estrategias, y recomendaciones con condiciones de validez. En el Laboratorio 4, las tres estrategias (mercado solo, seguro CxC e impulso FNCER) se enfrentan a los cuatro mundos de la página anterior, y la página 7 ya mostró que la más barata cambia de un mundo a otro. No hay probabilidades para esos mundos: por eso eran escenarios. <strong>¿Qué estrategia recomendar si no sabemos qué mundo llegará?</strong></p>
+</section>
+<section id="la-intuición-el-paraguas-con-números" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-paraguas-con-números">2. La intuición: el paraguas, con números</h2>
+<p>Ponga números a la molestia del paraguas, en una escala de 0 a 10 donde menos es mejor, y resuelva la decisión a mano.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del costo al arrepentimiento</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-08-arrepentimiento-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-08-arrepentimiento-1.svg" class="img-fluid" alt="Tabla de costos: llevar paraguas cuesta 2 en los dos mundos; no llevarlo cuesta 8 si llueve y 0 si no."></a></p>
+<p><strong>Escriba la tabla de costos.</strong> Llevar el paraguas molesta 2 llueva o no. No llevarlo cuesta 8 si llueve y 0 si no. No hay pronóstico: nadie sabe qué columna llegará.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-08-arrepentimiento-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-08-arrepentimiento-2.svg" class="img-fluid" alt="Se marca el campeón de cada columna: llevar si llueve, no llevar si no llueve."></a></p>
+<p><strong>Marque el campeón de cada columna.</strong> Si llueve, lo mejor era llevarlo (2). Si no llueve, lo mejor era no llevarlo (0).</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-08-arrepentimiento-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-08-arrepentimiento-3.svg" class="img-fluid" alt="Tabla de arrepentimiento: costo menos el campeón de la columna."></a></p>
+<p><strong>Calcule el arrepentimiento.</strong> En cada celda, reste el campeón <strong>de su columna</strong>: «sabiendo qué mundo llegó, ¿cuánto mejor me habría ido?». Llevarlo sin lluvia deja un arrepentimiento de 2; no llevarlo con lluvia, de 6.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-08-arrepentimiento-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-08-arrepentimiento-4.svg" class="img-fluid" alt="El máximo de cada fila de arrepentimiento: 2 para llevar y 6 para no llevar."></a></p>
+<p><strong>Tome el máximo de cada fila.</strong> Llevar el paraguas nunca deja un arrepentimiento mayor que 2; no llevarlo puede dejar 6. El criterio <strong>minimax regret</strong> elige el menor de esos máximos: llevarlo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-08-arrepentimiento-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-08-arrepentimiento-5.svg" class="img-fluid" alt="El peor caso de cada fila de costos: 2 para llevar y 8 para no llevar."></a></p>
+<p><strong>Compare con el peor caso.</strong> El criterio <strong>maximin</strong> mira el costo absoluto: el peor caso de llevarlo es 2 y el de no llevarlo, 8. También elige llevarlo. Con una asimetría tan grande, los dos criterios coinciden.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-08-arrepentimiento-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-08-arrepentimiento-6.svg" class="img-fluid" alt="En el Laboratorio 4, tres estrategias por cuatro mundos con los mismos pasos; allí los criterios discrepan."></a></p>
+<p><strong>Pase al sistema eléctrico.</strong> La tabla del Laboratorio 4 tiene tres filas y cuatro columnas, y se resuelve con los mismos pasos. Allí los dos criterios eligen estrategias distintas, y esa discrepancia es información para el decisor.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Tabla de robustez, maximin y minimax regret</span>
+</div>
+<p>Sea <span class="math inline">C(e, s)</span> el costo de la estrategia <span class="math inline">e</span> en el escenario <span class="math inline">s</span> (menor es mejor). La <strong>tabla de robustez</strong> es la matriz <span class="math inline">C</span> completa. El <strong>arrepentimiento</strong> de <span class="math inline">e</span> en <span class="math inline">s</span> es la distancia al campeón de ese escenario:</p>
+<p><span class="math display">R(e, s) = C(e, s) - \min_{e'} C(e', s) \geq 0 \quad [\text{unidades de } C].</span></p>
+<p>El criterio <strong>maximin</strong> elige la estrategia con el mejor peor caso, <span class="math inline">\arg\min_e \max_s C(e, s)</span>. El criterio <strong>minimax regret</strong> elige la de menor arrepentimiento máximo, <span class="math inline">\arg\min_e \max_s R(e, s)</span>. Ninguno usa probabilidades; el primero mira el desempeño absoluto y el segundo, el relativo a lo alcanzable en cada mundo.</p>
+</div>
+<p>El protocolo del curso, que el Laboratorio 4 ejecuta y el informe final replica, tiene cinco pasos:</p>
+<ol type="1">
+<li><strong>Métrica</strong>: una sola cifra por celda, con unidades y componentes a la vista.</li>
+<li><strong>Celdas</strong>: simular todas las combinaciones de estrategia y escenario con el mismo horizonte.</li>
+<li><strong>Tabla de desempeño</strong>, leída por filas (¿qué estrategia es frágil?) y por columnas (¿qué mundo es duro?).</li>
+<li><strong>Tabla de arrepentimiento</strong> y los dos criterios.</li>
+<li><strong>Recomendación redactada</strong>: decisión, condiciones de validez y señal que la haría cambiar.</li>
+</ol>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="la-planta-de-respaldo-de-un-hospital" class="level3">
+<h3 class="anchored" data-anchor-id="la-planta-de-respaldo-de-un-hospital">La planta de respaldo de un hospital</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Dos estrategias, dos mundos, a mano</span>
+</div>
+<p><strong>Planteamiento.</strong> Un hospital rural decide entre instalar una planta diésel de respaldo o depender solo de la red. Costos anuales en millones de pesos (ilustrativos): con la planta, 40 si la red es confiable (mantenimiento de un equipo que casi no se usa) y 55 si hay cortes frecuentes (combustible); sin planta, 10 con red confiable y 120 con cortes frecuentes (servicios suspendidos y medicamentos perdidos). ¿Qué recomiendan los dos criterios?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver la tabla</span>
+</div>
+<div class="paso">
+<p><strong>Escriba la tabla de costos.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Red confiable</th>
+<th style="text-align: center;">Cortes frecuentes</th>
+<th style="text-align: center;">Peor caso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Planta diésel</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">55</td>
+</tr>
+<tr class="even">
+<td>Solo red</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">120</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Aplique maximin.</strong> El peor caso de la planta es 55 y el de la red, 120: maximin elige la planta.</p>
+</div>
+<div class="paso">
+<p><strong>Construya el arrepentimiento.</strong> Campeones: 10 con red confiable (solo red) y 55 con cortes (planta).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Red confiable</th>
+<th style="text-align: center;">Cortes frecuentes</th>
+<th style="text-align: center;">Máximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Planta diésel</td>
+<td style="text-align: center;"><span class="math inline">40 - 10 = 30</span></td>
+<td style="text-align: center;"><span class="math inline">55 - 55 = 0</span></td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="even">
+<td>Solo red</td>
+<td style="text-align: center;"><span class="math inline">10 - 10 = 0</span></td>
+<td style="text-align: center;"><span class="math inline">120 - 55 = 65</span></td>
+<td style="text-align: center;">65</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Aplique minimax regret.</strong> El arrepentimiento máximo de la planta es 30 y el de la red, 65: también elige la planta. Los dos criterios coinciden porque el castigo de quedarse sin respaldo es mucho mayor que el costo de tenerlo.</p>
+</div>
+</div>
+</section>
+<section id="contratar-energía-para-el-año-entrante" class="level3">
+<h3 class="anchored" data-anchor-id="contratar-energía-para-el-año-entrante">Contratar energía para el año entrante</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Tres estrategias, tres hidrologías</span>
+</div>
+<p><strong>Planteamiento.</strong> Un comercializador compra la energía del año entrante con tres estrategias: todo en contratos (C), todo en bolsa (B) o mitad y mitad (M). El contrato cuesta 180 COP/kWh en cualquier hidrología. La bolsa cuesta 120 en un año húmedo, 160 en uno normal y 320 en uno seco. La mezcla paga el promedio de las dos. Resuelva la tabla y pruebe qué pasa si la bolsa en año seco fuera menos extrema.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver y probar la tabla</span>
+</div>
+<div class="paso">
+<p><strong>Complete los costos.</strong> M paga <span class="math inline">(180 + 120)/2 = 150</span>, <span class="math inline">(180 + 160)/2 = 170</span> y <span class="math inline">(180 + 320)/2 = 250</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Húmeda</th>
+<th style="text-align: center;">Normal</th>
+<th style="text-align: center;">Seca</th>
+<th style="text-align: center;">Peor caso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Contratos (C)</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">180</td>
+</tr>
+<tr class="even">
+<td>Bolsa (B)</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">160</td>
+<td style="text-align: center;">320</td>
+<td style="text-align: center;">320</td>
+</tr>
+<tr class="odd">
+<td>Mezcla (M)</td>
+<td style="text-align: center;">150</td>
+<td style="text-align: center;">170</td>
+<td style="text-align: center;">250</td>
+<td style="text-align: center;">250</td>
+</tr>
+</tbody>
+</table>
+<p>Maximin elige C.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule el arrepentimiento.</strong> Campeones: B en húmeda (120) y en normal (160), C en seca (180).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Húmeda</th>
+<th style="text-align: center;">Normal</th>
+<th style="text-align: center;">Seca</th>
+<th style="text-align: center;">Máximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">60</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">140</td>
+<td style="text-align: center;">140</td>
+</tr>
+<tr class="odd">
+<td>M</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">70</td>
+</tr>
+</tbody>
+</table>
+<p>Minimax regret también elige C, por poco frente a M.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la cercanía.</strong> C y M quedan a 10 COP/kWh de arrepentimiento máximo. Un veredicto tan estrecho pide revisar de qué celda depende: el arrepentimiento de M viene del año seco.</p>
+</div>
+</div>
+<div id="pred-seca" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Si la bolsa en año seco costara 240 en lugar de 320, ¿qué harían los criterios?</p>
+<div class="opcion">
+<p>Los dos seguirían eligiendo los contratos.</p>
+</div>
+<div class="opcion">
+<p>Maximin seguiría con los contratos y minimax regret pasaría a la mezcla.</p>
+</div>
+<div class="opcion">
+<p>Los dos pasarían a la bolsa, que ya no tendría un castigo tan grande.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La tabla del comercializador</span>
+</div>
+<p>Mueva el costo de la bolsa en año seco y observe en qué valor cambia cada criterio.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="196" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 195;"><span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>viewof secaK <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">160</span><span class="op">,</span> <span class="dv">500</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Bolsa en año seco [COP/kWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="201" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 200;"><span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a>comercializadorK <span class="op">=</span> {</span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> contratos <span class="op">=</span> [<span class="dv">180</span><span class="op">,</span> <span class="dv">180</span><span class="op">,</span> <span class="dv">180</span>]<span class="op">,</span> bolsa <span class="op">=</span> [<span class="dv">120</span><span class="op">,</span> <span class="dv">160</span><span class="op">,</span> secaK]<span class="op">;</span></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mezcla <span class="op">=</span> contratos<span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> j) <span class="kw">=&gt;</span> (c <span class="op">+</span> bolsa[j]) <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nombres <span class="op">=</span> [<span class="st">"Contratos (C)"</span><span class="op">,</span> <span class="st">"Bolsa (B)"</span><span class="op">,</span> <span class="st">"Mezcla (M)"</span>]<span class="op">;</span></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> matriz <span class="op">=</span> [contratos<span class="op">,</span> bolsa<span class="op">,</span> mezcla]<span class="op">;</span></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {nombres<span class="op">,</span> matriz<span class="op">,</span> <span class="op">...</span><span class="fu">criteriosRobustez</span>(matriz)}<span class="op">;</span></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="212" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 211;"><span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="max-width:40rem"&gt;</span></span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Húmeda&lt;/th&gt;&lt;th&gt;Normal&lt;/th&gt;&lt;th&gt;Seca&lt;/th&gt;&lt;th&gt;Peor caso&lt;/th&gt;&lt;th&gt;Arrepentimiento máximo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span><span class="op">.</span><span class="fu">map</span>((n<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;</span></span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>n<span class="sc">}</span><span class="vs">&lt;/td&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">matriz</span>[i]<span class="op">.</span><span class="fu">map</span>((c) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(c)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> comercializadorK<span class="op">.</span><span class="at">maximin</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#B26C00"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(comercializadorK<span class="op">.</span><span class="at">peorCaso</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> comercializadorK<span class="op">.</span><span class="at">minimaxRegret</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#5434A0"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(comercializadorK<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="223" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 222;"><span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Maximin elige&lt;b&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span>[comercializadorK<span class="op">.</span><span class="at">maximin</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Minimax regret elige&lt;b&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span>[comercializadorK<span class="op">.</span><span class="at">minimaxRegret</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Función <code>mise_sd.modelos.criterios_robustez</code>; costos ilustrativos. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Un empate se resuelve a favor de la fila de arriba.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el cambio</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-seca"></span>. Con la bolsa seca en 240, la mezcla paga 210 en ese año y su arrepentimiento máximo baja a 30, frente a 60 de los contratos y 60 de la bolsa: minimax regret elige la mezcla. Maximin sigue con los contratos, porque su peor caso (180) es menor que el de la mezcla (210). La respuesta es la B.</p>
+</div>
+<div class="paso">
+<p><strong>Ubique el umbral.</strong> El arrepentimiento de la mezcla en año seco es <span class="math inline">(\text{bolsa seca} - 180)/2</span>. Supera los 60 de los contratos cuando la bolsa seca pasa de 300: por debajo de ese valor el regret elige la mezcla; por encima, los contratos.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la lección.</strong> El regret perdona una apuesta mientras ningún mundo la castigue demasiado; el maximin no perdona nada. Elegir el criterio es elegir qué clase de prudencia se le debe al cliente, y esa elección se declara.</p>
+</div>
+</div>
+</section>
+<section id="la-tabla-del-laboratorio-4" class="level3">
+<h3 class="anchored" data-anchor-id="la-tabla-del-laboratorio-4">La tabla del Laboratorio 4</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Tres estrategias contra cuatro mundos, con la métrica a prueba</span>
+</div>
+<p><strong>Planteamiento.</strong> Enfrente las tres estrategias del Laboratorio 4 (mercado solo; seguro CxC con prima de 50 COP/kWh; impulso FNCER con subasta de 300 MW/año) a los cuatro mundos de la página anterior, con el modelo de la semana y 40 años de horizonte. La métrica es el <strong>costo medio para la demanda</strong> [COP/kWh]:</p>
+<p><span class="math display">\text{costo} = \overline{p_{\text{bolsa}}} + \text{prima} + \text{sobrecosto de los contratos FNCER} + \text{racionamiento}.</span></p>
+<p>El sobrecosto se pondera por la porción de la energía que cubren los contratos, con una relación de 0,30 entre el factor de carga de las FNCER y el del sistema. El racionamiento cuenta la brecha del margen por debajo de un umbral crítico de 12 %, valorada a 1 500 COP/kWh [POR VERIFICAR].</p>
+</div>
+<div id="pred-lab" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Qué estrategia elegirá cada criterio?</p>
+<div class="opcion">
+<p>Los dos, el seguro CxC, porque protege contra la escasez.</p>
+</div>
+<div class="opcion">
+<p>Maximin, el mercado solo; minimax regret, el impulso FNCER.</p>
+</div>
+<div class="opcion">
+<p>Los dos, el impulso FNCER, porque es el más barato en dos mundos.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tabla de robustez del Laboratorio 4</span>
+</div>
+<p>Con los valores iniciales, lea las dos tablas. Después someta la métrica a prueba: baje la relación de factores de carga, suba el costo de racionamiento y suba el umbral crítico del margen. ¿Qué peso cambia el veredicto?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="281" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 280;"><span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>viewof relacionL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.30</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Relación de factores de carga FNCER/sistema"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="286" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 285;"><span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a>viewof racionamientoL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">500</span><span class="op">,</span> <span class="dv">10000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1500</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Costo de racionamiento [COP/kWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="291" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 290;"><span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a>viewof criticoL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.08</span><span class="op">,</span> <span class="fl">0.25</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.12</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Umbral crítico del margen"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="296" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 295;"><span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a>corridasL <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(ESCENARIOS_LAB4)<span class="op">.</span><span class="fu">flatMap</span>(([mundo<span class="op">,</span> pm]) <span class="kw">=&gt;</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(ESTRATEGIAS_LAB4)<span class="op">.</span><span class="fu">map</span>(([estrategia<span class="op">,</span> pe]) <span class="kw">=&gt;</span></span>
+<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a>  [<span class="vs">`</span><span class="sc">${</span>mundo<span class="sc">}</span><span class="vs">|</span><span class="sc">${</span>estrategia<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>({<span class="op">...</span>pm<span class="op">,</span> <span class="op">...</span>pe})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})])))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="302" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 301;"><span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>tablaL <span class="op">=</span> {</span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mundos <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ESCENARIOS_LAB4)<span class="op">,</span> estrategias <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ESTRATEGIAS_LAB4)<span class="op">;</span></span>
+<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> opciones <span class="op">=</span> {<span class="dt">costo_racionamiento</span><span class="op">:</span> racionamientoL<span class="op">,</span> <span class="dt">relacion_factores_carga</span><span class="op">:</span> relacionL<span class="op">,</span> <span class="dt">margen_critico</span><span class="op">:</span> criticoL}<span class="op">;</span></span>
+<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> matriz <span class="op">=</span> estrategias<span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> mundos<span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> <span class="fu">costoParaDemanda</span>(corridasL[<span class="vs">`</span><span class="sc">${</span>m<span class="sc">}</span><span class="vs">|</span><span class="sc">${</span>e<span class="sc">}</span><span class="vs">`</span>]<span class="op">,</span> {<span class="op">...</span>ESTRATEGIAS_LAB4[e]<span class="op">,</span> <span class="op">...</span>opciones})))<span class="op">;</span></span>
+<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {mundos<span class="op">,</span> estrategias<span class="op">,</span> matriz<span class="op">,</span> <span class="op">...</span><span class="fu">criteriosRobustez</span>(matriz)}<span class="op">;</span></span>
+<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="312" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 311;"><span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="min-width:34rem"&gt;</span></span>
+<span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Costo [COP/kWh]&lt;/th&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;th&gt;</span><span class="sc">${</span>m<span class="sc">}</span><span class="vs">&lt;/th&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;th&gt;Peor caso&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;&lt;td&gt;</span><span class="sc">${</span>e<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">matriz</span>[i]<span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> j) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td style="</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">arrepentimiento</span>[i][j] <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#00693E"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(c)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> tablaL<span class="op">.</span><span class="at">maximin</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#B26C00"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">peorCaso</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;</span></span>
+<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;table class="table table-sm" style="min-width:34rem"&gt;</span></span>
+<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Arrepentimiento&lt;/th&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;th&gt;</span><span class="sc">${</span>m<span class="sc">}</span><span class="vs">&lt;/th&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;th&gt;Máximo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;&lt;td&gt;</span><span class="sc">${</span>e<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">arrepentimiento</span>[i]<span class="op">.</span><span class="fu">map</span>((r) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(r)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> tablaL<span class="op">.</span><span class="at">minimaxRegret</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#5434A0"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="328" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 327;"><span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Maximin elige&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">maximin</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Minimax regret elige&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">minimaxRegret</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Los criterios&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">maximin</span> <span class="op">===</span> tablaL<span class="op">.</span><span class="at">minimaxRegret</span> <span class="op">?</span> <span class="st">"coinciden"</span> <span class="op">:</span> <span class="st">"discrepan"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code> en los cuatro mundos de <code>notas/semana5/figuras/escenarios_lab4.py</code>; datos sintéticos con fines didácticos. Verde: el campeón de cada mundo. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. El costo de racionamiento y el umbral crítico son órdenes de magnitud por verificar.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La lectura de consultor</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-lab"></span>. Maximin elige el mercado solo, con un peor caso de 134,7 COP/kWh frente a 135,9 del impulso FNCER y 142,0 del seguro CxC. Minimax regret elige el impulso FNCER, con un arrepentimiento máximo de 1,8 frente a 9,2 del mercado solo y 19,9 del seguro. La respuesta es la B.</p>
+</div>
+<div class="paso">
+<p><strong>Lea las filas.</strong> El impulso FNCER gana con holgura en los mundos de transición rápida (125,5 y 119,4) y pierde por poco en los lentos, donde paga unos 2,5 COP/kWh de sobrecosto de contratos. El mercado solo gana en los lentos. El seguro CxC no gana en ningún mundo: su prima se paga siempre y la seguridad que compra casi nunca se cobra con esta métrica.</p>
+</div>
+<div class="paso">
+<p><strong>Mida la discrepancia.</strong> El impulso FNCER pierde el peor caso por 1,2 COP/kWh, menos del 1 %, y gana el arrepentimiento por un factor de cinco. Es una apuesta cuyo castigo máximo es pequeño y cuya ganancia en los mundos rápidos es grande.</p>
+</div>
+<div class="paso">
+<p><strong>Someta la métrica a estrés.</strong> Con una relación de factores de carga de 0,15 o menos, el sobrecosto de los contratos baja y el impulso FNCER gana también el maximin: los criterios coinciden. Subir el costo de racionamiento hasta 10 000 COP/kWh no cambia nada, porque en los cuatro mundos el margen solo cae bajo el umbral en el primer año, antes de que actúe cualquier estrategia. Subir el umbral crítico a 23 % sí cambia el maximin, que pasa al seguro CxC.</p>
+</div>
+<div class="paso">
+<p><strong>Redacte la recomendación.</strong> «Recomendamos el impulso FNCER como estrategia base, por un arrepentimiento máximo cinco veces menor que el de la alternativa más cercana. La recomendación vale mientras el sobrecosto de los contratos en los mundos de aprendizaje lento siga en unos pocos pesos por kilovatio hora; si el decisor considera crítico cualquier margen por debajo del 23 % o más, el peor caso pasa a favorecer al seguro CxC y la recomendación debe revisarse. Si tras dos subastas el costo adjudicado no baja al ritmo esperado, señal de un mundo lento, conviene migrar al mercado solo con vigilancia del margen.»</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="La tabla en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>La tabla en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="13a4c177" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib.util</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> criterios_robustez</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"../../notas/semana5/figuras/escenarios_lab4.py"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>especificacion <span class="op">=</span> importlib.util.spec_from_file_location(<span class="st">"escenarios_lab4"</span>, ruta)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>lab4 <span class="op">=</span> importlib.util.module_from_spec(especificacion)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>especificacion.loader.exec_module(lab4)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>estrategias, mundos <span class="op">=</span> <span class="bu">list</span>(lab4.ESTRATEGIAS), <span class="bu">list</span>(lab4.ESCENARIOS)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>costos <span class="op">=</span> np.array([[lab4.costo_para_demanda(lab4.correr(m, e), e) <span class="cf">for</span> m <span class="kw">in</span> mundos] <span class="cf">for</span> e <span class="kw">in</span> estrategias])</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> criterios_robustez(costos)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"maximin:"</span>, estrategias[resultado[<span class="st">"maximin"</span>]], <span class="st">"  minimax regret:"</span>, estrategias[resultado[<span class="st">"minimax_regret"</span>]])</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(resultado[<span class="st">"arrepentimiento"</span>], <span class="dv">1</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>maximin: mercado solo   minimax regret: impulso FNCER
+[[ 9.2  8.2  0.   0. ]
+ [16.5 19.8  7.4 11.6]
+ [ 0.   0.   1.4  1.8]]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Calcular el arrepentimiento por fila</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>Restar a cada celda el mínimo <strong>de su fila</strong>: para el paraguas, llevarlo daría 0 y 0, y no llevarlo, 8 y 0. Así se compara cada estrategia consigo misma y la tabla pierde el sentido.</p>
+</div>
+<div class="bien">
+<p>Restar el mínimo <strong>de su columna</strong>: el campeón de cada mundo. El arrepentimiento responde «en ese mundo, ¿cuánto mejor me habría ido con otra estrategia?».</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Promediar las columnas</span>
+</div>
+<p>Sumar los costos de los cuatro mundos y dividir por cuatro reintroduce la equiprobabilidad que los escenarios evitaban. La tabla se lee por extremos, peores casos y arrepentimientos máximos. Quien tenga probabilidades defendibles no necesitaba escenarios.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Esconder la métrica o confundir robusto con tibio</span>
+</div>
+<p>El veredicto depende de qué suma la métrica: en el simulador, el umbral crítico del margen cambia el ganador del maximin. La métrica se declara componente a componente y se somete a estrés. Además, la estrategia robusta no es «un poco de todo»: aquí es una apuesta decidida, la subasta. Una mezcla se evalúa agregándola como fila, y a veces hereda los costos de ambas estrategias sin sus beneficios.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En una tabla de costos, ¿cómo se calcula el arrepentimiento de una celda?</p>
+<div class="opcion">
+<p>Costo de la celda menos el mínimo de su fila.</p>
+<p><span class="porque">Eso compara la estrategia consigo misma. Revise el primer error común.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Costo de la celda menos el mínimo de su columna.</p>
+<p><span class="porque">Correcto: la distancia al campeón de ese mundo.</span></p>
+</div>
+<div class="opcion">
+<p>Costo de la celda menos el promedio de su columna.</p>
+<p><span class="porque">El promedio no representa lo alcanzable en ese mundo.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una estrategia nunca gana en ningún mundo, pero siempre queda a menos de 2 COP/kWh del campeón. ¿Cómo la tratan los criterios?</p>
+<div class="opcion" data-correcta="si">
+<p>El minimax regret la favorece, aunque no gane en ninguna columna.</p>
+<p><span class="porque">Correcto: su arrepentimiento máximo es pequeño.</span></p>
+</div>
+<div class="opcion">
+<p>Ningún criterio la elige, porque no gana en ningún mundo.</p>
+<p><span class="porque">Los criterios no premian victorias sino extremos. Revise la definición.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la tabla del Laboratorio, maximin elige el mercado solo y minimax regret el impulso FNCER. ¿Qué conviene decirle al decisor?</p>
+<div class="opcion">
+<p>Que el análisis falló, porque los criterios deberían coincidir.</p>
+<p><span class="porque">Los criterios responden a clases distintas de prudencia; pueden discrepar.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que el impulso FNCER pierde el peor caso por menos del 1 % y gana el arrepentimiento por un factor de cinco, y de qué pesos de la métrica depende.</p>
+<p><span class="porque">Correcto: la discrepancia, bien explicada, es información.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué subir el costo de racionamiento no cambia el veredicto del Laboratorio?</p>
+<div class="opcion">
+<p>Porque el racionamiento no forma parte de la métrica.</p>
+<p><span class="porque">Sí forma parte. Busque cuándo cae el margen bajo el umbral.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque el margen solo cae bajo el umbral en el primer año, antes de que actúe cualquier estrategia, y ese costo es casi igual en todas las filas.</p>
+<p><span class="porque">Correcto: un componente que trata igual a todas las estrategias no cambia el orden.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un equipo suma los cuatro costos de cada estrategia y recomienda la de menor suma. ¿Qué supuesto introdujo?</p>
+<div class="opcion" data-correcta="si">
+<p>Que los cuatro mundos son igual de probables.</p>
+<p><span class="porque">Correcto: promediar columnas equivale a ponderarlas por igual.</span></p>
+</div>
+<div class="opcion">
+<p>Ninguno, porque sumar es neutral.</p>
+<p><span class="porque">Sumar da el mismo peso a cada mundo. Revise el segundo error común.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-un-año-extremo" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-un-año-extremo">Ejercicio 1 ●○○ · Un año extremo</h4>
+<p>Agregue a la tabla del comercializador una cuarta hidrología, extrema, donde la bolsa cuesta 500 y el contrato sigue en 180 (la mezcla paga 340). Recalcule los dos criterios. ¿Cambió algún veredicto? ¿Qué enseña sobre agregar escenarios severos?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En la columna extrema el campeón es C (180); los arrepentimientos son 0 para C, 320 para B y 160 para M. Los máximos quedan en 60 para C (por la columna húmeda), 320 para B y 160 para M: minimax regret elige C con más ventaja. Maximin también elige C (180 contra 500 y 340).</p>
+<p>No cambió el campeón, pero las brechas crecieron mucho. Agregar escenarios severos favorece a las estrategias de seguro, y por eso la selección de escenarios es parte del argumento: quien quiera vender contratos solo necesita imaginar sequías suficientemente catastróficas. El antídoto es el criterio de plausibilidad y declarar quién propuso cada mundo.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-una-cuarta-estrategia" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-una-cuarta-estrategia">Ejercicio 2 ●●○ · Una cuarta estrategia</h4>
+<p>Con el simulador de la tabla del Laboratorio como referencia, evalúe en Python un paquete intermedio, subasta de 150 MW/año más prima de 25 COP/kWh, agregándolo como cuarta fila. ¿Domina a alguna de las tres estrategias o hereda lo peor de ambas?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Recuerde la interacción de la página 4: la prima baja el precio de bolsa y con él el precio que capturan las FNCER. Revise además que el arrepentimiento se recalcule con el nuevo campeón de cada columna.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Con la métrica del Laboratorio, el paquete cuesta 132,0; 126,9; 140,2 y 134,9 COP/kWh en Viento a favor, Contrarreloj, Siesta y Tormenta. El impulso FNCER es más barato en los cuatro mundos: <strong>domina</strong> al paquete, que por eso nunca es campeón de una columna.</p>
+<p>Su arrepentimiento máximo es 7,6 y su peor caso, 140,2. Queda mejor que el mercado solo y el seguro CxC en arrepentimiento, pero peor que el impulso FNCER en todo, y los veredictos no cambian: maximin sigue con el mercado solo y minimax regret con el impulso FNCER.</p>
+<p>El paquete hereda lo peor de sus dos componentes: paga 25 COP/kWh de prima en todos los mundos y, al elevar el margen, baja el precio que capturan las FNCER, así que la mitad de subasta rinde menos de la mitad del despliegue. La mezcla intuitiva no resultó robusta.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>paquete <span class="op">=</span> {<span class="st">"subasta_fncer"</span>: <span class="fl">150.0</span>, <span class="st">"prima_cxc"</span>: <span class="fl">25.0</span>}</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lab4.ESTRATEGIAS[<span class="st">"paquete"</span>] <span class="op">=</span> paquete</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fila <span class="op">=</span> [lab4.costo_para_demanda(lab4.correr(m, <span class="st">"paquete"</span>), <span class="st">"paquete"</span>) <span class="cf">for</span> m <span class="kw">in</span> mundos]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(fila, <span class="dv">1</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Sin probabilidades para los mundos, se busca <strong>robustez</strong>: una estrategia aceptable en todos, en lugar de óptima en uno.</li>
+<li><strong>Arrepentimiento</strong> = costo menos el campeón <strong>de la columna</strong>. <strong>Maximin</strong> elige el mejor peor caso; <strong>minimax regret</strong>, el menor arrepentimiento máximo.</li>
+<li>Los criterios pueden discrepar. En el Laboratorio 4, maximin elige el mercado solo (134,7 COP/kWh de peor caso) y minimax regret el impulso FNCER (1,8 de arrepentimiento máximo).</li>
+<li>La <strong>métrica se somete a estrés</strong>: la relación de factores de carga y el umbral crítico pueden cambiar el veredicto; el costo de racionamiento, en estos mundos, no.</li>
+<li>La recomendación lleva <strong>decisión, condiciones de validez y señal de cambio</strong>.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Robustez sobre optimalidad» de las notas de la semana 5 trae los mapas de calor de las dos tablas y el ejercicio de sensibilidad de la métrica. En el Laboratorio 4 usted construye la tabla completa y defiende su recomendación, y la página siguiente muestra cómo el RDM convierte las señales de cambio en método.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgbWVyY2Fkb0NvblBvbGl0aWNhcywgY29zdG9QYXJhRGVtYW5kYSwgY3JpdGVyaW9zUm9idXN0ZXosIEVTQ0VOQVJJT1NfTEFCNCwgRVNUUkFURUdJQVNfTEFCNCwgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2Ygc2VjYUsgPSBJbnB1dHMucmFuZ2UoWzE2MCwgNTAwXSwge3ZhbHVlOiAzMjAsIHN0ZXA6IDEwLCBsYWJlbDogXCJCb2xzYSBlbiBhw7FvIHNlY28gW0NPUC9rV2hdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY29tZXJjaWFsaXphZG9ySyA9IHtcbiAgY29uc3QgY29udHJhdG9zID0gWzE4MCwgMTgwLCAxODBdLCBib2xzYSA9IFsxMjAsIDE2MCwgc2VjYUtdO1xuICBjb25zdCBtZXpjbGEgPSBjb250cmF0b3MubWFwKChjLCBqKSA9PiAoYyArIGJvbHNhW2pdKSAvIDIpO1xuICBjb25zdCBub21icmVzID0gW1wiQ29udHJhdG9zIChDKVwiLCBcIkJvbHNhIChCKVwiLCBcIk1lemNsYSAoTSlcIl07XG4gIGNvbnN0IG1hdHJpeiA9IFtjb250cmF0b3MsIGJvbHNhLCBtZXpjbGFdO1xuICByZXR1cm4ge25vbWJyZXMsIG1hdHJpeiwgLi4uY3JpdGVyaW9zUm9idXN0ZXoobWF0cml6KX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgc3R5bGU9XCJvdmVyZmxvdy14OmF1dG9cIj48dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwibWF4LXdpZHRoOjQwcmVtXCI+XG4gIDx0aGVhZD48dHI+PHRoPjwvdGg+PHRoPkjDum1lZGE8L3RoPjx0aD5Ob3JtYWw8L3RoPjx0aD5TZWNhPC90aD48dGg+UGVvciBjYXNvPC90aD48dGg+QXJyZXBlbnRpbWllbnRvIG3DoXhpbW88L3RoPjwvdHI+PC90aGVhZD5cbiAgPHRib2R5PiR7Y29tZXJjaWFsaXphZG9ySy5ub21icmVzLm1hcCgobiwgaSkgPT4gaHRtbGA8dHI+XG4gICAgPHRkPiR7bn08L3RkPiR7Y29tZXJjaWFsaXphZG9ySy5tYXRyaXpbaV0ubWFwKChjKSA9PiBodG1sYDx0ZD4ke2Zvcm1hdG9OdW1lcm8oMCkoYyl9PC90ZD5gKX1cbiAgICA8dGQgc3R5bGU9XCIke2kgPT09IGNvbWVyY2lhbGl6YWRvcksubWF4aW1pbiA/IFwiZm9udC13ZWlnaHQ6NzAwO2NvbG9yOiNCMjZDMDBcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvTnVtZXJvKDApKGNvbWVyY2lhbGl6YWRvcksucGVvckNhc29baV0pfTwvdGQ+XG4gICAgPHRkIHN0eWxlPVwiJHtpID09PSBjb21lcmNpYWxpemFkb3JLLm1pbmltYXhSZWdyZXQgPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojNTQzNEEwXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygwKShjb21lcmNpYWxpemFkb3JLLmFycmVwZW50aW1pZW50b01heGltb1tpXSl9PC90ZD48L3RyPmApfVxuICA8L3Rib2R5PjwvdGFibGU+PC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5NYXhpbWluIGVsaWdlPGI+JHtjb21lcmNpYWxpemFkb3JLLm5vbWJyZXNbY29tZXJjaWFsaXphZG9ySy5tYXhpbWluXX08L2I+PC9kaXY+XG4gIDxkaXY+TWluaW1heCByZWdyZXQgZWxpZ2U8Yj4ke2NvbWVyY2lhbGl6YWRvcksubm9tYnJlc1tjb21lcmNpYWxpemFkb3JLLm1pbmltYXhSZWdyZXRdfTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiByZWxhY2lvbkwgPSBJbnB1dHMucmFuZ2UoWzAsIDFdLCB7dmFsdWU6IDAuMzAsIHN0ZXA6IDAuMDUsIGxhYmVsOiBcIlJlbGFjacOzbiBkZSBmYWN0b3JlcyBkZSBjYXJnYSBGTkNFUi9zaXN0ZW1hXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHJhY2lvbmFtaWVudG9MID0gSW5wdXRzLnJhbmdlKFs1MDAsIDEwMDAwXSwge3ZhbHVlOiAxNTAwLCBzdGVwOiA1MDAsIGxhYmVsOiBcIkNvc3RvIGRlIHJhY2lvbmFtaWVudG8gW0NPUC9rV2hdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGNyaXRpY29MID0gSW5wdXRzLnJhbmdlKFswLjA4LCAwLjI1XSwge3ZhbHVlOiAwLjEyLCBzdGVwOiAwLjAxLCBsYWJlbDogXCJVbWJyYWwgY3LDrXRpY28gZGVsIG1hcmdlblwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImNvcnJpZGFzTCA9IE9iamVjdC5mcm9tRW50cmllcyhPYmplY3QuZW50cmllcyhFU0NFTkFSSU9TX0xBQjQpLmZsYXRNYXAoKFttdW5kbywgcG1dKSA9PiBPYmplY3QuZW50cmllcyhFU1RSQVRFR0lBU19MQUI0KS5tYXAoKFtlc3RyYXRlZ2lhLCBwZV0pID0+XG4gIFtgJHttdW5kb318JHtlc3RyYXRlZ2lhfWAsIHNpbXVsYXIobWVyY2Fkb0NvblBvbGl0aWNhcyh7Li4ucG0sIC4uLnBlfSksIHt0RmluYWw6IDQwLCBwYXNvOiAwLjA1fSldKSkpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidGFibGFMID0ge1xuICBjb25zdCBtdW5kb3MgPSBPYmplY3Qua2V5cyhFU0NFTkFSSU9TX0xBQjQpLCBlc3RyYXRlZ2lhcyA9IE9iamVjdC5rZXlzKEVTVFJBVEVHSUFTX0xBQjQpO1xuICBjb25zdCBvcGNpb25lcyA9IHtjb3N0b19yYWNpb25hbWllbnRvOiByYWNpb25hbWllbnRvTCwgcmVsYWNpb25fZmFjdG9yZXNfY2FyZ2E6IHJlbGFjaW9uTCwgbWFyZ2VuX2NyaXRpY286IGNyaXRpY29MfTtcbiAgY29uc3QgbWF0cml6ID0gZXN0cmF0ZWdpYXMubWFwKChlKSA9PiBtdW5kb3MubWFwKChtKSA9PiBjb3N0b1BhcmFEZW1hbmRhKGNvcnJpZGFzTFtgJHttfXwke2V9YF0sIHsuLi5FU1RSQVRFR0lBU19MQUI0W2VdLCAuLi5vcGNpb25lc30pKSk7XG4gIHJldHVybiB7bXVuZG9zLCBlc3RyYXRlZ2lhcywgbWF0cml6LCAuLi5jcml0ZXJpb3NSb2J1c3RleihtYXRyaXopfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTEiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgc3R5bGU9XCJvdmVyZmxvdy14OmF1dG9cIj48dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwibWluLXdpZHRoOjM0cmVtXCI+XG4gIDx0aGVhZD48dHI+PHRoPkNvc3RvIFtDT1Ava1doXTwvdGg+JHt0YWJsYUwubXVuZG9zLm1hcCgobSkgPT4gaHRtbGA8dGg+JHttfTwvdGg+YCl9PHRoPlBlb3IgY2FzbzwvdGg+PC90cj48L3RoZWFkPlxuICA8dGJvZHk+JHt0YWJsYUwuZXN0cmF0ZWdpYXMubWFwKChlLCBpKSA9PiBodG1sYDx0cj48dGQ+JHtlfTwvdGQ+XG4gICAgJHt0YWJsYUwubWF0cml6W2ldLm1hcCgoYywgaikgPT4gaHRtbGA8dGQgc3R5bGU9XCIke3RhYmxhTC5hcnJlcGVudGltaWVudG9baV1bal0gPT09IDAgPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojMDA2OTNFXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygxKShjKX08L3RkPmApfVxuICAgIDx0ZCBzdHlsZT1cIiR7aSA9PT0gdGFibGFMLm1heGltaW4gPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojQjI2QzAwXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygxKSh0YWJsYUwucGVvckNhc29baV0pfTwvdGQ+PC90cj5gKX1cbiAgPC90Ym9keT48L3RhYmxlPlxuICA8dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwibWluLXdpZHRoOjM0cmVtXCI+XG4gIDx0aGVhZD48dHI+PHRoPkFycmVwZW50aW1pZW50bzwvdGg+JHt0YWJsYUwubXVuZG9zLm1hcCgobSkgPT4gaHRtbGA8dGg+JHttfTwvdGg+YCl9PHRoPk3DoXhpbW88L3RoPjwvdHI+PC90aGVhZD5cbiAgPHRib2R5PiR7dGFibGFMLmVzdHJhdGVnaWFzLm1hcCgoZSwgaSkgPT4gaHRtbGA8dHI+PHRkPiR7ZX08L3RkPlxuICAgICR7dGFibGFMLmFycmVwZW50aW1pZW50b1tpXS5tYXAoKHIpID0+IGh0bWxgPHRkPiR7Zm9ybWF0b051bWVybygxKShyKX08L3RkPmApfVxuICAgIDx0ZCBzdHlsZT1cIiR7aSA9PT0gdGFibGFMLm1pbmltYXhSZWdyZXQgPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojNTQzNEEwXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygxKSh0YWJsYUwuYXJyZXBlbnRpbWllbnRvTWF4aW1vW2ldKX08L3RkPjwvdHI+YCl9XG4gIDwvdGJvZHk+PC90YWJsZT48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEyIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5NYXhpbWluIGVsaWdlPGI+JHt0YWJsYUwuZXN0cmF0ZWdpYXNbdGFibGFMLm1heGltaW5dfTwvYj48L2Rpdj5cbiAgPGRpdj5NaW5pbWF4IHJlZ3JldCBlbGlnZTxiPiR7dGFibGFMLmVzdHJhdGVnaWFzW3RhYmxhTC5taW5pbWF4UmVncmV0XX08L2I+PC9kaXY+XG4gIDxkaXY+TG9zIGNyaXRlcmlvczxiPiR7dGFibGFMLm1heGltaW4gPT09IHRhYmxhTC5taW5pbWF4UmVncmV0ID8gXCJjb2luY2lkZW5cIiA6IFwiZGlzY3JlcGFuXCJ9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzZWNhSycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdyZWxhY2lvbkwnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncmFjaW9uYW1pZW50b0wnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnY3JpdGljb0wnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana5";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana5/07-escenarios.html" class="pagination-link" aria-label="Diseño de escenarios">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Diseño de escenarios</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
