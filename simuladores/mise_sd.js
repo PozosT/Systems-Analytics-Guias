@@ -194,6 +194,55 @@ export function cicloInversionCapacidad(parametros = {}) {
   };
 }
 
+/** La bañera de Sterman [L, min] (réplica de mise_sd.modelos.banera). */
+export function banera({nivel_inicial = 80, caudal_grifo = 5, caudal_desague = 3, tau_desague = null} = {}) {
+  return {
+    nombre: "banera",
+    constantes: {caudal_grifo, caudal_desague, tau_desague: tau_desague || 0},
+    stocks: [{nombre: "nivel", inicial: nivel_inicial, entradas: ["entrada"], salidas: ["salida"]}],
+    auxiliares: [],
+    flujos: [
+      ["entrada", (t, e) => e.caudal_grifo],
+      ["salida", tau_desague ? (t, e) => e.nivel / e.tau_desague : (t, e) => e.caudal_desague],
+    ],
+  };
+}
+
+/**
+ * Cobertura de contratos con retardo de negociación [GWh, años]
+ * (réplica de mise_sd.modelos.cobertura_contratos).
+ */
+export function coberturaContratos({cobertura_inicial = 60, meta = 100, tiempo_ajuste = 0.5,
+  retardo_negociacion = 0.5, etapas = 3} = {}) {
+  const conRetardo = retardo_negociacion > 0;
+  const stocks = [{nombre: "cobertura", inicial: cobertura_inicial,
+    entradas: [conRetardo ? "firma" : "compras"], salidas: []}];
+  const flujos = [["compras", (t, e) => e.brecha / e.tiempo_ajuste]];
+  if (conRetardo) {
+    for (let k = 1; k <= etapas; k++) {
+      stocks.push({nombre: `negociacion_${k}`, inicial: 0,
+        entradas: [k === 1 ? "compras" : `avance_${k - 1}`], salidas: [k === etapas ? "firma" : `avance_${k}`]});
+    }
+    for (let k = 1; k < etapas; k++)
+      flujos.push([`avance_${k}`, (t, e) => e[`negociacion_${k}`] * etapas / e.retardo_negociacion]);
+    flujos.push(["firma", (t, e) => e[`negociacion_${etapas}`] * etapas / e.retardo_negociacion]);
+  }
+  return {
+    nombre: "cobertura_contratos",
+    constantes: {meta, tiempo_ajuste, retardo_negociacion},
+    stocks,
+    auxiliares: [["brecha", (t, e) => e.meta - e.cobertura]],
+    flujos,
+  };
+}
+
+/** Primer instante desde el cual la serie queda dentro de ±tolerancia de la meta. */
+export function tiempoAsentamiento(tiempo, serie, meta, tolerancia = 1) {
+  let ultimoFuera = -1;
+  serie.forEach((v, k) => { if (Math.abs(v - meta) > tolerancia) ultimoFuera = k; });
+  return ultimoFuera + 1 < tiempo.length ? tiempo[ultimoFuera + 1] : null;
+}
+
 /**
  * Valles (mínimos locales) de una serie con una prominencia mínima.
  * Sirve para leer en el simulador cuándo ocurre cada escasez y qué tan
