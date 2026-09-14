@@ -72,6 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../semana5/03-balance-retardo-oscilacion.html" rel="next">
 <link href="../semana5/01-refuerzo-exponencial.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -289,6 +290,12 @@ window.Quarto = {
  <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -450,7 +457,7 @@ window.Quarto = {
 </div>
 </div>
 <p>La curva de cierre es la misma para cualquier búsqueda de meta. Si el tiempo se mide en tiempos de ajuste y la brecha en fracción de la inicial, el carro, el embalse y el margen de reserva dibujan una sola curva:</p>
-<div id="8d4633e5" class="cell" data-execution_count="2">
+<div id="89773361" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -872,7 +879,7 @@ window.Quarto = {
 <p><strong>Cuente lo que compra y lo que cuesta.</strong> Con 50 COP/kWh el sistema tiene en el año 40 unos 3 567 MW firmes más que sin prima, el precio de bolsa baja a 105,7 COP/kWh y la capacidad FNCER cae de 116 a 53 MW: la prima abarata la bolsa y con ello le quita ingresos a las renovables. El margen extra compra seguridad contra sequías y se paga con capacidad ociosa en los años normales y con un sesgo hacia la tecnología firme.</p>
 </div>
 <div class="paso">
-<p><strong>Mire la cresta.</strong> Con prima, el margen sube hasta 49,3 % en el año 6 antes de bajar a su meta, contra 34,4 % sin prima. La inversión reacciona hoy y la capacidad llega cuatro años después: el retardo hace que el lazo se pase. Ese sobrepaso es el tema de la página siguiente.</p>
+<p><strong>Mire la cresta.</strong> Con prima, el margen sube hasta 49,3 % en el año 6 antes de bajar a su meta, contra 34,4 % sin prima. La inversión reacciona hoy y la capacidad llega cuatro años después: el retardo hace que el lazo se pase. Ese sobrepaso es el tema de la <a href="../semana5/03-balance-retardo-oscilacion.html">página siguiente</a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="El barrido de la prima en Python">
@@ -887,7 +894,7 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="d74d0f29" class="cell" data-execution_count="3">
+<div id="ca13de3e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -933,7 +940,7 @@ prima = 100 COP/kWh   margen en el año 40 = 0.547   meta efectiva = 0.547</code
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Acortar el tiempo de ajuste como si fuera gratis</span>
 </div>
 <p>Corregir más rápido exige más recursos por unidad de tiempo, y la corrección más grande llega justo al principio.</p>
-<div id="ba3a06a1" class="cell" data-execution_count="4">
+<div id="7bbf764f" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1150,7 +1157,7 @@ prima = 100 COP/kWh   margen en el año 40 = 0.547   meta efectiva = 0.547</code
 <li>El mercado del curso busca una <strong>meta oculta</strong> del 29,06 %; la prima del Cargo por Confiabilidad la eleva, a 38,7 % con 50 COP/kWh, y con ello baja el precio de bolsa y frena a las FNCER.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Lazos de balance: la búsqueda de meta» de las notas de la semana 5 trae la figura del embalse y del margen con prima, y los ejercicios del embalse con presión comercial y del barrido de la prima. En el Laboratorio 4 usted medirá la meta efectiva del modelo con y sin prima.</p>
+<p><strong>Para profundizar.</strong> La sección «Lazos de balance: la búsqueda de meta» de las notas de la semana 5 trae la figura del embalse y del margen con prima, y los ejercicios del embalse con presión comercial y del barrido de la prima. En el Laboratorio 4 usted medirá la meta efectiva del modelo con y sin prima. La página siguiente muestra qué pasa cuando la corrección llega con retardo: <a href="../semana5/03-balance-retardo-oscilacion.html">balance más retardo</a>.</p>
 
 
 </section>
@@ -1579,6 +1586,9 @@ window._ojs.runtime.interpretFromScriptTags();
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../semana5/03-balance-retardo-oscilacion.html" class="pagination-link" aria-label="Balance más retardo: oscilación">
+        <span class="nav-page-text">Balance más retardo: oscilación</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

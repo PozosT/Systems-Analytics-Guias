@@ -192,7 +192,7 @@ export const PARAMETROS_CICLO = {
   capacidad_inicial: 12000, proyectos_iniciales: 2500, demanda_inicial: 8000,
   crecimiento_demanda: 0.03, margen_objetivo: 0.30, retardo_constructor: 4,
   vida_util: 30, precio_referencia: 150, sensibilidad_precio: 4,
-  elasticidad_inversion: 3, elasticidad_demanda: 0,
+  elasticidad_inversion: 3, elasticidad_demanda: 0, peso_cartera: 0,
 };
 
 /** Modelo de tres stocks del ciclo inversión-capacidad (semana 4). */
@@ -209,6 +209,7 @@ export function cicloInversionCapacidad(parametros = {}) {
       sensibilidad_precio: p.sensibilidad_precio,
       elasticidad_inversion: p.elasticidad_inversion,
       elasticidad_demanda: p.elasticidad_demanda,
+      peso_cartera: p.peso_cartera,
       tasa_inversion_referencia: 1 / p.vida_util + p.crecimiento_demanda,
     },
     stocks: [
@@ -223,10 +224,14 @@ export function cicloInversionCapacidad(parametros = {}) {
       ["margen_reserva", (t, e) => (e.capacidad_instalada - e.demanda) / e.demanda],
       ["precio_bolsa", (t, e) => e.precio_referencia
         * Math.exp(-e.sensibilidad_precio * (e.margen_reserva - e.margen_objetivo))],
+      ["margen_percibido", (t, e) => e.margen_reserva + e.peso_cartera * (e.proyectos_en_construccion
+        - e.retardo_constructor * e.tasa_inversion_referencia * e.capacidad_instalada) / e.demanda],
+      ["precio_percibido", (t, e) => e.precio_referencia
+        * Math.exp(-e.sensibilidad_precio * (e.margen_percibido - e.margen_objetivo))],
     ],
     flujos: [
       ["inicio_proyectos", (t, e) => e.tasa_inversion_referencia * e.capacidad_instalada
-        * (e.precio_bolsa / e.precio_referencia) ** e.elasticidad_inversion],
+        * (e.precio_percibido / e.precio_referencia) ** e.elasticidad_inversion],
       ["puesta_en_servicio", (t, e) => e.proyectos_en_construccion / e.retardo_constructor],
       ["retiros", (t, e) => e.capacidad_instalada / e.vida_util],
       ["crecimiento_demanda", (t, e) => e.crecimiento_demanda_anual * e.demanda
@@ -340,6 +345,44 @@ export function reservaConDosMetas({reserva_inicial = 5000, meta_operador = 9000
       ["recuperacion", (t, e) => (e.meta_operador - e.reserva) / e.tiempo_ajuste_operador],
       ["presion_comercial", tiempo_ajuste_comercial
         ? (t, e) => Math.max(0, e.reserva - e.meta_comercial) / e.tiempo_ajuste_comercial : () => 0],
+    ],
+  };
+}
+
+/** Telaraña del ciclo del cerdo en tiempo discreto (réplica de mise_sd.modelos.telarana). */
+export function telarana({rondas = 16, oferta_inicial = 80, sensibilidad_oferta = 0.4, pendiente_demanda = 2,
+  precio_equilibrio = 100, oferta_equilibrio = 100} = {}) {
+  const oferta = [oferta_inicial], precio = [];
+  for (let ronda = 0; ronda < rondas; ronda++) {
+    precio.push(Math.max(0, precio_equilibrio - pendiente_demanda * (oferta.at(-1) - oferta_equilibrio)));
+    if (ronda < rondas - 1) oferta.push(Math.max(0, oferta_equilibrio + sensibilidad_oferta * (precio.at(-1) - precio_equilibrio)));
+  }
+  return {ronda: Array.from({length: rondas}, (_, k) => k), oferta, precio};
+}
+
+/**
+ * Inventario que busca su meta a través de un retardo de entrega de orden n
+ * (réplica de mise_sd.modelos.inventario_con_retardo).
+ */
+export function inventarioConRetardo({inventario_inicial = 60, meta = 120, consumo = 30, tiempo_ajuste = 1,
+  retardo = 2, orden = 3, peso_transito = 0, pedidos_minimos = 0} = {}) {
+  const etapas = Array.from({length: orden}, (_, k) => `transito_${k + 1}`);
+  const flujos = ["pedidos", ...Array.from({length: orden - 1}, (_, k) => `avance_${k + 1}`), "llegadas"];
+  return {
+    nombre: "inventario_con_retardo",
+    constantes: {meta, consumo, tiempo_ajuste, peso_transito, transito_normal: consumo * retardo, tiempo_etapa: retardo / orden},
+    stocks: [
+      ...etapas.map((etapa, k) => ({nombre: etapa, inicial: consumo * retardo / orden, entradas: [flujos[k]], salidas: [flujos[k + 1]]})),
+      {nombre: "inventario", inicial: inventario_inicial, entradas: ["llegadas"], salidas: ["uso"]},
+    ],
+    auxiliares: [["en_transito", (t, e) => etapas.reduce((a, etapa) => a + e[etapa], 0)]],
+    flujos: [
+      ["pedidos", (t, e) => {
+        const bruto = e.consumo + (e.meta - e.inventario - e.peso_transito * (e.en_transito - e.transito_normal)) / e.tiempo_ajuste;
+        return pedidos_minimos === null ? bruto : Math.max(pedidos_minimos, bruto);
+      }],
+      ...etapas.map((etapa, k) => [flujos[k + 1], (t, e) => e[etapa] / e.tiempo_etapa]),
+      ["uso", (t, e) => e.consumo],
     ],
   };
 }
