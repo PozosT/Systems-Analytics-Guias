@@ -249,7 +249,7 @@ export const PARAMETROS_MERCADO = {
   sensibilidad_precio: 4, elasticidad_inversion: 3,
   periodo_nino: 0, duracion_nino: 1.5, intensidad_nino: 0.10,
   prima_cxc: 0, subasta_fncer: 0, impuesto_carbono: 0, inicio_subasta: 0, duracion_subasta: null,
-  meta_subasta_firme: 0, tiempo_ajuste_subasta: 2,
+  meta_subasta_firme: 0, tiempo_ajuste_subasta: 2, congestion_social: 0,
 };
 
 /** Ciclo con CxC, FNCER y aprendizaje (semana 5; réplica de mise_sd.modelos.mercado_con_politicas). */
@@ -272,6 +272,7 @@ export function mercadoConPoliticas(parametros = {}) {
       inicio_subasta: p.inicio_subasta, fin_subasta: p.duracion_subasta === null ? Infinity : p.inicio_subasta + p.duracion_subasta,
       periodo_nino: p.periodo_nino, duracion_nino: p.duracion_nino, intensidad_nino: p.intensidad_nino,
       meta_subasta_firme: p.meta_subasta_firme, tiempo_ajuste_subasta: p.tiempo_ajuste_subasta,
+      congestion_social: p.congestion_social,
     },
     stocks: [
       {nombre: "capacidad_firme", inicial: p.capacidad_firme_inicial, entradas: ["puesta_firme"], salidas: ["retiros_firme"]},
@@ -295,6 +296,7 @@ export function mercadoConPoliticas(parametros = {}) {
         + (e.proyectos_firme - e.retardo_firme * e.tasa_firme * e.capacidad_firme) / e.demanda_efectiva],
       ["subasta_firme", (t, e) => e.meta_subasta_firme > 0
         ? Math.max(0, e.meta_subasta_firme - e.margen_proyectado) * e.demanda_efectiva / e.tiempo_ajuste_subasta : 0],
+      ["retardo_fncer_efectivo", (t, e) => e.retardo_fncer + e.congestion_social * e.proyectos_fncer / 1000],
     ],
     flujos: [
       ["inicios_firme", (t, e) => e.tasa_firme * e.capacidad_firme * (e.ingreso_firme / e.precio_referencia) ** e.elasticidad_inversion
@@ -304,7 +306,7 @@ export function mercadoConPoliticas(parametros = {}) {
       ["inicios_fncer", (t, e) => e.tasa_fncer * Math.max(e.capacidad_fncer, e.semilla_fncer)
         * (e.precio_capturado_fncer / e.costo_fncer) ** e.elasticidad_fncer
         + (e.inicio_subasta <= t && t < e.fin_subasta ? e.subasta_fncer : 0)],
-      ["puesta_fncer", (t, e) => e.proyectos_fncer / e.retardo_fncer],
+      ["puesta_fncer", (t, e) => e.proyectos_fncer / e.retardo_fncer_efectivo],
       ["puesta_fncer_acumulada", (t, e) => e.puesta_fncer],
       ["retiros_fncer", (t, e) => e.capacidad_fncer / e.vida_fncer],
       ["crecimiento_demanda", (t, e) => e.crecimiento_demanda_anual * e.demanda],
