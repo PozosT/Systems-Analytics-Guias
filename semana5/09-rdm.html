@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Del «predecir y actuar» al «explorar y adaptar»: el marco XLRM, la exploración de muchos futuros, el análisis de vulnerabilidad hecho a mano sobre 200 futuros y el plan adaptativo con señales y contingencias.">
+
+<title>Introducción a la toma de decisiones robusta (RDM) – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana5/08-robustez-regret.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/09-rdm.html">Introducción a la toma de decisiones robusta (RDM)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-el-mapa-y-la-brújula" id="toc-la-intuición-el-mapa-y-la-brújula" class="nav-link" data-scroll-target="#la-intuición-el-mapa-y-la-brújula">2. La intuición: el mapa y la brújula</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/09-rdm.html">Introducción a la toma de decisiones robusta (RDM)</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Introducción a la toma de decisiones robusta (RDM)</h1>
+<p class="subtitle lead">Semana 5 · Concepto 9 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Del «predecir y actuar» al «explorar y adaptar»: el marco XLRM, la exploración de muchos futuros, el análisis de vulnerabilidad hecho a mano sobre 200 futuros y el plan adaptativo con señales y contingencias.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="18" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 17;"><span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 45 a 55 minutos</span> <span class="dato">📚 Requiere <a href="../semana5/07-escenarios.html">escenarios</a> y <a href="../semana5/08-robustez-regret.html">robustez</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4 y en las secciones 6 y 7 del informe final</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Estructurar un problema de decisión en incertidumbres, palancas, modelo y métricas (XLRM).</li>
+<li>Explorar muchos futuros y delimitar la región donde falla una estrategia, con su cobertura y su densidad.</li>
+<li>Convertir las vulnerabilidades en un plan adaptativo con acción inmediata, señales observables y contingencias.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>La toma de decisiones robusta cambia la pregunta «¿qué pasará?» por «¿bajo qué condiciones fallaría mi estrategia?». Su producto es un plan que decide hoy lo que no puede esperar y deja escritas las señales que harían cambiar el rumbo.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>En 2010 casi ningún plan energético anticipó que el costo nivelado de la solar caería un 85 % en diez años (IRENA). Los planes seguían el paradigma de <strong>predecir y actuar</strong>: construir el mejor pronóstico y optimizar contra él. Las páginas de esta semana construyeron otra forma de trabajar, con escenarios, tablas de robustez y arrepentimiento. La corporación RAND agrupó esos métodos bajo el nombre de <em>Robust Decision Making</em> (RDM), toma de decisiones robusta (Marchau et al., 2019). <strong>¿Qué cambia cuando se pasa de predecir y actuar a explorar y adaptar, y qué agrega el RDM a lo que usted ya sabe hacer?</strong></p>
+</section>
+<section id="la-intuición-el-mapa-y-la-brújula" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-mapa-y-la-brújula">2. La intuición: el mapa y la brújula</h2>
+<p>Dos capitanes preparan el mismo viaje con el mismo pronóstico.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos maneras de preparar un viaje</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-brujula-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-09-brujula-1.svg" class="img-fluid" alt="Ruta recta del origen al destino, trazada con el pronóstico de buen tiempo."></a></p>
+<p><strong>El capitán del mapa.</strong> El pronóstico anuncia buen tiempo. Traza la ruta más corta y la sigue: es la estrategia óptima para el futuro esperado.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-brujula-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-09-brujula-2.svg" class="img-fluid" alt="Una tormenta cruza la ruta recta y la bloquea."></a></p>
+<p><strong>El pronóstico falla.</strong> Una tormenta cruza la ruta. No había alternativa preparada, así que el capitán decide sobre la marcha, con poco tiempo y peor información.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-brujula-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-09-brujula-3.svg" class="img-fluid" alt="Ruta con un punto de decisión, una ruta alterna al norte y una regla escrita: si el barómetro baja de 1 000 hPa, tomar la ruta norte."></a></p>
+<p><strong>El capitán de la brújula.</strong> Traza una ruta razonable con un punto de decisión, prepara una ruta alterna y escribe antes de zarpar la regla que la activa: si el barómetro baja de 1 000 hPa, tomar la ruta norte.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-brujula-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-09-brujula-4.svg" class="img-fluid" alt="La tormenta aparece, la señal se activa y el barco toma el desvío previsto hasta el destino."></a></p>
+<p><strong>La señal aparece a tiempo.</strong> El barómetro cae, el capitán toma el desvío que ya había estudiado y llega. No predijo mejor la tormenta: preparó la respuesta y la señal que la dispara.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-brujula-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-09-brujula-5.svg" class="img-fluid" alt="El sistema eléctrico: acción de hoy, señales y contingencias escritas de antemano."></a></p>
+<p><strong>El sistema eléctrico.</strong> Hoy se decide lo que no puede esperar, como subastar y publicar la cartera; se vigilan señales como el costo adjudicado o el precio capturado, y cada señal activa una contingencia escrita de antemano.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Toma de decisiones robusta (RDM)</span>
+</div>
+<p>Marco iterativo de cuatro pasos (Marchau et al., 2019):</p>
+<ol type="1">
+<li><strong>XLRM</strong>: estructurar el problema en incertidumbres exógenas (X), palancas del decisor (L), relaciones o modelo (R) y métricas (M).</li>
+<li><strong>Exploración</strong>: evaluar las estrategias en un conjunto amplio de futuros, desde cuatro escenarios hasta miles de combinaciones muestreadas.</li>
+<li><strong>Análisis de vulnerabilidad</strong>: encontrar las regiones del espacio de incertidumbre donde cada estrategia falla. Una región se juzga por su <strong>cobertura</strong> (qué fracción de todas las fallas contiene) y su <strong>densidad</strong> (qué fracción de los futuros de la región son fallas).</li>
+<li><strong>Estrategia adaptativa</strong>: acciones robustas inmediatas, señales observables ligadas a las vulnerabilidades y contingencias predefinidas.</li>
+</ol>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El ciclo, paso a paso</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-ciclo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-09-ciclo-1.svg" class="img-fluid" alt="Paso 1: XLRM."></a></p>
+<p><strong>Estructure con XLRM.</strong> En el caso ancla: X son la tasa de aprendizaje, el crédito de capacidad, la demanda, El Niño y la canibalización; L, la prima, la subasta, el impuesto y la publicación de la cartera; R, <code>mercado_con_politicas</code>; M, el costo para la demanda y el margen mínimo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-ciclo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s5-09-ciclo-2.svg" class="img-fluid" alt="Paso 2: explorar."></a></p>
+<p><strong>Explore.</strong> Corra las estrategias en muchos futuros. La tabla del Laboratorio con cuatro mundos es la versión mínima; aquí usará 200 futuros muestreados.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-ciclo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s5-09-ciclo-3.svg" class="img-fluid" alt="Paso 3: vulnerabilidad."></a></p>
+<p><strong>Busque las vulnerabilidades.</strong> Sobre los resultados, pregunte en qué región de los futuros el arrepentimiento de cada estrategia supera un umbral. La dirección del análisis se invierte: los futuros problemáticos salen de los datos y no de la imaginación del analista.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-ciclo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s5-09-ciclo-4.svg" class="img-fluid" alt="Paso 4: adaptar."></a></p>
+<p><strong>Adapte.</strong> Cada vulnerabilidad se convierte en una señal que se puede medir y en una contingencia que se activa con ella.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-09-ciclo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s5-09-ciclo-5.svg" class="img-fluid" alt="Cierre del ciclo: iterar; PRIM, Rhodium y EMA Workbench automatizan los pasos 2 y 3."></a></p>
+<p><strong>Itere y ubique la frontera.</strong> El plan se revisa cuando llegan datos nuevos. El RDM formal automatiza la exploración y la búsqueda de regiones con algoritmos como PRIM y plataformas como Rhodium o EMA Workbench; el curso hace esos pasos a mano.</p>
+</div>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="xlrm-de-una-microrred-para-un-hospital" class="level3">
+<h3 class="anchored" data-anchor-id="xlrm-de-una-microrred-para-un-hospital">XLRM de una microrred para un hospital</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Estructurar antes de modelar</span>
+</div>
+<p><strong>Planteamiento.</strong> Un municipio de una zona no interconectada decide cómo abastecer su hospital durante los próximos 20 años: seguir con la planta diésel, instalar una microrred solar con baterías o una combinación. Estructure el problema en XLRM.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Llenar las cuatro casillas</span>
+</div>
+<div class="paso">
+<p><strong>Liste las incertidumbres (X).</strong> Precio del diésel puesto en el municipio, costo de las baterías en 2030, frecuencia de fallas del transporte de combustible y crecimiento de la demanda del hospital. Márquelas: el diésel del próximo año es riesgo; las baterías en 2030, incertidumbre profunda.</p>
+</div>
+<div class="paso">
+<p><strong>Liste las palancas (L).</strong> Tamaño de la planta solar, capacidad de baterías, reserva de combustible y tipo de contrato de mantenimiento. Son lo que el municipio controla.</p>
+</div>
+<div class="paso">
+<p><strong>Describa el modelo (R).</strong> Un balance horario de energía con la generación solar, el estado de carga de las baterías, el despacho del diésel y un stock de combustible que se repone con retardo.</p>
+</div>
+<div class="paso">
+<p><strong>Elija las métricas (M).</strong> Horas sin servicio al año (lo que le importa al hospital) y costo anual total (lo que le importa al municipio). Dos métricas porque hay dos interesados.</p>
+</div>
+<div class="paso">
+<p><strong>Revise la separación.</strong> Ninguna X es algo que el municipio controle, y ninguna L es algo que no controle. Si una casilla mezcla las dos, el análisis de vulnerabilidad confundirá decisiones con suerte.</p>
+</div>
+</div>
+</section>
+<section id="del-veredicto-de-la-tabla-a-un-plan-adaptativo" class="level3">
+<h3 class="anchored" data-anchor-id="del-veredicto-de-la-tabla-a-un-plan-adaptativo">Del veredicto de la tabla a un plan adaptativo</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">El plan adaptativo del caso ancla</span>
+</div>
+<p><strong>Planteamiento.</strong> La tabla de robustez del Laboratorio 4 dejó al impulso FNCER como la estrategia de menor arrepentimiento máximo y al mercado solo como la de mejor peor caso. Convierta ese resultado en un plan con acción inmediata, señales y contingencias.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Construir el plan</span>
+</div>
+<div class="paso">
+<p><strong>Nombre las vulnerabilidades conocidas.</strong> El impulso FNCER paga sobrecostos de contratos cuando el aprendizaje es lento (Siesta y Tormenta). El mercado solo pierde cuando la transición se acelera y el país llega tarde a la curva de aprendizaje. El seguro CxC cuesta más en los cuatro mundos, pero es el que más margen compra: un margen medio de 42 a 44 % después del año 10, frente a 33 a 37 % de las otras dos.</p>
+</div>
+<div class="paso">
+<p><strong>Decida lo que no puede esperar.</strong> Subastar 150 MW/año, la mitad del impulso pleno, compra posición en la curva sin comprometer el sobrecosto máximo. Publicar cada trimestre la cartera en construcción es una palanca de información barata que la página 3 mostró eficaz.</p>
+</div>
+<div class="paso">
+<p><strong>Ate una señal a cada vulnerabilidad.</strong> Aprendizaje lento: si tras dos subastas el costo adjudicado no cae al menos un 15 %. Canibalización fuerte: si el precio que capturan las FNCER existentes cae más de un 30 % frente al precio medio de bolsa. Escasez: el margen proyectado a cinco años con la cartera publicada.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba las contingencias.</strong> Mundo lento: congelar el crecimiento de la subasta. Canibalización fuerte: orientar la subasta hacia almacenamiento y demanda flexible. Margen proyectado en caída: activar una prima de confiabilidad temporal.</p>
+</div>
+<div class="paso">
+<p><strong>Revise los umbrales.</strong> Los porcentajes de las señales son propuestas de diseño que se calibran con el modelo y con datos. Lo que hace robusto al plan es que cada contingencia está atada a una señal medible y cada señal, a una vulnerabilidad demostrada.</p>
+</div>
+</div>
+</section>
+<section id="doscientos-futuros-y-una-caja-de-falla" class="level3">
+<h3 class="anchored" data-anchor-id="doscientos-futuros-y-una-caja-de-falla">Doscientos futuros y una caja de falla</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Análisis de vulnerabilidad a mano</span>
+</div>
+<p><strong>Planteamiento.</strong> Se muestrearon 200 futuros al azar sobre rangos amplios: tasa de aprendizaje de 5 a 35 %, canibalización de 1 a 4, crecimiento de la demanda de 1,5 a 5 % anual, crédito de capacidad de 0,1 a 0,5 y un El Niño cada 3 a 8 años. En cada futuro se corrieron las tres estrategias del Laboratorio con su métrica de costo. Una estrategia <strong>falla</strong> en un futuro cuando su arrepentimiento supera un umbral, 2 COP/kWh por defecto. ¿Dónde falla el impulso FNCER?</p>
+</div>
+<div id="pred-caja" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Antes de explorar, ¿dónde espera que falle el impulso FNCER?</p>
+<div class="opcion">
+<p>Donde el aprendizaje es lento <strong>y</strong> la canibalización es fuerte, las dos condiciones a la vez.</p>
+</div>
+<div class="opcion">
+<p>Donde el aprendizaje es lento, casi sin importar la canibalización.</p>
+</div>
+<div class="opcion">
+<p>Donde la demanda crece rápido.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Buscar la caja de falla</span>
+</div>
+<p>Cada punto es un futuro; los rojos son fallas del impulso FNCER. Ajuste la caja con los dos controles de abajo y busque una caja pequeña que contenga casi todas las fallas.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="240" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 239;"><span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a>futurosV <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s5-09-futuros.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="245" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 244;"><span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a>viewof umbralV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.5</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Umbral de falla [COP/kWh de arrepentimiento]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="250" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 249;"><span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>viewof aprendizajeV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.05</span><span class="op">,</span> <span class="fl">0.35</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.35</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caja: aprendizaje menor que"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="255" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 254;"><span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>viewof canibalizacionV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caja: canibalización mayor que"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="260" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 259;"><span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a>vulnerabilidadV <span class="op">=</span> {</span>
+<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> f <span class="op">=</span> futurosV<span class="op">.</span><span class="at">futuros</span><span class="op">;</span></span>
+<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> futurosV<span class="op">.</span><span class="at">costos</span><span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> arrepentimiento <span class="op">=</span> c[<span class="dv">2</span>] <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>c)<span class="op">;</span></span>
+<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="dt">aprendizaje</span><span class="op">:</span> f<span class="op">.</span><span class="at">tasa_aprendizaje</span>[i]<span class="op">,</span> <span class="dt">canibalizacion</span><span class="op">:</span> f<span class="op">.</span><span class="at">canibalizacion</span>[i]<span class="op">,</span> arrepentimiento<span class="op">,</span></span>
+<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>      <span class="dt">falla</span><span class="op">:</span> arrepentimiento <span class="op">&gt;</span> umbralV<span class="op">,</span></span>
+<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>      <span class="dt">enCaja</span><span class="op">:</span> f<span class="op">.</span><span class="at">tasa_aprendizaje</span>[i] <span class="op">&lt;</span> aprendizajeV <span class="op">&amp;&amp;</span> f<span class="op">.</span><span class="at">canibalizacion</span>[i] <span class="op">&gt;</span> canibalizacionV}<span class="op">;</span></span>
+<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fallas <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> enCaja <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">enCaja</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fallasEnCaja <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span> <span class="op">&amp;&amp;</span> p<span class="op">.</span><span class="at">enCaja</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> peor <span class="op">=</span> puntos<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> p) <span class="kw">=&gt;</span> (p<span class="op">.</span><span class="at">arrepentimiento</span> <span class="op">&gt;</span> a<span class="op">.</span><span class="at">arrepentimiento</span> <span class="op">?</span> p <span class="op">:</span> a))<span class="op">;</span></span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {puntos<span class="op">,</span> fallas<span class="op">,</span> enCaja<span class="op">,</span> fallasEnCaja<span class="op">,</span> peor<span class="op">,</span></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cobertura</span><span class="op">:</span> fallas <span class="op">?</span> fallasEnCaja <span class="op">/</span> fallas <span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">densidad</span><span class="op">:</span> enCaja <span class="op">?</span> fallasEnCaja <span class="op">/</span> enCaja <span class="op">:</span> <span class="dv">0</span>}<span class="op">;</span></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="279" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 278;"><span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">640</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">340</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tasa de aprendizaje"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.04</span><span class="op">,</span> <span class="fl">0.36</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Canibalización"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.9</span><span class="op">,</span> <span class="fl">4.1</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rect</span>([{<span class="dt">x1</span><span class="op">:</span> <span class="fl">0.04</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> aprendizajeV<span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> canibalizacionV<span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="fl">4.1</span>}]<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y2"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.12</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span>})<span class="op">,</span></span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vulnerabilidadV<span class="op">.</span><span class="at">puntos</span><span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> <span class="op">!</span>p<span class="op">.</span><span class="at">falla</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"aprendizaje"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"canibalizacion"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.7</span>})<span class="op">,</span></span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vulnerabilidadV<span class="op">.</span><span class="at">puntos</span><span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"aprendizaje"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"canibalizacion"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span>})<span class="op">,</span></span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="293" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 292;"><span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Fallas del impulso FNCER&lt;b&gt;</span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">fallas</span><span class="sc">}</span><span class="vs"> de 200 futuros&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Futuros en la caja&lt;b&gt;</span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">enCaja</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cobertura: fallas dentro de la caja&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(vulnerabilidadV<span class="op">.</span><span class="at">cobertura</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Densidad: futuros de la caja que fallan&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(vulnerabilidadV<span class="op">.</span><span class="at">densidad</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Arrepentimiento máximo en los 200 futuros&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(vulnerabilidadV<span class="op">.</span><span class="at">peor</span><span class="op">.</span><span class="at">arrepentimiento</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>200 futuros muestreados de manera uniforme (semilla 2026) sobre <code>mise_sd.modelos.mercado_con_politicas</code>, con la métrica y las estrategias de <code>notas/semana5/figuras/escenarios_lab4.py</code>; cálculo hecho en Python al construir la página. Datos sintéticos con fines didácticos.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la exploración</span>
+</div>
+<div class="paso">
+<p><strong>Cuente las fallas.</strong> Con el umbral de 2 COP/kWh, el impulso FNCER falla en 16 de 200 futuros, y su arrepentimiento máximo en los 200 es de 6,7 COP/kWh. El mercado solo llega a 47,0 y el seguro CxC a 58,5 en sus peores futuros: la exploración confirma que la subasta es la más robusta de las tres.</p>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-caja"></span>. Con la caja «aprendizaje menor que 10 %» y sin restricción de canibalización quedan 24 futuros, que contienen 15 de las 16 fallas: cobertura de 94 % y densidad de 63 %. Si además exige canibalización mayor que 2,5, la cobertura cae a 50 % y la densidad no mejora (62 %). La respuesta es la B: la hipótesis de las dos condiciones a la vez no se sostiene.</p>
+</div>
+<div class="paso">
+<p><strong>Busque lo que ninguna caja atrapa.</strong> La falla que queda fuera es la peor de todas, con 6,7 COP/kWh: un futuro con aprendizaje de 34 %, canibalización de 3,6, demanda de 4,9 % anual y crédito de 0,20. Ahí el mercado solo ya despliega 92 GW de renovables sin ayuda, la subasta temprana satura el precio capturado y termina con 77 GW y un costo de 130,4 frente a 123,8 COP/kWh. Nadie la había imaginado como amenaza.</p>
+</div>
+<div class="paso">
+<p><strong>Traduzca a señales.</strong> La vulnerabilidad principal pide vigilar la velocidad del aprendizaje, con el costo adjudicado en las subastas. La segunda pide vigilar la canibalización cuando las renovables crecen solas: si el mercado ya despliega, la subasta sobra.</p>
+</div>
+<div class="paso">
+<p><strong>Ubique la frontera del curso.</strong> PRIM hace esta búsqueda de cajas en todas las dimensiones a la vez y reporta la cobertura y la densidad de cada caja candidata. El curso la hace a mano, en dos dimensiones, para entender qué calcula el algoritmo.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Presentar el RDM como una predicción</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Según el RDM, el aprendizaje será lento en el 12 % de los futuros.» Los 200 futuros se muestrearon de rangos elegidos por el analista: su frecuencia no es una probabilidad.</p>
+</div>
+<div class="bien">
+<p>«El impulso FNCER falla sobre todo cuando el aprendizaje es menor que 10 %; vigilaremos el costo adjudicado para saber si estamos en esa región.» El RDM describe condiciones de falla, no frecuencias.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Plan adaptativo sin señales observables</span>
+</div>
+<p>«Monitorearemos la evolución del sector» no es una señal. Cada contingencia necesita un indicador concreto, publicado por alguien (XM, UPME, las subastas), y un umbral que dispare la revisión. Sin indicador y fuente, la adaptación es decorativa.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir adaptativo con indeciso</span>
+</div>
+<p>El plan adaptativo decide hoy lo que no puede esperar, como subastar y publicar la cartera, y deja para después solo lo que puede esperar a mejor información. Aplazarlo todo hasta tener certeza es la antiestrategia: bajo incertidumbre profunda la certeza no llega, y el retardo constructor sigue corriendo.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En XLRM, ¿dónde va el tamaño de la subasta FNCER?</p>
+<div class="opcion">
+<p>En X, porque su valor futuro es incierto.</p>
+<p><span class="porque">El tamaño lo decide el regulador. Revise el último paso del ejemplo básico.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>En L, porque es una palanca del decisor.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>En M, porque se mide en megavatios.</p>
+<p><span class="porque">Las métricas miden resultados, no decisiones.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una caja contiene 5 de las 16 fallas y todos sus futuros fallan. ¿Cómo la describe?</p>
+<div class="opcion" data-correcta="si">
+<p>Densidad de 100 % y cobertura baja, de 31 %: explica bien pocas fallas.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Cobertura de 100 %, porque todos sus futuros fallan.</p>
+<p><span class="porque">Esa es la densidad. La cobertura mira qué fracción de todas las fallas contiene.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué agrega la exploración de 200 futuros a la tabla de cuatro mundos?</p>
+<div class="opcion">
+<p>Probabilidades para cada mundo.</p>
+<p><span class="porque">Los futuros se muestrearon de rangos elegidos; no dan probabilidades. Revise el primer error común.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Vulnerabilidades que nadie imaginó, como el futuro de aprendizaje rápido donde la subasta sobra.</p>
+<p><span class="porque">Correcto: los futuros problemáticos salen de los datos.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Cuál de estas es una señal útil para un plan adaptativo?</p>
+<div class="opcion">
+<p>«La evolución de la transición energética.»</p>
+<p><span class="porque">No se puede medir ni tiene umbral.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>«El costo adjudicado en la subasta, si tras dos rondas no cae al menos un 15 %.»</p>
+<p><span class="porque">Correcto: indicador publicado y umbral explícito.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un comité decide esperar cinco años «hasta que la incertidumbre se despeje» antes de subastar. ¿Qué error comete?</p>
+<div class="opcion" data-correcta="si">
+<p>Confundir adaptativo con indeciso: la incertidumbre profunda no se despeja sola y el retardo constructor corre.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Ninguno, porque esperar también es una estrategia robusta.</p>
+<p><span class="porque">Esperar pierde posición en la curva de aprendizaje, como mostró la primera página.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-xlrm-de-su-proyecto" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-xlrm-de-su-proyecto">Ejercicio 1 ●○○ · XLRM de su proyecto</h4>
+<p>Estructure en XLRM el problema de su proyecto integrador: al menos tres incertidumbres profundas (X), tres palancas del decisor (L), el modelo de su sección 4 (R) y dos métricas que su cliente reconocería (M).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Plantilla con el caso ancla. <strong>X</strong>: tasa de aprendizaje FNCER, crédito de capacidad regulatorio, crecimiento de la demanda, frecuencia e intensidad de El Niño y canibalización. <strong>L</strong>: prima del Cargo por Confiabilidad, tamaño y calendario de las subastas FNCER, impuesto al carbono y publicación de la cartera. <strong>R</strong>: <code>mercado_con_politicas</code>, con seis stocks, dos cadenas de capacidad y tres palancas. <strong>M</strong>: costo medio para la demanda [COP/kWh], margen mínimo del recorrido y capacidad FNCER a 20 y 40 años.</p>
+<p>Para su caso, llene las cuatro casillas con la misma concreción: cada X con su clasificación de riesgo o incertidumbre profunda, cada L con su peldaño en la jerarquía de Meadows y cada M con sus unidades.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-señales-en-pares" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-señales-en-pares">Ejercicio 2 ●●○ · Señales en pares</h4>
+<p>Para cada vulnerabilidad del plan adaptativo, proponga un segundo indicador distinto del sugerido, con fuente colombiana concreta y un umbral tentativo. Critique uno de los indicadores originales: ¿qué lo podría volver engañoso?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Piense en qué otras causas, además del aprendizaje, pueden encarecer una subasta.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Mundo lento: el precio de los módulos y aerogeneradores importados, con datos de comercio exterior y de fabricantes, además del costo adjudicado. Canibalización: la diferencia entre el precio promedio de bolsa y el precio en las horas solares, con datos de XM, además del precio capturado. Margen: la cartera de proyectos con licencia y conexión aprobadas, de la UPME y la ANLA, además de la proyección propia.</p>
+<p>El costo adjudicado es una señal ruidosa del aprendizaje: también se mueve con las tasas de interés, la tasa de cambio y la competencia entre oferentes. Dos subastas caras pueden indicar un mundo lento o un costo de capital alto. Por eso las señales van en pares y el plan exige confirmación cruzada antes de activar una contingencia.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>El RDM cambia <strong>predecir y actuar</strong> por <strong>explorar y adaptar</strong>: pregunta bajo qué condiciones falla una estrategia.</li>
+<li>Cuatro pasos: <strong>XLRM</strong>, <strong>exploración</strong>, <strong>vulnerabilidad</strong> y <strong>estrategia adaptativa</strong>, en ciclo.</li>
+<li>Una región de falla se juzga por su <strong>cobertura</strong> y su <strong>densidad</strong>. En 200 futuros, el impulso FNCER falla sobre todo con aprendizaje menor que 10 % (cobertura de 94 %), y la exploración encontró una falla que nadie imaginó, con aprendizaje rápido y canibalización fuerte.</li>
+<li>El plan adaptativo decide <strong>hoy</strong> lo que no puede esperar y ata cada <strong>contingencia</strong> a una <strong>señal</strong> medible con fuente y umbral.</li>
+<li>La versión formal (PRIM, Rhodium, EMA Workbench) automatiza la búsqueda; el curso la hace a mano.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Del predecir y actuar al explorar y adaptar» de las notas de la semana 5 trae el plan adaptativo completo y el ejercicio de PRIM a mano sobre una malla. En el informe final, la sección 6 lleva recomendaciones con condiciones de validez, señales y contingencias, y la sección 7 declara que se exploraron futuros construidos a mano. La página siguiente integra la semana en el modelo con Cargo por Confiabilidad y FNCER.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJmdXR1cm9zViA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczUtMDktZnV0dXJvcy5qc29uXCIpLmpzb24oKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHVtYnJhbFYgPSBJbnB1dHMucmFuZ2UoWzAuNSwgNV0sIHt2YWx1ZTogMiwgc3RlcDogMC41LCBsYWJlbDogXCJVbWJyYWwgZGUgZmFsbGEgW0NPUC9rV2ggZGUgYXJyZXBlbnRpbWllbnRvXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBhcHJlbmRpemFqZVYgPSBJbnB1dHMucmFuZ2UoWzAuMDUsIDAuMzVdLCB7dmFsdWU6IDAuMzUsIHN0ZXA6IDAuMDEsIGxhYmVsOiBcIkNhamE6IGFwcmVuZGl6YWplIG1lbm9yIHF1ZVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBjYW5pYmFsaXphY2lvblYgPSBJbnB1dHMucmFuZ2UoWzEsIDRdLCB7dmFsdWU6IDEsIHN0ZXA6IDAuMSwgbGFiZWw6IFwiQ2FqYTogY2FuaWJhbGl6YWNpw7NuIG1heW9yIHF1ZVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZ1bG5lcmFiaWxpZGFkViA9IHtcbiAgY29uc3QgZiA9IGZ1dHVyb3NWLmZ1dHVyb3M7XG4gIGNvbnN0IHB1bnRvcyA9IGZ1dHVyb3NWLmNvc3Rvcy5tYXAoKGMsIGkpID0+IHtcbiAgICBjb25zdCBhcnJlcGVudGltaWVudG8gPSBjWzJdIC0gTWF0aC5taW4oLi4uYyk7XG4gICAgcmV0dXJuIHthcHJlbmRpemFqZTogZi50YXNhX2FwcmVuZGl6YWplW2ldLCBjYW5pYmFsaXphY2lvbjogZi5jYW5pYmFsaXphY2lvbltpXSwgYXJyZXBlbnRpbWllbnRvLFxuICAgICAgZmFsbGE6IGFycmVwZW50aW1pZW50byA+IHVtYnJhbFYsXG4gICAgICBlbkNhamE6IGYudGFzYV9hcHJlbmRpemFqZVtpXSA8IGFwcmVuZGl6YWplViAmJiBmLmNhbmliYWxpemFjaW9uW2ldID4gY2FuaWJhbGl6YWNpb25WfTtcbiAgfSk7XG4gIGNvbnN0IGZhbGxhcyA9IHB1bnRvcy5maWx0ZXIoKHApID0+IHAuZmFsbGEpLmxlbmd0aDtcbiAgY29uc3QgZW5DYWphID0gcHVudG9zLmZpbHRlcigocCkgPT4gcC5lbkNhamEpLmxlbmd0aDtcbiAgY29uc3QgZmFsbGFzRW5DYWphID0gcHVudG9zLmZpbHRlcigocCkgPT4gcC5mYWxsYSAmJiBwLmVuQ2FqYSkubGVuZ3RoO1xuICBjb25zdCBwZW9yID0gcHVudG9zLnJlZHVjZSgoYSwgcCkgPT4gKHAuYXJyZXBlbnRpbWllbnRvID4gYS5hcnJlcGVudGltaWVudG8gPyBwIDogYSkpO1xuICByZXR1cm4ge3B1bnRvcywgZmFsbGFzLCBlbkNhamEsIGZhbGxhc0VuQ2FqYSwgcGVvcixcbiAgICBjb2JlcnR1cmE6IGZhbGxhcyA/IGZhbGxhc0VuQ2FqYSAvIGZhbGxhcyA6IDAsIGRlbnNpZGFkOiBlbkNhamEgPyBmYWxsYXNFbkNhamEgLyBlbkNhamEgOiAwfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNjQwKSwgaGVpZ2h0OiAzNDAsIG1hcmdpbkxlZnQ6IDUwLFxuICB4OiB7bGFiZWw6IFwiVGFzYSBkZSBhcHJlbmRpemFqZVwiLCBkb21haW46IFswLjA0LCAwLjM2XSwgdGlja0Zvcm1hdDogKGQpID0+IGZvcm1hdG9Qb3JjZW50YWplKGQsIDApfSxcbiAgeToge2xhYmVsOiBcIkNhbmliYWxpemFjacOzblwiLCBkb21haW46IFswLjksIDQuMV0sIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdChbe3gxOiAwLjA0LCB4MjogYXByZW5kaXphamVWLCB5MTogY2FuaWJhbGl6YWNpb25WLCB5MjogNC4xfV0sIHt4MTogXCJ4MVwiLCB4MjogXCJ4MlwiLCB5MTogXCJ5MVwiLCB5MjogXCJ5MlwiLCBmaWxsOiBDT0xPUkVTLmFtYmFyLCBmaWxsT3BhY2l0eTogMC4xMiwgc3Ryb2tlOiBDT0xPUkVTLmFtYmFyfSksXG4gICAgUGxvdC5kb3QodnVsbmVyYWJpbGlkYWRWLnB1bnRvcy5maWx0ZXIoKHApID0+ICFwLmZhbGxhKSwge3g6IFwiYXByZW5kaXphamVcIiwgeTogXCJjYW5pYmFsaXphY2lvblwiLCByOiAzLCBmaWxsOiBcIiM5RTlFOUVcIiwgZmlsbE9wYWNpdHk6IDAuN30pLFxuICAgIFBsb3QuZG90KHZ1bG5lcmFiaWxpZGFkVi5wdW50b3MuZmlsdGVyKChwKSA9PiBwLmZhbGxhKSwge3g6IFwiYXByZW5kaXphamVcIiwgeTogXCJjYW5pYmFsaXphY2lvblwiLCByOiA1LCBmaWxsOiBDT0xPUkVTLnJvam99KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTgiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkZhbGxhcyBkZWwgaW1wdWxzbyBGTkNFUjxiPiR7dnVsbmVyYWJpbGlkYWRWLmZhbGxhc30gZGUgMjAwIGZ1dHVyb3M8L2I+PC9kaXY+XG4gIDxkaXY+RnV0dXJvcyBlbiBsYSBjYWphPGI+JHt2dWxuZXJhYmlsaWRhZFYuZW5DYWphfTwvYj48L2Rpdj5cbiAgPGRpdj5Db2JlcnR1cmE6IGZhbGxhcyBkZW50cm8gZGUgbGEgY2FqYTxiPiR7Zm9ybWF0b1BvcmNlbnRhamUodnVsbmVyYWJpbGlkYWRWLmNvYmVydHVyYSwgMCl9PC9iPjwvZGl2PlxuICA8ZGl2PkRlbnNpZGFkOiBmdXR1cm9zIGRlIGxhIGNhamEgcXVlIGZhbGxhbjxiPiR7Zm9ybWF0b1BvcmNlbnRhamUodnVsbmVyYWJpbGlkYWRWLmRlbnNpZGFkLCAwKX08L2I+PC9kaXY+XG4gIDxkaXY+QXJyZXBlbnRpbWllbnRvIG3DoXhpbW8gZW4gbG9zIDIwMCBmdXR1cm9zPGI+JHtmb3JtYXRvTnVtZXJvKDEpKHZ1bG5lcmFiaWxpZGFkVi5wZW9yLmFycmVwZW50aW1pZW50byl9IENPUC9rV2g8L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3VtYnJhbFYnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYXByZW5kaXphamVWJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NhbmliYWxpemFjaW9uVicpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana5";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana5/08-robustez-regret.html" class="pagination-link" aria-label="Robustez y arrepentimiento máximo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Robustez y arrepentimiento máximo</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
