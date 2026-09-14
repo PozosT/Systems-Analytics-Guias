@@ -10,6 +10,18 @@
 // prueba.
 
 // ----------------------------------------------------------------------
+// Formato numérico del curso: coma decimal y espacio fino como separador de miles
+// ----------------------------------------------------------------------
+
+/** Devuelve una función que formatea números con `decimales` fijos: 19 107,7. */
+export const formatoNumero = (decimales = 0) => (d) =>
+  d.toLocaleString("es-CO", {minimumFractionDigits: decimales, maximumFractionDigits: decimales})
+    .replace(/\./g, "\u202F");
+
+/** Formatea una fracción como porcentaje con espacio antes del signo: 25,0 %. */
+export const formatoPorcentaje = (d, decimales = 0) => `${formatoNumero(decimales)(100 * d)} %`;
+
+// ----------------------------------------------------------------------
 // Núcleo: modelo declarativo e integración
 // ----------------------------------------------------------------------
 
@@ -234,6 +246,51 @@ export function coberturaContratos({cobertura_inicial = 60, meta = 100, tiempo_a
     auxiliares: [["brecha", (t, e) => e.meta - e.cobertura]],
     flujos,
   };
+}
+
+/** Embalse agregado del SIN [GWh, días] (réplica de mise_sd.modelos.embalse_agregado). */
+export function embalseAgregado({energia_inicial = 12000, aportes_medios = 150, amplitud_aportes = 0,
+  periodo_aportes = 365, turbinamiento = 180} = {}) {
+  return {
+    nombre: "embalse_agregado",
+    constantes: {aportes_medios, amplitud_aportes, periodo_aportes, turbinamiento_constante: turbinamiento},
+    stocks: [{nombre: "energia_embalsada", inicial: energia_inicial, entradas: ["aportes"], salidas: ["turbinamiento"]}],
+    auxiliares: [],
+    flujos: [
+      ["aportes", (t, e) => e.aportes_medios + e.amplitud_aportes * Math.sin(2 * Math.PI * t / e.periodo_aportes)],
+      ["turbinamiento", (t, e) => e.turbinamiento_constante],
+    ],
+  };
+}
+
+/**
+ * Integración gráfica con flujos constantes por tramos (semana 4, concepto 2).
+ * La entrada es constante y la salida cambia al inicio de cada tramo de
+ * `duracion` unidades de tiempo. Devuelve la malla con entrada, salida y
+ * nivel, integrado de forma exacta (el flujo neto es constante en cada tramo).
+ */
+export function balancePorTramos({nivel_inicial = 80, entrada = 5, salidas = [3, 8, 5], duracion = 10, paso = 0.5} = {}) {
+  const filas = [];
+  const tFinal = salidas.length * duracion;
+  for (let k = 0; k <= Math.round(tFinal / paso); k++) {
+    const t = k * paso;
+    let nivel = nivel_inicial;
+    for (let j = 0; j < salidas.length; j++) {
+      const inicio = j * duracion;
+      const dentro = Math.min(Math.max(t - inicio, 0), duracion);
+      nivel += (entrada - salidas[j]) * dentro;
+    }
+    const tramo = Math.min(Math.floor(t / duracion), salidas.length - 1);
+    filas.push({tiempo: t, entrada, salida: salidas[tramo], nivel});
+  }
+  return filas;
+}
+
+/** Stock que resulta de acumular flujos por periodo: S_k = S_0 + suma de flujos hasta k. */
+export function acumular(inicial, flujos) {
+  const stock = [inicial];
+  flujos.forEach((f) => stock.push(stock[stock.length - 1] + f));
+  return stock;
 }
 
 /** Primer instante desde el cual la serie queda dentro de ±tolerancia de la meta. */
