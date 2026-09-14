@@ -249,6 +249,7 @@ export const PARAMETROS_MERCADO = {
   sensibilidad_precio: 4, elasticidad_inversion: 3,
   periodo_nino: 0, duracion_nino: 1.5, intensidad_nino: 0.10,
   prima_cxc: 0, subasta_fncer: 0, impuesto_carbono: 0, inicio_subasta: 0, duracion_subasta: null,
+  meta_subasta_firme: 0, tiempo_ajuste_subasta: 2,
 };
 
 /** Ciclo con CxC, FNCER y aprendizaje (semana 5; réplica de mise_sd.modelos.mercado_con_politicas). */
@@ -270,6 +271,7 @@ export function mercadoConPoliticas(parametros = {}) {
       prima_cxc: p.prima_cxc, subasta_fncer: p.subasta_fncer, impuesto_carbono: p.impuesto_carbono,
       inicio_subasta: p.inicio_subasta, fin_subasta: p.duracion_subasta === null ? Infinity : p.inicio_subasta + p.duracion_subasta,
       periodo_nino: p.periodo_nino, duracion_nino: p.duracion_nino, intensidad_nino: p.intensidad_nino,
+      meta_subasta_firme: p.meta_subasta_firme, tiempo_ajuste_subasta: p.tiempo_ajuste_subasta,
     },
     stocks: [
       {nombre: "capacidad_firme", inicial: p.capacidad_firme_inicial, entradas: ["puesta_firme"], salidas: ["retiros_firme"]},
@@ -289,9 +291,14 @@ export function mercadoConPoliticas(parametros = {}) {
       ["penetracion_fncer", (t, e) => e.capacidad_fncer / e.demanda],
       ["precio_capturado_fncer", (t, e) => e.precio_bolsa * Math.exp(-e.canibalizacion * e.penetracion_fncer)],
       ["ingreso_firme", (t, e) => Math.max(e.precio_bolsa + e.prima_cxc - e.impuesto_carbono, 1)],
+      ["margen_proyectado", (t, e) => e.margen_reserva
+        + (e.proyectos_firme - e.retardo_firme * e.tasa_firme * e.capacidad_firme) / e.demanda_efectiva],
+      ["subasta_firme", (t, e) => e.meta_subasta_firme > 0
+        ? Math.max(0, e.meta_subasta_firme - e.margen_proyectado) * e.demanda_efectiva / e.tiempo_ajuste_subasta : 0],
     ],
     flujos: [
-      ["inicios_firme", (t, e) => e.tasa_firme * e.capacidad_firme * (e.ingreso_firme / e.precio_referencia) ** e.elasticidad_inversion],
+      ["inicios_firme", (t, e) => e.tasa_firme * e.capacidad_firme * (e.ingreso_firme / e.precio_referencia) ** e.elasticidad_inversion
+        + e.subasta_firme],
       ["puesta_firme", (t, e) => e.proyectos_firme / e.retardo_firme],
       ["retiros_firme", (t, e) => e.capacidad_firme / e.vida_firme],
       ["inicios_fncer", (t, e) => e.tasa_fncer * Math.max(e.capacidad_fncer, e.semilla_fncer)

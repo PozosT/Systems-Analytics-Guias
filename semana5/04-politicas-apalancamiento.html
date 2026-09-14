@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="La jerarquía de puntos de apalancamiento de Meadows aplicada al sector eléctrico: qué ecuación cambia cada política, por qué una prima fija y una subasta con meta dejan el mismo margen con trayectorias distintas, y las firmas de la prima, la subasta FNCER y el impuesto al carbono en el modelo de la semana.">
+
+<title>Políticas y puntos de apalancamiento – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana5/03-balance-retardo-oscilacion.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/04-politicas-apalancamiento.html">Políticas y puntos de apalancamiento</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-una-escalera-sobre-el-mismo-embalse" id="toc-la-intuición-una-escalera-sobre-el-mismo-embalse" class="nav-link" data-scroll-target="#la-intuición-una-escalera-sobre-el-mismo-embalse">2. La intuición: una escalera sobre el mismo embalse</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/04-politicas-apalancamiento.html">Políticas y puntos de apalancamiento</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Políticas y puntos de apalancamiento</h1>
+<p class="subtitle lead">Semana 5 · Concepto 4 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    La jerarquía de puntos de apalancamiento de Meadows aplicada al sector eléctrico: qué ecuación cambia cada política, por qué una prima fija y una subasta con meta dejan el mismo margen con trayectorias distintas, y las firmas de la prima, la subasta FNCER y el impuesto al carbono en el modelo de la semana.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> mercadoConPoliticas<span class="op">,</span> costoParaDemanda<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana5/01-refuerzo-exponencial.html">refuerzo</a>, <a href="../semana5/02-busqueda-de-meta.html">búsqueda de meta</a> y <a href="../semana5/03-balance-retardo-oscilacion.html">balance más retardo</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Clasificar una política en la jerarquía de apalancamiento respondiendo qué ecuación del modelo cambia.</li>
+<li>Predecir la firma de una política según su punto de aplicación: equilibrio desplazado, trayectoria amortiguada o refuerzo encendido.</li>
+<li>Comparar la prima, la subasta FNCER y el impuesto al carbono en el modelo de la semana con más de una métrica y más de un horizonte.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Las políticas se distinguen más por el lugar de la estructura que tocan que por su tamaño. Un parámetro desplaza un equilibrio; un lazo o una fuente de información cambian la trayectoria; una intervención que alimenta un refuerzo puede cambiar el destino.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>El sector eléctrico colombiano ha ensayado casi todas las herramientas de la caja: la prima del Cargo por Confiabilidad (Resolución CREG 071 de 2006), los incentivos tributarios a las renovables (Ley 1715 de 2014), las subastas de contratos de largo plazo de 2019 y campañas de ahorro como «Apagar paga», que entre marzo y abril de 2016 redujo el consumo en unos 1 219 GWh durante El Niño. Cada una toca un punto distinto del sistema. <strong>¿Cómo anticipar, antes de gastar un peso, qué clase de efecto tendrá cada política?</strong></p>
+</section>
+<section id="la-intuición-una-escalera-sobre-el-mismo-embalse" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-una-escalera-sobre-el-mismo-embalse">2. La intuición: una escalera sobre el mismo embalse</h2>
+<p>Donella Meadows (2008) ordenó los lugares donde se puede intervenir un sistema, del que exige más fuerza para cambiar poco al que cambia mucho con poca fuerza. El curso los condensa en cinco peldaños. Recórralos sobre un solo problema: el embalse que baja en una sequía.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Cinco alturas para intervenir</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-escalera-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-04-escalera-1.svg" class="img-fluid" alt="Escalera de cinco peldaños: parámetros, retardos e información, lazos, metas, paradigma y reglas."></a></p>
+<p><strong>El problema.</strong> El nivel del embalse cae y se acerca al racionamiento. Cualquier intervención cabe en uno de los cinco peldaños; cuanto más arriba, más cambia el sistema y más resistencia encuentra.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-escalera-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-04-escalera-2.svg" class="img-fluid" alt="Peldaño 1, parámetros: subir la tarifa en temporada seca o el precio de escasez."></a></p>
+<p><strong>Peldaño 1, parámetros.</strong> Subir la tarifa en la temporada seca cambia un número de una ecuación que ya existía. El consumo baja un poco mientras dura la medida; la estructura del sistema queda igual.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-escalera-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-04-escalera-3.svg" class="img-fluid" alt="Peldaño 2, retardos e información: publicar a diario el nivel de los embalses."></a></p>
+<p><strong>Peldaño 2, retardos e información.</strong> Publicar cada día el nivel y los aportes cambia quién ve qué y con cuánto retraso. En la página anterior, hacer visible lo que viene en camino eliminó un ciclo sin tocar ningún parámetro.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-escalera-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-04-escalera-4.svg" class="img-fluid" alt="Peldaño 3, lazos: pagar el ahorro mientras el embalse esté bajo, como Apagar paga en 2016."></a></p>
+<p><strong>Peldaño 3, lazos.</strong> Pagar el ahorro mientras el embalse esté bajo crea una conexión nueva: nivel bajo → incentivo → menos consumo → nivel que se recupera. Es un lazo de balance que antes no existía.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-escalera-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-04-escalera-5.svg" class="img-fluid" alt="Peldaño 4, metas: cambiar la meta del operador de turbinar al menor costo a guardar reserva."></a></p>
+<p><strong>Peldaño 4, metas.</strong> Cambiar la meta del operador redirige todos los lazos que la persiguen, incluidos los que nadie dibujó. En la segunda página vio que la meta efectiva manda sobre la declarada.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-escalera-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-04-escalera-6.svg" class="img-fluid" alt="Peldaño 5, paradigma y reglas: quién opera y con qué reglas, como las Leyes 142 y 143 de 1994."></a></p>
+<p><strong>Peldaño 5, paradigma y reglas.</strong> Decidir si el sistema lo planea el Estado o lo coordina un mercado cambia quién toma las decisiones y con qué propósito. Es la altura a la que operaron las Leyes 142 y 143 de 1994.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Puntos de apalancamiento (jerarquía operativa del curso)</span>
+</div>
+<p>De menor a mayor apalancamiento, con base en Meadows (2008):</p>
+<ol type="1">
+<li><strong>Parámetros</strong>: constantes de la estructura existente (tasas, precios de referencia, montos). Desplazan equilibrios.</li>
+<li><strong>Retardos y flujos de información</strong>: cuánto tarda la corrección y quién ve qué. Cambian amplitud y periodo.</li>
+<li><strong>Lazos</strong>: fortalecer o debilitar un lazo, o agregar uno nuevo. Cambian la clase de comportamiento.</li>
+<li><strong>Metas</strong>: hacia dónde tiran los lazos dominantes.</li>
+<li><strong>Paradigma y reglas del juego</strong>: el propósito del sistema y quién decide.</li>
+</ol>
+<p>Clasificar una política es responder <strong>qué ecuación del modelo cambia</strong>, y si el cambio es de valor, de estructura o de meta.</p>
+</div>
+<p>El diagrama causal de <code>mercado_con_politicas</code> muestra dónde entra cada una de las tres palancas del Laboratorio 4.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Tres palancas, tres puntos de entrada</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-politicas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s5-04-politicas-1.svg" class="img-fluid" alt="Diagrama causal del modelo: el termostato del mercado B1 en el segmento firme; la canibalización B2 y el aprendizaje R1 en el segmento FNCER."></a></p>
+<p><strong>Lea la estructura sin políticas.</strong> A la izquierda, el termostato del mercado (B1): el margen alto baja el precio y frena la inversión firme, con el retardo constructor. A la derecha, el aprendizaje de las FNCER (R1): más capacidad baja el costo y trae más inicios; y la canibalización (B2): más capacidad baja el precio que ellas capturan.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-politicas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s5-04-politicas-2.svg" class="img-fluid" alt="La prima CxC entra con signo positivo al ingreso de la inversión firme."></a></p>
+<p><strong>Agregue la prima.</strong> En el modelo, la prima es un número que se suma al precio de bolsa en el ingreso de la inversión firme: <span class="math inline">\text{ingreso} = p + \text{prima} - \text{impuesto}</span>. Cambia un valor, así que es un <strong>parámetro</strong>, peldaño 1. El Cargo real es más que eso, y el ejemplo intermedio lo muestra.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-politicas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s5-04-politicas-3.svg" class="img-fluid" alt="El impuesto al carbono entra con signo negativo al mismo ingreso."></a></p>
+<p><strong>Agregue el impuesto.</strong> Entra a la misma ecuación con signo contrario. También es un parámetro de la regla de inversión firme. El modelo no traslada el impuesto al precio de bolsa; lo sube por otra vía, porque se invierte menos y el margen cae.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-politicas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s5-04-politicas-4.svg" class="img-fluid" alt="La subasta FNCER entra con signo positivo a los inicios de proyectos FNCER."></a></p>
+<p><strong>Agregue la subasta FNCER.</strong> Suma inicios de proyectos por fuera del mercado de bolsa: <span class="math inline">\text{inicios FNCER} = \text{regla de mercado} + \text{subasta}</span>. Es un flujo nuevo que <strong>alimenta el refuerzo R1</strong>: cada megavatio subastado abarata el siguiente.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-04-politicas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s5-04-politicas-5.svg" class="img-fluid" alt="Lectura final: la prima y el impuesto son parámetros de la regla de inversión; la subasta entra por fuera del mercado y alimenta R1."></a></p>
+<p><strong>Clasifique.</strong> Prima e impuesto cambian el valor de un término de la misma ecuación: esperan equilibrios desplazados. La subasta entra en el punto donde vive un refuerzo: puede cambiar el destino del sistema. Los simuladores de abajo ponen cifras a esas firmas.</p>
+</div>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-subsidio-solar-como-parámetro" class="level3">
+<h3 class="anchored" data-anchor-id="el-subsidio-solar-como-parámetro">El subsidio solar como parámetro</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Un subsidio que cambia el calendario</span>
+</div>
+<p><strong>Planteamiento.</strong> En el barrio de la primera página, 10 000 techos aptos adoptan paneles por voz a voz con un contagio de <span class="math inline">\beta = 0{,}5</span> por año. Un subsidio a la instalación hace que cada hogar convenza a más vecinos: <span class="math inline">\beta</span> sube a 0,6. ¿En qué peldaño opera y qué cambia?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el efecto de un parámetro</span>
+</div>
+<div class="paso">
+<p><strong>Ubique la ecuación.</strong> <span class="math inline">dA/dt = \beta\,A\,(1 - A/N)</span>. El subsidio cambia el valor de <span class="math inline">\beta</span> y deja intactas la forma de la ecuación y la saturación. Peldaño 1.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule la duplicación temprana.</strong> Sin subsidio, <span class="math inline">70/50 = 1{,}4</span> años; con subsidio, <span class="math inline">70/60 = 1{,}2</span> años.</p>
+</div>
+<div class="paso">
+<p><strong>Mueva el calendario.</strong> En la logística el calendario escala con <span class="math inline">1/\beta</span>. El año de más instalaciones pasa del 12,5 al 10,4, y el 90 % de adopción, del año 16,9 al 14,1.</p>
+</div>
+<div class="paso">
+<p><strong>Mire el destino.</strong> Con y sin subsidio, la adopción termina en los mismos 10 000 techos y la curva conserva su forma de S. El parámetro adelantó el calendario unos dos años; la clase de comportamiento es la misma.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la lección.</strong> Un parámetro se vuelve una palanca poderosa cuando lleva al sistema más allá de un umbral donde otro lazo toma el mando. En la logística ese umbral no existe; en el modelo de la semana, sí, y el ejemplo avanzado lo encuentra.</p>
+</div>
+</div>
+</section>
+<section id="el-cargo-por-confiabilidad-prima-fija-o-subasta-con-meta" class="level3">
+<h3 class="anchored" data-anchor-id="el-cargo-por-confiabilidad-prima-fija-o-subasta-con-meta">El Cargo por Confiabilidad: prima fija o subasta con meta</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">La misma seguridad, dos peldaños</span>
+</div>
+<p><strong>Planteamiento.</strong> El modelo de la semana representa el Cargo como una prima fija. El mecanismo real funciona de otro modo: la CREG convoca una subasta cuando la energía firme existente y en construcción no cubre la demanda objetivo, así que el mecanismo mide una brecha contra una meta y mira lo que viene en camino. Represente esa idea como un lazo: una subasta adjudica proyectos firmes adicionales en proporción a la brecha entre una meta de margen y el <em>margen proyectado</em>, que suma al margen actual la cartera firme que excede la normal:</p>
+<p><span class="math display">\text{subasta} = \max\bigl(0,\ m_{\text{meta}} - m_{\text{proyectado}}\bigr)\,\frac{D}{\tau_s} \quad [\text{MW/año}].</span></p>
+<p>Compare una prima de 33 COP/kWh con una subasta de meta 0,40 y tiempo de ajuste <span class="math inline">\tau_s = 1</span> año. Las dos dejan el margen cerca de 35 % en el año 40.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Clasificar las dos versiones</span>
+</div>
+<div class="paso">
+<p><strong>Ubique la prima.</strong> Cambia un valor en el ingreso de la inversión firme. Peldaño 1: desplaza la meta oculta del mercado, como vio en la segunda página.</p>
+</div>
+<div class="paso">
+<p><strong>Ubique la subasta.</strong> Agrega un circuito completo, margen proyectado → brecha → proyectos adjudicados → capacidad → margen: un <strong>lazo de balance nuevo</strong>, peldaño 3, con una meta declarada (peldaño 4) y con información sobre la cartera (peldaño 2).</p>
+</div>
+<div class="paso">
+<p><strong>Anticipe con las páginas anteriores.</strong> La prima empuja la inversión sin mirar la cartera, así que tiene los tres ingredientes de la oscilación. La subasta descuenta lo que viene en camino, así que le falta el tercero.</p>
+</div>
+</div>
+<div id="pred-cxc" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Con la prima y la subasta ajustadas para dejar el mismo margen en el año 40, ¿en qué se diferencian?</p>
+<div class="opcion">
+<p>En nada: si el margen final es igual, el efecto es igual.</p>
+</div>
+<div class="opcion">
+<p>La prima se pasa de largo en los primeros años y hunde el precio; la subasta sube sin pasarse.</p>
+</div>
+<div class="opcion">
+<p>La subasta se pasa de largo, porque adjudica proyectos en bloque.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Prima fija contra subasta con meta</span>
+</div>
+<p>Compare las dos curvas con los valores iniciales. Después suba la meta de la subasta a 0,45: ¿llega el margen a la meta declarada?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="210" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 209;"><span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>viewof primaP <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">80</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">33</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Prima fija [COP/kWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="215" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 214;"><span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a>viewof metaP <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.30</span><span class="op">,</span> <span class="fl">0.45</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.40</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Meta de la subasta (margen)"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="220" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 219;"><span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>cxcP <span class="op">=</span> {</span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (parametros) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>(parametros)<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">correr</span>({})<span class="op">,</span> prima <span class="op">=</span> <span class="fu">correr</span>({<span class="dt">prima_cxc</span><span class="op">:</span> primaP})<span class="op">,</span> subasta <span class="op">=</span> <span class="fu">correr</span>({<span class="dt">meta_subasta_firme</span><span class="op">:</span> metaP<span class="op">,</span> <span class="dt">tiempo_ajuste_subasta</span><span class="op">:</span> <span class="dv">1</span>})<span class="op">;</span></span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> leer <span class="op">=</span> (r) <span class="kw">=&gt;</span> ({<span class="dt">m40</span><span class="op">:</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">,</span> <span class="dt">maximo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>)<span class="op">,</span></span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>    <span class="dt">precioMin</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">precio_bolsa</span>)})<span class="op">;</span></span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> serie <span class="op">=</span> (r<span class="op">,</span> caso) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]<span class="op">,</span> caso}))<span class="op">;</span></span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {<span class="dt">filas</span><span class="op">:</span> [<span class="op">...</span><span class="fu">serie</span>(base<span class="op">,</span> <span class="st">"sin política"</span>)<span class="op">,</span> <span class="op">...</span><span class="fu">serie</span>(prima<span class="op">,</span> <span class="st">"prima fija"</span>)<span class="op">,</span> <span class="op">...</span><span class="fu">serie</span>(subasta<span class="op">,</span> <span class="st">"subasta con meta"</span>)]<span class="op">,</span></span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>    <span class="dt">prima</span><span class="op">:</span> <span class="fu">leer</span>(prima)<span class="op">,</span> <span class="dt">subasta</span><span class="op">:</span> <span class="fu">leer</span>(subasta)}<span class="op">;</span></span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="233" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 232;"><span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">270</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">40</span>]}<span class="op">,</span></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.15</span><span class="op">,</span> <span class="fl">0.60</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"sin política"</span><span class="op">,</span> <span class="st">"prima fija"</span><span class="op">,</span> <span class="st">"subasta con meta"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [<span class="st">"#9E9E9E"</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">verde</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([metaP]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(cxcP<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"caso"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span>})<span class="op">,</span></span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="247" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 246;"><span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Prima: margen en el año 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(cxcP<span class="op">.</span><span class="at">prima</span><span class="op">.</span><span class="at">m40</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Prima: margen máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(cxcP<span class="op">.</span><span class="at">prima</span><span class="op">.</span><span class="at">maximo</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Prima: precio mínimo de bolsa&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(cxcP<span class="op">.</span><span class="at">prima</span><span class="op">.</span><span class="at">precioMin</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subasta: margen en el año 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(cxcP<span class="op">.</span><span class="at">subasta</span><span class="op">.</span><span class="at">m40</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subasta: margen máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(cxcP<span class="op">.</span><span class="at">subasta</span><span class="op">.</span><span class="at">maximo</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subasta: precio mínimo de bolsa&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(cxcP<span class="op">.</span><span class="at">subasta</span><span class="op">.</span><span class="at">precioMin</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code> con los parámetros <code>prima_cxc</code> y <code>meta_subasta_firme</code> (tiempo de ajuste de la subasta de 1 año); datos sintéticos con fines didácticos. La línea verde punteada es la meta declarada de la subasta. El modelo no calcula el precio que se paga por las obligaciones subastadas.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer las dos trayectorias</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-cxc"></span>. Con prima de 33 COP/kWh el margen sube a 43,6 % hacia el año 6, cae a un valle de 33 % y termina en 35,0 %. Con la subasta el margen nunca pasa de 35,3 % y termina en 35,1 %. La respuesta es la B.</p>
+</div>
+<div class="paso">
+<p><strong>Mire el precio.</strong> Durante la cresta de la prima, el precio de bolsa cae hasta 87,1 COP/kWh; con la subasta, el mínimo es 121,5 COP/kWh. La sobreinversión temprana de la prima es capacidad ociosa que el mercado paga con precios hundidos.</p>
+</div>
+<div class="paso">
+<p><strong>Mire lo que se parece.</strong> En el año 40 las dos dejan casi la misma capacidad firme (49 283 y 49 307 MW) y casi la misma capacidad FNCER (66 y 68 MW). A largo plazo compran la misma seguridad y el mismo sesgo hacia la tecnología firme; la diferencia está en el camino.</p>
+</div>
+<div class="paso">
+<p><strong>Busque la meta efectiva.</strong> La subasta declara 0,40 y se estaciona en 35,1 %. El lazo del mercado sigue tirando hacia su meta oculta de 29 %, y el sistema queda entre las dos, como el embalse con dos metas de la segunda página. Declarar una meta más alta mueve poco; acortar <span class="math inline">\tau_s</span> o descontar mejor la cartera mueve más.</p>
+</div>
+</div>
+</section>
+<section id="tres-políticas-tres-firmas" class="level3">
+<h3 class="anchored" data-anchor-id="tres-políticas-tres-firmas">Tres políticas, tres firmas</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Prima, subasta FNCER e impuesto al carbono en el modelo de la semana</span>
+</div>
+<p><strong>Planteamiento.</strong> Aplique al modelo <code>mercado_con_politicas</code> tres palancas de tamaño comparable: una prima de 50 COP/kWh, una subasta FNCER de 300 MW/año y un impuesto al carbono de 50 COP/kWh sobre la inversión firme. Mida la seguridad de suministro, la composición de la matriz y el costo para la demanda, la métrica del Laboratorio 4.</p>
+</div>
+<div id="pred-tres" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Cuál de las tres palancas cambia la composición de la matriz en 40 años?</p>
+<div class="opcion">
+<p>La prima, porque es la que más inversión atrae.</p>
+</div>
+<div class="opcion">
+<p>La subasta FNCER.</p>
+</div>
+<div class="opcion">
+<p>El impuesto al carbono, porque encarece la tecnología firme.</p>
+</div>
+<div class="opcion">
+<p>Las tres por igual.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Las tres palancas del Laboratorio 4</span>
+</div>
+<p>Pruebe cada palanca sola con los valores del planteamiento. Después suba el impuesto a 75, baje la subasta a 25 y 50, y combine prima 50 con subasta 300.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="313" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 312;"><span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a>viewof primaT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Prima CxC [COP/kWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="318" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 317;"><span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a>viewof subastaT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">500</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">25</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Subasta FNCER [MW/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="323" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 322;"><span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a>viewof impuestoT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Impuesto al carbono [COP/kWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="328" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 327;"><span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a>tresT <span class="op">=</span> {</span>
+<span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> parametros <span class="op">=</span> {<span class="dt">prima_cxc</span><span class="op">:</span> primaT<span class="op">,</span> <span class="dt">subasta_fncer</span><span class="op">:</span> subastaT<span class="op">,</span> <span class="dt">impuesto_carbono</span><span class="op">:</span> impuestoT}<span class="op">;</span></span>
+<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>(parametros)<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>({})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">;</span></span>
+<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> media <span class="op">=</span> (serie) <span class="kw">=&gt;</span> serie<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> x) <span class="kw">=&gt;</span> a <span class="op">+</span> x<span class="op">,</span> <span class="dv">0</span>) <span class="op">/</span> serie<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> v<span class="op">.</span><span class="at">margen_reserva</span>[k]<span class="op">,</span> <span class="dt">F</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(v<span class="op">.</span><span class="at">capacidad_fncer</span>[k]<span class="op">,</span> <span class="dv">1</span>)}))<span class="op">,</span></span>
+<span id="cb10-336"><a href="#cb10-336" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">m</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">margen_reserva</span>[k]<span class="op">,</span> <span class="dt">F</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">capacidad_fncer</span>[k]}))<span class="op">,</span></span>
+<span id="cb10-337"><a href="#cb10-337" aria-hidden="true" tabindex="-1"></a>    <span class="dt">m40</span><span class="op">:</span> v<span class="op">.</span><span class="at">margen_reserva</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">,</span> <span class="dt">maximo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>v<span class="op">.</span><span class="at">margen_reserva</span>)<span class="op">,</span> <span class="dt">fncer40</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb10-338"><a href="#cb10-338" aria-hidden="true" tabindex="-1"></a>    <span class="dt">participacion</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>) <span class="op">/</span> (v<span class="op">.</span><span class="at">capacidad_fncer</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>) <span class="op">+</span> v<span class="op">.</span><span class="at">capacidad_firme</span><span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>))<span class="op">,</span></span>
+<span id="cb10-339"><a href="#cb10-339" aria-hidden="true" tabindex="-1"></a>    <span class="dt">precio</span><span class="op">:</span> <span class="fu">media</span>(v<span class="op">.</span><span class="at">precio_bolsa</span>)<span class="op">,</span> <span class="dt">costo</span><span class="op">:</span> <span class="fu">costoParaDemanda</span>(r<span class="op">,</span> parametros)<span class="op">,</span></span>
+<span id="cb10-340"><a href="#cb10-340" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb10-341"><a href="#cb10-341" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="346" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 345;"><span id="cb11-346"><a href="#cb11-346" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb11-347"><a href="#cb11-347" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">230</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb11-348"><a href="#cb11-348" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">40</span>]}<span class="op">,</span></span>
+<span id="cb11-349"><a href="#cb11-349" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Margen de reserva"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.1</span><span class="op">,</span> <span class="fl">0.6</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb11-350"><a href="#cb11-350" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tresT<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb11-352"><a href="#cb11-352" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tresT<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb11-353"><a href="#cb11-353" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb11-354"><a href="#cb11-354" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="359" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 358;"><span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">230</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">40</span>]}<span class="op">,</span></span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad FNCER [MW, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">30</span><span class="op">,</span> <span class="dv">60000</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tresT<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"F"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tresT<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"F"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="372" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 371;"><span id="cb13-372"><a href="#cb13-372" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb13-373"><a href="#cb13-373" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Margen en el año 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tresT<span class="op">.</span><span class="at">m40</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb13-374"><a href="#cb13-374" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Margen máximo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tresT<span class="op">.</span><span class="at">maximo</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb13-375"><a href="#cb13-375" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capacidad FNCER en el año 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tresT<span class="op">.</span><span class="at">fncer40</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb13-376"><a href="#cb13-376" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Participación FNCER en la capacidad&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tresT<span class="op">.</span><span class="at">participacion</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb13-377"><a href="#cb13-377" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Precio medio de bolsa&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tresT<span class="op">.</span><span class="at">precio</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb13-378"><a href="#cb13-378" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Costo para la demanda&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tresT<span class="op">.</span><span class="at">costo</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb13-379"><a href="#cb13-379" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code>, sin El Niño; datos sintéticos con fines didácticos (año 0 ≈ 2015). Costo para la demanda: precio medio de bolsa más prima, sobrecosto de la subasta y penalización por racionamiento, como en el Laboratorio 4. Línea gris: sin políticas.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer las firmas</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-tres"></span>. Solo la subasta cambia la matriz: en el año 40 hay 21 931 MW FNCER, el 35,0 % de la capacidad. Con la prima quedan 53 MW (0,1 %) y con el impuesto de 50, 503 MW (1,1 %). La respuesta es la B.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la prima.</strong> Margen de 38,8 % en el año 40 con una cresta de 49,3 %, precio medio de 106,6 COP/kWh y costo para la demanda de 156,6 COP/kWh, casi igual a los 156,9 sin política: en este modelo la prima se paga con la caída del precio de bolsa. Compra seguridad y profundiza el sesgo firme.</p>
+</div>
+<div class="paso">
+<p><strong>Lea el impuesto de 50.</strong> Margen de 22,1 %, precio medio de 206,9 COP/kWh y costo de 206,9. Hace lo que hace un parámetro: desplaza el equilibrio hacia menos margen y precios más altos, sin cambiar la clase de comportamiento.</p>
+</div>
+<div class="paso">
+<p><strong>Suba el impuesto a 75.</strong> La capacidad FNCER salta a 9 189 MW (18,0 %). El precio alto llevó el precio capturado por encima del costo FNCER y encendió el refuerzo R1. Un parámetro cruzó un umbral y cambió de peldaño en sus efectos, con un costo para la demanda de 229,7 COP/kWh.</p>
+</div>
+<div class="paso">
+<p><strong>Busque el umbral de la subasta.</strong> Con 25 MW/año quedan 3 177 MW FNCER en el año 40; con 50, 11 336; con 300, 21 931. Los primeros megavatios compran posición en la curva de aprendizaje y el refuerzo hace el resto: por eso la respuesta crece rápido al principio y se aplana después.</p>
+</div>
+<div class="paso">
+<p><strong>Combine prima y subasta.</strong> Con prima 50 y subasta 300 la capacidad FNCER del año 40 cae a 12 574 MW, casi la mitad que con la subasta sola. La prima eleva el margen, baja el precio de bolsa y, con él, el precio que capturan las FNCER. Las palancas interactúan; evaluar cada una por separado y sumar los efectos engaña.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Las firmas en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Las firmas en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="30a5b4f3" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>casos <span class="op">=</span> {<span class="st">"sin política"</span>: {}, <span class="st">"prima 50"</span>: {<span class="st">"prima_cxc"</span>: <span class="fl">50.0</span>}, <span class="st">"subasta 300"</span>: {<span class="st">"subasta_fncer"</span>: <span class="fl">300.0</span>},</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"impuesto 50"</span>: {<span class="st">"impuesto_carbono"</span>: <span class="fl">50.0</span>}, <span class="st">"impuesto 75"</span>: {<span class="st">"impuesto_carbono"</span>: <span class="fl">75.0</span>},</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">"prima 50 + subasta 300"</span>: {<span class="st">"prima_cxc"</span>: <span class="fl">50.0</span>, <span class="st">"subasta_fncer"</span>: <span class="fl">300.0</span>}}</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, parametros <span class="kw">in</span> casos.items():</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> integrar(mercado_con_politicas(<span class="op">**</span>parametros), t_final<span class="op">=</span><span class="fl">40.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    fncer, firme <span class="op">=</span> r[<span class="st">"capacidad_fncer"</span>][<span class="op">-</span><span class="dv">1</span>], r[<span class="st">"capacidad_firme"</span>][<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nombre<span class="sc">:24s}</span><span class="ss"> margen año 40 = </span><span class="sc">{</span>r[<span class="st">'margen_reserva'</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.1%}</span><span class="ss">   FNCER = </span><span class="sc">{</span>fncer<span class="sc">:6.0f}</span><span class="ss"> MW "</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"(</span><span class="sc">{</span>fncer <span class="op">/</span> (fncer <span class="op">+</span> firme)<span class="sc">:.1%}</span><span class="ss">)   precio medio = </span><span class="sc">{</span>r[<span class="st">'precio_bolsa'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> COP/kWh"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sin política             margen año 40 = 29.0%   FNCER =    116 MW (0.2%)   precio medio = 156.9 COP/kWh
+prima 50                 margen año 40 = 38.8%   FNCER =     53 MW (0.1%)   precio medio = 106.6 COP/kWh
+subasta 300              margen año 40 = 29.4%   FNCER =  21931 MW (35.0%)   precio medio = 152.8 COP/kWh
+impuesto 50              margen año 40 = 22.1%   FNCER =    503 MW (1.1%)   precio medio = 206.9 COP/kWh
+impuesto 75              margen año 40 = 22.1%   FNCER =   9189 MW (18.0%)   precio medio = 229.7 COP/kWh
+prima 50 + subasta 300   margen año 40 = 39.0%   FNCER =  12574 MW (21.1%)   precio medio = 104.5 COP/kWh</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tratar toda política como un cambio de parámetro</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«El Cargo por Confiabilidad es una prima: basta con escoger el monto.» Así modelado, desplaza el equilibrio y, de paso, provoca una cresta de sobreinversión.</p>
+</div>
+<div class="bien">
+<p>El Cargo real mide una brecha contra una meta y mira la cartera: es un lazo. Modelado así, deja el mismo margen de largo plazo sin cresta. La forma de representar la política decide qué efectos puede mostrar el modelo.</p>
+</div>
+</div>
+<p>Puede reproducirlo en el simulador del ejemplo intermedio.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Evaluar todas las políticas con la misma métrica y el mismo horizonte</span>
+</div>
+<p>Las palancas que encienden un refuerzo actúan despacio. Medidas a pocos años, pierden.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Métrica</th>
+<th style="text-align: center;">Prima 50</th>
+<th style="text-align: center;">Subasta 300</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Margen en el año 5</td>
+<td style="text-align: center;">48,1 %</td>
+<td style="text-align: center;">35,1 %</td>
+</tr>
+<tr class="even">
+<td>Capacidad FNCER en el año 10</td>
+<td style="text-align: center;">113 MW</td>
+<td style="text-align: center;">2 603 MW</td>
+</tr>
+<tr class="odd">
+<td>Capacidad FNCER en el año 40</td>
+<td style="text-align: center;">53 MW</td>
+<td style="text-align: center;">21 931 MW</td>
+</tr>
+</tbody>
+</table>
+<p>Con el margen a cinco años gana la prima; con la matriz a cuarenta, la subasta. Recortar el horizonte de evaluación inclina la balanza contra las políticas que transforman.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Olvidar los efectos secundarios de las palancas altas</span>
+</div>
+<p>Un lazo nuevo trae sus propios retardos y metas, y dos palancas pueden estorbarse. Con prima 50 y subasta 300, las FNCER del año 40 caen de 21 931 a 12 574 MW frente a la subasta sola. Cuanto más alta la palanca, más obligación de simular antes de firmar, que es la función del Laboratorio 4.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un regulador publica cada trimestre la cartera de proyectos en construcción con fechas de entrada. ¿En qué peldaño opera?</p>
+<div class="opcion">
+<p>Parámetros.</p>
+<p><span class="porque">No cambia ningún valor de una ecuación existente. Revise qué cambia: quién ve qué.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Retardos e información.</p>
+<p><span class="porque">Correcto: hace visible lo que viene en camino, el tercer ingrediente de la oscilación.</span></p>
+</div>
+<div class="opcion">
+<p>Paradigma y reglas.</p>
+<p><span class="porque">Quién decide y con qué propósito sigue igual.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el modelo, un impuesto de 50 COP/kWh apenas mueve las FNCER y uno de 75 las multiplica por dieciocho. ¿Por qué?</p>
+<div class="opcion">
+<p>Porque el impuesto se aplica directamente a las FNCER.</p>
+<p><span class="porque">El impuesto actúa solo sobre la inversión firme. Revise el diagrama de las tres palancas.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque el precio de bolsa sube lo suficiente para que el precio capturado supere el costo FNCER y se encienda el refuerzo del aprendizaje.</p>
+<p><span class="porque">Correcto: un parámetro que cruza un umbral activa otro lazo.</span></p>
+</div>
+<div class="opcion">
+<p>Porque el impuesto de 75 cambia la meta del regulador.</p>
+<p><span class="porque">El margen objetivo del modelo no cambia con el impuesto.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una prima fija y una subasta con meta dejan el mismo margen en el año 40. ¿Cuál evita la cresta de sobreinversión y por qué?</p>
+<div class="opcion" data-correcta="si">
+<p>La subasta, porque descuenta la cartera en construcción al medir la brecha.</p>
+<p><span class="porque">Correcto: le falta el tercer ingrediente de la oscilación.</span></p>
+</div>
+<div class="opcion">
+<p>La prima, porque es constante y no reacciona a nada.</p>
+<p><span class="porque">Justo por no mirar la cartera, la prima empuja la inversión hasta pasarse. Revise el simulador del ejemplo intermedio.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un comité evalúa la subasta FNCER y la prima con el margen de reserva a cinco años. ¿Qué sesgo introduce?</p>
+<div class="opcion">
+<p>Ninguno, porque la seguridad de suministro es lo más importante.</p>
+<p><span class="porque">La métrica puede ser legítima, pero el horizonte decide el ganador. Revise la tabla del segundo error común.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Favorece a la prima y castiga a la subasta, cuyo efecto llega a través de un refuerzo lento.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué la prima reduce la capacidad FNCER que logra una subasta?</p>
+<div class="opcion">
+<p>Porque la prima se paga con el mismo presupuesto de la subasta.</p>
+<p><span class="porque">El modelo no tiene restricción presupuestal. Busque la vía en el diagrama causal.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque eleva el margen, baja el precio de bolsa y con él el precio que capturan las FNCER.</p>
+<p><span class="porque">Correcto: la interacción pasa por el precio.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-clasificar-políticas" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-clasificar-políticas">Ejercicio 1 ●○○ · Clasificar políticas</h4>
+<p>Ubique en la jerarquía, con una frase de justificación: (i) subir el precio de escasez del Cargo por Confiabilidad; (ii) publicar en tiempo real la cartera de proyectos en construcción; (iii) crear un mercado intradiario de flexibilidad; (iv) cambiar el objetivo del despacho de «mínimo costo» a «mínimo costo más emisiones»; (v) reducir de 5 a 2 años el trámite de licencias de transmisión.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="i">
+<li><p>Peldaño 1, parámetro: cambia un valor de la regla existente.</p></li>
+<li><p>Peldaño 2, información: hace visible lo que viene en camino, como la regla que descuenta la cartera en la página anterior.</p></li>
+<li><p>Peldaño 3, lazo nuevo: crea un circuito de corrección rápida entre desbalances y precios que antes no existía.</p></li>
+<li><p>Peldaño 4, meta: redirige todos los lazos que optimizan contra el objetivo del despacho.</p></li>
+<li><p>Peldaño 2, retardo: acorta el tiempo de la corrección, lo que reduce la amplitud y el periodo del ciclo de transmisión y generación.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-firmas-sin-simular" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-firmas-sin-simular">Ejercicio 2 ●●○ · Firmas sin simular</h4>
+<p>Prediga la firma de estas intervenciones en <code>mercado_con_politicas</code> (¿equilibrio desplazado, trayectoria cambiada, refuerzo encendido?) y verifique con Python: (a) subir el margen objetivo del modelo de 0,30 a 0,60; (b) acortar el retardo constructor firme de 4 a 2 años; (c) elevar la tasa de aprendizaje FNCER del 20 % al 30 % y al 40 %, sin subasta.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Para (c), recuerde el umbral del impuesto: el refuerzo del aprendizaje solo se enciende si el precio capturado supera el costo FNCER.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Equilibrio desplazado: el margen del año 40 sube de 29,0 % a 59,0 %. La trayectoria además cambia de escala, porque el precio inicial se dispara y la primera cresta supera el 160 %: mover una meta arrastra todos los lazos que la persiguen.</p></li>
+<li><p>Trayectoria cambiada: el margen de largo plazo casi no se mueve (29,5 %), pero las crestas llegan antes, en los años 3,6 y 13,4 en lugar de 5,8 y 18,8. El retardo fija el periodo.</p></li>
+<li><p>Umbral: con 30 % la capacidad FNCER del año 40 pasa de 116 a apenas 236 MW; con 40 % despega hasta 66 313 MW. Un parámetro del refuerzo solo cambia el destino cuando cruza el umbral.</p></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parametros <span class="kw">in</span> ({}, {<span class="st">"margen_objetivo"</span>: <span class="fl">0.60</span>}, {<span class="st">"retardo_constructor_firme"</span>: <span class="fl">2.0</span>},</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                   {<span class="st">"tasa_aprendizaje"</span>: <span class="fl">0.30</span>}, {<span class="st">"tasa_aprendizaje"</span>: <span class="fl">0.40</span>}):</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> integrar(mercado_con_politicas(<span class="op">**</span>parametros), t_final<span class="op">=</span><span class="fl">40.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(parametros, <span class="ss">f"margen año 40 = </span><span class="sc">{</span>r[<span class="st">'margen_reserva'</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.1%}</span><span class="ss">"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"FNCER año 40 = </span><span class="sc">{</span>r[<span class="st">'capacidad_fncer'</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> MW"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>La jerarquía del curso tiene cinco peldaños: <strong>parámetros, retardos e información, lazos, metas, y paradigma y reglas</strong>. Clasificar una política es decir qué ecuación cambia.</li>
+<li>Los parámetros <strong>desplazan equilibrios</strong>; los retardos y la información <strong>cambian trayectorias</strong>; las intervenciones que alimentan un refuerzo pueden <strong>cambiar el destino</strong>.</li>
+<li>Una prima fija y una subasta con meta pueden dejar el mismo margen de largo plazo con caminos distintos: la prima se pasa de largo y la subasta, que mira la cartera, no.</li>
+<li>En el modelo, solo la subasta FNCER cambia la matriz (35,0 % de la capacidad en el año 40); un impuesto suficientemente alto también lo logra al cruzar un umbral.</li>
+<li>Las palancas <strong>interactúan</strong> y actúan con horizontes distintos: se evalúan juntas, con varias métricas y con horizontes largos.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Intervenciones de política» de las notas de la semana 5 trae la figura de las tres políticas y los ejercicios de dosis-respuesta y de paquetes combinados. La segunda hora del Laboratorio 4 reproduce las firmas, y la sección 6 del informe final pide declarar para cada recomendación el punto de la estructura donde interviene.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgbWVyY2Fkb0NvblBvbGl0aWNhcywgY29zdG9QYXJhRGVtYW5kYSwgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgcHJpbWFQID0gSW5wdXRzLnJhbmdlKFswLCA4MF0sIHt2YWx1ZTogMzMsIHN0ZXA6IDEsIGxhYmVsOiBcIlByaW1hIGZpamEgW0NPUC9rV2hdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIG1ldGFQID0gSW5wdXRzLnJhbmdlKFswLjMwLCAwLjQ1XSwge3ZhbHVlOiAwLjQwLCBzdGVwOiAwLjAxLCBsYWJlbDogXCJNZXRhIGRlIGxhIHN1YmFzdGEgKG1hcmdlbilcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJjeGNQID0ge1xuICBjb25zdCBjb3JyZXIgPSAocGFyYW1ldHJvcykgPT4gc2ltdWxhcihtZXJjYWRvQ29uUG9saXRpY2FzKHBhcmFtZXRyb3MpLCB7dEZpbmFsOiA0MCwgcGFzbzogMC4wNX0pO1xuICBjb25zdCBiYXNlID0gY29ycmVyKHt9KSwgcHJpbWEgPSBjb3JyZXIoe3ByaW1hX2N4YzogcHJpbWFQfSksIHN1YmFzdGEgPSBjb3JyZXIoe21ldGFfc3ViYXN0YV9maXJtZTogbWV0YVAsIHRpZW1wb19hanVzdGVfc3ViYXN0YTogMX0pO1xuICBjb25zdCBsZWVyID0gKHIpID0+ICh7bTQwOiByLnZhcmlhYmxlcy5tYXJnZW5fcmVzZXJ2YS5hdCgtMSksIG1heGltbzogTWF0aC5tYXgoLi4uci52YXJpYWJsZXMubWFyZ2VuX3Jlc2VydmEpLFxuICAgIHByZWNpb01pbjogTWF0aC5taW4oLi4uci52YXJpYWJsZXMucHJlY2lvX2JvbHNhKX0pO1xuICBjb25zdCBzZXJpZSA9IChyLCBjYXNvKSA9PiByLnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgbTogci52YXJpYWJsZXMubWFyZ2VuX3Jlc2VydmFba10sIGNhc299KSk7XG4gIHJldHVybiB7ZmlsYXM6IFsuLi5zZXJpZShiYXNlLCBcInNpbiBwb2zDrXRpY2FcIiksIC4uLnNlcmllKHByaW1hLCBcInByaW1hIGZpamFcIiksIC4uLnNlcmllKHN1YmFzdGEsIFwic3ViYXN0YSBjb24gbWV0YVwiKV0sXG4gICAgcHJpbWE6IGxlZXIocHJpbWEpLCBzdWJhc3RhOiBsZWVyKHN1YmFzdGEpfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAyNzAsIG1hcmdpbkxlZnQ6IDYwLFxuICB4OiB7bGFiZWw6IFwiVGllbXBvIFthw7Fvc11cIiwgZG9tYWluOiBbMCwgNDBdfSxcbiAgeToge2xhYmVsOiBcIk1hcmdlbiBkZSByZXNlcnZhXCIsIGRvbWFpbjogWzAuMTUsIDAuNjBdLCBncmlkOiB0cnVlLCB0aWNrRm9ybWF0OiAoZCkgPT4gZm9ybWF0b1BvcmNlbnRhamUoZCwgMCl9LFxuICBjb2xvcjoge2RvbWFpbjogW1wic2luIHBvbMOtdGljYVwiLCBcInByaW1hIGZpamFcIiwgXCJzdWJhc3RhIGNvbiBtZXRhXCJdLCByYW5nZTogW1wiIzlFOUU5RVwiLCBDT0xPUkVTLmFtYmFyLCBDT0xPUkVTLnZlcmRlXSwgbGVnZW5kOiB0cnVlfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVZKFttZXRhUF0sIHtzdHJva2U6IENPTE9SRVMudmVyZGUsIHN0cm9rZURhc2hhcnJheTogXCI0IDNcIn0pLFxuICAgIFBsb3QubGluZShjeGNQLmZpbGFzLCB7eDogXCJ0XCIsIHk6IFwibVwiLCBzdHJva2U6IFwiY2Fzb1wiLCBzdHJva2VXaWR0aDogMi4yfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5QcmltYTogbWFyZ2VuIGVuIGVsIGHDsW8gNDA8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKGN4Y1AucHJpbWEubTQwLCAxKX08L2I+PC9kaXY+XG4gIDxkaXY+UHJpbWE6IG1hcmdlbiBtw6F4aW1vPGI+JHtmb3JtYXRvUG9yY2VudGFqZShjeGNQLnByaW1hLm1heGltbywgMSl9PC9iPjwvZGl2PlxuICA8ZGl2PlByaW1hOiBwcmVjaW8gbcOtbmltbyBkZSBib2xzYTxiPiR7Zm9ybWF0b051bWVybygxKShjeGNQLnByaW1hLnByZWNpb01pbil9IENPUC9rV2g8L2I+PC9kaXY+XG4gIDxkaXY+U3ViYXN0YTogbWFyZ2VuIGVuIGVsIGHDsW8gNDA8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKGN4Y1Auc3ViYXN0YS5tNDAsIDEpfTwvYj48L2Rpdj5cbiAgPGRpdj5TdWJhc3RhOiBtYXJnZW4gbcOheGltbzxiPiR7Zm9ybWF0b1BvcmNlbnRhamUoY3hjUC5zdWJhc3RhLm1heGltbywgMSl9PC9iPjwvZGl2PlxuICA8ZGl2PlN1YmFzdGE6IHByZWNpbyBtw61uaW1vIGRlIGJvbHNhPGI+JHtmb3JtYXRvTnVtZXJvKDEpKGN4Y1Auc3ViYXN0YS5wcmVjaW9NaW4pfSBDT1Ava1doPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHByaW1hVCA9IElucHV0cy5yYW5nZShbMCwgMTAwXSwge3ZhbHVlOiAwLCBzdGVwOiA1LCBsYWJlbDogXCJQcmltYSBDeEMgW0NPUC9rV2hdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHN1YmFzdGFUID0gSW5wdXRzLnJhbmdlKFswLCA1MDBdLCB7dmFsdWU6IDAsIHN0ZXA6IDI1LCBsYWJlbDogXCJTdWJhc3RhIEZOQ0VSIFtNVy9hw7FvXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBpbXB1ZXN0b1QgPSBJbnB1dHMucmFuZ2UoWzAsIDEwMF0sIHt2YWx1ZTogMCwgc3RlcDogNSwgbGFiZWw6IFwiSW1wdWVzdG8gYWwgY2FyYm9ubyBbQ09QL2tXaF1cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidHJlc1QgPSB7XG4gIGNvbnN0IHBhcmFtZXRyb3MgPSB7cHJpbWFfY3hjOiBwcmltYVQsIHN1YmFzdGFfZm5jZXI6IHN1YmFzdGFULCBpbXB1ZXN0b19jYXJib25vOiBpbXB1ZXN0b1R9O1xuICBjb25zdCByID0gc2ltdWxhcihtZXJjYWRvQ29uUG9saXRpY2FzKHBhcmFtZXRyb3MpLCB7dEZpbmFsOiA0MCwgcGFzbzogMC4wNX0pO1xuICBjb25zdCBiYXNlID0gc2ltdWxhcihtZXJjYWRvQ29uUG9saXRpY2FzKHt9KSwge3RGaW5hbDogNDAsIHBhc286IDAuMDV9KTtcbiAgY29uc3QgdiA9IHIudmFyaWFibGVzO1xuICBjb25zdCBtZWRpYSA9IChzZXJpZSkgPT4gc2VyaWUucmVkdWNlKChhLCB4KSA9PiBhICsgeCwgMCkgLyBzZXJpZS5sZW5ndGg7XG4gIHJldHVybiB7XG4gICAgZmlsYXM6IHIudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBtOiB2Lm1hcmdlbl9yZXNlcnZhW2tdLCBGOiBNYXRoLm1heCh2LmNhcGFjaWRhZF9mbmNlcltrXSwgMSl9KSksXG4gICAgYmFzZTogYmFzZS50aWVtcG8ubWFwKCh0LCBrKSA9PiAoe3QsIG06IGJhc2UudmFyaWFibGVzLm1hcmdlbl9yZXNlcnZhW2tdLCBGOiBiYXNlLnZhcmlhYmxlcy5jYXBhY2lkYWRfZm5jZXJba119KSksXG4gICAgbTQwOiB2Lm1hcmdlbl9yZXNlcnZhLmF0KC0xKSwgbWF4aW1vOiBNYXRoLm1heCguLi52Lm1hcmdlbl9yZXNlcnZhKSwgZm5jZXI0MDogdi5jYXBhY2lkYWRfZm5jZXIuYXQoLTEpLFxuICAgIHBhcnRpY2lwYWNpb246IHYuY2FwYWNpZGFkX2ZuY2VyLmF0KC0xKSAvICh2LmNhcGFjaWRhZF9mbmNlci5hdCgtMSkgKyB2LmNhcGFjaWRhZF9maXJtZS5hdCgtMSkpLFxuICAgIHByZWNpbzogbWVkaWEodi5wcmVjaW9fYm9sc2EpLCBjb3N0bzogY29zdG9QYXJhRGVtYW5kYShyLCBwYXJhbWV0cm9zKSxcbiAgfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTEiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjMwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDQwXX0sXG4gIHk6IHtsYWJlbDogXCJNYXJnZW4gZGUgcmVzZXJ2YVwiLCBncmlkOiB0cnVlLCBkb21haW46IFswLjEsIDAuNl0sIHRpY2tGb3JtYXQ6IChkKSA9PiBmb3JtYXRvUG9yY2VudGFqZShkLCAwKX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKHRyZXNULmJhc2UsIHt4OiBcInRcIiwgeTogXCJtXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pLFxuICAgIFBsb3QubGluZSh0cmVzVC5maWxhcywge3g6IFwidFwiLCB5OiBcIm1cIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEyIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDIzMCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJUaWVtcG8gW2HDsW9zXVwiLCBkb21haW46IFswLCA0MF19LFxuICB5OiB7bGFiZWw6IFwiQ2FwYWNpZGFkIEZOQ0VSIFtNVywgZXNjYWxhIGxvZ11cIiwgdHlwZTogXCJsb2dcIiwgZG9tYWluOiBbMzAsIDYwMDAwXSwgZ3JpZDogdHJ1ZSwgdGlja0Zvcm1hdDogZm9ybWF0b051bWVybygwKX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKHRyZXNULmJhc2UsIHt4OiBcInRcIiwgeTogXCJGXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pLFxuICAgIFBsb3QubGluZSh0cmVzVC5maWxhcywge3g6IFwidFwiLCB5OiBcIkZcIiwgc3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VXaWR0aDogMi40fSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+TWFyZ2VuIGVuIGVsIGHDsW8gNDA8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKHRyZXNULm00MCwgMSl9PC9iPjwvZGl2PlxuICA8ZGl2Pk1hcmdlbiBtw6F4aW1vPGI+JHtmb3JtYXRvUG9yY2VudGFqZSh0cmVzVC5tYXhpbW8sIDEpfTwvYj48L2Rpdj5cbiAgPGRpdj5DYXBhY2lkYWQgRk5DRVIgZW4gZWwgYcOxbyA0MDxiPiR7Zm9ybWF0b051bWVybygwKSh0cmVzVC5mbmNlcjQwKX0gTVc8L2I+PC9kaXY+XG4gIDxkaXY+UGFydGljaXBhY2nDs24gRk5DRVIgZW4gbGEgY2FwYWNpZGFkPGI+JHtmb3JtYXRvUG9yY2VudGFqZSh0cmVzVC5wYXJ0aWNpcGFjaW9uLCAxKX08L2I+PC9kaXY+XG4gIDxkaXY+UHJlY2lvIG1lZGlvIGRlIGJvbHNhPGI+JHtmb3JtYXRvTnVtZXJvKDEpKHRyZXNULnByZWNpbyl9IENPUC9rV2g8L2I+PC9kaXY+XG4gIDxkaXY+Q29zdG8gcGFyYSBsYSBkZW1hbmRhPGI+JHtmb3JtYXRvTnVtZXJvKDEpKHRyZXNULmNvc3RvKX0gQ09QL2tXaDwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncHJpbWFQJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ21ldGFQJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3ByaW1hVCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzdWJhc3RhVCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdpbXB1ZXN0b1QnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana5";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana5/03-balance-retardo-oscilacion.html" class="pagination-link" aria-label="Balance más retardo: oscilación">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Balance más retardo: oscilación</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
