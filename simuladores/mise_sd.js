@@ -359,6 +359,29 @@ export function reservaConDosMetas({reserva_inicial = 5000, meta_operador = 9000
   };
 }
 
+/** Cronograma de un proyecto con consulta previa, en meses (réplica de mise_sd.modelos.cronograma_consulta). */
+export function cronogramaConsulta({certificacion = 6, preconsulta = 9, talleres = 18, protocolizacion = 5,
+  licencia_ambiental = 24, cierre_financiero = 8, construccion = 24, reabrir = false} = {}) {
+  const etapas = [];
+  let t = 0;
+  for (const [nombre, d] of [["certificación", certificacion], ["preconsulta", preconsulta]]) { etapas.push([nombre, t, t + d]); t += d; }
+  const inicioTalleres = t;
+  etapas.push(["talleres y acuerdos", t, t + talleres]); t += talleres;
+  etapas.push(["protocolización", t, t + protocolizacion]); t += protocolizacion;
+  if (reabrir) {
+    for (const [nombre, d] of [["preconsulta repetida", preconsulta], ["talleres repetidos", talleres], ["protocolización repetida", protocolizacion]]) {
+      etapas.push([nombre, t, t + d]); t += d;
+    }
+  }
+  const finLicencia = Math.max(inicioTalleres + licencia_ambiental, t);
+  etapas.push(["licencia ambiental", inicioTalleres, finLicencia]);
+  const inicioCierre = Math.max(finLicencia, t);
+  etapas.push(["cierre financiero", inicioCierre, inicioCierre + cierre_financiero]);
+  const inicioObra = inicioCierre + cierre_financiero;
+  etapas.push(["construcción", inicioObra, inicioObra + construccion]);
+  return {etapas, primer_kwh: inicioObra + construccion};
+}
+
 /** Arrepentimiento, maximin y minimax regret de una matriz estrategias × escenarios (réplica de mise_sd.modelos.criterios_robustez). */
 export function criteriosRobustez(matriz) {
   const minimos = matriz[0].map((_, j) => Math.min(...matriz.map((fila) => fila[j])));
