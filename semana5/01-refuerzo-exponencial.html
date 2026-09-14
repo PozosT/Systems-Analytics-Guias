@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Cómo reconocer un lazo de refuerzo, medir su tiempo de duplicación con la regla del 70, leer la curva de aprendizaje de Wright y buscar el lazo de balance que tarde o temprano lo frena.">
+
+<title>Lazos de refuerzo y crecimiento exponencial – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana5/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/01-refuerzo-exponencial.html">Lazos de refuerzo y crecimiento exponencial</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-monedas-que-se-duplican" id="toc-la-intuición-monedas-que-se-duplican" class="nav-link" data-scroll-target="#la-intuición-monedas-que-se-duplican">2. La intuición: monedas que se duplican</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/01-refuerzo-exponencial.html">Lazos de refuerzo y crecimiento exponencial</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Lazos de refuerzo y crecimiento exponencial</h1>
+<p class="subtitle lead">Semana 5 · Concepto 1 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Cómo reconocer un lazo de refuerzo, medir su tiempo de duplicación con la regla del 70, leer la curva de aprendizaje de Wright y buscar el lazo de balance que tarde o temprano lo frena.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> adopcionLogistica<span class="op">,</span> mercadoConPoliticas<span class="op">,</span> regresionLineal<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana4/05-polaridad-lazos.html">polaridad y lazos</a> y <a href="../semana4/02-stocks-flujos.html">stocks y flujos</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Calcular tiempos de duplicación con la regla del 70 y diagnosticar un crecimiento exponencial en escala semilogarítmica.</li>
+<li>Leer la curva de aprendizaje de Wright y explicar por qué el costo depende de lo construido y no del calendario.</li>
+<li>Identificar el lazo de balance que frena un refuerzo y predecir dónde se dobla la curva.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Un lazo de refuerzo hace crecer un stock un porcentaje fijo por unidad de tiempo, no una cantidad fija. Parece manso en las primeras duplicaciones y de pronto cambia el sistema entero; y siempre hay un lazo de balance esperándolo al final del tramo recto.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Entre 2010 y 2020 el costo nivelado de la energía solar fotovoltaica a gran escala cayó un 85 % en el mundo, de 0,381 a 0,057 USD/kWh, y la caída llegó al 90 % en 2023 (IRENA). Ningún plan energético de 2010 anticipó esa caída: los pronósticos quedaron obsoletos en pocos años. Los planificadores extrapolaban líneas rectas sobre un proceso gobernado por un círculo que se retroalimenta: cada panel instalado abarata el siguiente, y cada panel más barato multiplica las instalaciones. <strong>¿Por qué las proyecciones en línea recta se quedan cortas frente a un lazo de refuerzo?</strong></p>
+</section>
+<section id="la-intuición-monedas-que-se-duplican" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-monedas-que-se-duplican">2. La intuición: monedas que se duplican</h2>
+<p>Todo lazo de refuerzo es un interés compuesto disfrazado. Compare una cuenta que crece un porcentaje fijo con otra que suma una cantidad fija.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Duplicar contra sumar</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-monedas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-01-monedas-1.svg" class="img-fluid" alt="Una moneda en el año cero."></a></p>
+<p><strong>Año 0.</strong> Una moneda en cada cuenta. La primera crece al 10 % anual; la segunda suma una moneda cada 7 años.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-monedas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-01-monedas-2.svg" class="img-fluid" alt="Dos monedas en el año 7; las dos cuentas coinciden."></a></p>
+<p><strong>Año 7.</strong> Con 10 % anual, el capital se duplica en unos 7 años: dos monedas. La cuenta lineal también tiene dos. Nada las distingue todavía.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-monedas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-01-monedas-3.svg" class="img-fluid" alt="Cuatro monedas en el año 14 contra tres de la cuenta lineal."></a></p>
+<p><strong>Año 14.</strong> La exponencial tiene 4 monedas; la lineal, 3. La diferencia parece pequeña.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-monedas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-01-monedas-4.svg" class="img-fluid" alt="Ocho monedas en el año 21 contra cuatro de la cuenta lineal."></a></p>
+<p><strong>Año 21.</strong> 8 contra 4. La exponencial dobló a la lineal.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-monedas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-01-monedas-5.svg" class="img-fluid" alt="Dieciséis monedas en el año 28 contra cinco de la cuenta lineal."></a></p>
+<p><strong>Año 28.</strong> 16 contra 5. Una sola duplicación más agregó tantas monedas como todo lo acumulado antes. Con las exponenciales, el peligro es cansarse antes del despegue.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-monedas-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-01-monedas-6.svg" class="img-fluid" alt="La misma gráfica con la etiqueta: capacidad FNCER acumulada, cada duplicación abarata el costo."></a></p>
+<p><strong>La transición energética.</strong> Cambie las monedas por megavatios solares y eólicos construidos en el mundo. Cada duplicación del acumulado abarata el costo en un porcentaje fijo, y el costo más bajo acelera las instalaciones.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Crecimiento exponencial y tiempo de duplicación</span>
+</div>
+<p>Un stock cuyo flujo neto es proporcional a su propio nivel, <span class="math inline">dS/dt = r\,S</span> con <span class="math inline">r &gt; 0</span> [1/año], crece como <span class="math inline">S(t) = S_0\,e^{rt}</span>. Su <strong>tiempo de duplicación</strong> es</p>
+<p><span class="math display">T_d = \frac{\ln 2}{r} \approx \frac{70}{100\,r} \quad [\text{años}],</span></p>
+<p>la <strong>regla del 70</strong>. En escala semilogarítmica la trayectoria es una recta de pendiente <span class="math inline">r</span>.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Curva de aprendizaje de Wright</span>
+</div>
+<p>El costo unitario de una tecnología cae un porcentaje fijo, la <strong>tasa de aprendizaje</strong> <span class="math inline">LR</span>, con cada duplicación de la capacidad acumulada construida <span class="math inline">Q</span>:</p>
+<p><span class="math display">c(Q) = c_0\left(\frac{Q}{Q_0}\right)^{-b}, \qquad b = \log_2\frac{1}{1 - LR}.</span></p>
+<p>El curso usa <span class="math inline">LR = 20\,\%</span> (<span class="math inline">b = 0{,}32</span>), un valor conservador de largo plazo; en la década 2010–2020 las tasas observadas para la solar fueron de 34 a 39 % (IRENA).</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La espiral aprendizaje-costo y su freno</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-lazo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s5-01-lazo-1.svg" class="img-fluid" alt="Los inicios de proyectos FNCER aumentan la capacidad acumulada, signo positivo."></a></p>
+<p><strong>Despliegue → acumulado (+).</strong> Cada proyecto que se inicia termina sumando capacidad construida.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-lazo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s5-01-lazo-2.svg" class="img-fluid" alt="La capacidad acumulada reduce el costo nivelado, signo negativo."></a></p>
+<p><strong>Acumulado → costo (−).</strong> Es la curva de Wright. Con <span class="math inline">LR = 20\,\%</span>, al duplicar el acumulado el costo pasa de <span class="math inline">c</span> a <span class="math inline">0{,}8\,c</span>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-lazo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s5-01-lazo-3.svg" class="img-fluid" alt="El costo reduce los inicios, signo negativo, y se cierra el lazo R1 con dos enlaces negativos."></a></p>
+<p><strong>Costo → inicios (−) y cierre del lazo.</strong> Un costo más alto frena la inversión. Dos negativos, un número par: <strong>refuerzo</strong>, R1. En el modelo del curso los inicios crecen con el cociente <span class="math inline">(\text{precio capturado}/\text{costo})^{3}</span>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-lazo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s5-01-lazo-4.svg" class="img-fluid" alt="Los inicios aumentan la penetración FNCER y la penetración reduce el precio capturado."></a></p>
+<p><strong>Busque el freno.</strong> Más FNCER instaladas es más penetración (+). Como las solares generan todas a la misma hora, bajan el precio que ellas mismas capturan (−):</p>
+<p><span class="math display">p_{\text{capturado}} = p\; e^{-2\,\cdot\,\text{penetración}}.</span></p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s5-01-lazo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s5-01-lazo-5.svg" class="img-fluid" alt="El precio capturado aumenta los inicios y se cierra el lazo B1 con un enlace negativo."></a></p>
+<p><strong>Cierre el lazo de balance.</strong> Un precio capturado menor frena la inversión (+ entre precio capturado e inicios). Un negativo, impar: <strong>balance</strong>, B1, la canibalización. Todo refuerzo real opera rodeado de balances que tarde o temprano toman el mando: el resultado típico es una curva en S.</p>
+</div>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-interés-compuesto-con-la-regla-del-70" class="level3">
+<h3 class="anchored" data-anchor-id="el-interés-compuesto-con-la-regla-del-70">El interés compuesto con la regla del 70</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Tiempos de duplicación sin calculadora</span>
+</div>
+<p><strong>Planteamiento.</strong> Una cuenta paga 10 % anual compuesto. ¿Cuánto tarda en multiplicar por ocho el capital? ¿Y una deuda que crece al 24 % anual, cuánto tarda en duplicarse?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Usar la regla del 70</span>
+</div>
+<div class="paso">
+<p><strong>Cuente duplicaciones.</strong> Multiplicar por ocho son tres duplicaciones, porque <span class="math inline">2^3 = 8</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Aplique la regla.</strong> Cada duplicación tarda <span class="math inline">70/10 = 7</span> años. Tres duplicaciones: 21 años.</p>
+</div>
+<div class="paso">
+<p><strong>Verifique con la fórmula exacta.</strong> <span class="math inline">\ln 8/0{,}10 = 20{,}8</span> años. La regla del 70 se equivoca en menos de un 1 %.</p>
+</div>
+<div class="paso">
+<p><strong>Aplíquela a una deuda.</strong> Al 24 % anual, una deuda se duplica cada <span class="math inline">70/24 \approx 2{,}9</span> años. Aplazarla tres años equivale a regalar una duplicación entera. La regla convierte tasas en plazos que cualquier junta entiende.</p>
+</div>
+</div>
+</section>
+<section id="la-adopción-solar-por-voz-a-voz" class="level3">
+<h3 class="anchored" data-anchor-id="la-adopción-solar-por-voz-a-voz">La adopción solar por voz a voz</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Una exponencial que se convierte en S</span>
+</div>
+<p><strong>Planteamiento.</strong> En un barrio de Bogotá hay <span class="math inline">N = 10\,000</span> techos aptos. Cada hogar con paneles convence en promedio a <span class="math inline">\beta = 0{,}5</span> vecinos por año, y el contagio se frena a medida que quedan menos techos disponibles:</p>
+<p><span class="math display">\frac{dA}{dt} = \beta\, A \left(1 - \frac{A}{N}\right) \quad [\text{techos/año}], \qquad A(0) = 20.</span></p>
+<p>¿Cuándo se instalan más paneles y hasta dónde llega la adopción?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la logística</span>
+</div>
+<div class="paso">
+<p><strong>Identifique los lazos.</strong> <span class="math inline">\beta\,A</span> es el contagio, un lazo de refuerzo. <span class="math inline">(1 - A/N)</span> es la saturación, un lazo de balance.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la fase temprana.</strong> Mientras <span class="math inline">A \ll N</span>, la saturación casi no actúa y la adopción crece al 50 % anual: se duplica cada <span class="math inline">70/50 = 1{,}4</span> años. De 20 techos se llega a 1 000 en unos 8 años.</p>
+</div>
+<div class="paso">
+<p><strong>Ubique el punto de inflexión.</strong> Las instalaciones anuales son máximas cuando <span class="math inline">A = N/2</span>. A partir de ahí manda la saturación y cada año se instala menos que el anterior.</p>
+</div>
+</div>
+<div id="pred-contagio" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Si cada hogar convence a la mitad de vecinos por año (<span class="math inline">\beta = 0{,}25</span>), la adopción final…</p>
+<div class="opcion">
+<p>llega a la mitad de los techos.</p>
+</div>
+<div class="opcion">
+<p>llega a los mismos 10 000 techos, pero más tarde.</p>
+</div>
+<div class="opcion">
+<p>nunca se satura.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Adopción logística</span>
+</div>
+<p>Compare <span class="math inline">\beta = 0{,}5</span> con <span class="math inline">\beta = 0{,}25</span>. ¿Qué cambia, el destino o el calendario?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="210" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 209;"><span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>viewof contagioL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.25</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Contagio β [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="215" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 214;"><span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a>logisticaL <span class="op">=</span> {</span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionLogistica</span>({<span class="dt">contagio</span><span class="op">:</span> contagioL})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> A <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">adoptantes</span><span class="op">,</span> I <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">instalaciones</span><span class="op">;</span></span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> I<span class="op">.</span><span class="fu">indexOf</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>I))<span class="op">;</span></span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> primero <span class="op">=</span> (umbral) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">tiempo</span>[A<span class="op">.</span><span class="fu">findIndex</span>((a) <span class="kw">=&gt;</span> a <span class="op">&gt;=</span> umbral)]<span class="op">;</span></span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionLogistica</span>({<span class="dt">contagio</span><span class="op">:</span> <span class="fl">0.5</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> j) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">A</span><span class="op">:</span> A[j]<span class="op">,</span> <span class="dt">I</span><span class="op">:</span> I[j]}))<span class="op">,</span></span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> j) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">A</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">adoptantes</span>[j]}))<span class="op">,</span></span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>    <span class="dt">tPico</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span>[k]<span class="op">,</span> <span class="dt">aPico</span><span class="op">:</span> A[k]<span class="op">,</span> <span class="dt">t1000</span><span class="op">:</span> <span class="fu">primero</span>(<span class="dv">1000</span>)<span class="op">,</span> <span class="dt">t90</span><span class="op">:</span> <span class="fu">primero</span>(<span class="dv">9000</span>)<span class="op">,</span> <span class="dt">final</span><span class="op">:</span> A<span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="231" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 230;"><span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Techos con paneles"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">10000</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(logisticaL<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(logisticaL<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">t</span><span class="op">:</span> logisticaL<span class="op">.</span><span class="at">tPico</span><span class="op">,</span> <span class="dt">A</span><span class="op">:</span> logisticaL<span class="op">.</span><span class="at">aPico</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">6</span>})<span class="op">,</span></span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="246" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 245;"><span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Llega a 1 000 techos&lt;b&gt;año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">t1000</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Máximo de instalaciones&lt;b&gt;año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">tPico</span>)<span class="sc">}</span><span class="vs">, con </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(logisticaL<span class="op">.</span><span class="at">aPico</span>)<span class="sc">}</span><span class="vs"> adoptantes&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Llega al 90 %&lt;b&gt;</span><span class="sc">${</span>logisticaL<span class="op">.</span><span class="at">t90</span> <span class="op">===</span> <span class="kw">undefined</span> <span class="op">?</span> <span class="st">"después del año 60"</span> <span class="op">:</span> <span class="vs">`año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">t90</span>)<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo <code>mise_sd.modelos.adopcion_logistica</code>, con cifras ilustrativas. Línea gris: <span class="math inline">\beta = 0{,}5</span>. Punto ámbar: el máximo de instalaciones anuales.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-contagio"></span>. Con <span class="math inline">\beta = 0{,}5</span> la adopción llega a 1 000 techos en el año 8,1, instala más paneles en el año 12,5 (con unos 5 000 adoptantes, la mitad del mercado) y alcanza el 90 % en el año 16,9. Con <span class="math inline">\beta = 0{,}25</span> el máximo se retrasa al año 24,9 y el 90 % al año 33,7, pero el destino es el mismo: los 10 000 techos, la respuesta B. Las campañas de visibilidad mueven el <strong>cuándo</strong>; la saturación decide el <strong>cuánto</strong>. Y evaluar un programa por sus dos primeros años, cuando la exponencial todavía gatea, es la manera clásica de cancelar un refuerzo que iba a funcionar.</p>
+</section>
+<section id="la-espiral-aprendizaje-costo-de-las-fncer" class="level3">
+<h3 class="anchored" data-anchor-id="la-espiral-aprendizaje-costo-de-las-fncer">La espiral aprendizaje-costo de las FNCER</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">La subasta compra posición en la curva de aprendizaje</span>
+</div>
+<p><strong>Planteamiento.</strong> En el modelo de la semana, <code>mercado_con_politicas</code>, las FNCER casi no despegan solas: sin subasta, la capacidad sigue cerca de 100 MW y el costo nivelado en el año 30 es de 222 COP/kWh. Una subasta adjudica inicios de proyectos por fuera de la bolsa. Compare dos programas del mismo tamaño, 300 MW/año durante 20 años: uno que empieza en el año 0 y otro que empieza en el año 10.</p>
+</div>
+<div id="pred-calendario" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>En el año 30, ¿cómo es el costo nivelado FNCER del programa temprano frente al tardío?</p>
+<div class="opcion">
+<p>Igual, porque los dos programas suman 6 000 MW subastados.</p>
+</div>
+<div class="opcion">
+<p>Más bajo en el programa temprano.</p>
+</div>
+<div class="opcion">
+<p>Más bajo en el programa tardío, porque la tecnología madura sola con el tiempo.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tamaño y calendario de la subasta</span>
+</div>
+<p>Ponga 300 MW/año y compare los dos calendarios. Después cambie el tamaño: ¿cuánto acelera el despegue una subasta más grande?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="287" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 286;"><span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>viewof subastaE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">600</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Subasta [MW/año, durante 20 años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="292" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 291;"><span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a>viewof inicioE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"desde el año 0"</span><span class="op">,</span> <span class="st">"desde el año 10"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"desde el año 10"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Calendario"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="297" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 296;"><span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a>espiralE <span class="op">=</span> {</span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> inicio <span class="op">=</span> inicioE<span class="op">.</span><span class="fu">endsWith</span>(<span class="st">"10"</span>) <span class="op">?</span> <span class="dv">10</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (subasta<span class="op">,</span> desde) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>({<span class="dt">subasta_fncer</span><span class="op">:</span> subasta<span class="op">,</span> <span class="dt">inicio_subasta</span><span class="op">:</span> desde<span class="op">,</span> <span class="dt">duracion_subasta</span><span class="op">:</span> <span class="dv">20</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">correr</span>(subastaE<span class="op">,</span> inicio)<span class="op">;</span></span>
+<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> otro <span class="op">=</span> <span class="fu">correr</span>(subastaE<span class="op">,</span> inicio <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">10</span> <span class="op">:</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">;</span></span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k30 <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="dv">30</span> <span class="op">/</span> <span class="fl">0.05</span>)<span class="op">;</span></span>
+<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> x <span class="op">=</span> []<span class="op">,</span> y <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>  r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">forEach</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> { <span class="cf">if</span> (v<span class="op">.</span><span class="at">capacidad_fncer</span>[k] <span class="op">&gt;</span> <span class="dv">1000</span> <span class="op">&amp;&amp;</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[k] <span class="op">&lt;</span> <span class="dv">8000</span>) { x<span class="op">.</span><span class="fu">push</span>(t)<span class="op">;</span> y<span class="op">.</span><span class="fu">push</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(v<span class="op">.</span><span class="at">capacidad_fncer</span>[k]))<span class="op">;</span> } })<span class="op">;</span></span>
+<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tasa <span class="op">=</span> x<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">10</span> <span class="op">?</span> <span class="fu">regresionLineal</span>(x<span class="op">,</span> y)<span class="op">.</span><span class="at">pendiente</span> <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">K</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[k]<span class="op">,</span> <span class="dt">Q</span><span class="op">:</span> v<span class="op">.</span><span class="at">fncer_acumulada</span>[k]<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> v<span class="op">.</span><span class="at">costo_fncer</span>[k]}))<span class="op">,</span></span>
+<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a>    <span class="dt">otro</span><span class="op">:</span> otro<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">K</span><span class="op">:</span> otro<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">capacidad_fncer</span>[k]}))<span class="op">,</span></span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cap30</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[k30]<span class="op">,</span> <span class="dt">costo30</span><span class="op">:</span> v<span class="op">.</span><span class="at">costo_fncer</span>[k30]<span class="op">,</span> <span class="dt">costoOtro30</span><span class="op">:</span> otro<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">costo_fncer</span>[k30]<span class="op">,</span> tasa<span class="op">,</span></span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="317" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 316;"><span id="cb9-317"><a href="#cb9-317" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-318"><a href="#cb9-318" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb9-319"><a href="#cb9-319" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">40</span>]}<span class="op">,</span></span>
+<span id="cb9-320"><a href="#cb9-320" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad FNCER [MW, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">50</span><span class="op">,</span> <span class="dv">40000</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb9-321"><a href="#cb9-321" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-322"><a href="#cb9-322" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(espiralE<span class="op">.</span><span class="at">otro</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"K"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(espiralE<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"K"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb9-324"><a href="#cb9-324" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-325"><a href="#cb9-325" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="330" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 329;"><span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">230</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad acumulada construida [MW, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Costo nivelado [COP/kWh, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [Plot<span class="op">.</span><span class="fu">line</span>(espiralE<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"Q"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})]<span class="op">,</span></span>
+<span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="340" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 339;"><span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capacidad FNCER en el año 30&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(espiralE<span class="op">.</span><span class="at">cap30</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Costo nivelado en el año 30&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(espiralE<span class="op">.</span><span class="at">costo30</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Costo con el otro calendario&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(espiralE<span class="op">.</span><span class="at">costoOtro30</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Despegue (1 a 8 GW)&lt;b&gt;</span><span class="sc">${</span>espiralE<span class="op">.</span><span class="at">tasa</span> <span class="op">===</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">"no despega"</span> <span class="op">:</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(espiralE<span class="op">.</span><span class="at">tasa</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> anual, duplica en </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="dv">2</span>) <span class="op">/</span> espiralE<span class="op">.</span><span class="at">tasa</span>)<span class="sc">}</span><span class="vs"> años`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code>, con parámetros sintéticos con fines didácticos (año 0 ≈ 2015). Línea gris: el mismo tamaño de subasta con el otro calendario. La recta de la segunda gráfica es la curva de Wright del modelo.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la espiral</span>
+</div>
+<div class="paso">
+<p><strong>Mida el refuerzo.</strong> Con la subasta temprana, entre 1 y 8 GW la capacidad FNCER crece un 11,9 % anual: se duplica cada 5,8 años, como anticipa la regla del 70 (<span class="math inline">70/12</span>). Con la subasta tardía el despegue es más empinado (14,4 % anual) porque arranca cuando el precio ya es más alto, pero empieza diez años después. En escala semilogarítmica ese tramo es recto.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la curva de Wright.</strong> En escala log-log, costo contra acumulado es una recta: cada duplicación de lo construido abarata el costo un 20 %.</p>
+</div>
+<div class="paso">
+<p><strong>Compare los calendarios.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-calendario"></span>. En el año 30 el programa temprano deja el costo en 55,9 COP/kWh y 12 221 MW instalados; el tardío, en 63,5 COP/kWh y 9 553 MW. La respuesta es la B: el costo cae con lo construido, y el programa temprano construye antes y alimenta el refuerzo durante más años.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la lección de política.</strong> La subasta no solo compra megavatios: compra <strong>posición en la curva de aprendizaje</strong>. Los primeros gigavatios caros pagan el descuento de todos los siguientes, y esperar a que la tecnología baje sola pospone la bajada. Es la lectura de Farmer et al.&nbsp;(2019) sobre los puntos de intervención sensibles.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="El diagnóstico en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El diagnóstico en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="d99d4f54" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, inicio <span class="kw">in</span> ((<span class="st">"temprano"</span>, <span class="fl">0.0</span>), (<span class="st">"tardío"</span>, <span class="fl">10.0</span>)):</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> integrar(mercado_con_politicas(subasta_fncer<span class="op">=</span><span class="fl">300.0</span>, inicio_subasta<span class="op">=</span>inicio, duracion_subasta<span class="op">=</span><span class="fl">20.0</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                 t_final<span class="op">=</span><span class="fl">40.0</span>, paso_salida<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    capacidad, tiempo <span class="op">=</span> r[<span class="st">"capacidad_fncer"</span>], r.tiempo</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    tramo <span class="op">=</span> (capacidad <span class="op">&gt;</span> <span class="dv">1_000</span>) <span class="op">&amp;</span> (capacidad <span class="op">&lt;</span> <span class="dv">8_000</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    tasa, _ <span class="op">=</span> np.polyfit(tiempo[tramo], np.log(capacidad[tramo]), <span class="dv">1</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nombre<span class="sc">:9s}</span><span class="ss"> tasa de despegue = </span><span class="sc">{</span>tasa<span class="sc">:.1%}</span><span class="ss">   duplicación = </span><span class="sc">{</span>np<span class="sc">.</span>log(<span class="dv">2</span>) <span class="op">/</span> tasa<span class="sc">:.1f}</span><span class="ss"> años   "</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"costo en el año 30 = </span><span class="sc">{</span>r[<span class="st">'costo_fncer'</span>][<span class="dv">300</span>]<span class="sc">:.1f}</span><span class="ss"> COP/kWh"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>temprano  tasa de despegue = 11.9%   duplicación = 5.8 años   costo en el año 30 = 55.9 COP/kWh
+tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el año 30 = 63.5 COP/kWh</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Extrapolar la exponencial sin buscarle el freno</span>
+</div>
+<p>Toda exponencial real es el tramo inicial de una curva en S. El análisis profesional identifica el lazo de balance que la espera y estima dónde está el codo, aunque sea con un orden de magnitud.</p>
+<div id="94b0d112" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="01-refuerzo-exponencial_files/figure-html/cell-4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos."><img src="01-refuerzo-exponencial_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img" alt="Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos."></a></p>
+<figcaption>Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir crecimiento rápido con refuerzo</span>
+</div>
+<p>Una rampa agresiva (500 MW cada año) crece cantidades fijas, no porcentajes. La prueba es la escala semilogarítmica: solo el refuerzo dibuja una recta.</p>
+<div id="f8a5b60b" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="01-refuerzo-exponencial_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas."><img src="01-refuerzo-exponencial_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" alt="Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas."></a></p>
+<figcaption>Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Diagnóstico errado, política errada: las rampas se empujan año tras año; los refuerzos se siembran.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer la curva de Wright como función del tiempo</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Esperemos diez años a que la tecnología se abarate y entonces subastamos.»</p>
+</div>
+<div class="bien">
+<p>El costo cae con lo construido, no con el calendario. Si nadie construye, el costo no baja (salvo lo que aporten otros mercados). En el simulador, el programa tardío termina más caro en el año 30.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>La demanda eléctrica crece al 3,5 % anual. ¿En cuántos años se duplica?</p>
+<div class="opcion" data-correcta="si">
+<p>Unos 20 años.</p>
+<p><span class="porque">Correcto: <span class="math inline">70/3{,}5 = 20</span>.</span></p>
+</div>
+<div class="opcion">
+<p>Unos 35 años.</p>
+<p><span class="porque">Ese valor sale de dividir 70 entre 2, no entre 3,5.</span></p>
+</div>
+<div class="opcion">
+<p>Unos 29 años, porque <span class="math inline">100/3{,}5 \approx 29</span>.</p>
+<p><span class="porque">Esa cuenta supone crecimiento lineal: la duplicación exponencial es más rápida.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Cómo distingue en una gráfica un crecimiento exponencial de una rampa rápida?</p>
+<div class="opcion">
+<p>La exponencial siempre sube más rápido.</p>
+<p><span class="porque">Al principio una rampa puede subir más rápido que una exponencial.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>En escala semilogarítmica la exponencial es una recta y la rampa se curva.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con una tasa de aprendizaje del 20 %, ¿cuánto vale el costo cuando la capacidad acumulada se multiplica por cuatro?</p>
+<div class="opcion">
+<p>80 % del costo inicial.</p>
+<p><span class="porque">Eso corresponde a una sola duplicación.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>64 % del costo inicial.</p>
+<p><span class="porque">Correcto: dos duplicaciones, <span class="math inline">0{,}8 \times 0{,}8 = 0{,}64</span>.</span></p>
+</div>
+<div class="opcion">
+<p>20 % del costo inicial.</p>
+<p><span class="porque">La tasa se aplica por duplicación, no una sola vez al total.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la logística de adopción, ¿cuándo se instalan más paneles por año?</p>
+<div class="opcion">
+<p>Al principio, cuando hay más techos disponibles.</p>
+<p><span class="porque">Al principio hay pocos adoptantes que contagien.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Cuando la mitad del mercado ya adoptó.</p>
+<p><span class="porque">Correcto: ahí se equilibran contagio y saturación.</span></p>
+</div>
+<div class="opcion">
+<p>Al final, cuando casi todos adoptaron.</p>
+<p><span class="porque">Casi no quedan techos disponibles.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué lazo frena la espiral aprendizaje-costo en el modelo de la semana?</p>
+<div class="opcion" data-correcta="si">
+<p>La canibalización: más FNCER bajan el precio que ellas mismas capturan.</p>
+<p><span class="porque">Correcto: es un lazo de balance con un enlace negativo.</span></p>
+</div>
+<div class="opcion">
+<p>El retardo constructor de las FNCER.</p>
+<p><span class="porque">Un retardo demora la respuesta, pero no frena el crecimiento por sí mismo.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-regla-del-70" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-regla-del-70">Ejercicio 1 ●○○ · Regla del 70</h4>
+<p>Sin calculadora: (a) la demanda crece al 3,5 % anual, ¿cuándo se duplica? (b) Un embalse pierde 2 % de su volumen útil al año por sedimentación, ¿en cuántos años queda a la mitad? (c) La capacidad FNCER crece al 12 % anual en su despegue, ¿cuántas duplicaciones caben en 12 años?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">70/3{,}5 = 20</span> años.</p></li>
+<li><p>La regla funciona igual para decrecer: <span class="math inline">70/2 = 35</span> años para quedar a la mitad.</p></li>
+<li><p>Cada duplicación tarda <span class="math inline">70/12 \approx 5{,}8</span> años, así que en 12 años caben unas dos duplicaciones: la capacidad se multiplica por cerca de cuatro.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-la-logística-con-otro-contagio" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-la-logística-con-otro-contagio">Ejercicio 2 ●●○ · La logística con otro contagio</h4>
+<p>Con la adopción logística (<span class="math inline">N = 10\,000</span>, <span class="math inline">A_0 = 20</span>), responda para <span class="math inline">\beta = 1</span>: (a) ¿cuánto tarda la duplicación temprana? (b) ¿En qué año se instala el máximo de paneles, aproximadamente? (c) ¿Cambia el número final de adoptantes?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En la fase temprana <span class="math inline">A</span> crece a la tasa <span class="math inline">\beta</span>. Para (b), compare con los años 12,5 (<span class="math inline">\beta = 0{,}5</span>) y 24,9 (<span class="math inline">\beta = 0{,}25</span>) del simulador.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">70/100 = 0{,}7</span> años.</p></li>
+<li><p>El calendario escala con <span class="math inline">1/\beta</span>: si <span class="math inline">\beta = 0{,}5</span> da el año 12,5, <span class="math inline">\beta = 1</span> da la mitad, cerca del año 6,2. La simulación lo confirma (año 6,2).</p></li>
+<li><p>No: el mercado final sigue siendo de 10 000 techos. El contagio cambia el calendario; la saturación fija el destino.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Un lazo de <strong>refuerzo</strong> hace crecer un stock un porcentaje fijo: <span class="math inline">S(t) = S_0\,e^{rt}</span>, con tiempo de duplicación <span class="math inline">T_d \approx 70/(100\,r)</span>.</li>
+<li>En escala <strong>semilogarítmica</strong> la exponencial es una recta; una rampa se curva.</li>
+<li><strong>Curva de Wright</strong>: el costo cae un porcentaje fijo por cada duplicación de lo construido. Depende del acumulado, no del calendario.</li>
+<li>Todo refuerzo real encuentra un <strong>balance</strong>: saturación de techos, canibalización de precios. El resultado típico es una curva en S.</li>
+<li>Una subasta temprana compra posición en la curva de aprendizaje: en el modelo, 55,9 frente a 63,5 COP/kWh en el año 30 con el mismo tamaño de programa.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Lazos de refuerzo y crecimiento exponencial» de las notas de la semana 5 trae la figura de Wright del modelo y el ejercicio de la subasta retrasada. En el Laboratorio 4 usted medirá tiempos de duplicación sobre el modelo con políticas.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgYWRvcGNpb25Mb2dpc3RpY2EsIG1lcmNhZG9Db25Qb2xpdGljYXMsIHJlZ3Jlc2lvbkxpbmVhbCwgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgY29udGFnaW9MID0gSW5wdXRzLnJhbmdlKFswLjEsIDFdLCB7dmFsdWU6IDAuMjUsIHN0ZXA6IDAuMDUsIGxhYmVsOiBcIkNvbnRhZ2lvIM6yIFsxL2HDsW9dXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibG9naXN0aWNhTCA9IHtcbiAgY29uc3QgciA9IHNpbXVsYXIoYWRvcGNpb25Mb2dpc3RpY2Eoe2NvbnRhZ2lvOiBjb250YWdpb0x9KSwge3RGaW5hbDogNjAsIHBhc286IDAuMDV9KTtcbiAgY29uc3QgQSA9IHIudmFyaWFibGVzLmFkb3B0YW50ZXMsIEkgPSByLnZhcmlhYmxlcy5pbnN0YWxhY2lvbmVzO1xuICBjb25zdCBrID0gSS5pbmRleE9mKE1hdGgubWF4KC4uLkkpKTtcbiAgY29uc3QgcHJpbWVybyA9ICh1bWJyYWwpID0+IHIudGllbXBvW0EuZmluZEluZGV4KChhKSA9PiBhID49IHVtYnJhbCldO1xuICBjb25zdCBiYXNlID0gc2ltdWxhcihhZG9wY2lvbkxvZ2lzdGljYSh7Y29udGFnaW86IDAuNX0pLCB7dEZpbmFsOiA2MCwgcGFzbzogMC4wNX0pO1xuICByZXR1cm4ge1xuICAgIGZpbGFzOiByLnRpZW1wby5tYXAoKHQsIGopID0+ICh7dCwgQTogQVtqXSwgSTogSVtqXX0pKSxcbiAgICBiYXNlOiBiYXNlLnRpZW1wby5tYXAoKHQsIGopID0+ICh7dCwgQTogYmFzZS52YXJpYWJsZXMuYWRvcHRhbnRlc1tqXX0pKSxcbiAgICB0UGljbzogci50aWVtcG9ba10sIGFQaWNvOiBBW2tdLCB0MTAwMDogcHJpbWVybygxMDAwKSwgdDkwOiBwcmltZXJvKDkwMDApLCBmaW5hbDogQS5hdCgtMSksXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDYwXX0sXG4gIHk6IHtsYWJlbDogXCJUZWNob3MgY29uIHBhbmVsZXNcIiwgZ3JpZDogdHJ1ZSwgdGlja0Zvcm1hdDogZm9ybWF0b051bWVybygwKX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5ydWxlWShbMTAwMDBdLCB7c3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LmxpbmUobG9naXN0aWNhTC5iYXNlLCB7eDogXCJ0XCIsIHk6IFwiQVwiLCBzdHJva2U6IFwiIzlFOUU5RVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNSA0XCIsIHN0cm9rZVdpZHRoOiAxLjR9KSxcbiAgICBQbG90LmxpbmUobG9naXN0aWNhTC5maWxhcywge3g6IFwidFwiLCB5OiBcIkFcIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgICBQbG90LmRvdChbe3Q6IGxvZ2lzdGljYUwudFBpY28sIEE6IGxvZ2lzdGljYUwuYVBpY299XSwge3g6IFwidFwiLCB5OiBcIkFcIiwgZmlsbDogQ09MT1JFUy5hbWJhciwgcjogNn0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+TGxlZ2EgYSAxIDAwMCB0ZWNob3M8Yj5hw7FvICR7Zm9ybWF0b051bWVybygxKShsb2dpc3RpY2FMLnQxMDAwKX08L2I+PC9kaXY+XG4gIDxkaXY+TcOheGltbyBkZSBpbnN0YWxhY2lvbmVzPGI+YcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkobG9naXN0aWNhTC50UGljbyl9LCBjb24gJHtmb3JtYXRvTnVtZXJvKDApKGxvZ2lzdGljYUwuYVBpY28pfSBhZG9wdGFudGVzPC9iPjwvZGl2PlxuICA8ZGl2PkxsZWdhIGFsIDkwICU8Yj4ke2xvZ2lzdGljYUwudDkwID09PSB1bmRlZmluZWQgPyBcImRlc3B1w6lzIGRlbCBhw7FvIDYwXCIgOiBgYcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkobG9naXN0aWNhTC50OTApfWB9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHN1YmFzdGFFID0gSW5wdXRzLnJhbmdlKFswLCA2MDBdLCB7dmFsdWU6IDMwMCwgc3RlcDogNTAsIGxhYmVsOiBcIlN1YmFzdGEgW01XL2HDsW8sIGR1cmFudGUgMjAgYcOxb3NdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGluaWNpb0UgPSBJbnB1dHMucmFkaW8oW1wiZGVzZGUgZWwgYcOxbyAwXCIsIFwiZGVzZGUgZWwgYcOxbyAxMFwiXSwge3ZhbHVlOiBcImRlc2RlIGVsIGHDsW8gMTBcIiwgbGFiZWw6IFwiQ2FsZW5kYXJpb1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImVzcGlyYWxFID0ge1xuICBjb25zdCBpbmljaW8gPSBpbmljaW9FLmVuZHNXaXRoKFwiMTBcIikgPyAxMCA6IDA7XG4gIGNvbnN0IGNvcnJlciA9IChzdWJhc3RhLCBkZXNkZSkgPT4gc2ltdWxhcihtZXJjYWRvQ29uUG9saXRpY2FzKHtzdWJhc3RhX2ZuY2VyOiBzdWJhc3RhLCBpbmljaW9fc3ViYXN0YTogZGVzZGUsIGR1cmFjaW9uX3N1YmFzdGE6IDIwfSksIHt0RmluYWw6IDQwLCBwYXNvOiAwLjA1fSk7XG4gIGNvbnN0IHIgPSBjb3JyZXIoc3ViYXN0YUUsIGluaWNpbyk7XG4gIGNvbnN0IG90cm8gPSBjb3JyZXIoc3ViYXN0YUUsIGluaWNpbyA9PT0gMCA/IDEwIDogMCk7XG4gIGNvbnN0IHYgPSByLnZhcmlhYmxlcztcbiAgY29uc3QgazMwID0gTWF0aC5yb3VuZCgzMCAvIDAuMDUpO1xuICBjb25zdCB4ID0gW10sIHkgPSBbXTtcbiAgci50aWVtcG8uZm9yRWFjaCgodCwgaykgPT4geyBpZiAodi5jYXBhY2lkYWRfZm5jZXJba10gPiAxMDAwICYmIHYuY2FwYWNpZGFkX2ZuY2VyW2tdIDwgODAwMCkgeyB4LnB1c2godCk7IHkucHVzaChNYXRoLmxvZyh2LmNhcGFjaWRhZF9mbmNlcltrXSkpOyB9IH0pO1xuICBjb25zdCB0YXNhID0geC5sZW5ndGggPiAxMCA/IHJlZ3Jlc2lvbkxpbmVhbCh4LCB5KS5wZW5kaWVudGUgOiBudWxsO1xuICByZXR1cm4ge1xuICAgIGZpbGFzOiByLnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgSzogdi5jYXBhY2lkYWRfZm5jZXJba10sIFE6IHYuZm5jZXJfYWN1bXVsYWRhW2tdLCBjOiB2LmNvc3RvX2ZuY2VyW2tdfSkpLFxuICAgIG90cm86IG90cm8udGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBLOiBvdHJvLnZhcmlhYmxlcy5jYXBhY2lkYWRfZm5jZXJba119KSksXG4gICAgY2FwMzA6IHYuY2FwYWNpZGFkX2ZuY2VyW2szMF0sIGNvc3RvMzA6IHYuY29zdG9fZm5jZXJbazMwXSwgY29zdG9PdHJvMzA6IG90cm8udmFyaWFibGVzLmNvc3RvX2ZuY2VyW2szMF0sIHRhc2EsXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjUwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDQwXX0sXG4gIHk6IHtsYWJlbDogXCJDYXBhY2lkYWQgRk5DRVIgW01XLCBlc2NhbGEgbG9nXVwiLCB0eXBlOiBcImxvZ1wiLCBkb21haW46IFs1MCwgNDAwMDBdLCBncmlkOiB0cnVlLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmUoZXNwaXJhbEUub3Rybywge3g6IFwidFwiLCB5OiBcIktcIiwgc3Ryb2tlOiBcIiM5RTlFOUVcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjUgNFwiLCBzdHJva2VXaWR0aDogMS40fSksXG4gICAgUGxvdC5saW5lKGVzcGlyYWxFLmZpbGFzLCB7eDogXCJ0XCIsIHk6IFwiS1wiLCBzdHJva2U6IENPTE9SRVMudmVyZGUsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDIzMCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJDYXBhY2lkYWQgYWN1bXVsYWRhIGNvbnN0cnVpZGEgW01XLCBlc2NhbGEgbG9nXVwiLCB0eXBlOiBcImxvZ1wiLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgeToge2xhYmVsOiBcIkNvc3RvIG5pdmVsYWRvIFtDT1Ava1doLCBlc2NhbGEgbG9nXVwiLCB0eXBlOiBcImxvZ1wiLCBncmlkOiB0cnVlfSxcbiAgbWFya3M6IFtQbG90LmxpbmUoZXNwaXJhbEUuZmlsYXMsIHt4OiBcIlFcIiwgeTogXCJjXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi40fSldLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTEiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkNhcGFjaWRhZCBGTkNFUiBlbiBlbCBhw7FvIDMwPGI+JHtmb3JtYXRvTnVtZXJvKDApKGVzcGlyYWxFLmNhcDMwKX0gTVc8L2I+PC9kaXY+XG4gIDxkaXY+Q29zdG8gbml2ZWxhZG8gZW4gZWwgYcOxbyAzMDxiPiR7Zm9ybWF0b051bWVybygxKShlc3BpcmFsRS5jb3N0bzMwKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5Db3N0byBjb24gZWwgb3RybyBjYWxlbmRhcmlvPGI+JHtmb3JtYXRvTnVtZXJvKDEpKGVzcGlyYWxFLmNvc3RvT3RybzMwKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5EZXNwZWd1ZSAoMSBhIDggR1cpPGI+JHtlc3BpcmFsRS50YXNhID09PSBudWxsID8gXCJubyBkZXNwZWdhXCIgOiBgJHtmb3JtYXRvUG9yY2VudGFqZShlc3BpcmFsRS50YXNhLCAxKX0gYW51YWwsIGR1cGxpY2EgZW4gJHtmb3JtYXRvTnVtZXJvKDEpKE1hdGgubG9nKDIpIC8gZXNwaXJhbEUudGFzYSl9IGHDsW9zYH08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NvbnRhZ2lvTCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzdWJhc3RhRScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdpbmljaW9FJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana5";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana5/index.html" class="pagination-link" aria-label="Semana 5 · Dinámica de sistemas II">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Semana 5 · Dinámica de sistemas II</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

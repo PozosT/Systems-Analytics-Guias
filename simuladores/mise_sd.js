@@ -235,6 +235,110 @@ export function cicloInversionCapacidad(parametros = {}) {
   };
 }
 
+export const PARAMETROS_MERCADO = {
+  capacidad_firme_inicial: 13000, proyectos_firme_iniciales: 2700, retardo_constructor_firme: 4, vida_util_firme: 30,
+  capacidad_fncer_inicial: 100, proyectos_fncer_iniciales: 50, retardo_constructor_fncer: 1.5, vida_util_fncer: 25,
+  costo_fncer_inicial: 300, tasa_aprendizaje: 0.20, credito_capacidad_fncer: 0.30, elasticidad_fncer: 3,
+  semilla_mercado_fncer: 200, canibalizacion: 2,
+  demanda_inicial: 11000, crecimiento_demanda: 0.03, margen_objetivo: 0.30, precio_referencia: 150,
+  sensibilidad_precio: 4, elasticidad_inversion: 3,
+  periodo_nino: 0, duracion_nino: 1.5, intensidad_nino: 0.10,
+  prima_cxc: 0, subasta_fncer: 0, impuesto_carbono: 0, inicio_subasta: 0, duracion_subasta: null,
+};
+
+/** Ciclo con CxC, FNCER y aprendizaje (semana 5; réplica de mise_sd.modelos.mercado_con_politicas). */
+export function mercadoConPoliticas(parametros = {}) {
+  const p = {...PARAMETROS_MERCADO, ...parametros};
+  const acumuladaInicial = Math.max(p.capacidad_fncer_inicial, 1);
+  return {
+    nombre: "mercado_con_politicas",
+    constantes: {
+      crecimiento_demanda_anual: p.crecimiento_demanda, margen_objetivo: p.margen_objetivo,
+      retardo_firme: p.retardo_constructor_firme, retardo_fncer: p.retardo_constructor_fncer,
+      vida_firme: p.vida_util_firme, vida_fncer: p.vida_util_fncer,
+      precio_referencia: p.precio_referencia, sensibilidad_precio: p.sensibilidad_precio,
+      elasticidad_inversion: p.elasticidad_inversion, elasticidad_fncer: p.elasticidad_fncer,
+      credito_fncer: p.credito_capacidad_fncer, costo_fncer_inicial: p.costo_fncer_inicial,
+      fncer_acumulada_inicial: acumuladaInicial, exponente_wright: Math.log2(1 / (1 - p.tasa_aprendizaje)),
+      semilla_fncer: p.semilla_mercado_fncer, canibalizacion: p.canibalizacion,
+      tasa_firme: 1 / p.vida_util_firme + p.crecimiento_demanda, tasa_fncer: 1 / p.vida_util_fncer + p.crecimiento_demanda,
+      prima_cxc: p.prima_cxc, subasta_fncer: p.subasta_fncer, impuesto_carbono: p.impuesto_carbono,
+      inicio_subasta: p.inicio_subasta, fin_subasta: p.duracion_subasta === null ? Infinity : p.inicio_subasta + p.duracion_subasta,
+      periodo_nino: p.periodo_nino, duracion_nino: p.duracion_nino, intensidad_nino: p.intensidad_nino,
+    },
+    stocks: [
+      {nombre: "capacidad_firme", inicial: p.capacidad_firme_inicial, entradas: ["puesta_firme"], salidas: ["retiros_firme"]},
+      {nombre: "proyectos_firme", inicial: p.proyectos_firme_iniciales, entradas: ["inicios_firme"], salidas: ["puesta_firme"]},
+      {nombre: "capacidad_fncer", inicial: p.capacidad_fncer_inicial, entradas: ["puesta_fncer"], salidas: ["retiros_fncer"]},
+      {nombre: "proyectos_fncer", inicial: p.proyectos_fncer_iniciales, entradas: ["inicios_fncer"], salidas: ["puesta_fncer"]},
+      {nombre: "fncer_acumulada", inicial: acumuladaInicial, entradas: ["puesta_fncer_acumulada"], salidas: []},
+      {nombre: "demanda", inicial: p.demanda_inicial, entradas: ["crecimiento_demanda"], salidas: []},
+    ],
+    auxiliares: [
+      ["capacidad_equivalente", (t, e) => e.capacidad_firme + e.credito_fncer * e.capacidad_fncer],
+      ["factor_nino", (t, e) => 1 + (e.periodo_nino > 0 && (t % e.periodo_nino) < e.duracion_nino ? e.intensidad_nino : 0)],
+      ["demanda_efectiva", (t, e) => e.demanda * e.factor_nino],
+      ["margen_reserva", (t, e) => (e.capacidad_equivalente - e.demanda_efectiva) / e.demanda_efectiva],
+      ["precio_bolsa", (t, e) => e.precio_referencia * Math.exp(-e.sensibilidad_precio * (e.margen_reserva - e.margen_objetivo))],
+      ["costo_fncer", (t, e) => e.costo_fncer_inicial * (e.fncer_acumulada / e.fncer_acumulada_inicial) ** (-e.exponente_wright)],
+      ["penetracion_fncer", (t, e) => e.capacidad_fncer / e.demanda],
+      ["precio_capturado_fncer", (t, e) => e.precio_bolsa * Math.exp(-e.canibalizacion * e.penetracion_fncer)],
+      ["ingreso_firme", (t, e) => Math.max(e.precio_bolsa + e.prima_cxc - e.impuesto_carbono, 1)],
+    ],
+    flujos: [
+      ["inicios_firme", (t, e) => e.tasa_firme * e.capacidad_firme * (e.ingreso_firme / e.precio_referencia) ** e.elasticidad_inversion],
+      ["puesta_firme", (t, e) => e.proyectos_firme / e.retardo_firme],
+      ["retiros_firme", (t, e) => e.capacidad_firme / e.vida_firme],
+      ["inicios_fncer", (t, e) => e.tasa_fncer * Math.max(e.capacidad_fncer, e.semilla_fncer)
+        * (e.precio_capturado_fncer / e.costo_fncer) ** e.elasticidad_fncer
+        + (e.inicio_subasta <= t && t < e.fin_subasta ? e.subasta_fncer : 0)],
+      ["puesta_fncer", (t, e) => e.proyectos_fncer / e.retardo_fncer],
+      ["puesta_fncer_acumulada", (t, e) => e.puesta_fncer],
+      ["retiros_fncer", (t, e) => e.capacidad_fncer / e.vida_fncer],
+      ["crecimiento_demanda", (t, e) => e.crecimiento_demanda_anual * e.demanda],
+    ],
+  };
+}
+
+/** Escenarios, estrategias y métrica del Laboratorio 4 (réplica de notas/semana5/figuras/escenarios_lab4.py). */
+export const ESCENARIOS_LAB4 = {
+  "Viento a favor": {tasa_aprendizaje: 0.25, credito_capacidad_fncer: 0.40, crecimiento_demanda: 0.02, periodo_nino: 7, intensidad_nino: 0.10},
+  "Contrarreloj": {tasa_aprendizaje: 0.25, credito_capacidad_fncer: 0.40, crecimiento_demanda: 0.045, periodo_nino: 4, intensidad_nino: 0.15},
+  "Siesta": {tasa_aprendizaje: 0.10, credito_capacidad_fncer: 0.20, crecimiento_demanda: 0.02, periodo_nino: 7, intensidad_nino: 0.10},
+  "Tormenta": {tasa_aprendizaje: 0.10, credito_capacidad_fncer: 0.20, crecimiento_demanda: 0.045, periodo_nino: 4, intensidad_nino: 0.15},
+};
+export const ESTRATEGIAS_LAB4 = {"mercado solo": {}, "seguro CxC": {prima_cxc: 50}, "impulso FNCER": {subasta_fncer: 300}};
+export const MARGEN_CRITICO = 0.12;
+export const COSTO_RACIONAMIENTO = 1500;
+export const RELACION_FACTORES_CARGA = 0.30;
+
+/** Costo medio para la demanda [COP/kWh] de una corrida (réplica de escenarios_lab4.costo_para_demanda). */
+export function costoParaDemanda(resultado, {prima_cxc = 0, subasta_fncer = 0} = {}) {
+  const v = resultado.variables;
+  const media = (serie) => serie.reduce((a, x) => a + x, 0) / serie.length;
+  const racionamiento = COSTO_RACIONAMIENTO * media(v.margen_reserva.map((m) => Math.max(0, MARGEN_CRITICO - m)));
+  let sobrecosto = 0;
+  if (subasta_fncer > 0) {
+    sobrecosto = media(resultado.tiempo.map((t, k) => {
+      const subastada = Math.min(v.capacidad_fncer[k], subasta_fncer * t);
+      const porcion = RELACION_FACTORES_CARGA * subastada / v.demanda[k];
+      return Math.max(0, v.costo_fncer[k] - v.precio_bolsa[k]) * porcion;
+    }));
+  }
+  return media(v.precio_bolsa) + prima_cxc + sobrecosto + racionamiento;
+}
+
+/** Adopción logística de solar en techos (réplica de mise_sd.modelos.adopcion_logistica). */
+export function adopcionLogistica({techos = 10000, contagio = 0.5, adoptantes_iniciales = 20} = {}) {
+  return {
+    nombre: "adopcion_logistica",
+    constantes: {techos, contagio},
+    stocks: [{nombre: "adoptantes", inicial: adoptantes_iniciales, entradas: ["instalaciones"], salidas: []}],
+    auxiliares: [["fraccion_disponible", (t, e) => 1 - e.adoptantes / e.techos]],
+    flujos: [["instalaciones", (t, e) => e.contagio * e.adoptantes * e.fraccion_disponible]],
+  };
+}
+
 /** La bañera de Sterman [L, min] (réplica de mise_sd.modelos.banera). */
 export function banera({nivel_inicial = 80, caudal_grifo = 5, caudal_desague = 3, tau_desague = null} = {}) {
   return {
