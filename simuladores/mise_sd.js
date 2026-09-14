@@ -328,6 +328,22 @@ export function costoParaDemanda(resultado, {prima_cxc = 0, subasta_fncer = 0} =
   return media(v.precio_bolsa) + prima_cxc + sobrecosto + racionamiento;
 }
 
+/** Reserva con meta del operador y presión comercial (réplica de mise_sd.modelos.reserva_con_dos_metas). */
+export function reservaConDosMetas({reserva_inicial = 5000, meta_operador = 9000, tiempo_ajuste_operador = 3,
+  meta_comercial = 7000, tiempo_ajuste_comercial = null} = {}) {
+  return {
+    nombre: "reserva_con_dos_metas",
+    constantes: {meta_operador, tiempo_ajuste_operador, meta_comercial, tiempo_ajuste_comercial: tiempo_ajuste_comercial || 0},
+    stocks: [{nombre: "reserva", inicial: reserva_inicial, entradas: ["recuperacion"], salidas: ["presion_comercial"]}],
+    auxiliares: [],
+    flujos: [
+      ["recuperacion", (t, e) => (e.meta_operador - e.reserva) / e.tiempo_ajuste_operador],
+      ["presion_comercial", tiempo_ajuste_comercial
+        ? (t, e) => Math.max(0, e.reserva - e.meta_comercial) / e.tiempo_ajuste_comercial : () => 0],
+    ],
+  };
+}
+
 /** Adopción logística de solar en techos (réplica de mise_sd.modelos.adopcion_logistica). */
 export function adopcionLogistica({techos = 10000, contagio = 0.5, adoptantes_iniciales = 20} = {}) {
   return {
