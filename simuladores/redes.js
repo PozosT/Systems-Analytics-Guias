@@ -383,3 +383,105 @@ export function exponenteLeyPotencia(datos, minimo) {
   const alfa = 1 + x.length / x.reduce((a, v) => a + Math.log(v / minimo), 0);
   return {alfa, error_estandar: (alfa - 1) / Math.sqrt(x.length)};
 }
+
+// ----------------------------------------------------------------------
+// Puentes, caminos y cortes mínimos
+// ----------------------------------------------------------------------
+
+/** Puentes: aristas cuya salida desconecta la red. Devuelve pares [a, b] con a < b. */
+export function puentes(g) {
+  const visitado = new Set(), tin = new Map(), low = new Map(), salida = [];
+  let tiempo = 0;
+  const recorrer = (v, padre) => {
+    visitado.add(v); tin.set(v, tiempo); low.set(v, tiempo); tiempo++;
+    let saltadoPadre = false;
+    for (const w of g.vecinos.get(v)) {
+      if (w === padre && !saltadoPadre) { saltadoPadre = true; continue; }
+      if (visitado.has(w)) { low.set(v, Math.min(low.get(v), tin.get(w))); continue; }
+      recorrer(w, v);
+      low.set(v, Math.min(low.get(v), low.get(w)));
+      if (low.get(w) > tin.get(v)) salida.push(compararTexto(v, w) < 0 ? [v, w] : [w, v]);
+    }
+  };
+  for (const n of g.nodos) if (!visitado.has(n)) recorrer(n, null);
+  return salida.sort((x, y) => compararTexto(x[0], y[0]) || compararTexto(x[1], y[1]));
+}
+
+/** Camino más corto en saltos entre dos nodos (lista de nodos, o null si no hay). */
+export function caminoMasCorto(g, origen, destino) {
+  const previo = new Map([[origen, null]]), cola = [origen];
+  for (let i = 0; i < cola.length; i++) {
+    const v = cola[i];
+    if (v === destino) break;
+    for (const w of g.vecinos.get(v)) if (!previo.has(w)) { previo.set(w, v); cola.push(w); }
+  }
+  if (!previo.has(destino)) return null;
+  const camino = [];
+  for (let x = destino; x !== null; x = previo.get(x)) camino.unshift(x);
+  return camino;
+}
+
+/** Máximo flujo con capacidades enteras (Edmonds y Karp); devuelve el valor y el corte. */
+function _flujoMaximo(aristas, fuente, sumidero) {
+  const grafo = new Map(), lista = [];
+  const agregar = (u, v, cap) => {
+    if (!grafo.has(u)) grafo.set(u, []);
+    if (!grafo.has(v)) grafo.set(v, []);
+    grafo.get(u).push(lista.length); lista.push({v, cap, flujo: 0});
+    grafo.get(v).push(lista.length); lista.push({v: u, cap: 0, flujo: 0});
+  };
+  for (const [u, v, cap] of aristas) agregar(u, v, cap);
+  let valor = 0;
+  for (;;) {
+    const previo = new Map([[fuente, -1]]), cola = [fuente];
+    for (let i = 0; i < cola.length && !previo.has(sumidero); i++) {
+      for (const idx of grafo.get(cola[i]) ?? []) {
+        const e = lista[idx];
+        if (e.cap - e.flujo > 1e-9 && !previo.has(e.v)) { previo.set(e.v, idx); cola.push(e.v); }
+      }
+    }
+    if (!previo.has(sumidero)) {
+      const alcanzables = new Set(previo.keys());
+      return {valor, alcanzables};
+    }
+    let cuello = Infinity;
+    for (let x = sumidero; x !== fuente; ) { const idx = previo.get(x); const e = lista[idx];
+      cuello = Math.min(cuello, e.cap - e.flujo); x = lista[idx ^ 1].v; }
+    for (let x = sumidero; x !== fuente; ) { const idx = previo.get(x);
+      lista[idx].flujo += cuello; lista[idx ^ 1].flujo -= cuello; x = lista[idx ^ 1].v; }
+    valor += cuello;
+  }
+}
+
+/** Corte mínimo de aristas entre dos grupos de nodos (réplica de corte_minimo_entre_grupos). */
+export function corteMinimoAristas(g, grupoA, grupoB) {
+  const enA = new Set(grupoA), enB = new Set(grupoB);
+  const aristas = [];
+  for (const [u, vs] of g.vecinos) for (const v of vs) if (compararTexto(u, v) < 0) {
+    aristas.push([u, v, 1], [v, u, 1]);
+  }
+  for (const n of enA) aristas.push(["__fuente__", n, Infinity]);
+  for (const n of enB) aristas.push([n, "__sumidero__", Infinity]);
+  const {alcanzables} = _flujoMaximo(aristas, "__fuente__", "__sumidero__");
+  const corte = [];
+  for (const [u, vs] of g.vecinos) for (const v of vs) if (compararTexto(u, v) < 0) {
+    if (alcanzables.has(u) !== alcanzables.has(v)) corte.push([u, v]);
+  }
+  return corte.sort((x, y) => compararTexto(x[0], y[0]) || compararTexto(x[1], y[1]));
+}
+
+/** Corte mínimo de vértices entre dos grupos: nodos cuya salida simultánea los separa. */
+export function corteMinimoVertices(g, grupoA, grupoB) {
+  const enA = new Set(grupoA), enB = new Set(grupoB);
+  const lado = (n) => (enA.has(n) ? "__fuente__" : enB.has(n) ? "__sumidero__" : null);
+  const aristas = [];
+  const interiores = g.nodos.filter((n) => lado(n) === null);
+  for (const n of interiores) aristas.push([`${n}|in`, `${n}|out`, 1]);
+  const punta = (n, extremo) => lado(n) ?? `${n}|${extremo}`;
+  for (const [u, vs] of g.vecinos) for (const v of vs) if (compararTexto(u, v) < 0) {
+    if (lado(u) && lado(u) === lado(v)) continue;
+    aristas.push([punta(u, "out"), punta(v, "in"), Infinity], [punta(v, "out"), punta(u, "in"), Infinity]);
+  }
+  const {alcanzables} = _flujoMaximo(aristas, "__fuente__", "__sumidero__");
+  return interiores.filter((n) => alcanzables.has(`${n}|in`) && !alcanzables.has(`${n}|out`)).sort(compararTexto);
+}
