@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Por qué un VPN correcto puede equivocarse: la diferencia entre un sistema descomponible y uno donde el resultado depende de la interacción, con los cuatro dominios de Cynefin y el caso de una térmica de respaldo en la crisis de 2015.">
+<meta name="description" content="La métrica más simple de una red y la que más se malinterpreta: grado, apretón de manos, densidad, distribución de grado y CCDF, con la distribución real del sistema de transmisión estilizado.">
 
-<title>Complicado frente a complejo – Systems Analytics · Guías de autoestudio</title>
+<title>Grado, distribución y densidad – Systems Analytics · Guías de autoestudio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,8 +72,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../semana1/02-sistema-estructura.html" rel="next">
-<link href="../semana1/index.html" rel="prev">
+<link href="../semana4/index.html" rel="next">
+<link href="../semana2/01-del-sistema-al-grafo.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -173,7 +173,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/01-complicado-complejo.html">Complicado frente a complejo</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/02-grado-densidad.html">Grado, distribución y densidad</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -215,7 +215,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link active">
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Complicado frente a complejo</span></a>
   </div>
 </li>
@@ -256,7 +256,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Grado, distribución y densidad</span></a>
   </div>
 </li>
@@ -468,7 +468,7 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
-  <li><a href="#la-intuición-un-reloj-y-un-trancón" id="toc-la-intuición-un-reloj-y-un-trancón" class="nav-link" data-scroll-target="#la-intuición-un-reloj-y-un-trancón">2. La intuición: un reloj y un trancón</a></li>
+  <li><a href="#la-intuición-contar-vecinos" id="toc-la-intuición-contar-vecinos" class="nav-link" data-scroll-target="#la-intuición-contar-vecinos">2. La intuición: contar vecinos</a></li>
   <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
   <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
   <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
@@ -480,15 +480,15 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/01-complicado-complejo.html">Complicado frente a complejo</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/02-grado-densidad.html">Grado, distribución y densidad</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Complicado frente a complejo</h1>
-<p class="subtitle lead">Semana 1 · Concepto 1 de 10</p>
+<h1 class="title">Grado, distribución y densidad</h1>
+<p class="subtitle lead">Semana 2 · Concepto 2 de 10</p>
 </div>
 
 <div>
   <div class="description">
-    Por qué un VPN correcto puede equivocarse: la diferencia entre un sistema descomponible y uno donde el resultado depende de la interacción, con los cuatro dominios de Cynefin y el caso de una térmica de respaldo en la crisis de 2015.
+    La métrica más simple de una red y la que más se malinterpreta: grado, apretón de manos, densidad, distribución de grado y CCDF, con la distribución real del sistema de transmisión estilizado.
   </div>
 </div>
 
@@ -508,8 +508,8 @@ window.Quarto = {
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="9" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 8;"><span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {vpnTermicaCrisis<span class="op">,</span> formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="33" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 32;"><span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
 <div>
@@ -527,58 +527,58 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 50 a 60 minutos</span> <span class="dato">📚 Primera página del curso: no requiere nada previo</span> <span class="dato">🧪 Se aplica en la ficha del proyecto y en la sección 1 del informe</span></p>
+<p><span class="dato">⏱ 50 a 60 minutos</span> <span class="dato">📚 Requiere <a href="../semana2/01-del-sistema-al-grafo.html">del sistema al grafo</a></span> <span class="dato">🧪 Es el paso 4 del Laboratorio 1</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Al terminar esta página</span>
 </div>
 <ul>
-<li>Distinguir un sistema complicado de uno complejo con un criterio operativo, no con una impresión.</li>
-<li>Ubicar una decisión del sector eléctrico en los cuatro dominios de Cynefin y elegir el método que le corresponde.</li>
-<li>Explicar qué supuestos de un VPN estático fallan cuando el sistema es complejo, y cuantificar el efecto en un caso.</li>
+<li>Calcular grado, grado medio y densidad, y verificar el apretón de manos.</li>
+<li>Leer una distribución de grado y su CCDF, y explicar por qué la CCDF es preferible.</li>
+<li>Interpretar la distribución del sistema de transmisión sin confundir grado con capacidad.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Un sistema complicado se puede descomponer: el todo es la suma de sus partes y un experto con suficiente detalle lo predice. En uno complejo, el resultado nace de la interacción, así que conocer cada parte por separado deja fuera lo que decide el desenlace.</p>
+<p>El grado cuenta vecinos y ya responde preguntas de planeación. El grado medio, en cambio, describe mal una red donde conviven ramales de una línea y nodos con ocho: lo que informa es la distribución completa.</p>
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>En 2014 varias térmicas de respaldo del Caribe se evaluaron con flujos de caja tranquilos: ingresos del cargo por confiabilidad, unas pocas horas de generación al año y costos fijos conocidos. Quince meses después, entre septiembre de 2015 y abril de 2016, esas mismas plantas generaban día y noche cobrando un precio de escasez de 302,43 COP/kWh, por debajo de su costo de combustible, mientras el precio de bolsa superaba al de escasez durante 206 días seguidos (XM; Resolución CREG 178 de 2015).</p>
-<p>El VPN de 2014 estaba bien calculado. La fórmula es correcta, la aritmética también. <strong>¿Qué tenía ese sistema que la evaluación financiera no vio?</strong></p>
+<p>En el sistema de transmisión estilizado del curso, la subestación Primavera concentra ocho corredores hacia Antioquia, la Costa, los Santanderes y Bogotá. Caño Limón, en Arauca, tiene uno solo. Las dos son subestaciones del mismo sistema y de la misma tensión nominal.</p>
+<p>Una revisión de 32 estudios de redes de alta tensión encontró grados medios entre 2,1 y 4,4, con la mayoría entre 2,2 y 3,4 (Pagani y Aiello, 2013). <strong>¿Qué dice y qué esconde ese promedio?</strong></p>
 </section>
-<section id="la-intuición-un-reloj-y-un-trancón" class="level2">
-<h2 class="anchored" data-anchor-id="la-intuición-un-reloj-y-un-trancón">2. La intuición: un reloj y un trancón</h2>
+<section id="la-intuición-contar-vecinos" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-contar-vecinos">2. La intuición: contar vecinos</h2>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos sistemas que fallan de maneras distintas</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del grupo de trabajo a la CCDF</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-01-reloj-trancon-1.svg" class="img-fluid" alt="Un reloj que se atrasa dos segundos al día."></a></p>
-<p><strong>Mire el reloj.</strong> Se atrasa 2 segundos al día. Con esa sola pieza de información usted ya sabe todo lo que hará el reloj mañana, el mes entrante y el año que viene.</p>
+<p><a href="../diagramas/svg/s2-02-grado-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s2-02-grado-1.svg" class="img-fluid" alt="Seis personas y seis conversaciones."></a></p>
+<p><strong>Mire el grupo.</strong> Seis personas y seis conversaciones. P1 habla con cuatro; P2 a P5 hablan con dos cada una; P6 no habla con nadie.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-01-reloj-trancon-2.svg" class="img-fluid" alt="En 30 días el reloj acumula 60 segundos de atraso."></a></p>
-<p><strong>Sume.</strong> En 30 días acumula 60 segundos. El todo es la suma de las partes, y por eso el reloj se arregla pieza a pieza: se ajusta el mecanismo y el error desaparece.</p>
+<p><a href="../diagramas/svg/s2-02-grado-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s2-02-grado-2.svg" class="img-fluid" alt="El grado de cada persona, de 0 a 4."></a></p>
+<p><strong>Cuente los vecinos.</strong> Ese número es el <strong>grado</strong>. Los grados son 4, 2, 2, 2, 2 y 0, y suman 12, que es dos veces el número de conversaciones.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-01-reloj-trancon-3.svg" class="img-fluid" alt="Un trancón en la calle 100 con dos carriles de carros."></a></p>
-<p><strong>Ahora mire el trancón.</strong> El mismo viaje toma entre 35 y 70 minutos. El viernes pasado tomó 40. Conocer cada carro, cada motor y cada conductor no le dice cuánto tardará mañana.</p>
+<p><a href="../diagramas/svg/s2-02-grado-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s2-02-grado-3.svg" class="img-fluid" alt="Grado medio 2 y densidad 0,4."></a></p>
+<p><strong>Resuma con dos números.</strong> El grado medio es <span class="math inline">12/6 = 2</span>. La densidad compara las 6 conversaciones con las 15 posibles: 0,4.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-01-reloj-trancon-4.svg" class="img-fluid" alt="Flechas entre los carros: cada uno frena porque el de adelante frenó."></a></p>
-<p><strong>Mire las flechas.</strong> Cada conductor frena porque el de adelante frenó, y su frenada hace frenar al de atrás. El tiempo de viaje sale de esa interacción, no de la suma de los carros.</p>
+<p><a href="../diagramas/svg/s2-02-grado-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s2-02-grado-4.svg" class="img-fluid" alt="Histograma de la distribución de grado."></a></p>
+<p><strong>Dibuje la distribución.</strong> <span class="math inline">p_k</span> dice qué fracción de la red tiene cada grado: 1/6 con grado 0, 4/6 con grado 2 y 1/6 con grado 4. Ahí se ve lo que el promedio esconde.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-01-reloj-trancon-5.svg" class="img-fluid" alt="El reloj se arregla pieza a pieza; el trancón exige mirar las interacciones."></a></p>
-<p><strong>Saque el criterio.</strong> Si entender cada parte por separado basta, el sistema es <strong>complicado</strong>. Si el resultado depende de cómo se afectan las partes entre sí, es <strong>complejo</strong>. La diferencia no está en el tamaño ni en la dificultad.</p>
+<p><a href="../diagramas/svg/s2-02-grado-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s2-02-grado-5.svg" class="img-fluid" alt="CCDF: fracción con grado mayor o igual que k."></a></p>
+<p><strong>Acumule desde la derecha.</strong> La <strong>CCDF</strong> responde «qué fracción tiene grado <span class="math inline">k</span> o más». Es la forma recomendada de mirar colas, porque no depende de cómo se agrupen las barras.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s1-01-reloj-trancon-6.svg" class="img-fluid" alt="El VPN es el reloj; el despacho de 2015 y 2016 fue el trancón."></a></p>
-<p><strong>Pase al sector eléctrico.</strong> El VPN de la térmica funciona como el reloj: cada año aporta su flujo y el total es la suma. El despacho de 2015 y 2016 funcionó como el trancón: el precio y las horas de generación dependían de la lluvia, de las ofertas de los demás y de reglas que cambiaban sobre la marcha.</p>
+<p><a href="../diagramas/svg/s2-02-grado-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s2-02-grado-6.svg" class="img-fluid" alt="Primavera con grado 8 y Caño Limón con grado 1."></a></p>
+<p><strong>Pase al sistema.</strong> Primavera tiene grado 8 y Caño Limón, 1. El grado medio es 2,62 y el 18 % de las subestaciones son ramales de una sola línea: el promedio esconde los dos extremos, que son justamente los que importan.</p>
 </div>
 </div>
 </section>
@@ -586,183 +586,126 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
 <div class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Sistema complicado y sistema complejo</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Grado, apretón de manos y grado medio</span>
 </div>
-<p>Un sistema es <strong>complicado</strong> cuando se puede descomponer: el comportamiento del todo se deduce del de sus partes y de cómo están ensambladas. Un avión tiene millones de piezas y sigue siendo complicado.</p>
-<p>Un sistema es <strong>complejo</strong> cuando su comportamiento nace de la interacción entre muchos elementos que se adaptan. Mitchell (2009) identifica cinco rasgos que lo delatan: <strong>retroalimentación</strong>, <strong>no linealidad</strong>, <strong>adaptación</strong>, <strong>emergencia</strong> y <strong>eventos extremos</strong>. Los nueve conceptos siguientes de la semana son, uno a uno, esos rasgos.</p>
-</div>
-<p>Los cuatro dominios de Cynefin ordenan la decisión antes de elegir el método:</p>
-<div class="pasos caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Los cuatro dominios y su método</span>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-01-cynefin-1.svg" class="img-fluid" alt="Dominio claro: causa y efecto evidentes."></a></p>
-<p><strong>Claro.</strong> La relación entre causa y efecto es evidente para cualquiera. Se aplica la mejor práctica conocida y se sigue adelante.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-01-cynefin-2.svg" class="img-fluid" alt="Dominio complicado: causa y efecto separables con análisis experto."></a></p>
-<p><strong>Complicado.</strong> La relación existe y es estable, pero hace falta análisis experto para verla. Es el terreno de los modelos de ingeniería y de las buenas prácticas.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-01-cynefin-3.svg" class="img-fluid" alt="Dominio complejo: el patrón se reconoce después."></a></p>
-<p><strong>Complejo.</strong> El patrón solo se reconoce en retrospectiva. El método cambia: se sondea con intervenciones pequeñas, se observa la respuesta y se ajusta.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-01-cynefin-4.svg" class="img-fluid" alt="Dominio caótico: sin relación estable entre causa y efecto."></a></p>
-<p><strong>Caótico.</strong> No hay relación estable que aprovechar. Primero se actúa para estabilizar, después se observa. Un apagón en curso vive aquí.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s1-01-cynefin-5.svg" class="img-fluid" alt="Ejemplos del sector en cada dominio."></a></p>
-<p><strong>Ubique sus decisiones.</strong> Leer un medidor es claro. Programar el mantenimiento de una turbina es complicado. Anticipar el despacho durante El Niño es complejo. Operar durante un apagón es caótico. El error caro del sector es tratar lo complejo como si fuera complicado.</p>
-</div>
+<p>El <strong>grado</strong> de un nodo es su número de vecinos:</p>
+<p><span class="math display">k_i = \sum_j A_{ij}.</span></p>
+<p>Como cada arista aporta un grado a cada extremo, se cumple el <strong>apretón de manos</strong> <span class="math inline">\sum_i k_i = 2m</span>, y el <strong>grado medio</strong> es</p>
+<p><span class="math display">\langle k \rangle = \frac{2m}{n} \quad [\text{vecinos}].</span></p>
 </div>
 <div class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">El valor presente neto y sus supuestos</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Densidad</span>
 </div>
-<p>La fórmula del <strong>VPN</strong> descuenta los flujos de caja futuros a una tasa <span class="math inline">r</span> durante <span class="math inline">T</span> años:</p>
-<p><span class="math display">\text{VPN} = -I_0 + \sum_{t=1}^{T} \frac{FC_t}{(1+r)^t} \quad [\text{MUSD}].</span></p>
-<p>La fórmula no se equivoca; los supuestos con que se arman los <span class="math inline">FC_t</span> sí pueden hacerlo:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Supuesto implícito</th>
-<th>Qué lo rompe</th>
-<th>Concepto de la semana</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>El precio sigue una trayectoria conocida</td>
-<td>El precio nace de la interacción</td>
-<td>7, emergencia</td>
-</tr>
-<tr class="even">
-<td>Las horas de despacho son estables</td>
-<td>El orden de mérito cambia con el embalse</td>
-<td>4, no linealidad</td>
-</tr>
-<tr class="odd">
-<td>Las reglas del juego no cambian</td>
-<td>El regulador responde a la crisis</td>
-<td>6, adaptación</td>
-</tr>
-<tr class="even">
-<td>Los demás actores hacen lo de siempre</td>
-<td>Todos reaccionan a la misma señal</td>
-<td>6, adaptación</td>
-</tr>
-<tr class="odd">
-<td>Los choques son pequeños y aislados</td>
-<td>Sequía, incendio y falla coinciden</td>
-<td>8, eventos extremos</td>
-</tr>
-<tr class="even">
-<td>El pasado reciente predice el futuro</td>
-<td>El sistema tiene memoria larga</td>
-<td>5, trayectoria</td>
-</tr>
-<tr class="odd">
-<td>Cada año es independiente</td>
-<td>Un mal año agrava el siguiente</td>
-<td>3, retroalimentación</td>
-</tr>
-</tbody>
-</table>
+<p>La <strong>densidad</strong> compara las aristas que existen con todas las posibles:</p>
+<p><span class="math display">\rho = \frac{2m}{n(n-1)} = \frac{\langle k \rangle}{n-1}, \qquad 0 \leq \rho \leq 1.</span></p>
+<p>Depende del tamaño: una red de 1 000 nodos con el mismo grado medio de 2,62 tiene densidad 0,0026, diez veces menor que una de 100. Por eso las densidades solo se comparan entre redes de tamaño parecido.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Distribución de grado y CCDF</span>
+</div>
+<p>La <strong>distribución de grado</strong> es <span class="math inline">p_k = n_k / n</span>, la fracción de nodos con grado exactamente <span class="math inline">k</span>. La <strong>distribución complementaria acumulada</strong> o CCDF es</p>
+<p><span class="math display">P(K \geq k) = \sum_{k' \geq k} p_{k'}.</span></p>
+<p>En redes ponderadas se define además la <strong>fuerza</strong> <span class="math inline">s_i = \sum_j W_{ij}</span>, que suma los pesos de las aristas del nodo. Grado y fuerza responden preguntas distintas: cuántos vecinos y cuánta capacidad.</p>
 </div>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
-<section id="el-reloj-y-el-trancón-con-números" class="level3">
-<h3 class="anchored" data-anchor-id="el-reloj-y-el-trancón-con-números">El reloj y el trancón, con números</h3>
+<section id="el-apretón-de-manos-a-mano" class="level3">
+<h3 class="anchored" data-anchor-id="el-apretón-de-manos-a-mano">El apretón de manos, a mano</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Cuál de los dos puedo predecir?</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Doce subestaciones y quince líneas</span>
 </div>
-<p><strong>Planteamiento.</strong> Un reloj se atrasa 2 segundos al día. Un viaje por la calle 100 tomó 40 minutos el viernes pasado, y en los últimos meses ha tomado entre 35 y 70 minutos. ¿Cuánto se atrasará el reloj en un mes y cuánto tardará el viaje del próximo viernes?</p>
+<p><strong>Planteamiento.</strong> Una red regional tiene 12 subestaciones y 15 líneas. Una subestación es un ramal con una sola línea, cinco tienen dos líneas, cinco tienen tres y una tiene cuatro. Verifique la consistencia y calcule grado medio, densidad y CCDF.</p>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Predecir cada sistema</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Verificar y resumir</span>
 </div>
 <div class="paso">
-<p><strong>Prediga el reloj.</strong> El atraso se suma: <span class="math inline">30 \times 2 = 60</span> segundos en un mes. La predicción tiene una sola cifra y un error pequeño, porque el mecanismo no depende de nada externo.</p>
+<p><strong>Sume los grados.</strong> <span class="math inline">1 \times 1 + 5 \times 2 + 5 \times 3 + 1 \times 4 = 1 + 10 + 15 + 4 = 30</span>. Como <span class="math inline">2m = 30</span>, los datos son consistentes: si la suma hubiera dado impar, habría un error de conteo.</p>
 </div>
 <div class="paso">
-<p><strong>Intente predecir el viaje.</strong> Lo honesto es un rango: entre 35 y 70 minutos. El valor del próximo viernes depende de cuántos salgan a esa hora, de si llueve y de si alguien se accidenta. Esas decisiones se influyen entre sí.</p>
+<p><strong>Calcule el grado medio y la densidad.</strong> <span class="math inline">\langle k \rangle = 30/12 = 2{,}5</span>. La densidad es <span class="math inline">30 / (12 \times 11) = 0{,}227</span>.</p>
 </div>
 <div class="paso">
-<p><strong>Note la diferencia.</strong> El reloj admite una predicción puntual; el trancón, solo una distribución. En el primero, más detalle mejora la predicción; en el segundo, más detalle sobre cada carro no la mejora casi nada.</p>
+<p><strong>Arme la CCDF.</strong> <span class="math inline">P(K \geq 1) = 1</span>; <span class="math inline">P(K \geq 2) = 11/12 = 0{,}92</span>; <span class="math inline">P(K \geq 3) = 6/12 = 0{,}50</span>; <span class="math inline">P(K \geq 4) = 1/12 = 0{,}08</span>.</p>
 </div>
 <div class="paso">
-<p><strong>Aplique el criterio.</strong> Pregúntese si conocer cada parte por separado basta. Si la respuesta es sí, hay un problema complicado y conviene un experto. Si es no, hay un problema complejo y conviene un modelo de interacciones, que es lo que construye este curso.</p>
+<p><strong>Interprete.</strong> La mitad de las subestaciones tiene tres líneas o más, y hay una sola muy conectada. Una red así tiene una espina dorsal delgada, y esa lectura ya sugiere dónde mirar en el análisis de robustez de la página 8.</p>
 </div>
 </div>
 </section>
-<section id="el-costo-variable-de-una-térmica" class="level3">
-<h3 class="anchored" data-anchor-id="el-costo-variable-de-una-térmica">El costo variable de una térmica</h3>
+<section id="la-distribución-del-sistema-de-transmisión" class="level3">
+<h3 class="anchored" data-anchor-id="la-distribución-del-sistema-de-transmisión">La distribución del sistema de transmisión</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Lo complicado tiene respuesta exacta</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Cómo se ve la red completa</span>
 </div>
-<p><strong>Planteamiento.</strong> Una térmica a gas tiene un consumo específico de 10 MMBtu/MWh, paga el gas a 12 USD/MMBtu y gasta 8 USD/MWh en operación y mantenimiento variables. ¿Cuál es su costo variable y cuántas horas al año va a generar?</p>
+<p><strong>Planteamiento.</strong> Calcule la distribución de grado del sistema estilizado y compárela con lo que sugiere el grado medio.</p>
+</div>
+<div id="9f4892a5" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="02-grado-densidad_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Distribución de grado del sistema de transmisión estilizado (100 subestaciones, 131 corredores). Izquierda: histograma. Derecha: CCDF, la fracción de subestaciones con grado mayor o igual que k."><img src="02-grado-densidad_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" alt="Distribución de grado del sistema de transmisión estilizado (100 subestaciones, 131 corredores). Izquierda: histograma. Derecha: CCDF, la fracción de subestaciones con grado mayor o igual que k."></a></p>
+<figcaption>Distribución de grado del sistema de transmisión estilizado (100 subestaciones, 131 corredores). Izquierda: histograma. Derecha: CCDF, la fracción de subestaciones con grado mayor o igual que k.</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos preguntas de naturaleza distinta</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la distribución</span>
 </div>
 <div class="paso">
-<p><strong>Calcule el costo variable.</strong> <span class="math inline">10 \times 12 = 120</span> USD/MWh de combustible, más 8 de operación: <strong>128 USD/MWh</strong>. La cifra es exacta, verificable y no depende de lo que hagan los demás.</p>
+<p><strong>Mire dónde está la masa.</strong> 34 subestaciones tienen grado 2 y 31 tienen grado 3: dos de cada tres nodos están en esos dos valores. El grado medio de 2,62 describe bien a esa mayoría.</p>
 </div>
 <div class="paso">
-<p><strong>Intente la segunda pregunta.</strong> Las horas de generación dependen del despacho, y el despacho ordena todas las plantas del país por costo. Entrar o no entrar depende del costo de las demás, del nivel de los embalses y de la demanda de esa hora.</p>
+<p><strong>Mire la cola.</strong> Hay 18 nodos de grado 1 y, al otro extremo, tres de grado 6 y uno de grado 8. La cola es corta comparada con las redes sociales o con internet, y eso es típico de infraestructura: construir una línea cuesta dinero y territorio.</p>
 </div>
 <div class="paso">
-<p><strong>Compare.</strong> La primera pregunta es complicada y tiene respuesta exacta. La segunda es compleja y solo admite escenarios. Un estudio financiero que trata a las dos igual proyecta horas de generación con la misma confianza con que calcula el costo variable.</p>
+<p><strong>Lea la CCDF.</strong> El 48 % de las subestaciones tiene grado 3 o más, y solo el 1 % llega a 8. En escala logarítmica la caída es casi recta, señal de una cola exponencial y no de una ley de potencias, que es la discusión de la página 7.</p>
 </div>
 <div class="paso">
-<p><strong>Saque la consecuencia.</strong> Cuando el sistema entra en escasez, esa planta puede pasar de generar el 5 % del año a generar casi todo el año, y con el precio regulado por debajo de su costo cada MWh generado resta caja. Eso es exactamente lo que ocurrió en 2015 y 2016.</p>
+<p><strong>Saque la consecuencia de planeación.</strong> El 18 % de nodos de grado 1 son subestaciones que quedan aisladas si falla su única línea. Ese número, y no el grado medio, es el que interesa al planeador.</p>
 </div>
 </div>
 </section>
-<section id="el-vpn-de-la-térmica-de-respaldo" class="level3">
-<h3 class="anchored" data-anchor-id="el-vpn-de-la-térmica-de-respaldo">El VPN de la térmica de respaldo</h3>
+<section id="grado-región-y-capacidad" class="level3">
+<h3 class="anchored" data-anchor-id="grado-región-y-capacidad">Grado, región y capacidad</h3>
 <div class="ejemplo caja" data-nivel="avanzado">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Un cálculo correcto con una conclusión equivocada</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Tres lecturas de la misma red</span>
 </div>
-<p><strong>Planteamiento.</strong> Una térmica a líquidos de 200 MW se compra por 70 MUSD. Recibe una obligación de energía firme de 1 300 GWh/año a 15 USD/MWh, genera el 5 % del año con un margen de 10 USD/MWh y tiene costos fijos de 6 MUSD/año. Con 10 años de horizonte y una tasa de 10 %, ¿cuál es su VPN? ¿Y si llega una crisis en la que debe generar 210 días perdiendo 50 USD por cada MWh?</p>
+<p><strong>Planteamiento.</strong> Compare el grado por regiones y contraste el grado con la fuerza, que suma la capacidad de las líneas de cada subestación.</p>
 </div>
-<div id="pred-vpn" class="prediccion caja">
+<div id="pred-grado" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>¿Cuántos días de despacho forzado hacen que el VPN pase a negativo?</p>
+<p>¿Cuál de estas afirmaciones es cierta en el sistema estilizado?</p>
 <div class="opcion">
-<p>Unos 30 días.</p>
+<p>La subestación con más líneas es también la de mayor capacidad conectada.</p>
 </div>
 <div class="opcion">
-<p>Cerca de 110 días.</p>
+<p>Hay subestaciones con menos líneas y más capacidad conectada que otras con más líneas.</p>
 </div>
 <div class="opcion">
-<p>Más de 250 días.</p>
+<p>Grado y capacidad son la misma medida con otras unidades.</p>
 </div>
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El VPN de la térmica, con y sin crisis</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Grados del sistema de transmisión</span>
 </div>
-<p>Empiece con los valores del planteamiento. Mueva los días de despacho forzado hasta que el VPN cruce el cero y compare con su predicción; después mueva el precio del cargo para ver cuánto pesa la sensibilidad clásica.</p>
+<p>Filtre por región y compare el histograma con la CCDF. Después active la fuerza para ver la capacidad conectada en vez del número de líneas.</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="217" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 216;"><span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>viewof diasV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">300</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Días de despacho forzado"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="228" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 227;"><span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>stnG <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s2-stn.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
@@ -773,7 +716,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="222" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 221;"><span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>viewof brechaV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Pérdida por MWh generado [USD/MWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="233" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 232;"><span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a>viewof regionG <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"todo el sistema"</span><span class="op">,</span> <span class="st">"Antioquia"</span><span class="op">,</span> <span class="st">"Caribe"</span><span class="op">,</span> <span class="st">"Centro"</span><span class="op">,</span> <span class="st">"Guajira-Cesar"</span><span class="op">,</span> <span class="st">"Nordeste"</span><span class="op">,</span> <span class="st">"Oriental"</span><span class="op">,</span> <span class="st">"Suroccidental"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Región"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"todo el sistema"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -784,7 +727,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="227" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 226;"><span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>viewof cargoV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">12</span><span class="op">,</span> <span class="dv">18</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Precio del cargo por confiabilidad [USD/MWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="238" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 237;"><span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>viewof medidaG <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"grado (número de líneas)"</span><span class="op">,</span> <span class="st">"fuerza (capacidad conectada)"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"grado (número de líneas)"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Medida"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
@@ -795,7 +738,26 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="232" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 231;"><span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a>casoV <span class="op">=</span> <span class="fu">vpnTermicaCrisis</span>({<span class="dt">dias_despacho_forzado</span><span class="op">:</span> diasV<span class="op">,</span> <span class="dt">brecha_costo_precio_usd_mwh</span><span class="op">:</span> brechaV<span class="op">,</span> <span class="dt">precio_cargo_usd_mwh</span><span class="op">:</span> cargoV})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="243" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 242;"><span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a>medidasG <span class="op">=</span> {</span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> grado <span class="op">=</span> {}<span class="op">,</span> fuerza <span class="op">=</span> {}<span class="op">;</span></span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> n <span class="kw">of</span> stnG<span class="op">.</span><span class="at">nodos</span>) { grado[n<span class="op">.</span><span class="at">id</span>] <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> fuerza[n<span class="op">.</span><span class="at">id</span>] <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> }</span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> e <span class="kw">of</span> stnG<span class="op">.</span><span class="at">aristas</span>) {</span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a>    grado[e<span class="op">.</span><span class="at">a</span>]<span class="op">++;</span> grado[e<span class="op">.</span><span class="at">b</span>]<span class="op">++;</span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>    fuerza[e<span class="op">.</span><span class="at">a</span>] <span class="op">+=</span> e<span class="op">.</span><span class="at">capacidad_mw</span><span class="op">;</span> fuerza[e<span class="op">.</span><span class="at">b</span>] <span class="op">+=</span> e<span class="op">.</span><span class="at">capacidad_mw</span><span class="op">;</span></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nodos <span class="op">=</span> stnG<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> regionG <span class="op">===</span> <span class="st">"todo el sistema"</span> <span class="op">||</span> n<span class="op">.</span><span class="at">region</span> <span class="op">===</span> regionG)</span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> ({<span class="op">...</span>n<span class="op">,</span> <span class="dt">grado</span><span class="op">:</span> grado[n<span class="op">.</span><span class="at">id</span>]<span class="op">,</span> <span class="dt">fuerza</span><span class="op">:</span> fuerza[n<span class="op">.</span><span class="at">id</span>]}))<span class="op">;</span></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> usaGrado <span class="op">=</span> medidaG<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"grado"</span>)<span class="op">;</span></span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> valores <span class="op">=</span> nodos<span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> (usaGrado <span class="op">?</span> n<span class="op">.</span><span class="at">grado</span> <span class="op">:</span> n<span class="op">.</span><span class="at">fuerza</span>))<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">-</span> b)<span class="op">;</span></span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> distintos <span class="op">=</span> [<span class="op">...</span><span class="kw">new</span> <span class="bu">Set</span>(valores)]<span class="op">;</span></span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ccdf <span class="op">=</span> distintos<span class="op">.</span><span class="fu">map</span>((k) <span class="kw">=&gt;</span> ({k<span class="op">,</span> <span class="dt">P</span><span class="op">:</span> valores<span class="op">.</span><span class="fu">filter</span>((v) <span class="kw">=&gt;</span> v <span class="op">&gt;=</span> k)<span class="op">.</span><span class="at">length</span> <span class="op">/</span> valores<span class="op">.</span><span class="at">length</span>}))<span class="op">;</span></span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mayor <span class="op">=</span> nodos<span class="op">.</span><span class="fu">reduce</span>((m<span class="op">,</span> n) <span class="kw">=&gt;</span> ((usaGrado <span class="op">?</span> n<span class="op">.</span><span class="at">grado</span> <span class="op">:</span> n<span class="op">.</span><span class="at">fuerza</span>) <span class="op">&gt;</span> (usaGrado <span class="op">?</span> m<span class="op">.</span><span class="at">grado</span> <span class="op">:</span> m<span class="op">.</span><span class="at">fuerza</span>) <span class="op">?</span> n <span class="op">:</span> m)<span class="op">,</span> nodos[<span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {nodos<span class="op">,</span> usaGrado<span class="op">,</span> valores<span class="op">,</span> ccdf<span class="op">,</span> mayor<span class="op">,</span></span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>    <span class="dt">media</span><span class="op">:</span> valores<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b<span class="op">,</span> <span class="dv">0</span>) <span class="op">/</span> valores<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ramales</span><span class="op">:</span> nodos<span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">grado</span> <span class="op">===</span> <span class="dv">1</span>)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>    <span class="dt">tresOmas</span><span class="op">:</span> nodos<span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">grado</span> <span class="op">&gt;=</span> <span class="dv">3</span>)<span class="op">.</span><span class="at">length</span> <span class="op">/</span> nodos<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>    <span class="dt">densidad</span><span class="op">:</span> <span class="dv">2</span> <span class="op">*</span> stnG<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="at">length</span> <span class="op">/</span> (stnG<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="at">length</span> <span class="op">*</span> (stnG<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>))}<span class="op">;</span></span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
@@ -806,20 +768,15 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="237" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 236;"><span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">700</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
-<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"inversión"</span><span class="op">,</span> <span class="st">"flujos descontados"</span><span class="op">,</span> <span class="st">"pérdida de la crisis"</span><span class="op">,</span> <span class="st">"VPN"</span>]}<span class="op">,</span></span>
-<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ MUSD"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>([</span>
-<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"inversión"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="op">-</span><span class="dv">70</span>}<span class="op">,</span></span>
-<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"flujos descontados"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> casoV<span class="op">.</span><span class="at">anualidad</span> <span class="op">*</span> casoV<span class="op">.</span><span class="at">flujo_anual</span>}<span class="op">,</span></span>
-<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"pérdida de la crisis"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="op">-</span>casoV<span class="op">.</span><span class="at">valor_presente_perdida</span>}<span class="op">,</span></span>
-<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"VPN"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> casoV<span class="op">.</span><span class="at">vpn_con_crisis</span>}<span class="op">,</span></span>
-<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"concepto"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">concepto</span> <span class="op">===</span> <span class="st">"VPN"</span> <span class="op">?</span> (d<span class="op">.</span><span class="at">valor</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">verde</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span>) <span class="op">:</span> (d<span class="op">.</span><span class="at">valor</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">azul</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>)})<span class="op">,</span></span>
-<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
-<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="267" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 266;"><span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="st">"grado →"</span> <span class="op">:</span> <span class="st">"capacidad conectada [MW] →"</span>}<span class="op">,</span></span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ subestaciones"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectY</span>(medidasG<span class="op">.</span><span class="at">nodos</span><span class="op">,</span> Plot<span class="op">.</span><span class="fu">binX</span>({<span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span>}<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="st">"grado"</span> <span class="op">:</span> <span class="st">"fuerza"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">thresholds</span><span class="op">:</span> medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="dv">8</span> <span class="op">:</span> <span class="dv">10</span>}))<span class="op">,</span></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="expression">
@@ -830,13 +787,14 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="255" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 254;"><span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Flujo anual de caja&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">flujo_anual</span>)<span class="sc">}</span><span class="vs"> MUSD/año&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;VPN sin crisis&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">vpn_base</span>)<span class="sc">}</span><span class="vs"> MUSD&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Energía generada en la crisis&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">energia_crisis_gwh</span>)<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Pérdida en valor presente&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">valor_presente_perdida</span>)<span class="sc">}</span><span class="vs"> MUSD&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;VPN con crisis&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">vpn_con_crisis</span>)<span class="sc">}</span><span class="vs"> MUSD&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="280" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 279;"><span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subestaciones&lt;b&gt;</span><span class="sc">${</span>medidasG<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;</span><span class="sc">${</span>medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="st">"Grado medio"</span> <span class="op">:</span> <span class="st">"Capacidad media conectada"</span><span class="sc">}</span><span class="vs">&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="dv">2</span> <span class="op">:</span> <span class="dv">0</span>)(medidasG<span class="op">.</span><span class="at">media</span>)<span class="sc">}${</span>medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="st">""</span> <span class="op">:</span> <span class="st">" MW"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Mayor&lt;b&gt;</span><span class="sc">${</span>medidasG<span class="op">.</span><span class="at">mayor</span><span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span><span class="fu">formatoNumero</span>(medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">0</span>)(medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> medidasG<span class="op">.</span><span class="at">mayor</span><span class="op">.</span><span class="at">grado</span> <span class="op">:</span> medidasG<span class="op">.</span><span class="at">mayor</span><span class="op">.</span><span class="at">fuerza</span>)<span class="sc">}${</span>medidasG<span class="op">.</span><span class="at">usaGrado</span> <span class="op">?</span> <span class="st">" líneas"</span> <span class="op">:</span> <span class="st">" MW"</span><span class="sc">}</span><span class="vs">)&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Ramales de una línea&lt;b&gt;</span><span class="sc">${</span>medidasG<span class="op">.</span><span class="at">ramales</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Con tres líneas o más&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(medidasG<span class="op">.</span><span class="at">tresOmas</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Densidad del sistema completo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(medidasG<span class="op">.</span><span class="at">densidad</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="expression">
@@ -845,30 +803,24 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Modelo <code>mise_sd.modelos.vpn_termica_crisis</code> con los parámetros del planteamiento; cifras ilustrativas del orden de magnitud de una térmica de respaldo del Caribe, no de un proyecto real. El precio de escasez de 302,43 COP/kWh y los 206 días por encima de él son datos de XM para 2015 y 2016.</p>
+<p>Grafo estilizado <code>mise_sd.redes.stn_estilizado()</code>. El grado y la fuerza se calculan siempre sobre el sistema completo, y el filtro de región selecciona qué subestaciones se resumen. La capacidad de cada corredor viene de la tabla de líneas del módulo, con valores de referencia de 1 200 MW para 500 kV y 300 MW para 220 y 230 kV [POR VERIFICAR].</p>
 </div>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver el ejemplo</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer las tres comparaciones</span>
 </div>
 <div class="paso">
-<p><strong>Arme el flujo anual.</strong> El cargo aporta <span class="math inline">1\,300\,000 \times 15 / 10^6 = 19{,}5</span> MUSD/año. La energía aporta <span class="math inline">200 \times 8\,760 \times 0{,}05 \times 10 / 10^6 = 0{,}9</span> MUSD/año. Restados los 6 de costos fijos, quedan <strong>14,4 MUSD/año</strong>.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-grado"></span>. La respuesta es la B: Porce III tiene 4 líneas y 3 900 MW de capacidad conectada, mientras Sabanalarga tiene 6 líneas y 3 600 MW. Contar líneas y contar capacidad ordenan la red de maneras distintas.</p>
 </div>
 <div class="paso">
-<p><strong>Descuente.</strong> Con 10 años al 10 %, el factor de anualidad es 6,145, así que los flujos valen hoy 88,3 MUSD. Contra la inversión de 70, el <strong>VPN es de 18,3 MUSD</strong>: el proyecto pasa el filtro con holgura.</p>
+<p><strong>Mire las regiones.</strong> El Caribe tiene el grado medio más alto, 3,07, y el Nordeste concentra cuatro de los ramales de una sola línea. La topología no es homogénea, y un promedio nacional lo esconde.</p>
 </div>
 <div class="paso">
-<p><strong>Haga la sensibilidad clásica.</strong> Si el precio del cargo varía un 20 %, el VPN va de −5,6 a 42,3 MUSD. El analista concluye que el riesgo está acotado y que el punto crítico es el cargo.</p>
+<p><strong>Note el caso extremo.</strong> Primavera encabeza las dos medidas, con 8 líneas y 6 900 MW. Que coincida en este caso no autoriza a usar una en lugar de la otra: el ejemplo de Porce III muestra que el orden cambia.</p>
 </div>
 <div class="paso">
-<p><strong>Traiga la crisis.</strong> Con 210 días de despacho forzado al 85 % de la capacidad, la planta genera 856,8 GWh y pierde 50 USD en cada MWh: 42,8 MUSD, que en valor presente son 35,4. El <strong>VPN cae a −17,1 MUSD</strong>.</p>
-</div>
-<div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-vpn"></span>. La respuesta es la B: el VPN cruza el cero cerca de los 110 días de despacho forzado, poco más de un trimestre. La sensibilidad del 20 % sobre el cargo nunca exploró ese mundo, porque movía un parámetro y dejaba fija la estructura.</p>
-</div>
-<div class="paso">
-<p><strong>Saque la lección.</strong> El error no estuvo en la aritmética sino en el supuesto de que las horas de generación eran un dato. En un sistema complejo, la variable que decide el resultado suele ser la que el modelo trató como constante.</p>
+<p><strong>Conecte con lo que viene.</strong> El grado mide vecinos inmediatos. Las páginas siguientes preguntan por caminos y por posición en la red, y ahí Primavera y Sabanalarga se ordenan otra vez de manera distinta.</p>
 </div>
 </div>
 </section>
@@ -877,28 +829,28 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir complicado con complejo</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Comparar densidades de redes de distinto tamaño</span>
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>«Este proyecto es complejo: tiene 400 páginas de anexos y doce contratos.»</p>
+<p>«La red colombiana es más densa que la europea, porque su densidad es mayor.»</p>
 </div>
 <div class="bien">
-<p>El tamaño y el detalle hacen a un sistema complicado. Lo complejo es que el resultado dependa de la interacción: si cada parte se puede analizar por separado, el sistema es complicado por grande que sea.</p>
+<p>La densidad cae con el tamaño aunque el grado medio no cambie: con <span class="math inline">\langle k \rangle = 2{,}62</span>, pasar de 100 a 1 000 nodos baja la densidad de 0,026 a 0,0026. Entre redes de tamaños distintos se compara el grado medio, no la densidad.</p>
 </div>
 </div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer «complejo» como «imposible de analizar»</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Resumir la red con el grado medio</span>
 </div>
-<p>Lo complejo se analiza con otras herramientas: lazos, escenarios, redes y robustez, que son las de este curso. La conclusión útil cambia de forma: en vez de «el VPN es 18,3 MUSD», queda «el VPN es positivo mientras el despacho forzado no pase de unos 110 días al año, y esta es la señal que lo anticipa».</p>
+<p>Un grado medio de 2,62 sugiere una red pareja. La distribución real tiene 18 nodos de grado 1 y uno de grado 8, y son esos extremos los que deciden el riesgo. El promedio describe a la mayoría y calla sobre los casos que importan.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Creer que la sensibilidad clásica captura la complejidad</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir grado con capacidad</span>
 </div>
-<p>Mover un parámetro a la vez, con la estructura intacta, explora un solo mundo. La crisis de 2015 cambió al tiempo el precio, las horas de generación y las reglas. Por eso la semana 5 reemplaza la sensibilidad por escenarios y por la tabla de robustez.</p>
+<p>Seis líneas de 220 kV transportan menos que cuatro de 500 kV. Cuando la pregunta es de transporte, la medida correcta es la fuerza; cuando es de conectividad, el grado. Declarar cuál se está usando evita la mitad de las discusiones sobre «la subestación más importante».</p>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -907,81 +859,81 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Un motor de avión tiene 25 000 piezas y su falla se diagnostica pieza por pieza. ¿Qué es?</p>
+<p>Una red tiene 60 nodos y grado medio 3. ¿Cuántas aristas tiene?</p>
 <div class="opcion" data-correcta="si">
-<p>Complicado: se descompone, aunque sea enorme.</p>
-<p><span class="porque">Correcto: el tamaño no lo vuelve complejo.</span></p>
+<ol start="90" type="1">
+<li></li>
+</ol>
+<p><span class="porque">Correcto: <span class="math inline">m = n\langle k \rangle / 2</span>.</span></p>
 </div>
 <div class="opcion">
-<p>Complejo, por el número de piezas.</p>
-<p><span class="porque">Revise el criterio del cuadro 5 de la intuición.</span></p>
+<ol start="180" type="1">
+<li></li>
+</ol>
+<p><span class="porque">Esa es la suma de grados.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Cuál de estas decisiones vive en el dominio complejo de Cynefin?</p>
-<div class="opcion">
-<p>Calcular el costo variable de una térmica con su consumo específico.</p>
-<p><span class="porque">Esa cuenta tiene respuesta exacta. Revise el ejemplo intermedio.</span></p>
-</div>
+<p>¿Por qué se prefiere la CCDF al histograma para mirar la cola?</p>
 <div class="opcion" data-correcta="si">
-<p>Anticipar cuántas horas despachará esa térmica el año entrante.</p>
-<p><span class="porque">Correcto: depende de lo que hagan los demás y del clima.</span></p>
+<p>Porque no depende de cómo se agrupen los datos en barras.</p>
+<p><span class="porque">Correcto, y por eso se usa en la página 7 con las leyes de potencias.</span></p>
 </div>
 <div class="opcion">
-<p>Leer el medidor de un cliente.</p>
-<p><span class="porque">Eso es el dominio claro.</span></p>
+<p>Porque siempre da una recta.</p>
+<p><span class="porque">Solo las leyes de potencias dan una recta en log-log, y no siempre.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>En el ejemplo avanzado, ¿qué supuesto del VPN falló?</p>
+<p>En el sistema estilizado, ¿qué fracción de subestaciones tiene grado 3 o más?</p>
 <div class="opcion">
-<p>La tasa de descuento del 10 %.</p>
-<p><span class="porque">La tasa no cambió durante la crisis. Revise la tabla de supuestos.</span></p>
+<p>El 82 %.</p>
+<p><span class="porque">Ese es <span class="math inline">P(K \geq 2)</span>.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Que las horas de generación eran un dato estable.</p>
-<p><span class="porque">Correcto: pasaron del 5 % del año a 210 días seguidos.</span></p>
+<p>El 48 %.</p>
+<p><span class="porque">Correcto, según la CCDF.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Con el simulador, ¿qué mueve más el VPN?</p>
+<p>Dos redes tienen el mismo grado medio. ¿Se comportan igual ante fallas?</p>
 <div class="opcion">
-<p>Un 20 % de variación en el precio del cargo.</p>
-<p><span class="porque">Eso mueve el VPN unos 24 MUSD. Pruebe con 210 días de despacho forzado.</span></p>
+<p>Sí: el grado medio determina la robustez.</p>
+<p><span class="porque">Revise el último cuadro de la intuición.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Un trimestre largo de despacho forzado por debajo del costo.</p>
-<p><span class="porque">Correcto: 210 días restan 35,4 MUSD en valor presente y dan vuelta al signo.</span></p>
+<p>No necesariamente: la distribución puede ser pareja o concentrada en pocos nodos.</p>
+<p><span class="porque">Correcto, y la página 8 lo mide.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>«El sistema es complejo, así que no vale la pena modelarlo.» ¿Qué falla en esa frase?</p>
+<p>¿Cuándo conviene usar la fuerza en vez del grado?</p>
 <div class="opcion" data-correcta="si">
-<p>Confunde complejidad con imposibilidad: cambia el tipo de conclusión, no la posibilidad de analizar.</p>
+<p>Cuando la pregunta es de transporte: cuánta capacidad llega a un nodo.</p>
 <p><span class="porque">Correcto.</span></p>
 </div>
 <div class="opcion">
-<p>Nada: con interacciones no se puede modelar.</p>
-<p><span class="porque">Revise el segundo error común.</span></p>
+<p>Siempre, porque incluye más información.</p>
+<p><span class="porque">Para preguntas de conectividad, el grado es la medida adecuada; más información no es mejor si responde otra pregunta.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
 <h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
-<section id="ejercicio-1-clasificar-tres-sistemas" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-1-clasificar-tres-sistemas">Ejercicio 1 ●○○ · Clasificar tres sistemas</h4>
-<p>Clasifique como complicado o complejo, y justifique en una línea: (a) el mantenimiento programado de una subestación; (b) la formación del precio de bolsa en un día de sequía; (c) el cronograma de construcción de una línea de transmisión que cruza tres municipios.</p>
+<section id="ejercicio-1-un-conteo-imposible" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-un-conteo-imposible">Ejercicio 1 ●○○ · Un conteo imposible</h4>
+<p>Un informe reporta una red de 9 subestaciones con grados 3, 3, 3, 3, 3, 2, 2, 1 y 1. ¿Cuántas líneas tiene? ¿Qué pasa si además se afirma que la red es conexa?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -994,16 +946,15 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ol type="a">
-<li><strong>Complicado</strong>: el plan se descompone en tareas con duraciones conocidas y un experto lo optimiza. (b) <strong>Complejo</strong>: el precio surge de las ofertas de todos los generadores, del nivel de los embalses y de la demanda, y cada agente reacciona a lo que espera de los demás. (c) <strong>Complejo</strong>, aunque parezca un cronograma: las comunidades, las autoridades locales y los contratistas se adaptan a lo que ocurre, y el atraso de un permiso cambia la negociación siguiente. La semana 6 muestra este caso en detalle.</li>
-</ol>
+<p>La suma de grados es <span class="math inline">3 \times 5 + 2 \times 2 + 1 \times 2 = 15 + 4 + 2 = 21</span>, un número impar. Como la suma de grados debe ser <span class="math inline">2m</span>, <strong>la lista es imposible</strong>: hay un error de conteo en el informe.</p>
+<p>Si se corrige, por ejemplo, un grado 3 por un 2, la suma da 20 y <span class="math inline">m = 10</span>. Con 9 nodos, una red conexa necesita al menos <span class="math inline">n - 1 = 8</span> aristas, así que 10 es compatible con la conexidad y deja dos aristas de redundancia.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="ejercicio-2-el-vpn-con-una-crisis-más-corta" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-2-el-vpn-con-una-crisis-más-corta">Ejercicio 2 ●●○ · El VPN con una crisis más corta</h4>
-<p>Con el simulador, suponga una crisis de 150 días y que el regulador compensa después la mitad de la pérdida, un año más tarde. ¿Cuál es el VPN? ¿Cambia la recomendación de inversión?</p>
+<section id="ejercicio-2-un-refuerzo-y-sus-métricas" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-un-refuerzo-y-sus-métricas">Ejercicio 2 ●●○ · Un refuerzo y sus métricas</h4>
+<p>A la red de doce subestaciones del ejemplo básico se le agrega una línea entre dos subestaciones que tenían dos líneas cada una. Calcule el nuevo grado medio, la nueva densidad y la nueva CCDF, y diga qué mejora y qué no.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1016,8 +967,9 @@ window.Quarto = {
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Con 150 días la planta genera 612 GWh y pierde 30,6 MUSD, que en valor presente son 25,3. La compensación de 15,3 MUSD un año después vale hoy 11,5. El VPN queda en <span class="math inline">18{,}3 - 25{,}3 + 11{,}5 = 4{,}5</span> MUSD: positivo, pero muy por debajo del cálculo original y dependiente de una decisión regulatoria que en 2014 nadie había prometido.</p>
-<p>La recomendación cambia de forma: en vez de aprobar por el VPN, conviene aprobar con condiciones, por ejemplo un contrato de suministro que cubra la brecha de costo o una cláusula de revisión si el despacho forzado supera cierto umbral. Esa manera de recomendar es la que el curso practica desde la semana 5.</p>
+<p>Ahora <span class="math inline">m = 16</span> y la suma de grados es 32, así que <span class="math inline">\langle k \rangle = 32/12 = 2{,}67</span> y la densidad sube a <span class="math inline">32/(12 \times 11) = 0{,}242</span>. Los grados pasan a ser uno de 1, tres de 2, siete de 3 y uno de 4, con CCDF <span class="math inline">P(K \geq 2) = 11/12</span>, <span class="math inline">P(K \geq 3) = 8/12 = 0{,}67</span> y <span class="math inline">P(K \geq 4) = 1/12</span>.</p>
+<p><strong>Qué mejora</strong>: dos subestaciones ganan una ruta alterna, y la fracción con tres líneas o más pasa del 50 % al 67 %.</p>
+<p><strong>Qué no</strong>: el ramal de una sola línea sigue igual de expuesto. Si el objetivo era eliminar puntos únicos de falla, la línea se construyó en el lugar equivocado, y las métricas globales apenas lo muestran. La página 3 da la herramienta que sí lo señala: los puntos de articulación.</p>
 </div>
 </div>
 </div>
@@ -1031,25 +983,25 @@ window.Quarto = {
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Un sistema <strong>complicado</strong> se descompone; uno <strong>complejo</strong> debe su comportamiento a la <strong>interacción</strong> entre las partes.</li>
-<li>Los cinco rasgos de lo complejo son <strong>retroalimentación, no linealidad, adaptación, emergencia y eventos extremos</strong>, y son los conceptos de esta semana.</li>
-<li><strong>Cynefin</strong> dice qué método corresponde a cada decisión; el error caro es tratar lo complejo como complicado.</li>
-<li>El <strong>VPN</strong> no se equivoca como fórmula: fallan sus supuestos sobre precios, horas de despacho, reglas y choques.</li>
-<li>En el caso, el VPN pasa de <strong>+18,3 a −17,1 MUSD</strong> con 210 días de despacho forzado, y cruza el cero cerca de los <strong>110 días</strong>.</li>
+<li>El <strong>grado</strong> cuenta vecinos; la suma de grados es <span class="math inline">2m</span> y el <strong>grado medio</strong> es <span class="math inline">2m/n</span>.</li>
+<li>La <strong>densidad</strong> depende del tamaño: solo se compara entre redes parecidas.</li>
+<li>La <strong>distribución de grado</strong> y su <strong>CCDF</strong> muestran lo que el promedio esconde.</li>
+<li>El sistema estilizado tiene <span class="math inline">\langle k \rangle = 2{,}62</span>, con <strong>18 ramales de una línea</strong> y un máximo de 8 en Primavera; el 48 % tiene grado 3 o más.</li>
+<li><strong>Grado y fuerza</strong> ordenan distinto: Porce III tiene 4 líneas y 3 900 MW; Sabanalarga, 6 líneas y 3 600 MW.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Complicado frente a complejo» de las notas de la semana 1 trae la tabla completa de supuestos del VPN y los ejercicios de Cynefin. La ficha del proyecto integrador pide justamente esta clasificación para el caso elegido: en qué dominio vive la decisión que usted analiza. La <a href="../semana1/02-sistema-estructura.html">página siguiente</a> empieza a desarmar ese sistema en elementos, interconexiones y propósito.</p>
+<p><strong>Para profundizar.</strong> La sección «Grado, distribución de grado y densidad» de las notas de la semana 2 trae la comparación con los 32 estudios de redes de alta tensión y el análisis por regiones. La siguiente página pasa de los vecinos inmediatos a los caminos completos.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7dnBuVGVybWljYUNyaXNpcywgZm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBkaWFzViA9IElucHV0cy5yYW5nZShbMCwgMzAwXSwge3ZhbHVlOiAwLCBzdGVwOiAxMCwgbGFiZWw6IFwiRMOtYXMgZGUgZGVzcGFjaG8gZm9yemFkb1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBicmVjaGFWID0gSW5wdXRzLnJhbmdlKFswLCAxMDBdLCB7dmFsdWU6IDUwLCBzdGVwOiA1LCBsYWJlbDogXCJQw6lyZGlkYSBwb3IgTVdoIGdlbmVyYWRvIFtVU0QvTVdoXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBjYXJnb1YgPSBJbnB1dHMucmFuZ2UoWzEyLCAxOF0sIHt2YWx1ZTogMTUsIHN0ZXA6IDAuNSwgbGFiZWw6IFwiUHJlY2lvIGRlbCBjYXJnbyBwb3IgY29uZmlhYmlsaWRhZCBbVVNEL01XaF1cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJjYXNvViA9IHZwblRlcm1pY2FDcmlzaXMoe2RpYXNfZGVzcGFjaG9fZm9yemFkbzogZGlhc1YsIGJyZWNoYV9jb3N0b19wcmVjaW9fdXNkX213aDogYnJlY2hhViwgcHJlY2lvX2NhcmdvX3VzZF9td2g6IGNhcmdvVn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDcwMCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA2MCwgbWFyZ2luQm90dG9tOiA1MCxcbiAgeDoge2xhYmVsOiBudWxsLCBkb21haW46IFtcImludmVyc2nDs25cIiwgXCJmbHVqb3MgZGVzY29udGFkb3NcIiwgXCJww6lyZGlkYSBkZSBsYSBjcmlzaXNcIiwgXCJWUE5cIl19LFxuICB5OiB7bGFiZWw6IFwi4oaRIE1VU0RcIiwgZ3JpZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5iYXJZKFtcbiAgICAgIHtjb25jZXB0bzogXCJpbnZlcnNpw7NuXCIsIHZhbG9yOiAtNzB9LFxuICAgICAge2NvbmNlcHRvOiBcImZsdWpvcyBkZXNjb250YWRvc1wiLCB2YWxvcjogY2Fzb1YuYW51YWxpZGFkICogY2Fzb1YuZmx1am9fYW51YWx9LFxuICAgICAge2NvbmNlcHRvOiBcInDDqXJkaWRhIGRlIGxhIGNyaXNpc1wiLCB2YWxvcjogLWNhc29WLnZhbG9yX3ByZXNlbnRlX3BlcmRpZGF9LFxuICAgICAge2NvbmNlcHRvOiBcIlZQTlwiLCB2YWxvcjogY2Fzb1YudnBuX2Nvbl9jcmlzaXN9LFxuICAgIF0sIHt4OiBcImNvbmNlcHRvXCIsIHk6IFwidmFsb3JcIiwgZmlsbDogKGQpID0+IGQuY29uY2VwdG8gPT09IFwiVlBOXCIgPyAoZC52YWxvciA+PSAwID8gQ09MT1JFUy52ZXJkZSA6IENPTE9SRVMucm9qbykgOiAoZC52YWxvciA+PSAwID8gQ09MT1JFUy5henVsIDogQ09MT1JFUy5ncmlzKX0pLFxuICAgIFBsb3QucnVsZVkoWzBdKSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkZsdWpvIGFudWFsIGRlIGNhamE8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YuZmx1am9fYW51YWwpfSBNVVNEL2HDsW88L2I+PC9kaXY+XG4gIDxkaXY+VlBOIHNpbiBjcmlzaXM8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YudnBuX2Jhc2UpfSBNVVNEPC9iPjwvZGl2PlxuICA8ZGl2PkVuZXJnw61hIGdlbmVyYWRhIGVuIGxhIGNyaXNpczxiPiR7Zm9ybWF0b051bWVybygxKShjYXNvVi5lbmVyZ2lhX2NyaXNpc19nd2gpfSBHV2g8L2I+PC9kaXY+XG4gIDxkaXY+UMOpcmRpZGEgZW4gdmFsb3IgcHJlc2VudGU8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YudmFsb3JfcHJlc2VudGVfcGVyZGlkYSl9IE1VU0Q8L2I+PC9kaXY+XG4gIDxkaXY+VlBOIGNvbiBjcmlzaXM8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YudnBuX2Nvbl9jcmlzaXMpfSBNVVNEPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdkaWFzVicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdicmVjaGFWJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NhcmdvVicpIn1dfQ==
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJzdG5HID0gRmlsZUF0dGFjaG1lbnQoXCJkYXRvcy9zMi1zdG4uanNvblwiKS5qc29uKClcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiByZWdpb25HID0gSW5wdXRzLnNlbGVjdChbXCJ0b2RvIGVsIHNpc3RlbWFcIiwgXCJBbnRpb3F1aWFcIiwgXCJDYXJpYmVcIiwgXCJDZW50cm9cIiwgXCJHdWFqaXJhLUNlc2FyXCIsIFwiTm9yZGVzdGVcIiwgXCJPcmllbnRhbFwiLCBcIlN1cm9jY2lkZW50YWxcIl0sIHtsYWJlbDogXCJSZWdpw7NuXCIsIHZhbHVlOiBcInRvZG8gZWwgc2lzdGVtYVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtZWRpZGFHID0gSW5wdXRzLnJhZGlvKFtcImdyYWRvIChuw7ptZXJvIGRlIGzDrW5lYXMpXCIsIFwiZnVlcnphIChjYXBhY2lkYWQgY29uZWN0YWRhKVwiXSwge3ZhbHVlOiBcImdyYWRvIChuw7ptZXJvIGRlIGzDrW5lYXMpXCIsIGxhYmVsOiBcIk1lZGlkYVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Im1lZGlkYXNHID0ge1xuICBjb25zdCBncmFkbyA9IHt9LCBmdWVyemEgPSB7fTtcbiAgZm9yIChjb25zdCBuIG9mIHN0bkcubm9kb3MpIHsgZ3JhZG9bbi5pZF0gPSAwOyBmdWVyemFbbi5pZF0gPSAwOyB9XG4gIGZvciAoY29uc3QgZSBvZiBzdG5HLmFyaXN0YXMpIHtcbiAgICBncmFkb1tlLmFdKys7IGdyYWRvW2UuYl0rKztcbiAgICBmdWVyemFbZS5hXSArPSBlLmNhcGFjaWRhZF9tdzsgZnVlcnphW2UuYl0gKz0gZS5jYXBhY2lkYWRfbXc7XG4gIH1cbiAgY29uc3Qgbm9kb3MgPSBzdG5HLm5vZG9zLmZpbHRlcigobikgPT4gcmVnaW9uRyA9PT0gXCJ0b2RvIGVsIHNpc3RlbWFcIiB8fCBuLnJlZ2lvbiA9PT0gcmVnaW9uRylcbiAgICAubWFwKChuKSA9PiAoey4uLm4sIGdyYWRvOiBncmFkb1tuLmlkXSwgZnVlcnphOiBmdWVyemFbbi5pZF19KSk7XG4gIGNvbnN0IHVzYUdyYWRvID0gbWVkaWRhRy5zdGFydHNXaXRoKFwiZ3JhZG9cIik7XG4gIGNvbnN0IHZhbG9yZXMgPSBub2Rvcy5tYXAoKG4pID0+ICh1c2FHcmFkbyA/IG4uZ3JhZG8gOiBuLmZ1ZXJ6YSkpLnNvcnQoKGEsIGIpID0+IGEgLSBiKTtcbiAgY29uc3QgZGlzdGludG9zID0gWy4uLm5ldyBTZXQodmFsb3JlcyldO1xuICBjb25zdCBjY2RmID0gZGlzdGludG9zLm1hcCgoaykgPT4gKHtrLCBQOiB2YWxvcmVzLmZpbHRlcigodikgPT4gdiA+PSBrKS5sZW5ndGggLyB2YWxvcmVzLmxlbmd0aH0pKTtcbiAgY29uc3QgbWF5b3IgPSBub2Rvcy5yZWR1Y2UoKG0sIG4pID0+ICgodXNhR3JhZG8gPyBuLmdyYWRvIDogbi5mdWVyemEpID4gKHVzYUdyYWRvID8gbS5ncmFkbyA6IG0uZnVlcnphKSA/IG4gOiBtKSwgbm9kb3NbMF0pO1xuICByZXR1cm4ge25vZG9zLCB1c2FHcmFkbywgdmFsb3JlcywgY2NkZiwgbWF5b3IsXG4gICAgbWVkaWE6IHZhbG9yZXMucmVkdWNlKChhLCBiKSA9PiBhICsgYiwgMCkgLyB2YWxvcmVzLmxlbmd0aCxcbiAgICByYW1hbGVzOiBub2Rvcy5maWx0ZXIoKG4pID0+IG4uZ3JhZG8gPT09IDEpLmxlbmd0aCxcbiAgICB0cmVzT21hczogbm9kb3MuZmlsdGVyKChuKSA9PiBuLmdyYWRvID49IDMpLmxlbmd0aCAvIG5vZG9zLmxlbmd0aCxcbiAgICBkZW5zaWRhZDogMiAqIHN0bkcuYXJpc3Rhcy5sZW5ndGggLyAoc3RuRy5ub2Rvcy5sZW5ndGggKiAoc3RuRy5ub2Rvcy5sZW5ndGggLSAxKSl9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDI2MCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogbWVkaWRhc0cudXNhR3JhZG8gPyBcImdyYWRvIOKGklwiIDogXCJjYXBhY2lkYWQgY29uZWN0YWRhIFtNV10g4oaSXCJ9LFxuICB5OiB7bGFiZWw6IFwi4oaRIHN1YmVzdGFjaW9uZXNcIiwgZ3JpZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5yZWN0WShtZWRpZGFzRy5ub2RvcywgUGxvdC5iaW5YKHt5OiBcImNvdW50XCJ9LCB7eDogbWVkaWRhc0cudXNhR3JhZG8gPyBcImdyYWRvXCIgOiBcImZ1ZXJ6YVwiLCBmaWxsOiBDT0xPUkVTLmF6dWwsIHRocmVzaG9sZHM6IG1lZGlkYXNHLnVzYUdyYWRvID8gOCA6IDEwfSkpLFxuICAgIFBsb3QucnVsZVkoWzBdKSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PlN1YmVzdGFjaW9uZXM8Yj4ke21lZGlkYXNHLm5vZG9zLmxlbmd0aH08L2I+PC9kaXY+XG4gIDxkaXY+JHttZWRpZGFzRy51c2FHcmFkbyA/IFwiR3JhZG8gbWVkaW9cIiA6IFwiQ2FwYWNpZGFkIG1lZGlhIGNvbmVjdGFkYVwifTxiPiR7Zm9ybWF0b051bWVybyhtZWRpZGFzRy51c2FHcmFkbyA/IDIgOiAwKShtZWRpZGFzRy5tZWRpYSl9JHttZWRpZGFzRy51c2FHcmFkbyA/IFwiXCIgOiBcIiBNV1wifTwvYj48L2Rpdj5cbiAgPGRpdj5NYXlvcjxiPiR7bWVkaWRhc0cubWF5b3IuaWR9ICgke2Zvcm1hdG9OdW1lcm8obWVkaWRhc0cudXNhR3JhZG8gPyAwIDogMCkobWVkaWRhc0cudXNhR3JhZG8gPyBtZWRpZGFzRy5tYXlvci5ncmFkbyA6IG1lZGlkYXNHLm1heW9yLmZ1ZXJ6YSl9JHttZWRpZGFzRy51c2FHcmFkbyA/IFwiIGzDrW5lYXNcIiA6IFwiIE1XXCJ9KTwvYj48L2Rpdj5cbiAgPGRpdj5SYW1hbGVzIGRlIHVuYSBsw61uZWE8Yj4ke21lZGlkYXNHLnJhbWFsZXN9PC9iPjwvZGl2PlxuICA8ZGl2PkNvbiB0cmVzIGzDrW5lYXMgbyBtw6FzPGI+JHtmb3JtYXRvUG9yY2VudGFqZShtZWRpZGFzRy50cmVzT21hcywgMCl9PC9iPjwvZGl2PlxuICA8ZGl2PkRlbnNpZGFkIGRlbCBzaXN0ZW1hIGNvbXBsZXRvPGI+JHtmb3JtYXRvTnVtZXJvKDMpKG1lZGlkYXNHLmRlbnNpZGFkKX08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3JlZ2lvbkcnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbWVkaWRhRycpIn1dfQ==
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-window._ojs.paths.runtimeToDoc = "../../semana1";
+window._ojs.paths.runtimeToDoc = "../../semana2";
 window._ojs.paths.runtimeToRoot = "../..";
 window._ojs.paths.docToRoot = "..";
 window._ojs.selfContained = false;
@@ -1462,13 +1414,13 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../semana1/index.html" class="pagination-link" aria-label="Semana 1 · Sistemas complejos">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Semana 1 · Sistemas complejos</span>
+      <a href="../semana2/01-del-sistema-al-grafo.html" class="pagination-link" aria-label="Del sistema al grafo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Del sistema al grafo</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../semana1/02-sistema-estructura.html" class="pagination-link" aria-label="Sistema, estructura y comportamiento">
-        <span class="nav-page-text">Sistema, estructura y comportamiento</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../semana4/index.html" class="pagination-link" aria-label="Semana 4 · Dinámica de sistemas I">
+        <span class="nav-page-text">Semana 4 · Dinámica de sistemas I</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
