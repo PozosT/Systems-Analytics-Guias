@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Mediocristán y Extremistán, la cola pesada del precio de bolsa medida con 26 años de datos de XM, los cisnes negros y grises, y por qué los extremos del sistema eléctrico tienden a llegar juntos.">
+
+<title>Eventos extremos y colas pesadas – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Systems Analytics · Guías de autoestudio
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/04-centralidades.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Centralidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/05-mundo-pequeno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agrupamiento y mundo pequeño</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/06-modelos-de-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos de red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Redes II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/01-dinamica-sobre-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dinámica sobre redes: nodos con estado y reglas locales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/02-rogers-bass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rogers y Bass: la curva en S de la adopción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/03-contagio-simple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio simple: SI, SIS y SIR sobre redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/04-contagio-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio complejo y umbrales: cuando un vecino no basta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores y comunidades: quién se mueve con quién</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/07-bipartitas-mercado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes bipartitas y el mercado mayorista</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/08-limites-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Límites del enfoque de redes: de la red al stock agregado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/09-adopcion-solar-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La adopción solar como sistema en red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-estaturas-y-patrimonios" id="toc-la-intuición-estaturas-y-patrimonios" class="nav-link" data-scroll-target="#la-intuición-estaturas-y-patrimonios">2. La intuición: estaturas y patrimonios</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Eventos extremos y colas pesadas</h1>
+<p class="subtitle lead">Semana 1 · Concepto 8 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Mediocristán y Extremistán, la cola pesada del precio de bolsa medida con 26 años de datos de XM, los cisnes negros y grises, y por qué los extremos del sistema eléctrico tienden a llegar juntos.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="33" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 32;"><span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana1/04-no-linealidad.html">no linealidad</a></span> <span class="dato">🧪 El Avance 1 pide al menos un evento extremo justificado</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Distinguir un fenómeno de Mediocristán de uno de Extremistán y saber qué estadística sirve en cada uno.</li>
+<li>Medir la cola de una serie contra la que predice la distribución normal.</li>
+<li>Calcular la probabilidad de fallas conjuntas y explicar por qué los extremos que comparten causa no son independientes.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>En Extremistán una sola observación puede dominar el total, y la desviación típica subestima el riesgo. Además, los extremos del sistema eléctrico se atraen: la misma sequía que baja los embalses castiga a las plantas que deberían cubrir el hueco.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Entre enero de 2000 y diciembre de 2025, el precio de bolsa diario cambió más de cinco desviaciones típicas de un día a otro en 21 ocasiones (XM). Si esos cambios siguieran una distribución normal, un salto así ocurriría una vez cada varios miles de años.</p>
+<p>La crisis de 2015 y 2016 sumó una sequía histórica, la salida de las térmicas a líquidos y el incendio de Guatapé. <strong>¿Fue mala suerte, o el sistema produce extremos con más frecuencia de lo que dicen los modelos tranquilos?</strong></p>
+</section>
+<section id="la-intuición-estaturas-y-patrimonios" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-estaturas-y-patrimonios">2. La intuición: estaturas y patrimonios</h2>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos mundos estadísticos</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-medio-extremo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-08-medio-extremo-1.svg" class="img-fluid" alt="Cien personas de 170 cm."></a></p>
+<p><strong>Mida estaturas.</strong> Cien personas de 170 cm. El promedio es 170 cm, y describe bien a cualquiera del grupo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-medio-extremo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-08-medio-extremo-2.svg" class="img-fluid" alt="Una persona de 230 cm apenas mueve el promedio."></a></p>
+<p><strong>Agregue a la persona más alta posible.</strong> Alguien de 230 cm lleva el promedio a 170,6 cm: un 0,35 %. En este mundo, que se llama <strong>Mediocristán</strong>, ningún individuo mueve el total.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-medio-extremo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-08-medio-extremo-3.svg" class="img-fluid" alt="Cien personas con 50 millones de patrimonio cada una."></a></p>
+<p><strong>Mida patrimonios.</strong> Cien personas con 50 millones de pesos cada una: 5 000 millones en total y 50 millones de promedio.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-medio-extremo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-08-medio-extremo-4.svg" class="img-fluid" alt="Una persona con 50 billones domina el total."></a></p>
+<p><strong>Agregue a la persona más rica del país.</strong> Con 50 billones, el promedio salta a unos 495 000 millones y esa persona concentra el 99,99 % del total. En <strong>Extremistán</strong>, un solo caso es la historia completa.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-medio-extremo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-08-medio-extremo-5.svg" class="img-fluid" alt="El precio de bolsa vive en Extremistán."></a></p>
+<p><strong>Pase al sector.</strong> El cambio diario del precio de bolsa vive en Extremistán. Por eso el promedio y la desviación típica, que funcionan con estaturas, engañan con precios.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Mediocristán y Extremistán</span>
+</div>
+<p>En <strong>Mediocristán</strong> las observaciones tienen <strong>colas delgadas</strong>: los valores extremos son raros y ninguno pesa mucho en el total, como en una distribución normal. En <strong>Extremistán</strong> las colas son <strong>pesadas</strong>: los valores extremos son frecuentes y una sola observación puede dominar la suma (Taleb, 2007). La prueba práctica es preguntar si el mayor valor posible cambiaría el promedio de mil observaciones.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Cisne negro y cisne gris</span>
+</div>
+<p>Un <strong>cisne negro</strong> es un evento raro, de impacto extremo y explicable solo después de ocurrido. Un <strong>cisne gris</strong> es un extremo que se sabe posible y cuyo momento no se puede predecir. El Niño fuerte es un cisne gris: nadie duda de que vendrá, y nadie sabe cuándo.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Probabilidad de al menos una falla y causa común</span>
+</div>
+<p>Con <span class="math inline">n</span> elementos que fallan de forma independiente con probabilidad <span class="math inline">p</span> cada uno,</p>
+<p><span class="math display">P(\text{al menos una falla}) = 1 - (1 - p)^n.</span></p>
+<p>Si una causa común, como una sequía, aumenta <span class="math inline">p</span> en todos a la vez, las fallas dejan de ser independientes y la probabilidad de que coincidan con la sequía es mucho mayor que el producto de las probabilidades por separado.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Fragilidad, robustez y antifragilidad</span>
+</div>
+<p>Un sistema es <strong>frágil</strong> cuando su respuesta a los choques es cóncava: pierde más con un choque grande que lo que gana con uno pequeño. Es <strong>robusto</strong> cuando los choques casi no lo afectan y <strong>antifrágil</strong> cuando su respuesta es convexa y gana con la variabilidad. Una térmica que vende a precio regulado por debajo de su costo en escasez es frágil ante la sequía.</p>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-promedio-que-no-describe-a-nadie" class="level3">
+<h3 class="anchored" data-anchor-id="el-promedio-que-no-describe-a-nadie">El promedio que no describe a nadie</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Calcular los dos promedios</span>
+</div>
+<p><strong>Planteamiento.</strong> Verifique los promedios del ejemplo de estaturas y patrimonios y diga en cuál de los dos mundos tiene sentido reportar el promedio.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Los dos cálculos</span>
+</div>
+<div class="paso">
+<p><strong>Estaturas.</strong> <span class="math inline">(100 \times 170 + 230) / 101 = 17\,230 / 101 = 170{,}6</span> cm. El caso extremo mueve el promedio 0,6 cm.</p>
+</div>
+<div class="paso">
+<p><strong>Patrimonios.</strong> <span class="math inline">(5\,000 \text{ millones} + 50 \text{ billones}) / 101 = 50\,005\,000 \text{ millones} / 101 \approx 495\,000</span> millones. El promedio no describe a ninguna de las 101 personas.</p>
+</div>
+<div class="paso">
+<p><strong>Participación del mayor.</strong> <span class="math inline">50\,000\,000 / 50\,005\,000 = 99{,}99</span> %. En Extremistán, el total es el caso mayor.</p>
+</div>
+<div class="paso">
+<p><strong>Saque el criterio.</strong> En Mediocristán el promedio informa; en Extremistán hay que mirar la distribución completa, la mediana y la cola. El costo de un año del sistema eléctrico se parece más a los patrimonios que a las estaturas: en 2015 y 2016, el 10 % de los días más caros concentró cerca del 30 % del costo.</p>
+</div>
+</div>
+</section>
+<section id="la-cola-del-precio-de-bolsa" class="level3">
+<h3 class="anchored" data-anchor-id="la-cola-del-precio-de-bolsa">La cola del precio de bolsa</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">¿Cuántos saltos grandes predice la normal y cuántos hubo?</span>
+</div>
+<p><strong>Planteamiento.</strong> Con los 9 496 cambios logarítmicos diarios del precio de bolsa entre 2000 y 2025, cuente cuántos superan 3, 4 y 5 desviaciones típicas y compárelos con lo que predice una distribución normal.</p>
+</div>
+<div id="pred-cola" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Si los cambios fueran normales, un salto de más de 5σ ocurriría una vez cada 1,7 millones de días, unos 4 800 años. ¿Cuántas veces ocurrió en los 9 496 días?</p>
+<div class="opcion">
+<p>Ninguna.</p>
+</div>
+<div class="opcion">
+<p>Una o dos veces.</p>
+</div>
+<div class="opcion">
+<p>Más de veinte veces.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La cola del precio de bolsa</span>
+</div>
+<p>Mueva el umbral y compare los días observados con los que esperaría la distribución normal.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="169" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 168;"><span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>colaP <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s1-08-cola.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="174" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 173;"><span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>viewof umbralP <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Umbral [desviaciones típicas]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="179" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 178;"><span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>filaP <span class="op">=</span> colaP<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">find</span>((f) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(f<span class="op">.</span><span class="at">k</span> <span class="op">-</span> umbralP) <span class="op">&lt;</span> <span class="fl">1e-9</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="184" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 183;"><span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Umbral [σ] →"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">8</span>]}<span class="op">,</span></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"↑ Fracción de días por encima"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">1e-5</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"observado"</span><span class="op">,</span> <span class="st">"normal"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">gris</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(colaP<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">fraccion</span> <span class="op">&gt;</span> <span class="dv">0</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"k"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"fraccion"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"observado"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(colaP<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">normal</span> <span class="op">&gt;</span> <span class="fl">1e-5</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"k"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"normal"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"normal"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5,4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([umbralP]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span>})<span class="op">,</span></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="199" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 198;"><span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Días por encima del umbral&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(filaP<span class="op">.</span><span class="at">observados</span>)<span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(colaP<span class="op">.</span><span class="at">dias</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Frecuencia observada&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(filaP<span class="op">.</span><span class="at">fraccion</span><span class="op">,</span> <span class="dv">2</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Días que predice la normal&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(filaP<span class="op">.</span><span class="at">normal</span> <span class="op">*</span> colaP<span class="op">.</span><span class="at">dias</span> <span class="op">&lt;</span> <span class="dv">1</span> <span class="op">?</span> <span class="dv">3</span> <span class="op">:</span> <span class="dv">1</span>)(filaP<span class="op">.</span><span class="at">normal</span> <span class="op">*</span> colaP<span class="op">.</span><span class="at">dias</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Veces más frecuente que la normal&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(filaP<span class="op">.</span><span class="at">fraccion</span> <span class="op">/</span> filaP<span class="op">.</span><span class="at">normal</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Precio de bolsa nacional diario de XM (serie <code>PPPrecBolsNaci</code>) entre el 1 de enero de 2000 y el 31 de diciembre de 2025; cambio logarítmico de un día al siguiente, medido en desviaciones típicas de la serie completa (σ = 0,13). La comparación usa la probabilidad bilateral de la normal.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la cola</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-cola"></span>. La respuesta es la C: 21 días superaron 5σ, cuando la normal esperaría 0,005. Ese salto es casi 3 900 veces más frecuente de lo que predice la campana.</p>
+</div>
+<div class="paso">
+<p><strong>Recorra los umbrales.</strong> Por encima de 3σ hubo 182 días, el 1,9 % del total, frente al 0,27 % de la normal: siete veces más. Por encima de 4σ, 53 días, unas 90 veces más. Cuanto más lejos en la cola, mayor la sorpresa.</p>
+</div>
+<div class="paso">
+<p><strong>Mire la forma.</strong> En escala logarítmica, la curva normal cae en picada y la observada baja despacio. Esa diferencia de pendientes es la cola pesada, y es la que la desviación típica no ve.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la consecuencia financiera.</strong> Un modelo de riesgo que supone normalidad dimensiona coberturas para los saltos de 3σ y queda desnudo ante los de 5σ, que en 26 años ocurrieron 21 veces. Los cinco mayores saltos de la serie son de 2023 y 2024.</p>
+</div>
+</div>
+</section>
+<section id="el-niño-y-las-fallas-que-llegan-juntas" class="level3">
+<h3 class="anchored" data-anchor-id="el-niño-y-las-fallas-que-llegan-juntas">El Niño y las fallas que llegan juntas</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Independencia frente a causa común</span>
+</div>
+<p><strong>Planteamiento.</strong> El sistema tiene 20 plantas críticas y cada una falla en un semestre con probabilidad 2 %. Un El Niño fuerte llega uno de cada 16 semestres y, cuando llega, triplica la probabilidad de falla de cada planta. Compare la probabilidad de una crisis compuesta suponiendo independencia y con la causa común.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del producto a la causa común</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-conjuncion-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s1-08-conjuncion-1.svg" class="img-fluid" alt="Veinte plantas; la probabilidad de al menos una falla es 0,33."></a></p>
+<p><strong>Calcule una falla cualquiera.</strong> <span class="math inline">1 - 0{,}98^{20} = 0{,}33</span>: en uno de cada tres semestres falla al menos una planta crítica.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-conjuncion-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-08-conjuncion-2.svg" class="img-fluid" alt="El Niño fuerte llega uno de cada 16 semestres."></a></p>
+<p><strong>Agregue El Niño.</strong> Uno de cada 16 semestres. Por separado, ninguno de los dos eventos es raro.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-conjuncion-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-08-conjuncion-3.svg" class="img-fluid" alt="Suponiendo independencia, una falla concreta coincide con El Niño una vez cada 400 años."></a></p>
+<p><strong>Suponga independencia.</strong> Una falla concreta coincide con El Niño con probabilidad <span class="math inline">\tfrac{1}{16} \times 0{,}02 = 0{,}00125</span>: una vez cada 800 semestres, 400 años. Con esa cuenta, la crisis compuesta parece un cisne negro.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-conjuncion-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-08-conjuncion-4.svg" class="img-fluid" alt="Con causa común, la probabilidad de al menos una falla sube a 0,71."></a></p>
+<p><strong>Introduzca la causa común.</strong> En sequía las plantas trabajan más horas y los embalses están bajos; con <span class="math inline">p</span> triplicado a 6 %, la probabilidad de al menos una falla durante El Niño es <span class="math inline">1 - 0{,}94^{20} = 0{,}71</span>. Siete de cada diez El Niño traen una falla crítica.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-08-conjuncion-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-08-conjuncion-5.svg" class="img-fluid" alt="En 2015 y 2016 los extremos compartían causa."></a></p>
+<p><strong>Relea la crisis.</strong> La sequía, la salida de las térmicas a líquidos y el incendio de Guatapé no fueron tres accidentes independientes: compartían la presión de la sequía sobre el sistema. Era un cisne gris.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Fallas conjuntas</span>
+</div>
+<p>Cambie el número de plantas, la probabilidad de falla y cuánto la multiplica la sequía. Compare la cuenta con independencia y con causa común.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="277" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 276;"><span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a>viewof plantasF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">5</span><span class="op">,</span> <span class="dv">40</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Plantas críticas"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="282" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 281;"><span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a>viewof probabilidadF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.5</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Probabilidad de falla por semestre [%]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="287" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 286;"><span id="cb9-287"><a href="#cb9-287" aria-hidden="true" tabindex="-1"></a>viewof multiplicadorF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Multiplicador en sequía"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="292" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 291;"><span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a>fallasF <span class="op">=</span> {</span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> probabilidadF <span class="op">/</span> <span class="dv">100</span><span class="op">,</span> pSequia <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(p <span class="op">*</span> multiplicadorF<span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span> nino <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="dv">16</span><span class="op">;</span></span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> normal <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">1</span> <span class="op">-</span> p<span class="op">,</span> plantasF)<span class="op">,</span> enSequia <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">1</span> <span class="op">-</span> pSequia<span class="op">,</span> plantasF)<span class="op">;</span></span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {normal<span class="op">,</span> enSequia<span class="op">,</span> <span class="dt">plantaConcreta</span><span class="op">:</span> nino <span class="op">*</span> p<span class="op">,</span> <span class="dt">conjuntaIndependiente</span><span class="op">:</span> nino <span class="op">*</span> normal<span class="op">,</span> <span class="dt">conjuntaReal</span><span class="op">:</span> nino <span class="op">*</span> enSequia}<span class="op">;</span></span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="301" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 300;"><span id="cb11-301"><a href="#cb11-301" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb11-302"><a href="#cb11-302" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Al menos una falla, semestre normal&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(fallasF<span class="op">.</span><span class="at">normal</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Al menos una falla durante El Niño&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(fallasF<span class="op">.</span><span class="at">enSequia</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Una planta concreta falla con El Niño, si fueran independientes&lt;b&gt;1 cada </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(<span class="fl">0.5</span> <span class="op">/</span> fallasF<span class="op">.</span><span class="at">plantaConcreta</span>)<span class="sc">}</span><span class="vs"> años&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Alguna planta falla con El Niño, si fueran independientes&lt;b&gt;1 cada </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(<span class="fl">0.5</span> <span class="op">/</span> fallasF<span class="op">.</span><span class="at">conjuntaIndependiente</span>)<span class="sc">}</span><span class="vs"> años&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Alguna planta falla con El Niño, con causa común&lt;b&gt;1 cada </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(<span class="fl">0.5</span> <span class="op">/</span> fallasF<span class="op">.</span><span class="at">conjuntaReal</span>)<span class="sc">}</span><span class="vs"> años&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Cálculo con la fórmula <span class="math inline">1 - (1-p)^n</span> y una probabilidad de El Niño fuerte de 1/16 por semestre; cifras ilustrativas de las notas de la semana 1. Los años salen de dividir medio año entre la probabilidad por semestre. Las tres últimas lecturas separan los dos errores de la cuenta ingenua: mirar una planta concreta en vez de cualquiera, y suponer independencia.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer las tres cuentas</span>
+</div>
+<div class="paso">
+<p><strong>Empiece por la cuenta ingenua.</strong> Una planta concreta fallando justo con El Niño, si fueran independientes: una vez cada 400 años. Con esa cifra, nadie se prepara.</p>
+</div>
+<div class="paso">
+<p><strong>Corrija el primer error.</strong> Lo que importa es que falle alguna de las 20, no una en particular: con independencia, una vez cada 24 años.</p>
+</div>
+<div class="paso">
+<p><strong>Corrija el segundo.</strong> Con la sequía como causa común, una vez cada 11 años, unas 35 veces más frecuente que la cuenta ingenua. Esa es la cifra con la que se dimensionan las reservas.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Medir el riesgo con la desviación típica en Extremistán</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«El precio varía en promedio un 13 % diario; un salto de 65 % es prácticamente imposible.»</p>
+</div>
+<div class="bien">
+<p>Con cola pesada, los saltos de cinco desviaciones ocurrieron 21 veces en 26 años. Se mide la cola directamente, con frecuencias observadas o con modelos de cola pesada, y se diseña para ella.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Usar «cisne negro» como excusa</span>
+</div>
+<p>Llamar cisne negro a El Niño de 2015 exime de responsabilidad a quien no se preparó. Un extremo conocido, de fecha incierta, es un cisne gris, y para esos se planea: reservas, respaldo y reglas de emergencia.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tratar los extremos como independientes</span>
+</div>
+<p>Multiplicar probabilidades supone que los eventos no comparten causa. En el sistema eléctrico la sequía, el desgaste de las térmicas y la presión sobre el precio sí la comparten, y el producto subestima la crisis compuesta por un factor de decenas.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Cuál de estas magnitudes vive en Mediocristán?</p>
+<div class="opcion" data-correcta="si">
+<p>El consumo diario de energía de un hogar.</p>
+<p><span class="porque">Correcto: ningún día de un hogar mueve el total de un año.</span></p>
+</div>
+<div class="opcion">
+<p>El tamaño de los apagones de un país.</p>
+<p><span class="porque">Los apagones tienen cola pesada; la semana 2 lo mide.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En Extremistán, ¿qué estadística describe mejor lo típico?</p>
+<div class="opcion" data-correcta="si">
+<p>La mediana, acompañada de la cola.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>El promedio.</p>
+<p><span class="porque">Revise el ejemplo de los patrimonios.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con el simulador de la cola, ¿cuántas veces más frecuente que la normal fue un salto de más de 4σ?</p>
+<div class="opcion" data-correcta="si">
+<p>Unas 90 veces.</p>
+<p><span class="porque">Correcto: 53 días frente a 0,6 esperados.</span></p>
+</div>
+<div class="opcion">
+<p>El doble.</p>
+<p><span class="porque">Mueva el umbral a 4 y lea la razón.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué El Niño es un cisne gris y no un cisne negro?</p>
+<div class="opcion" data-correcta="si">
+<p>Porque se sabe que vendrá; lo incierto es cuándo y con qué fuerza.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Porque su impacto es pequeño.</p>
+<p><span class="porque">Su impacto es grande; lo que lo distingue es que es conocido.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con causa común, la probabilidad de al menos una falla durante El Niño es 0,71. ¿Qué cambia respecto a suponer independencia?</p>
+<div class="opcion" data-correcta="si">
+<p>La crisis compuesta pasa de parecer rarísima a esperarse en la mayoría de los El Niño.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Nada: las probabilidades por separado son las mismas.</p>
+<p><span class="porque">Las marginales son iguales, pero la conjunta cambia.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-mediocristán-o-extremistán" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-mediocristán-o-extremistán">Ejercicio 1 ●○○ · ¿Mediocristán o Extremistán?</h4>
+<p>Clasifique y justifique: (a) la temperatura diaria de Bogotá; (b) el número de usuarios afectados por cada apagón; (c) la generación diaria de una planta solar; (d) el costo de las indemnizaciones por un evento climático.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><strong>Mediocristán</strong>: la temperatura se mueve en un rango estrecho y ningún día cambia el promedio anual. (b) <strong>Extremistán</strong>: casi todos los apagones son pequeños y unos pocos afectan a millones; el mayor domina el total. (c) <strong>Mediocristán</strong>: la generación está acotada por la capacidad y la radiación; un día soleado no puede generar diez veces lo normal. (d) <strong>Extremistán</strong>: un solo evento grande puede costar más que todos los pequeños juntos.</li>
+</ol>
+<p>La prueba es imaginar el caso más extremo posible y preguntar si cambiaría el total. Si la respuesta es sí, la desviación típica no sirve para medir el riesgo.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-treinta-plantas-y-una-sequía" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-treinta-plantas-y-una-sequía">Ejercicio 2 ●●○ · Treinta plantas y una sequía</h4>
+<p>Un sistema tiene 30 plantas críticas con probabilidad de falla de 1,5 % por semestre en condiciones normales y 4 % durante una sequía. Calcule la probabilidad de al menos una falla en los dos casos y comente la diferencia.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Normal</strong>: <span class="math inline">1 - 0{,}985^{30} = 1 - 0{,}636 = 0{,}36</span>.</p>
+<p><strong>Sequía</strong>: <span class="math inline">1 - 0{,}96^{30} = 1 - 0{,}294 = 0{,}71</span>.</p>
+<p>La probabilidad casi se duplica aunque cada planta solo pase de 1,5 % a 4 %: con muchos elementos, un cambio pequeño en cada uno se acumula. Por eso las reservas deben dimensionarse para las condiciones de sequía y no para las normales, y por eso el mantenimiento preventivo antes de un El Niño anunciado tiene tanto valor.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>En <strong>Mediocristán</strong> ningún caso mueve el total; en <strong>Extremistán</strong> un solo caso puede ser el total.</li>
+<li>El cambio diario del precio de bolsa tiene <strong>cola pesada</strong>: 21 saltos de más de 5σ en 26 años, casi <strong>3 900 veces</strong> lo que predice la normal.</li>
+<li>Un <strong>cisne gris</strong> es un extremo conocido de fecha incierta; El Niño lo es, y para él se planea.</li>
+<li>Los extremos que comparten causa <strong>no son independientes</strong>: con la sequía, la probabilidad de al menos una falla crítica pasa de <strong>0,33 a 0,71</strong>.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Eventos extremos, colas pesadas y cisnes negros» de las notas de la semana 1 trae la figura de Mediocristán frente a Extremistán con 100 000 personas y la tabla de la cola del precio. La semana 2 mide colas pesadas en el tamaño de los apagones, y la semana 5 incorpora El Niño como incertidumbre profunda en los escenarios.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJjb2xhUCA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczEtMDgtY29sYS5qc29uXCIpLmpzb24oKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHVtYnJhbFAgPSBJbnB1dHMucmFuZ2UoWzEsIDhdLCB7dmFsdWU6IDMsIHN0ZXA6IDAuNSwgbGFiZWw6IFwiVW1icmFsIFtkZXN2aWFjaW9uZXMgdMOtcGljYXNdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZmlsYVAgPSBjb2xhUC5maWxhcy5maW5kKChmKSA9PiBNYXRoLmFicyhmLmsgLSB1bWJyYWxQKSA8IDFlLTkpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMzAwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlVtYnJhbCBbz4NdIOKGklwiLCBkb21haW46IFswLCA4XX0sXG4gIHk6IHt0eXBlOiBcImxvZ1wiLCBsYWJlbDogXCLihpEgRnJhY2Npw7NuIGRlIGTDrWFzIHBvciBlbmNpbWFcIiwgZG9tYWluOiBbMWUtNSwgMV0sIGdyaWQ6IHRydWV9LFxuICBjb2xvcjoge2RvbWFpbjogW1wib2JzZXJ2YWRvXCIsIFwibm9ybWFsXCJdLCByYW5nZTogW0NPTE9SRVMucm9qbywgQ09MT1JFUy5ncmlzXSwgbGVnZW5kOiB0cnVlfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmUoY29sYVAuZmlsYXMuZmlsdGVyKChmKSA9PiBmLmZyYWNjaW9uID4gMCksIHt4OiBcImtcIiwgeTogXCJmcmFjY2lvblwiLCBzdHJva2U6ICgpID0+IFwib2JzZXJ2YWRvXCIsIHN0cm9rZVdpZHRoOiAyfSksXG4gICAgUGxvdC5saW5lKGNvbGFQLmZpbGFzLmZpbHRlcigoZikgPT4gZi5ub3JtYWwgPiAxZS01KSwge3g6IFwia1wiLCB5OiBcIm5vcm1hbFwiLCBzdHJva2U6ICgpID0+IFwibm9ybWFsXCIsIHN0cm9rZURhc2hhcnJheTogXCI1LDRcIiwgc3Ryb2tlV2lkdGg6IDJ9KSxcbiAgICBQbG90LnJ1bGVYKFt1bWJyYWxQXSwge3N0cm9rZTogQ09MT1JFUy5hbWJhcn0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+RMOtYXMgcG9yIGVuY2ltYSBkZWwgdW1icmFsPGI+JHtmb3JtYXRvTnVtZXJvKDApKGZpbGFQLm9ic2VydmFkb3MpfSBkZSAke2Zvcm1hdG9OdW1lcm8oMCkoY29sYVAuZGlhcyl9PC9iPjwvZGl2PlxuICA8ZGl2PkZyZWN1ZW5jaWEgb2JzZXJ2YWRhPGI+JHtmb3JtYXRvUG9yY2VudGFqZShmaWxhUC5mcmFjY2lvbiwgMil9PC9iPjwvZGl2PlxuICA8ZGl2PkTDrWFzIHF1ZSBwcmVkaWNlIGxhIG5vcm1hbDxiPiR7Zm9ybWF0b051bWVybyhmaWxhUC5ub3JtYWwgKiBjb2xhUC5kaWFzIDwgMSA/IDMgOiAxKShmaWxhUC5ub3JtYWwgKiBjb2xhUC5kaWFzKX08L2I+PC9kaXY+XG4gIDxkaXY+VmVjZXMgbcOhcyBmcmVjdWVudGUgcXVlIGxhIG5vcm1hbDxiPiR7Zm9ybWF0b051bWVybygwKShmaWxhUC5mcmFjY2lvbiAvIGZpbGFQLm5vcm1hbCl9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHBsYW50YXNGID0gSW5wdXRzLnJhbmdlKFs1LCA0MF0sIHt2YWx1ZTogMjAsIHN0ZXA6IDEsIGxhYmVsOiBcIlBsYW50YXMgY3LDrXRpY2FzXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHByb2JhYmlsaWRhZEYgPSBJbnB1dHMucmFuZ2UoWzAuNSwgNV0sIHt2YWx1ZTogMiwgc3RlcDogMC41LCBsYWJlbDogXCJQcm9iYWJpbGlkYWQgZGUgZmFsbGEgcG9yIHNlbWVzdHJlIFslXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtdWx0aXBsaWNhZG9yRiA9IElucHV0cy5yYW5nZShbMSwgNV0sIHt2YWx1ZTogMywgc3RlcDogMC41LCBsYWJlbDogXCJNdWx0aXBsaWNhZG9yIGVuIHNlcXXDrWFcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZmFsbGFzRiA9IHtcbiAgY29uc3QgcCA9IHByb2JhYmlsaWRhZEYgLyAxMDAsIHBTZXF1aWEgPSBNYXRoLm1pbihwICogbXVsdGlwbGljYWRvckYsIDEpLCBuaW5vID0gMSAvIDE2O1xuICBjb25zdCBub3JtYWwgPSAxIC0gTWF0aC5wb3coMSAtIHAsIHBsYW50YXNGKSwgZW5TZXF1aWEgPSAxIC0gTWF0aC5wb3coMSAtIHBTZXF1aWEsIHBsYW50YXNGKTtcbiAgcmV0dXJuIHtub3JtYWwsIGVuU2VxdWlhLCBwbGFudGFDb25jcmV0YTogbmlubyAqIHAsIGNvbmp1bnRhSW5kZXBlbmRpZW50ZTogbmlubyAqIG5vcm1hbCwgY29uanVudGFSZWFsOiBuaW5vICogZW5TZXF1aWF9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+QWwgbWVub3MgdW5hIGZhbGxhLCBzZW1lc3RyZSBub3JtYWw8Yj4ke2Zvcm1hdG9OdW1lcm8oMikoZmFsbGFzRi5ub3JtYWwpfTwvYj48L2Rpdj5cbiAgPGRpdj5BbCBtZW5vcyB1bmEgZmFsbGEgZHVyYW50ZSBFbCBOacOxbzxiPiR7Zm9ybWF0b051bWVybygyKShmYWxsYXNGLmVuU2VxdWlhKX08L2I+PC9kaXY+XG4gIDxkaXY+VW5hIHBsYW50YSBjb25jcmV0YSBmYWxsYSBjb24gRWwgTmnDsW8sIHNpIGZ1ZXJhbiBpbmRlcGVuZGllbnRlczxiPjEgY2FkYSAke2Zvcm1hdG9OdW1lcm8oMCkoMC41IC8gZmFsbGFzRi5wbGFudGFDb25jcmV0YSl9IGHDsW9zPC9iPjwvZGl2PlxuICA8ZGl2PkFsZ3VuYSBwbGFudGEgZmFsbGEgY29uIEVsIE5pw7FvLCBzaSBmdWVyYW4gaW5kZXBlbmRpZW50ZXM8Yj4xIGNhZGEgJHtmb3JtYXRvTnVtZXJvKDApKDAuNSAvIGZhbGxhc0YuY29uanVudGFJbmRlcGVuZGllbnRlKX0gYcOxb3M8L2I+PC9kaXY+XG4gIDxkaXY+QWxndW5hIHBsYW50YSBmYWxsYSBjb24gRWwgTmnDsW8sIGNvbiBjYXVzYSBjb23Dum48Yj4xIGNhZGEgJHtmb3JtYXRvTnVtZXJvKDApKDAuNSAvIGZhbGxhc0YuY29uanVudGFSZWFsKX0gYcOxb3M8L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3VtYnJhbFAnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncGxhbnRhc0YnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncHJvYmFiaWxpZGFkRicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdtdWx0aXBsaWNhZG9yRicpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana1";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

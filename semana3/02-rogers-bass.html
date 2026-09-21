@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Las categorías de adoptantes de Rogers y el modelo de Bass con sus dos canales, innovación e imitación: el pico de la curva en S, la versión discreta y el ajuste a una serie de autogeneración solar, donde el mercado potencial queda mal identificado.">
+
+<title>Rogers y Bass: la curva en S de la adopción – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana3/03-contagio-simple.html" rel="next">
+<link href="../semana3/01-dinamica-sobre-redes.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana3/index.html">Semana 3 · Redes II</a></li><li class="breadcrumb-item"><a href="../semana3/02-rogers-bass.html">Rogers y Bass: la curva en S de la adopción</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/04-centralidades.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Centralidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/05-mundo-pequeno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agrupamiento y mundo pequeño</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/06-modelos-de-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos de red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Redes II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/01-dinamica-sobre-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dinámica sobre redes: nodos con estado y reglas locales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/02-rogers-bass.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Rogers y Bass: la curva en S de la adopción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/03-contagio-simple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio simple: SI, SIS y SIR sobre redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/04-contagio-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio complejo y umbrales: cuando un vecino no basta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores y comunidades: quién se mueve con quién</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/07-bipartitas-mercado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes bipartitas y el mercado mayorista</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/08-limites-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Límites del enfoque de redes: de la red al stock agregado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/09-adopcion-solar-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La adopción solar como sistema en red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-el-video-que-se-vuelve-viral" id="toc-la-intuición-el-video-que-se-vuelve-viral" class="nav-link" data-scroll-target="#la-intuición-el-video-que-se-vuelve-viral">2. La intuición: el video que se vuelve viral</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana3/index.html">Semana 3 · Redes II</a></li><li class="breadcrumb-item"><a href="../semana3/02-rogers-bass.html">Rogers y Bass: la curva en S de la adopción</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Rogers y Bass: la curva en S de la adopción</h1>
+<p class="subtitle lead">Semana 3 · Concepto 2 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    Las categorías de adoptantes de Rogers y el modelo de Bass con sus dos canales, innovación e imitación: el pico de la curva en S, la versión discreta y el ajuste a una serie de autogeneración solar, donde el mercado potencial queda mal identificado.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="27" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 26;"><span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {bass<span class="op">,</span> bassDiscreto<span class="op">,</span> tiempoPicoBass<span class="op">,</span> ajustarBass} <span class="im">from</span> <span class="st">"../simuladores/difusion.js"</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 75 minutos</span> <span class="dato">📚 Requiere <a href="../semana3/01-dinamica-sobre-redes.html">dinámica sobre redes</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 2</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Distinguir los dos canales de adopción del modelo de Bass (innovación e imitación) y explicar por qué su suma produce una curva en S.</li>
+<li>Calcular a mano el pico de adopción, <span class="math inline">t^* = \ln(q/p)/(p+q)</span>, y la versión discreta año por año.</li>
+<li>Ajustar Bass a una serie corta y explicar por qué el mercado potencial queda mal identificado antes del punto de inflexión.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>La adopción de una tecnología suma dos canales: quienes adoptan por su cuenta, a un ritmo que no depende de los demás, y quienes adoptan porque otros ya lo hicieron. El segundo canal acelera la curva al comienzo y el mercado que se agota la frena al final, y de ahí sale la forma de S.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Un planeador de la UPME, un operador de red o un banco que financia paneles necesita respuestas agregadas antes que respuestas de red: ¿cuántos techos solares habrá en 2030?, ¿cuándo llegará el año de más solicitudes de conexión?, ¿la adopción ya pasó su punto de máximo crecimiento?</p>
+<div class="caso-colombia caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En Colombia</span><span class="caja-texto-titulo">24 447 techos solares al cierre de 2025</span>
+</div>
+<p>El registro de la UPME que reporta el Ministerio de Minas y Energía contaba 24 447 techos solares en autogeneración y generación distribuida al cierre de 2025, con 9 360 nuevos en ese año (fuente: MinEnergía, 2026). La cifra cuenta registros, que no equivalen a sistemas en operación. Un año antes el registro tenía unos 15 087 techos: crecer 62 % en un año es propio de una tecnología en plena aceleración. En agosto de 2024 operaban 8 766 autogeneradores a pequeña escala con 187 MW (fuente: SER Colombia, 2024).</p>
+</div>
+<p>Una cifra suelta dice que la adopción crece rápido, pero no dice si la curva está en su tramo explosivo o cerca de saturarse. <strong>¿Qué forma tiene la curva de adopción de una tecnología y qué se puede saber de su futuro con pocos años de datos?</strong></p>
+</section>
+<section id="la-intuición-el-video-que-se-vuelve-viral" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-video-que-se-vuelve-viral">2. La intuición: el video que se vuelve viral</h2>
+<p>Piense en un video sobre cómo leer la factura de energía que circula en los grupos de mensajería de un barrio. Avance cuadro a cuadro y fíjese en los dos colores de cada barra: quienes encuentran el video por su cuenta y quienes lo reciben de alguien que ya lo vio.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos canales y un mercado que se agota</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-video-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s3-02-video-1.svg" class="img-fluid" alt="Ejes vacíos: vistas nuevas por día contra días; el video circula entre 2 000 personas."></a></p>
+<p><strong>Mire el mercado.</strong> Hay <span class="math inline">m = 2\,000</span> personas en los grupos y nadie ha visto el video. Pueden verlo de dos maneras: encontrarlo por su cuenta o recibirlo de alguien que ya lo vio.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-video-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s3-02-video-2.svg" class="img-fluid" alt="Barras de los días 0 y 1: 60 vistas por día, todas verdes (por su cuenta); el día 1 aparece una franja azul de imitación."></a></p>
+<p><strong>Arranque por el canal propio.</strong> Al comienzo lo ven <span class="math inline">p\,m = 0{,}03 \times 2\,000 = 60</span> personas por día, todas por su cuenta. Ese canal no depende de cuántos lo hayan visto.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-video-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s3-02-video-3.svg" class="img-fluid" alt="Días 2 y 3: la franja azul de imitación crece hasta 97 vistas por día, casi el doble de la verde."></a></p>
+<p><strong>Encienda la imitación.</strong> Cada persona que lo vio lo comparte, así que el canal azul crece con quienes ya lo vieron. El día 3 ya pesa casi el doble que el canal propio.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-video-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s3-02-video-4.svg" class="img-fluid" alt="Días 4 a 7: las barras llegan a su máximo cerca del día 6,2, con 221 vistas por día."></a></p>
+<p><strong>Llegue al pico.</strong> El ritmo toca su máximo el día 6,2: 221 vistas nuevas por día, con 921 personas que ya vieron el video. Casi todo viene de la imitación.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-video-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s3-02-video-5.svg" class="img-fluid" alt="Días 8 a 15: las barras bajan hasta 23 vistas por día."></a></p>
+<p><strong>Vea cómo se agota el mercado.</strong> Quedan pocas personas por ver el video. Todos siguen compartiendo, pero el ritmo cae porque casi no quedan a quién compartírselo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-video-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s3-02-video-6.svg" class="img-fluid" alt="Las barras se aclaran y aparece en violeta la curva acumulada en forma de S, con un eje derecho de 0 a 2 000 personas."></a></p>
+<p><strong>Acumule.</strong> Sume las vistas día a día y obtendrá la <strong>curva en S</strong>: arranque lento, aceleración y saturación. La campana de vistas nuevas es la pendiente de la S, y su pico es el punto de inflexión.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-video-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s3-02-video-7.svg" class="img-fluid" alt="La misma figura con etiquetas violeta: el canal propio es la publicidad, el subsidio o el instalador; el de imitación es el vecino que muestra su factura."></a></p>
+<p><strong>Pase a los techos solares.</strong> <span class="math inline">m</span> es el mercado potencial de techos; el canal propio es la publicidad, el subsidio o el instalador que toca la puerta; el de imitación es el vecino que muestra su factura. La escala de tiempo pasa de días a años.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Categorías de adoptantes de Rogers</span>
+</div>
+<p>Everett Rogers (2003) clasifica a quienes adoptan una innovación según el momento en que lo hacen: <strong>innovadores</strong> (el primer 2,5 %), <strong>adoptantes tempranos</strong> (13,5 %), <strong>mayoría temprana</strong> (34 %), <strong>mayoría tardía</strong> (34 %) y <strong>rezagados</strong> (16 %). Identifica además cinco atributos que aceleran la adopción: ventaja relativa, compatibilidad, baja complejidad, posibilidad de probar y <strong>observabilidad</strong>. El último conecta la difusión con las redes, porque un panel en el techo del vecino se ve.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Modelo de Bass</span>
+</div>
+<p>Sea <span class="math inline">N(t)</span> el número acumulado de adoptantes [techos] de un mercado potencial <span class="math inline">m</span> [techos]. Bass (1969) supone que la probabilidad de adoptar por unidad de tiempo de quien todavía no ha adoptado crece linealmente con la fracción que ya adoptó:</p>
+<p><span class="math display">\frac{dN}{dt} = \Bigl(p + q\,\frac{N}{m}\Bigr)\bigl(m - N\bigr) \quad [\text{techos/año}],</span></p>
+<p>donde <span class="math inline">p</span> es el <strong>coeficiente de innovación</strong> [1/año] y <span class="math inline">q</span> el de <strong>imitación</strong> [1/año]. Si <span class="math inline">q &gt; p</span>, la tasa de adopción tiene un máximo en</p>
+<p><span class="math display">t^* = \frac{\ln(q/p)}{p + q}\ [\text{años}],</span></p>
+<p>con <span class="math inline">N(t^*) = m\,(1/2 - p/2q)</span> adoptantes acumulados y una tasa máxima de</p>
+<p><span class="math display">\Bigl.\frac{dN}{dt}\Bigr|_{t^*} = \frac{m\,(p+q)^2}{4q} \quad [\text{techos/año}].</span></p>
+<p>En tiempo discreto, con pasos de un año: <span class="math inline">n_t = \bigl(p + q\,N_{t-1}/m\bigr)\bigl(m - N_{t-1}\bigr)</span> y <span class="math inline">N_t = N_{t-1} + n_t</span>.</p>
+</div>
+<p>Construya el modelo en notación de Forrester y escriba la ecuación al mismo ritmo. Lo nuevo de cada paso aparece en ámbar.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">De los dos canales a la ecuación de Bass</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-canales-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s3-02-canales-1.svg" class="img-fluid" alt="Un stock llamado adoptantes N de t, en techos."></a></p>
+<p><strong>Empiece por el stock.</strong> <span class="math inline">N(t)</span> [techos] son los hogares que ya instalaron. Pase el criterio de la fotografía de la semana 4: si congela el tiempo, puede contarlos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-canales-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s3-02-canales-2.svg" class="img-fluid" alt="Se agrega el stock de potenciales, m menos N, con valor inicial m, y un flujo de adopción que va de potenciales a adoptantes."></a></p>
+<p><strong>Agregue de dónde vienen.</strong> Los potenciales, <span class="math inline">m - N(t)</span>, arrancan en <span class="math inline">m</span> y se vacían hacia los adoptantes por el flujo de adopción [techos/año]. Nadie se pierde en el camino:</p>
+<p><span class="math display">\frac{dN}{dt} = \text{adopción}(t).</span></p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-canales-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s3-02-canales-3.svg" class="img-fluid" alt="Se agrega el coeficiente de innovación p y dos conectores hacia la válvula: desde p y desde el stock de potenciales, ambos con polaridad positiva."></a></p>
+<p><strong>Agregue el canal propio.</strong> Cada año adopta por su cuenta una fracción <span class="math inline">p</span> de los que faltan:</p>
+<p><span class="math display">\text{adopción}(t) = p\,(m - N) + \;?</span></p>
+<p>Unidades: [1/año] × [techos] = [techos/año], las de un flujo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-canales-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s3-02-canales-4.svg" class="img-fluid" alt="Se agregan el coeficiente de imitación q, el mercado potencial m y la fracción adoptada N sobre m, que recibe un conector positivo desde N y uno negativo desde m."></a></p>
+<p><strong>Agregue el canal de imitación.</strong> La presión social crece con la fracción que ya adoptó, <span class="math inline">N/m</span> [adimensional]:</p>
+<p><span class="math display">\text{adopción}(t) = \Bigl(p + q\,\frac{N}{m}\Bigr)(m - N).</span></p>
+<p>Con <span class="math inline">N = 0</span> solo funciona el canal propio; con <span class="math inline">N</span> cerca de <span class="math inline">m</span>, los dos canales se apagan porque no queda a quién convencer.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-canales-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s3-02-canales-5.svg" class="img-fluid" alt="Aparecen dos lazos: R1 de imitación entre adoptantes, fracción adoptada y adopción; B1 de agotamiento entre potenciales y adopción."></a></p>
+<p><strong>Lea los lazos.</strong> <strong>R1</strong> (imitación) es de refuerzo: más adoptantes, más contagio, más adoptantes. <strong>B1</strong> (agotamiento) es de balance: cada adopción deja menos potenciales y frena la siguiente. Con <span class="math inline">p = 0</span> y alguna semilla, la ecuación es la logística <span class="math inline">q\,N(1 - N/m)</span> que la semana 5 retoma.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-02-canales-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s3-02-canales-6.svg" class="img-fluid" alt="Recuadro con la curva en S: antes de t estrella domina R1 y después domina B1."></a></p>
+<p><strong>Ubique el cambio de dominancia.</strong> Antes de <span class="math inline">t^*</span> domina R1 y la adopción se acelera; después domina B1 y se frena. El pico cae en <span class="math inline">t^* = \ln(q/p)/(p+q)</span>, con <span class="math inline">N(t^*) = m\,(1/2 - p/2q)</span>, un poco antes de la mitad del mercado. Si <span class="math inline">q \le p</span>, no hay pico: la adopción es máxima al comienzo y la curva no tiene forma de S.</p>
+</div>
+</div>
+<p>Para tener valores de referencia, el metaanálisis de Sultan, Farley y Lehmann (1990) reporta promedios de <span class="math inline">p \approx 0{,}03</span> y <span class="math inline">q \approx 0{,}38</span> por año en bienes durables [POR VERIFICAR el resumen original]: la imitación suele pesar diez veces más que la innovación.</p>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-video-con-números" class="level3">
+<h3 class="anchored" data-anchor-id="el-video-con-números">El video, con números</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Cuándo llega el pico de vistas del video?</span>
+</div>
+<p><strong>Planteamiento.</strong> El video circula entre <span class="math inline">m = 2\,000</span> personas con <span class="math inline">p = 0{,}03</span> y <span class="math inline">q = 0{,}38</span> por día. ¿En qué día llega el máximo de vistas nuevas, cuántas personas lo han visto entonces y cuántas lo ven por día en ese momento? ¿Qué cambiaría sin imitación?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver el video a mano</span>
+</div>
+<div class="paso">
+<p><strong>Calcule el primer día.</strong> Nadie lo ha compartido, así que solo funciona el canal propio: <span class="math inline">p\,m = 0{,}03 \times 2\,000 = 60</span> personas por día.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule el día del pico.</strong></p>
+<p><span class="math display">t^* = \frac{\ln(0{,}38/0{,}03)}{0{,}03 + 0{,}38} = \frac{\ln 12{,}67}{0{,}41} = \frac{2{,}54}{0{,}41} \approx 6{,}2 \text{ días}.</span></p>
+</div>
+<div class="paso">
+<p><strong>Calcule cuántos lo han visto en el pico.</strong></p>
+<p><span class="math display">N(t^*) = 2\,000\Bigl(\frac12 - \frac{0{,}03}{2 \times 0{,}38}\Bigr) = 2\,000\,(0{,}5 - 0{,}0395) \approx 921 \text{ personas}.</span></p>
+</div>
+<div class="paso">
+<p><strong>Calcule la tasa máxima.</strong></p>
+<p><span class="math display">\Bigl.\frac{dN}{dt}\Bigr|_{t^*} = \frac{2\,000 \times 0{,}41^2}{4 \times 0{,}38} = \frac{336{,}2}{1{,}52} \approx 221 \text{ vistas/día}.</span></p>
+</div>
+<div class="paso">
+<p><strong>Quite la imitación.</strong> Con <span class="math inline">q = 0</span>, las vistas nuevas son <span class="math inline">p\,(m - N)</span>: 60 el primer día y menos cada día siguiente, sin pico ni forma de S. La S aparece solo cuando <span class="math inline">q &gt; p</span>, es decir, cuando la gente se entera más por los demás que por su cuenta.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Verifique con Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Verifique con Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="f1c46b7a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> difusion</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>p, q, m <span class="op">=</span> <span class="fl">0.03</span>, <span class="fl">0.38</span>, <span class="dv">2_000</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>pico <span class="op">=</span> difusion.tiempo_pico_bass(p, q)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>curva <span class="op">=</span> difusion.bass(p, q, m, np.array([<span class="fl">0.0</span>, pico]))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"día del pico = </span><span class="sc">{</span>pico<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(curva.<span class="bu">round</span>(<span class="dv">1</span>).to_string())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>día del pico = 6.19
+          acumulado  nuevos
+t                          
+0.000000        0.0    60.0
+6.192619      921.1   221.2</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="un-conjunto-residencial-año-por-año" class="level3">
+<h3 class="anchored" data-anchor-id="un-conjunto-residencial-año-por-año">Un conjunto residencial, año por año</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Bass con números redondos en 1 000 casas</span>
+</div>
+<p><strong>Planteamiento.</strong> Un conjunto de 1 000 casas en Medellín tiene un mercado potencial de <span class="math inline">m = 1\,000</span> techos, con <span class="math inline">p = 0{,}01</span> y <span class="math inline">q = 0{,}4</span> por año. Use la regla discreta anual para calcular los cinco primeros años. ¿En qué año se instalan más techos, según la versión discreta y según la continua?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver la tabla a mano</span>
+</div>
+<div class="paso">
+<p><strong>Calcule el año 1.</strong> Con <span class="math inline">N_0 = 0</span>, la probabilidad de adoptar de cada casa pendiente es <span class="math inline">p + q \times 0 = 0{,}01</span>, y adoptan <span class="math inline">0{,}01 \times 1\,000 = 10</span> casas.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">año <span class="math inline">t</span></th>
+<th style="text-align: center;"><span class="math inline">p + q\,N_{t-1}/m</span></th>
+<th style="text-align: center;"><span class="math inline">n_t</span> [techos]</th>
+<th style="text-align: center;"><span class="math inline">N_t</span> [techos]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0,01000</td>
+<td style="text-align: center;"><span class="math inline">0{,}01000 \times 1\,000{,}00 = 10{,}00</span></td>
+<td style="text-align: center;">10,00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Calcule los años 2 a 5.</strong> Cada año, la probabilidad usa el acumulado del año anterior:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">año <span class="math inline">t</span></th>
+<th style="text-align: center;"><span class="math inline">p + q\,N_{t-1}/m</span></th>
+<th style="text-align: center;"><span class="math inline">n_t</span> [techos]</th>
+<th style="text-align: center;"><span class="math inline">N_t</span> [techos]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><span class="math inline">0{,}01 + 0{,}4 \times 0{,}01000 = 0{,}01400</span></td>
+<td style="text-align: center;"><span class="math inline">0{,}01400 \times 990{,}00 = 13{,}86</span></td>
+<td style="text-align: center;">23,86</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"><span class="math inline">0{,}01 + 0{,}4 \times 0{,}02386 = 0{,}01954</span></td>
+<td style="text-align: center;"><span class="math inline">0{,}01954 \times 976{,}14 = 19{,}08</span></td>
+<td style="text-align: center;">42,94</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><span class="math inline">0{,}01 + 0{,}4 \times 0{,}04294 = 0{,}02718</span></td>
+<td style="text-align: center;"><span class="math inline">0{,}02718 \times 957{,}06 = 26{,}01</span></td>
+<td style="text-align: center;">68,95</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><span class="math inline">0{,}01 + 0{,}4 \times 0{,}06895 = 0{,}03758</span></td>
+<td style="text-align: center;"><span class="math inline">0{,}03758 \times 931{,}05 = 34{,}99</span></td>
+<td style="text-align: center;">103,93</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Interprete la columna de probabilidad.</strong> La probabilidad de adoptar de cada casa pendiente pasa de 1 % a casi 4 % en cinco años, aunque ni el precio ni el subsidio cambiaron. Lo que cambió es cuántos vecinos ya tienen paneles.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule el pico continuo.</strong> <span class="math inline">t^* = \ln(0{,}4/0{,}01)/0{,}41 = \ln 40/0{,}41 = 9{,}0</span> años, con <span class="math inline">N(t^*) = 1\,000\,(0{,}5 - 0{,}0125) = 487{,}5</span> techos y una tasa de <span class="math inline">1\,000 \times 0{,}41^2/1{,}6 = 105{,}1</span> techos por año.</p>
+</div>
+<div class="paso">
+<p><strong>Compare con la versión discreta.</strong> Siguiendo la tabla, el máximo discreto es de 105,0 techos y llega en el <strong>año 11</strong>. El paso anual retrasa el pico porque cada año usa el acumulado del año anterior: los mismos <span class="math inline">p</span> y <span class="math inline">q</span> dan picos distintos según la formulación.</p>
+</div>
+<div class="paso">
+<p><strong>Ubique las categorías de Rogers.</strong> Sobre la curva continua, los innovadores (primer 2,5 %, 25 techos) adoptan entre 0 y 1,8 años; los adoptantes tempranos (135), entre 1,8 y 5,3; la mayoría temprana (340), entre 5,3 y 9,1; la tardía (340), entre 9,1 y 13,1, y los rezagados (160), después.</p>
+</div>
+</div>
+<div id="pred-s3-canales" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>En el mismo conjunto, la administración tiene dos opciones con igual presupuesto: un <strong>subsidio</strong> que sube <span class="math inline">p</span> de 0,01 a 0,02, o una <strong>campaña de vitrinas</strong> (paneles visibles con su ahorro en la cartelera) que sube <span class="math inline">q</span> de 0,4 a 0,6. ¿Cuál adelanta más el año de más instalaciones?</p>
+<div class="opcion">
+<p>El subsidio, porque duplica un coeficiente.</p>
+</div>
+<div class="opcion">
+<p>La campaña de vitrinas.</p>
+</div>
+<div class="opcion">
+<p>Las dos lo adelantan lo mismo.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Bass con dos perillas</span>
+</div>
+<p>Mueva primero <span class="math inline">p</span> a 0,02 y anote el pico; vuelva a 0,01 y mueva <span class="math inline">q</span> a 0,6. Compare los dos cambios con su predicción. La curva gris es el caso base (<span class="math inline">p = 0{,}01</span>, <span class="math inline">q = 0{,}4</span>) y las barras muestran la versión discreta anual.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="300" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 299;"><span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a>viewof pB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.002</span><span class="op">,</span> <span class="fl">0.05</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.002</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Innovación p [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="305" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 304;"><span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a>viewof qB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">0.8</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.4</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Imitación q [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="310" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 309;"><span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>bassB <span class="op">=</span> {</span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tiempos <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">301</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> k <span class="op">*</span> <span class="fl">0.1</span>)<span class="op">;</span></span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> continua <span class="op">=</span> <span class="fu">bass</span>(pB<span class="op">,</span> qB<span class="op">,</span> <span class="dv">1000</span><span class="op">,</span> tiempos)<span class="op">;</span></span>
+<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">bass</span>(<span class="fl">0.01</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">,</span> <span class="dv">1000</span><span class="op">,</span> tiempos)<span class="op">;</span></span>
+<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> discreta <span class="op">=</span> <span class="fu">bassDiscreto</span>(pB<span class="op">,</span> qB<span class="op">,</span> <span class="dv">1000</span><span class="op">,</span> <span class="dv">30</span>)<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> maxima <span class="op">=</span> discreta<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> f) <span class="kw">=&gt;</span> (f<span class="op">.</span><span class="at">nuevos</span> <span class="op">&gt;</span> a<span class="op">.</span><span class="at">nuevos</span> <span class="op">?</span> f <span class="op">:</span> a))<span class="op">;</span></span>
+<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pico <span class="op">=</span> <span class="fu">tiempoPicoBass</span>(pB<span class="op">,</span> qB)<span class="op">;</span></span>
+<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {continua<span class="op">,</span> base<span class="op">,</span> discreta<span class="op">,</span> maxima<span class="op">,</span> pico<span class="op">,</span></span>
+<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a>    <span class="dt">tasaPico</span><span class="op">:</span> qB <span class="op">&gt;</span> pB <span class="op">?</span> <span class="dv">1000</span> <span class="op">*</span> (pB <span class="op">+</span> qB) <span class="op">**</span> <span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span> <span class="op">*</span> qB) <span class="op">:</span> <span class="dv">1000</span> <span class="op">*</span> pB<span class="op">,</span></span>
+<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a>    <span class="dt">acumuladoPico</span><span class="op">:</span> qB <span class="op">&gt;</span> pB <span class="op">?</span> <span class="dv">1000</span> <span class="op">*</span> (<span class="fl">0.5</span> <span class="op">-</span> pB <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> qB)) <span class="op">:</span> <span class="dv">0</span>}<span class="op">;</span></span>
+<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="325" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 324;"><span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Años"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">30</span>]}<span class="op">,</span></span>
+<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Techos nuevos por año"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectY</span>(bassB<span class="op">.</span><span class="at">discreta</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">periodo</span> <span class="op">-</span> <span class="fl">0.9</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">periodo</span> <span class="op">-</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"nuevos"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.18</span>})<span class="op">,</span></span>
+<span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(bassB<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"nuevos"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.6</span>})<span class="op">,</span></span>
+<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(bassB<span class="op">.</span><span class="at">continua</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"nuevos"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([bassB<span class="op">.</span><span class="at">pico</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="340" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 339;"><span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Pico continuo t*&lt;b&gt;</span><span class="sc">${</span>qB <span class="op">&gt;</span> pB <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(bassB<span class="op">.</span><span class="at">pico</span>)<span class="sc">}</span><span class="vs"> años`</span> <span class="op">:</span> <span class="st">"sin pico (q ≤ p)"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Tasa máxima continua&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(bassB<span class="op">.</span><span class="at">tasaPico</span>)<span class="sc">}</span><span class="vs"> techos/año&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Techos instalados en el pico&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(bassB<span class="op">.</span><span class="at">acumuladoPico</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Máximo discreto anual&lt;b&gt;año </span><span class="sc">${</span>bassB<span class="op">.</span><span class="at">maxima</span><span class="op">.</span><span class="at">periodo</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(bassB<span class="op">.</span><span class="at">maxima</span><span class="op">.</span><span class="at">nuevos</span>)<span class="sc">}</span><span class="vs"> techos&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo de Bass (<code>difusion.js</code>, réplica de <code>mise_sd.difusion.bass</code> y <code>bass_discreto</code>) con <span class="math inline">m = 1\,000</span> techos. Conjunto residencial hipotético con parámetros didácticos.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s3-canales"></span>. Con el subsidio (<span class="math inline">p = 0{,}02</span>), el pico llega en el año 7,1 con 110,3 techos por año; con la campaña de vitrinas (<span class="math inline">q = 0{,}6</span>), llega en el año 6,7 con 155,0 techos por año: la respuesta es la segunda. El subsidio suma adoptantes desde el primer día, pero su efecto se diluye; la visibilidad multiplica cada adopción. Además, la campaña produce un pico mucho más alto, que el operador de red debe prever en su ventanilla de solicitudes.</p>
+</section>
+<section id="la-autogeneración-solar-en-colombia" class="level3">
+<h3 class="anchored" data-anchor-id="la-autogeneración-solar-en-colombia">La autogeneración solar en Colombia</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Qué dice Bass sobre el tamaño final del mercado?</span>
+</div>
+<p><strong>Planteamiento.</strong> La serie de capacidad de autogeneración a pequeña escala (AGPE) de 2017 a 2024 del módulo <code>mise_sd.datos</code> es <strong>sintética</strong> y está calibrada a los órdenes de magnitud públicos (unos 190 MW y 9 000 instalaciones en 2024, según SER Colombia); los valores anteriores a 2024 no tienen fuente oficial continua [POR VERIFICAR]. Tiene una ventaja didáctica: se generó con una curva de Bass conocida, <span class="math inline">m = 1\,500</span> MW, <span class="math inline">p = 0{,}002</span> y <span class="math inline">q = 0{,}45</span>, más ruido. Ajuste Bass a los ocho puntos, con 2016 como año de lanzamiento, y compare lo que el ajuste recupera con la verdad.</p>
+</div>
+<section id="acto-1.-predecir" class="level4">
+<h4 class="anchored" data-anchor-id="acto-1.-predecir">Acto 1. Predecir</h4>
+<div id="pred-s3-mercado" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Con los tres parámetros libres, ¿qué mercado potencial <span class="math inline">m</span> espera que recupere el ajuste?</p>
+<div class="opcion">
+<p>Cerca de 1 500 MW, el valor verdadero, porque el ajuste es de mínimos cuadrados.</p>
+</div>
+<div class="opcion">
+<p>Bastante menos de 1 500 MW.</p>
+</div>
+<div class="opcion">
+<p>Bastante más de 1 500 MW.</p>
+</div>
+</div>
+</section>
+<section id="acto-2.-simular" class="level4">
+<h4 class="anchored" data-anchor-id="acto-2.-simular">Acto 2. Simular</h4>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Ajuste de Bass a la serie AGPE</span>
+</div>
+<p>Deje primero el mercado potencial libre y anote <span class="math inline">m</span>, su error y la capacidad en 2030. Después fíjelo en 400, 1 500 y 3 000 MW y compare el error de ajuste (RMSE) con la capacidad proyectada.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="386" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 385;"><span id="cb9-386"><a href="#cb9-386" aria-hidden="true" tabindex="-1"></a>agpe <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s3-02-agpe.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="391" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 390;"><span id="cb10-391"><a href="#cb10-391" aria-hidden="true" tabindex="-1"></a>viewof libreA <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">toggle</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Mercado potencial libre"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="kw">true</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="396" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 395;"><span id="cb11-396"><a href="#cb11-396" aria-hidden="true" tabindex="-1"></a>viewof mA <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">300</span><span class="op">,</span> <span class="dv">5000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1500</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Mercado potencial fijo m [MW]"</span><span class="op">,</span> <span class="dt">disabled</span><span class="op">:</span> libreA})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="401" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 400;"><span id="cb12-401"><a href="#cb12-401" aria-hidden="true" tabindex="-1"></a>ajusteA <span class="op">=</span> {</span>
+<span id="cb12-402"><a href="#cb12-402" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> t <span class="op">=</span> agpe<span class="op">.</span><span class="at">anio</span><span class="op">.</span><span class="fu">map</span>((a) <span class="kw">=&gt;</span> a <span class="op">-</span> <span class="dv">2016</span>)<span class="op">;</span></span>
+<span id="cb12-403"><a href="#cb12-403" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> libre <span class="op">=</span> <span class="fu">ajustarBass</span>(t<span class="op">,</span> agpe<span class="op">.</span><span class="at">capacidad_mw</span>)<span class="op">;</span></span>
+<span id="cb12-404"><a href="#cb12-404" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ajuste <span class="op">=</span> libreA <span class="op">?</span> libre <span class="op">:</span> <span class="fu">ajustarBass</span>(t<span class="op">,</span> agpe<span class="op">.</span><span class="at">capacidad_mw</span><span class="op">,</span> {<span class="dt">mFijo</span><span class="op">:</span> mA})<span class="op">;</span></span>
+<span id="cb12-405"><a href="#cb12-405" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tiempos <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">191</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">+</span> k <span class="op">*</span> <span class="fl">0.1</span>)<span class="op">;</span></span>
+<span id="cb12-406"><a href="#cb12-406" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> curva <span class="op">=</span> <span class="fu">bass</span>(ajuste<span class="op">.</span><span class="at">p</span><span class="op">,</span> ajuste<span class="op">.</span><span class="at">q</span><span class="op">,</span> ajuste<span class="op">.</span><span class="at">m</span><span class="op">,</span> tiempos)<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> ({<span class="dt">anio</span><span class="op">:</span> <span class="dv">2016</span> <span class="op">+</span> f<span class="op">.</span><span class="at">t</span><span class="op">,</span> <span class="dt">mw</span><span class="op">:</span> f<span class="op">.</span><span class="at">acumulado</span>}))<span class="op">;</span></span>
+<span id="cb12-407"><a href="#cb12-407" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> curvaLibre <span class="op">=</span> <span class="fu">bass</span>(libre<span class="op">.</span><span class="at">p</span><span class="op">,</span> libre<span class="op">.</span><span class="at">q</span><span class="op">,</span> libre<span class="op">.</span><span class="at">m</span><span class="op">,</span> tiempos)<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> ({<span class="dt">anio</span><span class="op">:</span> <span class="dv">2016</span> <span class="op">+</span> f<span class="op">.</span><span class="at">t</span><span class="op">,</span> <span class="dt">mw</span><span class="op">:</span> f<span class="op">.</span><span class="at">acumulado</span>}))<span class="op">;</span></span>
+<span id="cb12-408"><a href="#cb12-408" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {ajuste<span class="op">,</span> curva<span class="op">,</span> curvaLibre<span class="op">,</span> <span class="dt">datos</span><span class="op">:</span> agpe<span class="op">.</span><span class="at">anio</span><span class="op">.</span><span class="fu">map</span>((a<span class="op">,</span> i) <span class="kw">=&gt;</span> ({<span class="dt">anio</span><span class="op">:</span> a<span class="op">,</span> <span class="dt">mw</span><span class="op">:</span> agpe<span class="op">.</span><span class="at">capacidad_mw</span>[i]}))<span class="op">,</span></span>
+<span id="cb12-409"><a href="#cb12-409" aria-hidden="true" tabindex="-1"></a>    <span class="dt">pico</span><span class="op">:</span> <span class="dv">2016</span> <span class="op">+</span> <span class="fu">tiempoPicoBass</span>(ajuste<span class="op">.</span><span class="at">p</span><span class="op">,</span> ajuste<span class="op">.</span><span class="at">q</span>)<span class="op">,</span> <span class="dt">en2030</span><span class="op">:</span> <span class="fu">bass</span>(ajuste<span class="op">.</span><span class="at">p</span><span class="op">,</span> ajuste<span class="op">.</span><span class="at">q</span><span class="op">,</span> ajuste<span class="op">.</span><span class="at">m</span><span class="op">,</span> [<span class="dv">14</span>])[<span class="dv">0</span>]<span class="op">.</span><span class="at">acumulado</span>}<span class="op">;</span></span>
+<span id="cb12-410"><a href="#cb12-410" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="415" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 414;"><span id="cb13-415"><a href="#cb13-415" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb13-416"><a href="#cb13-416" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb13-417"><a href="#cb13-417" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Año"</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="bu">String</span>(d)<span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">2017</span><span class="op">,</span> <span class="dv">2035</span>]}<span class="op">,</span></span>
+<span id="cb13-418"><a href="#cb13-418" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad AGPE acumulada [MW]"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb13-419"><a href="#cb13-419" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb13-420"><a href="#cb13-420" aria-hidden="true" tabindex="-1"></a>    libreA <span class="op">?</span> <span class="kw">null</span> <span class="op">:</span> Plot<span class="op">.</span><span class="fu">line</span>(ajusteA<span class="op">.</span><span class="at">curvaLibre</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"mw"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.6</span>})<span class="op">,</span></span>
+<span id="cb13-421"><a href="#cb13-421" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(ajusteA<span class="op">.</span><span class="at">curva</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"mw"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb13-422"><a href="#cb13-422" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">2030</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3 3"</span>})<span class="op">,</span></span>
+<span id="cb13-423"><a href="#cb13-423" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(ajusteA<span class="op">.</span><span class="at">datos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"mw"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">4</span>})<span class="op">,</span></span>
+<span id="cb13-424"><a href="#cb13-424" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb13-425"><a href="#cb13-425" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="430" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 429;"><span id="cb14-430"><a href="#cb14-430" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb14-431"><a href="#cb14-431" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Mercado potencial m&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(ajusteA<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">m</span>)<span class="sc">}</span><span class="vs"> MW</span><span class="sc">${</span>libreA <span class="op">?</span> <span class="vs">` ± </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(ajusteA<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">errores</span><span class="op">.</span><span class="at">m</span>)<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> <span class="st">" (fijo)"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-432"><a href="#cb14-432" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Innovación p&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">4</span>)(ajusteA<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">p</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-433"><a href="#cb14-433" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Imitación q&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(ajusteA<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">q</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-434"><a href="#cb14-434" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Error de ajuste (RMSE)&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(ajusteA<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">rmse</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-435"><a href="#cb14-435" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Año del pico de instalaciones&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(ajusteA<span class="op">.</span><span class="at">pico</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-436"><a href="#cb14-436" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capacidad en 2030&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(ajusteA<span class="op">.</span><span class="at">en2030</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-437"><a href="#cb14-437" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Datos sintéticos con fines didácticos, calibrados a órdenes de magnitud de SER Colombia (2024) y MinEnergía (2026): <code>mise_sd.datos.adopcion_solar_distribuida()</code>, en MW acumulados (puntos ámbar). Ajuste por mínimos cuadrados con <code>ajustarBass</code> de <code>difusion.js</code>, que coincide con <code>mise_sd.difusion.ajustar_bass</code> en las pruebas del curso. La curva gris punteada es el ajuste con <span class="math inline">m</span> libre.</p>
+</div>
+</div>
+</section>
+<section id="acto-3.-explicar" class="level4">
+<h4 class="anchored" data-anchor-id="acto-3.-explicar">Acto 3. Explicar</h4>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el ajuste</span>
+</div>
+<div class="paso">
+<p><strong>Mire los datos.</strong> La serie va de 4,0 MW en 2017 a 213,5 MW en 2024 y crece más rápido cada año: todavía no muestra el punto de inflexión.</p>
+</div>
+<div class="paso">
+<p><strong>Lea el ajuste libre.</strong> Da <span class="math inline">p = 0{,}0030</span>, <span class="math inline">q = 0{,}52</span> y <span class="math inline">m = 797 \pm 333</span> MW, con un error cuadrático medio de 2,1 MW y el pico en 2025,9. El ajuste es excelente y el mercado potencial es la mitad del verdadero. La incertidumbre de <span class="math inline">m</span> es del 42 %, y la correlación estimada entre <span class="math inline">p</span> y <span class="math inline">m</span> es de −0,97: los datos admiten muchas combinaciones casi equivalentes.</p>
+</div>
+<div class="paso">
+<p><strong>Fije el mercado con información externa.</strong> Con <span class="math inline">m = 400</span>, <span class="math inline">1\,500</span> y <span class="math inline">3\,000</span> MW, el error de ajuste es de 3,5, 2,3 y 2,5 MW: casi igual de bueno. En 2030, en cambio, habría 393, 1 116 o 1 616 MW, con el pico de instalaciones en 2023,8, 2027,7 o 2029,6.</p>
+</div>
+<div class="paso">
+<p><strong>Recorte la serie.</strong> El ejercicio avanzado de las notas corta la serie en 2021: con cinco puntos, el ajuste libre propone un mercado de 5 048 MW, justo el tope que el algoritmo admite (cien veces el último dato), con un error estándar de cientos de miles. Mientras la serie no pase su inflexión, <span class="math inline">m</span> casi no está en los datos.</p>
+</div>
+<div class="paso">
+<p><strong>Contraste con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s3-mercado"></span>. La respuesta es la segunda: el ajuste libre recupera 797 MW frente a los 1 500 verdaderos, y lo hace con un error de ajuste menor que el del valor verdadero.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba la conclusión para el informe.</strong> Antes del punto de inflexión, Bass describe bien el pasado y dice poco sobre el tamaño final. El mercado potencial debe venir de fuera de la serie (potencial técnico de techos, estratos con techo propio, límites de los circuitos de la Resolución CREG 174 de 2021) y reportarse como escenario.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo ajuste en Python, como en el Laboratorio 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo ajuste en Python, como en el Laboratorio 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="e1bcd76b" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> difusion</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.datos <span class="im">import</span> adopcion_solar_distribuida</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>serie <span class="op">=</span> adopcion_solar_distribuida()           <span class="co"># 2017-2024, MW acumulados (sintéticos)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> (serie.index <span class="op">-</span> <span class="dv">2016</span>).to_numpy(<span class="bu">float</span>)       <span class="co"># años desde el lanzamiento</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>capacidad <span class="op">=</span> serie[<span class="st">"capacidad_mw"</span>].to_numpy()</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>libre <span class="op">=</span> difusion.ajustar_bass(t, capacidad)    <span class="co"># p, q y m libres</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"libre: p = </span><span class="sc">{</span>libre<span class="sc">.</span>p<span class="sc">:.4f}</span><span class="ss">, q = </span><span class="sc">{</span>libre<span class="sc">.</span>q<span class="sc">:.2f}</span><span class="ss">, m = </span><span class="sc">{</span>libre<span class="sc">.</span>m<span class="sc">:.0f}</span><span class="ss"> ± </span><span class="sc">{</span>libre<span class="sc">.</span>errores[<span class="st">'m'</span>]<span class="sc">:.0f}</span><span class="ss"> MW, "</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"correlación p-m = </span><span class="sc">{</span>libre<span class="sc">.</span>correlacion_pm<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> (<span class="fl">400.0</span>, <span class="fl">1_500.0</span>, <span class="fl">3_000.0</span>):            <span class="co"># m fijado con información externa</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    ajuste <span class="op">=</span> difusion.ajustar_bass(t, capacidad, m_fijo<span class="op">=</span>m)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    en_2030 <span class="op">=</span> difusion.bass(ajuste.p, ajuste.q, m, <span class="dv">2030</span> <span class="op">-</span> <span class="dv">2016</span>)[<span class="st">"acumulado"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"m = </span><span class="sc">{</span>m<span class="sc">:5.0f}</span><span class="ss">: RMSE = </span><span class="sc">{</span>ajuste<span class="sc">.</span>rmse<span class="sc">:.1f}</span><span class="ss"> MW, pico en </span><span class="sc">{</span><span class="dv">2016</span> <span class="op">+</span> ajuste<span class="sc">.</span>tiempo_pico<span class="sc">:.1f}</span><span class="ss">, "</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"en 2030 = </span><span class="sc">{</span>en_2030<span class="sc">:.0f}</span><span class="ss"> MW"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>libre: p = 0.0030, q = 0.52, m = 797 ± 333 MW, correlación p-m = -0.97
+m =   400: RMSE = 3.5 MW, pico en 2023.8, en 2030 = 393 MW
+m =  1500: RMSE = 2.3 MW, pico en 2027.7, en 2030 = 1116 MW
+m =  3000: RMSE = 2.5 MW, pico en 2029.6, en 2030 = 1616 MW</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir adopción con difusión</span>
+</div>
+<p>La <strong>adopción</strong> es la decisión de un hogar; la <strong>difusión</strong> es el proceso agregado por el que la tecnología se extiende en una población. Una política que mejora la rentabilidad individual (el subsidio) se parece a subir <span class="math inline">p</span>; una que aumenta la visibilidad (vitrinas, datos de ahorro de los vecinos) se parece a subir <span class="math inline">q</span>. En el conjunto residencial, duplicar <span class="math inline">p</span> adelanta el pico al año 7,1 y subir <span class="math inline">q</span> a 0,6 lo adelanta al 6,7 con una tasa máxima de 155 techos por año. Reprodúzcalo en el simulador «Bass con dos perillas».</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer el m ajustado como el potencial del mercado</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Según el ajuste de Bass, el mercado potencial de la autogeneración solar es de 797 MW.»</p>
+</div>
+<div class="bien">
+<p>«Con la serie disponible, el mercado potencial no se puede estimar: el ajuste admite desde 400 hasta 3 000 MW con errores parecidos. Presentamos tres escenarios de <span class="math inline">m</span> con su fuente.»</p>
+</div>
+</div>
+<p>Con series cortas que no han llegado al pico, <span class="math inline">m</span> está mal identificado. Presentar un artefacto del ajuste como un dato es el error; la corrección es fijar <span class="math inline">m</span> con información independiente y declararlo como supuesto.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Identificar los innovadores de Bass con los de Rogers</span>
+</div>
+<p>Los innovadores de Rogers son el primer 2,5 % en adoptar; los adoptantes por innovación de Bass son quienes adoptan por el término <span class="math inline">p</span>, en cualquier momento.</p>
+<div id="b506161b" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="02-rogers-bass_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Conjunto residencial con p = 0,01, q = 0,4 y m = 1 000: techos nuevos por año según el canal. La franja gris son los innovadores de Rogers (primer 2,5 %). Parámetros didácticos."><img src="02-rogers-bass_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" alt="Conjunto residencial con p = 0,01, q = 0,4 y m = 1 000: techos nuevos por año según el canal. La franja gris son los innovadores de Rogers (primer 2,5 %). Parámetros didácticos."></a></p>
+<figcaption>Conjunto residencial con p = 0,01, q = 0,4 y m = 1 000: techos nuevos por año según el canal. La franja gris son los innovadores de Rogers (primer 2,5 %). Parámetros didácticos.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>De los 1 000 techos, unos 93 adoptan por el término <span class="math inline">p</span>, y 76 de ellos lo hacen después de que termina el tramo de los innovadores de Rogers. Una campaña dirigida a «los innovadores» con las cifras de <span class="math inline">p</span> apunta a otra población.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Olvidar el paso de tiempo al comparar formulaciones</span>
+</div>
+<p>La versión discreta anual y la continua dan picos distintos con los mismos parámetros: año 11 frente a 9,0 en el conjunto residencial. Si se ajusta la fórmula continua a datos anuales generados por un proceso discreto, <span class="math inline">p</span> sale sesgado. Declare siempre la formulación y el paso; en el simulador, compare la posición de las barras con la de la línea ámbar.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un programa de calentadores solares tiene <span class="math inline">p = 0{,}02</span> y <span class="math inline">q = 0{,}3</span> por año. ¿Cuándo llega el pico de instalaciones?</p>
+<div class="opcion" data-correcta="si">
+<p>Hacia el año 8,5.</p>
+<p><span class="porque">Correcto: <span class="math inline">\ln(0{,}3/0{,}02)/0{,}32 = \ln 15/0{,}32 = 2{,}71/0{,}32 \approx 8{,}5</span>.</span></p>
+</div>
+<div class="opcion">
+<p>En el año 1, porque el canal propio es máximo al comienzo.</p>
+<p><span class="porque">Eso ocurre solo si <span class="math inline">q \le p</span>; aquí la imitación domina.</span></p>
+</div>
+<div class="opcion">
+<p>En el año 15, porque <span class="math inline">q/p = 15</span>.</p>
+<p><span class="porque">Revise la fórmula: <span class="math inline">t^*</span> usa el logaritmo de <span class="math inline">q/p</span> dividido por <span class="math inline">p + q</span>.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una ciudad lanza un subsidio que baja el costo de instalar paneles. En el modelo de Bass, ¿qué parámetro representa mejor ese cambio?</p>
+<div class="opcion" data-correcta="si">
+<p>Principalmente <span class="math inline">p</span>, porque mejora la decisión de cada hogar sin depender de los demás.</p>
+<p><span class="porque">Correcto: el subsidio actúa sobre la adopción individual.</span></p>
+</div>
+<div class="opcion">
+<p>Principalmente <span class="math inline">q</span>, porque más hogares instalarán.</p>
+<p><span class="porque">Revise el error de confundir adopción con difusión: <span class="math inline">q</span> representa el contagio por lo que se ve en otros.</span></p>
+</div>
+<div class="opcion">
+<p><span class="math inline">m</span>, porque el mercado crece.</p>
+<p><span class="porque">Podría crecer algo si el subsidio incluye a hogares que antes no podían, pero el efecto principal es sobre la decisión individual.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un consultor ajusta Bass a cinco años de datos que crecen cada vez más rápido y reporta «el mercado potencial es de 5 048 MW». ¿Qué le diría?</p>
+<div class="opcion">
+<p>Que el ajuste es confiable si el error cuadrático es pequeño.</p>
+<p><span class="porque">En el ejemplo avanzado, <span class="math inline">m = 400</span> y <span class="math inline">m = 3\,000</span> ajustan casi igual de bien: el error pequeño no identifica <span class="math inline">m</span>.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que antes del punto de inflexión <span class="math inline">m</span> está mal identificado y debe venir de información externa, como escenario.</p>
+<p><span class="porque">Correcto: ese valor es, además, el tope que admite el algoritmo.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En Bass con <span class="math inline">q &gt; p</span>, ¿qué lazo domina después del pico?</p>
+<div class="opcion">
+<p>R1, la imitación, porque hay más adoptantes que nunca.</p>
+<p><span class="porque">Hay más adoptantes, pero cada vez menos potenciales a quienes convencer.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>B1, el agotamiento del mercado.</p>
+<p><span class="porque">Correcto: la adopción cae aunque todos sigan imitando.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el conjunto residencial (<span class="math inline">p = 0{,}01</span>, <span class="math inline">q = 0{,}4</span>, <span class="math inline">m = 1\,000</span>), ¿cuántos techos hay instalados en el pico continuo?</p>
+<div class="opcion">
+<p>500, la mitad del mercado.</p>
+<p><span class="porque">Casi: la fórmula resta <span class="math inline">p/(2q)</span> a la mitad.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>487,5.</p>
+<p><span class="porque">Correcto: <span class="math inline">1\,000\,(0{,}5 - 0{,}01/0{,}8) = 487{,}5</span>.</span></p>
+</div>
+<div class="opcion">
+<p>105,1.</p>
+<p><span class="porque">Esa es la tasa máxima en techos por año, no el acumulado.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-calentadores-solares-en-una-ciudad-intermedia" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-calentadores-solares-en-una-ciudad-intermedia">Ejercicio 1 ●○○ · Calentadores solares en una ciudad intermedia</h4>
+<p>Un programa de calentadores solares en una ciudad intermedia tiene <span class="math inline">m = 5\,000</span> hogares, <span class="math inline">p = 0{,}02</span> y <span class="math inline">q = 0{,}3</span> por año. Calcule a mano el año del pico, el número acumulado de hogares en el pico y la tasa máxima de instalaciones.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">t^* = \ln(0{,}3/0{,}02)/(0{,}02 + 0{,}3) = \ln 15/0{,}32 = 2{,}708/0{,}32 \approx 8{,}5</span> años.</p>
+<p><span class="math inline">N(t^*) = 5\,000\,(0{,}5 - 0{,}02/0{,}6) = 5\,000\,(0{,}5 - 0{,}0333) \approx 2\,333</span> hogares.</p>
+<p>Tasa máxima: <span class="math inline">5\,000 \times 0{,}32^2/(4 \times 0{,}3) = 5\,000 \times 0{,}1024/1{,}2 \approx 427</span> hogares por año.</p>
+<p>Lectura: el programa necesita más de ocho años para llegar a su año de más instalaciones, y en ese momento lleva casi la mitad del mercado. Un presupuesto anual plano subestima la demanda de instaladores cerca del pico.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-continuar-la-tabla-del-conjunto-residencial" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-continuar-la-tabla-del-conjunto-residencial">Ejercicio 2 ●●○ · Continuar la tabla del conjunto residencial</h4>
+<p>Continúe la tabla del ejemplo intermedio hasta el año 12. (a) ¿En qué año se instalan más techos y cuántos? (b) Compare con <span class="math inline">t^* = 9{,}0</span> y explique la diferencia. (c) ¿Qué paso de tiempo usaría para acercar la versión discreta a la continua, y cómo cambian entonces <span class="math inline">p</span> y <span class="math inline">q</span>?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Repita la regla <span class="math inline">n_t = (p + q\,N_{t-1}/m)(m - N_{t-1})</span> desde <span class="math inline">N_5 = 103{,}93</span>. En el simulador, las barras muestran la versión discreta con los mismos parámetros.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Los años 6 a 12 dan <span class="math inline">n_t</span> = 46,21; 59,54; 74,19; 88,48; 99,76; 104,97 y 101,85 techos, con <span class="math inline">N_{12} = 678{,}93</span>. El máximo es de <strong>104,97 techos en el año 11</strong>.</p></li>
+<li><p>La versión continua ubica el pico en 9,0 años. La discreta llega dos años después porque cada año calcula la probabilidad con el acumulado del año anterior: la imitación reacciona con un año de atraso, y ese atraso se suma a lo largo de la curva.</p></li>
+<li><p>Con pasos mensuales (<span class="math inline">\Delta t = 1/12</span> año), la regla discreta usa <span class="math inline">p\,\Delta t</span> y <span class="math inline">q\,\Delta t</span> por mes: <span class="math inline">n_k = (p\,\Delta t + q\,\Delta t\,N_{k-1}/m)(m - N_{k-1})</span>. Al achicar el paso, el pico discreto converge al continuo. Es la misma lección de Euler de la semana 4: el paso de integración es parte del modelo.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li><strong>Rogers</strong> clasifica a los adoptantes por el momento en que adoptan (2,5 %, 13,5 %, 34 %, 34 % y 16 %) y señala la <strong>observabilidad</strong> como el atributo que conecta la difusión con las redes.</li>
+<li><strong>Bass</strong> suma dos canales, innovación <span class="math inline">p\,(m - N)</span> e imitación <span class="math inline">q\,(N/m)(m - N)</span>; R1 acelera la curva y B1 la frena, y de ahí sale la <strong>curva en S</strong>.</li>
+<li>El pico llega en <span class="math inline">t^* = \ln(q/p)/(p+q)</span> con <span class="math inline">N(t^*) = m\,(1/2 - p/2q)</span>; si <span class="math inline">q \le p</span> no hay pico.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>caso</th>
+<th style="text-align: center;"><span class="math inline">p</span></th>
+<th style="text-align: center;"><span class="math inline">q</span></th>
+<th style="text-align: center;">pico</th>
+<th style="text-align: center;">tasa máxima</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>video de la factura (<span class="math inline">m</span> = 2 000)</td>
+<td style="text-align: center;">0,03</td>
+<td style="text-align: center;">0,38</td>
+<td style="text-align: center;">día 6,2</td>
+<td style="text-align: center;">221 vistas/día</td>
+</tr>
+<tr class="even">
+<td>conjunto residencial (<span class="math inline">m</span> = 1 000)</td>
+<td style="text-align: center;">0,01</td>
+<td style="text-align: center;">0,4</td>
+<td style="text-align: center;">año 9,0 (discreto: 11)</td>
+<td style="text-align: center;">105 techos/año</td>
+</tr>
+<tr class="odd">
+<td>con subsidio</td>
+<td style="text-align: center;">0,02</td>
+<td style="text-align: center;">0,4</td>
+<td style="text-align: center;">año 7,1</td>
+<td style="text-align: center;">110 techos/año</td>
+</tr>
+<tr class="even">
+<td>con vitrinas</td>
+<td style="text-align: center;">0,01</td>
+<td style="text-align: center;">0,6</td>
+<td style="text-align: center;">año 6,7</td>
+<td style="text-align: center;">155 techos/año</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Antes del punto de inflexión, el <strong>mercado potencial <span class="math inline">m</span></strong> está mal identificado: en la serie AGPE el ajuste libre da 797 ± 333 MW frente a 1 500 verdaderos. Se fija con información externa y se reporta como escenario.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Difusión de innovaciones agregada: Rogers y Bass» de las notas de la semana 3 trae la solución analítica completa, la figura de las categorías de Rogers y el ejercicio de la serie recortada. En el Laboratorio 2, Bass es la línea de base agregada contra la que se comparan las simulaciones en red. La <a href="../semana3/03-contagio-simple.html">siguiente página</a> baja al nivel de la red con el contagio simple.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7YmFzcywgYmFzc0Rpc2NyZXRvLCB0aWVtcG9QaWNvQmFzcywgYWp1c3RhckJhc3N9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9kaWZ1c2lvbi5qc1wiXG5pbXBvcnQge2Zvcm1hdG9OdW1lcm8sIGZvcm1hdG9Qb3JjZW50YWplfSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvbWlzZV9zZC5qc1wiXG5DT0xPUkVTID0gKHthenVsOiBcIiMwMDMzNjZcIiwgdmVyZGU6IFwiIzAwNjkzRVwiLCBhbWJhcjogXCIjQjI2QzAwXCIsIHZpb2xldGE6IFwiIzU0MzRBMFwiLCBncmlzOiBcIiM1RjVGNUZcIiwgcm9qbzogXCIjQ0UxMTI2XCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHBCID0gSW5wdXRzLnJhbmdlKFswLjAwMiwgMC4wNV0sIHt2YWx1ZTogMC4wMSwgc3RlcDogMC4wMDIsIGxhYmVsOiBcIklubm92YWNpw7NuIHAgWzEvYcOxb11cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgcUIgPSBJbnB1dHMucmFuZ2UoWzAsIDAuOF0sIHt2YWx1ZTogMC40LCBzdGVwOiAwLjA1LCBsYWJlbDogXCJJbWl0YWNpw7NuIHEgWzEvYcOxb11cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJiYXNzQiA9IHtcbiAgY29uc3QgdGllbXBvcyA9IEFycmF5LmZyb20oe2xlbmd0aDogMzAxfSwgKF8sIGspID0+IGsgKiAwLjEpO1xuICBjb25zdCBjb250aW51YSA9IGJhc3MocEIsIHFCLCAxMDAwLCB0aWVtcG9zKTtcbiAgY29uc3QgYmFzZSA9IGJhc3MoMC4wMSwgMC40LCAxMDAwLCB0aWVtcG9zKTtcbiAgY29uc3QgZGlzY3JldGEgPSBiYXNzRGlzY3JldG8ocEIsIHFCLCAxMDAwLCAzMCkuc2xpY2UoMSk7XG4gIGNvbnN0IG1heGltYSA9IGRpc2NyZXRhLnJlZHVjZSgoYSwgZikgPT4gKGYubnVldm9zID4gYS5udWV2b3MgPyBmIDogYSkpO1xuICBjb25zdCBwaWNvID0gdGllbXBvUGljb0Jhc3MocEIsIHFCKTtcbiAgcmV0dXJuIHtjb250aW51YSwgYmFzZSwgZGlzY3JldGEsIG1heGltYSwgcGljbyxcbiAgICB0YXNhUGljbzogcUIgPiBwQiA/IDEwMDAgKiAocEIgKyBxQikgKiogMiAvICg0ICogcUIpIDogMTAwMCAqIHBCLFxuICAgIGFjdW11bGFkb1BpY286IHFCID4gcEIgPyAxMDAwICogKDAuNSAtIHBCIC8gKDIgKiBxQikpIDogMH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMzAwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIkHDsW9zXCIsIGRvbWFpbjogWzAsIDMwXX0sXG4gIHk6IHtsYWJlbDogXCJUZWNob3MgbnVldm9zIHBvciBhw7FvXCIsIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdFkoYmFzc0IuZGlzY3JldGEsIHt4MTogKGQpID0+IGQucGVyaW9kbyAtIDAuOSwgeDI6IChkKSA9PiBkLnBlcmlvZG8gLSAwLjEsIHk6IFwibnVldm9zXCIsIGZpbGw6IENPTE9SRVMuYXp1bCwgZmlsbE9wYWNpdHk6IDAuMTh9KSxcbiAgICBQbG90LmxpbmUoYmFzc0IuYmFzZSwge3g6IFwidFwiLCB5OiBcIm51ZXZvc1wiLCBzdHJva2U6IFwiIzlFOUU5RVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNSA0XCIsIHN0cm9rZVdpZHRoOiAxLjZ9KSxcbiAgICBQbG90LmxpbmUoYmFzc0IuY29udGludWEsIHt4OiBcInRcIiwgeTogXCJudWV2b3NcIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgICBQbG90LnJ1bGVYKFtiYXNzQi5waWNvXSwge3N0cm9rZTogQ09MT1JFUy5hbWJhciwgc3Ryb2tlRGFzaGFycmF5OiBcIjQgM1wifSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5QaWNvIGNvbnRpbnVvIHQqPGI+JHtxQiA+IHBCID8gYCR7Zm9ybWF0b051bWVybygxKShiYXNzQi5waWNvKX0gYcOxb3NgIDogXCJzaW4gcGljbyAocSDiiaQgcClcIn08L2I+PC9kaXY+XG4gIDxkaXY+VGFzYSBtw6F4aW1hIGNvbnRpbnVhPGI+JHtmb3JtYXRvTnVtZXJvKDEpKGJhc3NCLnRhc2FQaWNvKX0gdGVjaG9zL2HDsW88L2I+PC9kaXY+XG4gIDxkaXY+VGVjaG9zIGluc3RhbGFkb3MgZW4gZWwgcGljbzxiPiR7Zm9ybWF0b051bWVybygxKShiYXNzQi5hY3VtdWxhZG9QaWNvKX08L2I+PC9kaXY+XG4gIDxkaXY+TcOheGltbyBkaXNjcmV0byBhbnVhbDxiPmHDsW8gJHtiYXNzQi5tYXhpbWEucGVyaW9kb306ICR7Zm9ybWF0b051bWVybygxKShiYXNzQi5tYXhpbWEubnVldm9zKX0gdGVjaG9zPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiYWdwZSA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczMtMDItYWdwZS5qc29uXCIpLmpzb24oKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGxpYnJlQSA9IElucHV0cy50b2dnbGUoe2xhYmVsOiBcIk1lcmNhZG8gcG90ZW5jaWFsIGxpYnJlXCIsIHZhbHVlOiB0cnVlfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtQSA9IElucHV0cy5yYW5nZShbMzAwLCA1MDAwXSwge3ZhbHVlOiAxNTAwLCBzdGVwOiAxMDAsIGxhYmVsOiBcIk1lcmNhZG8gcG90ZW5jaWFsIGZpam8gbSBbTVddXCIsIGRpc2FibGVkOiBsaWJyZUF9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImFqdXN0ZUEgPSB7XG4gIGNvbnN0IHQgPSBhZ3BlLmFuaW8ubWFwKChhKSA9PiBhIC0gMjAxNik7XG4gIGNvbnN0IGxpYnJlID0gYWp1c3RhckJhc3ModCwgYWdwZS5jYXBhY2lkYWRfbXcpO1xuICBjb25zdCBhanVzdGUgPSBsaWJyZUEgPyBsaWJyZSA6IGFqdXN0YXJCYXNzKHQsIGFncGUuY2FwYWNpZGFkX213LCB7bUZpam86IG1BfSk7XG4gIGNvbnN0IHRpZW1wb3MgPSBBcnJheS5mcm9tKHtsZW5ndGg6IDE5MX0sIChfLCBrKSA9PiAxICsgayAqIDAuMSk7XG4gIGNvbnN0IGN1cnZhID0gYmFzcyhhanVzdGUucCwgYWp1c3RlLnEsIGFqdXN0ZS5tLCB0aWVtcG9zKS5tYXAoKGYpID0+ICh7YW5pbzogMjAxNiArIGYudCwgbXc6IGYuYWN1bXVsYWRvfSkpO1xuICBjb25zdCBjdXJ2YUxpYnJlID0gYmFzcyhsaWJyZS5wLCBsaWJyZS5xLCBsaWJyZS5tLCB0aWVtcG9zKS5tYXAoKGYpID0+ICh7YW5pbzogMjAxNiArIGYudCwgbXc6IGYuYWN1bXVsYWRvfSkpO1xuICByZXR1cm4ge2FqdXN0ZSwgY3VydmEsIGN1cnZhTGlicmUsIGRhdG9zOiBhZ3BlLmFuaW8ubWFwKChhLCBpKSA9PiAoe2FuaW86IGEsIG13OiBhZ3BlLmNhcGFjaWRhZF9td1tpXX0pKSxcbiAgICBwaWNvOiAyMDE2ICsgdGllbXBvUGljb0Jhc3MoYWp1c3RlLnAsIGFqdXN0ZS5xKSwgZW4yMDMwOiBiYXNzKGFqdXN0ZS5wLCBhanVzdGUucSwgYWp1c3RlLm0sIFsxNF0pWzBdLmFjdW11bGFkb307XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDMyMCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJBw7FvXCIsIHRpY2tGb3JtYXQ6IChkKSA9PiBTdHJpbmcoZCksIGRvbWFpbjogWzIwMTcsIDIwMzVdfSxcbiAgeToge2xhYmVsOiBcIkNhcGFjaWRhZCBBR1BFIGFjdW11bGFkYSBbTVddXCIsIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIGxpYnJlQSA/IG51bGwgOiBQbG90LmxpbmUoYWp1c3RlQS5jdXJ2YUxpYnJlLCB7eDogXCJhbmlvXCIsIHk6IFwibXdcIiwgc3Ryb2tlOiBcIiM5RTlFOUVcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjUgNFwiLCBzdHJva2VXaWR0aDogMS42fSksXG4gICAgUGxvdC5saW5lKGFqdXN0ZUEuY3VydmEsIHt4OiBcImFuaW9cIiwgeTogXCJtd1wiLCBzdHJva2U6IENPTE9SRVMuYXp1bCwgc3Ryb2tlV2lkdGg6IDIuNH0pLFxuICAgIFBsb3QucnVsZVgoWzIwMzBdLCB7c3Ryb2tlOiBDT0xPUkVTLmdyaXMsIHN0cm9rZURhc2hhcnJheTogXCIzIDNcIn0pLFxuICAgIFBsb3QuZG90KGFqdXN0ZUEuZGF0b3MsIHt4OiBcImFuaW9cIiwgeTogXCJtd1wiLCBmaWxsOiBDT0xPUkVTLmFtYmFyLCByOiA0fSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+TWVyY2FkbyBwb3RlbmNpYWwgbTxiPiR7Zm9ybWF0b051bWVybygwKShhanVzdGVBLmFqdXN0ZS5tKX0gTVcke2xpYnJlQSA/IGAgwrEgJHtmb3JtYXRvTnVtZXJvKDApKGFqdXN0ZUEuYWp1c3RlLmVycm9yZXMubSl9YCA6IFwiIChmaWpvKVwifTwvYj48L2Rpdj5cbiAgPGRpdj5Jbm5vdmFjacOzbiBwPGI+JHtmb3JtYXRvTnVtZXJvKDQpKGFqdXN0ZUEuYWp1c3RlLnApfTwvYj48L2Rpdj5cbiAgPGRpdj5JbWl0YWNpw7NuIHE8Yj4ke2Zvcm1hdG9OdW1lcm8oMikoYWp1c3RlQS5hanVzdGUucSl9PC9iPjwvZGl2PlxuICA8ZGl2PkVycm9yIGRlIGFqdXN0ZSAoUk1TRSk8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoYWp1c3RlQS5hanVzdGUucm1zZSl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PkHDsW8gZGVsIHBpY28gZGUgaW5zdGFsYWNpb25lczxiPiR7Zm9ybWF0b051bWVybygxKShhanVzdGVBLnBpY28pfTwvYj48L2Rpdj5cbiAgPGRpdj5DYXBhY2lkYWQgZW4gMjAzMDxiPiR7Zm9ybWF0b051bWVybygwKShhanVzdGVBLmVuMjAzMCl9IE1XPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdwQicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdxQicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdsaWJyZUEnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbUEnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana3";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana3/01-dinamica-sobre-redes.html" class="pagination-link" aria-label="Dinámica sobre redes: nodos con estado y reglas locales">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Dinámica sobre redes: nodos con estado y reglas locales</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana3/03-contagio-simple.html" class="pagination-link" aria-label="Contagio simple: SI, SIS y SIR sobre redes">
+        <span class="nav-page-text">Contagio simple: SI, SIS y SIR sobre redes</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

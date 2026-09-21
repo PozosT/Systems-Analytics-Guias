@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Triángulos, caminos cortos y la combinación de los dos: el coeficiente de agrupamiento, la transitividad, el modelo de Watts y Strogatz y el sistema de transmisión comparado con redes aleatorias equivalentes.">
+
+<title>Agrupamiento y mundo pequeño – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana2/06-modelos-de-red.html" rel="next">
+<link href="../semana2/04-centralidades.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/05-mundo-pequeno.html">Agrupamiento y mundo pequeño</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/04-centralidades.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Centralidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/05-mundo-pequeno.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Agrupamiento y mundo pequeño</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/06-modelos-de-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos de red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Redes II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/01-dinamica-sobre-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dinámica sobre redes: nodos con estado y reglas locales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/02-rogers-bass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rogers y Bass: la curva en S de la adopción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/03-contagio-simple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio simple: SI, SIS y SIR sobre redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/04-contagio-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio complejo y umbrales: cuando un vecino no basta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores y comunidades: quién se mueve con quién</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/07-bipartitas-mercado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes bipartitas y el mercado mayorista</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/08-limites-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Límites del enfoque de redes: de la red al stock agregado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/09-adopcion-solar-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La adopción solar como sistema en red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-los-amigos-de-camila" id="toc-la-intuición-los-amigos-de-camila" class="nav-link" data-scroll-target="#la-intuición-los-amigos-de-camila">2. La intuición: los amigos de Camila</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/05-mundo-pequeno.html">Agrupamiento y mundo pequeño</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Agrupamiento y mundo pequeño</h1>
+<p class="subtitle lead">Semana 2 · Concepto 5 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Triángulos, caminos cortos y la combinación de los dos: el coeficiente de agrupamiento, la transitividad, el modelo de Watts y Strogatz y el sistema de transmisión comparado con redes aleatorias equivalentes.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="27" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 26;"><span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {wattsStrogatz<span class="op">,</span> agrupamientoMedio<span class="op">,</span> distanciasGigante} <span class="im">from</span> <span class="st">"../simuladores/redes.js"</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 55 a 65 minutos</span> <span class="dato">📚 Requiere <a href="../semana2/03-caminos-conectividad.html">caminos, distancia y conectividad</a></span> <span class="dato">🧪 Es parte del paso 4 del Laboratorio 1</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Calcular el coeficiente de agrupamiento de un nodo y distinguir el agrupamiento medio de la transitividad.</li>
+<li>Explicar con el modelo de Watts y Strogatz por qué unos pocos atajos acortan los caminos sin destruir los triángulos.</li>
+<li>Decidir si una red es de mundo pequeño comparándola con redes aleatorias equivalentes.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Un mundo pequeño combina dos cosas que parecen opuestas: mucha redundancia local (triángulos) y caminos cortos entre cualquier par. Basta una pequeña fracción de atajos para lograrlo, y por eso se declara solo comparando con el azar.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>En 1998 Duncan Watts y Steven Strogatz publicaron en <em>Nature</em> un artículo de tres páginas que cambió el estudio de las redes. Uno de sus tres casos era la red eléctrica del oeste de Estados Unidos, con 4 941 nodos y grado medio 2,67 (Watts y Strogatz, 1998). Encontraron que esa red, como la de actores de cine y la del sistema nervioso de un gusano, era de «mundo pequeño».</p>
+<p>El sistema de transmisión colombiano estilizado tiene un grado medio parecido, 2,62. <strong>¿Qué significa que una red sea de mundo pequeño, y lo es la nuestra?</strong></p>
+</section>
+<section id="la-intuición-los-amigos-de-camila" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-los-amigos-de-camila">2. La intuición: los amigos de Camila</h2>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Contar triángulos</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-camila-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s2-05-camila-1.svg" class="img-fluid" alt="Camila y sus cuatro amigos."></a></p>
+<p><strong>Mire el entorno de Camila.</strong> Tiene cuatro amigos. La pregunta del agrupamiento es cuántos de ellos son amigos entre sí.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-camila-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s2-05-camila-2.svg" class="img-fluid" alt="Los seis pares posibles entre los cuatro amigos."></a></p>
+<p><strong>Cuente los pares posibles.</strong> Entre cuatro amigos hay <span class="math inline">4 \times 3 / 2 = 6</span> pares.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-camila-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s2-05-camila-3.svg" class="img-fluid" alt="Dos pares de amigos enlazados: agrupamiento 0,33."></a></p>
+<p><strong>Cuente los que existen.</strong> Ana con Bruno y Dora con Elías: 2 de 6. El <strong>agrupamiento</strong> de Camila es 0,33, y cada par enlazado cierra un triángulo con ella.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-camila-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s2-05-camila-4.svg" class="img-fluid" alt="Un tercer par enlazado: agrupamiento 0,5."></a></p>
+<p><strong>Cierre un triángulo más.</strong> Si Bruno y Dora se hacen amigos, sube a 3 de 6: 0,5. Los triángulos son redundancia local: si Camila falta, sus amigos siguen conectados.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-camila-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s2-05-camila-5.svg" class="img-fluid" alt="El sistema de transmisión agrupa 0,095 frente a 0,022 del azar."></a></p>
+<p><strong>Pase al sistema.</strong> El agrupamiento medio del sistema estilizado es 0,095, bajo en términos absolutos, pero 4,3 veces el de una red aleatoria con el mismo número de nodos y líneas.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Agrupamiento local, medio y transitividad</span>
+</div>
+<p>El <strong>agrupamiento local</strong> de un nodo <span class="math inline">i</span> con grado <span class="math inline">k_i</span> y <span class="math inline">T_i</span> triángulos es</p>
+<p><span class="math display">C_i = \frac{2T_i}{k_i(k_i-1)},</span></p>
+<p>y vale 0 si <span class="math inline">k_i &lt; 2</span>. El <strong>agrupamiento medio</strong> es <span class="math inline">\bar{C} = \frac{1}{n}\sum_i C_i</span>. La <strong>transitividad</strong> o agrupamiento global cuenta triángulos sobre tríadas conectadas de toda la red:</p>
+<p><span class="math display">C_{\text{global}} = \frac{3 \times \text{triángulos}}{\sum_i k_i(k_i-1)/2}.</span></p>
+<p>Las dos miden triángulos, pero pesan distinto a los nodos de grado alto y no dan la misma cifra.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Mundo pequeño y coeficiente sigma</span>
+</div>
+<p>Una red es de <strong>mundo pequeño</strong> si su agrupamiento es mucho mayor que el de una red aleatoria equivalente (mismo <span class="math inline">n</span> y mismo <span class="math inline">m</span>) y su longitud media de camino es parecida. Para una red aleatoria, <span class="math inline">\bar{C}_{\text{al}} \approx \langle k \rangle / n</span> y <span class="math inline">L_{\text{al}} \approx \ln n / \ln\langle k \rangle</span>. El coeficiente</p>
+<p><span class="math display">\sigma = \frac{\bar{C}/\bar{C}_{\text{al}}}{L/L_{\text{al}}}</span></p>
+<p>resume la comparación: <span class="math inline">\sigma \gg 1</span> indica mundo pequeño. Los valores aleatorios se promedian sobre muchas redes, no sobre una sola.</p>
+</div>
+<p>El modelo de Watts y Strogatz muestra cómo aparece un mundo pequeño:</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del anillo al mundo pequeño</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-anillo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s2-05-anillo-1.svg" class="img-fluid" alt="Anillo regular con vecinos de segundo orden."></a></p>
+<p><strong>Empiece con un anillo.</strong> Cada nodo se une a sus vecinos más cercanos. Hay muchos triángulos, pero cruzar el anillo exige muchos pasos: con 500 nodos y 8 vecinos cada uno, 32 en promedio.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-anillo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s2-05-anillo-2.svg" class="img-fluid" alt="Un atajo entre dos puntos opuestos."></a></p>
+<p><strong>Recablee una arista.</strong> Un atajo entre dos puntos opuestos casi no toca los triángulos, pero acorta a la mitad muchos caminos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-anillo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s2-05-anillo-3.svg" class="img-fluid" alt="Unos pocos atajos más."></a></p>
+<p><strong>Agregue unos pocos atajos.</strong> Con 1 % de aristas recableadas, la longitud media cae al 26 % y el agrupamiento conserva el 96 %.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-anillo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s2-05-anillo-4.svg" class="img-fluid" alt="Agrupamiento alto con caminos cortos: el mundo pequeño."></a></p>
+<p><strong>Nombre la combinación.</strong> Agrupamiento alto con caminos cortos es el <strong>mundo pequeño</strong>. Si se recablea todo, los triángulos desaparecen y la red es aleatoria.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-05-anillo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s2-05-anillo-5.svg" class="img-fluid" alt="El sistema de transmisión tiene sigma 3,40."></a></p>
+<p><strong>Mida el sistema.</strong> Su agrupamiento es 4,3 veces el del azar y sus caminos son 27 % más largos: <span class="math inline">\sigma = 3{,}40</span>, un mundo pequeño moderado.</p>
+</div>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-agrupamiento-de-camila-a-mano" class="level3">
+<h3 class="anchored" data-anchor-id="el-agrupamiento-de-camila-a-mano">El agrupamiento de Camila, a mano</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Contar triángulos en un entorno</span>
+</div>
+<p><strong>Planteamiento.</strong> Verifique el agrupamiento de Camila antes y después de que Bruno y Dora se hagan amigos, y diga cuánto cambia el agrupamiento de Bruno.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Aplicar la fórmula</span>
+</div>
+<div class="paso">
+<p><strong>Camila antes.</strong> <span class="math inline">k = 4</span> y <span class="math inline">T = 2</span> triángulos: <span class="math inline">C = 2 \times 2 / (4 \times 3) = 0{,}33</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Camila después.</strong> <span class="math inline">T = 3</span>: <span class="math inline">C = 6/12 = 0{,}5</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Bruno antes.</strong> Sus amigos son Camila y Ana, que son amigas: <span class="math inline">k = 2</span>, <span class="math inline">T = 1</span>, <span class="math inline">C = 1</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Bruno después.</strong> Ahora tiene a Camila, Ana y Dora. Camila-Ana y Camila-Dora están enlazados; Ana-Dora no. <span class="math inline">k = 3</span>, <span class="math inline">T = 2</span>, <span class="math inline">C = 4/6 = 0{,}67</span>. Un amigo nuevo le bajó el agrupamiento: tener más vecinos no implica un entorno más tejido.</p>
+</div>
+</div>
+</section>
+<section id="malla-frente-a-red-radial" class="level3">
+<h3 class="anchored" data-anchor-id="malla-frente-a-red-radial">Malla frente a red radial</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Ocho subestaciones, dos diseños</span>
+</div>
+<p><strong>Planteamiento.</strong> Ocho subestaciones pueden unirse con una red radial de 7 líneas (un árbol que parte de una fuente) o con una malla de 12 líneas: un anillo de 8 más cuatro diagonales que unen los nodos pares. Compare agrupamiento y distancias.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Comparar los diseños</span>
+</div>
+<div class="paso">
+<p><strong>Mida la radial.</strong> Un árbol no tiene triángulos: <span class="math inline">\bar{C} = 0</span>. Las 28 parejas suman 71 saltos, así que <span class="math inline">L = 2{,}54</span> y el diámetro es 5.</p>
+</div>
+<div class="paso">
+<p><strong>Mida la malla.</strong> Los cuatro nodos pares tienen grado 4 y agrupamiento 1/3; los impares, grado 2 y agrupamiento 1. <span class="math inline">\bar{C} = (4 \times \tfrac13 + 4 \times 1)/8 = 0{,}667</span>, mientras la transitividad es <span class="math inline">12/28 = 0{,}429</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Compare distancias.</strong> La malla suma 46 saltos: <span class="math inline">L = 1{,}64</span> y diámetro 3. Con 5 líneas más, un 71 % más de inversión, los caminos son 35 % más cortos.</p>
+</div>
+<div class="paso">
+<p><strong>Traduzca a operación.</strong> En la radial cada línea es un punto único de falla. En la malla, cada nodo tiene una ruta alterna de dos saltos: los triángulos son la redundancia que el criterio N-1 de la página 8 va a exigir.</p>
+</div>
+</div>
+</section>
+<section id="el-modelo-de-watts-y-strogatz-y-el-sistema" class="level3">
+<h3 class="anchored" data-anchor-id="el-modelo-de-watts-y-strogatz-y-el-sistema">El modelo de Watts y Strogatz y el sistema</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Cuántos atajos hacen falta?</span>
+</div>
+<p><strong>Planteamiento.</strong> Con un anillo de 500 nodos y 8 vecinos por nodo, recablee una fracción <span class="math inline">p</span> de las aristas y mida el agrupamiento y la longitud media relativos al anillo. Después compare el sistema de transmisión con redes aleatorias equivalentes.</p>
+</div>
+<div id="pred-ws" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Qué fracción de aristas recableadas basta para que la longitud media caiga a menos de un tercio de la del anillo?</p>
+<div class="opcion">
+<p>Alrededor del 1 %.</p>
+</div>
+<div class="opcion">
+<p>Alrededor del 30 %.</p>
+</div>
+<div class="opcion">
+<p>Hay que recablear casi todas.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Del anillo al azar</span>
+</div>
+<p>Mueva la fracción de recableado en escala logarítmica. Compare cuánto cae la longitud media con cuánto cae el agrupamiento.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="226" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 225;"><span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>curvaW <span class="op">=</span> {</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> medir <span class="op">=</span> (p) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> C <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> L <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> semilla <span class="kw">of</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]) {</span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> g <span class="op">=</span> <span class="fu">wattsStrogatz</span>(<span class="dv">500</span><span class="op">,</span> <span class="dv">8</span><span class="op">,</span> p<span class="op">,</span> semilla)<span class="op">;</span></span>
+<span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a>      C <span class="op">+=</span> <span class="fu">agrupamientoMedio</span>(g)<span class="op">;</span> L <span class="op">+=</span> <span class="fu">distanciasGigante</span>(g)<span class="op">.</span><span class="at">longitudMedia</span><span class="op">;</span></span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="dt">C</span><span class="op">:</span> C <span class="op">/</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">L</span><span class="op">:</span> L <span class="op">/</span> <span class="dv">3</span>}<span class="op">;</span></span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">medir</span>(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {base<span class="op">,</span> <span class="dt">filas</span><span class="op">:</span> [<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="op">-</span><span class="fl">3.5</span><span class="op">,</span> <span class="op">-</span><span class="dv">3</span><span class="op">,</span> <span class="op">-</span><span class="fl">2.5</span><span class="op">,</span> <span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="op">-</span><span class="fl">1.5</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.5</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> r <span class="op">=</span> <span class="fu">medir</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">10</span><span class="op">,</span> e))<span class="op">;</span></span>
+<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {e<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(<span class="dv">10</span><span class="op">,</span> e)<span class="op">,</span> <span class="dt">C</span><span class="op">:</span> r<span class="op">.</span><span class="at">C</span> <span class="op">/</span> base<span class="op">.</span><span class="at">C</span><span class="op">,</span> <span class="dt">L</span><span class="op">:</span> r<span class="op">.</span><span class="at">L</span> <span class="op">/</span> base<span class="op">.</span><span class="at">L</span><span class="op">,</span> <span class="dt">Cabs</span><span class="op">:</span> r<span class="op">.</span><span class="at">C</span><span class="op">,</span> <span class="dt">Labs</span><span class="op">:</span> r<span class="op">.</span><span class="at">L</span>}<span class="op">;</span></span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>  })}<span class="op">;</span></span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="245" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 244;"><span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a>viewof exponenteW <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Fracción recableada (log₁₀ p)"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="250" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 249;"><span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>filaW <span class="op">=</span> curvaW<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">find</span>((f) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(f<span class="op">.</span><span class="at">e</span> <span class="op">-</span> exponenteW) <span class="op">&lt;</span> <span class="fl">1e-9</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="255" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 254;"><span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">700</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Fracción recableada p →"</span>}<span class="op">,</span></span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ Relativo al anillo"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">1.05</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"agrupamiento C(p)/C(0)"</span><span class="op">,</span> <span class="st">"longitud L(p)/L(0)"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">azul</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(curvaW<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"C"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"agrupamiento C(p)/C(0)"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">marker</span><span class="op">:</span> <span class="st">"circle"</span>})<span class="op">,</span></span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(curvaW<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"L"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"longitud L(p)/L(0)"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">marker</span><span class="op">:</span> <span class="st">"circle"</span>})<span class="op">,</span></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([filaW<span class="op">.</span><span class="at">p</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span>})<span class="op">,</span></span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="270" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 269;"><span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Fracción recableada&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(filaW<span class="op">.</span><span class="at">p</span><span class="op">,</span> filaW<span class="op">.</span><span class="at">p</span> <span class="op">&lt;</span> <span class="fl">0.01</span> <span class="op">?</span> <span class="dv">2</span> <span class="op">:</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Agrupamiento relativo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(filaW<span class="op">.</span><span class="at">C</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Longitud media relativa&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(filaW<span class="op">.</span><span class="at">L</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Longitud media&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(filaW<span class="op">.</span><span class="at">Labs</span>)<span class="sc">}</span><span class="vs"> saltos (anillo: </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(curvaW<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">L</span>)<span class="sc">}</span><span class="vs">)&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Redes de Watts y Strogatz de 500 nodos y 8 vecinos por nodo, generadas en el navegador con <code>simuladores/redes.js</code> y promediadas sobre tres semillas. Las notas usan el generador de NetworkX; las cifras difieren en uno a tres puntos porcentuales.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la transición</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-ws"></span>. La respuesta es la A: con 1 % de aristas recableadas la longitud media cae al 26 % de la del anillo, de 31,7 a 8,3 saltos, y el agrupamiento conserva el 96 %.</p>
+</div>
+<div class="paso">
+<p><strong>Siga subiendo.</strong> Con 10 % la longitud llega al 14 % y el agrupamiento aún conserva el 73 %. Con todas las aristas recableadas, el agrupamiento cae al 2 %: ya no hay triángulos.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la asimetría.</strong> Los caminos se acortan con muy pocos atajos, porque cada atajo sirve a muchos pares. Los triángulos se pierden despacio, porque cada recableado rompe solo unos pocos. Esa asimetría es la que hace común el mundo pequeño.</p>
+</div>
+<div class="paso">
+<p><strong>Mida el sistema de transmisión.</strong> Su agrupamiento medio es 0,095 frente a 0,022 del azar, y su longitud media 5,72 frente a 4,50: <span class="math inline">\sigma = 3{,}40</span>, promediando 50 redes aleatorias con el mismo número de nodos y líneas. Su transitividad es 0,111.</p>
+</div>
+<div class="paso">
+<p><strong>Interprete con cuidado.</strong> Un <span class="math inline">\sigma</span> de 3,4 es un mundo pequeño moderado; la red del oeste de Estados Unidos que estudiaron Watts y Strogatz llega a unos 10. Que los caminos sean cortos no dice que una falla se propague rápido: eso depende de las cargas, que son el tema de la página 9.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tratar el agrupamiento medio y la transitividad como la misma cifra</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«El agrupamiento de la malla es 0,667», citado en un informe junto a la transitividad de otra red.</p>
+</div>
+<div class="bien">
+<p>En la malla, el agrupamiento medio es 0,667 y la transitividad 0,429. Se dice cuál se usa y se compara con la misma medida en todas las redes.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Declarar «mundo pequeño» con una sola red aleatoria</span>
+</div>
+<p>Una red aleatoria de 100 nodos puede salir con más o menos triángulos por azar. El valor de referencia se promedia sobre muchas redes con el mismo <span class="math inline">n</span> y el mismo <span class="math inline">m</span>; con una sola, <span class="math inline">\sigma</span> puede cambiar lo suficiente para cambiar la conclusión.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer caminos cortos como propagación rápida de fallas</span>
+</div>
+<p>Caminos cortos significan que una perturbación podría llegar lejos en pocos pasos. Si llega o no depende de la holgura de cada elemento. El mundo pequeño describe la topología; la cascada, la página 9.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un nodo tiene 5 vecinos y hay 4 enlaces entre ellos. ¿Cuál es su agrupamiento?</p>
+<div class="opcion" data-correcta="si">
+<p>0,4.</p>
+<p><span class="porque">Correcto: <span class="math inline">2 \times 4 / (5 \times 4)</span>.</span></p>
+</div>
+<div class="opcion">
+<p>0,8.</p>
+<p><span class="porque">Hay 10 pares posibles entre 5 vecinos, no 5.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué unos pocos atajos acortan tanto los caminos?</p>
+<div class="opcion" data-correcta="si">
+<p>Porque cada atajo sirve a muchos pares a la vez.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Porque eliminan los triángulos.</p>
+<p><span class="porque">Los triángulos casi no cambian con pocos atajos.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con el simulador, ¿qué pasa con el agrupamiento cuando se recablea el 10 % de las aristas?</p>
+<div class="opcion" data-correcta="si">
+<p>Conserva cerca de tres cuartas partes del valor del anillo.</p>
+<p><span class="porque">Correcto: 73 %.</span></p>
+</div>
+<div class="opcion">
+<p>Cae casi a cero.</p>
+<p><span class="porque">Eso ocurre solo cerca de p = 1.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué indica <span class="math inline">\sigma = 3{,}40</span> en el sistema de transmisión?</p>
+<div class="opcion" data-correcta="si">
+<p>Que agrupa mucho más que el azar con caminos apenas más largos: un mundo pequeño moderado.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Que una falla se propagará tres veces más rápido.</p>
+<p><span class="porque">Revise el tercer error común.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la malla de ocho nodos, ¿por qué los nodos impares tienen agrupamiento 1?</p>
+<div class="opcion" data-correcta="si">
+<p>Porque sus dos vecinos, los pares adyacentes, están unidos por una diagonal.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Porque tienen el mayor grado.</p>
+<p><span class="porque">Tienen grado 2, el menor de la malla.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-una-línea-atajo-en-la-red-radial" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-una-línea-atajo-en-la-red-radial">Ejercicio 1 ●○○ · Una línea atajo en la red radial</h4>
+<p>En la red radial de ocho subestaciones, la fuente S une a A y B; A une a C y D; B une a E y F; E une a G. Se construye una línea entre C y G. Calcule cuántos saltos se ahorran entre C y G, y qué pasa con el agrupamiento.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Antes, el camino C-A-S-B-E-G tiene 5 saltos, el diámetro de la red. Con la línea C-G, la distancia entre ellos pasa a 1: un ahorro de 4 saltos, y varios pares más se acortan también, por ejemplo D-G pasa de 5 a 3.</p>
+<p>El agrupamiento sigue en 0: la línea nueva cierra un ciclo de 6 nodos (C-A-S-B-E-G-C), pero ningún triángulo. Los atajos acortan caminos sin crear triángulos, igual que en el modelo de Watts y Strogatz. La línea además elimina varios puntos únicos de falla, porque la red deja de ser un árbol.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-el-agrupamiento-de-la-red-de-doce" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-el-agrupamiento-de-la-red-de-doce">Ejercicio 2 ●●○ · El agrupamiento de la red de doce</h4>
+<p>En la red regional de doce subestaciones de la página 2, suponga que la subestación de grado 4 tiene 2 enlaces entre sus vecinos y que cada una de las cinco de grado 3 tiene 1. Las demás no tienen triángulos. Calcule el agrupamiento medio.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Grado 4</strong>: <span class="math inline">C = 2 \times 2 / (4 \times 3) = 0{,}33</span>. <strong>Grado 3</strong>, cinco nodos: <span class="math inline">C = 2 \times 1 / (3 \times 2) = 0{,}33</span> cada uno. <strong>Grados 1 y 2</strong>: <span class="math inline">C = 0</span> (seis nodos).</p>
+<p><span class="math inline">\bar{C} = (0{,}33 + 5 \times 0{,}33 + 6 \times 0) / 12 = 2 / 12 = 0{,}167</span>.</p>
+<p>Para comparar con el azar: con <span class="math inline">\langle k \rangle = 2{,}5</span> y <span class="math inline">n = 12</span>, <span class="math inline">\bar{C}_{\text{al}} \approx 2{,}5/12 = 0{,}21</span>. Esta red no agrupa más que el azar: con tan pocos nodos, la aproximación es gruesa y hay que comparar con muchas redes aleatorias antes de concluir.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>El <strong>agrupamiento</strong> cuenta triángulos alrededor de un nodo; el <strong>medio</strong> promedia nodos y la <strong>transitividad</strong> cuenta triángulos de toda la red.</li>
+<li>Un <strong>mundo pequeño</strong> tiene agrupamiento alto y caminos cortos; se declara comparando con redes aleatorias equivalentes mediante <span class="math inline">\sigma</span>.</li>
+<li>En el modelo de Watts y Strogatz, recablear el <strong>1 %</strong> de las aristas lleva la longitud media al <strong>26 %</strong> y conserva el <strong>96 %</strong> del agrupamiento.</li>
+<li>El sistema estilizado tiene <span class="math inline">\bar{C} = 0{,}095</span> frente a 0,022 del azar y <span class="math inline">\sigma = 3{,}40</span>: un mundo pequeño moderado.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Agrupamiento y mundo pequeño» de las notas de la semana 2 trae el barrido completo de Watts y Strogatz y la comparación con aleatorias que conservan la distribución de grado. La <a href="../semana2/06-modelos-de-red.html">página siguiente</a> estudia los modelos de red como historias de cómo se formó una red.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7d2F0dHNTdHJvZ2F0eiwgYWdydXBhbWllbnRvTWVkaW8sIGRpc3RhbmNpYXNHaWdhbnRlfSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvcmVkZXMuanNcIlxuaW1wb3J0IHtmb3JtYXRvTnVtZXJvLCBmb3JtYXRvUG9yY2VudGFqZX0gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImN1cnZhVyA9IHtcbiAgY29uc3QgbWVkaXIgPSAocCkgPT4ge1xuICAgIGxldCBDID0gMCwgTCA9IDA7XG4gICAgZm9yIChjb25zdCBzZW1pbGxhIG9mIFsxLCAyLCAzXSkge1xuICAgICAgY29uc3QgZyA9IHdhdHRzU3Ryb2dhdHooNTAwLCA4LCBwLCBzZW1pbGxhKTtcbiAgICAgIEMgKz0gYWdydXBhbWllbnRvTWVkaW8oZyk7IEwgKz0gZGlzdGFuY2lhc0dpZ2FudGUoZykubG9uZ2l0dWRNZWRpYTtcbiAgICB9XG4gICAgcmV0dXJuIHtDOiBDIC8gMywgTDogTCAvIDN9O1xuICB9O1xuICBjb25zdCBiYXNlID0gbWVkaXIoMCk7XG4gIHJldHVybiB7YmFzZSwgZmlsYXM6IFstNCwgLTMuNSwgLTMsIC0yLjUsIC0yLCAtMS41LCAtMSwgLTAuNSwgMF0ubWFwKChlKSA9PiB7XG4gICAgY29uc3QgciA9IG1lZGlyKE1hdGgucG93KDEwLCBlKSk7XG4gICAgcmV0dXJuIHtlLCBwOiBNYXRoLnBvdygxMCwgZSksIEM6IHIuQyAvIGJhc2UuQywgTDogci5MIC8gYmFzZS5MLCBDYWJzOiByLkMsIExhYnM6IHIuTH07XG4gIH0pfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBleHBvbmVudGVXID0gSW5wdXRzLnJhbmdlKFstNCwgMF0sIHt2YWx1ZTogLTIsIHN0ZXA6IDAuNSwgbGFiZWw6IFwiRnJhY2Npw7NuIHJlY2FibGVhZGEgKGxvZ+KCgeKCgCBwKVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImZpbGFXID0gY3VydmFXLmZpbGFzLmZpbmQoKGYpID0+IE1hdGguYWJzKGYuZSAtIGV4cG9uZW50ZVcpIDwgMWUtOSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzAwKSwgaGVpZ2h0OiAyODAsIG1hcmdpbkxlZnQ6IDU1LFxuICB4OiB7dHlwZTogXCJsb2dcIiwgbGFiZWw6IFwiRnJhY2Npw7NuIHJlY2FibGVhZGEgcCDihpJcIn0sXG4gIHk6IHtsYWJlbDogXCLihpEgUmVsYXRpdm8gYWwgYW5pbGxvXCIsIGRvbWFpbjogWzAsIDEuMDVdLCBncmlkOiB0cnVlfSxcbiAgY29sb3I6IHtkb21haW46IFtcImFncnVwYW1pZW50byBDKHApL0MoMClcIiwgXCJsb25naXR1ZCBMKHApL0woMClcIl0sIHJhbmdlOiBbQ09MT1JFUy52ZXJkZSwgQ09MT1JFUy5henVsXSwgbGVnZW5kOiB0cnVlfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmUoY3VydmFXLmZpbGFzLCB7eDogXCJwXCIsIHk6IFwiQ1wiLCBzdHJva2U6ICgpID0+IFwiYWdydXBhbWllbnRvIEMocCkvQygwKVwiLCBzdHJva2VXaWR0aDogMiwgbWFya2VyOiBcImNpcmNsZVwifSksXG4gICAgUGxvdC5saW5lKGN1cnZhVy5maWxhcywge3g6IFwicFwiLCB5OiBcIkxcIiwgc3Ryb2tlOiAoKSA9PiBcImxvbmdpdHVkIEwocCkvTCgwKVwiLCBzdHJva2VXaWR0aDogMiwgbWFya2VyOiBcImNpcmNsZVwifSksXG4gICAgUGxvdC5ydWxlWChbZmlsYVcucF0sIHtzdHJva2U6IENPTE9SRVMuYW1iYXJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkZyYWNjacOzbiByZWNhYmxlYWRhPGI+JHtmb3JtYXRvUG9yY2VudGFqZShmaWxhVy5wLCBmaWxhVy5wIDwgMC4wMSA/IDIgOiAwKX08L2I+PC9kaXY+XG4gIDxkaXY+QWdydXBhbWllbnRvIHJlbGF0aXZvPGI+JHtmb3JtYXRvUG9yY2VudGFqZShmaWxhVy5DLCAwKX08L2I+PC9kaXY+XG4gIDxkaXY+TG9uZ2l0dWQgbWVkaWEgcmVsYXRpdmE8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKGZpbGFXLkwsIDApfTwvYj48L2Rpdj5cbiAgPGRpdj5Mb25naXR1ZCBtZWRpYTxiPiR7Zm9ybWF0b051bWVybygxKShmaWxhVy5MYWJzKX0gc2FsdG9zIChhbmlsbG86ICR7Zm9ybWF0b051bWVybygxKShjdXJ2YVcuYmFzZS5MKX0pPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdleHBvbmVudGVXJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana2";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana2/04-centralidades.html" class="pagination-link" aria-label="Centralidades">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Centralidades</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana2/06-modelos-de-red.html" class="pagination-link" aria-label="Modelos de red">
+        <span class="nav-page-text">Modelos de red</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

@@ -485,3 +485,41 @@ export function corteMinimoVertices(g, grupoA, grupoB) {
   const {alcanzables} = _flujoMaximo(aristas, "__fuente__", "__sumidero__");
   return interiores.filter((n) => alcanzables.has(`${n}|in`) && !alcanzables.has(`${n}|out`)).sort(compararTexto);
 }
+
+// ----------------------------------------------------------------------
+// Correlación de rangos
+// ----------------------------------------------------------------------
+
+/** Rangos con empates promediados (como scipy.stats.rankdata). */
+export function rangos(valores) {
+  const orden = valores.map((v, i) => [v, i]).sort((a, b) => a[0] - b[0]);
+  const salida = Array(valores.length);
+  for (let i = 0; i < orden.length; ) {
+    let j = i;
+    while (j + 1 < orden.length && orden[j + 1][0] === orden[i][0]) j++;
+    const rango = (i + j) / 2 + 1;
+    for (let k = i; k <= j; k++) salida[orden[k][1]] = rango;
+    i = j + 1;
+  }
+  return salida;
+}
+
+/** Correlación de Spearman: Pearson sobre los rangos (con empates promediados). */
+export function spearman(x, y) {
+  const rx = rangos(x), ry = rangos(y), n = x.length;
+  const mx = rx.reduce((a, b) => a + b, 0) / n, my = ry.reduce((a, b) => a + b, 0) / n;
+  let sxy = 0, sxx = 0, syy = 0;
+  for (let i = 0; i < n; i++) { const dx = rx[i] - mx, dy = ry[i] - my; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
+  return sxy / Math.sqrt(sxx * syy);
+}
+
+/** Transitividad: 3 × triángulos / tríadas conectadas (agrupamiento global). */
+export function transitividad(g) {
+  let triangulos3 = 0, triadas = 0;
+  for (const n of g.nodos) {
+    const vs = g.vecinos.get(n), k = vs.length;
+    triadas += k * (k - 1) / 2;
+    for (let i = 0; i < k; i++) for (let j = i + 1; j < k; j++) if (g.vecinos.get(vs[i]).includes(vs[j])) triangulos3++;
+  }
+  return triadas ? triangulos3 / triadas : 0;
+}

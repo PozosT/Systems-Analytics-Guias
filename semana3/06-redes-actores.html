@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Cómo construir una red de actores con evidencia, cómo medir con la modularidad si tiene bloques y por qué una red de coparticipación registra presencia conjunta y no alianzas.">
+
+<title>Redes de actores y comunidades: quién se mueve con quién – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana3/07-bipartitas-mercado.html" rel="next">
+<link href="../semana3/05-intervenir-difusion.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana3/index.html">Semana 3 · Redes II</a></li><li class="breadcrumb-item"><a href="../semana3/06-redes-actores.html">Redes de actores y comunidades: quién se mueve con quién</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/04-centralidades.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Centralidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/05-mundo-pequeno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agrupamiento y mundo pequeño</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/06-modelos-de-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos de red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Redes II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/01-dinamica-sobre-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dinámica sobre redes: nodos con estado y reglas locales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/02-rogers-bass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rogers y Bass: la curva en S de la adopción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/03-contagio-simple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio simple: SI, SIS y SIR sobre redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/04-contagio-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio complejo y umbrales: cuando un vecino no basta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/06-redes-actores.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Redes de actores y comunidades: quién se mueve con quién</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/07-bipartitas-mercado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes bipartitas y el mercado mayorista</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/08-limites-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Límites del enfoque de redes: de la red al stock agregado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/09-adopcion-solar-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La adopción solar como sistema en red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-un-club-que-se-divide" id="toc-la-intuición-un-club-que-se-divide" class="nav-link" data-scroll-target="#la-intuición-un-club-que-se-divide">2. La intuición: un club que se divide</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana3/index.html">Semana 3 · Redes II</a></li><li class="breadcrumb-item"><a href="../semana3/06-redes-actores.html">Redes de actores y comunidades: quién se mueve con quién</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Redes de actores y comunidades: quién se mueve con quién</h1>
+<p class="subtitle lead">Semana 3 · Concepto 6 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    Cómo construir una red de actores con evidencia, cómo medir con la modularidad si tiene bloques y por qué una red de coparticipación registra presencia conjunta y no alianzas.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="36" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 35;"><span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {modularidad<span class="op">,</span> comunidadesCodiciosas<span class="op">,</span> redCoparticipacion} <span class="im">from</span> <span class="st">"../simuladores/difusion.js"</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 80 minutos</span> <span class="dato">📚 Requiere <a href="../semana2/02-grado-densidad.html">grado, distribución y densidad</a> y las centralidades de la semana 2 (notas, sección 4)</span> <span class="dato">🧪 Se aplica en el Laboratorio 2</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Construir una red de actores a partir de evidencia (actas, cartas, comentarios) y decir qué registra cada arista.</li>
+<li>Calcular a mano la modularidad de una partición y comparar dos particiones de la misma red.</li>
+<li>Distinguir una comunidad de coparticipación de una alianza, y una centralidad de convocatoria de una centralidad de influencia.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Una red de actores tiene comunidades cuando hay muchas más relaciones dentro de los grupos de las que habría si se repartieran al azar, y la modularidad mide esa diferencia. La red solo es tan buena como la evidencia de sus aristas: si las aristas registran presencia en la misma sala, la red muestra quién convoca, no quién está aliado con quién.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>La velocidad de la adopción solar depende de los hogares y también de reglas que se discuten entre muchos actores. La CREG redacta y somete a consulta; los operadores de red opinan sobre los límites de penetración y los costos de conexión; los gremios de renovables piden trámites más cortos; las asociaciones de usuarios preguntan quién paga la red, y el ministerio y la UPME fijan metas.</p>
+<div class="caso-colombia caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En Colombia</span><span class="caja-texto-titulo">Del 15 % al 50 % en tres años</span>
+</div>
+<p>La Resolución CREG 030 de 2018 fijó en 15 % de la capacidad del circuito el límite de penetración de la autogeneración a pequeña escala. La Resolución CREG 174 de 2021 la derogó, subió el límite al 50 % en el nivel de tensión 1 y obligó a los operadores de red a ofrecer el trámite en línea. En 2025 la CREG cambió la valoración de los nuevos excedentes, que pasaron a liquidarse con el precio promedio de los contratos en lugar del precio de bolsa. Cada cambio resultó de posiciones que se alinearon o chocaron en consultas públicas y mesas técnicas.</p>
+</div>
+<p>Un consultor que quiera anticipar la próxima discusión regulatoria necesita saber quién se mueve con quién. <strong>¿Cómo se construye esa red con evidencia, y cómo se sabe si sus bloques son reales o un efecto de la forma en que se armó?</strong></p>
+</section>
+<section id="la-intuición-un-club-que-se-divide" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-un-club-que-se-divide">2. La intuición: un club que se divide</h2>
+<p>Piense en un club deportivo donde el instructor y el administrador tienen un conflicto. Nadie publica una lista de quién está con quién, pero cualquiera que observe los entrenamientos y las salidas del fin de semana ve que ciertos miembros siempre están juntos.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">De los encuentros a los bloques</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-club-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s3-06-club-1.svg" class="img-fluid" alt="Doce miembros de un club; el instructor I y el administrador A tienen un conflicto."></a></p>
+<p>Un club de doce miembros. El instructor (I) y el administrador (A) están en conflicto, y nadie publica quién apoya a quién.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-club-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s3-06-club-2.svg" class="img-fluid" alt="Se dibujan 22 líneas, una por cada par de miembros que se ven fuera del club."></a></p>
+<p>Dibuje una línea por cada par de miembros que se ven fuera del club: 22 líneas, todas observadas.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-club-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s3-06-club-3.svg" class="img-fluid" alt="Aparecen dos grupos de seis con 10 líneas internas cada uno y 2 líneas entre ellos."></a></p>
+<p>Aparecen dos grupos. Dentro de cada uno hay 10 líneas y entre ellos solo 2.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-club-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s3-06-club-4.svg" class="img-fluid" alt="El 91 % de las líneas queda dentro de los grupos frente al 50 % esperado al azar."></a></p>
+<p><strong>Compare con el azar.</strong> El 91 % de las líneas queda dentro de los grupos. Si se repartieran al azar respetando cuántas tiene cada miembro, quedaría dentro el 50 %. La diferencia, 0,41, es la <strong>modularidad</strong>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-club-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s3-06-club-5.svg" class="img-fluid" alt="El corte de la división pasa por las dos líneas entre grupos."></a></p>
+<p>Cuando el club se divide, la división sigue las líneas: el corte pasa por los 2 encuentros entre grupos y deja intactos los 20 de adentro.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-club-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s3-06-club-6.svg" class="img-fluid" alt="Con listas de asistencia, el presidente queda unido a los doce miembros."></a></p>
+<p><strong>La trampa.</strong> Si el dibujo se hace con las listas de asistencia a las asambleas, el presidente, que las convoca, queda unido a todos: aparece como el más conectado (12 líneas) y la modularidad de la mejor partición baja de 0,41 a 0,25. Las lealtades no cambiaron; cambió la fuente de las líneas.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-club-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s3-06-club-7.svg" class="img-fluid" alt="Los mismos grupos con etiquetas de la regulación: bloque de autogeneración, bloque de redes y regulador que convoca."></a></p>
+<p>Cambie las etiquetas. Los grupos son <strong>bloques de actores</strong>, quienes promueven la autogeneración y quienes operan las redes, y el presidente es el <strong>regulador que convoca las mesas técnicas</strong>. Aparecer en la misma acta registra presencia; una alianza exige otra evidencia.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Red de actores con signo y peso</span>
+</div>
+<p>Una <strong>red de actores</strong> es un grafo <span class="math inline">G = (V, E)</span> cuyos nodos son individuos u organizaciones y cuyas aristas son relaciones observadas con evidencia. Cada arista <span class="math inline">(i, j)</span> lleva un <strong>signo</strong> <span class="math inline">s_{ij} \in \{+1, -1\}</span> (cooperación o conflicto) y un <strong>peso</strong> <span class="math inline">w_{ij} &gt; 0</span> (número de interacciones, documentos compartidos, volumen transado). Las fuentes típicas son actas, comentarios a proyectos de resolución, contratos, sentencias y entrevistas. En una <strong>red de coparticipación</strong>, dos actores se enlazan con peso igual al número de documentos o eventos en que aparecen juntos.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Modularidad (Newman, 2006)</span>
+</div>
+<p>Para una partición de los nodos en comunidades <span class="math inline">c</span>,</p>
+<p><span class="math display">Q = \sum_{c} \left[ \frac{L_c}{m} - \left(\frac{d_c}{2m}\right)^{2} \right] \qquad [\text{adimensional}],</span></p>
+<p>donde <span class="math inline">m</span> es el peso total de las aristas, <span class="math inline">L_c</span> el peso de las aristas internas de la comunidad <span class="math inline">c</span> y <span class="math inline">d_c</span> la suma de los grados (ponderados) de sus nodos. El primer término es la fracción de peso que queda dentro; el segundo, la fracción esperada si las aristas se repartieran al azar respetando los grados. <span class="math inline">Q = 0</span> para una sola comunidad, y valores por encima de 0,3 suelen indicar estructura clara. El algoritmo codicioso de Clauset, Newman y Moore (2004) une comunidades de a pares mientras <span class="math inline">Q</span> crezca; el de Louvain (Blondel et al., 2008) mueve nodos entre comunidades y es estocástico, así que se fija con una semilla.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La modularidad de dos triángulos, a mano</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-triangulos-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s3-06-triangulos-1.svg" class="img-fluid" alt="Seis actores en dos triángulos unidos por una arista; m igual a 7."></a></p>
+<p><strong>Cuente las aristas.</strong> Dos triángulos unidos por una arista: seis actores y <span class="math inline">m = 7</span> relaciones.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-triangulos-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s3-06-triangulos-2.svg" class="img-fluid" alt="Cada triángulo es una comunidad, en azul y en verde."></a></p>
+<p><strong>Proponga una partición.</strong> Cada triángulo es una comunidad: <span class="math inline">c = 1</span> (azul) y <span class="math inline">c = 2</span> (verde).</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-triangulos-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s3-06-triangulos-3.svg" class="img-fluid" alt="Tres aristas internas en cada comunidad; la arista 3-4 queda entre comunidades."></a></p>
+<p><strong>Cuente las aristas internas.</strong> <span class="math inline">L_c = 3</span> en cada comunidad, así que cada una guarda <span class="math inline">3/7 = 0{,}429</span> del peso. La arista 3–4 queda entre comunidades.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-triangulos-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s3-06-triangulos-4.svg" class="img-fluid" alt="Grados 2, 2 y 3 en cada comunidad: d_c igual a 7 y fracción esperada 0,25."></a></p>
+<p><strong>Sume los grados.</strong> <span class="math inline">d_c = 2 + 2 + 3 = 7</span>. Al azar, la fracción esperada dentro de cada comunidad sería <span class="math inline">(7/14)^2 = 0{,}250</span>. Las unidades se cancelan: aristas sobre aristas.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-triangulos-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s3-06-triangulos-5.svg" class="img-fluid" alt="Q igual a 2 por 0,429 menos 0,250, es decir, 0,357."></a></p>
+<p><strong>Reste y sume.</strong> <span class="math inline">Q = 2\,(0{,}429 - 0{,}250) = 0{,}357</span>: una estructura de comunidades clara.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-06-triangulos-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s3-06-triangulos-6.svg" class="img-fluid" alt="Otra partición, 1-2 y 3-4-5-6, tiene Q igual a 0,122."></a></p>
+<p><strong>Compare con otra partición.</strong> Con <span class="math inline">\{1, 2\}</span> y <span class="math inline">\{3, 4, 5, 6\}</span>, <span class="math inline">Q = 0{,}122</span>; con una sola comunidad, <span class="math inline">Q = 0</span>. Los algoritmos buscan la partición de mayor <span class="math inline">Q</span>.</p>
+</div>
+</div>
+<p>La modularidad clásica no admite pesos negativos. La práctica del curso, implementada en <code>actores.comunidades</code>, es detectar comunidades con las aristas positivas y leer después las negativas: los conflictos entre comunidades confirman la partición, y los conflictos dentro de una comunidad señalan tensiones internas.</p>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-club-de-karate-de-zachary" class="level3">
+<h3 class="anchored" data-anchor-id="el-club-de-karate-de-zachary">El club de karate de Zachary</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Anticipaba la red la división del club?</span>
+</div>
+<p><strong>Planteamiento.</strong> Zachary (1977) registró las interacciones fuera de clase de los 34 miembros de un club de karate universitario, en el que un conflicto entre el instructor y el administrador terminó en la división del club. La red tiene 78 aristas y viene en NetworkX (<code>nx.karate_club_graph()</code>). La división dejó 17 miembros con cada uno. ¿Cuál es la modularidad de esa división, y qué encuentra un algoritmo que no la conoce?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver el karate con cuatro números</span>
+</div>
+<div class="paso">
+<p><strong>Reúna los datos.</strong> <span class="math inline">m = 78</span> y <span class="math inline">2m = 156</span>. El grupo del instructor tiene <span class="math inline">L_c = 35</span> aristas internas y suma de grados <span class="math inline">d_c = 81</span>; el del administrador, <span class="math inline">L_c = 32</span> y <span class="math inline">d_c = 75</span>. Compruebe: <span class="math inline">81 + 75 = 156 = 2m</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule la modularidad de la división real.</strong></p>
+<p><span class="math display">Q = \frac{35}{78} - \left(\frac{81}{156}\right)^{2} + \frac{32}{78} - \left(\frac{75}{156}\right)^{2}</span></p>
+<p><span class="math display">= 0{,}449 - 0{,}270 + 0{,}410 - 0{,}231 = 0{,}358.</span></p>
+</div>
+<div class="paso">
+<p><strong>Corra el algoritmo codicioso.</strong> Sin conocer la división, encuentra tres comunidades de 17, 9 y 8 miembros con <span class="math inline">Q = 0{,}381</span>. La primera reúne a 16 miembros del administrador y a uno del instructor; las otras dos parten el grupo del instructor en dos subgrupos y solo incluyen a un miembro del administrador.</p>
+</div>
+<div class="paso">
+<p><strong>Corra Louvain.</strong> Con semilla 0 encuentra cuatro comunidades con <span class="math inline">Q = 0{,}420</span>. Tres particiones distintas tienen modularidades de 0,36 a 0,42.</p>
+</div>
+<div class="paso">
+<p><strong>Saque dos lecciones.</strong> La estructura de la red anticipó la división casi miembro por miembro: solo 2 de 34 quedaron del otro lado. Y la partición de máxima modularidad no coincide con la división social que interesa: la modularidad mide densidad de relaciones, y la lealtad se verifica por otras vías.</p>
+</div>
+</div>
+<div id="167e3815" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="06-redes-actores_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Club de karate de Zachary. Color: comunidades del algoritmo codicioso (Q = 0,381). Forma: bando en la división real (círculos, instructor; cuadrados, administrador). Datos de Zachary (1977) incluidos en NetworkX."><img src="06-redes-actores_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" alt="Club de karate de Zachary. Color: comunidades del algoritmo codicioso (Q = 0,381). Forma: bando en la división real (círculos, instructor; cuadrados, administrador). Datos de Zachary (1977) incluidos en NetworkX."></a></p>
+<figcaption>Club de karate de Zachary. Color: comunidades del algoritmo codicioso (Q = 0,381). Forma: bando en la división real (círculos, instructor; cuadrados, administrador). Datos de Zachary (1977) incluidos en NetworkX.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Verifique las cifras con Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Verifique las cifras con Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="cc947af2" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>instructor <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> karate <span class="cf">if</span> karate.nodes[n][<span class="st">"club"</span>] <span class="op">==</span> <span class="st">"Mr. Hi"</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>administrador <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> karate <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> instructor]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># peso=None: cada arista cuenta 1 (el grafo de NetworkX trae además un peso que aquí no se usa)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"división real:"</span>, <span class="bu">round</span>(actores.modularidad(karate, [instructor, administrador], peso<span class="op">=</span><span class="va">None</span>), <span class="dv">3</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"codicioso:   "</span>, <span class="bu">round</span>(codicioso.modularidad, <span class="dv">3</span>), [<span class="bu">len</span>(c) <span class="cf">for</span> c <span class="kw">in</span> codicioso.particion])</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>louvain <span class="op">=</span> actores.comunidades(karate, peso<span class="op">=</span><span class="va">None</span>, metodo<span class="op">=</span><span class="st">"louvain"</span>, semilla<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Louvain:     "</span>, <span class="bu">round</span>(louvain.modularidad, <span class="dv">3</span>), [<span class="bu">len</span>(c) <span class="cf">for</span> c <span class="kw">in</span> louvain.particion])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>división real: 0.358
+codicioso:    0.381 [17, 9, 8]
+Louvain:      0.42 [12, 11, 6, 5]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="los-actores-de-la-generación-distribuida" class="level3">
+<h3 class="anchored" data-anchor-id="los-actores-de-la-generación-distribuida">Los actores de la generación distribuida</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">¿En qué bloque queda el ministerio?</span>
+</div>
+<p><strong>Planteamiento.</strong> Un consultor arma, con actas y comunicados, la red de ocho actores de la generación distribuida en una ciudad: prosumidores (P), instaladores (I), banca (Ba), gremio solar (GS), operador de red y comercializador (OR), regulador (Reg), ministerio (MME) y liga de usuarios (LU). Registra 10 relaciones de cooperación, cada una con peso 1, y dos de conflicto: P–OR, por demoras en la conexión, y GS–OR, por el límite de penetración. ¿Qué partición en dos bloques es más modular?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Comparar dos particiones a mano</span>
+</div>
+<div class="paso">
+<p><strong>Cuente con las aristas positivas.</strong> <span class="math inline">m = 10</span> y <span class="math inline">2m = 20</span>. Los grados son P 3, I 2, Ba 2, GS 4, MME 2, Reg 3, OR 2 y LU 2; suman 20.</p>
+</div>
+<div class="paso">
+<p><strong>Evalúe la partición A</strong>, {P, I, Ba, GS} y {MME, Reg, OR, LU}: 5 y 4 aristas internas; sumas de grados 11 y 9.</p>
+<p><span class="math display">Q_A = \frac{5}{10} - \left(\frac{11}{20}\right)^{2} + \frac{4}{10} - \left(\frac{9}{20}\right)^{2} = 0{,}500 - 0{,}3025 + 0{,}400 - 0{,}2025 = 0{,}395.</span></p>
+</div>
+<div class="paso">
+<p><strong>Evalúe la partición B</strong>, con el ministerio en el primer grupo: 6 y 3 aristas internas; sumas de grados 13 y 7.</p>
+<p><span class="math display">Q_B = 0{,}600 - 0{,}4225 + 0{,}300 - 0{,}1225 = 0{,}355.</span></p>
+</div>
+<div class="paso">
+<p><strong>Lea los conflictos.</strong> Las dos aristas negativas unen los dos bloques de la partición A, lo que confirma la lectura de dos bloques con posiciones opuestas sobre la conexión.</p>
+</div>
+</div>
+<div id="pred-ministerio" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>En la partición A, el ministerio está con el regulador, el operador y la liga. Si lo pasa al bloque de prosumidores, instaladores, banca y gremio solar, la modularidad…</p>
+<div class="opcion">
+<p>sube, porque el ministerio coopera con el gremio solar.</p>
+</div>
+<div class="opcion">
+<p>baja.</p>
+</div>
+<div class="opcion">
+<p>no cambia, porque el ministerio tiene solo dos relaciones.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Reparta los ocho actores en dos bloques</span>
+</div>
+<p>Marque los actores del bloque 1; los demás quedan en el bloque 2. Empiece con la partición A, pase el ministerio al bloque 1 y compare con su predicción. Después pruebe dónde deja más modular la red a la liga de usuarios.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="287" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 286;"><span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a>actoresGD <span class="op">=</span> ({</span>
+<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a>  <span class="dt">nombres</span><span class="op">:</span> {<span class="dt">P</span><span class="op">:</span> <span class="st">"prosumidores"</span><span class="op">,</span> <span class="dt">I</span><span class="op">:</span> <span class="st">"instaladores"</span><span class="op">,</span> <span class="dt">Ba</span><span class="op">:</span> <span class="st">"banca"</span><span class="op">,</span> <span class="dt">GS</span><span class="op">:</span> <span class="st">"gremio solar"</span><span class="op">,</span> <span class="dt">MME</span><span class="op">:</span> <span class="st">"ministerio"</span><span class="op">,</span> <span class="dt">Reg</span><span class="op">:</span> <span class="st">"regulador"</span><span class="op">,</span> <span class="dt">OR</span><span class="op">:</span> <span class="st">"operador de red"</span><span class="op">,</span> <span class="dt">LU</span><span class="op">:</span> <span class="st">"liga de usuarios"</span>}<span class="op">,</span></span>
+<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a>  <span class="dt">posicion</span><span class="op">:</span> {<span class="dt">P</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">I</span><span class="op">:</span> [<span class="dv">1</span><span class="op">,</span> <span class="fl">2.1</span>]<span class="op">,</span> <span class="dt">Ba</span><span class="op">:</span> [<span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.1</span>]<span class="op">,</span> <span class="dt">GS</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">MME</span><span class="op">:</span> [<span class="fl">3.4</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">Reg</span><span class="op">:</span> [<span class="fl">4.8</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">OR</span><span class="op">:</span> [<span class="fl">5.8</span><span class="op">,</span> <span class="fl">2.1</span>]<span class="op">,</span> <span class="dt">LU</span><span class="op">:</span> [<span class="fl">5.8</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.1</span>]}<span class="op">,</span></span>
+<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a>  <span class="dt">red</span><span class="op">:</span> {<span class="dt">nodos</span><span class="op">:</span> [<span class="st">"P"</span><span class="op">,</span> <span class="st">"I"</span><span class="op">,</span> <span class="st">"Ba"</span><span class="op">,</span> <span class="st">"GS"</span><span class="op">,</span> <span class="st">"OR"</span><span class="op">,</span> <span class="st">"Reg"</span><span class="op">,</span> <span class="st">"MME"</span><span class="op">,</span> <span class="st">"LU"</span>]<span class="op">.</span><span class="fu">map</span>((id) <span class="kw">=&gt;</span> ({id}))<span class="op">,</span></span>
+<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>    <span class="dt">aristas</span><span class="op">:</span> [[<span class="st">"P"</span><span class="op">,</span> <span class="st">"I"</span>]<span class="op">,</span> [<span class="st">"P"</span><span class="op">,</span> <span class="st">"Ba"</span>]<span class="op">,</span> [<span class="st">"I"</span><span class="op">,</span> <span class="st">"GS"</span>]<span class="op">,</span> [<span class="st">"Ba"</span><span class="op">,</span> <span class="st">"GS"</span>]<span class="op">,</span> [<span class="st">"P"</span><span class="op">,</span> <span class="st">"GS"</span>]<span class="op">,</span> [<span class="st">"OR"</span><span class="op">,</span> <span class="st">"Reg"</span>]<span class="op">,</span> [<span class="st">"Reg"</span><span class="op">,</span> <span class="st">"MME"</span>]<span class="op">,</span> [<span class="st">"MME"</span><span class="op">,</span> <span class="st">"GS"</span>]<span class="op">,</span> [<span class="st">"OR"</span><span class="op">,</span> <span class="st">"LU"</span>]<span class="op">,</span> [<span class="st">"LU"</span><span class="op">,</span> <span class="st">"Reg"</span>]<span class="op">,</span></span>
+<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a>      [<span class="st">"P"</span><span class="op">,</span> <span class="st">"OR"</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>]<span class="op">,</span> [<span class="st">"GS"</span><span class="op">,</span> <span class="st">"OR"</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>]]<span class="op">.</span><span class="fu">map</span>(([a<span class="op">,</span> b<span class="op">,</span> signo <span class="op">=</span> <span class="dv">1</span>]) <span class="kw">=&gt;</span> ({a<span class="op">,</span> b<span class="op">,</span> signo}))}<span class="op">,</span></span>
+<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="298" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 297;"><span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a>viewof bloqueGD <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>([<span class="st">"P"</span><span class="op">,</span> <span class="st">"I"</span><span class="op">,</span> <span class="st">"Ba"</span><span class="op">,</span> <span class="st">"GS"</span><span class="op">,</span> <span class="st">"MME"</span><span class="op">,</span> <span class="st">"Reg"</span><span class="op">,</span> <span class="st">"OR"</span><span class="op">,</span> <span class="st">"LU"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> [<span class="st">"P"</span><span class="op">,</span> <span class="st">"I"</span><span class="op">,</span> <span class="st">"Ba"</span><span class="op">,</span> <span class="st">"GS"</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Bloque 1"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (x) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>x<span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>actoresGD<span class="op">.</span><span class="at">nombres</span>[x]<span class="sc">}</span><span class="vs">)`</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="303" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 302;"><span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a>lecturaGD <span class="op">=</span> {</span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> uno <span class="op">=</span> bloqueGD<span class="op">,</span> dos <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(actoresGD<span class="op">.</span><span class="at">nombres</span>)<span class="op">.</span><span class="fu">filter</span>((x) <span class="kw">=&gt;</span> <span class="op">!</span>uno<span class="op">.</span><span class="fu">includes</span>(x))<span class="op">;</span></span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> particion <span class="op">=</span> [uno<span class="op">,</span> dos]<span class="op">.</span><span class="fu">filter</span>((g) <span class="kw">=&gt;</span> g<span class="op">.</span><span class="at">length</span>)<span class="op">;</span></span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> q <span class="op">=</span> <span class="fu">modularidad</span>(actoresGD<span class="op">.</span><span class="at">red</span><span class="op">,</span> particion)<span class="op">;</span></span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> algoritmo <span class="op">=</span> <span class="fu">comunidadesCodiciosas</span>(actoresGD<span class="op">.</span><span class="at">red</span>)<span class="op">;</span></span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cruzan <span class="op">=</span> actoresGD<span class="op">.</span><span class="at">red</span><span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">filter</span>((e) <span class="kw">=&gt;</span> e<span class="op">.</span><span class="at">signo</span> <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> uno<span class="op">.</span><span class="fu">includes</span>(e<span class="op">.</span><span class="at">a</span>) <span class="op">!==</span> uno<span class="op">.</span><span class="fu">includes</span>(e<span class="op">.</span><span class="at">b</span>))<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {q<span class="op">,</span> <span class="dt">qAlgoritmo</span><span class="op">:</span> <span class="fu">modularidad</span>(actoresGD<span class="op">.</span><span class="at">red</span><span class="op">,</span> algoritmo)<span class="op">,</span> algoritmo<span class="op">,</span> cruzan}<span class="op">;</span></span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="315" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 314;"><span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">620</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(actoresGD<span class="op">.</span><span class="at">red</span><span class="op">.</span><span class="at">aristas</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[e<span class="op">.</span><span class="at">a</span>][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[e<span class="op">.</span><span class="at">a</span>][<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[e<span class="op">.</span><span class="at">b</span>][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[e<span class="op">.</span><span class="at">b</span>][<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> e<span class="op">.</span><span class="at">signo</span> <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">rojo</span> <span class="op">:</span> <span class="st">"#AAAAAA"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> e<span class="op">.</span><span class="at">signo</span> <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"5,4"</span> <span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.6</span>})<span class="op">,</span></span>
+<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(actoresGD<span class="op">.</span><span class="at">nombres</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">17</span><span class="op">,</span></span>
+<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> bloqueGD<span class="op">.</span><span class="fu">includes</span>(n) <span class="op">?</span> COLORES<span class="op">.</span><span class="at">azul</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(actoresGD<span class="op">.</span><span class="at">nombres</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> actoresGD<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">text</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> n<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">"bold"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">11</span>})<span class="op">,</span></span>
+<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="331" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 330;"><span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Modularidad de su partición&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(lecturaGD<span class="op">.</span><span class="at">q</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Partición del algoritmo codicioso&lt;b&gt;</span><span class="sc">${</span>lecturaGD<span class="op">.</span><span class="at">algoritmo</span><span class="op">.</span><span class="fu">map</span>((g) <span class="kw">=&gt;</span> <span class="vs">`{</span><span class="sc">${</span>g<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs">}`</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">" y "</span>)<span class="sc">}</span><span class="vs">: Q = </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(lecturaGD<span class="op">.</span><span class="at">qAlgoritmo</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Conflictos entre sus dos bloques&lt;b&gt;</span><span class="sc">${</span>lecturaGD<span class="op">.</span><span class="at">cruzan</span><span class="sc">}</span><span class="vs"> de 2&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Red sintética con fines didácticos. Azul: bloque 1; verde: bloque 2; rojo discontinuo: conflicto. La modularidad usa solo las aristas de cooperación, con <code>modularidad</code> y <code>comunidadesCodiciosas</code> de <code>difusion.js</code>, que la prueba del curso compara con <code>mise_sd.actores</code> para esta misma red.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-ministerio"></span>. La respuesta es la B: <span class="math inline">Q</span> baja de 0,395 a 0,355. El ministerio gana una arista interna con el gremio solar, pero su bloque crece en grados y el término esperado sube más que el observado. El algoritmo codicioso encuentra la partición A. La intermediación de la semana 2 agrega el dato estratégico: el gremio solar (0,60), el ministerio (0,57) y el regulador (0,48) forman la única ruta de cooperación entre los bloques. Si el ministerio deja de hablar con el gremio, los dos bloques quedan conectados solo por conflictos.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo cálculo en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo cálculo en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="9464aff8" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>relaciones <span class="op">=</span> [(<span class="st">"P"</span>, <span class="st">"I"</span>, <span class="dv">1</span>), (<span class="st">"P"</span>, <span class="st">"Ba"</span>, <span class="dv">1</span>), (<span class="st">"I"</span>, <span class="st">"GS"</span>, <span class="dv">1</span>), (<span class="st">"Ba"</span>, <span class="st">"GS"</span>, <span class="dv">1</span>), (<span class="st">"P"</span>, <span class="st">"GS"</span>, <span class="dv">1</span>), (<span class="st">"OR"</span>, <span class="st">"Reg"</span>, <span class="dv">1</span>),</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              (<span class="st">"Reg"</span>, <span class="st">"MME"</span>, <span class="dv">1</span>), (<span class="st">"MME"</span>, <span class="st">"GS"</span>, <span class="dv">1</span>), (<span class="st">"OR"</span>, <span class="st">"LU"</span>, <span class="dv">1</span>), (<span class="st">"LU"</span>, <span class="st">"Reg"</span>, <span class="dv">1</span>), (<span class="st">"P"</span>, <span class="st">"OR"</span>, <span class="op">-</span><span class="dv">1</span>), (<span class="st">"GS"</span>, <span class="st">"OR"</span>, <span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>gd <span class="op">=</span> nx.Graph()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a, b, signo <span class="kw">in</span> relaciones:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    gd.add_edge(a, b, signo<span class="op">=</span>signo)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>positivas <span class="op">=</span> nx.Graph([(a, b) <span class="cf">for</span> a, b, s <span class="kw">in</span> relaciones <span class="cf">if</span> s <span class="op">&gt;</span> <span class="dv">0</span>])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, particion <span class="kw">in</span> ((<span class="st">"A"</span>, [{<span class="st">"P"</span>, <span class="st">"I"</span>, <span class="st">"Ba"</span>, <span class="st">"GS"</span>}, {<span class="st">"MME"</span>, <span class="st">"Reg"</span>, <span class="st">"OR"</span>, <span class="st">"LU"</span>}]),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                          (<span class="st">"B"</span>, [{<span class="st">"P"</span>, <span class="st">"I"</span>, <span class="st">"Ba"</span>, <span class="st">"GS"</span>, <span class="st">"MME"</span>}, {<span class="st">"Reg"</span>, <span class="st">"OR"</span>, <span class="st">"LU"</span>}])):</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(nombre, <span class="bu">round</span>(actores.modularidad(positivas, particion, peso<span class="op">=</span><span class="va">None</span>), <span class="dv">3</span>))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(actores.comunidades(gd, peso<span class="op">=</span><span class="va">None</span>, metodo<span class="op">=</span><span class="st">"codicioso"</span>).particion)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>({k: <span class="bu">round</span>(v, <span class="dv">2</span>) <span class="cf">for</span> k, v <span class="kw">in</span> nx.betweenness_centrality(positivas).items() <span class="cf">if</span> v <span class="op">&gt;</span> <span class="fl">0.1</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A 0.395
+B 0.355
+[{'GS', 'P', 'I', 'Ba'}, {'Reg', 'MME', 'LU', 'OR'}]
+{'GS': 0.6, 'Reg': 0.48, 'MME': 0.57}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="coaliciones-en-la-discusión-regulatoria" class="level3">
+<h3 class="anchored" data-anchor-id="coaliciones-en-la-discusión-regulatoria">Coaliciones en la discusión regulatoria</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Qué bloques muestra un expediente de consulta, y cuánto se les puede creer?</span>
+</div>
+<p><strong>Planteamiento.</strong> El consultor no puede entrevistar a todos, pero sí revisar un expediente de consulta pública. <code>actores.coparticipacion_regulatoria_sintetica()</code> genera uno sintético con la forma de uno real: 40 documentos firmados por 18 actores, entre ellos 12 cartas del bloque que promueve la autogeneración, 10 del bloque de redes, 10 actas de mesas técnicas convocadas por el regulador y 8 documentos entre entidades. Los actores son roles genéricos y ningún documento reproduce un expediente real. Con la red de coparticipación (peso = documentos compartidos), ¿qué bloques hay y quién es el actor más central?</p>
+</div>
+<section id="acto-1.-predecir" class="level4">
+<h4 class="anchored" data-anchor-id="acto-1.-predecir">Acto 1. Predecir</h4>
+<div id="pred-mesas-regulador" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>El regulador aparece en 14 de los 40 documentos y tiene el mayor grado de la red (15 de 17 posibles). Si se quitan las 10 actas de mesas técnicas, su grado…</p>
+<div class="opcion">
+<p>se mantiene cerca de 15, porque es un actor central de verdad.</p>
+</div>
+<div class="opcion">
+<p>baja a la mitad.</p>
+</div>
+<div class="opcion">
+<p>cae a muy pocos vecinos.</p>
+</div>
+</div>
+<div id="pred-mesas-modularidad" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Y la modularidad de los bloques, sin las actas…</p>
+<div class="opcion">
+<p>baja, porque la red pierde aristas.</p>
+</div>
+<div class="opcion">
+<p>sube.</p>
+</div>
+<div class="opcion">
+<p>no cambia.</p>
+</div>
+</div>
+</section>
+<section id="acto-2.-simular" class="level4">
+<h4 class="anchored" data-anchor-id="acto-2.-simular">Acto 2. Simular</h4>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Un expediente de 40 documentos, por tipo de documento</span>
+</div>
+<p>Con todos los documentos, anote la modularidad y el grado del regulador. Después desmarque las actas de mesas técnicas y compare con sus predicciones. Pruebe también a quedarse solo con las cartas.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="410" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 409;"><span id="cb11-410"><a href="#cb11-410" aria-hidden="true" tabindex="-1"></a>expediente <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s3-06-coparticipacion.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="415" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 414;"><span id="cb12-415"><a href="#cb12-415" aria-hidden="true" tabindex="-1"></a>viewof tiposE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>(<span class="kw">new</span> <span class="bu">Map</span>([[<span class="st">"cartas del bloque de autogeneración (12)"</span><span class="op">,</span> <span class="st">"carta_autogeneracion"</span>]<span class="op">,</span> [<span class="st">"cartas del bloque de redes (10)"</span><span class="op">,</span> <span class="st">"carta_redes"</span>]<span class="op">,</span></span>
+<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"actas de mesas técnicas (10)"</span><span class="op">,</span> <span class="st">"mesa_tecnica"</span>]<span class="op">,</span> [<span class="st">"documentos entre entidades (8)"</span><span class="op">,</span> <span class="st">"documento_entidades"</span>]])<span class="op">,</span></span>
+<span id="cb12-417"><a href="#cb12-417" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">value</span><span class="op">:</span> [<span class="st">"carta_autogeneracion"</span><span class="op">,</span> <span class="st">"carta_redes"</span><span class="op">,</span> <span class="st">"mesa_tecnica"</span><span class="op">,</span> <span class="st">"documento_entidades"</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Documentos incluidos"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="422" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 421;"><span id="cb13-422"><a href="#cb13-422" aria-hidden="true" tabindex="-1"></a>redE <span class="op">=</span> {</span>
+<span id="cb13-423"><a href="#cb13-423" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> documentos <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(expediente<span class="op">.</span><span class="at">documentos</span>)<span class="op">.</span><span class="fu">filter</span>(([k]) <span class="kw">=&gt;</span> tiposE<span class="op">.</span><span class="fu">some</span>((t) <span class="kw">=&gt;</span> k<span class="op">.</span><span class="fu">startsWith</span>(t))))<span class="op">;</span></span>
+<span id="cb13-424"><a href="#cb13-424" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> red <span class="op">=</span> <span class="fu">redCoparticipacion</span>(documentos)<span class="op">;</span></span>
+<span id="cb13-425"><a href="#cb13-425" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>red<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="at">length</span>) <span class="cf">return</span> {<span class="dt">vacia</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">documentos</span><span class="op">:</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(documentos)<span class="op">.</span><span class="at">length</span>}<span class="op">;</span></span>
+<span id="cb13-426"><a href="#cb13-426" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> comunidades <span class="op">=</span> <span class="fu">comunidadesCodiciosas</span>(red<span class="op">,</span> {<span class="dt">usarPeso</span><span class="op">:</span> <span class="kw">true</span>})<span class="op">;</span></span>
+<span id="cb13-427"><a href="#cb13-427" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> grupo <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(comunidades<span class="op">.</span><span class="fu">flatMap</span>((g<span class="op">,</span> i) <span class="kw">=&gt;</span> g<span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">,</span> i])))<span class="op">;</span></span>
+<span id="cb13-428"><a href="#cb13-428" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> grado <span class="op">=</span> {}<span class="op">;</span></span>
+<span id="cb13-429"><a href="#cb13-429" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> e <span class="kw">of</span> red<span class="op">.</span><span class="at">aristas</span>) { grado[e<span class="op">.</span><span class="at">a</span>] <span class="op">=</span> (grado[e<span class="op">.</span><span class="at">a</span>] <span class="op">??</span> <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> grado[e<span class="op">.</span><span class="at">b</span>] <span class="op">=</span> (grado[e<span class="op">.</span><span class="at">b</span>] <span class="op">??</span> <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> }</span>
+<span id="cb13-430"><a href="#cb13-430" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> n <span class="op">=</span> red<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb13-431"><a href="#cb13-431" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> maximo <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span><span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(grado))<span class="op">;</span></span>
+<span id="cb13-432"><a href="#cb13-432" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {<span class="dt">vacia</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> red<span class="op">,</span> comunidades<span class="op">,</span> grupo<span class="op">,</span> grado<span class="op">,</span> n<span class="op">,</span> <span class="dt">documentos</span><span class="op">:</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(documentos)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb13-433"><a href="#cb13-433" aria-hidden="true" tabindex="-1"></a>    <span class="dt">q</span><span class="op">:</span> <span class="fu">modularidad</span>(red<span class="op">,</span> comunidades<span class="op">,</span> {<span class="dt">usarPeso</span><span class="op">:</span> <span class="kw">true</span>})<span class="op">,</span> <span class="dt">densidad</span><span class="op">:</span> red<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="at">length</span> <span class="op">/</span> (n <span class="op">*</span> (n <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">2</span>)<span class="op">,</span></span>
+<span id="cb13-434"><a href="#cb13-434" aria-hidden="true" tabindex="-1"></a>    <span class="dt">lideres</span><span class="op">:</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(grado)<span class="op">.</span><span class="fu">filter</span>((x) <span class="kw">=&gt;</span> grado[x] <span class="op">===</span> maximo)<span class="op">,</span> maximo}<span class="op">;</span></span>
+<span id="cb13-435"><a href="#cb13-435" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="440" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 439;"><span id="cb14-440"><a href="#cb14-440" aria-hidden="true" tabindex="-1"></a>redE<span class="op">.</span><span class="at">vacia</span> <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;p&gt;Marque al menos un tipo de documento.&lt;/p&gt;`</span> <span class="op">:</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb14-441"><a href="#cb14-441" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">700</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">700</span>) <span class="op">*</span> <span class="fl">0.72</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span></span>
+<span id="cb14-442"><a href="#cb14-442" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb14-443"><a href="#cb14-443" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span> <span class="st">"ordinal"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">violeta</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">gris</span>]}<span class="op">,</span></span>
+<span id="cb14-444"><a href="#cb14-444" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb14-445"><a href="#cb14-445" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(redE<span class="op">.</span><span class="at">red</span><span class="op">.</span><span class="at">aristas</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[e<span class="op">.</span><span class="at">a</span>][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[e<span class="op">.</span><span class="at">a</span>][<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb14-446"><a href="#cb14-446" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[e<span class="op">.</span><span class="at">b</span>][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[e<span class="op">.</span><span class="at">b</span>][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#BBBBBB"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> <span class="fl">0.6</span> <span class="op">+</span> <span class="fl">0.9</span> <span class="op">*</span> e<span class="op">.</span><span class="at">peso</span><span class="op">,</span> <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.7</span>})<span class="op">,</span></span>
+<span id="cb14-447"><a href="#cb14-447" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(redE<span class="op">.</span><span class="at">red</span><span class="op">.</span><span class="at">nodos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[d<span class="op">.</span><span class="at">id</span>][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[d<span class="op">.</span><span class="at">id</span>][<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb14-448"><a href="#cb14-448" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="dv">4</span> <span class="op">+</span> <span class="fl">1.3</span> <span class="op">*</span> d<span class="op">.</span><span class="at">documentos</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> redE<span class="op">.</span><span class="at">grupo</span>[d<span class="op">.</span><span class="at">id</span>]<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span>})<span class="op">,</span></span>
+<span id="cb14-449"><a href="#cb14-449" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(redE<span class="op">.</span><span class="at">red</span><span class="op">.</span><span class="at">nodos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[d<span class="op">.</span><span class="at">id</span>][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> expediente<span class="op">.</span><span class="at">posiciones</span>[d<span class="op">.</span><span class="at">id</span>][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"id"</span><span class="op">,</span></span>
+<span id="cb14-450"><a href="#cb14-450" aria-hidden="true" tabindex="-1"></a>      <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">14</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span>})<span class="op">,</span></span>
+<span id="cb14-451"><a href="#cb14-451" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb14-452"><a href="#cb14-452" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="457" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 456;"><span id="cb15-457"><a href="#cb15-457" aria-hidden="true" tabindex="-1"></a>redE<span class="op">.</span><span class="at">vacia</span> <span class="op">?</span> <span class="fu">html</span><span class="vs">``</span> <span class="op">:</span> <span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb15-458"><a href="#cb15-458" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Documentos y aristas&lt;b&gt;</span><span class="sc">${</span>redE<span class="op">.</span><span class="at">documentos</span><span class="sc">}</span><span class="vs"> documentos; </span><span class="sc">${</span>redE<span class="op">.</span><span class="at">red</span><span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> aristas; densidad </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(redE<span class="op">.</span><span class="at">densidad</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-459"><a href="#cb15-459" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Comunidades (codicioso) y modularidad&lt;b&gt;</span><span class="sc">${</span>redE<span class="op">.</span><span class="at">comunidades</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> comunidades; Q = </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(redE<span class="op">.</span><span class="at">q</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-460"><a href="#cb15-460" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Grado del regulador&lt;b&gt;</span><span class="sc">${</span>redE<span class="op">.</span><span class="at">grado</span>[<span class="st">"Regulador"</span>] <span class="op">===</span> <span class="kw">undefined</span> <span class="op">?</span> <span class="st">"no aparece"</span> <span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>redE<span class="op">.</span><span class="at">grado</span>[<span class="st">"Regulador"</span>]<span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span>redE<span class="op">.</span><span class="at">n</span> <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="vs"> posibles`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-461"><a href="#cb15-461" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Mayor grado&lt;b&gt;</span><span class="sc">${</span>redE<span class="op">.</span><span class="at">lideres</span><span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>redE<span class="op">.</span><span class="at">maximo</span><span class="sc">}</span><span class="vs">)&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb15-462"><a href="#cb15-462" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Expediente sintético con fines didácticos (<code>actores.coparticipacion_regulatoria_sintetica</code>, semilla 14). Color: comunidad del algoritmo codicioso con pesos; tamaño: documentos firmados; grosor: documentos compartidos. Posiciones fijas calculadas en Python sobre la red completa. La prueba del curso compara la red y la modularidad del navegador con <code>mise_sd.actores</code>.</p>
+</div>
+</div>
+</section>
+<section id="acto-3.-explicar" class="level4">
+<h4 class="anchored" data-anchor-id="acto-3.-explicar">Acto 3. Explicar</h4>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el expediente como consultor</span>
+</div>
+<div class="paso">
+<p><strong>Lea los bloques.</strong> La red completa tiene 95 aristas y densidad 0,62: casi todos coparticiparon con casi todos. Aun así el algoritmo codicioso (y Louvain, en las notas) encuentra tres comunidades con <span class="math inline">Q = 0{,}294</span>: el bloque de autogeneración con la academia, la alcaldía y la ONG ambiental; el de redes, con los grandes consumidores y la liga de usuarios, y el de las cinco entidades públicas.</p>
+</div>
+<div class="paso">
+<p><strong>Contraste con sus predicciones.</strong> Sin las 10 actas de mesas técnicas, el grado del regulador cae de 15 a 3, la red baja a 43 aristas y la modularidad <strong>sube</strong> a 0,587, con las mismas tres comunidades. Usted anotó <span class="mi-prediccion" data-para="pred-mesas-regulador"></span> y <span class="mi-prediccion" data-para="pred-mesas-modularidad"></span>; las respuestas son la C y la B.</p>
+</div>
+<div class="paso">
+<p><strong>Explique el grado del regulador.</strong> El regulador aparece en 14 documentos porque convoca las mesas, y la coparticipación registra presencia en la misma sala. Su centralidad describe su función de convocar, no su alineación. La intermediación es baja para todos (el máximo es 0,07), como corresponde a una red tan densa: nadie controla el paso entre bloques, porque todos se encuentran en las mesas.</p>
+</div>
+<div class="paso">
+<p><strong>Explique por qué sube la modularidad.</strong> Las actas mezclan a actores de todos los bloques en el mismo documento y agregan aristas entre comunidades. Sin ellas quedan sobre todo las cartas, que cada bloque firma con los suyos. Las comunidades eran robustas; la densidad y la centralidad del regulador eran efectos del tipo de documento.</p>
+</div>
+<div class="paso">
+<p><strong>Marque la posición menos segura.</strong> La liga de usuarios quedó con el bloque de redes porque firmó más cartas con ese bloque. Es un dato que merece verificarse con el contenido de las cartas o en entrevistas antes de afirmar una alianza.</p>
+</div>
+<div class="paso">
+<p><strong>Redacte la conclusión.</strong> Un informe serio diría tres cosas: hay tres bloques estables que coinciden con intereses plausibles; la posición de la liga de usuarios es la menos segura, y la centralidad del regulador describe su función de convocar. La semana 6 retomará estas redes para agregar poder, intereses y capacidad de veto.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo análisis en Python, como en el Laboratorio 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo análisis en Python, como en el Laboratorio 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="7f1fbf99" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>red <span class="op">=</span> actores.red_coparticipacion(documentos)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"aristas:"</span>, red.number_of_edges(), <span class="st">" densidad:"</span>, <span class="bu">round</span>(nx.density(red), <span class="dv">2</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> metodo <span class="kw">in</span> (<span class="st">"louvain"</span>, <span class="st">"codicioso"</span>):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    resultado <span class="op">=</span> actores.comunidades(red, metodo<span class="op">=</span>metodo)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(metodo, <span class="bu">round</span>(resultado.modularidad, <span class="dv">3</span>), [<span class="bu">sorted</span>(g) <span class="cf">for</span> g <span class="kw">in</span> resultado.particion])</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>sin_mesas <span class="op">=</span> {k: v <span class="cf">for</span> k, v <span class="kw">in</span> documentos.items() <span class="cf">if</span> <span class="kw">not</span> k.startswith(<span class="st">"mesa"</span>)}</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>red_sin_mesas <span class="op">=</span> actores.red_coparticipacion(sin_mesas)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sin actas: grado del regulador"</span>, red_sin_mesas.degree(<span class="st">"Regulador"</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"aristas"</span>, red_sin_mesas.number_of_edges(),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Q"</span>, <span class="bu">round</span>(actores.comunidades(red_sin_mesas).modularidad, <span class="dv">3</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>aristas: 95  densidad: 0.62
+louvain 0.294 [['Academia', 'Alcaldía', 'Banca verde', 'Gremio solar', 'Instaladores', 'ONG ambiental', 'Prosumidores'], ['Grandes consumidores', 'Gremio distribuidores', 'Liga de usuarios', 'OR regional', 'OR urbano 1', 'OR urbano 2'], ['Ministerio', 'Operador del mercado', 'Planeador', 'Regulador', 'Superintendencia']]
+codicioso 0.294 [['Academia', 'Alcaldía', 'Banca verde', 'Gremio solar', 'Instaladores', 'ONG ambiental', 'Prosumidores'], ['Grandes consumidores', 'Gremio distribuidores', 'Liga de usuarios', 'OR regional', 'OR urbano 1', 'OR urbano 2'], ['Ministerio', 'Operador del mercado', 'Planeador', 'Regulador', 'Superintendencia']]
+sin actas: grado del regulador 3 aristas 43 Q 0.587</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Presentar la red sin interpretación</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>Un sociograma con colores y una tabla de centralidades como resultado final del análisis.</p>
+</div>
+<div class="bien">
+<p>Cada métrica responde una pregunta del caso (¿quiénes forman bloque?, ¿por dónde pasa la cooperación entre bloques?) y cada respuesta dice qué implica para el decisor: «si el ministerio deja de hablar con el gremio, los bloques quedan unidos solo por conflictos».</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer alianza en una red de coparticipación</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«La liga de usuarios y los operadores de red firmaron juntos: son aliados.»</p>
+</div>
+<div class="bien">
+<p>Firmar el mismo documento registra presencia conjunta. Puede ser alianza, puede ser que ambos fueron convocados y puede ser que se sentaron a discutir en contra. La coparticipación sugiere hipótesis que se confirman con el contenido de los documentos o con entrevistas.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer la centralidad sin mirar cómo se construyó la red</span>
+</div>
+<p>En una red de coparticipación, quien convoca aparece conectado con todos. Confundir esa centralidad con influencia es el error de confundir centralidades de la semana 2, aplicado a actores. Reprodúzcalo en el simulador avanzado: con las actas, el regulador tiene grado 15; sin ellas, 3. Antes de interpretar una centralidad, pregunte qué tipo de evento produjo cada arista.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tomar la partición del algoritmo como la verdad</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Louvain encontró cuatro comunidades en el karate, así que el club tenía cuatro facciones.»</p>
+</div>
+<div class="bien">
+<p>Algoritmos, semillas o resoluciones distintas dan particiones distintas con modularidades parecidas (0,381 y 0,420 en el karate). Se reporta la partición con su estabilidad frente a esas variaciones, y una diferencia de pocas centésimas de <span class="math inline">Q</span> no se trata como sustantiva.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una partición tiene 60 % del peso de las aristas dentro de sus comunidades, y al azar se esperaría 45 %. ¿Cuánto vale su modularidad?</p>
+<div class="opcion" data-correcta="si">
+<p>0,15.</p>
+<p><span class="porque">Correcto: <span class="math inline">Q</span> es lo observado menos lo esperado, sumado sobre las comunidades.</span></p>
+</div>
+<div class="opcion">
+<p>0,60.</p>
+<p><span class="porque">Ese es solo el primer término; falta restar lo esperado al azar.</span></p>
+</div>
+<div class="opcion">
+<p>1,33, el cociente entre las dos.</p>
+<p><span class="porque">La modularidad es una diferencia, no un cociente; revise la definición.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En una red de coparticipación de un expediente de consulta, el regulador tiene el mayor grado. ¿Qué concluye?</p>
+<div class="opcion">
+<p>Que es el actor con más aliados.</p>
+<p><span class="porque">Ese es el error de leer alianza en una red de coparticipación.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Nada todavía: hay que ver qué documentos producen sus aristas, porque quien convoca aparece con todos.</p>
+<p><span class="porque">Correcto: en el expediente sintético, sin las actas de mesas su grado cae de 15 a 3.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué la modularidad sube de 0,294 a 0,587 al quitar las actas de mesas técnicas, si la red pierde más de la mitad de sus aristas?</p>
+<div class="opcion">
+<p>Porque con menos aristas cualquier partición es más modular.</p>
+<p><span class="porque">La modularidad compara con lo esperado según los grados; quitar aristas al azar no la sube.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque las actas agregaban sobre todo aristas entre bloques, y las cartas que quedan se firman dentro de cada bloque.</p>
+<p><span class="porque">Correcto: las comunidades eran las mismas; las mesas diluían la señal.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Dos algoritmos dan particiones distintas de la misma red, con <span class="math inline">Q = 0{,}381</span> y <span class="math inline">Q = 0{,}420</span>. ¿Qué reporta?</p>
+<div class="opcion">
+<p>La de mayor <span class="math inline">Q</span>, porque es la verdadera.</p>
+<p><span class="porque">La partición de máxima modularidad no tiene por qué coincidir con la división social que interesa.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Las dos, los actores que cambian de grupo entre ellas y la evidencia externa que las distingue.</p>
+<p><span class="porque">Correcto: la estabilidad de la partición es parte del resultado.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la red de ocho actores, las dos aristas de conflicto unen actores de bloques distintos de la partición más modular. ¿Qué indica?</p>
+<div class="opcion" data-correcta="si">
+<p>Que los conflictos confirman la lectura de dos bloques con posiciones opuestas.</p>
+<p><span class="porque">Correcto: se detecta con las positivas y se leen después las negativas; un conflicto dentro de un bloque señalaría tensión interna.</span></p>
+</div>
+<div class="opcion">
+<p>Que la partición está mal, porque hay aristas entre los bloques.</p>
+<p><span class="porque">Las aristas negativas no entran en la modularidad clásica; entre bloques son lo esperable.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-dónde-va-la-liga-de-usuarios" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-dónde-va-la-liga-de-usuarios">Ejercicio 1 ●○○ · ¿Dónde va la liga de usuarios?</h4>
+<p>En la red de ocho actores, calcule a mano la modularidad de la partición {P, I, Ba, GS, LU} y {MME, Reg, OR}. Compárela con <span class="math inline">Q_A</span> y <span class="math inline">Q_B</span> y explique qué indica el resultado sobre la posición de la liga de usuarios. Verifique con el simulador.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Con la liga en el primer grupo, {P, I, Ba, GS, LU} conserva 5 aristas internas (LU no tiene relaciones de cooperación con ese grupo) y su suma de grados es <span class="math inline">3 + 2 + 2 + 4 + 2 = 13</span>; {MME, Reg, OR} tiene 2 aristas internas (MME–Reg y Reg–OR) y suma de grados <span class="math inline">2 + 3 + 2 = 7</span>:</p>
+<p><span class="math display">Q = \frac{5}{10} - \left(\frac{13}{20}\right)^{2} + \frac{2}{10} - \left(\frac{7}{20}\right)^{2} = 0{,}500 - 0{,}4225 + 0{,}200 - 0{,}1225 = 0{,}155.</span></p>
+<p>Es mucho menor que <span class="math inline">Q_A = 0{,}395</span> y que <span class="math inline">Q_B = 0{,}355</span>. Mover a la liga rompe dos aristas internas del segundo grupo (LU–OR y LU–Reg) sin agregar ninguna al primero. Si el consultor sospecha que la liga simpatiza con los prosumidores, la red de relaciones registradas no lo respalda y hace falta otra evidencia.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-coparticipación-a-mano" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-coparticipación-a-mano">Ejercicio 2 ●●○ · Coparticipación a mano</h4>
+<p>Cuatro documentos tienen estos firmantes: D1 = {A, B, C}, D2 = {A, B}, D3 = {C, D, E} y D4 = {D, E}. (a) Construya la red de coparticipación con pesos. (b) Calcule la modularidad ponderada de las particiones {A, B, C} y {D, E}, y {A, B} y {C, D, E}. (c) ¿Qué indica el resultado sobre el actor C y qué información adicional pediría?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Cada documento une a todos sus firmantes de a pares; un par que comparte dos documentos tiene peso 2. En la modularidad ponderada, <span class="math inline">m</span> es la suma de los pesos y <span class="math inline">d_c</span> la suma de las fuerzas (grados ponderados).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Pesos: A–B 2 (D1 y D2), A–C 1, B–C 1, C–D 1, C–E 1 y D–E 2 (D3 y D4). El peso total es <span class="math inline">m = 8</span> y las fuerzas son A 3, B 3, C 4, D 3 y E 3.</p></li>
+<li><p>Para {A, B, C} y {D, E}: <span class="math inline">L_1 = 4</span>, <span class="math inline">d_1 = 10</span>, <span class="math inline">L_2 = 2</span>, <span class="math inline">d_2 = 6</span>:</p></li>
+</ol>
+<p><span class="math display">Q = \frac{4}{8} - \left(\frac{10}{16}\right)^{2} + \frac{2}{8} - \left(\frac{6}{16}\right)^{2} = 0{,}500 - 0{,}3906 + 0{,}250 - 0{,}1406 = 0{,}219.</span></p>
+<p>Para {A, B} y {C, D, E}, por simetría, <span class="math inline">Q = 0{,}219</span> también.</p>
+<ol start="3" type="a">
+<li>Las dos particiones son igual de modulares: C está exactamente entre los dos grupos, con un documento de tres firmas en cada lado. El algoritmo codicioso lo asigna a {A, B} por un desempate. Para ubicar a C hace falta leer qué dicen D1 y D3 (¿C firmó para apoyar o para objetar?), preguntarle directamente o ampliar la muestra de documentos.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Una <strong>red de actores</strong> se construye con relaciones observadas y fuente para cada arista; el <strong>signo</strong> distingue cooperación de conflicto y el <strong>peso</strong> mide intensidad.</li>
+<li>La <strong>modularidad</strong> compara el peso dentro de las comunidades con el esperado al azar: <span class="math inline">Q = \sum_c [L_c/m - (d_c/2m)^2]</span>. Dos triángulos unidos por una arista: <span class="math inline">Q = 0{,}357</span>.</li>
+<li>Las comunidades se detectan con las aristas positivas y los conflictos se leen después: entre bloques confirman la partición; dentro, señalan tensiones.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>red</th>
+<th>partición</th>
+<th style="text-align: center;"><span class="math inline">Q</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>karate de Zachary</td>
+<td>división real</td>
+<td style="text-align: center;">0,358</td>
+</tr>
+<tr class="even">
+<td>karate de Zachary</td>
+<td>codicioso (3 comunidades)</td>
+<td style="text-align: center;">0,381</td>
+</tr>
+<tr class="odd">
+<td>ocho actores de la generación distribuida</td>
+<td>A: ministerio con el regulador</td>
+<td style="text-align: center;">0,395</td>
+</tr>
+<tr class="even">
+<td>ocho actores de la generación distribuida</td>
+<td>B: ministerio con el gremio</td>
+<td style="text-align: center;">0,355</td>
+</tr>
+<tr class="odd">
+<td>expediente sintético de 40 documentos</td>
+<td>codicioso, con las actas</td>
+<td style="text-align: center;">0,294</td>
+</tr>
+<tr class="even">
+<td>expediente sintético de 40 documentos</td>
+<td>codicioso, sin las actas</td>
+<td style="text-align: center;">0,587</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>En una <strong>red de coparticipación</strong>, una arista registra presencia conjunta: sugiere alianzas que se confirman con el contenido de los documentos, y quien convoca aparece conectado con todos.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Redes de actores: construcción y comunidades» de las notas de la semana 3 trae la figura del karate y del expediente, los cuatro ejercicios (incluido el de estabilidad frente a la resolución) y sus soluciones. El Laboratorio 2 construye la red de actores del mercado mayorista y detecta sus comunidades, que la <a href="../semana3/07-bipartitas-mercado.html">página siguiente</a> desarrolla. La <a href="../semana6/06-redes-actores.html">página de redes de actores de la semana 6</a> agrega a esta base el poder, los intereses y los puntos de veto.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7bW9kdWxhcmlkYWQsIGNvbXVuaWRhZGVzQ29kaWNpb3NhcywgcmVkQ29wYXJ0aWNpcGFjaW9ufSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvZGlmdXNpb24uanNcIlxuaW1wb3J0IHtmb3JtYXRvTnVtZXJvLCBmb3JtYXRvUG9yY2VudGFqZX0gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImFjdG9yZXNHRCA9ICh7XG4gIG5vbWJyZXM6IHtQOiBcInByb3N1bWlkb3Jlc1wiLCBJOiBcImluc3RhbGFkb3Jlc1wiLCBCYTogXCJiYW5jYVwiLCBHUzogXCJncmVtaW8gc29sYXJcIiwgTU1FOiBcIm1pbmlzdGVyaW9cIiwgUmVnOiBcInJlZ3VsYWRvclwiLCBPUjogXCJvcGVyYWRvciBkZSByZWRcIiwgTFU6IFwibGlnYSBkZSB1c3Vhcmlvc1wifSxcbiAgcG9zaWNpb246IHtQOiBbMCwgMV0sIEk6IFsxLCAyLjFdLCBCYTogWzEsIC0wLjFdLCBHUzogWzIsIDFdLCBNTUU6IFszLjQsIDFdLCBSZWc6IFs0LjgsIDFdLCBPUjogWzUuOCwgMi4xXSwgTFU6IFs1LjgsIC0wLjFdfSxcbiAgcmVkOiB7bm9kb3M6IFtcIlBcIiwgXCJJXCIsIFwiQmFcIiwgXCJHU1wiLCBcIk9SXCIsIFwiUmVnXCIsIFwiTU1FXCIsIFwiTFVcIl0ubWFwKChpZCkgPT4gKHtpZH0pKSxcbiAgICBhcmlzdGFzOiBbW1wiUFwiLCBcIklcIl0sIFtcIlBcIiwgXCJCYVwiXSwgW1wiSVwiLCBcIkdTXCJdLCBbXCJCYVwiLCBcIkdTXCJdLCBbXCJQXCIsIFwiR1NcIl0sIFtcIk9SXCIsIFwiUmVnXCJdLCBbXCJSZWdcIiwgXCJNTUVcIl0sIFtcIk1NRVwiLCBcIkdTXCJdLCBbXCJPUlwiLCBcIkxVXCJdLCBbXCJMVVwiLCBcIlJlZ1wiXSxcbiAgICAgIFtcIlBcIiwgXCJPUlwiLCAtMV0sIFtcIkdTXCIsIFwiT1JcIiwgLTFdXS5tYXAoKFthLCBiLCBzaWdubyA9IDFdKSA9PiAoe2EsIGIsIHNpZ25vfSkpfSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgYmxvcXVlR0QgPSBJbnB1dHMuY2hlY2tib3goW1wiUFwiLCBcIklcIiwgXCJCYVwiLCBcIkdTXCIsIFwiTU1FXCIsIFwiUmVnXCIsIFwiT1JcIiwgXCJMVVwiXSwge3ZhbHVlOiBbXCJQXCIsIFwiSVwiLCBcIkJhXCIsIFwiR1NcIl0sIGxhYmVsOiBcIkJsb3F1ZSAxXCIsIGZvcm1hdDogKHgpID0+IGAke3h9ICgke2FjdG9yZXNHRC5ub21icmVzW3hdfSlgfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImxlY3R1cmFHRCA9IHtcbiAgY29uc3QgdW5vID0gYmxvcXVlR0QsIGRvcyA9IE9iamVjdC5rZXlzKGFjdG9yZXNHRC5ub21icmVzKS5maWx0ZXIoKHgpID0+ICF1bm8uaW5jbHVkZXMoeCkpO1xuICBjb25zdCBwYXJ0aWNpb24gPSBbdW5vLCBkb3NdLmZpbHRlcigoZykgPT4gZy5sZW5ndGgpO1xuICBjb25zdCBxID0gbW9kdWxhcmlkYWQoYWN0b3Jlc0dELnJlZCwgcGFydGljaW9uKTtcbiAgY29uc3QgYWxnb3JpdG1vID0gY29tdW5pZGFkZXNDb2RpY2lvc2FzKGFjdG9yZXNHRC5yZWQpO1xuICBjb25zdCBjcnV6YW4gPSBhY3RvcmVzR0QucmVkLmFyaXN0YXMuZmlsdGVyKChlKSA9PiBlLnNpZ25vIDwgMCAmJiB1bm8uaW5jbHVkZXMoZS5hKSAhPT0gdW5vLmluY2x1ZGVzKGUuYikpLmxlbmd0aDtcbiAgcmV0dXJuIHtxLCBxQWxnb3JpdG1vOiBtb2R1bGFyaWRhZChhY3RvcmVzR0QucmVkLCBhbGdvcml0bW8pLCBhbGdvcml0bW8sIGNydXphbn07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDYyMCksIGhlaWdodDogMjYwLCBpbnNldDogMzAsXG4gIHg6IHtheGlzOiBudWxsfSwgeToge2F4aXM6IG51bGx9LFxuICBtYXJrczogW1xuICAgIFBsb3QubGluayhhY3RvcmVzR0QucmVkLmFyaXN0YXMsIHt4MTogKGUpID0+IGFjdG9yZXNHRC5wb3NpY2lvbltlLmFdWzBdLCB5MTogKGUpID0+IGFjdG9yZXNHRC5wb3NpY2lvbltlLmFdWzFdLFxuICAgICAgeDI6IChlKSA9PiBhY3RvcmVzR0QucG9zaWNpb25bZS5iXVswXSwgeTI6IChlKSA9PiBhY3RvcmVzR0QucG9zaWNpb25bZS5iXVsxXSxcbiAgICAgIHN0cm9rZTogKGUpID0+IGUuc2lnbm8gPCAwID8gQ09MT1JFUy5yb2pvIDogXCIjQUFBQUFBXCIsIHN0cm9rZURhc2hhcnJheTogKGUpID0+IGUuc2lnbm8gPCAwID8gXCI1LDRcIiA6IG51bGwsIHN0cm9rZVdpZHRoOiAxLjZ9KSxcbiAgICBQbG90LmRvdChPYmplY3Qua2V5cyhhY3RvcmVzR0Qubm9tYnJlcyksIHt4OiAobikgPT4gYWN0b3Jlc0dELnBvc2ljaW9uW25dWzBdLCB5OiAobikgPT4gYWN0b3Jlc0dELnBvc2ljaW9uW25dWzFdLCByOiAxNyxcbiAgICAgIGZpbGw6IChuKSA9PiBibG9xdWVHRC5pbmNsdWRlcyhuKSA/IENPTE9SRVMuYXp1bCA6IENPTE9SRVMudmVyZGUsIHN0cm9rZTogXCJ3aGl0ZVwiLCBzdHJva2VXaWR0aDogMn0pLFxuICAgIFBsb3QudGV4dChPYmplY3Qua2V5cyhhY3RvcmVzR0Qubm9tYnJlcyksIHt4OiAobikgPT4gYWN0b3Jlc0dELnBvc2ljaW9uW25dWzBdLCB5OiAobikgPT4gYWN0b3Jlc0dELnBvc2ljaW9uW25dWzFdLCB0ZXh0OiAobikgPT4gbiwgZmlsbDogXCJ3aGl0ZVwiLCBmb250V2VpZ2h0OiBcImJvbGRcIiwgZm9udFNpemU6IDExfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5Nb2R1bGFyaWRhZCBkZSBzdSBwYXJ0aWNpw7NuPGI+JHtmb3JtYXRvTnVtZXJvKDMpKGxlY3R1cmFHRC5xKX08L2I+PC9kaXY+XG4gIDxkaXY+UGFydGljacOzbiBkZWwgYWxnb3JpdG1vIGNvZGljaW9zbzxiPiR7bGVjdHVyYUdELmFsZ29yaXRtby5tYXAoKGcpID0+IGB7JHtnLmpvaW4oXCIsIFwiKX19YCkuam9pbihcIiB5IFwiKX06IFEgPSAke2Zvcm1hdG9OdW1lcm8oMykobGVjdHVyYUdELnFBbGdvcml0bW8pfTwvYj48L2Rpdj5cbiAgPGRpdj5Db25mbGljdG9zIGVudHJlIHN1cyBkb3MgYmxvcXVlczxiPiR7bGVjdHVyYUdELmNydXphbn0gZGUgMjwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImV4cGVkaWVudGUgPSBGaWxlQXR0YWNobWVudChcImRhdG9zL3MzLTA2LWNvcGFydGljaXBhY2lvbi5qc29uXCIpLmpzb24oKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHRpcG9zRSA9IElucHV0cy5jaGVja2JveChuZXcgTWFwKFtbXCJjYXJ0YXMgZGVsIGJsb3F1ZSBkZSBhdXRvZ2VuZXJhY2nDs24gKDEyKVwiLCBcImNhcnRhX2F1dG9nZW5lcmFjaW9uXCJdLCBbXCJjYXJ0YXMgZGVsIGJsb3F1ZSBkZSByZWRlcyAoMTApXCIsIFwiY2FydGFfcmVkZXNcIl0sXG4gIFtcImFjdGFzIGRlIG1lc2FzIHTDqWNuaWNhcyAoMTApXCIsIFwibWVzYV90ZWNuaWNhXCJdLCBbXCJkb2N1bWVudG9zIGVudHJlIGVudGlkYWRlcyAoOClcIiwgXCJkb2N1bWVudG9fZW50aWRhZGVzXCJdXSksXG4gIHt2YWx1ZTogW1wiY2FydGFfYXV0b2dlbmVyYWNpb25cIiwgXCJjYXJ0YV9yZWRlc1wiLCBcIm1lc2FfdGVjbmljYVwiLCBcImRvY3VtZW50b19lbnRpZGFkZXNcIl0sIGxhYmVsOiBcIkRvY3VtZW50b3MgaW5jbHVpZG9zXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC05IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoicmVkRSA9IHtcbiAgY29uc3QgZG9jdW1lbnRvcyA9IE9iamVjdC5mcm9tRW50cmllcyhPYmplY3QuZW50cmllcyhleHBlZGllbnRlLmRvY3VtZW50b3MpLmZpbHRlcigoW2tdKSA9PiB0aXBvc0Uuc29tZSgodCkgPT4gay5zdGFydHNXaXRoKHQpKSkpO1xuICBjb25zdCByZWQgPSByZWRDb3BhcnRpY2lwYWNpb24oZG9jdW1lbnRvcyk7XG4gIGlmICghcmVkLmFyaXN0YXMubGVuZ3RoKSByZXR1cm4ge3ZhY2lhOiB0cnVlLCBkb2N1bWVudG9zOiBPYmplY3Qua2V5cyhkb2N1bWVudG9zKS5sZW5ndGh9O1xuICBjb25zdCBjb211bmlkYWRlcyA9IGNvbXVuaWRhZGVzQ29kaWNpb3NhcyhyZWQsIHt1c2FyUGVzbzogdHJ1ZX0pO1xuICBjb25zdCBncnVwbyA9IE9iamVjdC5mcm9tRW50cmllcyhjb211bmlkYWRlcy5mbGF0TWFwKChnLCBpKSA9PiBnLm1hcCgobikgPT4gW24sIGldKSkpO1xuICBjb25zdCBncmFkbyA9IHt9O1xuICBmb3IgKGNvbnN0IGUgb2YgcmVkLmFyaXN0YXMpIHsgZ3JhZG9bZS5hXSA9IChncmFkb1tlLmFdID8/IDApICsgMTsgZ3JhZG9bZS5iXSA9IChncmFkb1tlLmJdID8/IDApICsgMTsgfVxuICBjb25zdCBuID0gcmVkLm5vZG9zLmxlbmd0aDtcbiAgY29uc3QgbWF4aW1vID0gTWF0aC5tYXgoLi4uT2JqZWN0LnZhbHVlcyhncmFkbykpO1xuICByZXR1cm4ge3ZhY2lhOiBmYWxzZSwgcmVkLCBjb211bmlkYWRlcywgZ3J1cG8sIGdyYWRvLCBuLCBkb2N1bWVudG9zOiBPYmplY3Qua2V5cyhkb2N1bWVudG9zKS5sZW5ndGgsXG4gICAgcTogbW9kdWxhcmlkYWQocmVkLCBjb211bmlkYWRlcywge3VzYXJQZXNvOiB0cnVlfSksIGRlbnNpZGFkOiByZWQuYXJpc3Rhcy5sZW5ndGggLyAobiAqIChuIC0gMSkgLyAyKSxcbiAgICBsaWRlcmVzOiBPYmplY3Qua2V5cyhncmFkbykuZmlsdGVyKCh4KSA9PiBncmFkb1t4XSA9PT0gbWF4aW1vKSwgbWF4aW1vfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTAiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJyZWRFLnZhY2lhID8gaHRtbGA8cD5NYXJxdWUgYWwgbWVub3MgdW4gdGlwbyBkZSBkb2N1bWVudG8uPC9wPmAgOiBQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDcwMCksIGhlaWdodDogTWF0aC5taW4od2lkdGgsIDcwMCkgKiAwLjcyLCBpbnNldDogNDAsXG4gIHg6IHtheGlzOiBudWxsfSwgeToge2F4aXM6IG51bGx9LFxuICBjb2xvcjoge3R5cGU6IFwib3JkaW5hbFwiLCBkb21haW46IFswLCAxLCAyLCAzLCA0XSwgcmFuZ2U6IFtDT0xPUkVTLmF6dWwsIENPTE9SRVMudmVyZGUsIENPTE9SRVMuYW1iYXIsIENPTE9SRVMudmlvbGV0YSwgQ09MT1JFUy5ncmlzXX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5rKHJlZEUucmVkLmFyaXN0YXMsIHt4MTogKGUpID0+IGV4cGVkaWVudGUucG9zaWNpb25lc1tlLmFdWzBdLCB5MTogKGUpID0+IGV4cGVkaWVudGUucG9zaWNpb25lc1tlLmFdWzFdLFxuICAgICAgeDI6IChlKSA9PiBleHBlZGllbnRlLnBvc2ljaW9uZXNbZS5iXVswXSwgeTI6IChlKSA9PiBleHBlZGllbnRlLnBvc2ljaW9uZXNbZS5iXVsxXSwgc3Ryb2tlOiBcIiNCQkJCQkJcIiwgc3Ryb2tlV2lkdGg6IChlKSA9PiAwLjYgKyAwLjkgKiBlLnBlc28sIHN0cm9rZU9wYWNpdHk6IDAuN30pLFxuICAgIFBsb3QuZG90KHJlZEUucmVkLm5vZG9zLCB7eDogKGQpID0+IGV4cGVkaWVudGUucG9zaWNpb25lc1tkLmlkXVswXSwgeTogKGQpID0+IGV4cGVkaWVudGUucG9zaWNpb25lc1tkLmlkXVsxXSxcbiAgICAgIHI6IChkKSA9PiA0ICsgMS4zICogZC5kb2N1bWVudG9zLCBmaWxsOiAoZCkgPT4gcmVkRS5ncnVwb1tkLmlkXSwgc3Ryb2tlOiBcIndoaXRlXCJ9KSxcbiAgICBQbG90LnRleHQocmVkRS5yZWQubm9kb3MsIHt4OiAoZCkgPT4gZXhwZWRpZW50ZS5wb3NpY2lvbmVzW2QuaWRdWzBdLCB5OiAoZCkgPT4gZXhwZWRpZW50ZS5wb3NpY2lvbmVzW2QuaWRdWzFdLCB0ZXh0OiBcImlkXCIsXG4gICAgICBkeTogLTE0LCBmb250U2l6ZTogMTAsIHN0cm9rZTogXCJ3aGl0ZVwiLCBzdHJva2VXaWR0aDogMywgZmlsbDogXCJibGFja1wifSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InJlZEUudmFjaWEgPyBodG1sYGAgOiBodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkRvY3VtZW50b3MgeSBhcmlzdGFzPGI+JHtyZWRFLmRvY3VtZW50b3N9IGRvY3VtZW50b3M7ICR7cmVkRS5yZWQuYXJpc3Rhcy5sZW5ndGh9IGFyaXN0YXM7IGRlbnNpZGFkICR7Zm9ybWF0b051bWVybygyKShyZWRFLmRlbnNpZGFkKX08L2I+PC9kaXY+XG4gIDxkaXY+Q29tdW5pZGFkZXMgKGNvZGljaW9zbykgeSBtb2R1bGFyaWRhZDxiPiR7cmVkRS5jb211bmlkYWRlcy5sZW5ndGh9IGNvbXVuaWRhZGVzOyBRID0gJHtmb3JtYXRvTnVtZXJvKDMpKHJlZEUucSl9PC9iPjwvZGl2PlxuICA8ZGl2PkdyYWRvIGRlbCByZWd1bGFkb3I8Yj4ke3JlZEUuZ3JhZG9bXCJSZWd1bGFkb3JcIl0gPT09IHVuZGVmaW5lZCA/IFwibm8gYXBhcmVjZVwiIDogYCR7cmVkRS5ncmFkb1tcIlJlZ3VsYWRvclwiXX0gZGUgJHtyZWRFLm4gLSAxfSBwb3NpYmxlc2B9PC9iPjwvZGl2PlxuICA8ZGl2Pk1heW9yIGdyYWRvPGI+JHtyZWRFLmxpZGVyZXMuam9pbihcIiwgXCIpfSAoJHtyZWRFLm1heGltb30pPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdibG9xdWVHRCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCd0aXBvc0UnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana3";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana3/05-intervenir-difusion.html" class="pagination-link" aria-label="Intervenir la difusión: semillas, subsidios y puntos de inflexión">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana3/07-bipartitas-mercado.html" class="pagination-link" aria-label="Redes bipartitas y el mercado mayorista">
+        <span class="nav-page-text">Redes bipartitas y el mercado mayorista</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Qué nodo importa, y para qué: grado, cercanía, intermediación y vector propio, calculados a mano en un comité y en diez subestaciones, y comparados sobre el sistema de transmisión estilizado.">
+
+<title>Centralidades – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana2/05-mundo-pequeno.html" rel="next">
+<link href="../semana2/03-caminos-conectividad.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/04-centralidades.html">Centralidades</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/04-centralidades.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Centralidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/05-mundo-pequeno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agrupamiento y mundo pequeño</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/06-modelos-de-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos de red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Redes II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/01-dinamica-sobre-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dinámica sobre redes: nodos con estado y reglas locales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/02-rogers-bass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rogers y Bass: la curva en S de la adopción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/03-contagio-simple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio simple: SI, SIS y SIR sobre redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/04-contagio-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio complejo y umbrales: cuando un vecino no basta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores y comunidades: quién se mueve con quién</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/07-bipartitas-mercado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes bipartitas y el mercado mayorista</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/08-limites-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Límites del enfoque de redes: de la red al stock agregado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/09-adopcion-solar-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La adopción solar como sistema en red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-un-comité-de-seis-vecinos" id="toc-la-intuición-un-comité-de-seis-vecinos" class="nav-link" data-scroll-target="#la-intuición-un-comité-de-seis-vecinos">2. La intuición: un comité de seis vecinos</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/04-centralidades.html">Centralidades</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Centralidades</h1>
+<p class="subtitle lead">Semana 2 · Concepto 4 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Qué nodo importa, y para qué: grado, cercanía, intermediación y vector propio, calculados a mano en un comité y en diez subestaciones, y comparados sobre el sistema de transmisión estilizado.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="30" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 29;"><span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {grafo<span class="op">,</span> centralidades<span class="op">,</span> spearman} <span class="im">from</span> <span class="st">"../simuladores/redes.js"</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana2/03-caminos-conectividad.html">caminos, distancia y conectividad</a></span> <span class="dato">🧪 Es el paso 3 del Laboratorio 1 y la base de la red de actores de la semana 6</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Calcular grado, cercanía e intermediación en una red pequeña y decir qué pregunta responde cada una.</li>
+<li>Usar el atajo de los puntos de articulación para calcular la intermediación a mano.</li>
+<li>Comparar rankings de centralidad en el sistema de transmisión y medir cuánto coinciden.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>«¿Cuál es la subestación más importante?» es una pregunta incompleta. Cada centralidad responde una pregunta distinta, y en una misma red puede señalar nodos distintos: el primer paso es decir para qué se quiere saber.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>El operador del sistema quiere saber qué subestación afecta a más vecinos si sale de servicio. El planeador quiere saber por cuál pasan más rutas entre regiones. El equipo de mantenimiento quiere saber cuál está más cerca de todo. Las tres son preguntas legítimas sobre «la subestación más importante».</p>
+<p>La semana 6 volverá sobre este mismo problema con personas en lugar de subestaciones, en la red de actores de un parque eólico. <strong>¿Qué medida responde cada pregunta, y cuándo señalan nodos distintos?</strong></p>
+</section>
+<section id="la-intuición-un-comité-de-seis-vecinos" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-un-comité-de-seis-vecinos">2. La intuición: un comité de seis vecinos</h2>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Cuatro maneras de ser importante</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-04-comite-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s2-04-comite-1.svg" class="img-fluid" alt="Seis vecinos de un comité y sus conversaciones."></a></p>
+<p><strong>Mire el comité.</strong> Seis vecinos y quién habla con quién. Antes de preguntar quién es el más importante, hay que decir importante para qué.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-04-comite-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s2-04-comite-2.svg" class="img-fluid" alt="Ana resaltada: tiene el mayor grado."></a></p>
+<p><strong>Cuente vecinos.</strong> Ana habla con cuatro personas: es la de mayor <strong>grado</strong>. Si la pregunta es a quién le llega un mensaje directo, Ana.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-04-comite-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s2-04-comite-3.svg" class="img-fluid" alt="Ana resaltada: tiene la mayor cercanía."></a></p>
+<p><strong>Mida distancias.</strong> Ana llega a cualquiera en uno o dos pasos: tiene la mayor <strong>cercanía</strong>, 0,83. Si la pregunta es desde dónde se difunde algo más rápido, otra vez Ana.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-04-comite-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s2-04-comite-4.svg" class="img-fluid" alt="Diego resaltado: es el único puente hacia Fer."></a></p>
+<p><strong>Cuente caminos que pasan por cada uno.</strong> Todos los caminos hacia Fer pasan por Diego. Diego tiene la mayor <strong>intermediación</strong>, 0,40 frente a 0,35 de Ana. Si la pregunta es quién puede cortar la comunicación, Diego.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-04-comite-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s2-04-comite-5.svg" class="img-fluid" alt="Ana y Beto encabezan el vector propio."></a></p>
+<p><strong>Mire a quién conoce cada uno.</strong> El <strong>vector propio</strong> premia estar conectado con quienes están bien conectados: Ana (0,55) y Beto (0,47) encabezan, y Fer, con un solo vecino, queda último.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-04-comite-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s2-04-comite-6.svg" class="img-fluid" alt="Las tres preguntas del sector."></a></p>
+<p><strong>Pase al sector.</strong> El operador pregunta por el grado, el planeador por la intermediación y mantenimiento por la cercanía. Tres preguntas, tres medidas, y a veces tres respuestas.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Grado y cercanía</span>
+</div>
+<p>La <strong>centralidad de grado</strong> normaliza el grado por el máximo posible: <span class="math inline">C^G_i = k_i / (n-1)</span>.</p>
+<p>La <strong>cercanía</strong> es el inverso de la distancia media a los demás:</p>
+<p><span class="math display">C^C_i = \frac{n-1}{\sum_{j \neq i} d_{ij}}.</span></p>
+<p>Mide qué tan pocos saltos separan a un nodo de todos los otros.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Intermediación</span>
+</div>
+<p>La <strong>intermediación</strong> cuenta en qué fracción de los caminos más cortos entre pares de otros nodos está el nodo <span class="math inline">i</span> (Freeman, 1977):</p>
+<p><span class="math display">b_i = \sum_{s &lt; t,\; s,t \neq i} \frac{\sigma_{st}(i)}{\sigma_{st}}, \qquad C^B_i = \frac{b_i}{(n-1)(n-2)/2},</span></p>
+<p>donde <span class="math inline">\sigma_{st}</span> es el número de caminos más cortos entre <span class="math inline">s</span> y <span class="math inline">t</span>, y <span class="math inline">\sigma_{st}(i)</span> los que pasan por <span class="math inline">i</span>. Señala puentes y cuellos de botella.</p>
+<p><strong>Atajo para puntos de articulación.</strong> Si quitar el nodo <span class="math inline">i</span> parte la red en piezas de tamaños <span class="math inline">n_a, n_b, \dots</span>, todos los caminos entre piezas distintas pasan por él, así que <span class="math inline">b_i \geq \sum_{a&lt;b} n_a n_b</span>; si no hay otros caminos que pasen por <span class="math inline">i</span>, la igualdad es exacta.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Vector propio</span>
+</div>
+<p>La <strong>centralidad de vector propio</strong> asigna a cada nodo un valor proporcional a la suma de los valores de sus vecinos:</p>
+<p><span class="math display">x_i = \frac{1}{\lambda} \sum_j A_{ij} x_j.</span></p>
+<p>Es alta para los nodos conectados con nodos centrales, aunque ellos mismos no tengan muchos vecinos.</p>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-comité-a-mano" class="level3">
+<h3 class="anchored" data-anchor-id="el-comité-a-mano">El comité, a mano</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">La intermediación de Diego</span>
+</div>
+<p><strong>Planteamiento.</strong> En el comité, calcule la intermediación de Diego sin computador y explique por qué supera a la de Ana, que tiene más vecinos.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Contar caminos</span>
+</div>
+<div class="paso">
+<p><strong>Busque los pares que dependen de Diego.</strong> Fer solo se conecta con Diego, así que los caminos de Fer hacia Ana, Beto, Carla y Eva pasan por él: 4 pares.</p>
+</div>
+<div class="paso">
+<p><strong>Busque otros pares.</strong> Entre los otros cinco vecinos hay caminos alternativos que no usan a Diego, así que no suman. <span class="math inline">b_{\text{Diego}} = 4</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Normalice.</strong> Con <span class="math inline">n = 6</span> hay <span class="math inline">(5 \times 4)/2 = 10</span> pares posibles sin contar a Diego: <span class="math inline">C^B = 4/10 = 0{,}40</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Compare con Ana.</strong> Ana está en muchos caminos, pero casi siempre comparte ese papel con otra ruta de la misma longitud, y cada camino cuenta solo en la fracción que le toca. Su intermediación es 0,35: más vecinos, menos control.</p>
+</div>
+</div>
+</section>
+<section id="diez-subestaciones-y-un-enlace" class="level3">
+<h3 class="anchored" data-anchor-id="diez-subestaciones-y-un-enlace">Diez subestaciones y un enlace</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">El atajo de los puntos de articulación</span>
+</div>
+<p><strong>Planteamiento.</strong> Una malla urbana de cuatro subestaciones (Norte, Centro, Oriente y Occidente) se une por la subestación Enlace con un sistema rural de cinco (Valle, Mina, Río, Pueblo y Cantera). Calcule la intermediación de Enlace y de Centro.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Aplicar el atajo</span>
+</div>
+<div class="paso">
+<p><strong>Quite Enlace.</strong> La red se parte en la malla urbana (4 nodos) y el sistema rural (5 nodos). Todos los caminos entre las dos pasan por Enlace: <span class="math inline">b = 4 \times 5 = 20</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Normalice.</strong> Con <span class="math inline">n = 10</span> hay <span class="math inline">9 \times 8 / 2 = 36</span> pares sin Enlace: <span class="math inline">C^B = 20/36 = 0{,}556</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Quite Centro.</strong> Queda separado el trío Norte, Oriente y Occidente del resto (Enlace más el sistema rural, 6 nodos): <span class="math inline">b = 3 \times 6 = 18</span> y <span class="math inline">C^B = 18/36 = 0{,}500</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Mire la cercanía.</strong> Enlace suma 16 saltos hacia los otros nueve: <span class="math inline">C^C = 9/16 = 0{,}56</span>, la mayor de la red. En este caso intermediación y cercanía coinciden en señalar a Enlace; la siguiente red muestra que no siempre ocurre.</p>
+</div>
+</div>
+</section>
+<section id="las-centralidades-del-sistema-de-transmisión" class="level3">
+<h3 class="anchored" data-anchor-id="las-centralidades-del-sistema-de-transmisión">Las centralidades del sistema de transmisión</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Coinciden los rankings?</span>
+</div>
+<p><strong>Planteamiento.</strong> Calcule las cuatro centralidades de las 100 subestaciones del sistema estilizado, identifique qué subestación encabeza cada una y mida cuánto se parecen los rankings.</p>
+</div>
+<div id="pred-central" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Ocaña tiene 3 líneas y Sabanalarga tiene 6. ¿Cuál tiene mayor intermediación?</p>
+<div class="opcion">
+<p>Sabanalarga, porque tiene el doble de líneas.</p>
+</div>
+<div class="opcion">
+<p>Ocaña.</p>
+</div>
+<div class="opcion">
+<p>Tienen la misma, porque las dos son subestaciones grandes.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Centralidades del sistema</span>
+</div>
+<p>Elija una centralidad y compare el mapa con la dispersión contra el grado. Fíjese en las subestaciones que se apartan de la diagonal.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="207" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 206;"><span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>stnK <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s2-stn.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="212" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 211;"><span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a>viewof medidaK <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"intermediacion"</span><span class="op">,</span> <span class="st">"cercania"</span><span class="op">,</span> <span class="st">"vector_propio"</span><span class="op">,</span> <span class="st">"centralidad_grado"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"intermediacion"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Centralidad"</span><span class="op">,</span></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a>  <span class="dt">format</span><span class="op">:</span> (x) <span class="kw">=&gt;</span> ({<span class="dt">intermediacion</span><span class="op">:</span> <span class="st">"intermediación"</span><span class="op">,</span> <span class="dt">cercania</span><span class="op">:</span> <span class="st">"cercanía"</span><span class="op">,</span> <span class="dt">vector_propio</span><span class="op">:</span> <span class="st">"vector propio"</span><span class="op">,</span> <span class="dt">centralidad_grado</span><span class="op">:</span> <span class="st">"grado"</span>}[x])})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="218" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 217;"><span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>tablaK <span class="op">=</span> <span class="fu">centralidades</span>(<span class="fu">grafo</span>(stnK<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> [e<span class="op">.</span><span class="at">a</span><span class="op">,</span> e<span class="op">.</span><span class="at">b</span>])<span class="op">,</span> stnK<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span>)))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="223" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 222;"><span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a>vistaK <span class="op">=</span> {</span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> posicion <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(stnK<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">.</span><span class="at">id</span><span class="op">,</span> n]))<span class="op">;</span></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> tablaK<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> ({<span class="op">...</span>f<span class="op">,</span> <span class="dt">lon</span><span class="op">:</span> posicion[f<span class="op">.</span><span class="at">nodo</span>]<span class="op">.</span><span class="at">lon</span><span class="op">,</span> <span class="dt">lat</span><span class="op">:</span> posicion[f<span class="op">.</span><span class="at">nodo</span>]<span class="op">.</span><span class="at">lat</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> f[medidaK]}))<span class="op">;</span></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ordenadas <span class="op">=</span> [<span class="op">...</span>filas]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">valor</span> <span class="op">-</span> a<span class="op">.</span><span class="at">valor</span>)<span class="op">;</span></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {filas<span class="op">,</span> ordenadas<span class="op">,</span> <span class="dt">rho</span><span class="op">:</span> <span class="fu">spearman</span>(filas<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">grado</span>)<span class="op">,</span> filas<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">valor</span>))<span class="op">,</span></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a>    <span class="dt">aristas</span><span class="op">:</span> stnK<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> ({<span class="dt">x1</span><span class="op">:</span> posicion[e<span class="op">.</span><span class="at">a</span>]<span class="op">.</span><span class="at">lon</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> posicion[e<span class="op">.</span><span class="at">a</span>]<span class="op">.</span><span class="at">lat</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> posicion[e<span class="op">.</span><span class="at">b</span>]<span class="op">.</span><span class="at">lon</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> posicion[e<span class="op">.</span><span class="at">b</span>]<span class="op">.</span><span class="at">lat</span>}))}<span class="op">;</span></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="234" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 233;"><span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">560</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">480</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">aspectRatio</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>  <span class="dt">r</span><span class="op">:</span> {<span class="dt">range</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">14</span>]}<span class="op">,</span></span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(vistaK<span class="op">.</span><span class="at">aristas</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y2"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#CCC"</span>})<span class="op">,</span></span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vistaK<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span>})<span class="op">,</span></span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(vistaK<span class="op">.</span><span class="at">ordenadas</span><span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"nodo"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">14</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span>})<span class="op">,</span></span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="248" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 247;"><span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">560</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Grado →"</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ Centralidad elegida"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vistaK<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"grado"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.6</span>})<span class="op">,</span></span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(vistaK<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> [<span class="st">"Primavera"</span><span class="op">,</span> <span class="st">"Ocaña"</span><span class="op">,</span> <span class="st">"Sabanalarga"</span><span class="op">,</span> <span class="st">"Torca"</span>]<span class="op">.</span><span class="fu">includes</span>(f<span class="op">.</span><span class="at">nodo</span>))<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"grado"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"nodo"</span><span class="op">,</span> <span class="dt">dx</span><span class="op">:</span> <span class="dv">8</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"start"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">10</span>})<span class="op">,</span></span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="260" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 259;"><span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Encabeza&lt;b&gt;</span><span class="sc">${</span>vistaK<span class="op">.</span><span class="at">ordenadas</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">nodo</span><span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(vistaK<span class="op">.</span><span class="at">ordenadas</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">valor</span>)<span class="sc">}</span><span class="vs">)&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Las cinco primeras&lt;b&gt;</span><span class="sc">${</span>vistaK<span class="op">.</span><span class="at">ordenadas</span><span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">nodo</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Spearman con el grado&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(vistaK<span class="op">.</span><span class="at">rho</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Grafo estilizado <code>mise_sd.redes.stn_estilizado()</code>; centralidades sin pesos calculadas en el navegador con <code>simuladores/redes.js</code>, que reproduce las normalizaciones de NetworkX. Tamaño de cada punto: valor de la centralidad elegida.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer las centralidades</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-central"></span>. La respuesta es la B: Ocaña, con 3 líneas, tiene intermediación de 0,192, y Sabanalarga, con 6, de 0,165. Ocaña está en el paso entre el norte y el interior; las líneas de Sabanalarga se quedan dentro del Caribe.</p>
+</div>
+<div class="paso">
+<p><strong>Mire quién encabeza.</strong> Primavera lidera las cuatro medidas: grado 8, intermediación 0,481, cercanía 0,286 y vector propio 0,416. Por Primavera pasan 2 332 de los caminos más cortos del sistema.</p>
+</div>
+<div class="paso">
+<p><strong>Mida el acuerdo.</strong> La correlación de Spearman entre grado e intermediación es 0,88: alta, pero con excepciones que importan. Entre intermediación y cercanía baja a 0,56. Las medidas no son intercambiables.</p>
+</div>
+<div class="paso">
+<p><strong>Busque los desacuerdos.</strong> Torca, con grado 4, tiene intermediación de apenas 0,064: sus líneas conectan vecinos que tienen otras rutas. Cuestecitas, con grado 5, también tiene 0,064. Un ranking por grado las pondría arriba de Ocaña; uno por intermediación, muy abajo.</p>
+</div>
+<div class="paso">
+<p><strong>Declare el peso.</strong> Con la longitud de las líneas como peso, la intermediación de Primavera baja a 0,365 y la correlación con la versión sin pesos es 0,92. El orden general se mantiene, pero cada decisión de modelado mueve los valores y hay que decirla.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir grado con intermediación</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Sabanalarga tiene seis líneas: es la subestación que más rutas controla en el norte.»</p>
+</div>
+<div class="bien">
+<p>El grado cuenta vecinos; la intermediación cuenta caminos. Ocaña, con tres líneas, está en más caminos más cortos que Sabanalarga. Para preguntas de tránsito entre regiones, la medida es la intermediación.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Mezclar normalizaciones sin notarlo</span>
+</div>
+<p>La intermediación de Primavera es 2 332 sin normalizar y 0,481 normalizada por los <span class="math inline">(n-1)(n-2)/2</span> pares posibles. Comparar una cifra de un software con otra de otro sin revisar la normalización produce conclusiones falsas.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Usar la intermediación como medida de flujo de potencia</span>
+</div>
+<p>La intermediación cuenta caminos más cortos en saltos. La potencia se reparte según las impedancias y el despacho, por todos los caminos a la vez. Una subestación con alta intermediación es un candidato a revisar, no la prueba de que por ella fluye más energía.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué centralidad responde «quién puede cortar la comunicación entre dos partes de la red»?</p>
+<div class="opcion" data-correcta="si">
+<p>La intermediación.</p>
+<p><span class="porque">Correcto: cuenta caminos que pasan por el nodo.</span></p>
+</div>
+<div class="opcion">
+<p>El grado.</p>
+<p><span class="porque">El grado cuenta vecinos, no caminos.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un nodo de grado 2 es punto de articulación y separa la red en piezas de 10 y 30 nodos. ¿Cuánto vale al menos su intermediación sin normalizar?</p>
+<div class="opcion" data-correcta="si">
+<ol start="300" type="1">
+<li></li>
+</ol>
+<p><span class="porque">Correcto: <span class="math inline">10 \times 30</span> pares dependen de él.</span></p>
+</div>
+<div class="opcion">
+<p>2, su grado.</p>
+<p><span class="porque">Revise el atajo de los puntos de articulación.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué premia la centralidad de vector propio?</p>
+<div class="opcion" data-correcta="si">
+<p>Estar conectado con nodos bien conectados.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Estar lejos de la periferia.</p>
+<p><span class="porque">Eso se parece más a la cercanía.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con el simulador en cercanía, ¿qué correlación de Spearman tiene con el grado comparada con la intermediación?</p>
+<div class="opcion" data-correcta="si">
+<p>Más baja: cercanía y grado coinciden menos.</p>
+<p><span class="porque">Correcto: la cercanía depende de la posición global, no de los vecinos inmediatos.</span></p>
+</div>
+<div class="opcion">
+<p>Igual, porque todas las centralidades miden lo mismo.</p>
+<p><span class="porque">Cambie la medida en el simulador y compare.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Torca tiene grado 4 e intermediación 0,064. ¿Qué significa?</p>
+<div class="opcion" data-correcta="si">
+<p>Que sus vecinos tienen rutas alternativas y pocos caminos más cortos dependen de ella.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Que es poco importante para todo propósito.</p>
+<p><span class="porque">Puede ser clave para otras preguntas: Torca atiende la mayor demanda propia del sistema.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-un-cambio-en-el-comité" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-un-cambio-en-el-comité">Ejercicio 1 ●○○ · Un cambio en el comité</h4>
+<p>Fer empieza a hablar también con Eva. Recalcule la intermediación de Diego y diga quién queda con la mayor.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Con la conversación Fer-Eva, Fer tiene dos caminos al resto: por Diego y por Eva. Diego deja de ser el único puente y ya no es punto de articulación. Su intermediación baja de 0,40 a 0,15 y queda empatada con Ana y con Eva, las tres en 0,15.</p>
+<p>El control que antes concentraba Diego queda repartido entre tres personas. La intermediación no es un atributo del nodo sino de su posición: una sola conversación nueva redistribuye el control de la red.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-una-línea-que-reparte-el-control" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-una-línea-que-reparte-el-control">Ejercicio 2 ●●○ · Una línea que reparte el control</h4>
+<p>En la red de diez subestaciones, se construye una línea entre Oriente y Mina. Diga qué pasa con la intermediación de Enlace y por qué.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Enlace deja de ser punto de articulación: ahora hay dos caminos entre la malla urbana y el sistema rural, por Enlace y por Oriente-Mina. Su intermediación sin normalizar baja de 20 a 7, es decir, de 0,556 a 0,194. Mina, que queda en el cruce de las dos rutas, pasa a encabezar con 0,403.</p>
+<p><strong>Lectura de planeación</strong>: la línea nueva no agrega capacidad para la demanda de nadie, pero quita a Enlace el papel de punto único de falla. Es el mismo razonamiento del corte mínimo de la página 3, visto desde la intermediación: repartir el control es la manera topológica de reducir el riesgo.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li><strong>Grado</strong>: cuántos vecinos. <strong>Cercanía</strong>: qué tan cerca de todos. <strong>Intermediación</strong>: por cuántos caminos más cortos se pasa. <strong>Vector propio</strong>: qué tan bien conectados están los vecinos.</li>
+<li>Cada centralidad responde una pregunta; hay que decir cuál antes de nombrar «la más importante».</li>
+<li>En el sistema estilizado <strong>Primavera</strong> encabeza las cuatro, pero el grado y la intermediación solo se correlacionan 0,88 y la cercanía con la intermediación, 0,56.</li>
+<li><strong>Ocaña</strong>, con 3 líneas, tiene más intermediación que <strong>Sabanalarga</strong>, con 6.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Centralidades» de las notas de la semana 2 trae la tabla completa de las ocho subestaciones principales y la comparación con pesos. La semana 6 usa estas mismas medidas en la red de actores de Windpeshi, donde confundir grado con intermediación lleva a negociar con la persona equivocada. La <a href="../semana2/05-mundo-pequeno.html">página siguiente</a> mira la red a otra escala: triángulos y atajos.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Z3JhZm8sIGNlbnRyYWxpZGFkZXMsIHNwZWFybWFufSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvcmVkZXMuanNcIlxuaW1wb3J0IHtmb3JtYXRvTnVtZXJvfSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvbWlzZV9zZC5qc1wiXG5DT0xPUkVTID0gKHthenVsOiBcIiMwMDMzNjZcIiwgdmVyZGU6IFwiIzAwNjkzRVwiLCBhbWJhcjogXCIjQjI2QzAwXCIsIHZpb2xldGE6IFwiIzU0MzRBMFwiLCBncmlzOiBcIiM1RjVGNUZcIiwgcm9qbzogXCIjQ0UxMTI2XCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoic3RuSyA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczItc3RuLmpzb25cIikuanNvbigpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgbWVkaWRhSyA9IElucHV0cy5yYWRpbyhbXCJpbnRlcm1lZGlhY2lvblwiLCBcImNlcmNhbmlhXCIsIFwidmVjdG9yX3Byb3Bpb1wiLCBcImNlbnRyYWxpZGFkX2dyYWRvXCJdLCB7dmFsdWU6IFwiaW50ZXJtZWRpYWNpb25cIiwgbGFiZWw6IFwiQ2VudHJhbGlkYWRcIixcbiAgZm9ybWF0OiAoeCkgPT4gKHtpbnRlcm1lZGlhY2lvbjogXCJpbnRlcm1lZGlhY2nDs25cIiwgY2VyY2FuaWE6IFwiY2VyY2Fuw61hXCIsIHZlY3Rvcl9wcm9waW86IFwidmVjdG9yIHByb3Bpb1wiLCBjZW50cmFsaWRhZF9ncmFkbzogXCJncmFkb1wifVt4XSl9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidGFibGFLID0gY2VudHJhbGlkYWRlcyhncmFmbyhzdG5LLmFyaXN0YXMubWFwKChlKSA9PiBbZS5hLCBlLmJdKSwgc3RuSy5ub2Rvcy5tYXAoKG4pID0+IG4uaWQpKSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpc3RhSyA9IHtcbiAgY29uc3QgcG9zaWNpb24gPSBPYmplY3QuZnJvbUVudHJpZXMoc3RuSy5ub2Rvcy5tYXAoKG4pID0+IFtuLmlkLCBuXSkpO1xuICBjb25zdCBmaWxhcyA9IHRhYmxhSy5tYXAoKGYpID0+ICh7Li4uZiwgbG9uOiBwb3NpY2lvbltmLm5vZG9dLmxvbiwgbGF0OiBwb3NpY2lvbltmLm5vZG9dLmxhdCwgdmFsb3I6IGZbbWVkaWRhS119KSk7XG4gIGNvbnN0IG9yZGVuYWRhcyA9IFsuLi5maWxhc10uc29ydCgoYSwgYikgPT4gYi52YWxvciAtIGEudmFsb3IpO1xuICByZXR1cm4ge2ZpbGFzLCBvcmRlbmFkYXMsIHJobzogc3BlYXJtYW4oZmlsYXMubWFwKChmKSA9PiBmLmdyYWRvKSwgZmlsYXMubWFwKChmKSA9PiBmLnZhbG9yKSksXG4gICAgYXJpc3Rhczogc3RuSy5hcmlzdGFzLm1hcCgoZSkgPT4gKHt4MTogcG9zaWNpb25bZS5hXS5sb24sIHkxOiBwb3NpY2lvbltlLmFdLmxhdCwgeDI6IHBvc2ljaW9uW2UuYl0ubG9uLCB5MjogcG9zaWNpb25bZS5iXS5sYXR9KSl9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA1NjApLCBoZWlnaHQ6IDQ4MCwgaW5zZXQ6IDEyLCBhc3BlY3RSYXRpbzogMSxcbiAgeDoge2F4aXM6IG51bGx9LCB5OiB7YXhpczogbnVsbH0sXG4gIHI6IHtyYW5nZTogWzIsIDE0XX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5rKHZpc3RhSy5hcmlzdGFzLCB7eDE6IFwieDFcIiwgeTE6IFwieTFcIiwgeDI6IFwieDJcIiwgeTI6IFwieTJcIiwgc3Ryb2tlOiBcIiNDQ0NcIn0pLFxuICAgIFBsb3QuZG90KHZpc3RhSy5maWxhcywge3g6IFwibG9uXCIsIHk6IFwibGF0XCIsIHI6IFwidmFsb3JcIiwgZmlsbDogQ09MT1JFUy5henVsLCBmaWxsT3BhY2l0eTogMC44LCBzdHJva2U6IFwid2hpdGVcIn0pLFxuICAgIFBsb3QudGV4dCh2aXN0YUsub3JkZW5hZGFzLnNsaWNlKDAsIDUpLCB7eDogXCJsb25cIiwgeTogXCJsYXRcIiwgdGV4dDogXCJub2RvXCIsIGR5OiAtMTQsIGZvbnRTaXplOiAxMCwgc3Ryb2tlOiBcIndoaXRlXCIsIHN0cm9rZVdpZHRoOiAzLCBmaWxsOiBcImJsYWNrXCJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDU2MCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIkdyYWRvIOKGklwifSwgeToge2xhYmVsOiBcIuKGkSBDZW50cmFsaWRhZCBlbGVnaWRhXCIsIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QuZG90KHZpc3RhSy5maWxhcywge3g6IFwiZ3JhZG9cIiwgeTogXCJ2YWxvclwiLCBmaWxsOiBDT0xPUkVTLmF6dWwsIGZpbGxPcGFjaXR5OiAwLjZ9KSxcbiAgICBQbG90LnRleHQodmlzdGFLLmZpbGFzLmZpbHRlcigoZikgPT4gW1wiUHJpbWF2ZXJhXCIsIFwiT2Nhw7FhXCIsIFwiU2FiYW5hbGFyZ2FcIiwgXCJUb3JjYVwiXS5pbmNsdWRlcyhmLm5vZG8pKSwge3g6IFwiZ3JhZG9cIiwgeTogXCJ2YWxvclwiLCB0ZXh0OiBcIm5vZG9cIiwgZHg6IDgsIHRleHRBbmNob3I6IFwic3RhcnRcIiwgZm9udFNpemU6IDEwfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5FbmNhYmV6YTxiPiR7dmlzdGFLLm9yZGVuYWRhc1swXS5ub2RvfSAoJHtmb3JtYXRvTnVtZXJvKDMpKHZpc3RhSy5vcmRlbmFkYXNbMF0udmFsb3IpfSk8L2I+PC9kaXY+XG4gIDxkaXY+TGFzIGNpbmNvIHByaW1lcmFzPGI+JHt2aXN0YUsub3JkZW5hZGFzLnNsaWNlKDAsIDUpLm1hcCgoZikgPT4gZi5ub2RvKS5qb2luKFwiLCBcIil9PC9iPjwvZGl2PlxuICA8ZGl2PlNwZWFybWFuIGNvbiBlbCBncmFkbzxiPiR7Zm9ybWF0b051bWVybygyKSh2aXN0YUsucmhvKX08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ21lZGlkYUsnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana2";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana2/03-caminos-conectividad.html" class="pagination-link" aria-label="Caminos, distancia y conectividad">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Caminos, distancia y conectividad</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana2/05-mundo-pequeno.html" class="pagination-link" aria-label="Agrupamiento y mundo pequeño">
+        <span class="nav-page-text">Agrupamiento y mundo pequeño</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
