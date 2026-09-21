@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Patrones colectivos que nadie diseñó: el trancón fantasma, la curva de carga que aparece al sumar hogares y la falacia de composición de cuatro inversionistas que deciden bien por separado y mal en conjunto.">
+
+<title>Emergencia y falacia de composición – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana2/index.html" rel="next">
+<link href="../semana1/06-adaptacion.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/07-emergencia.html">Emergencia y falacia de composición</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-un-trancón-sin-causa" id="toc-la-intuición-un-trancón-sin-causa" class="nav-link" data-scroll-target="#la-intuición-un-trancón-sin-causa">2. La intuición: un trancón sin causa</a></li>
+  <li><a href="#del-dibujo-a-la-definición" id="toc-del-dibujo-a-la-definición" class="nav-link" data-scroll-target="#del-dibujo-a-la-definición">3. Del dibujo a la definición</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/07-emergencia.html">Emergencia y falacia de composición</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Emergencia y falacia de composición</h1>
+<p class="subtitle lead">Semana 1 · Concepto 7 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Patrones colectivos que nadie diseñó: el trancón fantasma, la curva de carga que aparece al sumar hogares y la falacia de composición de cuatro inversionistas que deciden bien por separado y mal en conjunto.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="20" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 19;"><span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {curvaCargaHogares<span class="op">,</span> formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 55 a 65 minutos</span> <span class="dato">📚 Requiere <a href="../semana1/06-adaptacion.html">adaptación y aprendizaje</a></span> <span class="dato">🧪 Se aplica en el mapa causal y en la lectura de cualquier variable agregada</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Reconocer un patrón emergente: ordenado, colectivo y sin nadie que lo haya diseñado.</li>
+<li>Calcular un factor de coincidencia y explicar por qué la curva de carga agregada es más suave y más baja por hogar que la de cada hogar.</li>
+<li>Identificar una falacia de composición en una decisión de inversión.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Hay patrones colectivos que ningún agente fijó: salen de la interacción de muchos que siguen reglas locales. Por eso el agregado no se comporta como un individuo grande, y por eso lo que conviene a uno puede ser un desastre si lo hacen todos.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>El 8 de octubre de 2015 el precio de bolsa promedió 1 942,7 COP/kWh (XM). Ninguna autoridad lo decretó y ningún generador lo eligió: salió del cruce entre las ofertas de decenas de plantas, el despacho hora a hora y la demanda de millones de usuarios.</p>
+<p>La demanda del sistema tiene, además, una forma que se repite día tras día: entre el 9 y el 15 de marzo de 2025 osciló entre 7,3 y 11,2 GW y alcanzó su máximo todos los días en el periodo 20, entre las 7 y las 8 de la noche (XM). <strong>¿Quién produce esos patrones, si nadie los fija?</strong></p>
+</section>
+<section id="la-intuición-un-trancón-sin-causa" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-un-trancón-sin-causa">2. La intuición: un trancón sin causa</h2>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El trancón fantasma</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-trancon-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-07-trancon-1.svg" class="img-fluid" alt="Veintidós carros en una pista circular, a la misma velocidad."></a></p>
+<p><strong>Mire el experimento.</strong> Veintidós carros en una pista circular de 230 metros, todos a unos 30 km/h y con la instrucción de mantener la velocidad (Sugiyama y otros, 2008). No hay semáforos ni obstáculos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-trancon-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-07-trancon-2.svg" class="img-fluid" alt="Un conductor frena un poco más de la cuenta."></a></p>
+<p><strong>Introduzca una perturbación mínima.</strong> Un conductor frena un poco más de la cuenta. El de atrás frena un poco más para no acercarse, y el siguiente, un poco más aún.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-trancon-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-07-trancon-3.svg" class="img-fluid" alt="Aparece un grupo de carros detenidos."></a></p>
+<p><strong>Observe el patrón.</strong> En menos de un minuto aparece un grupo de carros detenidos. Nadie causó el trancón en el sentido habitual: cada conductor hizo algo razonable.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-trancon-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-07-trancon-4.svg" class="img-fluid" alt="El trancón retrocede mientras los carros avanzan."></a></p>
+<p><strong>Siga el trancón.</strong> Se mueve hacia atrás mientras los carros avanzan: los que llegan frenan y los de adelante salen. Ningún carro es el trancón; el trancón es un patrón que viaja por los carros.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-trancon-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-07-trancon-5.svg" class="img-fluid" alt="El precio de bolsa como patrón emergente."></a></p>
+<p><strong>Pase al sector.</strong> El precio de bolsa tampoco lo fija nadie: sale de la interacción entre ofertas, despacho y demanda. Preguntar quién puso el precio de 1 942,7 COP/kWh es como preguntar qué carro es el trancón.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-definición" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-definición">3. Del dibujo a la definición</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Emergencia y auto-organización</span>
+</div>
+<p>Una propiedad es <strong>emergente</strong> cuando aparece en el nivel colectivo sin estar en ningún agente individual y sin que alguien la haya diseñado. La <strong>auto-organización</strong> es el proceso por el que ese orden surge de reglas locales. Mitchell (2009) distingue la emergencia débil, que se puede reproducir simulando las reglas, y ese es el tipo que interesa en ingeniería: si se entienden las reglas locales, se puede anticipar el patrón.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Factor de coincidencia</span>
+</div>
+<p>El <strong>factor de coincidencia</strong> compara el pico de un grupo con la suma de los picos individuales:</p>
+<p><span class="math display">f_c = \frac{\text{pico del agregado por hogar}}{\text{pico individual medio}} \leq 1.</span></p>
+<p>Es menor que uno porque los hogares no hacen todo a la misma hora. Es la razón por la que un transformador de barrio no se dimensiona sumando los picos de cada casa.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Falacia de composición</span>
+</div>
+<p>Hay <strong>falacia de composición</strong> cuando se supone que lo que es cierto para cada parte es cierto para el todo. En un mercado, la decisión que conviene a un inversionista con los precios de hoy puede destruir esos precios si todos la toman a la vez.</p>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="tres-reglas-y-una-bandada" class="level3">
+<h3 class="anchored" data-anchor-id="tres-reglas-y-una-bandada">Tres reglas y una bandada</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">El orden que nadie dirige</span>
+</div>
+<p><strong>Planteamiento.</strong> Una bandada de estorninos gira como un solo cuerpo. Reynolds (1987) la reprodujo con tres reglas locales para cada pájaro: separarse si el vecino está muy cerca, alinearse con la dirección de los vecinos y acercarse al centro del grupo cercano. ¿Dónde está el orden?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la bandada como sistema</span>
+</div>
+<div class="paso">
+<p><strong>Busque al líder.</strong> No existe: ninguna regla menciona un pájaro que guíe. Cada uno mira solo a sus vecinos inmediatos.</p>
+</div>
+<div class="paso">
+<p><strong>Busque el plan.</strong> Tampoco existe: nadie conoce la forma de la bandada. La forma es el resultado de miles de ajustes locales.</p>
+</div>
+<div class="paso">
+<p><strong>Pruebe una intervención.</strong> Si se quisiera cambiar la trayectoria, darle una orden a un pájaro no serviría. Cambiar una regla, por ejemplo la distancia de separación, cambia el patrón de todos.</p>
+</div>
+<div class="paso">
+<p><strong>Saque el criterio.</strong> Ante un patrón emergente, la palanca está en las reglas de interacción, no en los individuos. Es la misma conclusión de la página 2 con las interconexiones.</p>
+</div>
+</div>
+</section>
+<section id="la-curva-de-carga-que-aparece-al-sumar" class="level3">
+<h3 class="anchored" data-anchor-id="la-curva-de-carga-que-aparece-al-sumar">La curva de carga que aparece al sumar</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">De hogares erráticos a una curva suave</span>
+</div>
+<p><strong>Planteamiento.</strong> Cada hogar sintético tiene carga base, nevera que cicla y actividades con hora de inicio aleatoria: ducha y desayuno en la mañana, almuerzo, iluminación, comida y televisión en la noche. Compare el perfil horario de un hogar con el de 10, 100, 1 000 y 10 000, y calcule el factor de coincidencia.</p>
+</div>
+<div id="pred-carga" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Con 10 000 hogares, el pico de la curva por hogar comparado con el pico medio de cada hogar es…</p>
+<div class="opcion">
+<p>Igual: sumar hogares no cambia el pico por hogar.</p>
+</div>
+<div class="opcion">
+<p>Cerca de dos tercios.</p>
+</div>
+<div class="opcion">
+<p>Cerca de una décima parte.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Sumar hogares</span>
+</div>
+<p>Aumente el número de hogares y observe cómo el perfil se suaviza y el pico por hogar baja.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="152" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 151;"><span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>viewof hogaresC <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1000</span><span class="op">,</span> <span class="dv">10000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Hogares"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (x) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)(x)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="157" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 156;"><span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>cargaC <span class="op">=</span> <span class="fu">curvaCargaHogares</span>({<span class="dt">hogares</span><span class="op">:</span> hogaresC<span class="op">,</span> <span class="dt">semilla</span><span class="op">:</span> <span class="dv">2016</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="162" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 161;"><span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Hora del día →"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">24</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">12</span><span class="op">,</span> <span class="dv">18</span><span class="op">,</span> <span class="dv">24</span>]}<span class="op">,</span></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ Consumo medio por hogar [kW]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">1.3</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectY</span>(cargaC<span class="op">.</span><span class="at">perfil</span><span class="op">.</span><span class="fu">map</span>((v<span class="op">,</span> h) <span class="kw">=&gt;</span> ({h<span class="op">,</span> v}))<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"h"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">h</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">h</span> <span class="op">===</span> cargaC<span class="op">.</span><span class="at">hora_pico</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">ambar</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="fl">0.5</span>})<span class="op">,</span></span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([cargaC<span class="op">.</span><span class="at">pico_individual_medio</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5,4"</span>})<span class="op">,</span></span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="176" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 175;"><span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Pico del perfil por hogar&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(cargaC<span class="op">.</span><span class="at">pico_agregado</span>)<span class="sc">}</span><span class="vs"> kW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Hora del pico&lt;b&gt;</span><span class="sc">${</span>cargaC<span class="op">.</span><span class="at">hora_pico</span><span class="sc">}</span><span class="vs"> a </span><span class="sc">${</span>cargaC<span class="op">.</span><span class="at">hora_pico</span> <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="vs"> h&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Pico medio de cada hogar&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(cargaC<span class="op">.</span><span class="at">pico_individual_medio</span>)<span class="sc">}</span><span class="vs"> kW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Factor de coincidencia&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(cargaC<span class="op">.</span><span class="at">factor_coincidencia</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Consumo mensual medio&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(cargaC<span class="op">.</span><span class="at">consumo_mensual_kwh</span>)<span class="sc">}</span><span class="vs"> kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo <code>mise_sd.modelos.curva_carga_hogares</code>, hogar sintético con fines didácticos, calibrado a órdenes de magnitud de un hogar urbano colombiano [POR VERIFICAR]; mismo generador de números aleatorios en Python y en el navegador. Línea gris: pico horario medio de los hogares individuales. En ámbar, la hora del pico del agregado.</p>
+</div>
+</div>
+<div id="423e2c6d" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="07-emergencia_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Demanda real horaria del SIN entre el 9 y el 15 de marzo de 2025 (XM, serie DemaReal). La suma de millones de usuarios repite cada día la misma forma, con el máximo en el periodo 20."><img src="07-emergencia_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" alt="Demanda real horaria del SIN entre el 9 y el 15 de marzo de 2025 (XM, serie DemaReal). La suma de millones de usuarios repite cada día la misma forma, con el máximo en el periodo 20."></a></p>
+<figcaption>Demanda real horaria del SIN entre el 9 y el 15 de marzo de 2025 (XM, serie DemaReal). La suma de millones de usuarios repite cada día la misma forma, con el máximo en el periodo 20.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la curva agregada</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-carga"></span>. La respuesta es la B: con 10 000 hogares el pico del perfil es de 0,65 kW por hogar, frente a un pico medio individual de 1,04 kW, un factor de coincidencia de 0,63.</p>
+</div>
+<div class="paso">
+<p><strong>Mire un solo hogar.</strong> Su pico está a las 5 de la mañana, cuando coinciden la ducha eléctrica y el desayuno, y su perfil es irregular. Otro hogar tendría otra forma.</p>
+</div>
+<div class="paso">
+<p><strong>Sume.</strong> Con cien o más hogares aparece una curva con dos lomas, mañana y mediodía, y un pico nocturno entre las 7 y las 8 de la noche. Es la misma forma de la demanda real del sistema, que tiene su máximo todos los días en el periodo 20.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la consecuencia técnica.</strong> Un transformador para cien hogares no necesita cien veces el pico de uno: basta cerca de dos tercios. Si todos hicieran lo mismo a la misma hora, por ejemplo cargar un vehículo eléctrico al llegar a casa, la coincidencia subiría y esa holgura desaparecería.</p>
+</div>
+</div>
+</section>
+<section id="cuatro-inversionistas-y-un-precio" class="level3">
+<h3 class="anchored" data-anchor-id="cuatro-inversionistas-y-un-precio">Cuatro inversionistas y un precio</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Decisiones racionales, resultado irracional</span>
+</div>
+<p><strong>Planteamiento.</strong> Cuatro inversionistas pueden construir, cada uno, una planta de 250 MW con costo de 180 COP/kWh. El precio de mercado es hoy de 400 COP/kWh y baja con cada planta que entra: 300 con una, 200 con dos, 120 con tres y 80 con cuatro. ¿Qué pasa si cada uno decide con el precio de hoy?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">De la decisión individual al resultado colectivo</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-falacia-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-07-falacia-1.svg" class="img-fluid" alt="El precio baja con cada planta nueva."></a></p>
+<p><strong>Dibuje la curva de precio.</strong> 400, 300, 200, 120 y 80 COP/kWh con cero a cuatro plantas nuevas. El precio depende de cuántos entran, no de lo que decida cada uno por separado.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-falacia-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-07-falacia-2.svg" class="img-fluid" alt="El costo de 180 COP/kWh como línea."></a></p>
+<p><strong>Trace el costo.</strong> Con el precio de hoy, 400, cualquier inversionista gana 220 COP/kWh sobre su costo de 180. Para cada uno, construir es obvio.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-falacia-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-07-falacia-3.svg" class="img-fluid" alt="El margen por planta según cuántas entren."></a></p>
+<p><strong>Calcule el margen según cuántos entren.</strong> Con una planta, +120; con dos, +20; con tres, −60; con cuatro, −100 COP/kWh por planta.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-falacia-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-07-falacia-4.svg" class="img-fluid" alt="Los cuatro construyen y todos pierden."></a></p>
+<p><strong>Siga las decisiones.</strong> Los cuatro razonan igual y los cuatro construyen. Cada uno pierde 100 COP/kWh: la suma de decisiones individualmente racionales es colectivamente irracional.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-07-falacia-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s1-07-falacia-5.svg" class="img-fluid" alt="Con información completa entrarían dos plantas."></a></p>
+<p><strong>Busque el equilibrio con información completa.</strong> Si cada uno anticipa lo que harán los demás, entran dos plantas: una tercera ya perdería. La diferencia entre los dos resultados es el costo de decidir mirando solo el precio de hoy.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Buscar un responsable de un resultado emergente</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Hay que encontrar al generador que puso el precio de 1 942,7 COP/kWh.»</p>
+</div>
+<div class="bien">
+<p>El precio salió de la interacción de todas las ofertas con la demanda y el despacho. La pregunta útil es qué reglas de oferta y qué condiciones del sistema produjeron ese resultado, y cómo cambiarlas.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tratar el agregado como un individuo grande</span>
+</div>
+<p>La curva del sistema es suave y predecible; la de un hogar, no. Diseñar una tarifa horaria suponiendo que cada hogar se comporta como la curva agregada fracasa, porque el promedio no describe a nadie en particular.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Suponer que optimizar cada parte optimiza el todo</span>
+</div>
+<p>Cuatro inversionistas que maximizan cada uno su beneficio con el precio de hoy terminan perdiendo. Lo mismo ocurre con los ciclos de sobreinversión y escasez que estudia la semana 4: la señal de precio llega a todos a la vez.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Cuál de estos es un patrón emergente?</p>
+<div class="opcion" data-correcta="si">
+<p>La forma de la curva de carga diaria del sistema.</p>
+<p><span class="porque">Correcto: nadie la diseñó y surge de millones de decisiones.</span></p>
+</div>
+<div class="opcion">
+<p>El horario de un turno de trabajo fijado por la empresa.</p>
+<p><span class="porque">Ese patrón lo diseñó alguien.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Por qué el factor de coincidencia es menor que uno?</p>
+<div class="opcion" data-correcta="si">
+<p>Porque los hogares no alcanzan su pico a la misma hora.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Porque los hogares grandes consumen menos por persona.</p>
+<p><span class="porque">El factor no depende del tamaño del hogar sino de la simultaneidad.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con el simulador y un solo hogar, ¿a qué hora está el pico?</p>
+<div class="opcion" data-correcta="si">
+<p>Entre las 5 y las 6 de la mañana.</p>
+<p><span class="porque">Correcto: coinciden la ducha eléctrica y el desayuno.</span></p>
+</div>
+<div class="opcion">
+<p>Entre las 7 y las 8 de la noche.</p>
+<p><span class="porque">Ese es el pico del agregado, no el de este hogar.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el ejemplo de los inversionistas, ¿cuántas plantas entrarían con información completa?</p>
+<div class="opcion" data-correcta="si">
+<p>Dos.</p>
+<p><span class="porque">Correcto: la tercera ya perdería 60 COP/kWh.</span></p>
+</div>
+<div class="opcion">
+<p>Cuatro.</p>
+<p><span class="porque">Esa es la entrada sin anticipar a los demás.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Dónde está la palanca para cambiar un patrón emergente?</p>
+<div class="opcion">
+<p>En convencer al agente más grande.</p>
+<p><span class="porque">Revise el ejemplo de la bandada.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>En las reglas de interacción que siguen todos.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-emergente-o-no" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-emergente-o-no">Ejercicio 1 ●○○ · ¿Emergente o no?</h4>
+<p>Diga si cada patrón es emergente y justifique: (a) la hora pico del Transmilenio; (b) el precio regulado de la tarifa de un usuario residencial; (c) la formación de barrios con techos solares agrupados; (d) el programa de mantenimiento de una central.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><strong>Emergente</strong>: nadie fija la hora pico; resulta de millones de horarios individuales que coinciden. (b) <strong>No emergente</strong>: la tarifa sale de una fórmula regulada que alguien diseñó y aplica. (c) <strong>Emergente</strong>: los techos se agrupan porque los vecinos se imitan, sin plan central; la semana 3 lo estudia como difusión en redes. (d) <strong>No emergente</strong>: es un plan que la central elabora y ejecuta.</li>
+</ol>
+<p>La prueba práctica es preguntar si existe un documento o una persona que haya fijado el patrón. Si no existe y el patrón se repite, es emergente.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-vehículos-eléctricos-y-coincidencia" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-vehículos-eléctricos-y-coincidencia">Ejercicio 2 ●●○ · Vehículos eléctricos y coincidencia</h4>
+<p>Un barrio de 200 hogares tiene un pico individual medio de 1,0 kW y un factor de coincidencia de 0,6, con su pico agregado hacia las 8 de la noche. Llegan 40 vehículos eléctricos que cargan a 3,5 kW durante tres horas desde las 10 de la noche, cuando el resto del barrio consume el 80 % de su pico. ¿Cuál es el nuevo pico del barrio?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Pico actual</strong>: <span class="math inline">200 \times 1{,}0 \times 0{,}6 = 120</span> kW, a las 8 de la noche.</p>
+<p><strong>A las 10 de la noche</strong>: el barrio consume <span class="math inline">0{,}8 \times 120 = 96</span> kW y los vehículos agregan <span class="math inline">40 \times 3{,}5 = 140</span> kW, porque todos empiezan a cargar al tiempo. El total es <strong>236 kW</strong>, casi el doble del pico anterior, y se traslada a las 10 de la noche.</p>
+<p><strong>Lectura</strong>: los vehículos cargan con coincidencia cercana a uno, porque la regla «conecto al llegar» es la misma para todos. Una regla distinta, como una tarifa que premie cargar de madrugada o un cargador que reparta el inicio, devuelve la diversidad y el factor de coincidencia baja. La palanca, otra vez, está en la regla.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Un patrón es <strong>emergente</strong> cuando aparece en el colectivo sin estar en ningún individuo y sin que nadie lo diseñe.</li>
+<li>El <strong>factor de coincidencia</strong> mide cuánto baja el pico por hogar al sumar: con 10 000 hogares sintéticos, <strong>0,63</strong>.</li>
+<li>La demanda real del sistema repite cada día su forma, con el máximo en el <strong>periodo 20</strong>.</li>
+<li>La <strong>falacia de composición</strong> convierte decisiones individuales racionales en un resultado colectivo malo: cuatro plantas en lugar de dos, y <strong>−100 COP/kWh</strong> para cada una.</li>
+<li>La palanca sobre un patrón emergente está en las <strong>reglas de interacción</strong>.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Emergencia, auto-organización y falacia de composición» de las notas de la semana 1 trae el modelo del hogar sintético completo y los tres paneles de la curva de carga con los datos de XM. La semana 3 vuelve a la emergencia con la difusión de techos solares en redes de vecinos.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Y3VydmFDYXJnYUhvZ2FyZXMsIGZvcm1hdG9OdW1lcm99IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgaG9nYXJlc0MgPSBJbnB1dHMucmFkaW8oWzEsIDEwLCAxMDAsIDEwMDAsIDEwMDAwXSwge3ZhbHVlOiAxLCBsYWJlbDogXCJIb2dhcmVzXCIsIGZvcm1hdDogKHgpID0+IGZvcm1hdG9OdW1lcm8oMCkoeCl9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY2FyZ2FDID0gY3VydmFDYXJnYUhvZ2FyZXMoe2hvZ2FyZXM6IGhvZ2FyZXNDLCBzZW1pbGxhOiAyMDE2fSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAyODAsIG1hcmdpbkxlZnQ6IDU1LFxuICB4OiB7bGFiZWw6IFwiSG9yYSBkZWwgZMOtYSDihpJcIiwgZG9tYWluOiBbMCwgMjRdLCB0aWNrczogWzAsIDYsIDEyLCAxOCwgMjRdfSxcbiAgeToge2xhYmVsOiBcIuKGkSBDb25zdW1vIG1lZGlvIHBvciBob2dhciBba1ddXCIsIGRvbWFpbjogWzAsIDEuM10sIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdFkoY2FyZ2FDLnBlcmZpbC5tYXAoKHYsIGgpID0+ICh7aCwgdn0pKSwge3gxOiBcImhcIiwgeDI6IChkKSA9PiBkLmggKyAxLCB5OiBcInZcIixcbiAgICAgIGZpbGw6IChkKSA9PiBkLmggPT09IGNhcmdhQy5ob3JhX3BpY28gPyBDT0xPUkVTLmFtYmFyIDogQ09MT1JFUy5henVsLCBpbnNldDogMC41fSksXG4gICAgUGxvdC5ydWxlWShbY2FyZ2FDLnBpY29faW5kaXZpZHVhbF9tZWRpb10sIHtzdHJva2U6IENPTE9SRVMuZ3Jpcywgc3Ryb2tlRGFzaGFycmF5OiBcIjUsNFwifSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5QaWNvIGRlbCBwZXJmaWwgcG9yIGhvZ2FyPGI+JHtmb3JtYXRvTnVtZXJvKDIpKGNhcmdhQy5waWNvX2FncmVnYWRvKX0ga1c8L2I+PC9kaXY+XG4gIDxkaXY+SG9yYSBkZWwgcGljbzxiPiR7Y2FyZ2FDLmhvcmFfcGljb30gYSAke2NhcmdhQy5ob3JhX3BpY28gKyAxfSBoPC9iPjwvZGl2PlxuICA8ZGl2PlBpY28gbWVkaW8gZGUgY2FkYSBob2dhcjxiPiR7Zm9ybWF0b051bWVybygyKShjYXJnYUMucGljb19pbmRpdmlkdWFsX21lZGlvKX0ga1c8L2I+PC9kaXY+XG4gIDxkaXY+RmFjdG9yIGRlIGNvaW5jaWRlbmNpYTxiPiR7Zm9ybWF0b051bWVybygyKShjYXJnYUMuZmFjdG9yX2NvaW5jaWRlbmNpYSl9PC9iPjwvZGl2PlxuICA8ZGl2PkNvbnN1bW8gbWVuc3VhbCBtZWRpbzxiPiR7Zm9ybWF0b051bWVybygwKShjYXJnYUMuY29uc3Vtb19tZW5zdWFsX2t3aCl9IGtXaDwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnaG9nYXJlc0MnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana1";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana1/06-adaptacion.html" class="pagination-link" aria-label="Adaptación y aprendizaje">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Adaptación y aprendizaje</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana2/index.html" class="pagination-link" aria-label="Semana 2 · Redes I">
+        <span class="nav-page-text">Semana 2 · Redes I</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

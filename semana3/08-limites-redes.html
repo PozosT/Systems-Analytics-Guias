@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Qué deja por fuera un modelo de red, cuándo basta la curva agregada de Bass y cuándo engaña, y cómo el comportamiento en red se resume en un stock de adoptantes con un q aparente.">
+
+<title>Límites del enfoque de redes: de la red al stock agregado – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Systems Analytics · Guías de autoestudio
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-el-mapa-del-metro" id="toc-la-intuición-el-mapa-del-metro" class="nav-link" data-scroll-target="#la-intuición-el-mapa-del-metro">2. La intuición: el mapa del metro</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Límites del enfoque de redes: de la red al stock agregado</h1>
+<p class="subtitle lead">Semana 3 · Concepto 8 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    Qué deja por fuera un modelo de red, cuándo basta la curva agregada de Bass y cuándo engaña, y cómo el comportamiento en red se resume en un stock de adoptantes con un q aparente.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {bassEnRed<span class="op">,</span> bassEnRedCompleta<span class="op">,</span> bassDiscreto<span class="op">,</span> ajustarBass<span class="op">,</span> bass<span class="op">,</span> fracciones<span class="op">,</span> contagio<span class="op">,</span> cascadaUmbral} <span class="im">from</span> <span class="st">"../simuladores/difusion.js"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {grafo<span class="op">,</span> anilloRegular<span class="op">,</span> wattsStrogatz<span class="op">,</span> erdosRenyi<span class="op">,</span> agrupamientoMedio} <span class="im">from</span> <span class="st">"../simuladores/redes.js"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="23" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 22;"><span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">// Los doce comercios del ejemplo intermedio, con posiciones fijas para dibujarlos</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>COMERCIOS <span class="op">=</span> ({</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">aristas</span><span class="op">:</span> [[<span class="st">"a1"</span><span class="op">,</span> <span class="st">"a2"</span>]<span class="op">,</span> [<span class="st">"a1"</span><span class="op">,</span> <span class="st">"a3"</span>]<span class="op">,</span> [<span class="st">"a1"</span><span class="op">,</span> <span class="st">"a4"</span>]<span class="op">,</span> [<span class="st">"a2"</span><span class="op">,</span> <span class="st">"a3"</span>]<span class="op">,</span> [<span class="st">"a2"</span><span class="op">,</span> <span class="st">"a4"</span>]<span class="op">,</span> [<span class="st">"a3"</span><span class="op">,</span> <span class="st">"a4"</span>]<span class="op">,</span> [<span class="st">"b1"</span><span class="op">,</span> <span class="st">"b2"</span>]<span class="op">,</span> [<span class="st">"b1"</span><span class="op">,</span> <span class="st">"b3"</span>]<span class="op">,</span> [<span class="st">"b1"</span><span class="op">,</span> <span class="st">"b4"</span>]<span class="op">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"b2"</span><span class="op">,</span> <span class="st">"b3"</span>]<span class="op">,</span> [<span class="st">"b2"</span><span class="op">,</span> <span class="st">"b4"</span>]<span class="op">,</span> [<span class="st">"b3"</span><span class="op">,</span> <span class="st">"b4"</span>]<span class="op">,</span> [<span class="st">"a3"</span><span class="op">,</span> <span class="st">"b1"</span>]<span class="op">,</span> [<span class="st">"a3"</span><span class="op">,</span> <span class="st">"b2"</span>]<span class="op">,</span> [<span class="st">"a4"</span><span class="op">,</span> <span class="st">"b1"</span>]<span class="op">,</span> [<span class="st">"a4"</span><span class="op">,</span> <span class="st">"b2"</span>]<span class="op">,</span> [<span class="st">"H"</span><span class="op">,</span> <span class="st">"a1"</span>]<span class="op">,</span> [<span class="st">"H"</span><span class="op">,</span> <span class="st">"b4"</span>]<span class="op">,</span> [<span class="st">"H"</span><span class="op">,</span> <span class="st">"L1"</span>]<span class="op">,</span> [<span class="st">"H"</span><span class="op">,</span> <span class="st">"L2"</span>]<span class="op">,</span> [<span class="st">"H"</span><span class="op">,</span> <span class="st">"L3"</span>]]<span class="op">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">posicion</span><span class="op">:</span> {<span class="dt">a1</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> <span class="dt">a2</span><span class="op">:</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">a3</span><span class="op">:</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">a4</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> <span class="dt">b1</span><span class="op">:</span> [<span class="fl">2.6</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">b2</span><span class="op">:</span> [<span class="fl">3.6</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> <span class="dt">b3</span><span class="op">:</span> [<span class="fl">4.6</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">b4</span><span class="op">:</span> [<span class="fl">3.6</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> <span class="dt">H</span><span class="op">:</span> [<span class="fl">1.8</span><span class="op">,</span> <span class="fl">3.2</span>]<span class="op">,</span> <span class="dt">L1</span><span class="op">:</span> [<span class="fl">0.8</span><span class="op">,</span> <span class="fl">4.2</span>]<span class="op">,</span> <span class="dt">L2</span><span class="op">:</span> [<span class="fl">1.8</span><span class="op">,</span> <span class="fl">4.5</span>]<span class="op">,</span> <span class="dt">L3</span><span class="op">:</span> [<span class="fl">2.8</span><span class="op">,</span> <span class="fl">4.2</span>]}</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 55 a 70 minutos</span> <span class="dato">📚 Requiere <a href="02-rogers-bass.qmd">Rogers y Bass</a>, <a href="04-contagio-complejo.qmd">contagio complejo</a> y agrupamiento y mundo pequeño (semana 2, concepto 5)</span> <span class="dato">🧪 Se aplica en el Laboratorio 2 (última pregunta)</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Decidir, para una pregunta dada, si basta un modelo agregado o si hace falta el modelo en red, y justificarlo en una frase.</li>
+<li>Explicar por qué el <span class="math inline">q</span> de Bass que se ajusta a datos de una red con agrupamiento es un <span class="math inline">q</span> aparente, menor que la propensión individual a imitar.</li>
+<li>Predecir, simular y explicar cuándo la curva agregada describe bien una difusión en red y cuándo engaña al pronosticar.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Cada modelo de difusión responde bien unas preguntas y mal otras. La curva agregada resume la red en un solo parámetro, el <span class="math inline">q</span> aparente, que mezcla la conducta de los hogares con la estructura de la red; basta para pronosticar una red que no cambia y engaña cuando la política cambia la red o cuando el contagio es complejo.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Dos personas trabajan con la misma difusión de techos solares y necesitan modelos distintos. Un planeador que proyecta la autogeneración a 2035 no va a simular millones de hogares con sus vecinos: usará una curva agregada o un stock de capacidad con un flujo de adopción. El gerente de un programa barrial de vitrinas, en cambio, necesita saber en qué cuadras sembrar, y para eso el agregado no sirve.</p>
+<div class="caso-colombia caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En Colombia</span><span class="caja-texto-titulo">Una cifra nacional y una decisión por cuadras</span>
+</div>
+<p>El registro de la UPME que reporta el Ministerio de Minas y Energía contaba 24 447 techos solares en autogeneración y generación distribuida al cierre de 2025, 9 360 de ellos nuevos en ese año (MinEnergía, 2026). Esa cifra es un stock nacional y sirve para proyectar megavatios. La Resolución CREG 174 de 2021, en cambio, fija el límite de penetración circuito por circuito, y un circuito se llena según cómo se agrupen los adoptantes en sus cuadras.</p>
+</div>
+<p>El riesgo aparece cuando se usa un modelo para la pregunta del otro: una curva de Bass para decidir dónde poner vitrinas, o una red de mil hogares sintéticos para prometer megavatios en 2035. <strong>¿Cuándo basta la curva agregada y cuándo hace falta la red?</strong></p>
+</section>
+<section id="la-intuición-el-mapa-del-metro" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-mapa-del-metro">2. La intuición: el mapa del metro</h2>
+<p>El mapa del metro de una ciudad es una red excelente. Avance cuadro a cuadro y fíjese en qué preguntas responde y cuáles no.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El mapa y la ciudad</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-metro-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s3-08-metro-1.svg" class="img-fluid" alt="Mapa esquemático con dos líneas de metro: la línea 1 en azul de A a F por B y C, y la línea 2 en verde de D a F por E y G."></a></p>
+<p><strong>Mire el mapa.</strong> Estaciones como nodos, tramos como aristas y líneas de colores. Con él se planea un viaje de A a F en segundos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-metro-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s3-08-metro-2.svg" class="img-fluid" alt="Las dos rutas de A a F resaltadas: 3 tramos por la línea 1 y 4 tramos con transbordo en D por la línea 2."></a></p>
+<p><strong>Cuente tramos.</strong> Por la línea 1 hay 3 tramos sin transbordo; por la ruta que baja a D y toma la línea 2, 4 tramos y un transbordo. Contada en tramos, gana la línea 1.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-metro-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s3-08-metro-3.svg" class="img-fluid" alt="Cada tramo con su longitud: 4 kilómetros en la línea 1 y 1,5 kilómetros en la ruta alterna."></a></p>
+<p><strong>Mire la ciudad.</strong> El mapa dibuja todos los tramos iguales, pero los de la línea 1 miden 4 km (12 km en total) y los de la ruta alterna, 1,5 km (6 km en total).</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-metro-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s3-08-metro-4.svg" class="img-fluid" alt="Tiempos de viaje: unos 21 minutos por la línea 1 y 18 minutos por la ruta alterna con transbordo."></a></p>
+<p><strong>Convierta a tiempo.</strong> A 35 km/h, la línea 1 tarda unos 21 minutos y la ruta alterna, 10 minutos más un transbordo de 8: 18 minutos. La red sin pesos dio la respuesta equivocada porque la pregunta era de tiempo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-metro-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s3-08-metro-5.svg" class="img-fluid" alt="Notas sobre lo que el mapa omite: trenes llenos a las siete de la mañana y un barrio sin estación."></a></p>
+<p><strong>Liste lo que falta.</strong> El mapa tampoco dice que a las siete de la mañana los trenes van llenos ni que un barrio sin estación depende de buses. Nadie diría que el mapa está mal: está hecho para una pregunta.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-metro-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s3-08-metro-6.svg" class="img-fluid" alt="El mismo mapa con etiquetas de la adopción solar: las líneas son la red de influencia y los kilómetros son precio, crédito, ingreso, tarifa, instalador y trámite."></a></p>
+<p><strong>Cambie las etiquetas.</strong> La red de influencia entre hogares es el mapa: dice quién habla con quién. Omite precio, crédito, ingreso y tarifa, que son los kilómetros. La curva agregada de Bass omite, además, la red. Elegir el nivel de abstracción que corresponde a la decisión es parte del trabajo del analista.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Del comportamiento en red al stock agregado</span>
+</div>
+<p>Sea <span class="math inline">x_i(t) \in \{0, 1\}</span> el estado de adopción del hogar <span class="math inline">i</span> en una red de <span class="math inline">N</span> hogares con la <strong>regla de Bass en red</strong>: cada no adoptante adopta en el paso <span class="math inline">t</span> con probabilidad <span class="math inline">p + q\,a_i(t)</span>, donde</p>
+<p><span class="math display">a_i(t) = \frac{1}{k_i}\sum_{j \in \mathcal{N}(i)} x_j(t) \qquad [\text{adimensional}]</span></p>
+<p>es la fracción de sus <span class="math inline">k_i</span> vecinos que ya adoptó. Con <span class="math inline">A = \sum_i x_i</span> [hogares], el número esperado de adopciones es</p>
+<p><span class="math display">\mathbb{E}[\Delta A] = \bigl(p + q\,\bar a_{\text{no adopt.}}\bigr)(N - A) \qquad [\text{hogares/año}],</span></p>
+<p>con <span class="math inline">\bar a_{\text{no adopt.}}</span> la fracción media de vecinos adoptantes <strong>entre quienes no han adoptado</strong>. El modelo agregado de Bass supone <span class="math inline">\bar a_{\text{no adopt.}} = A/N</span>, la fracción global: es el supuesto de <strong>campo medio</strong>, exacto en un grafo completo y razonable en redes aleatorias grandes. En redes con agrupamiento, los no adoptantes tienden a estar rodeados de no adoptantes y <span class="math inline">\bar a_{\text{no adopt.}} &lt; A/N</span>.</p>
+</div>
+<p>Siga el cálculo en un anillo de ocho hogares, cada uno con dos vecinos, con <span class="math inline">p = 0{,}01</span> y <span class="math inline">q = 0{,}4</span> por año.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del anillo de ocho hogares al stock</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-campo-medio-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s3-08-campo-medio-1.svg" class="img-fluid" alt="Anillo de ocho hogares; los hogares 0, 1 y 2, contiguos, ya adoptaron."></a></p>
+<p><strong>Cuente el stock.</strong> Tres hogares contiguos ya adoptaron: <span class="math inline">A = 3</span> de <span class="math inline">N = 8</span>, así que la fracción global es <span class="math inline">A/N = 0{,}375</span>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-campo-medio-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s3-08-campo-medio-2.svg" class="img-fluid" alt="El hogar 3 resaltado con sus dos vecinos, el 2 adoptante y el 4 no adoptante."></a></p>
+<p><strong>Mire a un no adoptante.</strong> El hogar 3 tiene dos vecinos y uno adoptó: <span class="math inline">a_3 = 1/2</span>. Lo que cuenta para él es su vecindario, no la fracción global.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-campo-medio-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s3-08-campo-medio-3.svg" class="img-fluid" alt="Fracción de vecinos adoptantes de cada no adoptante: 1/2, 0, 0, 0 y 1/2."></a></p>
+<p><strong>Promedie entre los no adoptantes.</strong> Los hogares 3 a 7 ven <span class="math inline">1/2</span>, <span class="math inline">0</span>, <span class="math inline">0</span>, <span class="math inline">0</span> y <span class="math inline">1/2</span>: la media es <span class="math inline">\bar a_{\text{no adopt.}} = 1/5 = 0{,}2</span>, menor que <span class="math inline">0{,}375</span>. Los adoptantes están juntos y los no adoptantes, rodeados de no adoptantes.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-campo-medio-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s3-08-campo-medio-4.svg" class="img-fluid" alt="Probabilidad de adoptar de cada no adoptante: 0,21 para los hogares 3 y 7 y 0,01 para los hogares 4, 5 y 6."></a></p>
+<p><strong>Calcule las adopciones esperadas en la red.</strong> Con <span class="math inline">p + q\,a_i</span>, los hogares 3 y 7 adoptan con probabilidad <span class="math inline">0{,}21</span> y los hogares 4, 5 y 6, con <span class="math inline">0{,}01</span>:</p>
+<p><span class="math display">\mathbb{E}[\Delta A] = 0{,}21 + 3 \cdot 0{,}01 + 0{,}21 = 0{,}45 \ \text{hogares}.</span></p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-campo-medio-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s3-08-campo-medio-5.svg" class="img-fluid" alt="Con campo medio, cada no adoptante tendría probabilidad 0,16 y las adopciones esperadas serían 0,80."></a></p>
+<p><strong>Compare con el campo medio.</strong> Si cada no adoptante viera la fracción global, adoptaría con <span class="math inline">0{,}01 + 0{,}4 \cdot 0{,}375 = 0{,}16</span>, y las adopciones esperadas serían <span class="math inline">5 \cdot 0{,}16 = 0{,}80</span>, casi el doble. Para que la fórmula agregada dé 0,45, el <span class="math inline">q</span> tendría que valer</p>
+<p><span class="math display">q_{\text{ap}} = q\,\frac{\bar a_{\text{no adopt.}}}{A/N} = 0{,}4 \cdot \frac{0{,}2}{0{,}375} = 0{,}21.</span></p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-campo-medio-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s3-08-campo-medio-6.svg" class="img-fluid" alt="Diagrama de Forrester: una nube, el flujo de adopción con su válvula y el stock de hogares con paneles A(t), con p, q aparente y N como auxiliares."></a></p>
+<p><strong>Escriba el stock agregado.</strong> Con notación de la semana 4, el modelo agregado es un stock <span class="math inline">A(t)</span> [hogares] con un flujo de entrada</p>
+<p><span class="math display">\frac{dA}{dt} = \Bigl(p + q_{\text{ap}}\,\frac{A}{N}\Bigr)(N - A) \qquad [\text{hogares/año}].</span></p>
+<p>Las unidades cuadran: [1/año] por [hogares]. El <span class="math inline">q_{\text{ap}}</span> guarda la estructura de la red, y ese es su valor y su riesgo.</p>
+</div>
+</div>
+<p>La semana 5 leerá ese flujo como un lazo de refuerzo (la imitación) frenado por un lazo de balance (el agotamiento del mercado). El modelo en red y el agregado conviven: el primero explica de dónde sale <span class="math inline">q_{\text{ap}}</span> y cómo cambia con una intervención que modifica la red; el segundo permite acoplar la adopción con precios, tarifas y capacidad. Más allá de las redes están los <em>modelos basados en agentes</em> (Wilensky y Rand, 2015), con agentes heterogéneos, memoria, ubicación y respuesta al precio; representan lo que la red omite a cambio de muchos más parámetros que calibrar, y el curso los deja como horizonte.</p>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-mapa-del-metro-con-números" class="level3">
+<h3 class="anchored" data-anchor-id="el-mapa-del-metro-con-números">El mapa del metro, con números</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿A qué velocidad deja de convenir la ruta con transbordo?</span>
+</div>
+<p><strong>Planteamiento.</strong> Con el metro de la intuición, la línea 1 recorre 12 km sin transbordo y la ruta alterna, 6 km con un transbordo de 8 minutos. A 35 km/h gana la ruta alterna. ¿A partir de qué velocidad del tren conviene la línea 1? ¿Qué puede decir de esto el mapa sin distancias?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver con lápiz</span>
+</div>
+<div class="paso">
+<p><strong>Nombre las variables.</strong> <span class="math inline">v</span> [km/h] es la velocidad del tren; <span class="math inline">t_1</span> y <span class="math inline">t_2</span> [min], los tiempos por la línea 1 y por la ruta alterna.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba los dos tiempos.</strong> Distancia sobre velocidad, pasada a minutos, más el transbordo:</p>
+<p><span class="math display">t_1 = \frac{60 \cdot 12}{v}, \qquad t_2 = \frac{60 \cdot 6}{v} + 8.</span></p>
+</div>
+<div class="paso">
+<p><strong>Evalúe en el caso base.</strong> Con <span class="math inline">v = 35</span> km/h, <span class="math inline">t_1 = 720/35 = 20{,}6</span> min y <span class="math inline">t_2 = 360/35 + 8 = 18{,}3</span> min. Gana la ruta alterna por unos dos minutos.</p>
+</div>
+<div class="paso">
+<p><strong>Busque el empate.</strong> <span class="math inline">t_1 = t_2</span> exige <span class="math inline">720/v = 360/v + 8</span>, es decir, <span class="math inline">360/v = 8</span> y <span class="math inline">v^* = 45</span> km/h. Con trenes más rápidos que 45 km/h conviene la línea 1; con trenes más lentos, la ruta alterna.</p>
+</div>
+<div class="paso">
+<p><strong>Lea el resultado.</strong> El mapa sin pesos siempre elige la línea 1, sea cual sea la velocidad. La respuesta correcta depende de dos datos que el mapa no tiene, la longitud de los tramos y la duración del transbordo. Del mismo modo, una red de hogares sin ingresos ni costos dice dónde está el refuerzo social y calla quién puede pagar un sistema.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo cálculo en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo cálculo en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="d30819ef" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>velocidades <span class="op">=</span> np.array([<span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">55</span>])          <span class="co"># km/h</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>linea_1 <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">12</span> <span class="op">/</span> velocidades                     <span class="co"># min</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ruta_alterna <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">6</span> <span class="op">/</span> velocidades <span class="op">+</span> <span class="dv">8</span>             <span class="co"># min, con el transbordo</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v, t1, t2 <span class="kw">in</span> <span class="bu">zip</span>(velocidades, linea_1, ruta_alterna):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"v = </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss"> km/h: línea 1 </span><span class="sc">{</span>t1<span class="sc">:.1f}</span><span class="ss"> min, ruta alterna </span><span class="sc">{</span>t2<span class="sc">:.1f}</span><span class="ss"> min"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>v = 25 km/h: línea 1 28.8 min, ruta alterna 22.4 min
+v = 35 km/h: línea 1 20.6 min, ruta alterna 18.3 min
+v = 45 km/h: línea 1 16.0 min, ruta alterna 16.0 min
+v = 55 km/h: línea 1 13.1 min, ruta alterna 14.5 min</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="doce-comercios-una-red-y-dos-dinámicas" class="level3">
+<h3 class="anchored" data-anchor-id="doce-comercios-una-red-y-dos-dinámicas">Doce comercios, una red y dos dinámicas</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">La misma red con dos dinámicas y dos conclusiones</span>
+</div>
+<p><strong>Planteamiento.</strong> Doce comercios forman dos grupos de cuatro (a y b) unidos por un puente ancho, porque a3 y a4 conocen a b1 y b2; un gremio local H conoce a a1, a b4 y a tres comercios pequeños (L1, L2 y L3). Compare dos dinámicas sobre la misma red: una <strong>noticia</strong>, que basta oír de un vecino (contagio SI con <span class="math inline">\beta = 1</span>), y una <strong>inversión</strong>, que un comercio hace si al menos el 40 % de sus vecinos ya la hizo (umbral de 0,4). ¿Dónde conviene sembrar en cada caso?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Propagar a mano, paso a paso</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-comercios-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s3-08-comercios-1.svg" class="img-fluid" alt="Red de doce comercios: dos grupos de cuatro unidos por un puente y un gremio H conectado a a1, b4 y tres comercios pequeños."></a></p>
+<p><strong>Mire la red.</strong> H tiene grado 5, igual que a3, a4, b1 y b2, pero es el de mayor cercanía (0,65) y el único a dos pasos de todos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-comercios-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s3-08-comercios-2.svg" class="img-fluid" alt="Noticia sembrada en H: en el paso 1 la conocen a1, b4, L1, L2 y L3."></a></p>
+<p><strong>Propague la noticia desde H.</strong> En el paso 1 la reciben sus cinco vecinos: la fracción informada pasa de 0,08 a 0,50.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-comercios-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s3-08-comercios-3.svg" class="img-fluid" alt="En el paso 2 la conocen los doce comercios."></a></p>
+<p><strong>Complete la noticia.</strong> En el paso 2 la conocen los doce. Desde a3, con el mismo grado, hacen falta tres pasos (0,08, 0,50, 0,75 y 1,00). Conclusión para la noticia: «contárselo al gremio».</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-comercios-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s3-08-comercios-4.svg" class="img-fluid" alt="Inversión sembrada en H: adoptan L1, L2 y L3; a1 y b4 ven un vecino activo de cuatro y no adoptan."></a></p>
+<p><strong>Pruebe la inversión desde H.</strong> L1, L2 y L3 adoptan en el paso 1, porque su único vecino es H. Pero a1 ve 1 de 4 vecinos activos (<span class="math inline">0{,}25 &lt; 0{,}4</span>), y b4 también. La cascada se detiene en un tercio de los comercios.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-comercios-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../diagramas/svg/s3-08-comercios-5.svg" class="img-fluid" alt="Inversión sembrada en a3 y a4: en el paso 1 adoptan a1, a2, b1 y b2."></a></p>
+<p><strong>Siembre dos vecinos del puente.</strong> Con a3 y a4, en el paso 1 adoptan a1 (2 de 4), a2 (2 de 3), b1 y b2 (2 de 5 cada uno): la mitad de los comercios.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-comercios-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../diagramas/svg/s3-08-comercios-6.svg" class="img-fluid" alt="Pasos 2 y 3: adoptan b3, b4 y luego H."></a></p>
+<p><strong>Siga la cascada.</strong> En el paso 2 adoptan b3 (2 de 3) y b4 (2 de 4); en el paso 3, H, que ahora ve a a1 y a b4 (2 de 5).</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-08-comercios-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="../diagramas/svg/s3-08-comercios-7.svg" class="img-fluid" alt="Paso 4: adoptan L1, L2 y L3 y la red entera adoptó."></a></p>
+<p><strong>Compare las conclusiones.</strong> En el paso 4 adoptan L1, L2 y L3: los doce. Para la inversión, la recomendación es «financiar dos vitrinas vecinas en el puente», la opuesta a la de la noticia. La red no decide la estrategia; la decide la red junto con la dinámica, y la dinámica es una hipótesis sobre el comportamiento que hay que sustentar con evidencia.</p>
+</div>
+</div>
+<div id="pred-s3-08-gremio" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Para la inversión con umbral 0,4, alguien propone sembrar en H, el comercio más central, y en a1, su vecino. ¿Qué espera?</p>
+<div class="opcion">
+<p>Adoptan los doce, porque H llega a todos en dos pasos.</p>
+</div>
+<div class="opcion">
+<p>La cascada se detiene antes de la mitad de los comercios.</p>
+</div>
+<div class="opcion">
+<p>Adopta exactamente la mitad, un grupo completo más el gremio.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Dos dinámicas sobre los doce comercios</span>
+</div>
+<p>Elija la dinámica y dos semillas. Pruebe H y a1 con la inversión y compare con su predicción; después busque otros pares que lleven la inversión a los doce comercios.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="286" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 285;"><span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a>viewof dinamicaC <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"noticia (basta un vecino)"</span><span class="op">,</span> <span class="st">"inversión (umbral 0,4)"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"inversión (umbral 0,4)"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Dinámica"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="291" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 290;"><span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>viewof semillaC1 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(COMERCIOS<span class="op">.</span><span class="at">posicion</span>)<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"H"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Primera semilla"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="296" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 295;"><span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a>viewof semillaC2 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"ninguna"</span><span class="op">,</span> <span class="op">...</span><span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(COMERCIOS<span class="op">.</span><span class="at">posicion</span>)]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"a1"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Segunda semilla"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="301" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 300;"><span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a>corridaC <span class="op">=</span> {</span>
+<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> g <span class="op">=</span> <span class="fu">grafo</span>(COMERCIOS<span class="op">.</span><span class="at">aristas</span>)<span class="op">;</span></span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> semillas <span class="op">=</span> [<span class="op">...</span><span class="kw">new</span> <span class="bu">Set</span>([semillaC1<span class="op">,</span> semillaC2]<span class="op">.</span><span class="fu">filter</span>((s) <span class="kw">=&gt;</span> s <span class="op">!==</span> <span class="st">"ninguna"</span>))]<span class="op">;</span></span>
+<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> historia <span class="op">=</span> dinamicaC<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"noticia"</span>)</span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> <span class="fu">contagio</span>(g<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> semillas<span class="op">,</span> <span class="dv">6</span><span class="op">,</span> {<span class="dt">modelo</span><span class="op">:</span> <span class="st">"SI"</span><span class="op">,</span> <span class="dt">semilla</span><span class="op">:</span> <span class="dv">1</span>})</span>
+<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="fu">cascadaUmbral</span>(g<span class="op">,</span> <span class="fl">0.4</span><span class="op">,</span> semillas)<span class="op">;</span></span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> serie <span class="op">=</span> <span class="fu">fracciones</span>(historia<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> pasos <span class="op">=</span> serie<span class="op">.</span><span class="fu">findIndex</span>((v<span class="op">,</span> k) <span class="kw">=&gt;</span> k <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> v <span class="op">===</span> serie[k <span class="op">-</span> <span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a>  pasos <span class="op">=</span> pasos <span class="op">===</span> <span class="op">-</span><span class="dv">1</span> <span class="op">?</span> serie<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span> <span class="op">:</span> pasos <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> final <span class="op">=</span> historia[pasos]<span class="op">;</span></span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> paso <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">,</span> historia<span class="op">.</span><span class="fu">findIndex</span>((e) <span class="kw">=&gt;</span> e[n] <span class="op">===</span> <span class="dv">1</span>)]))<span class="op">;</span></span>
+<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nodos <span class="op">=</span> g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> ({<span class="dt">id</span><span class="op">:</span> n<span class="op">,</span> <span class="dt">x</span><span class="op">:</span> COMERCIOS<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> COMERCIOS<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">activo</span><span class="op">:</span> final[n] <span class="op">===</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>    <span class="dt">etiqueta</span><span class="op">:</span> final[n] <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span>n<span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>paso[n]<span class="sc">}</span><span class="vs">)`</span> <span class="op">:</span> n}))<span class="op">;</span></span>
+<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> aristas <span class="op">=</span> COMERCIOS<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">map</span>(([a<span class="op">,</span> b]) <span class="kw">=&gt;</span> ({<span class="dt">x1</span><span class="op">:</span> COMERCIOS<span class="op">.</span><span class="at">posicion</span>[a][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> COMERCIOS<span class="op">.</span><span class="at">posicion</span>[a][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> COMERCIOS<span class="op">.</span><span class="at">posicion</span>[b][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> COMERCIOS<span class="op">.</span><span class="at">posicion</span>[b][<span class="dv">1</span>]}))<span class="op">;</span></span>
+<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {nodos<span class="op">,</span> aristas<span class="op">,</span> <span class="dt">fraccion</span><span class="op">:</span> serie[pasos]<span class="op">,</span> pasos<span class="op">,</span> <span class="dt">adoptan</span><span class="op">:</span> nodos<span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">activo</span>)<span class="op">.</span><span class="at">length</span><span class="op">,</span> <span class="dt">serie</span><span class="op">:</span> serie<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> pasos <span class="op">+</span> <span class="dv">1</span>)}<span class="op">;</span></span>
+<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="321" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 320;"><span id="cb9-321"><a href="#cb9-321" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-322"><a href="#cb9-322" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">560</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">330</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">22</span><span class="op">,</span></span>
+<span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb9-324"><a href="#cb9-324" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-325"><a href="#cb9-325" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(corridaC<span class="op">.</span><span class="at">aristas</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y2"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#BBBBBB"</span>})<span class="op">,</span></span>
+<span id="cb9-326"><a href="#cb9-326" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(corridaC<span class="op">.</span><span class="at">nodos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">13</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">activo</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">azul</span> <span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span>})<span class="op">,</span></span>
+<span id="cb9-327"><a href="#cb9-327" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(corridaC<span class="op">.</span><span class="at">nodos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"etiqueta"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">20</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">11</span>})<span class="op">,</span></span>
+<span id="cb9-328"><a href="#cb9-328" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-329"><a href="#cb9-329" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="334" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 333;"><span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Comercios que adoptan&lt;b&gt;</span><span class="sc">${</span>corridaC<span class="op">.</span><span class="at">adoptan</span><span class="sc">}</span><span class="vs"> de 12 (</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(corridaC<span class="op">.</span><span class="at">fraccion</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">)&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-336"><a href="#cb10-336" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Pasos hasta detenerse&lt;b&gt;</span><span class="sc">${</span>corridaC<span class="op">.</span><span class="at">pasos</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-337"><a href="#cb10-337" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Fracción por paso&lt;b&gt;</span><span class="sc">${</span>corridaC<span class="op">.</span><span class="at">serie</span><span class="op">.</span><span class="fu">map</span>((v) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">2</span>)(v))<span class="op">.</span><span class="fu">join</span>(<span class="st">" · "</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-338"><a href="#cb10-338" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Red sintética con fines didácticos. Entre paréntesis, el paso en que adoptó cada comercio. La noticia usa <code>contagio</code> con <span class="math inline">\beta = 1</span> y la inversión, <code>cascadaUmbral</code>, de <code>simuladores/difusion.js</code>; las pruebas del curso las comparan con <code>mise_sd.difusion</code>.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s3-08-gremio"></span>. Con H y a1 adoptan 5 de los 12 comercios (42 %), la respuesta B. L1, L2 y L3 adoptan en el paso 1, pero nadie más alcanza el umbral: a2 ve a a1 entre 3 vecinos (0,33), a3 y a4 lo ven entre 5 (0,2) y b4 ve a H entre 4 (0,25). Sembrar en el nodo más central y en su vecino gasta las dos semillas en el mismo lado de la red. De los 66 pares posibles, 30 llevan la inversión a los doce comercios, entre ellos H con b3: lo que tienen en común es dar dos vecinos activos a algún comercio de un grupo.</p>
+</section>
+<section id="la-misma-regla-en-cuatro-redes" class="level3">
+<h3 class="anchored" data-anchor-id="la-misma-regla-en-cuatro-redes">La misma regla en cuatro redes</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Cuándo basta la curva de Bass y cuándo engaña?</span>
+</div>
+<p><strong>Planteamiento.</strong> Se aplica la misma regla individual de Bass (<span class="math inline">p = 0{,}01</span> y <span class="math inline">q = 0{,}4</span> por año) a 1 000 hogares en redes de grado medio 6 con distinta estructura, desde un anillo sin atajos hasta el grafo completo. En cada red se promedian 20 corridas de 40 años y se ajusta la curva agregada de Bass al promedio. ¿Qué <span class="math inline">q</span> devuelve el ajuste en cada red, y qué pasa si la adopción es un contagio complejo?</p>
+</div>
+<section id="acto-1.-predecir" class="level4">
+<h4 class="anchored" data-anchor-id="acto-1.-predecir">Acto 1. Predecir</h4>
+<div id="pred-s3-08-anillo" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>En el anillo sin atajos, cada hogar solo conoce a sus seis vecinos más cercanos y el agrupamiento es alto (0,60). El <span class="math inline">q</span> que devuelve el ajuste agregado será…</p>
+<div class="opcion">
+<p>cercano a 0,4, porque la regla individual es la misma.</p>
+</div>
+<div class="opcion">
+<p>cercano a 0,3.</p>
+</div>
+<div class="opcion">
+<p>cercano a 0,2.</p>
+</div>
+<div class="opcion">
+<p>mayor que 0,4, porque el agrupamiento refuerza el voz a voz.</p>
+</div>
+</div>
+</section>
+<section id="acto-2.-simular" class="level4">
+<h4 class="anchored" data-anchor-id="acto-2.-simular">Acto 2. Simular</h4>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Bass en red frente a la curva agregada</span>
+</div>
+<p>Empiece con el anillo y compare el <span class="math inline">q</span> ajustado con su predicción. Después recorra las redes hacia el grafo completo y mire cómo sube el <span class="math inline">q</span> ajustado sin que cambie la regla de cada hogar. La línea gris es el agregado de Bass con el <span class="math inline">q</span> individual.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="383" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 382;"><span id="cb11-383"><a href="#cb11-383" aria-hidden="true" tabindex="-1"></a>viewof redB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"anillo sin atajos"</span><span class="op">,</span> <span class="st">"Watts-Strogatz, p = 0,01"</span><span class="op">,</span> <span class="st">"Watts-Strogatz, p = 0,1"</span><span class="op">,</span> <span class="st">"Watts-Strogatz, p = 0,3"</span><span class="op">,</span> <span class="st">"aleatoria"</span><span class="op">,</span> <span class="st">"grafo completo"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"anillo sin atajos"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Red de 1 000 hogares, grado medio 6"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="388" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 387;"><span id="cb12-388"><a href="#cb12-388" aria-hidden="true" tabindex="-1"></a>viewof qB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.6</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.4</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Propensión individual a imitar q [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="393" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 392;"><span id="cb13-393"><a href="#cb13-393" aria-hidden="true" tabindex="-1"></a>grafoB <span class="op">=</span> {</span>
+<span id="cb13-394"><a href="#cb13-394" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb13-395"><a href="#cb13-395" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (redB <span class="op">===</span> <span class="st">"anillo sin atajos"</span>) <span class="cf">return</span> <span class="fu">anilloRegular</span>(N<span class="op">,</span> <span class="dv">6</span>)<span class="op">;</span></span>
+<span id="cb13-396"><a href="#cb13-396" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (redB <span class="op">===</span> <span class="st">"Watts-Strogatz, p = 0,01"</span>) <span class="cf">return</span> <span class="fu">wattsStrogatz</span>(N<span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb13-397"><a href="#cb13-397" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (redB <span class="op">===</span> <span class="st">"Watts-Strogatz, p = 0,1"</span>) <span class="cf">return</span> <span class="fu">wattsStrogatz</span>(N<span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (redB <span class="op">===</span> <span class="st">"Watts-Strogatz, p = 0,3"</span>) <span class="cf">return</span> <span class="fu">wattsStrogatz</span>(N<span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (redB <span class="op">===</span> <span class="st">"aleatoria"</span>) <span class="cf">return</span> <span class="fu">erdosRenyi</span>(N<span class="op">,</span> <span class="dv">6</span> <span class="op">/</span> (N <span class="op">-</span> <span class="dv">1</span>)<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span>  <span class="co">// grafo completo: bassEnRedCompleta, sin construir sus aristas</span></span>
+<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="406" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 405;"><span id="cb14-406"><a href="#cb14-406" aria-hidden="true" tabindex="-1"></a>difusionB <span class="op">=</span> {</span>
+<span id="cb14-407"><a href="#cb14-407" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> <span class="dv">1000</span><span class="op">,</span> P <span class="op">=</span> <span class="fl">0.01</span><span class="op">,</span> PASOS <span class="op">=</span> <span class="dv">40</span><span class="op">,</span> CORRIDAS <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb14-408"><a href="#cb14-408" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> t <span class="op">=</span> [<span class="op">...</span><span class="bu">Array</span>(PASOS <span class="op">+</span> <span class="dv">1</span>)<span class="op">.</span><span class="fu">keys</span>()]<span class="op">;</span></span>
+<span id="cb14-409"><a href="#cb14-409" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> curvas <span class="op">=</span> [<span class="op">...</span><span class="bu">Array</span>(CORRIDAS)<span class="op">.</span><span class="fu">keys</span>()]<span class="op">.</span><span class="fu">map</span>((s) <span class="kw">=&gt;</span> <span class="fu">fracciones</span>(grafoB</span>
+<span id="cb14-410"><a href="#cb14-410" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> <span class="fu">bassEnRed</span>(grafoB<span class="op">,</span> P<span class="op">,</span> qB<span class="op">,</span> PASOS<span class="op">,</span> {<span class="dt">semilla</span><span class="op">:</span> <span class="dv">1</span> <span class="op">+</span> s})</span>
+<span id="cb14-411"><a href="#cb14-411" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="fu">bassEnRedCompleta</span>(N<span class="op">,</span> P<span class="op">,</span> qB<span class="op">,</span> PASOS<span class="op">,</span> {<span class="dt">semilla</span><span class="op">:</span> <span class="dv">1</span> <span class="op">+</span> s})<span class="op">,</span> <span class="dv">1</span>))<span class="op">;</span></span>
+<span id="cb14-412"><a href="#cb14-412" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> media <span class="op">=</span> t<span class="op">.</span><span class="fu">map</span>((k) <span class="kw">=&gt;</span> curvas<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> c) <span class="kw">=&gt;</span> a <span class="op">+</span> c[k]<span class="op">,</span> <span class="dv">0</span>) <span class="op">/</span> CORRIDAS)<span class="op">;</span></span>
+<span id="cb14-413"><a href="#cb14-413" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ajuste <span class="op">=</span> <span class="fu">ajustarBass</span>(t<span class="op">,</span> media<span class="op">.</span><span class="fu">map</span>((x) <span class="kw">=&gt;</span> x <span class="op">*</span> N))<span class="op">;</span></span>
+<span id="cb14-414"><a href="#cb14-414" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> curvaAjuste <span class="op">=</span> <span class="fu">bass</span>(ajuste<span class="op">.</span><span class="at">p</span><span class="op">,</span> ajuste<span class="op">.</span><span class="at">q</span><span class="op">,</span> ajuste<span class="op">.</span><span class="at">m</span><span class="op">,</span> t)<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">acumulado</span> <span class="op">/</span> N)<span class="op">;</span></span>
+<span id="cb14-415"><a href="#cb14-415" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> agregado <span class="op">=</span> <span class="fu">bassDiscreto</span>(P<span class="op">,</span> qB<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> PASOS)<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">acumulado</span>)<span class="op">;</span></span>
+<span id="cb14-416"><a href="#cb14-416" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> t<span class="op">.</span><span class="fu">flatMap</span>((x<span class="op">,</span> k) <span class="kw">=&gt;</span> [</span>
+<span id="cb14-417"><a href="#cb14-417" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">t</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> agregado[k]<span class="op">,</span> <span class="dt">serie</span><span class="op">:</span> <span class="st">"agregado con q individual"</span>}<span class="op">,</span></span>
+<span id="cb14-418"><a href="#cb14-418" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">t</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> media[k]<span class="op">,</span> <span class="dt">serie</span><span class="op">:</span> <span class="st">"promedio en la red"</span>}<span class="op">,</span></span>
+<span id="cb14-419"><a href="#cb14-419" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">t</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> curvaAjuste[k]<span class="op">,</span> <span class="dt">serie</span><span class="op">:</span> <span class="st">"Bass ajustado al promedio"</span>}])<span class="op">;</span></span>
+<span id="cb14-420"><a href="#cb14-420" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {filas<span class="op">,</span> ajuste<span class="op">,</span> <span class="dt">anio10</span><span class="op">:</span> media[<span class="dv">10</span>]<span class="op">,</span> <span class="dt">agrupamiento</span><span class="op">:</span> grafoB <span class="op">?</span> <span class="fu">agrupamientoMedio</span>(grafoB) <span class="op">:</span> <span class="dv">1</span>}<span class="op">;</span></span>
+<span id="cb14-421"><a href="#cb14-421" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="426" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 425;"><span id="cb15-426"><a href="#cb15-426" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb15-427"><a href="#cb15-427" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb15-428"><a href="#cb15-428" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span>}<span class="op">,</span></span>
+<span id="cb15-429"><a href="#cb15-429" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Fracción de adoptantes"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb15-430"><a href="#cb15-430" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"agregado con q individual"</span><span class="op">,</span> <span class="st">"promedio en la red"</span><span class="op">,</span> <span class="st">"Bass ajustado al promedio"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [<span class="st">"#9E9E9E"</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">ambar</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb15-431"><a href="#cb15-431" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb15-432"><a href="#cb15-432" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(difusionB<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"serie"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">serie</span> <span class="op">===</span> <span class="st">"promedio en la red"</span> <span class="op">?</span> <span class="fl">2.6</span> <span class="op">:</span> <span class="fl">1.6</span><span class="op">,</span></span>
+<span id="cb15-433"><a href="#cb15-433" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeDasharray</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">serie</span> <span class="op">===</span> <span class="st">"Bass ajustado al promedio"</span> <span class="op">?</span> <span class="st">"5 4"</span> <span class="op">:</span> <span class="kw">null</span>})<span class="op">,</span></span>
+<span id="cb15-434"><a href="#cb15-434" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">10</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3 3"</span>})<span class="op">,</span></span>
+<span id="cb15-435"><a href="#cb15-435" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb15-436"><a href="#cb15-436" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="441" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 440;"><span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;q ajustado (q aparente)&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(difusionB<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">q</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;q aparente / q individual&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(difusionB<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">q</span> <span class="op">/</span> qB)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Adopción en el año 10&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(difusionB<span class="op">.</span><span class="at">anio10</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Error del ajuste (RMSE)&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(difusionB<span class="op">.</span><span class="at">ajuste</span><span class="op">.</span><span class="at">rmse</span>)<span class="sc">}</span><span class="vs"> hogares&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-446"><a href="#cb16-446" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Agrupamiento medio de la red&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(difusionB<span class="op">.</span><span class="at">agrupamiento</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Redes sintéticas con fines didácticos, generadas en el navegador con semilla 1 (<code>redes.js</code>); 20 corridas de <code>bassEnRed</code> con semillas 1 a 20 y ajuste de Bass por mínimos cuadrados (<code>ajustarBass</code>). Las pruebas del curso comparan <code>bassEnRed</code> con <code>mise_sd.difusion.bass_en_red</code> por promedios de conjunto. Las redes del navegador no son las de NetworkX, por eso las cifras difieren en la tercera cifra de las de las notas.</p>
+</div>
+</div>
+</section>
+<section id="acto-3.-explicar" class="level4">
+<h4 class="anchored" data-anchor-id="acto-3.-explicar">Acto 3. Explicar</h4>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer los ajustes</span>
+</div>
+<div class="paso">
+<p><strong>Contraste con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s3-08-anillo"></span>. En el anillo el ajuste devuelve <span class="math inline">q = 0{,}197</span>, la mitad del <span class="math inline">q</span> individual: la respuesta C. En el año 10 ha adoptado el 31,0 % de los hogares.</p>
+</div>
+<div class="paso">
+<p><strong>Recorra las redes.</strong> Con la misma regla, el <span class="math inline">q</span> ajustado vale 0,204 con Watts-Strogatz <span class="math inline">p = 0{,}01</span>, 0,245 con <span class="math inline">p = 0{,}1</span>, 0,293 con <span class="math inline">p = 0{,}3</span>, 0,321 en la red aleatoria y 0,407 en el grafo completo, donde en el año 10 ya adoptó el 44,8 %. El <span class="math inline">q</span> aparente sube a medida que baja el agrupamiento (de 0,60 a 0,01).</p>
+</div>
+<div class="paso">
+<p><strong>Explique con el campo medio.</strong> En el grafo completo cada no adoptante ve la fracción global y el agregado describe exactamente el modelo individual. En el anillo los no adoptantes están rodeados de no adoptantes, <span class="math inline">\bar a_{\text{no adopt.}} &lt; A/N</span>, y la imitación rinde menos: es el anillo de ocho hogares de la sección 3, en grande.</p>
+</div>
+<div class="paso">
+<p><strong>Lea cuándo basta.</strong> Los ajustes son muy buenos en todas las redes (errores de 4 a 7 hogares de 1 000). Para pronosticar la curva de una red que no cambia, el agregado con <span class="math inline">q_{\text{ap}}</span> basta.</p>
+</div>
+<div class="paso">
+<p><strong>Lea cuándo engaña, primero.</strong> Una política que cambie la red cambia el <span class="math inline">q</span> aparente. Sumar atajos, al pasar del anillo a Watts-Strogatz con <span class="math inline">p = 0{,}1</span>, lo sube de 0,197 a 0,245 sin que ningún hogar cambie de conducta, y un modelo agregado lo atribuiría a una campaña.</p>
+</div>
+<div class="paso">
+<p><strong>Lea cuándo engaña, después.</strong> La figura siguiente repite el ejercicio con un contagio complejo: umbrales individuales de media 0,35 más adopción espontánea de 0,01 por año, en redes de Watts-Strogatz. Cada corrida despega de golpe, y en un año distinto: el 50 % llega entre los años 11 y 16. El promedio es una S suave que Bass ajusta con un error de 6,2 hogares, aunque ninguna ciudad real siga ese promedio.</p>
+</div>
+<div class="paso">
+<p><strong>Mire el pronóstico temprano.</strong> Con los primeros 8 años (19,9 % de adopción), el ajuste propone un mercado de 822 hogares y pronostica 76 % en el año 20 y 82 % en el año 30, cuando la simulación llega a 92 % y a casi 100 %. En su fase temprana, el contagio complejo se parece a una difusión lenta que ya se satura, y el agregado subestima el despegue que viene.</p>
+</div>
+</div>
+<div id="911867e4" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="08-limites-redes_files/figure-html/cell-4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Cascada de umbral con innovadores en redes de Watts-Strogatz de 1 000 hogares: corridas individuales (gris), su promedio (azul) y dos ajustes de Bass al promedio, con toda la serie (verde) y con los primeros 8 años (rojo). Redes sintéticas con fines didácticos, 20 corridas."><img src="08-limites-redes_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img" alt="Cascada de umbral con innovadores en redes de Watts-Strogatz de 1 000 hogares: corridas individuales (gris), su promedio (azul) y dos ajustes de Bass al promedio, con toda la serie (verde) y con los primeros 8 años (rojo). Redes sintéticas con fines didácticos, 20 corridas."></a></p>
+<figcaption>Cascada de umbral con innovadores en redes de Watts-Strogatz de 1 000 hogares: corridas individuales (gris), su promedio (azul) y dos ajustes de Bass al promedio, con toda la serie (verde) y con los primeros 8 años (rojo). Redes sintéticas con fines didácticos, 20 corridas.</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Año del 50 %: entre 11 y 16. Ajuste temprano: m = 822 hogares.</code></pre>
+</div>
+</div>
+<p><strong>Puente a la semana 4.</strong> El stock <span class="math inline">A(t)</span> con su flujo de adopción es la pieza que la semana 4 formaliza con <code>mise_sd.core</code>. La red queda como el lugar donde se estima <span class="math inline">q_{\text{ap}}</span> y donde se prueban las intervenciones locales; el stock, como el lugar donde la adopción se conecta con precios, tarifas y capacidad del sistema. La <a href="../semana4/index.html">semana 4</a> empieza por ahí.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo experimento en Python, como en el Laboratorio 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo experimento en Python, como en el Laboratorio 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="50ac4241" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> difusion</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(<span class="dv">41</span>, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>redes <span class="op">=</span> {<span class="st">"aleatoria"</span>: nx.fast_gnp_random_graph(<span class="dv">1_000</span>, <span class="dv">6</span> <span class="op">/</span> <span class="dv">999</span>, seed<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">"WS p=0,1"</span>: nx.watts_strogatz_graph(<span class="dv">1_000</span>, <span class="dv">6</span>, <span class="fl">0.1</span>, seed<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>         <span class="st">"anillo"</span>: nx.watts_strogatz_graph(<span class="dv">1_000</span>, <span class="dv">6</span>, <span class="fl">0.0</span>, seed<span class="op">=</span><span class="dv">1</span>)}</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, red <span class="kw">in</span> redes.items():</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    curvas <span class="op">=</span> [difusion.bass_en_red(red, <span class="fl">0.01</span>, <span class="fl">0.4</span>, <span class="dv">40</span>, semilla<span class="op">=</span>s)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>              .fracciones[<span class="st">"adoptante"</span>].to_numpy() <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>)]</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    ajuste <span class="op">=</span> difusion.ajustar_bass(t, np.mean(curvas, axis<span class="op">=</span><span class="dv">0</span>) <span class="op">*</span> <span class="dv">1_000</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">: q ajustado </span><span class="sc">{</span>ajuste<span class="sc">.</span>q<span class="sc">:.3f}</span><span class="ss">, RMSE </span><span class="sc">{</span>ajuste<span class="sc">.</span>rmse<span class="sc">:.1f}</span><span class="ss"> hogares"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>aleatoria: q ajustado 0.318, RMSE 6.7 hogares
+WS p=0,1: q ajustado 0.246, RMSE 3.9 hogares
+anillo: q ajustado 0.202, RMSE 4.6 hogares</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Interpretar el q ajustado como conducta individual</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«En Medellín el <span class="math inline">q</span> ajustado es menor que en Bogotá: los medellinenses imitan menos a sus vecinos.»</p>
+</div>
+<div class="bien">
+<p>«El <span class="math inline">q</span> ajustado mezcla la propensión a imitar con la estructura de la red. Una diferencia entre ciudades puede venir de barrios más o menos cerrados.» En el simulador, la misma regla individual da 0,197 en el anillo y 0,407 en el grafo completo.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Promediar mundos distintos y leer el promedio como uno más</span>
+</div>
+<p>En la figura del contagio complejo cada corrida despega de golpe y el promedio es más suave que cualquiera de ellas. Para planear la red de distribución de un circuito, lo relevante es el despegue brusco y la incertidumbre sobre su fecha.</p>
+<div id="cd984da4" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="08-limites-redes_files/figure-html/cell-6-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-21" title="Tasa de adopción anual de tres corridas del contagio complejo y del promedio de 20 corridas. Redes sintéticas con fines didácticos."><img src="08-limites-redes_files/figure-html/cell-6-output-1.svg" class="img-fluid figure-img" alt="Tasa de adopción anual de tres corridas del contagio complejo y del promedio de 20 corridas. Redes sintéticas con fines didácticos."></a></p>
+<figcaption>Tasa de adopción anual de tres corridas del contagio complejo y del promedio de 20 corridas. Redes sintéticas con fines didácticos.</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Pico anual: corridas [np.float64(6.8), np.float64(6.4), np.float64(6.1)] %, promedio 7.6 %</code></pre>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tomar la red como si fuera el sistema</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«La adopción depende de la estructura de la red; la estrategia es sembrar en los nodos centrales.»</p>
+</div>
+<div class="bien">
+<p>«La red explica el refuerzo social. El costo de los paneles, el crédito y la tarifa deciden quién puede adoptar, y el análisis los declara como entradas o los incorpora en el modelo de dinámica de sistemas.» Confundirlos es confundir el mapa del metro con la ciudad.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una empresa quiere saber cuántos MW de autogeneración habrá en Colombia en 2030. ¿Qué modelo conviene?</p>
+<div class="opcion" data-correcta="si">
+<p>Un modelo agregado, una curva de Bass o un stock de capacidad con su flujo de adopción.</p>
+<p><span class="porque">Correcto: la pregunta es nacional y la red de cada barrio se resume en un <span class="math inline">q</span> aparente.</span></p>
+</div>
+<div class="opcion">
+<p>Una red de todos los hogares del país con sus vecinos.</p>
+<p><span class="porque">Una red nacional no se puede medir ni calibrar, y la pregunta no pide saber dónde; revise la sección 1.</span></p>
+</div>
+<div class="opcion">
+<p>Ninguno: sin datos de la red no se puede proyectar.</p>
+<p><span class="porque">El agregado absorbe la estructura en el <span class="math inline">q</span> aparente; revise el paso 6 del anillo de ocho hogares.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el anillo de ocho hogares, ¿por qué el campo medio sobrestima las adopciones esperadas (0,80 frente a 0,45)?</p>
+<div class="opcion">
+<p>Porque el campo medio usa un <span class="math inline">p</span> más alto.</p>
+<p><span class="porque">El <span class="math inline">p</span> es el mismo en los dos cálculos; revise qué fracción de vecinos adoptantes usa cada uno.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque supone que cada no adoptante ve la fracción global de adoptantes, cuando en la red ven menos.</p>
+<p><span class="porque">Correcto: los no adoptantes ven en promedio 0,2 y no 0,375.</span></p>
+</div>
+<div class="opcion">
+<p>Porque el anillo tiene pocos hogares y el azar domina.</p>
+<p><span class="porque">El cálculo es de valores esperados y no depende del azar; revise la definición de <span class="math inline">\bar a_{\text{no adopt.}}</span>.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un programa crea grupos de mensajería entre barrios y, un año después, el <span class="math inline">q</span> ajustado de la ciudad sube de 0,20 a 0,25. ¿Qué puede concluir?</p>
+<div class="opcion">
+<p>Que el programa hizo a los hogares más propensos a imitar.</p>
+<p><span class="porque">Ese es el error de leer el <span class="math inline">q</span> ajustado como conducta individual.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que el aumento puede deberse, al menos en parte, a los atajos que el programa agregó a la red.</p>
+<p><span class="porque">Correcto: del anillo a Watts-Strogatz con <span class="math inline">p = 0{,}1</span> el <span class="math inline">q</span> aparente pasa de 0,197 a 0,245 sin cambio de conducta.</span></p>
+</div>
+<div class="opcion">
+<p>Nada, porque el <span class="math inline">q</span> ajustado no cambia con la red.</p>
+<p><span class="porque">El simulador muestra lo contrario; recorra las redes con el mismo <span class="math inline">q</span> individual.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En los doce comercios, ¿por qué la mejor semilla para la noticia es mala para la inversión?</p>
+<div class="opcion">
+<p>Porque H tiene menos vecinos que a3.</p>
+<p><span class="porque">H y a3 tienen el mismo grado; revise qué exige cada dinámica.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque la inversión exige dos vecinos activos y H reparte su influencia en comercios que solo lo ven a él entre varios.</p>
+<p><span class="porque">Correcto: a1 y b4 ven 1 de 4 vecinos activos, por debajo del umbral de 0,4.</span></p>
+</div>
+<div class="opcion">
+<p>Porque la inversión es más lenta y necesita más pasos.</p>
+<p><span class="porque">La inversión desde H no es lenta: se detiene en el paso 1.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Con contagio complejo, un analista ajusta Bass a los primeros ocho años de adopción de un circuito. ¿Qué error espera?</p>
+<div class="opcion">
+<p>Ninguno importante, porque el ajuste tiene error bajo.</p>
+<p><span class="porque">El error de ajuste en los datos disponibles no dice nada del pronóstico; revise el acto 3.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que subestime el mercado y el despegue que viene.</p>
+<p><span class="porque">Correcto: el ajuste temprano propone 822 hogares y 76 % en el año 20, cuando la simulación llega a 92 %.</span></p>
+</div>
+<div class="opcion">
+<p>Que sobrestime la adopción, porque Bass siempre exagera.</p>
+<p><span class="porque">Con contagio complejo ocurre lo contrario en la fase temprana.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-red-o-agregado" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-red-o-agregado">Ejercicio 1 ●○○ · ¿Red o agregado?</h4>
+<p>Para cada pregunta, diga si basta un modelo agregado (Bass o un stock) o si hace falta un modelo en red, con una frase: (a) ¿cuántos MW de autogeneración a pequeña escala habrá en Colombia en 2030?; (b) ¿en qué conjuntos residenciales de Medellín conviene instalar las primeras vitrinas?; (c) ¿cuándo se alcanzará el límite de penetración de un circuito específico?; (d) ¿cuánto recaudo pierde un comercializador por la autogeneración de sus clientes?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><strong>Agregado.</strong> La pregunta es nacional; la red se resume en un <span class="math inline">q</span> aparente calibrado con la serie de registros.</p></li>
+<li><p><strong>Red.</strong> La pregunta es dónde, y la respuesta depende de la estructura local y de la dinámica (contagio simple o complejo), como en los doce comercios.</p></li>
+<li><p><strong>Red</strong>, o al menos un agregado por circuito que reconozca el agrupamiento: con contagio complejo un circuito se llena de golpe, y el promedio de la ciudad no lo anticipa.</p></li>
+<li><p><strong>Agregado, con segmentación por tipo de cliente.</strong> Importa cuántos kWh dejan de comprarse y a qué tarifa, no quién influyó en quién.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-atajos-y-q-aparente" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-atajos-y-q-aparente">Ejercicio 2 ●●○ · Atajos y q aparente</h4>
+<ol type="a">
+<li>Con las lecturas del acto 3, calcule el cociente <span class="math inline">q_{\text{ap}}/q</span> para el anillo, Watts-Strogatz con <span class="math inline">p = 0{,}1</span>, la red aleatoria y el grafo completo. (b) Prediga, antes de simular, si Watts-Strogatz con <span class="math inline">p = 0{,}01</span> quedará más cerca del anillo o de <span class="math inline">p = 0{,}1</span>, y si <span class="math inline">p = 0{,}3</span> quedará por encima o por debajo de 0,245; verifique con el simulador. (c) Explique qué error cometería una evaluación de impacto que compare el <span class="math inline">q</span> ajustado antes y después de un programa que creó grupos de mensajería entre barrios.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Con <span class="math inline">p = 0{,}01</span> solo se recablea una de cada cien aristas y el agrupamiento casi no cambia; con <span class="math inline">p = 0{,}3</span> el agrupamiento cae a la mitad.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Los cocientes son <span class="math inline">0{,}197/0{,}4 = 0{,}49</span> en el anillo, <span class="math inline">0{,}245/0{,}4 = 0{,}61</span> con <span class="math inline">p = 0{,}1</span>, <span class="math inline">0{,}321/0{,}4 = 0{,}80</span> en la red aleatoria y <span class="math inline">0{,}407/0{,}4 = 1{,}02</span> en el grafo completo.</p></li>
+<li><p>Con <span class="math inline">p = 0{,}01</span> el agrupamiento es 0,58, casi el del anillo (0,60), y el simulador da <span class="math inline">q = 0{,}204</span>, muy cerca del anillo. Con <span class="math inline">p = 0{,}3</span> el agrupamiento baja a 0,22 y el <span class="math inline">q</span> ajustado sube a 0,293, por encima de 0,245.</p></li>
+<li><p>Los grupos de mensajería agregan atajos a la red y suben el <span class="math inline">q</span> aparente aunque ningún hogar cambie su propensión a imitar. Una evaluación que compare el <span class="math inline">q</span> ajustado antes y después atribuiría al programa un cambio de conducta que es, al menos en parte, un cambio de estructura; y si el programa coincidió con una baja de precios, confundiría tres efectos. Hace falta un grupo de comparación y, si es posible, medir la red antes y después.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Cada nivel de abstracción responde bien unas preguntas: la red, <strong>dónde</strong> sembrar y por qué se agrupa la adopción; el agregado, <strong>cuánto</strong> habrá y cómo se conecta con precios y capacidad.</li>
+<li>El agregado de Bass supone <strong>campo medio</strong>: cada no adoptante ve la fracción global. En redes con agrupamiento ven menos, y el <span class="math inline">q</span> ajustado es un <strong><span class="math inline">q</span> aparente</strong>, <span class="math inline">q_{\text{ap}} = q\,\bar a_{\text{no adopt.}}/(A/N)</span>.</li>
+<li>Con la misma regla individual (<span class="math inline">q = 0{,}4</span>):</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>red de 1 000 hogares</th>
+<th style="text-align: center;">agrupamiento</th>
+<th style="text-align: center;"><span class="math inline">q</span> ajustado</th>
+<th style="text-align: center;">adopción en el año 10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>anillo sin atajos</td>
+<td style="text-align: center;">0,60</td>
+<td style="text-align: center;">0,197</td>
+<td style="text-align: center;">31,0 %</td>
+</tr>
+<tr class="even">
+<td>Watts-Strogatz, <span class="math inline">p = 0{,}1</span></td>
+<td style="text-align: center;">0,44</td>
+<td style="text-align: center;">0,245</td>
+<td style="text-align: center;">32,0 %</td>
+</tr>
+<tr class="odd">
+<td>aleatoria</td>
+<td style="text-align: center;">0,01</td>
+<td style="text-align: center;">0,321</td>
+<td style="text-align: center;">36,2 %</td>
+</tr>
+<tr class="even">
+<td>grafo completo</td>
+<td style="text-align: center;">1,00</td>
+<td style="text-align: center;">0,407</td>
+<td style="text-align: center;">44,8 %</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>El agregado <strong>basta</strong> para pronosticar una red que no cambia y <strong>engaña</strong> cuando la política cambia la red o cuando el contagio es complejo, porque el ajuste temprano subestima el despegue.</li>
+<li>El stock <span class="math inline">A(t)</span> con <span class="math inline">dA/dt = (p + q_{\text{ap}}A/N)(N - A)</span> es el puente hacia la semana 4.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Límites del enfoque de redes: del comportamiento en red al stock agregado» de las notas de la semana 3 trae los cuatro ejercicios con sus soluciones, entre ellos uno avanzado que construye el stock con <code>mise_sd.core</code> y lo compara con vitrinas sembradas en la red. La última pregunta del Laboratorio 2 le pide justificar si su caso necesita la red o si basta un agregado. La <a href="09-adopcion-solar-red.qmd">página integradora</a> junta las redes de la semana en el arco del laboratorio.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7YmFzc0VuUmVkLCBiYXNzRW5SZWRDb21wbGV0YSwgYmFzc0Rpc2NyZXRvLCBhanVzdGFyQmFzcywgYmFzcywgZnJhY2Npb25lcywgY29udGFnaW8sIGNhc2NhZGFVbWJyYWx9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9kaWZ1c2lvbi5qc1wiXG5pbXBvcnQge2dyYWZvLCBhbmlsbG9SZWd1bGFyLCB3YXR0c1N0cm9nYXR6LCBlcmRvc1JlbnlpLCBhZ3J1cGFtaWVudG9NZWRpb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL3JlZGVzLmpzXCJcbmltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiIvLyBMb3MgZG9jZSBjb21lcmNpb3MgZGVsIGVqZW1wbG8gaW50ZXJtZWRpbywgY29uIHBvc2ljaW9uZXMgZmlqYXMgcGFyYSBkaWJ1amFybG9zXG5DT01FUkNJT1MgPSAoe1xuICBhcmlzdGFzOiBbW1wiYTFcIiwgXCJhMlwiXSwgW1wiYTFcIiwgXCJhM1wiXSwgW1wiYTFcIiwgXCJhNFwiXSwgW1wiYTJcIiwgXCJhM1wiXSwgW1wiYTJcIiwgXCJhNFwiXSwgW1wiYTNcIiwgXCJhNFwiXSwgW1wiYjFcIiwgXCJiMlwiXSwgW1wiYjFcIiwgXCJiM1wiXSwgW1wiYjFcIiwgXCJiNFwiXSxcbiAgICBbXCJiMlwiLCBcImIzXCJdLCBbXCJiMlwiLCBcImI0XCJdLCBbXCJiM1wiLCBcImI0XCJdLCBbXCJhM1wiLCBcImIxXCJdLCBbXCJhM1wiLCBcImIyXCJdLCBbXCJhNFwiLCBcImIxXCJdLCBbXCJhNFwiLCBcImIyXCJdLCBbXCJIXCIsIFwiYTFcIl0sIFtcIkhcIiwgXCJiNFwiXSwgW1wiSFwiLCBcIkwxXCJdLCBbXCJIXCIsIFwiTDJcIl0sIFtcIkhcIiwgXCJMM1wiXV0sXG4gIHBvc2ljaW9uOiB7YTE6IFswLCAyXSwgYTI6IFstMSwgMV0sIGEzOiBbMSwgMV0sIGE0OiBbMCwgMF0sIGIxOiBbMi42LCAxXSwgYjI6IFszLjYsIDBdLCBiMzogWzQuNiwgMV0sIGI0OiBbMy42LCAyXSwgSDogWzEuOCwgMy4yXSwgTDE6IFswLjgsIDQuMl0sIEwyOiBbMS44LCA0LjVdLCBMMzogWzIuOCwgNC4yXX1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgZGluYW1pY2FDID0gSW5wdXRzLnJhZGlvKFtcIm5vdGljaWEgKGJhc3RhIHVuIHZlY2lubylcIiwgXCJpbnZlcnNpw7NuICh1bWJyYWwgMCw0KVwiXSwge3ZhbHVlOiBcImludmVyc2nDs24gKHVtYnJhbCAwLDQpXCIsIGxhYmVsOiBcIkRpbsOhbWljYVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBzZW1pbGxhQzEgPSBJbnB1dHMuc2VsZWN0KE9iamVjdC5rZXlzKENPTUVSQ0lPUy5wb3NpY2lvbiksIHt2YWx1ZTogXCJIXCIsIGxhYmVsOiBcIlByaW1lcmEgc2VtaWxsYVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBzZW1pbGxhQzIgPSBJbnB1dHMuc2VsZWN0KFtcIm5pbmd1bmFcIiwgLi4uT2JqZWN0LmtleXMoQ09NRVJDSU9TLnBvc2ljaW9uKV0sIHt2YWx1ZTogXCJhMVwiLCBsYWJlbDogXCJTZWd1bmRhIHNlbWlsbGFcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJjb3JyaWRhQyA9IHtcbiAgY29uc3QgZyA9IGdyYWZvKENPTUVSQ0lPUy5hcmlzdGFzKTtcbiAgY29uc3Qgc2VtaWxsYXMgPSBbLi4ubmV3IFNldChbc2VtaWxsYUMxLCBzZW1pbGxhQzJdLmZpbHRlcigocykgPT4gcyAhPT0gXCJuaW5ndW5hXCIpKV07XG4gIGNvbnN0IGhpc3RvcmlhID0gZGluYW1pY2FDLnN0YXJ0c1dpdGgoXCJub3RpY2lhXCIpXG4gICAgPyBjb250YWdpbyhnLCAxLCAwLCBzZW1pbGxhcywgNiwge21vZGVsbzogXCJTSVwiLCBzZW1pbGxhOiAxfSlcbiAgICA6IGNhc2NhZGFVbWJyYWwoZywgMC40LCBzZW1pbGxhcyk7XG4gIGNvbnN0IHNlcmllID0gZnJhY2Npb25lcyhoaXN0b3JpYSwgMSk7XG4gIGxldCBwYXNvcyA9IHNlcmllLmZpbmRJbmRleCgodiwgaykgPT4gayA+IDAgJiYgdiA9PT0gc2VyaWVbayAtIDFdKTtcbiAgcGFzb3MgPSBwYXNvcyA9PT0gLTEgPyBzZXJpZS5sZW5ndGggLSAxIDogcGFzb3MgLSAxO1xuICBjb25zdCBmaW5hbCA9IGhpc3RvcmlhW3Bhc29zXTtcbiAgY29uc3QgcGFzbyA9IE9iamVjdC5mcm9tRW50cmllcyhnLm5vZG9zLm1hcCgobikgPT4gW24sIGhpc3RvcmlhLmZpbmRJbmRleCgoZSkgPT4gZVtuXSA9PT0gMSldKSk7XG4gIGNvbnN0IG5vZG9zID0gZy5ub2Rvcy5tYXAoKG4pID0+ICh7aWQ6IG4sIHg6IENPTUVSQ0lPUy5wb3NpY2lvbltuXVswXSwgeTogQ09NRVJDSU9TLnBvc2ljaW9uW25dWzFdLCBhY3Rpdm86IGZpbmFsW25dID09PSAxLFxuICAgIGV0aXF1ZXRhOiBmaW5hbFtuXSA9PT0gMSA/IGAke259ICgke3Bhc29bbl19KWAgOiBufSkpO1xuICBjb25zdCBhcmlzdGFzID0gQ09NRVJDSU9TLmFyaXN0YXMubWFwKChbYSwgYl0pID0+ICh7eDE6IENPTUVSQ0lPUy5wb3NpY2lvblthXVswXSwgeTE6IENPTUVSQ0lPUy5wb3NpY2lvblthXVsxXSwgeDI6IENPTUVSQ0lPUy5wb3NpY2lvbltiXVswXSwgeTI6IENPTUVSQ0lPUy5wb3NpY2lvbltiXVsxXX0pKTtcbiAgcmV0dXJuIHtub2RvcywgYXJpc3RhcywgZnJhY2Npb246IHNlcmllW3Bhc29zXSwgcGFzb3MsIGFkb3B0YW46IG5vZG9zLmZpbHRlcigoZCkgPT4gZC5hY3Rpdm8pLmxlbmd0aCwgc2VyaWU6IHNlcmllLnNsaWNlKDAsIHBhc29zICsgMSl9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA1NjApLCBoZWlnaHQ6IDMzMCwgaW5zZXQ6IDIyLFxuICB4OiB7YXhpczogbnVsbH0sIHk6IHtheGlzOiBudWxsfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmsoY29ycmlkYUMuYXJpc3Rhcywge3gxOiBcIngxXCIsIHkxOiBcInkxXCIsIHgyOiBcIngyXCIsIHkyOiBcInkyXCIsIHN0cm9rZTogXCIjQkJCQkJCXCJ9KSxcbiAgICBQbG90LmRvdChjb3JyaWRhQy5ub2Rvcywge3g6IFwieFwiLCB5OiBcInlcIiwgcjogMTMsIGZpbGw6IChkKSA9PiBkLmFjdGl2byA/IENPTE9SRVMuYXp1bCA6IFwid2hpdGVcIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAxLjV9KSxcbiAgICBQbG90LnRleHQoY29ycmlkYUMubm9kb3MsIHt4OiBcInhcIiwgeTogXCJ5XCIsIHRleHQ6IFwiZXRpcXVldGFcIiwgZHk6IC0yMCwgZm9udFNpemU6IDExfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5Db21lcmNpb3MgcXVlIGFkb3B0YW48Yj4ke2NvcnJpZGFDLmFkb3B0YW59IGRlIDEyICgke2Zvcm1hdG9Qb3JjZW50YWplKGNvcnJpZGFDLmZyYWNjaW9uLCAwKX0pPC9iPjwvZGl2PlxuICA8ZGl2PlBhc29zIGhhc3RhIGRldGVuZXJzZTxiPiR7Y29ycmlkYUMucGFzb3N9PC9iPjwvZGl2PlxuICA8ZGl2PkZyYWNjacOzbiBwb3IgcGFzbzxiPiR7Y29ycmlkYUMuc2VyaWUubWFwKCh2KSA9PiBmb3JtYXRvTnVtZXJvKDIpKHYpKS5qb2luKFwiIMK3IFwiKX08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgcmVkQiA9IElucHV0cy5yYWRpbyhbXCJhbmlsbG8gc2luIGF0YWpvc1wiLCBcIldhdHRzLVN0cm9nYXR6LCBwID0gMCwwMVwiLCBcIldhdHRzLVN0cm9nYXR6LCBwID0gMCwxXCIsIFwiV2F0dHMtU3Ryb2dhdHosIHAgPSAwLDNcIiwgXCJhbGVhdG9yaWFcIiwgXCJncmFmbyBjb21wbGV0b1wiXSwge3ZhbHVlOiBcImFuaWxsbyBzaW4gYXRham9zXCIsIGxhYmVsOiBcIlJlZCBkZSAxIDAwMCBob2dhcmVzLCBncmFkbyBtZWRpbyA2XCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBxQiA9IElucHV0cy5yYW5nZShbMC4yLCAwLjZdLCB7dmFsdWU6IDAuNCwgc3RlcDogMC4wNSwgbGFiZWw6IFwiUHJvcGVuc2nDs24gaW5kaXZpZHVhbCBhIGltaXRhciBxIFsxL2HDsW9dXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImdyYWZvQiA9IHtcbiAgY29uc3QgTiA9IDEwMDA7XG4gIGlmIChyZWRCID09PSBcImFuaWxsbyBzaW4gYXRham9zXCIpIHJldHVybiBhbmlsbG9SZWd1bGFyKE4sIDYpO1xuICBpZiAocmVkQiA9PT0gXCJXYXR0cy1TdHJvZ2F0eiwgcCA9IDAsMDFcIikgcmV0dXJuIHdhdHRzU3Ryb2dhdHooTiwgNiwgMC4wMSwgMSk7XG4gIGlmIChyZWRCID09PSBcIldhdHRzLVN0cm9nYXR6LCBwID0gMCwxXCIpIHJldHVybiB3YXR0c1N0cm9nYXR6KE4sIDYsIDAuMSwgMSk7XG4gIGlmIChyZWRCID09PSBcIldhdHRzLVN0cm9nYXR6LCBwID0gMCwzXCIpIHJldHVybiB3YXR0c1N0cm9nYXR6KE4sIDYsIDAuMywgMSk7XG4gIGlmIChyZWRCID09PSBcImFsZWF0b3JpYVwiKSByZXR1cm4gZXJkb3NSZW55aShOLCA2IC8gKE4gLSAxKSwgMSk7XG4gIHJldHVybiBudWxsOyAgLy8gZ3JhZm8gY29tcGxldG86IGJhc3NFblJlZENvbXBsZXRhLCBzaW4gY29uc3RydWlyIHN1cyBhcmlzdGFzXG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEyIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZGlmdXNpb25CID0ge1xuICBjb25zdCBOID0gMTAwMCwgUCA9IDAuMDEsIFBBU09TID0gNDAsIENPUlJJREFTID0gMjA7XG4gIGNvbnN0IHQgPSBbLi4uQXJyYXkoUEFTT1MgKyAxKS5rZXlzKCldO1xuICBjb25zdCBjdXJ2YXMgPSBbLi4uQXJyYXkoQ09SUklEQVMpLmtleXMoKV0ubWFwKChzKSA9PiBmcmFjY2lvbmVzKGdyYWZvQlxuICAgID8gYmFzc0VuUmVkKGdyYWZvQiwgUCwgcUIsIFBBU09TLCB7c2VtaWxsYTogMSArIHN9KVxuICAgIDogYmFzc0VuUmVkQ29tcGxldGEoTiwgUCwgcUIsIFBBU09TLCB7c2VtaWxsYTogMSArIHN9KSwgMSkpO1xuICBjb25zdCBtZWRpYSA9IHQubWFwKChrKSA9PiBjdXJ2YXMucmVkdWNlKChhLCBjKSA9PiBhICsgY1trXSwgMCkgLyBDT1JSSURBUyk7XG4gIGNvbnN0IGFqdXN0ZSA9IGFqdXN0YXJCYXNzKHQsIG1lZGlhLm1hcCgoeCkgPT4geCAqIE4pKTtcbiAgY29uc3QgY3VydmFBanVzdGUgPSBiYXNzKGFqdXN0ZS5wLCBhanVzdGUucSwgYWp1c3RlLm0sIHQpLm1hcCgoZikgPT4gZi5hY3VtdWxhZG8gLyBOKTtcbiAgY29uc3QgYWdyZWdhZG8gPSBiYXNzRGlzY3JldG8oUCwgcUIsIDEsIFBBU09TKS5tYXAoKGYpID0+IGYuYWN1bXVsYWRvKTtcbiAgY29uc3QgZmlsYXMgPSB0LmZsYXRNYXAoKHgsIGspID0+IFtcbiAgICB7dDogeCwgdmFsb3I6IGFncmVnYWRvW2tdLCBzZXJpZTogXCJhZ3JlZ2FkbyBjb24gcSBpbmRpdmlkdWFsXCJ9LFxuICAgIHt0OiB4LCB2YWxvcjogbWVkaWFba10sIHNlcmllOiBcInByb21lZGlvIGVuIGxhIHJlZFwifSxcbiAgICB7dDogeCwgdmFsb3I6IGN1cnZhQWp1c3RlW2tdLCBzZXJpZTogXCJCYXNzIGFqdXN0YWRvIGFsIHByb21lZGlvXCJ9XSk7XG4gIHJldHVybiB7ZmlsYXMsIGFqdXN0ZSwgYW5pbzEwOiBtZWRpYVsxMF0sIGFncnVwYW1pZW50bzogZ3JhZm9CID8gYWdydXBhbWllbnRvTWVkaW8oZ3JhZm9CKSA6IDF9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAzMjAsIG1hcmdpbkxlZnQ6IDU1LFxuICB4OiB7bGFiZWw6IFwiVGllbXBvIFthw7Fvc11cIn0sXG4gIHk6IHtsYWJlbDogXCJGcmFjY2nDs24gZGUgYWRvcHRhbnRlc1wiLCBncmlkOiB0cnVlLCBkb21haW46IFswLCAxXSwgdGlja0Zvcm1hdDogKGQpID0+IGZvcm1hdG9Qb3JjZW50YWplKGQpfSxcbiAgY29sb3I6IHtkb21haW46IFtcImFncmVnYWRvIGNvbiBxIGluZGl2aWR1YWxcIiwgXCJwcm9tZWRpbyBlbiBsYSByZWRcIiwgXCJCYXNzIGFqdXN0YWRvIGFsIHByb21lZGlvXCJdLCByYW5nZTogW1wiIzlFOUU5RVwiLCBDT0xPUkVTLmF6dWwsIENPTE9SRVMuYW1iYXJdLCBsZWdlbmQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QubGluZShkaWZ1c2lvbkIuZmlsYXMsIHt4OiBcInRcIiwgeTogXCJ2YWxvclwiLCBzdHJva2U6IFwic2VyaWVcIiwgc3Ryb2tlV2lkdGg6IChkKSA9PiBkLnNlcmllID09PSBcInByb21lZGlvIGVuIGxhIHJlZFwiID8gMi42IDogMS42LFxuICAgICAgc3Ryb2tlRGFzaGFycmF5OiAoZCkgPT4gZC5zZXJpZSA9PT0gXCJCYXNzIGFqdXN0YWRvIGFsIHByb21lZGlvXCIgPyBcIjUgNFwiIDogbnVsbH0pLFxuICAgIFBsb3QucnVsZVgoWzEwXSwge3N0cm9rZTogQ09MT1JFUy5ncmlzLCBzdHJva2VEYXNoYXJyYXk6IFwiMyAzXCJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE0IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5xIGFqdXN0YWRvIChxIGFwYXJlbnRlKTxiPiR7Zm9ybWF0b051bWVybygzKShkaWZ1c2lvbkIuYWp1c3RlLnEpfTwvYj48L2Rpdj5cbiAgPGRpdj5xIGFwYXJlbnRlIC8gcSBpbmRpdmlkdWFsPGI+JHtmb3JtYXRvTnVtZXJvKDIpKGRpZnVzaW9uQi5hanVzdGUucSAvIHFCKX08L2I+PC9kaXY+XG4gIDxkaXY+QWRvcGNpw7NuIGVuIGVsIGHDsW8gMTA8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKGRpZnVzaW9uQi5hbmlvMTAsIDEpfTwvYj48L2Rpdj5cbiAgPGRpdj5FcnJvciBkZWwgYWp1c3RlIChSTVNFKTxiPiR7Zm9ybWF0b051bWVybygxKShkaWZ1c2lvbkIuYWp1c3RlLnJtc2UpfSBob2dhcmVzPC9iPjwvZGl2PlxuICA8ZGl2PkFncnVwYW1pZW50byBtZWRpbyBkZSBsYSByZWQ8Yj4ke2Zvcm1hdG9OdW1lcm8oMikoZGlmdXNpb25CLmFncnVwYW1pZW50byl9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdkaW5hbWljYUMnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2VtaWxsYUMxJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3NlbWlsbGFDMicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdyZWRCJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3FCJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana3";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

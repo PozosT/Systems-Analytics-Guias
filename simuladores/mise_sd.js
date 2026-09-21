@@ -417,6 +417,39 @@ export function generadorCongruencial(semilla = 1) {
   return () => { estado = Number((BigInt(estado) * 1664525n + 1013904223n) % 4294967296n); return estado / 4294967296; };
 }
 
+/** Actividades del hogar sintético (réplica de ACTIVIDADES_HOGAR). */
+export const ACTIVIDADES_HOGAR = [[3.0, 8, 6.0, 1.0, 0.5], [1.2, 30, 6.3, 0.8, 0.6], [1.2, 40, 12.0, 0.8, 0.5],
+  [1.2, 45, 19.0, 1.0, 0.7], [0.35, 240, 18.8, 0.7, 0.95], [0.2, 180, 19.8, 1.2, 0.8], [1.0, 60, 10.0, 3.0, 0.3]];
+
+/** Curva de carga agregada de hogares sintéticos (réplica de curva_carga_hogares). */
+export function curvaCargaHogares({hogares = 100, semilla = 2016} = {}) {
+  const azar = generadorCongruencial(semilla), minutos = 1440;
+  const sumaHoraria = Array(24).fill(0);
+  let sumaPicos = 0;
+  for (let i = 0; i < hogares; i++) {
+    const carga = Array(minutos).fill(0.05);
+    const fase = Math.floor(azar() * 50);
+    for (let m = 0; m < minutos; m++) if ((m + fase) % 50 < 20) carga[m] += 0.12;
+    for (const [potencia, duracion, hora, desviacion, probabilidad] of ACTIVIDADES_HOGAR) {
+      if (azar() > probabilidad) continue;
+      let z = 0;
+      for (let k = 0; k < 12; k++) z += azar();
+      z -= 6;
+      const inicio = Math.trunc(Math.min(Math.max((hora + desviacion * z) * 60, 0), minutos - 1));
+      const largo = Math.max(5, Math.trunc(duracion * (0.5 + azar())));
+      for (let m = inicio; m < Math.min(inicio + largo, minutos); m++) carga[m] += potencia;
+    }
+    const horaria = [];
+    for (let h = 0; h < 24; h++) { let total = 0; for (let m = h * 60; m < h * 60 + 60; m++) total += carga[m]; horaria.push(total / 60); }
+    sumaPicos += Math.max(...horaria);
+    for (let h = 0; h < 24; h++) sumaHoraria[h] += horaria[h];
+  }
+  const perfil = sumaHoraria.map((v) => v / hogares);
+  const pico_agregado = Math.max(...perfil), pico_individual_medio = sumaPicos / hogares;
+  return {perfil, pico_agregado, pico_individual_medio, factor_coincidencia: pico_agregado / pico_individual_medio,
+    hora_pico: perfil.indexOf(pico_agregado), consumo_mensual_kwh: perfil.reduce((a, b) => a + b, 0) * 30};
+}
+
 /** Urna de Pólya generalizada (réplica de urna_polya): participación de A tras cada adopción. */
 export function urnaPolya({adoptantes = 2000, historias = 20, exponente = 1, base = [1, 1], semilla = 1989} = {}) {
   const azar = generadorCongruencial(semilla), salida = [];

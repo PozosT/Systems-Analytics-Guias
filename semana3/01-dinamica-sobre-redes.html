@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Estados, reglas locales y orden de actualización: la regla de mayoría a mano, la ola que muere al cambiar el orden y el modelo del votante, en el que gana la fracción de grado y no la de personas.">
+
+<title>Dinámica sobre redes: nodos con estado y reglas locales – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Systems Analytics · Guías de autoestudio
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-la-ola-del-estadio" id="toc-la-intuición-la-ola-del-estadio" class="nav-link" data-scroll-target="#la-intuición-la-ola-del-estadio">2. La intuición: la ola del estadio</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Dinámica sobre redes: nodos con estado y reglas locales</h1>
+<p class="subtitle lead">Semana 3 · Concepto 1 de 9</p>
+</div>
+
+<div>
+  <div class="description">
+    Estados, reglas locales y orden de actualización: la regla de mayoría a mano, la ola que muere al cambiar el orden y el modelo del votante, en el que gana la fracción de grado y no la de personas.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="29" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 28;"><span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {grafo<span class="op">,</span> grado<span class="op">,</span> azar} <span class="im">from</span> <span class="st">"../simuladores/redes.js"</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {modeloVotante<span class="op">,</span> semillaCorrida} <span class="im">from</span> <span class="st">"../simuladores/difusion.js"</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 60 a 75 minutos</span> <span class="dato">📚 Requiere <a href="../semana2/01-del-sistema-al-grafo.html">del sistema al grafo</a> y <a href="../semana2/02-grado-densidad.html">grado, distribución y densidad</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 2</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Describir una dinámica sobre una red con sus tres ingredientes (estados, regla local y orden de actualización) y declarar cada uno.</li>
+<li>Aplicar a mano la regla de mayoría y reconocer cuándo el orden de actualización cambia el resultado.</li>
+<li>Predecir con la fracción de grado qué opinión gana en el modelo del votante y comprobarlo con un conjunto de corridas.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>En una red, cada nodo cambia de estado según lo que ve en sus vecinos, y el patrón del conjunto emerge de esas reglas locales. El desenlace depende de la regla, del orden en que se actualizan los nodos y de quién ocupa las posiciones de mucho grado, además de cuántos piensan igual.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>La semana 2 estudió la red eléctrica como una estructura quieta: quién se conecta con quién y qué pasa si falla una subestación. En la adopción de techos solares la red importa por otra razón. Cada hogar tiene un <strong>estado</strong> (instaló o no instaló, está a favor o en contra de un cambio tarifario) y ese estado cambia con lo que observa en sus vecinos.</p>
+<div class="caso-colombia caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En Colombia</span><span class="caja-texto-titulo">Un límite que se mide circuito por circuito</span>
+</div>
+<p>La Resolución CREG 174 de 2021 subió el límite de penetración de la autogeneración a pequeña escala del 15 % al 50 % de la capacidad de cada circuito del nivel de tensión 1, y obligó a los operadores de red a ofrecer el trámite de conexión en línea (fuente: Res. CREG 174 de 2021, que derogó la Res. CREG 030 de 2018). Como el límite se cuenta por circuito, el lugar donde se agrupan las instalaciones deja de ser un dato curioso: si los techos solares aparecen por conjuntos y por cuadras, un circuito puede llegar a su tope mientras el de al lado sigue vacío.</p>
+</div>
+<p>Para planear la red de distribución hace falta un modelo en el que cada hogar decida mirando a sus vecinos. <strong>¿Cómo se describe, y cómo se simula, un sistema así, y qué determina el patrón que produce?</strong></p>
+</section>
+<section id="la-intuición-la-ola-del-estadio" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-la-ola-del-estadio">2. La intuición: la ola del estadio</h2>
+<p>Nadie coordina a cuarenta mil personas en una tribuna y, sin embargo, la ola la recorre entera. Avance cuadro a cuadro y fíjese en tres cosas: qué mira cada espectador, qué regla sigue y en qué orden cambian.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Ocho espectadores y una regla</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-ola-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s3-01-ola-1.svg" class="img-fluid" alt="Fila de ocho círculos; el primero, relleno, está de pie en t igual a cero. Se enuncia la regla: me paro si el de mi izquierda estaba de pie y, si yo estaba de pie, me siento."></a></p>
+<p><strong>Mire los ingredientes.</strong> Cada espectador tiene un estado (sentado o de pie), mira solo a su vecino de la izquierda y todos siguen la misma regla. En <span class="math inline">t = 0</span> se para el primero.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-ola-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s3-01-ola-2.svg" class="img-fluid" alt="Se agrega la fila t igual a uno: el espectador 2 está de pie, resaltado en ámbar, y el 1 se sentó."></a></p>
+<p><strong>Actualice todos a la vez.</strong> Cada uno mira la fotografía anterior y todos cambian juntos: el 2 se para y el 1 se sienta. Esa es la actualización <strong>sincrónica</strong>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-ola-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s3-01-ola-3.svg" class="img-fluid" alt="Filas t igual a dos y tres: está de pie el espectador 3 y luego el 4."></a></p>
+<p><strong>Siga la ola.</strong> Avanza exactamente un asiento por paso. Nadie tiene la regla «haga una ola»; la ola es el patrón que producen las reglas locales.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-ola-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s3-01-ola-4.svg" class="img-fluid" alt="Filas hasta t igual a siete: la ola llega al espectador 8 en t igual a siete."></a></p>
+<p><strong>Llegue al final.</strong> En <span class="math inline">t = 7</span> la ola alcanza al último espectador y en <span class="math inline">t = 8</span> sale de la fila.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-ola-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s3-01-ola-5.svg" class="img-fluid" alt="Fila t igual a cero con el primero de pie y fila t igual a uno, en ámbar, con todos sentados; una flecha indica que la actualización va de izquierda a derecha."></a></p>
+<p><strong>Cambie solo el orden.</strong> Ahora los espectadores se actualizan uno por uno, de izquierda a derecha, y cada uno ve lo que acaban de hacer los anteriores. El 1 se sienta; el 2 mira a su izquierda, ve a alguien sentado y sigue sentado. La ola muere en el paso 1.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-ola-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s3-01-ola-6.svg" class="img-fluid" alt="Fila t igual a uno con el espectador 2 de pie; una flecha indica que la actualización va de derecha a izquierda."></a></p>
+<p><strong>Invierta el orden.</strong> De derecha a izquierda, cada espectador todavía ve el estado anterior de su vecino, y el resultado coincide con el sincrónico. Con la misma regla y los mismos estados, el orden decide si hay ola o no.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-ola-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s3-01-ola-7.svg" class="img-fluid" alt="La misma cuadrícula con etiquetas violeta: las columnas son los hogares de una cuadra, las filas son meses, el círculo relleno significa que el hogar instaló paneles."></a></p>
+<p><strong>Pase a la adopción solar.</strong> Los ingredientes son los mismos: el estado (instaló o no), los vecinos (quienes ven su techo), la regla (cuándo instala) y el orden (el operador aprueba por lotes mensuales o solicitud por solicitud). Las reglas de los hogares son más difíciles de observar que la del estadio, y por eso conviene escribirlas.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<p>La red es un grafo no dirigido con <span class="math inline">N</span> nodos, la vecindad de un nodo <span class="math inline">i</span> es <span class="math inline">\mathcal{N}(i)</span> y su grado es <span class="math inline">k_i</span>, con la notación de la <a href="../semana2/02-grado-densidad.html">semana 2</a>.</p>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Dinámica sobre una red</span>
+</div>
+<p>Una <strong>dinámica sobre una red</strong> asigna a cada nodo <span class="math inline">i</span> un <strong>estado</strong> <span class="math inline">x_i(t)</span> tomado de un conjunto finito (por ejemplo, 0 «no adopta» y 1 «adopta») y una <strong>regla de actualización</strong> que depende solo del estado propio y del de los vecinos:</p>
+<p><span class="math display">x_i(t+1) = f\bigl(x_i(t),\ \{x_j(t) : j \in \mathcal{N}(i)\}\bigr).</span></p>
+<p>La regla es <strong>determinista</strong> si da un único valor y <strong>estocástica</strong> si da probabilidades. El tiempo <span class="math inline">t</span> se mide en pasos [adimensional] o en unidades físicas cuando cada paso representa un intervalo [días, meses]. Lo que se observa en el agregado es la fracción de nodos en cada estado,</p>
+<p><span class="math display">\rho_s(t) = \frac{1}{N}\sum_{i} \mathbf{1}\bigl[x_i(t) = s\bigr] \quad [\text{adimensional}].</span></p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Actualización sincrónica y asincrónica</span>
+</div>
+<p>En la actualización <strong>sincrónica</strong> todos los nodos calculan su nuevo estado con la fotografía del paso anterior y cambian a la vez. En la <strong>asincrónica</strong> los nodos se actualizan uno por uno, en orden fijo o al azar, y cada uno usa los estados vigentes en ese momento, incluidos los que otros acaban de cambiar. Un <strong>barrido</strong> son <span class="math inline">N</span> actualizaciones asincrónicas: en promedio, cada nodo se actualiza una vez por barrido.</p>
+</div>
+<section id="la-regla-de-mayoría-paso-a-paso" class="level3">
+<h3 class="anchored" data-anchor-id="la-regla-de-mayoría-paso-a-paso">La regla de mayoría, paso a paso</h3>
+<p>La <strong>regla de mayoría</strong> es determinista y sincrónica: el nodo adopta el estado de la mayoría de sus vecinos y conserva el suyo si hay empate. Aplíquela a ocho hogares de dos cuadras que opinan sobre un proyecto de paneles comunitarios (1 a favor, 0 en contra).</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Ocho hogares y la regla de mayoría</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mayoria-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s3-01-mayoria-1.svg" class="img-fluid" alt="Red de ocho hogares en dos grupos, A B C D a la izquierda y E F G H a la derecha, unidos por la arista D E. D, G y H están rellenos: a favor en t igual a cero."></a></p>
+<p><strong>Nombre los estados.</strong> En <span class="math inline">t = 0</span> están a favor D, G y H. Anote los grados, que la regla necesita: <span class="math inline">k_A = k_H = 2</span> y <span class="math inline">k = 3</span> para los demás.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mayoria-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s3-01-mayoria-2.svg" class="img-fluid" alt="Se resaltan en ámbar las tres aristas de D hacia B, C y E, ninguno a favor."></a></p>
+<p><strong>Escriba la regla.</strong> Con <span class="math inline">u_i(t) = \sum_{j \in \mathcal{N}(i)} x_j(t)</span> vecinos a favor,</p>
+<p><span class="math display">x_i(t+1) = \begin{cases} 1 &amp; \text{si } u_i(t) &gt; k_i/2,\\ 0 &amp; \text{si } u_i(t) &lt; k_i/2,\\ x_i(t) &amp; \text{si hay empate.}\end{cases}</span></p>
+<p>D tiene <span class="math inline">u_D = 0</span> de 3, menos de <span class="math inline">3/2</span>: pasa a 0.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mayoria-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s3-01-mayoria-3.svg" class="img-fluid" alt="Estado en t igual a uno: a favor E, F y H. Anillos ámbar en D, E, F y G, los que cambiaron. La tabla muestra la fila t igual a uno."></a></p>
+<p><strong>Calcule <span class="math inline">t = 1</span> con la fotografía de <span class="math inline">t = 0</span>.</strong> E ve a D y G a favor (2 de 3) y F ve a G y H (2 de 3): pasan a 1. G ve solo a H (1 de 3): pasa a 0. H tiene un vecino de cada lado, empate, y conserva su 1.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mayoria-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s3-01-mayoria-4.svg" class="img-fluid" alt="Estado en t igual a dos: a favor F, G y H. Cambiaron E y G."></a></p>
+<p><strong>Calcule <span class="math inline">t = 2</span>.</strong> G ve a E, F y H a favor y vuelve a 1; E ve solo a F (1 de 3) y regresa a 0. D sigue en 0 y H sigue con empate.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mayoria-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s3-01-mayoria-5.svg" class="img-fluid" alt="Estado en t igual a tres: a favor E, F, G y H. Solo cambió E."></a></p>
+<p><strong>Calcule <span class="math inline">t = 3</span> y compruebe si hay equilibrio.</strong> E ve a F y G a favor y pasa a 1. Desde aquí nadie cambia: a la izquierda ningún hogar tiene más de un vecino a favor, y a la derecha todos tienen mayoría.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mayoria-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s3-01-mayoria-6.svg" class="img-fluid" alt="Los dos grupos encerrados: el izquierdo todo en contra, el derecho todo a favor. Columna rho uno con 3/8, 3/8, 3/8 y 4/8."></a></p>
+<p><strong>Lea el agregado.</strong> La fracción a favor <span class="math inline">\rho_1</span> vale 3/8, 3/8, 3/8 y 4/8: casi no cambia, pero la opinión quedó <strong>polarizada por grupos</strong>. El mismo mecanismo explica que la adopción quede confinada a un conjunto residencial aunque el de al lado tenga condiciones idénticas, porque una sola arista entre grupos no mueve una mayoría.</p>
+</div>
+</div>
+</section>
+<section id="el-modelo-del-votante-y-la-fracción-de-grado" class="level3">
+<h3 class="anchored" data-anchor-id="el-modelo-del-votante-y-la-fracción-de-grado">El modelo del votante y la fracción de grado</h3>
+<p>El <strong>modelo del votante</strong> (Holley y Liggett, 1975) es estocástico y asincrónico: en cada actualización se elige un nodo <span class="math inline">i</span> al azar, luego uno de sus vecinos <span class="math inline">j</span> al azar, y el nodo copia la opinión del vecino, <span class="math inline">x_i \leftarrow x_j</span>. En una red conexa y finita siempre termina en consenso, todos en 0 o todos en 1, porque de esos estados ya no se sale. ¿Cuál de los dos consensos gana?</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Qué opinión gana en el votante</span>
+</div>
+<div class="paso">
+<p><strong>Defina la suma ponderada por grado.</strong> Cuente las opiniones favorables pesando cada nodo por su grado:</p>
+<p><span class="math display">\Omega = \sum_i k_i\,x_i, \qquad \omega = \frac{\Omega}{\sum_i k_i} \quad [\text{adimensional}].</span></p>
+<p><span class="math inline">\omega</span> es la <strong>fracción de grado</strong> a favor, distinta de la fracción de personas <span class="math inline">\rho_1</span> salvo que todos tengan el mismo grado.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule el cambio esperado en una actualización.</strong> El nodo <span class="math inline">i</span> sale elegido con probabilidad <span class="math inline">1/N</span> y el vecino <span class="math inline">j</span> con probabilidad <span class="math inline">1/k_i</span>; si <span class="math inline">i</span> copia a <span class="math inline">j</span>, <span class="math inline">\Omega</span> cambia en <span class="math inline">k_i(x_j - x_i)</span>:</p>
+<p><span class="math display">\mathbb{E}[\Delta\Omega] = \sum_i \frac{1}{N}\,k_i \sum_{j \in \mathcal{N}(i)} \frac{x_j - x_i}{k_i} = \frac{1}{N}\sum_i \sum_{j \in \mathcal{N}(i)} (x_j - x_i).</span></p>
+</div>
+<div class="paso">
+<p><strong>Reordene la doble suma.</strong> Cada nodo <span class="math inline">j</span> aparece como vecino tantas veces como su grado, así que <span class="math inline">\sum_i \sum_{j \in \mathcal{N}(i)} x_j = \sum_j k_j x_j</span>. El segundo término suma <span class="math inline">x_i</span> una vez por cada vecino, es decir, <span class="math inline">\sum_i k_i x_i</span>. Los dos son <span class="math inline">\Omega</span>:</p>
+<p><span class="math display">\mathbb{E}[\Delta\Omega] = \frac{1}{N}\,(\Omega - \Omega) = 0.</span></p>
+</div>
+<div class="paso">
+<p><strong>Lea el final.</strong> En promedio <span class="math inline">\Omega</span> no cambia. Al llegar al consenso vale <span class="math inline">\sum_i k_i</span> si ganó el 1 y 0 si ganó el 0, de modo que <span class="math inline">P(\text{consenso en 1}) \cdot \sum_i k_i = \Omega(0)</span>:</p>
+<p><span class="math display">P(\text{consenso en } 1) = \omega(0) = \frac{\sum_i k_i\,x_i(0)}{\sum_i k_i} \quad [\text{adimensional}].</span></p>
+<p>Gana, en probabilidad, la fracción de grado. En una red regular coincide con la fracción de personas; en una red con <em>hubs</em> (nodos de grado muy alto), no.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="la-mesa-redonda" class="level3">
+<h3 class="anchored" data-anchor-id="la-mesa-redonda">La mesa redonda</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Cuatro amigos deciden si piden postre</span>
+</div>
+<p><strong>Planteamiento.</strong> Cuatro amigos se sientan en una mesa redonda y cada uno ve a los dos que tiene al lado: la red es un ciclo A–B–C–D–A. Al comienzo A y C quieren postre y B y D no. Cada uno sigue la regla de mayoría con empate conservador. ¿Qué deciden si todos cambian a la vez? ¿Y si deciden por turnos, en el orden A, B, C, D?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver la mesa a mano</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mesa-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s3-01-mesa-1.svg" class="img-fluid" alt="Mesa redonda con cuatro amigos en ciclo; A y C, rellenos, quieren postre."></a></p>
+<p><strong>Escriba el estado inicial.</strong> <span class="math inline">x = (A, B, C, D) = (1, 0, 1, 0)</span>. Cada amigo tiene grado 2, así que la mayoría exige los dos vecinos y un vecino de cada lado es empate.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mesa-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s3-01-mesa-2.svg" class="img-fluid" alt="Paso sincrónico uno: ahora B y D quieren postre; los cuatro tienen anillo ámbar porque cambiaron."></a></p>
+<p><strong>Aplique la regla sincrónica.</strong> A ve a B y D en 0 (dos de dos en contra) y pasa a 0; B ve a A y C en 1 y pasa a 1. Con C y D ocurre lo mismo: <span class="math inline">x(1) = (0, 1, 0, 1)</span>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mesa-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s3-01-mesa-3.svg" class="img-fluid" alt="Paso sincrónico dos: A y C vuelven a querer postre, igual que al comienzo."></a></p>
+<p><strong>Repita.</strong> <span class="math inline">x(2) = (1, 0, 1, 0)</span>, el estado inicial. La mesa <strong>oscila con periodo 2</strong> para siempre y nunca decide.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mesa-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../diagramas/svg/s3-01-mesa-4.svg" class="img-fluid" alt="Actualización asincrónica: A cambia a sin postre; solo C sigue queriendo postre."></a></p>
+<p><strong>Aplique la regla por turnos.</strong> A decide primero: ve a B y D en 0 y pasa a 0. Ahora el estado vigente es <span class="math inline">(0, 0, 1, 0)</span>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-mesa-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../diagramas/svg/s3-01-mesa-5.svg" class="img-fluid" alt="Tras B, C y D, nadie pide postre."></a></p>
+<p><strong>Termine el barrido.</strong> B ve a A en 0 (recién cambiado) y a C en 1: empate, se queda en 0. C ve a B y D en 0 y pasa a 0. D ve a C y A en 0 y sigue en 0. Resultado: <span class="math inline">(0, 0, 0, 0)</span>, <strong>consenso en un barrido</strong>. La misma mesa oscila o decide según el orden, y por eso todo modelo declara el suyo.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Verifique la mesa con Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Verifique la mesa con Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="dca5c6ba" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> difusion</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mesa <span class="op">=</span> nx.cycle_graph([<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>inicial <span class="op">=</span> {<span class="st">"A"</span>: <span class="dv">1</span>, <span class="st">"B"</span>: <span class="dv">0</span>, <span class="st">"C"</span>: <span class="dv">1</span>, <span class="st">"D"</span>: <span class="dv">0</span>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sincrónica: la regla de mayoría de mise_sd</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sincronica <span class="op">=</span> difusion.regla_mayoria(mesa, inicial, pasos<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> paso <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    estados <span class="op">=</span> sincronica.estados_en(paso)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"sincrónica"</span>, paso, [<span class="bu">int</span>(estados[n] <span class="op">==</span> <span class="st">"estado_1"</span>) <span class="cf">for</span> n <span class="kw">in</span> <span class="st">"ABCD"</span>])</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Asincrónica en orden fijo A, B, C, D con valores recién cambiados</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>estado <span class="op">=</span> <span class="bu">dict</span>(inicial)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nodo <span class="kw">in</span> <span class="st">"ABCD"</span>:</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    a_favor <span class="op">=</span> <span class="bu">sum</span>(estado[v] <span class="cf">for</span> v <span class="kw">in</span> mesa.neighbors(nodo))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    en_contra <span class="op">=</span> mesa.degree(nodo) <span class="op">-</span> a_favor</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> a_favor <span class="op">!=</span> en_contra:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        estado[nodo] <span class="op">=</span> <span class="bu">int</span>(a_favor <span class="op">&gt;</span> en_contra)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"asincrónica tras un barrido"</span>, [estado[n] <span class="cf">for</span> n <span class="kw">in</span> <span class="st">"ABCD"</span>])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sincrónica 0 [1, 0, 1, 0]
+sincrónica 1 [0, 1, 0, 1]
+sincrónica 2 [1, 0, 1, 0]
+sincrónica 3 [0, 1, 0, 1]
+sincrónica 4 [1, 0, 1, 0]
+asincrónica tras un barrido [0, 0, 0, 0]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="el-líder-comunitario" class="level3">
+<h3 class="anchored" data-anchor-id="el-líder-comunitario">El líder comunitario</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">¿Pesa más un líder o cuatro vecinos?</span>
+</div>
+<p><strong>Planteamiento.</strong> En una vereda, un líder comunitario conversa con cuatro vecinos que no se hablan entre sí: la red es una estrella de cinco nodos. Las opiniones sobre una microrred solar evolucionan como en el votante. ¿Qué probabilidad hay de que toda la vereda termine a favor si solo el líder empieza a favor? ¿Y si empiezan a favor los cuatro vecinos y el líder no?</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver con la fracción de grado</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-estrella-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="../diagramas/svg/s3-01-estrella-1.svg" class="img-fluid" alt="Estrella: el líder L en el centro con grado 4 y cuatro vecinos de grado 1. La suma de grados es 8."></a></p>
+<p><strong>Anote los grados.</strong> El líder tiene <span class="math inline">k_L = 4</span> y cada vecino <span class="math inline">k = 1</span>. La suma de grados es <span class="math inline">4 + 4 \times 1 = 8</span>, el doble de las 4 aristas.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-estrella-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="../diagramas/svg/s3-01-estrella-2.svg" class="img-fluid" alt="Solo el líder a favor: omega igual a 4 sobre 8, 0,50, con una persona de cinco a favor."></a></p>
+<p><strong>Calcule <span class="math inline">\omega</span> con el líder solo.</strong> <span class="math inline">\omega = 4/8 = 0{,}50</span>. Una persona de cinco (el 20 %) gana la mitad de las historias.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-estrella-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="../diagramas/svg/s3-01-estrella-3.svg" class="img-fluid" alt="Los cuatro vecinos a favor: omega igual a 4 sobre 8, 0,50, con cuatro personas de cinco."></a></p>
+<p><strong>Calcule <span class="math inline">\omega</span> con los cuatro vecinos.</strong> <span class="math inline">\omega = (1+1+1+1)/8 = 0{,}50</span>. El 80 % de las personas tiene la misma probabilidad de imponerse que el líder solo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-estrella-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="../diagramas/svg/s3-01-estrella-4.svg" class="img-fluid" alt="Un solo vecino a favor: omega igual a 1 sobre 8."></a></p>
+<p><strong>Compare con un vecino solo.</strong> <span class="math inline">\omega = 1/8 = 0{,}125</span>: una persona también, pero en la periferia, gana una de cada ocho historias.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s3-01-estrella-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="../diagramas/svg/s3-01-estrella-5.svg" class="img-fluid" alt="Con n vecinos, omega del líder es n sobre 2n, 0,50 para cualquier n."></a></p>
+<p><strong>Generalice.</strong> Con <span class="math inline">n</span> vecinos, el líder pesa <span class="math inline">n</span> de <span class="math inline">2n</span>: sigue ganando la mitad de las veces por grande que sea la vereda, porque su grado crece al ritmo de todos los demás juntos.</p>
+</div>
+</div>
+<div id="pred-s3-lider" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Ahora empiezan a favor el líder <strong>y</strong> un vecino, y en contra los otros tres vecinos. Dos personas contra tres. ¿Qué probabilidad espera de consenso favorable?</p>
+<div class="opcion">
+<p>Menos de 0,5, porque la mayoría de las personas está en contra.</p>
+</div>
+<div class="opcion">
+<p>Exactamente 0,5, porque el líder decide.</p>
+</div>
+<div class="opcion">
+<p>Más de 0,5, porque la fracción de grado a favor supera la mitad.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El votante en la vereda</span>
+</div>
+<p>Elija «el líder y un vecino» y compare con su predicción. Después aumente el número de vecinos con el líder solo a favor: ¿se mueve la probabilidad?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="340" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 339;"><span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a>viewof vecinosE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">2</span><span class="op">,</span> <span class="dv">10</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Vecinos del líder n"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="345" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 344;"><span id="cb5-345"><a href="#cb5-345" aria-hidden="true" tabindex="-1"></a>viewof favorablesE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="kw">new</span> <span class="bu">Map</span>([[<span class="st">"solo el líder"</span><span class="op">,</span> <span class="st">"lider"</span>]<span class="op">,</span> [<span class="st">"solo un vecino"</span><span class="op">,</span> <span class="st">"uno"</span>]<span class="op">,</span> [<span class="st">"el líder y un vecino"</span><span class="op">,</span> <span class="st">"lider-uno"</span>]<span class="op">,</span> [<span class="st">"todos los vecinos menos uno"</span><span class="op">,</span> <span class="st">"casi-todos"</span>]<span class="op">,</span> [<span class="st">"todos los vecinos"</span><span class="op">,</span> <span class="st">"todos"</span>]])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"lider"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Empiezan a favor"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="350" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 349;"><span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a>estrellaE <span class="op">=</span> {</span>
+<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> g <span class="op">=</span> <span class="fu">grafo</span>([<span class="op">...</span><span class="bu">Array</span>(vecinosE)<span class="op">.</span><span class="fu">keys</span>()]<span class="op">.</span><span class="fu">map</span>((i) <span class="kw">=&gt;</span> [<span class="st">"L"</span><span class="op">,</span> <span class="vs">`V</span><span class="sc">${</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="vs">`</span>]))<span class="op">;</span></span>
+<span id="cb6-352"><a href="#cb6-352" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> vecinos <span class="op">=</span> g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> n <span class="op">!==</span> <span class="st">"L"</span>)<span class="op">;</span></span>
+<span id="cb6-353"><a href="#cb6-353" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> conjuntos <span class="op">=</span> {<span class="dt">lider</span><span class="op">:</span> [<span class="st">"L"</span>]<span class="op">,</span> <span class="dt">uno</span><span class="op">:</span> [<span class="st">"V1"</span>]<span class="op">,</span> <span class="st">"lider-uno"</span><span class="op">:</span> [<span class="st">"L"</span><span class="op">,</span> <span class="st">"V1"</span>]<span class="op">,</span> <span class="st">"casi-todos"</span><span class="op">:</span> vecinos<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span>)<span class="op">,</span> <span class="dt">todos</span><span class="op">:</span> vecinos}<span class="op">;</span></span>
+<span id="cb6-354"><a href="#cb6-354" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> favorables <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(conjuntos[favorablesE])<span class="op">;</span></span>
+<span id="cb6-355"><a href="#cb6-355" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> iniciales <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">,</span> favorables<span class="op">.</span><span class="fu">has</span>(n) <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span>]))<span class="op">;</span></span>
+<span id="cb6-356"><a href="#cb6-356" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> sumaGrados <span class="op">=</span> g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> n) <span class="kw">=&gt;</span> a <span class="op">+</span> <span class="fu">grado</span>(g<span class="op">,</span> n)<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb6-357"><a href="#cb6-357" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> omega <span class="op">=</span> [<span class="op">...</span>favorables]<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> n) <span class="kw">=&gt;</span> a <span class="op">+</span> <span class="fu">grado</span>(g<span class="op">,</span> n)<span class="op">,</span> <span class="dv">0</span>) <span class="op">/</span> sumaGrados<span class="op">;</span></span>
+<span id="cb6-358"><a href="#cb6-358" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> corridas <span class="op">=</span> <span class="dv">2000</span><span class="op">;</span></span>
+<span id="cb6-359"><a href="#cb6-359" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> exitos <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-360"><a href="#cb6-360" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> c <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> c <span class="op">&lt;</span> corridas<span class="op">;</span> c<span class="op">++</span>) {</span>
+<span id="cb6-361"><a href="#cb6-361" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> r <span class="op">=</span> <span class="fu">modeloVotante</span>(g<span class="op">,</span> {<span class="dt">estadosIniciales</span><span class="op">:</span> iniciales<span class="op">,</span> <span class="dt">barridos</span><span class="op">:</span> <span class="dv">100000</span><span class="op">,</span> <span class="dt">semilla</span><span class="op">:</span> <span class="fu">semillaCorrida</span>(c<span class="op">,</span> <span class="dv">1</span>)})<span class="op">;</span></span>
+<span id="cb6-362"><a href="#cb6-362" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(r<span class="op">.</span><span class="at">historia</span>[r<span class="op">.</span><span class="at">historia</span><span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>])<span class="op">.</span><span class="fu">every</span>((v) <span class="kw">=&gt;</span> v <span class="op">===</span> <span class="dv">1</span>)) exitos <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-363"><a href="#cb6-363" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-364"><a href="#cb6-364" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {<span class="dt">simulada</span><span class="op">:</span> exitos <span class="op">/</span> corridas<span class="op">,</span> omega<span class="op">,</span> <span class="dt">personas</span><span class="op">:</span> favorables<span class="op">.</span><span class="at">size</span> <span class="op">/</span> g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="at">length</span><span class="op">,</span> corridas}<span class="op">;</span></span>
+<span id="cb6-365"><a href="#cb6-365" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="370" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 369;"><span id="cb7-370"><a href="#cb7-370" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb7-371"><a href="#cb7-371" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">190</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">230</span><span class="op">,</span></span>
+<span id="cb7-372"><a href="#cb7-372" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Fracción"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb7-373"><a href="#cb7-373" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb7-374"><a href="#cb7-374" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb7-375"><a href="#cb7-375" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barX</span>([</span>
+<span id="cb7-376"><a href="#cb7-376" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">que</span><span class="op">:</span> <span class="st">"personas a favor al inicio"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> estrellaE<span class="op">.</span><span class="at">personas</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>}<span class="op">,</span></span>
+<span id="cb7-377"><a href="#cb7-377" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">que</span><span class="op">:</span> <span class="st">"predicción por grado ω"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> estrellaE<span class="op">.</span><span class="at">omega</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">violeta</span>}<span class="op">,</span></span>
+<span id="cb7-378"><a href="#cb7-378" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">que</span><span class="op">:</span> <span class="st">"consenso a favor (simulado)"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> estrellaE<span class="op">.</span><span class="at">simulada</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span>}<span class="op">,</span></span>
+<span id="cb7-379"><a href="#cb7-379" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span> {<span class="dt">y</span><span class="op">:</span> <span class="st">"que"</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"color"</span><span class="op">,</span> <span class="dt">sort</span><span class="op">:</span> <span class="kw">null</span>})<span class="op">,</span></span>
+<span id="cb7-380"><a href="#cb7-380" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="fl">0.5</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb7-381"><a href="#cb7-381" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb7-382"><a href="#cb7-382" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="387" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 386;"><span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Personas a favor al inicio&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(estrellaE<span class="op">.</span><span class="at">personas</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Predicción por grado ω&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(estrellaE<span class="op">.</span><span class="at">omega</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Consenso a favor en </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(estrellaE<span class="op">.</span><span class="at">corridas</span>)<span class="sc">}</span><span class="vs"> corridas&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(estrellaE<span class="op">.</span><span class="at">simulada</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo del votante asincrónico (<code>difusion.js</code>, réplica de <code>mise_sd.difusion.modelo_votante</code>) en una estrella, con 2 000 corridas de semilla fija. Con ese número de corridas la probabilidad simulada puede alejarse de la teórica en unas ±0,02. Red de juguete con fines didácticos.</p>
+</div>
+</div>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s3-lider"></span>. La respuesta es la tercera: el líder y un vecino suman <span class="math inline">(4 + 1)/8 = 0{,}625</span> de los grados, y el simulador da 0,64 en 2 000 corridas, aunque solo el 40 % de las personas empiece a favor. En la vereda, contar cabezas lleva a la conclusión contraria. Con el líder solo, la probabilidad simulada se queda cerca de 0,50 con cualquier número de vecinos (0,52 con 4 y con 10), como anticipó el paso 5.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo cálculo en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo cálculo en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="0687b380" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> difusion</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>vereda <span class="op">=</span> nx.star_graph(<span class="dv">4</span>)                 <span class="co"># nodo 0 = líder, nodos 1 a 4 = vecinos</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>grados <span class="op">=</span> <span class="bu">dict</span>(vereda.degree())</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>iniciales <span class="op">=</span> {n: <span class="bu">int</span>(n <span class="kw">in</span> (<span class="dv">0</span>, <span class="dv">1</span>)) <span class="cf">for</span> n <span class="kw">in</span> vereda.nodes}   <span class="co"># el líder y un vecino</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="bu">sum</span>(grados[n] <span class="op">*</span> x <span class="cf">for</span> n, x <span class="kw">in</span> iniciales.items()) <span class="op">/</span> <span class="bu">sum</span>(grados.values())</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>corridas <span class="op">=</span> <span class="dv">2_000</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>exitos <span class="op">=</span> <span class="bu">sum</span>(difusion.modelo_votante(vereda, estados_iniciales<span class="op">=</span>iniciales, barridos<span class="op">=</span><span class="dv">100_000</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                                     semilla<span class="op">=</span>s).fraccion_final(<span class="st">"opinion_1"</span>) <span class="op">==</span> <span class="fl">1.0</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>             <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(corridas))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"omega = </span><span class="sc">{</span>omega<span class="sc">:.3f}</span><span class="ss">; simulado = </span><span class="sc">{</span>exitos <span class="op">/</span> corridas<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>omega = 0.625; simulado = 0.645</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="una-tarifa-nueva-en-dos-redes-de-usuarios" class="level3">
+<h3 class="anchored" data-anchor-id="una-tarifa-nueva-en-dos-redes-de-usuarios">Una tarifa nueva en dos redes de usuarios</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Conviene convencer a pocos usuarios muy conectados?</span>
+</div>
+<p><strong>Planteamiento.</strong> Un comercializador evalúa una opción tarifaria nueva y quiere entender cómo evoluciona la opinión de sus usuarios en redes de vecindario y de mensajería. Modela a 400 usuarios con el votante sobre dos redes con el mismo grado medio de 6: una de <strong>Watts–Strogatz</strong> (anillo con 5 % de atajos, como un vecindario, grados entre 5 y 8) y una de <strong>Barabási–Albert</strong> (con <em>hubs</em>, como una red de seguidores, grado máximo 57). Tiene presupuesto para convencer al 10 % de los usuarios. ¿Gana más eligiéndolos al azar o entre los más conectados?</p>
+</div>
+<section id="acto-1.-predecir" class="level4">
+<h4 class="anchored" data-anchor-id="acto-1.-predecir">Acto 1. Predecir</h4>
+<div id="pred-s3-hubs" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>En la red de Barabási–Albert, el 10 % de los usuarios empieza a favor y se eligen entre los 40 más conectados. La probabilidad de que toda la red termine a favor es cercana a…</p>
+<div class="opcion">
+<p>0,10, la fracción de personas a favor.</p>
+</div>
+<div class="opcion">
+<p>0,33, un tercio.</p>
+</div>
+<div class="opcion">
+<p>0,90, porque los <em>hubs</em> arrastran a todos.</p>
+</div>
+</div>
+</section>
+<section id="acto-2.-simular" class="level4">
+<h4 class="anchored" data-anchor-id="acto-2.-simular">Acto 2. Simular</h4>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El votante en dos redes de 400 usuarios</span>
+</div>
+<p>Deje primero la red de Barabási–Albert con el 10 % al azar y anote las lecturas. Luego cambie a «entre los más conectados». Por último, repita los dos casos en la red de Watts–Strogatz. Cada cambio corre 200 historias y puede tardar uno o dos segundos.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="452" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 451;"><span id="cb11-452"><a href="#cb11-452" aria-hidden="true" tabindex="-1"></a>redesV <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s3-01-redes.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="457" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 456;"><span id="cb12-457"><a href="#cb12-457" aria-hidden="true" tabindex="-1"></a>viewof redV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>(<span class="kw">new</span> <span class="bu">Map</span>([[<span class="st">"Barabási–Albert (con hubs)"</span><span class="op">,</span> <span class="st">"ba"</span>]<span class="op">,</span> [<span class="st">"Watts–Strogatz (vecindario)"</span><span class="op">,</span> <span class="st">"ws"</span>]])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"ba"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Red"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="462" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 461;"><span id="cb13-462"><a href="#cb13-462" aria-hidden="true" tabindex="-1"></a>viewof dondeV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>(<span class="kw">new</span> <span class="bu">Map</span>([[<span class="st">"al azar"</span><span class="op">,</span> <span class="st">"azar"</span>]<span class="op">,</span> [<span class="st">"entre los más conectados"</span><span class="op">,</span> <span class="st">"hubs"</span>]])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"azar"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Favorables iniciales"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="467" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 466;"><span id="cb14-467"><a href="#cb14-467" aria-hidden="true" tabindex="-1"></a>viewof fraccionV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.05</span><span class="op">,</span> <span class="fl">0.5</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Usuarios a favor al inicio [fracción]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="472" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 471;"><span id="cb15-472"><a href="#cb15-472" aria-hidden="true" tabindex="-1"></a>votanteV <span class="op">=</span> {</span>
+<span id="cb15-473"><a href="#cb15-473" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> g <span class="op">=</span> <span class="fu">grafo</span>(redesV[redV]<span class="op">,</span> [<span class="op">...</span><span class="bu">Array</span>(<span class="dv">400</span>)<span class="op">.</span><span class="fu">keys</span>()])<span class="op">;</span></span>
+<span id="cb15-474"><a href="#cb15-474" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">,</span> <span class="fu">grado</span>(g<span class="op">,</span> n)]))<span class="op">;</span></span>
+<span id="cb15-475"><a href="#cb15-475" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> suma <span class="op">=</span> g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> n) <span class="kw">=&gt;</span> a <span class="op">+</span> k[n]<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb15-476"><a href="#cb15-476" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cuantos <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(fraccionV <span class="op">*</span> <span class="dv">400</span>)<span class="op">;</span></span>
+<span id="cb15-477"><a href="#cb15-477" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> orden <span class="op">=</span> [<span class="op">...</span>g<span class="op">.</span><span class="at">nodos</span>]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> k[b] <span class="op">-</span> k[a] <span class="op">||</span> a <span class="op">-</span> b)<span class="op">;</span></span>
+<span id="cb15-478"><a href="#cb15-478" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> corridas <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb15-479"><a href="#cb15-479" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> omegaMedio <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-480"><a href="#cb15-480" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> c <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> c <span class="op">&lt;</span> <span class="dv">200</span><span class="op">;</span> c<span class="op">++</span>) {</span>
+<span id="cb15-481"><a href="#cb15-481" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> favorables<span class="op">;</span></span>
+<span id="cb15-482"><a href="#cb15-482" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (dondeV <span class="op">===</span> <span class="st">"hubs"</span>) favorables <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(orden<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> cuantos))<span class="op">;</span></span>
+<span id="cb15-483"><a href="#cb15-483" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb15-484"><a href="#cb15-484" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> u <span class="op">=</span> <span class="fu">azar</span>(<span class="fu">semillaCorrida</span>(c<span class="op">,</span> <span class="dv">9000</span>))<span class="op">,</span> resto <span class="op">=</span> [<span class="op">...</span>g<span class="op">.</span><span class="at">nodos</span>]<span class="op">;</span></span>
+<span id="cb15-485"><a href="#cb15-485" aria-hidden="true" tabindex="-1"></a>      favorables <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>()<span class="op">;</span></span>
+<span id="cb15-486"><a href="#cb15-486" aria-hidden="true" tabindex="-1"></a>      <span class="cf">while</span> (favorables<span class="op">.</span><span class="at">size</span> <span class="op">&lt;</span> cuantos) favorables<span class="op">.</span><span class="fu">add</span>(resto<span class="op">.</span><span class="fu">splice</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="fu">u</span>() <span class="op">*</span> resto<span class="op">.</span><span class="at">length</span>)<span class="op">,</span> <span class="dv">1</span>)[<span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb15-487"><a href="#cb15-487" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-488"><a href="#cb15-488" aria-hidden="true" tabindex="-1"></a>    omegaMedio <span class="op">+=</span> [<span class="op">...</span>favorables]<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> n) <span class="kw">=&gt;</span> a <span class="op">+</span> k[n]<span class="op">,</span> <span class="dv">0</span>) <span class="op">/</span> suma <span class="op">/</span> <span class="dv">200</span><span class="op">;</span></span>
+<span id="cb15-489"><a href="#cb15-489" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> iniciales <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(g<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">,</span> favorables<span class="op">.</span><span class="fu">has</span>(n) <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span>]))<span class="op">;</span></span>
+<span id="cb15-490"><a href="#cb15-490" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> r <span class="op">=</span> <span class="fu">modeloVotante</span>(g<span class="op">,</span> {<span class="dt">estadosIniciales</span><span class="op">:</span> iniciales<span class="op">,</span> <span class="dt">barridos</span><span class="op">:</span> <span class="dv">50000</span><span class="op">,</span> <span class="dt">semilla</span><span class="op">:</span> <span class="fu">semillaCorrida</span>(c<span class="op">,</span> <span class="dv">5000</span>)})<span class="op">;</span></span>
+<span id="cb15-491"><a href="#cb15-491" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> aFavor <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(r<span class="op">.</span><span class="at">historia</span>[r<span class="op">.</span><span class="at">historia</span><span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>])<span class="op">.</span><span class="fu">every</span>((v) <span class="kw">=&gt;</span> v <span class="op">===</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb15-492"><a href="#cb15-492" aria-hidden="true" tabindex="-1"></a>    corridas<span class="op">.</span><span class="fu">push</span>({<span class="dt">barrido</span><span class="op">:</span> r<span class="op">.</span><span class="at">barridoConsenso</span><span class="op">,</span> <span class="dt">desenlace</span><span class="op">:</span> aFavor <span class="op">?</span> <span class="st">"consenso a favor"</span> <span class="op">:</span> <span class="st">"consenso en contra"</span>})<span class="op">;</span></span>
+<span id="cb15-493"><a href="#cb15-493" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-494"><a href="#cb15-494" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> barridos <span class="op">=</span> corridas<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">barrido</span>)<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">-</span> b)<span class="op">;</span></span>
+<span id="cb15-495"><a href="#cb15-495" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {corridas<span class="op">,</span> <span class="dt">omega</span><span class="op">:</span> omegaMedio<span class="op">,</span> <span class="dt">probabilidad</span><span class="op">:</span> corridas<span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">desenlace</span> <span class="op">===</span> <span class="st">"consenso a favor"</span>)<span class="op">.</span><span class="at">length</span> <span class="op">/</span> <span class="dv">200</span><span class="op">,</span></span>
+<span id="cb15-496"><a href="#cb15-496" aria-hidden="true" tabindex="-1"></a>    <span class="dt">mediana</span><span class="op">:</span> (barridos[<span class="dv">99</span>] <span class="op">+</span> barridos[<span class="dv">100</span>]) <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">p10</span><span class="op">:</span> barridos[<span class="dv">19</span>]<span class="op">,</span> <span class="dt">p90</span><span class="op">:</span> barridos[<span class="dv">179</span>]}<span class="op">;</span></span>
+<span id="cb15-497"><a href="#cb15-497" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="502" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 501;"><span id="cb16-502"><a href="#cb16-502" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb16-503"><a href="#cb16-503" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb16-504"><a href="#cb16-504" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Barrido en que se alcanza el consenso (escala logarítmica)"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb16-505"><a href="#cb16-505" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb16-506"><a href="#cb16-506" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"consenso a favor"</span><span class="op">,</span> <span class="st">"consenso en contra"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">rojo</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb16-507"><a href="#cb16-507" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [Plot<span class="op">.</span><span class="fu">dot</span>(votanteV<span class="op">.</span><span class="at">corridas</span><span class="op">,</span> Plot<span class="op">.</span><span class="fu">dodgeY</span>({<span class="dt">x</span><span class="op">:</span> <span class="st">"barrido"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"desenlace"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">anchor</span><span class="op">:</span> <span class="st">"bottom"</span>}))]<span class="op">,</span></span>
+<span id="cb16-508"><a href="#cb16-508" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb17" data-startfrom="513" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 512;"><span id="cb17-513"><a href="#cb17-513" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb17-514"><a href="#cb17-514" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Consenso a favor en 200 historias&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(votanteV<span class="op">.</span><span class="at">probabilidad</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb17-515"><a href="#cb17-515" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Predicción por grado ω&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(votanteV<span class="op">.</span><span class="at">omega</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb17-516"><a href="#cb17-516" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Usuarios a favor al inicio&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(fraccionV <span class="op">*</span> <span class="dv">400</span>) <span class="op">/</span> <span class="dv">400</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb17-517"><a href="#cb17-517" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Barridos hasta el consenso (mediana)&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(votanteV<span class="op">.</span><span class="at">mediana</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb17-518"><a href="#cb17-518" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Rango del 80 % central&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(votanteV<span class="op">.</span><span class="at">p10</span>)<span class="sc">}</span><span class="vs"> a </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(votanteV<span class="op">.</span><span class="at">p90</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb17-519"><a href="#cb17-519" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Redes sintéticas con fines didácticos: <code>networkx.watts_strogatz_graph(400, 6, 0.05, seed=3)</code> y <code>networkx.barabasi_albert_graph(400, 3, seed=5)</code>, las mismas de las notas. El votante corre en el navegador con <code>difusion.js</code> y semillas fijas; cada punto es una historia. Con 200 historias, la probabilidad simulada se aleja de la teórica en unas ±0,035.</p>
+</div>
+</div>
+</section>
+<section id="acto-3.-explicar" class="level4">
+<h4 class="anchored" data-anchor-id="acto-3.-explicar">Acto 3. Explicar</h4>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el experimento</span>
+</div>
+<div class="paso">
+<p><strong>Lea el caso al azar.</strong> En la red de Barabási–Albert con el 10 % elegido al azar, 0,12 de las historias terminan a favor, y la predicción por grado es 0,100: elegidos al azar, los favorables tienen en promedio el grado de cualquiera y su fracción de grado coincide con su fracción de personas.</p>
+</div>
+<div class="paso">
+<p><strong>Mueva a los favorables a los <em>hubs</em>.</strong> Con los mismos 40 usuarios elegidos entre los más conectados, la probabilidad sube a 0,315, y la ecuación predice 0,332: esos 40 usuarios suman un tercio de todos los grados de la red.</p>
+</div>
+<div class="paso">
+<p><strong>Compare con la red de vecindario.</strong> En Watts–Strogatz nadie tiene más de 8 vecinos. Al azar sale 0,10, y entre los más conectados, 0,12 (predicción 0,118): elegir a los más conectados casi no cambia nada cuando todos tienen un grado parecido.</p>
+</div>
+<div class="paso">
+<p><strong>Suba la fracción inicial al 50 %.</strong> En Barabási–Albert, al azar se obtiene 0,545 (predicción 0,497) y en los <em>hubs</em>, 0,71 (predicción 0,736). Las diferencias entre lo simulado y lo predicho están dentro del error de muestreo de 200 historias, unas ±0,035.</p>
+</div>
+<div class="paso">
+<p><strong>Mire la nube de puntos.</strong> Con la misma red y el mismo punto de partida, unas historias terminan a favor y otras en contra, y el consenso llega en decenas o en cientos de barridos. Por eso el resultado de un modelo estocástico es una distribución, y el número que se reporta es una probabilidad con su dispersión.</p>
+</div>
+<div class="paso">
+<p><strong>Contraste con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s3-hubs"></span>. La respuesta es la segunda, 0,33. Para el comercializador hay dos lecturas: en una red con <em>hubs</em>, convencer a pocos usuarios muy conectados mueve el desenlace más que convencer a muchos poco conectados; y el votante supone que la gente copia opiniones al azar, sin evaluar la tarifa. El modelo sirve para ver el efecto de la estructura, no para pronosticar la opinión.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo experimento en Python, como en el Laboratorio 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo experimento en Python, como en el Laboratorio 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="f18517e0" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> difusion</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>red_ba <span class="op">=</span> nx.barabasi_albert_graph(<span class="dv">400</span>, <span class="dv">3</span>, seed<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>grados <span class="op">=</span> <span class="bu">dict</span>(red_ba.degree())</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>hubs <span class="op">=</span> <span class="bu">sorted</span>(red_ba.nodes, key<span class="op">=</span><span class="kw">lambda</span> n: <span class="op">-</span>grados[n])[:<span class="dv">40</span>]   <span class="co"># el 10 % más conectado</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>iniciales <span class="op">=</span> {n: <span class="bu">int</span>(n <span class="kw">in</span> hubs) <span class="cf">for</span> n <span class="kw">in</span> red_ba.nodes}</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="bu">sum</span>(grados[n] <span class="cf">for</span> n <span class="kw">in</span> hubs) <span class="op">/</span> <span class="bu">sum</span>(grados.values())</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>exitos <span class="op">=</span> <span class="bu">sum</span>(difusion.modelo_votante(red_ba, estados_iniciales<span class="op">=</span>iniciales, barridos<span class="op">=</span><span class="dv">50_000</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                                     semilla<span class="op">=</span><span class="dv">5_000</span> <span class="op">+</span> s).fraccion_final(<span class="st">"opinion_1"</span>) <span class="op">==</span> <span class="fl">1.0</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>             <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">200</span>))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"predicción por grado = </span><span class="sc">{</span>omega<span class="sc">:.3f}</span><span class="ss">; simulado en 200 historias = </span><span class="sc">{</span>exitos <span class="op">/</span> <span class="dv">200</span><span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>predicción por grado = 0.332; simulado en 200 historias = 0.345</code></pre>
+</div>
+</div>
+<p>Python usa otro generador de números aleatorios, así que la probabilidad simulada difiere en unas centésimas de la del navegador; la predicción por grado es idéntica porque la red es la misma.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Olvidar declarar el orden de actualización</span>
+</div>
+<p>La misma regla puede producir una ola, ninguna ola u oscilaciones perpetuas según el orden.</p>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Cada hogar adopta la opinión de la mayoría de sus vecinos», sin más. En la mesa redonda, con actualización sincrónica, la opinión oscila para siempre.</p>
+</div>
+<div class="bien">
+<p>«Cada mes el operador procesa todas las solicitudes a la vez (sincrónica)» o «los hogares deciden uno por uno, en orden aleatorio, viendo las decisiones ya tomadas (asincrónica)». En la mesa, la versión por turnos llega al consenso en un barrido.</p>
+</div>
+</div>
+<p>La actualización sincrónica, además, fabrica oscilaciones de periodo 2 en redes bipartitas, como el ciclo de cuatro, que desaparecen con la asincrónica.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Reportar una corrida estocástica como el resultado</span>
+</div>
+<p>Cinco corridas del votante con la misma red de Watts–Strogatz y el mismo 50 % inicial, que solo difieren en la semilla aleatoria:</p>
+<div id="447d2488" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="01-dinamica-sobre-redes_files/figure-html/cell-6-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Fracción a favor en cinco corridas del votante en la red de Watts–Strogatz de 400 usuarios, con el mismo 50 % inicial. Red sintética con fines didácticos."><img src="01-dinamica-sobre-redes_files/figure-html/cell-6-output-1.svg" class="img-fluid figure-img" alt="Fracción a favor en cinco corridas del votante en la red de Watts–Strogatz de 400 usuarios, con el mismo 50 % inicial. Red sintética con fines didácticos."></a></p>
+<figcaption>Fracción a favor en cinco corridas del votante en la red de Watts–Strogatz de 400 usuarios, con el mismo 50 % inicial. Red sintética con fines didácticos.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Cuatro corridas terminan en contra y una a favor, y el consenso llega en los barridos 431, 1 269, 111, 763 y 700: tiempos que varían más de diez veces. Fije la semilla para que el resultado se pueda reproducir y, además, repita con muchas semillas y reporte la proporción de desenlaces y su dispersión, como hace el simulador del acto 2.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Suponer que la mayoría inicial gana</span>
+</div>
+<p>En el votante gana, en probabilidad, la fracción de grado. En la vereda, el líder y un vecino (40 % de las personas) ganan el 64 % de las historias; en la red de Barabási–Albert, el 10 % de usuarios mejor conectados gana un tercio de ellas. En la regla de mayoría, la estructura de grupos puede además congelar una minoría local, como en los ocho hogares. Reprodúzcalo en el simulador de la vereda con «el líder y un vecino».</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir la regla con el patrón</span>
+</div>
+<p>Nadie en el estadio tiene la regla «haga una ola», y ningún hogar decide «polarizar el barrio». Atribuir a los individuos la intención del patrón agregado es la falacia de composición de la semana 1, aplicada a redes.</p>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Un modelo dice: «cada hogar instala paneles si al menos dos de sus vecinos ya instalaron». ¿Qué le falta para que otra persona pueda reproducirlo?</p>
+<div class="opcion">
+<p>Nada; la regla local basta.</p>
+<p><span class="porque">Revise la mesa redonda: la misma regla oscila o llega al consenso según el orden.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>El orden de actualización (sincrónica o asincrónica, y en qué orden) y los estados iniciales.</p>
+<p><span class="porque">Correcto: los tres ingredientes, más el punto de partida, definen la dinámica.</span></p>
+</div>
+<div class="opcion">
+<p>El número de hogares que terminarán instalando.</p>
+<p><span class="porque">Ese es el resultado que el modelo debe producir, no un ingrediente.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el votante, un hogar con 20 vecinos y cuatro hogares con 2 vecinos cada uno empiezan a favor, en una red cuya suma de grados es 200. ¿Qué probabilidad de consenso favorable predice la ecuación?</p>
+<div class="opcion">
+<p>5/N, la fracción de hogares a favor.</p>
+<p><span class="porque">Esa es la fracción de personas; revise la derivación de la fracción de grado.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>0,14.</p>
+<p><span class="porque">Correcto: <span class="math inline">(20 + 4 \times 2)/200 = 28/200 = 0{,}14</span>.</span></p>
+</div>
+<div class="opcion">
+<p>0,10, porque el hogar de 20 vecinos domina.</p>
+<p><span class="porque">Revise la cuenta: los cuatro hogares pequeños también suman grado.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Corre el votante una vez y la red termina a favor en el barrido 300. ¿Qué puede reportar?</p>
+<div class="opcion">
+<p>«La red termina a favor en unos 300 barridos.»</p>
+<p><span class="porque">Una corrida es una muestra; otra semilla puede dar el consenso contrario y tiempos diez veces distintos.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Nada general todavía: debe repetir con muchas semillas y reportar la proporción de desenlaces y su dispersión.</p>
+<p><span class="porque">Correcto: el resultado de un modelo estocástico es una distribución.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la red de Watts–Strogatz del simulador, elegir a los favorables «entre los más conectados» casi no cambia la probabilidad. ¿Por qué?</p>
+<div class="opcion">
+<p>Porque el votante ignora la red.</p>
+<p><span class="porque">En Barabási–Albert el mismo cambio triplica la probabilidad; la red sí importa.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque todos tienen un grado parecido (de 5 a 8) y la fracción de grado casi coincide con la de personas.</p>
+<p><span class="porque">Correcto: sin <em>hubs</em>, elegir por grado apenas mueve <span class="math inline">\omega</span>.</span></p>
+</div>
+<div class="opcion">
+<p>Porque 200 historias son pocas para ver el efecto.</p>
+<p><span class="porque">El error de muestreo es de unas ±0,035; en Barabási–Albert el efecto es de 0,2.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En los ocho hogares con regla de mayoría, la fracción a favor pasa de 3/8 a 4/8. ¿Qué describe mejor lo ocurrido?</p>
+<div class="opcion">
+<p>La opinión favorable ganó terreno de manera pareja en las dos cuadras.</p>
+<p><span class="porque">Mire la red del último cuadro: la cuadra izquierda quedó toda en contra.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>La opinión se ordenó por grupos: una cuadra quedó a favor y la otra en contra.</p>
+<p><span class="porque">Correcto: el agregado casi no cambia, pero la distribución en la red sí.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-dos-olas-en-un-anillo" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-dos-olas-en-un-anillo">Ejercicio 1 ●○○ · Dos olas en un anillo</h4>
+<p>La tribuna de un estadio pequeño es un anillo de 30 espectadores con la regla de la ola (sincrónica). En <span class="math inline">t = 0</span> se paran los espectadores 1 y 16. (a) ¿Cuántos están de pie en cada paso? (b) ¿Vuelve la tribuna alguna vez a la configuración inicial?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Siempre dos. Cada ola avanza un asiento por paso: en <span class="math inline">t = 1</span> están de pie el 2 y el 17, en <span class="math inline">t = 2</span> el 3 y el 18, y así sucesivamente. Como el anillo no tiene final, ninguna ola sale de la tribuna.</p></li>
+<li><p>Sí, cada 15 pasos. En <span class="math inline">t = 15</span> están de pie el 16 y el 31, que en un anillo de 30 es el asiento 1: el mismo conjunto del comienzo. Las dos olas son idénticas y están separadas media vuelta, así que basta media vuelta para repetir la configuración. Una sola ola tardaría 30 pasos.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-dos-personas-contra-tres" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-dos-personas-contra-tres">Ejercicio 2 ●●○ · Dos personas contra tres</h4>
+<p>En la vereda del ejemplo intermedio (líder con cuatro vecinos), compare dos puntos de partida: (i) a favor el líder y un vecino; (ii) a favor tres vecinos y el líder en contra. Calcule <span class="math inline">\omega</span> en cada caso, compruebe con el simulador y explique a un gerente, en dos frases, por qué el grupo más pequeño tiene más probabilidad de imponerse.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Sume los grados de quienes empiezan a favor y divida por la suma de todos los grados, que es 8. En el simulador, (ii) corresponde a «todos los vecinos menos uno».</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="i">
+<li><span class="math inline">\omega = (4 + 1)/8 = 0{,}625</span>; el simulador da 0,64. (ii) <span class="math inline">\omega = 3/8 = 0{,}375</span>; el simulador da 0,36. Las dos lecturas están a menos de dos centésimas de la predicción, dentro del error de 2 000 corridas.</li>
+</ol>
+<p>Para el gerente: en el votante, cada conversación tiene el mismo peso, y el líder participa en todas las conversaciones de la vereda, de modo que su opinión se copia más veces que la de cualquier vecino. Dos personas bien ubicadas pesan más que tres en la periferia; antes de contar apoyos, conviene mirar quién habla con quién.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Una <strong>dinámica sobre una red</strong> tiene tres ingredientes: los <strong>estados</strong> de los nodos, una <strong>regla local</strong> que mira a los vecinos y un <strong>orden de actualización</strong> (sincrónico o asincrónico). Los tres se declaran.</li>
+<li>La <strong>regla de mayoría</strong> es determinista: en los ocho hogares llega en tres pasos a una polarización estable por grupos.</li>
+<li>El <strong>orden</strong> puede cambiar la clase de comportamiento: la ola sincrónica cruza la fila, la asincrónica de izquierda a derecha muere en el paso 1; la mesa redonda oscila o llega al consenso.</li>
+<li>En el <strong>votante</strong>, la probabilidad de consenso favorable es la <strong>fracción de grado</strong> inicial, <span class="math inline">\omega(0) = \sum_i k_i x_i(0) / \sum_i k_i</span>.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>punto de partida</th>
+<th style="text-align: center;">personas a favor</th>
+<th style="text-align: center;"><span class="math inline">\omega</span></th>
+<th style="text-align: center;">simulado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>vereda: líder solo</td>
+<td style="text-align: center;">20 %</td>
+<td style="text-align: center;">0,50</td>
+<td style="text-align: center;">0,52</td>
+</tr>
+<tr class="even">
+<td>vereda: líder y un vecino</td>
+<td style="text-align: center;">40 %</td>
+<td style="text-align: center;">0,625</td>
+<td style="text-align: center;">0,64</td>
+</tr>
+<tr class="odd">
+<td>Barabási–Albert: 10 % al azar</td>
+<td style="text-align: center;">10 %</td>
+<td style="text-align: center;">0,100</td>
+<td style="text-align: center;">0,12</td>
+</tr>
+<tr class="even">
+<td>Barabási–Albert: 10 % en los <em>hubs</em></td>
+<td style="text-align: center;">10 %</td>
+<td style="text-align: center;">0,332</td>
+<td style="text-align: center;">0,315</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Con dinámicas estocásticas se reportan probabilidades y dispersiones, nunca una corrida.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Dinámica sobre redes: nodos con estado y reglas locales» de las notas de la semana 3 trae la derivación completa del votante, el ejercicio del votante por aristas y la conexión con el informe del proyecto. El Laboratorio 2 empieza aquí: antes de simular contagios, cada grupo escribe para su red la tabla de estados, la regla y el orden de actualización. La <a href="02-rogers-bass.qmd">siguiente página</a> mira la adopción desde arriba, con la curva en S de Rogers y Bass.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Z3JhZm8sIGdyYWRvLCBhemFyfSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvcmVkZXMuanNcIlxuaW1wb3J0IHttb2RlbG9Wb3RhbnRlLCBzZW1pbGxhQ29ycmlkYX0gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL2RpZnVzaW9uLmpzXCJcbmltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgdmVjaW5vc0UgPSBJbnB1dHMucmFuZ2UoWzIsIDEwXSwge3ZhbHVlOiA0LCBzdGVwOiAxLCBsYWJlbDogXCJWZWNpbm9zIGRlbCBsw61kZXIgblwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBmYXZvcmFibGVzRSA9IElucHV0cy5zZWxlY3QobmV3IE1hcChbW1wic29sbyBlbCBsw61kZXJcIiwgXCJsaWRlclwiXSwgW1wic29sbyB1biB2ZWNpbm9cIiwgXCJ1bm9cIl0sIFtcImVsIGzDrWRlciB5IHVuIHZlY2lub1wiLCBcImxpZGVyLXVub1wiXSwgW1widG9kb3MgbG9zIHZlY2lub3MgbWVub3MgdW5vXCIsIFwiY2FzaS10b2Rvc1wiXSwgW1widG9kb3MgbG9zIHZlY2lub3NcIiwgXCJ0b2Rvc1wiXV0pLCB7dmFsdWU6IFwibGlkZXJcIiwgbGFiZWw6IFwiRW1waWV6YW4gYSBmYXZvclwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImVzdHJlbGxhRSA9IHtcbiAgY29uc3QgZyA9IGdyYWZvKFsuLi5BcnJheSh2ZWNpbm9zRSkua2V5cygpXS5tYXAoKGkpID0+IFtcIkxcIiwgYFYke2kgKyAxfWBdKSk7XG4gIGNvbnN0IHZlY2lub3MgPSBnLm5vZG9zLmZpbHRlcigobikgPT4gbiAhPT0gXCJMXCIpO1xuICBjb25zdCBjb25qdW50b3MgPSB7bGlkZXI6IFtcIkxcIl0sIHVubzogW1wiVjFcIl0sIFwibGlkZXItdW5vXCI6IFtcIkxcIiwgXCJWMVwiXSwgXCJjYXNpLXRvZG9zXCI6IHZlY2lub3Muc2xpY2UoMSksIHRvZG9zOiB2ZWNpbm9zfTtcbiAgY29uc3QgZmF2b3JhYmxlcyA9IG5ldyBTZXQoY29uanVudG9zW2Zhdm9yYWJsZXNFXSk7XG4gIGNvbnN0IGluaWNpYWxlcyA9IE9iamVjdC5mcm9tRW50cmllcyhnLm5vZG9zLm1hcCgobikgPT4gW24sIGZhdm9yYWJsZXMuaGFzKG4pID8gMSA6IDBdKSk7XG4gIGNvbnN0IHN1bWFHcmFkb3MgPSBnLm5vZG9zLnJlZHVjZSgoYSwgbikgPT4gYSArIGdyYWRvKGcsIG4pLCAwKTtcbiAgY29uc3Qgb21lZ2EgPSBbLi4uZmF2b3JhYmxlc10ucmVkdWNlKChhLCBuKSA9PiBhICsgZ3JhZG8oZywgbiksIDApIC8gc3VtYUdyYWRvcztcbiAgY29uc3QgY29ycmlkYXMgPSAyMDAwO1xuICBsZXQgZXhpdG9zID0gMDtcbiAgZm9yIChsZXQgYyA9IDA7IGMgPCBjb3JyaWRhczsgYysrKSB7XG4gICAgY29uc3QgciA9IG1vZGVsb1ZvdGFudGUoZywge2VzdGFkb3NJbmljaWFsZXM6IGluaWNpYWxlcywgYmFycmlkb3M6IDEwMDAwMCwgc2VtaWxsYTogc2VtaWxsYUNvcnJpZGEoYywgMSl9KTtcbiAgICBpZiAoT2JqZWN0LnZhbHVlcyhyLmhpc3RvcmlhW3IuaGlzdG9yaWEubGVuZ3RoIC0gMV0pLmV2ZXJ5KCh2KSA9PiB2ID09PSAxKSkgZXhpdG9zICs9IDE7XG4gIH1cbiAgcmV0dXJuIHtzaW11bGFkYTogZXhpdG9zIC8gY29ycmlkYXMsIG9tZWdhLCBwZXJzb25hczogZmF2b3JhYmxlcy5zaXplIC8gZy5ub2Rvcy5sZW5ndGgsIGNvcnJpZGFzfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAxOTAsIG1hcmdpbkxlZnQ6IDIzMCxcbiAgeDoge2xhYmVsOiBcIkZyYWNjacOzblwiLCBkb21haW46IFswLCAxXSwgZ3JpZDogdHJ1ZSwgdGlja0Zvcm1hdDogKGQpID0+IGZvcm1hdG9Qb3JjZW50YWplKGQpfSxcbiAgeToge2xhYmVsOiBudWxsfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmJhclgoW1xuICAgICAge3F1ZTogXCJwZXJzb25hcyBhIGZhdm9yIGFsIGluaWNpb1wiLCB2YWxvcjogZXN0cmVsbGFFLnBlcnNvbmFzLCBjb2xvcjogQ09MT1JFUy5ncmlzfSxcbiAgICAgIHtxdWU6IFwicHJlZGljY2nDs24gcG9yIGdyYWRvIM+JXCIsIHZhbG9yOiBlc3RyZWxsYUUub21lZ2EsIGNvbG9yOiBDT0xPUkVTLnZpb2xldGF9LFxuICAgICAge3F1ZTogXCJjb25zZW5zbyBhIGZhdm9yIChzaW11bGFkbylcIiwgdmFsb3I6IGVzdHJlbGxhRS5zaW11bGFkYSwgY29sb3I6IENPTE9SRVMuYXp1bH0sXG4gICAgXSwge3k6IFwicXVlXCIsIHg6IFwidmFsb3JcIiwgZmlsbDogXCJjb2xvclwiLCBzb3J0OiBudWxsfSksXG4gICAgUGxvdC5ydWxlWChbMC41XSwge3N0cm9rZTogQ09MT1JFUy5ncmlzLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PlBlcnNvbmFzIGEgZmF2b3IgYWwgaW5pY2lvPGI+JHtmb3JtYXRvUG9yY2VudGFqZShlc3RyZWxsYUUucGVyc29uYXMpfTwvYj48L2Rpdj5cbiAgPGRpdj5QcmVkaWNjacOzbiBwb3IgZ3JhZG8gz4k8Yj4ke2Zvcm1hdG9OdW1lcm8oMykoZXN0cmVsbGFFLm9tZWdhKX08L2I+PC9kaXY+XG4gIDxkaXY+Q29uc2Vuc28gYSBmYXZvciBlbiAke2Zvcm1hdG9OdW1lcm8oMCkoZXN0cmVsbGFFLmNvcnJpZGFzKX0gY29ycmlkYXM8Yj4ke2Zvcm1hdG9OdW1lcm8oMykoZXN0cmVsbGFFLnNpbXVsYWRhKX08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJyZWRlc1YgPSBGaWxlQXR0YWNobWVudChcImRhdG9zL3MzLTAxLXJlZGVzLmpzb25cIikuanNvbigpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTgiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgcmVkViA9IElucHV0cy5yYWRpbyhuZXcgTWFwKFtbXCJCYXJhYsOhc2nigJNBbGJlcnQgKGNvbiBodWJzKVwiLCBcImJhXCJdLCBbXCJXYXR0c+KAk1N0cm9nYXR6ICh2ZWNpbmRhcmlvKVwiLCBcIndzXCJdXSksIHt2YWx1ZTogXCJiYVwiLCBsYWJlbDogXCJSZWRcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgZG9uZGVWID0gSW5wdXRzLnJhZGlvKG5ldyBNYXAoW1tcImFsIGF6YXJcIiwgXCJhemFyXCJdLCBbXCJlbnRyZSBsb3MgbcOhcyBjb25lY3RhZG9zXCIsIFwiaHVic1wiXV0pLCB7dmFsdWU6IFwiYXphclwiLCBsYWJlbDogXCJGYXZvcmFibGVzIGluaWNpYWxlc1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTAiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgZnJhY2Npb25WID0gSW5wdXRzLnJhbmdlKFswLjA1LCAwLjVdLCB7dmFsdWU6IDAuMSwgc3RlcDogMC4wNSwgbGFiZWw6IFwiVXN1YXJpb3MgYSBmYXZvciBhbCBpbmljaW8gW2ZyYWNjacOzbl1cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidm90YW50ZVYgPSB7XG4gIGNvbnN0IGcgPSBncmFmbyhyZWRlc1ZbcmVkVl0sIFsuLi5BcnJheSg0MDApLmtleXMoKV0pO1xuICBjb25zdCBrID0gT2JqZWN0LmZyb21FbnRyaWVzKGcubm9kb3MubWFwKChuKSA9PiBbbiwgZ3JhZG8oZywgbildKSk7XG4gIGNvbnN0IHN1bWEgPSBnLm5vZG9zLnJlZHVjZSgoYSwgbikgPT4gYSArIGtbbl0sIDApO1xuICBjb25zdCBjdWFudG9zID0gTWF0aC5yb3VuZChmcmFjY2lvblYgKiA0MDApO1xuICBjb25zdCBvcmRlbiA9IFsuLi5nLm5vZG9zXS5zb3J0KChhLCBiKSA9PiBrW2JdIC0ga1thXSB8fCBhIC0gYik7XG4gIGNvbnN0IGNvcnJpZGFzID0gW107XG4gIGxldCBvbWVnYU1lZGlvID0gMDtcbiAgZm9yIChsZXQgYyA9IDA7IGMgPCAyMDA7IGMrKykge1xuICAgIGxldCBmYXZvcmFibGVzO1xuICAgIGlmIChkb25kZVYgPT09IFwiaHVic1wiKSBmYXZvcmFibGVzID0gbmV3IFNldChvcmRlbi5zbGljZSgwLCBjdWFudG9zKSk7XG4gICAgZWxzZSB7XG4gICAgICBjb25zdCB1ID0gYXphcihzZW1pbGxhQ29ycmlkYShjLCA5MDAwKSksIHJlc3RvID0gWy4uLmcubm9kb3NdO1xuICAgICAgZmF2b3JhYmxlcyA9IG5ldyBTZXQoKTtcbiAgICAgIHdoaWxlIChmYXZvcmFibGVzLnNpemUgPCBjdWFudG9zKSBmYXZvcmFibGVzLmFkZChyZXN0by5zcGxpY2UoTWF0aC5mbG9vcih1KCkgKiByZXN0by5sZW5ndGgpLCAxKVswXSk7XG4gICAgfVxuICAgIG9tZWdhTWVkaW8gKz0gWy4uLmZhdm9yYWJsZXNdLnJlZHVjZSgoYSwgbikgPT4gYSArIGtbbl0sIDApIC8gc3VtYSAvIDIwMDtcbiAgICBjb25zdCBpbmljaWFsZXMgPSBPYmplY3QuZnJvbUVudHJpZXMoZy5ub2Rvcy5tYXAoKG4pID0+IFtuLCBmYXZvcmFibGVzLmhhcyhuKSA/IDEgOiAwXSkpO1xuICAgIGNvbnN0IHIgPSBtb2RlbG9Wb3RhbnRlKGcsIHtlc3RhZG9zSW5pY2lhbGVzOiBpbmljaWFsZXMsIGJhcnJpZG9zOiA1MDAwMCwgc2VtaWxsYTogc2VtaWxsYUNvcnJpZGEoYywgNTAwMCl9KTtcbiAgICBjb25zdCBhRmF2b3IgPSBPYmplY3QudmFsdWVzKHIuaGlzdG9yaWFbci5oaXN0b3JpYS5sZW5ndGggLSAxXSkuZXZlcnkoKHYpID0+IHYgPT09IDEpO1xuICAgIGNvcnJpZGFzLnB1c2goe2JhcnJpZG86IHIuYmFycmlkb0NvbnNlbnNvLCBkZXNlbmxhY2U6IGFGYXZvciA/IFwiY29uc2Vuc28gYSBmYXZvclwiIDogXCJjb25zZW5zbyBlbiBjb250cmFcIn0pO1xuICB9XG4gIGNvbnN0IGJhcnJpZG9zID0gY29ycmlkYXMubWFwKChkKSA9PiBkLmJhcnJpZG8pLnNvcnQoKGEsIGIpID0+IGEgLSBiKTtcbiAgcmV0dXJuIHtjb3JyaWRhcywgb21lZ2E6IG9tZWdhTWVkaW8sIHByb2JhYmlsaWRhZDogY29ycmlkYXMuZmlsdGVyKChkKSA9PiBkLmRlc2VubGFjZSA9PT0gXCJjb25zZW5zbyBhIGZhdm9yXCIpLmxlbmd0aCAvIDIwMCxcbiAgICBtZWRpYW5hOiAoYmFycmlkb3NbOTldICsgYmFycmlkb3NbMTAwXSkgLyAyLCBwMTA6IGJhcnJpZG9zWzE5XSwgcDkwOiBiYXJyaWRvc1sxNzldfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiAyMCxcbiAgeDoge3R5cGU6IFwibG9nXCIsIGxhYmVsOiBcIkJhcnJpZG8gZW4gcXVlIHNlIGFsY2FuemEgZWwgY29uc2Vuc28gKGVzY2FsYSBsb2dhcsOtdG1pY2EpXCIsIGdyaWQ6IHRydWV9LFxuICB5OiB7YXhpczogbnVsbH0sXG4gIGNvbG9yOiB7ZG9tYWluOiBbXCJjb25zZW5zbyBhIGZhdm9yXCIsIFwiY29uc2Vuc28gZW4gY29udHJhXCJdLCByYW5nZTogW0NPTE9SRVMuYXp1bCwgQ09MT1JFUy5yb2pvXSwgbGVnZW5kOiB0cnVlfSxcbiAgbWFya3M6IFtQbG90LmRvdCh2b3RhbnRlVi5jb3JyaWRhcywgUGxvdC5kb2RnZVkoe3g6IFwiYmFycmlkb1wiLCBmaWxsOiBcImRlc2VubGFjZVwiLCByOiAzLCBhbmNob3I6IFwiYm90dG9tXCJ9KSldLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkNvbnNlbnNvIGEgZmF2b3IgZW4gMjAwIGhpc3RvcmlhczxiPiR7Zm9ybWF0b051bWVybygzKSh2b3RhbnRlVi5wcm9iYWJpbGlkYWQpfTwvYj48L2Rpdj5cbiAgPGRpdj5QcmVkaWNjacOzbiBwb3IgZ3JhZG8gz4k8Yj4ke2Zvcm1hdG9OdW1lcm8oMykodm90YW50ZVYub21lZ2EpfTwvYj48L2Rpdj5cbiAgPGRpdj5Vc3VhcmlvcyBhIGZhdm9yIGFsIGluaWNpbzxiPiR7Zm9ybWF0b1BvcmNlbnRhamUoTWF0aC5yb3VuZChmcmFjY2lvblYgKiA0MDApIC8gNDAwKX08L2I+PC9kaXY+XG4gIDxkaXY+QmFycmlkb3MgaGFzdGEgZWwgY29uc2Vuc28gKG1lZGlhbmEpPGI+JHtmb3JtYXRvTnVtZXJvKDApKHZvdGFudGVWLm1lZGlhbmEpfTwvYj48L2Rpdj5cbiAgPGRpdj5SYW5nbyBkZWwgODAgJSBjZW50cmFsPGI+JHtmb3JtYXRvTnVtZXJvKDApKHZvdGFudGVWLnAxMCl9IGEgJHtmb3JtYXRvTnVtZXJvKDApKHZvdGFudGVWLnA5MCl9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCd2ZWNpbm9zRScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdmYXZvcmFibGVzRScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdyZWRWJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2RvbmRlVicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdmcmFjY2lvblYnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana3";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
