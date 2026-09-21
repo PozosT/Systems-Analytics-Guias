@@ -399,6 +399,25 @@ export function vpnConNino(probabilidad_nino, {inversion, margen_normal, margen_
 }
 
 /** Costo futuro con curva de Wright y despliegue exponencial (réplica de mise_sd.modelos.costo_wright). */
+/** VPN de una térmica de respaldo con y sin despacho forzado (réplica de vpn_termica_crisis). */
+export function vpnTermicaCrisis({inversion = 70, capacidad_mw = 200, energia_cargo_gwh = 1300, precio_cargo_usd_mwh = 15,
+  margen_energia_usd_mwh = 10, factor_planta_normal = 0.05, costos_fijos = 6, anios = 10, tasa_descuento = 0.10,
+  dias_despacho_forzado = 0, factor_despacho_crisis = 0.85, brecha_costo_precio_usd_mwh = 50,
+  anio_crisis = 2, compensacion = 0, anio_compensacion = 3} = {}) {
+  const ingreso_cargo = energia_cargo_gwh * 1000 * precio_cargo_usd_mwh / 1e6;
+  const margen_energia = capacidad_mw * 8760 * factor_planta_normal * margen_energia_usd_mwh / 1e6;
+  const flujo_anual = ingreso_cargo + margen_energia - costos_fijos;
+  const anualidad = (1 - Math.pow(1 + tasa_descuento, -anios)) / tasa_descuento;
+  const vpn_base = -inversion + anualidad * flujo_anual;
+  const energia_crisis_gwh = capacidad_mw * factor_despacho_crisis * 24 * dias_despacho_forzado / 1000;
+  const perdida_crisis = energia_crisis_gwh * 1000 * brecha_costo_precio_usd_mwh / 1e6;
+  const valor_presente_perdida = perdida_crisis / Math.pow(1 + tasa_descuento, anio_crisis);
+  const valor_presente_compensacion = compensacion / Math.pow(1 + tasa_descuento, anio_compensacion);
+  return {ingreso_cargo, margen_energia, flujo_anual, anualidad, vpn_base, energia_crisis_gwh, perdida_crisis,
+    valor_presente_perdida, valor_presente_compensacion,
+    vpn_con_crisis: vpn_base - valor_presente_perdida + valor_presente_compensacion};
+}
+
 export function costoWright(anios, tasa_aprendizaje, crecimiento_despliegue, costo_inicial = 100) {
   return costo_inicial * Math.exp(-crecimiento_despliegue * anios * Math.log2(1 / (1 - tasa_aprendizaje)));
 }
