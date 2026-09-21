@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Qué tan fácil es partir una red: falla aleatoria frente a ataque dirigido en un pueblo con un solo puente, el criterio N-1 a mano en ocho subestaciones y las curvas de robustez y la lista de subestaciones críticas del sistema de transmisión estilizado.">
+
+<title>Robustez y criterio N-1 – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../semana3/index.html" rel="next">
+<link href="../semana2/07-colas-pesadas.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/08-robustez-n1.html">Robustez y criterio N-1</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/04-centralidades.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Centralidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/05-mundo-pequeno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agrupamiento y mundo pequeño</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/06-modelos-de-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos de red</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/07-colas-pesadas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leyes de potencias y colas pesadas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/08-robustez-n1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Robustez y criterio N-1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Redes II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/01-dinamica-sobre-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dinámica sobre redes: nodos con estado y reglas locales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/02-rogers-bass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rogers y Bass: la curva en S de la adopción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/03-contagio-simple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio simple: SI, SIS y SIR sobre redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/04-contagio-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio complejo y umbrales: cuando un vecino no basta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores y comunidades: quién se mueve con quién</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/07-bipartitas-mercado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes bipartitas y el mercado mayorista</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/08-limites-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Límites del enfoque de redes: de la red al stock agregado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/09-adopcion-solar-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La adopción solar como sistema en red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
+  <li><a href="#la-intuición-el-puente-de-un-pueblo" id="toc-la-intuición-el-puente-de-un-pueblo" class="nav-link" data-scroll-target="#la-intuición-el-puente-de-un-pueblo">2. La intuición: el puente de un pueblo</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/08-robustez-n1.html">Robustez y criterio N-1</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Robustez y criterio N-1</h1>
+<p class="subtitle lead">Semana 2 · Concepto 8 de 10</p>
+</div>
+
+<div>
+  <div class="description">
+    Qué tan fácil es partir una red: falla aleatoria frente a ataque dirigido en un pueblo con un solo puente, el criterio N-1 a mano en ocho subestaciones y las curvas de robustez y la lista de subestaciones críticas del sistema de transmisión estilizado.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="47" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 46;"><span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {grafo<span class="op">,</span> analisisNmenos1} <span class="im">from</span> <span class="st">"../simuladores/redes.js"</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">⏱ 65 a 75 minutos</span> <span class="dato">📚 Requiere <a href="../semana2/03-caminos-conectividad.html">caminos, distancia y conectividad</a> y <a href="../semana2/04-centralidades.html">centralidades</a></span> <span class="dato">🧪 Son los pasos 5 y 7 del Laboratorio 1</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Calcular a mano el daño esperado de una falla al azar y el de un ataque dirigido en una red pequeña.</li>
+<li>Aplicar el criterio N-1 topológico a un sistema de ocho subestaciones y distinguirlo del N-1 operativo.</li>
+<li>Leer curvas de robustez y una lista de subestaciones críticas, y reportarlas en megavatios.</li>
+</ul>
+</div>
+<div class="idea-clave caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Idea clave</span>
+</div>
+<p>Una misma red puede resistir muy bien las fallas al azar y partirse con pocos retiros elegidos, porque sus nodos no son todos iguales. El criterio N-1 topológico encuentra las piezas cuya salida aísla demanda o generación; es necesario para operar con seguridad, pero no suficiente.</p>
+</div>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
+<p>Una red de transmisión pierde elementos todos los días: una descarga atmosférica dispara una línea, un transformador sale a mantenimiento, un atentado contra torres deja un circuito fuera durante semanas. El sistema se planea para convivir con esas salidas, y la regla de diseño es el <strong>criterio N-1</strong>: con cualquiera de sus <span class="math inline">N</span> elementos fuera de servicio, el sistema debe seguir atendiendo la demanda.</p>
+<p>En la página de centralidades, Primavera encabezó las cuatro medidas del sistema estilizado. La pregunta de la semana era qué pasaría si falla la subestación más conectada del país. Esta página da la segunda respuesta, la del criterio N-1, y encuentra una sorpresa. <strong>¿Por qué la salida de la subestación más central no es la que más demanda deja sin servicio?</strong></p>
+</section>
+<section id="la-intuición-el-puente-de-un-pueblo" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-puente-de-un-pueblo">2. La intuición: el puente de un pueblo</h2>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Robusta ante el azar, frágil ante la intención</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-pueblo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s2-08-pueblo-1.svg" class="img-fluid" alt="Un pueblo de ocho lugares con un río y un solo puente."></a></p>
+<p><strong>Mire el pueblo.</strong> Cinco lugares en el casco urbano, tres al otro lado del río y nueve calles. Un solo puente, entre el Mercado y la Vereda Alta, cruza el río.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-pueblo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s2-08-pueblo-2.svg" class="img-fluid" alt="Una calle del casco urbano cerrada al azar; nadie queda aislado."></a></p>
+<p><strong>Cierre una calle al azar.</strong> Casi siempre cae en el casco urbano, donde las calles forman ciclos y siempre hay un rodeo. Nadie lo nota.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-pueblo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s2-08-pueblo-3.svg" class="img-fluid" alt="Las tres calles que son puentes, resaltadas."></a></p>
+<p><strong>Busque los puentes.</strong> Tres calles no tienen rodeo: la del río y las dos de la vereda. Un cierre al azar aísla a alguien con probabilidad 3/9, y deja en promedio 0,56 lugares aislados.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-pueblo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s2-08-pueblo-4.svg" class="img-fluid" alt="El puente del río cerrado a propósito; la vereda queda aislada."></a></p>
+<p><strong>Elija el cierre.</strong> Quien quiere aislar al pueblo corta la calle por la que pasan más caminos, el puente. Quedan aislados tres lugares con certeza, unas cinco veces el daño esperado al azar.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-pueblo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s2-08-pueblo-5.svg" class="img-fluid" alt="La misma red, robusta ante el azar y frágil ante la intención."></a></p>
+<p><strong>Pase al sector.</strong> En transmisión, el «ataque» no necesita un atacante: una sequía, un incendio forestal o un conflicto armado también golpean justo donde pasan las rutas. La pregunta de diseño es qué piezas no tienen rodeo.</p>
+</div>
+</div>
+</section>
+<section id="del-dibujo-a-la-ecuación" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Curva e índice de robustez</span>
+</div>
+<p>Sea <span class="math inline">f \in [0, 1]</span> la fracción de nodos retirados según una <strong>estrategia</strong> y <span class="math inline">S(f)</span> la fracción de los <span class="math inline">n</span> nodos originales que queda en la componente gigante. Las estrategias clásicas son la <strong>falla aleatoria</strong>, el <strong>ataque por grado</strong> y el <strong>ataque por intermediación</strong>. El ataque es <strong>adaptativo</strong> si la métrica se recalcula después de cada retiro.</p>
+<p>El <strong>índice de robustez</strong> es el área bajo la curva,</p>
+<p><span class="math display">R = \int_0^{f_{\max}} S(f)\, df,</span></p>
+<p>que se reporta junto con la fracción máxima <span class="math inline">f_{\max}</span> hasta la que se integró. Cuanto mayor es <span class="math inline">R</span>, más retiros resiste la red antes de partirse.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Criterio N-1 operativo y topológico</span>
+</div>
+<p>El <strong>criterio N-1 operativo</strong> exige que el sistema atienda la demanda sin violar límites de tensión, frecuencia ni cargabilidad ante la salida de cualquier elemento individual [POR VERIFICAR la redacción exacta en el Código de Redes, Res. CREG 025 de 1995].</p>
+<p>Su versión <strong>topológica</strong> retira cada nodo (o cada línea) de uno en uno y reporta los nodos que quedan fuera de la componente gigante, con la demanda y la generación que aíslan. Un nodo que aísla a otros es un <strong>punto de articulación</strong>, y una línea que lo hace es un <strong>puente</strong>. El N-1 topológico es condición necesaria del operativo: lo que queda aislado no se puede atender.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Construir la curva de robustez del pueblo</span>
+</div>
+<div class="paso">
+<p><strong>Cambie calles por lugares.</strong> La curva de robustez retira nodos, no aristas. Con los ocho lugares del pueblo, <span class="math inline">f</span> avanza de <span class="math inline">1/8</span> en <span class="math inline">1/8</span> y <span class="math inline">S(0) = 1</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Ataque por intermediación.</strong> El Mercado tiene la mayor intermediación (12,5 caminos sin normalizar). Al retirarlo quedan el casco urbano (4 lugares) y la vereda (3): <span class="math inline">S(1/8) = 4/8 = 0{,}50</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Recalcule y siga.</strong> En lo que queda, la Escuela es la que más caminos une (Hospital con Plaza e Iglesia). Al retirarla, la pieza mayor es la vereda: <span class="math inline">S(2/8) = 3/8 = 0{,}375</span>. Luego sale la Vereda Alta y <span class="math inline">S(3/8) = 0{,}25</span>.</p>
+</div>
+<div class="paso">
+<p><strong>Compare con el azar.</strong> Un lugar retirado al azar deja en promedio <span class="math inline">S(1/8) = 0{,}80</span>: en seis de ocho casos sale un lugar que no parte la red. La curva del azar baja despacio; la del ataque cae de golpe.</p>
+</div>
+<div class="paso">
+<p><strong>Mida el área.</strong> Integrada hasta <span class="math inline">f = 1</span>, el área del ataque es 0,28 y la del azar es 0,40. La diferencia entre las dos áreas es la medida de «robusta pero frágil» (Albert, Jeong y Barabási, 2000).</p>
+</div>
+</div>
+</section>
+<section id="ejemplos-resueltos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<section id="el-pueblo-cierre-por-cierre" class="level3">
+<h3 class="anchored" data-anchor-id="el-pueblo-cierre-por-cierre">El pueblo, cierre por cierre</h3>
+<div class="ejemplo caja" data-nivel="basico">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Cuánto más daña el ataque que el azar?</span>
+</div>
+<p><strong>Planteamiento.</strong> En el pueblo de la intuición, cada noche se cierra una calle. Calcule el número esperado de lugares aislados si la calle se elige al azar y si la elige alguien que quiere aislar a la mayor cantidad de gente.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Azar frente a intención</span>
+</div>
+<div class="paso">
+<p><strong>Clasifique las calles.</strong> De las nueve, seis están en ciclos del casco urbano y no aíslan a nadie. Tres son puentes: el del río aísla 3 lugares; Vereda Alta-Finca y Vereda Alta-Molino aíslan 1 cada uno.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule el valor esperado al azar.</strong> Cada calle tiene probabilidad <span class="math inline">1/9</span>:</p>
+<p><span class="math display">E[\text{aislados}] = \frac{0 \times 6 + 3 + 1 + 1}{9} = \frac{5}{9} \approx 0{,}56 \text{ lugares por cierre.}</span></p>
+</div>
+<div class="paso">
+<p><strong>Encuentre el blanco del ataque.</strong> La calle con mayor intermediación de aristas es el puente del río: todos los caminos entre los 5 lugares del casco y los 3 de la vereda lo cruzan, <span class="math inline">5 \times 3 = 15</span> de las 28 parejas.</p>
+</div>
+<div class="paso">
+<p><strong>Compare.</strong> El ataque aísla 3 lugares con certeza, <span class="math inline">3 / 0{,}56 \approx 5{,}4</span> veces el daño esperado al azar. La red no cambió; cambió la manera de elegir.</p>
+</div>
+</div>
+</section>
+<section id="n-1-a-mano-en-ocho-subestaciones" class="level3">
+<h3 class="anchored" data-anchor-id="n-1-a-mano-en-ocho-subestaciones">N-1 a mano en ocho subestaciones</h3>
+<div class="ejemplo caja" data-nivel="intermedio">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">¿Qué subestaciones fallan el criterio?</span>
+</div>
+<p><strong>Planteamiento.</strong> Un sistema regional tiene una hidroeléctrica de 300 MW unida por dos líneas a un anillo de cuatro subestaciones de carga, una térmica de 150 MW conectada solo a Sur y un ramal Este-Pueblo-Vereda. La demanda total es de 300 MW. Aplique el criterio N-1 topológico a cada subestación.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Retirar cada subestación</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-nmenos1-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s2-08-nmenos1-1.svg" class="img-fluid" alt="Ocho subestaciones con su demanda o generación en megavatios."></a></p>
+<p><strong>Anote demanda y generación.</strong> Norte 80, Oeste 70, Este 50, Sur 60, Pueblo 30 y Vereda 10 MW de demanda; Hidro 300 y Térmica 150 MW de generación.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-nmenos1-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s2-08-nmenos1-2.svg" class="img-fluid" alt="Sale Este: Pueblo y Vereda quedan aislados."></a></p>
+<p><strong>Retire Este.</strong> El ramal queda colgando: Pueblo y Vereda, con 40 MW, quedan aislados. Falla el N-1 topológico. Retirar Pueblo aísla a Vereda (10 MW), por la misma razón.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-nmenos1-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s2-08-nmenos1-3.svg" class="img-fluid" alt="Sale Sur: la Térmica queda aislada."></a></p>
+<p><strong>Retire Sur.</strong> La Térmica queda aislada con sus 150 MW. Ninguna demanda se desconecta, pero el sistema pierde su respaldo: también falla.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-nmenos1-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s2-08-nmenos1-4.svg" class="img-fluid" alt="Sale Hidro: la red sigue conexa pero falta generación."></a></p>
+<p><strong>Retire Hidro.</strong> La red sigue conexa y el N-1 topológico se cumple. El balance dice otra cosa: quedan 150 MW para 300 MW de demanda. La topología dice «pasa» y el balance de potencia dice «no pasa».</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-08-nmenos1-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s2-08-nmenos1-5.svg" class="img-fluid" alt="Resumen: Este, Pueblo y Sur fallan el N-1 topológico."></a></p>
+<p><strong>Resuma.</strong> Tres subestaciones fallan el N-1 topológico, Este, Pueblo y Sur, y las tres son puntos de articulación. Norte, Oeste, Térmica y Vereda lo cumplen; Hidro lo cumple en topología y lo falla en generación.</p>
+</div>
+</div>
+<div id="pred-norte" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Sale Norte, la subestación de mayor demanda (80 MW). ¿Qué dice el N-1?</p>
+<div class="opcion">
+<p>Falla el topológico: es la carga más grande y la red se parte.</p>
+</div>
+<div class="opcion">
+<p>Cumple el topológico y sobra generación, pero todavía no se puede afirmar que cumpla el operativo.</p>
+</div>
+<div class="opcion">
+<p>Cumple el N-1 operativo, porque la red sigue conexa.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Criterio N-1 en ocho subestaciones</span>
+</div>
+<p>Elija la subestación que sale y lea qué queda aislado y cómo queda el balance en la red principal. Pruebe Norte y compare con su predicción; después pruebe Hidro.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="240" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 239;"><span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a>ochoN <span class="op">=</span> ({</span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a>  <span class="dt">aristas</span><span class="op">:</span> [[<span class="st">"Hidro"</span><span class="op">,</span> <span class="st">"Norte"</span>]<span class="op">,</span> [<span class="st">"Hidro"</span><span class="op">,</span> <span class="st">"Oeste"</span>]<span class="op">,</span> [<span class="st">"Norte"</span><span class="op">,</span> <span class="st">"Este"</span>]<span class="op">,</span> [<span class="st">"Este"</span><span class="op">,</span> <span class="st">"Sur"</span>]<span class="op">,</span> [<span class="st">"Sur"</span><span class="op">,</span> <span class="st">"Oeste"</span>]<span class="op">,</span> [<span class="st">"Oeste"</span><span class="op">,</span> <span class="st">"Norte"</span>]<span class="op">,</span></span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"Sur"</span><span class="op">,</span> <span class="st">"Térmica"</span>]<span class="op">,</span> [<span class="st">"Este"</span><span class="op">,</span> <span class="st">"Pueblo"</span>]<span class="op">,</span> [<span class="st">"Pueblo"</span><span class="op">,</span> <span class="st">"Vereda"</span>]]<span class="op">,</span></span>
+<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a>  <span class="dt">atributos</span><span class="op">:</span> {<span class="dt">Hidro</span><span class="op">:</span> {<span class="dt">generacion_mw</span><span class="op">:</span> <span class="dv">300</span>}<span class="op">,</span> <span class="dt">Norte</span><span class="op">:</span> {<span class="dt">demanda_mw</span><span class="op">:</span> <span class="dv">80</span>}<span class="op">,</span> <span class="dt">Oeste</span><span class="op">:</span> {<span class="dt">demanda_mw</span><span class="op">:</span> <span class="dv">70</span>}<span class="op">,</span> <span class="dt">Este</span><span class="op">:</span> {<span class="dt">demanda_mw</span><span class="op">:</span> <span class="dv">50</span>}<span class="op">,</span></span>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Sur</span><span class="op">:</span> {<span class="dt">demanda_mw</span><span class="op">:</span> <span class="dv">60</span>}<span class="op">,</span> <span class="dt">Térmica</span><span class="op">:</span> {<span class="dt">generacion_mw</span><span class="op">:</span> <span class="dv">150</span>}<span class="op">,</span> <span class="dt">Pueblo</span><span class="op">:</span> {<span class="dt">demanda_mw</span><span class="op">:</span> <span class="dv">30</span>}<span class="op">,</span> <span class="dt">Vereda</span><span class="op">:</span> {<span class="dt">demanda_mw</span><span class="op">:</span> <span class="dv">10</span>}}<span class="op">,</span></span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a>  <span class="dt">posicion</span><span class="op">:</span> {<span class="dt">Hidro</span><span class="op">:</span> [<span class="op">-</span><span class="fl">1.8</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> <span class="dt">Norte</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">Oeste</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>]<span class="op">,</span> <span class="dt">Este</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">Sur</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>]<span class="op">,</span> <span class="dt">Térmica</span><span class="op">:</span> [<span class="fl">3.9</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>]<span class="op">,</span> <span class="dt">Pueblo</span><span class="op">:</span> [<span class="fl">3.9</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">Vereda</span><span class="op">:</span> [<span class="fl">5.7</span><span class="op">,</span> <span class="dv">1</span>]}<span class="op">,</span></span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="251" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 250;"><span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a>viewof saleN <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"Hidro"</span><span class="op">,</span> <span class="st">"Norte"</span><span class="op">,</span> <span class="st">"Oeste"</span><span class="op">,</span> <span class="st">"Este"</span><span class="op">,</span> <span class="st">"Sur"</span><span class="op">,</span> <span class="st">"Térmica"</span><span class="op">,</span> <span class="st">"Pueblo"</span><span class="op">,</span> <span class="st">"Vereda"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Sale"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"Norte"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="256" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 255;"><span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a>filaN <span class="op">=</span> <span class="fu">analisisNmenos1</span>(<span class="fu">grafo</span>(ochoN<span class="op">.</span><span class="at">aristas</span>)<span class="op">,</span> ochoN<span class="op">.</span><span class="at">atributos</span>)<span class="op">.</span><span class="fu">find</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">nodo</span> <span class="op">===</span> saleN)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="261" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 260;"><span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>balanceN <span class="op">=</span> {</span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fuera <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>([saleN<span class="op">,</span> <span class="op">...</span>filaN<span class="op">.</span><span class="at">aislados</span>])<span class="op">;</span></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> suma <span class="op">=</span> (clave) <span class="kw">=&gt;</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(ochoN<span class="op">.</span><span class="at">atributos</span>)<span class="op">.</span><span class="fu">filter</span>(([n]) <span class="kw">=&gt;</span> <span class="op">!</span>fuera<span class="op">.</span><span class="fu">has</span>(n))<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> [<span class="op">,</span> v]) <span class="kw">=&gt;</span> a <span class="op">+</span> (v[clave] <span class="op">??</span> <span class="dv">0</span>)<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {<span class="dt">demanda</span><span class="op">:</span> <span class="fu">suma</span>(<span class="st">"demanda_mw"</span>)<span class="op">,</span> <span class="dt">generacion</span><span class="op">:</span> <span class="fu">suma</span>(<span class="st">"generacion_mw"</span>)}<span class="op">;</span></span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="270" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 269;"><span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">560</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">220</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(ochoN<span class="op">.</span><span class="at">aristas</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[e[<span class="dv">0</span>]][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[e[<span class="dv">0</span>]][<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[e[<span class="dv">1</span>]][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[e[<span class="dv">1</span>]][<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> (e<span class="op">.</span><span class="fu">includes</span>(saleN) <span class="op">?</span> <span class="st">"#DDD"</span> <span class="op">:</span> <span class="st">"#999"</span>)<span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span>})<span class="op">,</span></span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ochoN<span class="op">.</span><span class="at">posicion</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">11</span><span class="op">,</span></span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> (n <span class="op">===</span> saleN <span class="op">?</span> COLORES<span class="op">.</span><span class="at">rojo</span> <span class="op">:</span> filaN<span class="op">.</span><span class="at">aislados</span><span class="op">.</span><span class="fu">includes</span>(n) <span class="op">?</span> COLORES<span class="op">.</span><span class="at">ambar</span> <span class="op">:</span> ochoN<span class="op">.</span><span class="at">atributos</span>[n]<span class="op">.</span><span class="at">generacion_mw</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">verde</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span>)})<span class="op">,</span></span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ochoN<span class="op">.</span><span class="at">posicion</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">0</span>]<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> ochoN<span class="op">.</span><span class="at">posicion</span>[n][<span class="dv">1</span>]<span class="op">,</span> <span class="dt">text</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> n<span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">19</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">11</span>})<span class="op">,</span></span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="286" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 285;"><span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subestaciones aisladas&lt;b&gt;</span><span class="sc">${</span>filaN<span class="op">.</span><span class="at">nodos_aislados</span> <span class="op">?</span> filaN<span class="op">.</span><span class="at">aislados</span><span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>) <span class="op">:</span> <span class="st">"ninguna"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Demanda aislada&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(filaN<span class="op">.</span><span class="at">demanda_aislada_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Generación aislada&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(filaN<span class="op">.</span><span class="at">generacion_aislada_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Red principal: generación y demanda&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(balanceN<span class="op">.</span><span class="at">generacion</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(balanceN<span class="op">.</span><span class="at">demanda</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Lectura&lt;b&gt;</span><span class="sc">${</span>filaN<span class="op">.</span><span class="at">nodos_aislados</span> <span class="op">?</span> <span class="st">"falla el N-1 topológico"</span> <span class="op">:</span> balanceN<span class="op">.</span><span class="at">generacion</span> <span class="op">&lt;</span> balanceN<span class="op">.</span><span class="at">demanda</span> <span class="op">?</span> <span class="st">"conexa, pero sin generación suficiente"</span> <span class="op">:</span> <span class="st">"cumple el topológico; faltan los flujos"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Red y valores del ejemplo de las notas de la semana 2; análisis N-1 con <code>analisisNmenos1</code> de <code>simuladores/redes.js</code>, que reproduce <code>mise_sd.redes.analisis_n_menos_1</code>. La demanda propia de la subestación que sale se cuenta como perdida.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Lo que dice y lo que calla la topología</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-norte"></span>. La respuesta es la B. Sin Norte la red sigue conexa, con 450 MW de generación para 220 MW de demanda, y cumple el N-1 topológico.</p>
+</div>
+<div class="paso">
+<p><strong>Nombre lo que falta.</strong> Para afirmar que Norte cumple el operativo hacen falta las capacidades y las impedancias de las líneas: sin Hidro-Norte, toda la hidráulica sale por Hidro-Oeste, y si esa línea supera su límite el criterio falla aunque la red siga unida.</p>
+</div>
+<div class="paso">
+<p><strong>Lea la fila de Hidro.</strong> Con Hidro fuera, el simulador muestra 150 MW de generación para 300 MW de demanda. El sistema real tendría que desconectar la mitad de la carga, y la tabla topológica diría que todo está bien.</p>
+</div>
+<div class="paso">
+<p><strong>Guarde la regla.</strong> El N-1 topológico encuentra fallas seguras, porque lo aislado no se atiende. Lo que pasa, pasa a la siguiente revisión: el balance de potencia y los flujos de carga.</p>
+</div>
+</div>
+</section>
+<section id="el-sistema-de-transmisión" class="level3">
+<h3 class="anchored" data-anchor-id="el-sistema-de-transmisión">El sistema de transmisión</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Curvas de robustez y subestaciones críticas del STN estilizado</span>
+</div>
+<p><strong>Planteamiento.</strong> Calcule las curvas de robustez de las 100 subestaciones del sistema estilizado hasta retirar la mitad, para falla aleatoria, ataque por grado y ataque por intermediación. Después aplique el N-1 topológico a cada subestación y construya la lista de críticas.</p>
+</div>
+<div id="pred-stn" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Cuántas subestaciones retiradas por ataque de intermediación hacen falta para que la componente gigante baje de la mitad de la red?</p>
+<div class="opcion">
+<p>Unas 3.</p>
+</div>
+<div class="opcion">
+<p>Unas 10.</p>
+</div>
+<div class="opcion">
+<p>Unas 25, como en la falla aleatoria.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Curvas de robustez del sistema</span>
+</div>
+<p>Compare las tres curvas y lea en cuántos retiros cada una cruza la línea del 50 %. Después apague «Recalcular» y vea cuánto se debilita el ataque cuando usa el orden de la red intacta.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="347" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 346;"><span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a>curvasR <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s2-08-robustez.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="352" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 351;"><span id="cb9-352"><a href="#cb9-352" aria-hidden="true" tabindex="-1"></a>viewof recalcularR <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">toggle</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Recalcular la métrica tras cada retiro"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="kw">true</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="357" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 356;"><span id="cb10-357"><a href="#cb10-357" aria-hidden="true" tabindex="-1"></a>vistaR <span class="op">=</span> {</span>
+<span id="cb10-358"><a href="#cb10-358" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nombres <span class="op">=</span> {<span class="dt">aleatoria</span><span class="op">:</span> <span class="st">"falla aleatoria"</span><span class="op">,</span> <span class="dt">grado</span><span class="op">:</span> <span class="st">"ataque por grado"</span><span class="op">,</span> <span class="dt">intermediacion</span><span class="op">:</span> <span class="st">"ataque por intermediación"</span>}<span class="op">;</span></span>
+<span id="cb10-359"><a href="#cb10-359" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> elegidas <span class="op">=</span> curvasR<span class="op">.</span><span class="fu">filter</span>((c) <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">estrategia</span> <span class="op">===</span> <span class="st">"aleatoria"</span> <span class="op">||</span> c<span class="op">.</span><span class="at">recalcular</span> <span class="op">===</span> recalcularR)<span class="op">;</span></span>
+<span id="cb10-360"><a href="#cb10-360" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> elegidas<span class="op">.</span><span class="fu">flatMap</span>((c) <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> ({<span class="op">...</span>f<span class="op">,</span> <span class="dt">estrategia</span><span class="op">:</span> nombres[c<span class="op">.</span><span class="at">estrategia</span>]})))<span class="op">;</span></span>
+<span id="cb10-361"><a href="#cb10-361" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> resumen <span class="op">=</span> elegidas<span class="op">.</span><span class="fu">map</span>((c) <span class="kw">=&gt;</span> ({<span class="dt">estrategia</span><span class="op">:</span> nombres[c<span class="op">.</span><span class="at">estrategia</span>]<span class="op">,</span> <span class="dt">area</span><span class="op">:</span> c<span class="op">.</span><span class="at">area</span><span class="op">,</span></span>
+<span id="cb10-362"><a href="#cb10-362" aria-hidden="true" tabindex="-1"></a>    <span class="dt">s5</span><span class="op">:</span> c<span class="op">.</span><span class="at">filas</span>[<span class="dv">5</span>]<span class="op">.</span><span class="at">s</span><span class="op">,</span> <span class="dt">s10</span><span class="op">:</span> c<span class="op">.</span><span class="at">filas</span>[<span class="dv">10</span>]<span class="op">.</span><span class="at">s</span><span class="op">,</span> <span class="dt">mitad</span><span class="op">:</span> (c<span class="op">.</span><span class="at">filas</span><span class="op">.</span><span class="fu">find</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">s</span> <span class="op">&lt;</span> <span class="fl">0.5</span>) <span class="op">??</span> {<span class="dt">retirados</span><span class="op">:</span> <span class="kw">NaN</span>})<span class="op">.</span><span class="at">retirados</span>}))<span class="op">;</span></span>
+<span id="cb10-363"><a href="#cb10-363" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {puntos<span class="op">,</span> resumen<span class="op">,</span> <span class="dt">banda</span><span class="op">:</span> curvasR<span class="op">.</span><span class="fu">find</span>((c) <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">estrategia</span> <span class="op">===</span> <span class="st">"aleatoria"</span>)<span class="op">.</span><span class="at">filas</span>}<span class="op">;</span></span>
+<span id="cb10-364"><a href="#cb10-364" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="369" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 368;"><span id="cb11-369"><a href="#cb11-369" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb11-370"><a href="#cb11-370" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb11-371"><a href="#cb11-371" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Subestaciones retiradas →"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">50</span>]}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ Fracción en la componente gigante"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb11-372"><a href="#cb11-372" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"falla aleatoria"</span><span class="op">,</span> <span class="st">"ataque por grado"</span><span class="op">,</span> <span class="st">"ataque por intermediación"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">rojo</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb11-373"><a href="#cb11-373" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb11-374"><a href="#cb11-374" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">areaY</span>(vistaR<span class="op">.</span><span class="at">banda</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"retirados"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> (f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">s</span> <span class="op">-</span> f<span class="op">.</span><span class="at">sd</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> (f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">s</span> <span class="op">+</span> f<span class="op">.</span><span class="at">sd</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.15</span>})<span class="op">,</span></span>
+<span id="cb11-375"><a href="#cb11-375" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.5</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb11-376"><a href="#cb11-376" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(vistaR<span class="op">.</span><span class="at">puntos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"retirados"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"s"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"estrategia"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb11-377"><a href="#cb11-377" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb11-378"><a href="#cb11-378" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="383" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 382;"><span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a><span class="vs">  </span><span class="sc">${</span>vistaR<span class="op">.</span><span class="at">resumen</span><span class="op">.</span><span class="fu">map</span>((r) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span>r<span class="op">.</span><span class="at">estrategia</span><span class="sc">}</span><span class="vs">: S con 5 y 10 retiros · área&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(r<span class="op">.</span><span class="at">s5</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(r<span class="op">.</span><span class="at">s10</span>)<span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(r<span class="op">.</span><span class="at">area</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb12-385"><a href="#cb12-385" aria-hidden="true" tabindex="-1"></a><span class="vs">  </span><span class="sc">${</span>vistaR<span class="op">.</span><span class="at">resumen</span><span class="op">.</span><span class="fu">map</span>((r) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span>r<span class="op">.</span><span class="at">estrategia</span><span class="sc">}</span><span class="vs">: retiros para bajar de 0,5&lt;b&gt;</span><span class="sc">${</span>r<span class="op">.</span><span class="at">mitad</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Grafo estilizado <code>mise_sd.redes.stn_estilizado()</code> con fines didácticos; no es la red real. Curvas de <code>mise_sd.redes.curva_robustez</code> con semilla 2026: promedio de 200 repeticiones para la falla aleatoria (banda de una desviación estándar), de 20 para el ataque por grado y de 5 para el de intermediación, porque los empates se rompen al azar. Área integrada hasta <span class="math inline">f = 0{,}5</span>.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer las curvas</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-stn"></span>. La respuesta es la A: tres retiros bastan. Con cinco, la componente gigante queda en el 27 % de la red.</p>
+</div>
+<div class="paso">
+<p><strong>Lea el azar.</strong> Al azar, diez retiros dejan el 83 % de la red unida, y hace falta retirar la cuarta parte de las subestaciones (26 de 100) para partirla a la mitad. El área es 0,269.</p>
+</div>
+<div class="paso">
+<p><strong>Ubique el ataque por grado.</strong> Queda en medio, con área 0,108 y la mitad de la red partida con 10 retiros: el grado señala bien los nodos grandes, pero no los que unen regiones. El ataque por intermediación, con área 0,068, es el más dañino.</p>
+</div>
+<div class="paso">
+<p><strong>Apague el recálculo.</strong> Sin recalcular, el área del ataque por intermediación sube de 0,068 a 0,121: tras cada retiro los caminos se reorganizan y aparecen nuevos cuellos de botella que el orden inicial no ve.</p>
+</div>
+<div class="paso">
+<p><strong>Ponga el resultado en contexto.</strong> Albert, Albert y Nakarado (2004) encontraron en la red de Norteamérica que retirar el 4 % de las subestaciones de mayor carga producía hasta un 60 % de pérdida de conectividad, aunque esa red tampoco es libre de escala. En las dos redes, la fragilidad frente al ataque viene de los cuellos de botella entre regiones.</p>
+</div>
+</div>
+<div id="e28254a2" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, eje <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="fl">3.6</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>estilos <span class="op">=</span> {<span class="st">"aleatoria"</span>: (<span class="st">"falla aleatoria"</span>, COLORES[<span class="st">"gris"</span>]), <span class="st">"grado"</span>: (<span class="st">"ataque por grado"</span>, COLORES[<span class="st">"azul"</span>]),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">"intermediacion"</span>: (<span class="st">"ataque por intermediación"</span>, COLORES[<span class="st">"rojo"</span>])}</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> estrategia, (nombre, color) <span class="kw">in</span> estilos.items():</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    curva <span class="op">=</span> curvas[(estrategia, <span class="va">True</span>)]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    eje.plot(curva[<span class="st">"nodos_retirados"</span>], curva[<span class="st">"fraccion_gigante"</span>], color<span class="op">=</span>color, label<span class="op">=</span>nombre)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> estrategia <span class="op">==</span> <span class="st">"aleatoria"</span>:</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        eje.fill_between(curva[<span class="st">"nodos_retirados"</span>], curva[<span class="st">"fraccion_gigante"</span>] <span class="op">-</span> curva[<span class="st">"desviacion"</span>],</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                         curva[<span class="st">"fraccion_gigante"</span>] <span class="op">+</span> curva[<span class="st">"desviacion"</span>], color<span class="op">=</span>color, alpha<span class="op">=</span><span class="fl">0.15</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>eje.axhline(<span class="fl">0.5</span>, color<span class="op">=</span>COLORES[<span class="st">"ambar"</span>], linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>eje.set_xlabel(<span class="st">"Subestaciones retiradas"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>eje.set_ylabel(<span class="st">"Fracción en la componente gigante"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>eje.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="08-robustez-n1_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Curvas de robustez del sistema de transmisión estilizado: falla aleatoria (promedio de 200 repeticiones con banda de una desviación estándar) y ataques adaptativos por grado y por intermediación. Datos sintéticos con fines didácticos."><img src="08-robustez-n1_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" alt="Curvas de robustez del sistema de transmisión estilizado: falla aleatoria (promedio de 200 repeticiones con banda de una desviación estándar) y ataques adaptativos por grado y por intermediación. Datos sintéticos con fines didácticos."></a></p>
+<figcaption>Curvas de robustez del sistema de transmisión estilizado: falla aleatoria (promedio de 200 repeticiones con banda de una desviación estándar) y ataques adaptativos por grado y por intermediación. Datos sintéticos con fines didácticos.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La curva cuenta subestaciones. Al decisor le importan los megavatios, y para eso sirve el N-1 con atributos.</p>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">N-1 del sistema de transmisión</span>
+</div>
+<p>Elija una subestación y vea qué deja aislado su salida. Empiece por Primavera, la más central, y compare con Sabanalarga y con Torca.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="444" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 443;"><span id="cb14-444"><a href="#cb14-444" aria-hidden="true" tabindex="-1"></a>stnN <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s2-stn.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="449" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 448;"><span id="cb15-449"><a href="#cb15-449" aria-hidden="true" tabindex="-1"></a>tablaN <span class="op">=</span> <span class="fu">analisisNmenos1</span>(<span class="fu">grafo</span>(stnN<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> [e<span class="op">.</span><span class="at">a</span><span class="op">,</span> e<span class="op">.</span><span class="at">b</span>])<span class="op">,</span> stnN<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span>))<span class="op">,</span></span>
+<span id="cb15-450"><a href="#cb15-450" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(stnN<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">.</span><span class="at">id</span><span class="op">,</span> {<span class="dt">demanda_mw</span><span class="op">:</span> n<span class="op">.</span><span class="at">demanda_mw</span><span class="op">,</span> <span class="dt">generacion_mw</span><span class="op">:</span> n<span class="op">.</span><span class="at">generacion_mw</span>}])))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="455" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 454;"><span id="cb16-455"><a href="#cb16-455" aria-hidden="true" tabindex="-1"></a>viewof saleS <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(tablaN<span class="op">.</span><span class="fu">map</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">nodo</span>)<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Sale"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"Primavera"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-15" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb17" data-startfrom="460" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 459;"><span id="cb17-460"><a href="#cb17-460" aria-hidden="true" tabindex="-1"></a>filaS <span class="op">=</span> tablaN<span class="op">.</span><span class="fu">find</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">nodo</span> <span class="op">===</span> saleS)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-16" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb18" data-startfrom="465" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 464;"><span id="cb18-465"><a href="#cb18-465" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb18-466"><a href="#cb18-466" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">560</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">480</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">aspectRatio</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb18-467"><a href="#cb18-467" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb18-468"><a href="#cb18-468" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb18-469"><a href="#cb18-469" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(stnN<span class="op">.</span><span class="at">aristas</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> stnN<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">a</span>)<span class="op">.</span><span class="at">lon</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> stnN<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">a</span>)<span class="op">.</span><span class="at">lat</span><span class="op">,</span></span>
+<span id="cb18-470"><a href="#cb18-470" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> stnN<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">b</span>)<span class="op">.</span><span class="at">lon</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> stnN<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">b</span>)<span class="op">.</span><span class="at">lat</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#CCC"</span>})<span class="op">,</span></span>
+<span id="cb18-471"><a href="#cb18-471" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(stnN<span class="op">.</span><span class="at">nodos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleS <span class="op">||</span> filaS<span class="op">.</span><span class="at">aislados</span><span class="op">.</span><span class="fu">includes</span>(n<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> <span class="dv">7</span> <span class="op">:</span> <span class="fl">3.5</span>)<span class="op">,</span></span>
+<span id="cb18-472"><a href="#cb18-472" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleS <span class="op">?</span> COLORES<span class="op">.</span><span class="at">rojo</span> <span class="op">:</span> filaS<span class="op">.</span><span class="at">aislados</span><span class="op">.</span><span class="fu">includes</span>(n<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> COLORES<span class="op">.</span><span class="at">ambar</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span>)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span>})<span class="op">,</span></span>
+<span id="cb18-473"><a href="#cb18-473" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(stnN<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleS)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"id"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">12</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span>})<span class="op">,</span></span>
+<span id="cb18-474"><a href="#cb18-474" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb18-475"><a href="#cb18-475" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-17" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb19" data-startfrom="480" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 479;"><span id="cb19-480"><a href="#cb19-480" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb19-481"><a href="#cb19-481" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Grado y demanda propia&lt;b&gt;</span><span class="sc">${</span>filaS<span class="op">.</span><span class="at">grado</span><span class="sc">}</span><span class="vs"> líneas · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(filaS<span class="op">.</span><span class="at">demanda_propia_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-482"><a href="#cb19-482" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subestaciones aisladas&lt;b&gt;</span><span class="sc">${</span>filaS<span class="op">.</span><span class="at">nodos_aislados</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span>filaS<span class="op">.</span><span class="at">nodos_aislados</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>filaS<span class="op">.</span><span class="at">aislados</span><span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> <span class="st">"ninguna"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-483"><a href="#cb19-483" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Demanda aislada&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(filaS<span class="op">.</span><span class="at">demanda_aislada_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-484"><a href="#cb19-484" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Generación aislada&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(filaS<span class="op">.</span><span class="at">generacion_aislada_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-485"><a href="#cb19-485" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subestaciones que fallan el N-1 topológico&lt;b&gt;</span><span class="sc">${</span>tablaN<span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">nodos_aislados</span> <span class="op">&gt;</span> <span class="dv">0</span>)<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span>tablaN<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-486"><a href="#cb19-486" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-18" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Grafo estilizado <code>mise_sd.redes.stn_estilizado()</code> con demanda y generación sintéticas por subestación, calibradas a órdenes de magnitud del sistema colombiano; datos sintéticos con fines didácticos. La lista de subestaciones viene ordenada por severidad, igual que <code>mise_sd.redes.analisis_n_menos_1</code>.</p>
+</div>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la lista de críticas</span>
+</div>
+<div class="paso">
+<p><strong>Mire el primer puesto.</strong> La salida de Sabanalarga separa los anillos de Barranquilla y Cartagena: 8 subestaciones, 1 130 MW de demanda y 1 714 MW de generación térmica, en esta red estilizada.</p>
+</div>
+<div class="paso">
+<p><strong>Mire a Primavera.</strong> La subestación de mayor grado e intermediación aísla solo tres nodos, los ramales de Malena, Termocentro y Termosierra: 60 MW de demanda y 740 MW de generación. Ser central significa estar en muchos caminos; si esos caminos tienen alternativa, la salida no aísla a nadie.</p>
+</div>
+<div class="paso">
+<p><strong>Mire a Torca.</strong> Con la mayor demanda propia del sistema, 500 MW, Torca no aísla a nadie: su propia carga se pierde, pero el resto sigue unido.</p>
+</div>
+<div class="paso">
+<p><strong>Cuente.</strong> De las 100 subestaciones, 20 fallan el N-1 topológico, las mismas 20 que son puntos de articulación. Por líneas, 22 de 131 lo fallan: los 22 puentes.</p>
+</div>
+<div class="paso">
+<p><strong>Arme la tabla.</strong> Las seis más críticas por número de nodos aislados:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Subestación</th>
+<th style="text-align: right;">Grado</th>
+<th style="text-align: right;">Aislados</th>
+<th style="text-align: right;">Demanda aislada [MW]</th>
+<th style="text-align: right;">Generación aislada [MW]</th>
+<th style="text-align: right;">Demanda propia [MW]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sabanalarga</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1 130</td>
+<td style="text-align: right;">1 714</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="even">
+<td>Toledo</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td>Yumbo</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">485</td>
+<td style="text-align: right;">220</td>
+</tr>
+<tr class="even">
+<td>Primavera</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">740</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td>Cuestecitas</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="even">
+<td>Samoré</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Declare el alcance.</strong> La salida completa de una subestación es más severa que la contingencia sencilla del criterio operativo, que retira un solo elemento, y el análisis ignora capacidades. La lista sirve para priorizar estudios eléctricos, no para reemplazarlos.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="errores-comunes" class="level2">
+<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tomar el N-1 topológico por el operativo</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Sin Hidro la red sigue conexa: el sistema cumple el N-1.»</p>
+</div>
+<div class="bien">
+<p>Sin Hidro la red sigue conexa, pero quedan 150 MW para 300 MW de demanda. El N-1 topológico solo descarta lo que queda aislado; el balance de potencia y los flujos de carga deciden lo demás.</p>
+</div>
+</div>
+<p>Puede reproducirlo en el simulador de las ocho subestaciones eligiendo Hidro.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Comparar ataques sin decir si se recalcula</span>
+</div>
+<p>El ataque que recalcula la intermediación tras cada retiro es mucho más dañino que el que usa el orden inicial. En el sistema estilizado, el área pasa de 0,068 a 0,121 al dejar de recalcular. Un informe que no dice cuál usó no permite comparar sus cifras. Apague «Recalcular» en el simulador de curvas para verlo.</p>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Medir la robustez en nodos cuando al decisor le importa la demanda</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«La salida de Primavera y la de Toledo aíslan tres subestaciones cada una: son igual de graves.»</p>
+</div>
+<div class="bien">
+<p>Primavera aísla 60 MW de demanda y 740 MW de generación; Toledo aísla 190 MW de demanda y ninguna generación. Acompañe cada cifra en nodos con la demanda y la generación desconectadas.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="compruebe-lo-aprendido" class="level2">
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una red resiste bien las fallas al azar y se parte con pocos retiros dirigidos. ¿Qué explica esa diferencia?</p>
+<div class="opcion" data-correcta="si">
+<p>Que sus nodos no son todos iguales: unos pocos unen partes que no tienen otra ruta.</p>
+<p><span class="porque">Correcto: el azar casi nunca acierta a esos pocos; el ataque va directo a ellos.</span></p>
+</div>
+<div class="opcion">
+<p>Que el ataque retira más nodos que la falla aleatoria.</p>
+<p><span class="porque">Las dos estrategias retiran el mismo número de nodos; revise qué cambia en la elección.</span></p>
+</div>
+<div class="opcion">
+<p>Que la red es libre de escala.</p>
+<p><span class="porque">El sistema estilizado no es libre de escala y aun así es frágil ante el ataque. Revise la página de modelos de red.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Una subestación sale y la red sigue conexa. ¿Qué puede afirmar?</p>
+<div class="opcion" data-correcta="si">
+<p>Que cumple el N-1 topológico y que falta verificar balance y flujos.</p>
+<p><span class="porque">Correcto.</span></p>
+</div>
+<div class="opcion">
+<p>Que cumple el N-1 operativo.</p>
+<p><span class="porque">Recuerde la fila de Hidro: conexa y con la mitad de la generación que hace falta.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En una red de 12 líneas, 4 son puentes que aíslan 2, 1, 1 y 4 nodos. ¿Cuántos nodos aísla en promedio la salida de una línea al azar?</p>
+<div class="opcion" data-correcta="si">
+<p><span class="math inline">8/12 \approx 0{,}67</span>.</p>
+<p><span class="porque">Correcto: las 8 líneas restantes aíslan cero.</span></p>
+</div>
+<div class="opcion">
+<p><span class="math inline">8/4 = 2</span>.</p>
+<p><span class="porque">Así se promedia solo sobre los puentes; la línea que sale al azar puede ser cualquiera de las 12.</span></p>
+</div>
+<div class="opcion">
+<p>4, el peor caso.</p>
+<p><span class="porque">Ese es el resultado del ataque, no el valor esperado al azar.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el simulador de curvas, ¿qué pasa con el ataque por intermediación al apagar «Recalcular»?</p>
+<div class="opcion" data-correcta="si">
+<p>Se debilita: el área sube de 0,068 a 0,121.</p>
+<p><span class="porque">Correcto: el orden inicial no ve los cuellos de botella que aparecen después de cada retiro.</span></p>
+</div>
+<div class="opcion">
+<p>Se vuelve más dañino, porque ataca más rápido.</p>
+<p><span class="porque">Apague el control y compare las áreas.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Torca tiene la mayor demanda propia del sistema y no aísla a nadie. ¿Qué concluye?</p>
+<div class="opcion" data-correcta="si">
+<p>Que su salida pierde su propia carga, pero no parte la red.</p>
+<p><span class="porque">Correcto: la demanda propia y la aislada son columnas distintas de la tabla.</span></p>
+</div>
+<div class="opcion">
+<p>Que su salida no tiene consecuencias.</p>
+<p><span class="porque">Revise la columna de demanda propia: 500 MW se pierden con la subestación.</span></p>
+</div>
+</div>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<section id="ejercicio-1-un-segundo-puente" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-un-segundo-puente">Ejercicio 1 ●○○ · Un segundo puente</h4>
+<p>En el pueblo se construye un segundo puente, del Hospital al Molino. (a) ¿Qué calles siguen siendo puentes? (b) ¿Cuál es ahora la probabilidad de aislar a alguien con un cierre al azar, y el número esperado de lugares aislados? (c) ¿Cuántos cierres elegidos hacen falta para aislar a la Vereda Alta?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Solo queda un puente, Vereda Alta-Finca. El puente del río y Vereda Alta-Molino dejan de serlo, porque forman el ciclo Mercado-Vereda Alta-Molino-Hospital-Mercado.</p></li>
+<li><p>Hay 10 calles y solo una aísla a alguien: probabilidad <span class="math inline">1/10</span> y <span class="math inline">0{,}1</span> lugares aislados esperados por cierre, frente a 0,56 antes.</p></li>
+<li><p>Dos cierres, por ejemplo Mercado-Vereda Alta y Vereda Alta-Molino. La conectividad de aristas entre la Plaza y la Vereda Alta pasó de 1 a 2: una sola obra redujo el daño esperado a la sexta parte y duplicó el esfuerzo que necesita el ataque.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-reforzar-el-sistema-de-ocho-subestaciones" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-reforzar-el-sistema-de-ocho-subestaciones">Ejercicio 2 ●●○ · Reforzar el sistema de ocho subestaciones</h4>
+<ol type="a">
+<li>Proponga el menor número de líneas nuevas con el que ninguna salida de subestación ni de línea aísle demanda ni generación. (b) Explique por qué la línea Vereda-Este no resuelve el problema del ramal.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Bastan dos líneas: una que cierre el ramal por un nodo distinto de Este, como Vereda-Sur, y otra que dé a la Térmica un segundo punto de conexión, como Térmica-Oeste. Con menos de dos no alcanza, porque el ramal Este-Pueblo-Vereda y la conexión radial de la Térmica son dos problemas independientes. Con ambas líneas, <code>redes.analisis_n_menos_1</code> y <code>redes.analisis_n_menos_1_lineas</code> devuelven cero nodos aislados para todas las salidas. Vereda-Norte y Térmica-Hidro también funcionan.</p></li>
+<li><p>Vereda-Este forma el triángulo Este-Pueblo-Vereda, que sigue colgado de la red solo por Este: si sale Este, Pueblo y Vereda quedan aislados. La línea elimina los puentes Este-Pueblo y Pueblo-Vereda, pero Este sigue siendo punto de articulación. Para el N-1 de subestaciones, el ramal necesita una segunda salida hacia otra subestación.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="en-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>La <strong>curva de robustez</strong> <span class="math inline">S(f)</span> mide la componente gigante al retirar nodos; su área <span class="math inline">R</span> resume cuántos retiros resiste la red.</li>
+<li><strong>Robusta pero frágil</strong>: en el sistema estilizado, el azar necesita 26 retiros para partir la red a la mitad y el ataque por intermediación, <strong>3</strong>.</li>
+<li>El ataque <strong>adaptativo</strong> es más dañino: área 0,068 recalculando y 0,121 sin recalcular. Diga siempre cuál usó.</li>
+<li>El <strong>N-1 topológico</strong> encuentra puntos de articulación y puentes: 20 de 100 subestaciones y 22 de 131 líneas en el sistema estilizado. Es <strong>necesario, no suficiente</strong>: la red conexa todavía debe pasar balance y flujos.</li>
+<li>Reporte en <strong>megavatios</strong>: la subestación más central (Primavera) aísla 60 MW de demanda; Sabanalarga, 1 130 MW.</li>
+</ul>
+</div>
+<p><strong>Para profundizar.</strong> La sección «Robustez: falla aleatoria, ataque dirigido y criterio N-1» de las notas de la semana 2 trae el N-1 por líneas y un ejercicio que mide la robustez en megavatios. La página siguiente agrega lo que la topología ignora, las capacidades, y muestra cómo una sola salida puede desencadenar una cascada.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Z3JhZm8sIGFuYWxpc2lzTm1lbm9zMX0gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL3JlZGVzLmpzXCJcbmltcG9ydCB7Zm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Im9jaG9OID0gKHtcbiAgYXJpc3RhczogW1tcIkhpZHJvXCIsIFwiTm9ydGVcIl0sIFtcIkhpZHJvXCIsIFwiT2VzdGVcIl0sIFtcIk5vcnRlXCIsIFwiRXN0ZVwiXSwgW1wiRXN0ZVwiLCBcIlN1clwiXSwgW1wiU3VyXCIsIFwiT2VzdGVcIl0sIFtcIk9lc3RlXCIsIFwiTm9ydGVcIl0sXG4gICAgW1wiU3VyXCIsIFwiVMOpcm1pY2FcIl0sIFtcIkVzdGVcIiwgXCJQdWVibG9cIl0sIFtcIlB1ZWJsb1wiLCBcIlZlcmVkYVwiXV0sXG4gIGF0cmlidXRvczoge0hpZHJvOiB7Z2VuZXJhY2lvbl9tdzogMzAwfSwgTm9ydGU6IHtkZW1hbmRhX213OiA4MH0sIE9lc3RlOiB7ZGVtYW5kYV9tdzogNzB9LCBFc3RlOiB7ZGVtYW5kYV9tdzogNTB9LFxuICAgIFN1cjoge2RlbWFuZGFfbXc6IDYwfSwgVMOpcm1pY2E6IHtnZW5lcmFjaW9uX213OiAxNTB9LCBQdWVibG86IHtkZW1hbmRhX213OiAzMH0sIFZlcmVkYToge2RlbWFuZGFfbXc6IDEwfX0sXG4gIHBvc2ljaW9uOiB7SGlkcm86IFstMS44LCAwXSwgTm9ydGU6IFswLCAxXSwgT2VzdGU6IFswLCAtMV0sIEVzdGU6IFsyLCAxXSwgU3VyOiBbMiwgLTFdLCBUw6lybWljYTogWzMuOSwgLTFdLCBQdWVibG86IFszLjksIDFdLCBWZXJlZGE6IFs1LjcsIDFdfSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2Ygc2FsZU4gPSBJbnB1dHMucmFkaW8oW1wiSGlkcm9cIiwgXCJOb3J0ZVwiLCBcIk9lc3RlXCIsIFwiRXN0ZVwiLCBcIlN1clwiLCBcIlTDqXJtaWNhXCIsIFwiUHVlYmxvXCIsIFwiVmVyZWRhXCJdLCB7bGFiZWw6IFwiU2FsZVwiLCB2YWx1ZTogXCJOb3J0ZVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImZpbGFOID0gYW5hbGlzaXNObWVub3MxKGdyYWZvKG9jaG9OLmFyaXN0YXMpLCBvY2hvTi5hdHJpYnV0b3MpLmZpbmQoKGYpID0+IGYubm9kbyA9PT0gc2FsZU4pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJiYWxhbmNlTiA9IHtcbiAgY29uc3QgZnVlcmEgPSBuZXcgU2V0KFtzYWxlTiwgLi4uZmlsYU4uYWlzbGFkb3NdKTtcbiAgY29uc3Qgc3VtYSA9IChjbGF2ZSkgPT4gT2JqZWN0LmVudHJpZXMob2Nob04uYXRyaWJ1dG9zKS5maWx0ZXIoKFtuXSkgPT4gIWZ1ZXJhLmhhcyhuKSkucmVkdWNlKChhLCBbLCB2XSkgPT4gYSArICh2W2NsYXZlXSA/PyAwKSwgMCk7XG4gIHJldHVybiB7ZGVtYW5kYTogc3VtYShcImRlbWFuZGFfbXdcIiksIGdlbmVyYWNpb246IHN1bWEoXCJnZW5lcmFjaW9uX213XCIpfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNTYwKSwgaGVpZ2h0OiAyMjAsIGluc2V0OiAzMCxcbiAgeDoge2F4aXM6IG51bGx9LCB5OiB7YXhpczogbnVsbH0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5rKG9jaG9OLmFyaXN0YXMsIHt4MTogKGUpID0+IG9jaG9OLnBvc2ljaW9uW2VbMF1dWzBdLCB5MTogKGUpID0+IG9jaG9OLnBvc2ljaW9uW2VbMF1dWzFdLFxuICAgICAgeDI6IChlKSA9PiBvY2hvTi5wb3NpY2lvbltlWzFdXVswXSwgeTI6IChlKSA9PiBvY2hvTi5wb3NpY2lvbltlWzFdXVsxXSxcbiAgICAgIHN0cm9rZTogKGUpID0+IChlLmluY2x1ZGVzKHNhbGVOKSA/IFwiI0RERFwiIDogXCIjOTk5XCIpLCBzdHJva2VXaWR0aDogMS41fSksXG4gICAgUGxvdC5kb3QoT2JqZWN0LmtleXMob2Nob04ucG9zaWNpb24pLCB7eDogKG4pID0+IG9jaG9OLnBvc2ljaW9uW25dWzBdLCB5OiAobikgPT4gb2Nob04ucG9zaWNpb25bbl1bMV0sIHI6IDExLFxuICAgICAgZmlsbDogKG4pID0+IChuID09PSBzYWxlTiA/IENPTE9SRVMucm9qbyA6IGZpbGFOLmFpc2xhZG9zLmluY2x1ZGVzKG4pID8gQ09MT1JFUy5hbWJhciA6IG9jaG9OLmF0cmlidXRvc1tuXS5nZW5lcmFjaW9uX213ID8gQ09MT1JFUy52ZXJkZSA6IENPTE9SRVMuYXp1bCl9KSxcbiAgICBQbG90LnRleHQoT2JqZWN0LmtleXMob2Nob04ucG9zaWNpb24pLCB7eDogKG4pID0+IG9jaG9OLnBvc2ljaW9uW25dWzBdLCB5OiAobikgPT4gb2Nob04ucG9zaWNpb25bbl1bMV0sIHRleHQ6IChuKSA9PiBuLCBkeTogLTE5LCBmb250U2l6ZTogMTF9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PlN1YmVzdGFjaW9uZXMgYWlzbGFkYXM8Yj4ke2ZpbGFOLm5vZG9zX2Fpc2xhZG9zID8gZmlsYU4uYWlzbGFkb3Muam9pbihcIiwgXCIpIDogXCJuaW5ndW5hXCJ9PC9iPjwvZGl2PlxuICA8ZGl2PkRlbWFuZGEgYWlzbGFkYTxiPiR7Zm9ybWF0b051bWVybygwKShmaWxhTi5kZW1hbmRhX2Fpc2xhZGFfbXcpfSBNVzwvYj48L2Rpdj5cbiAgPGRpdj5HZW5lcmFjacOzbiBhaXNsYWRhPGI+JHtmb3JtYXRvTnVtZXJvKDApKGZpbGFOLmdlbmVyYWNpb25fYWlzbGFkYV9tdyl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PlJlZCBwcmluY2lwYWw6IGdlbmVyYWNpw7NuIHkgZGVtYW5kYTxiPiR7Zm9ybWF0b051bWVybygwKShiYWxhbmNlTi5nZW5lcmFjaW9uKX0geSAke2Zvcm1hdG9OdW1lcm8oMCkoYmFsYW5jZU4uZGVtYW5kYSl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PkxlY3R1cmE8Yj4ke2ZpbGFOLm5vZG9zX2Fpc2xhZG9zID8gXCJmYWxsYSBlbCBOLTEgdG9wb2zDs2dpY29cIiA6IGJhbGFuY2VOLmdlbmVyYWNpb24gPCBiYWxhbmNlTi5kZW1hbmRhID8gXCJjb25leGEsIHBlcm8gc2luIGdlbmVyYWNpw7NuIHN1ZmljaWVudGVcIiA6IFwiY3VtcGxlIGVsIHRvcG9sw7NnaWNvOyBmYWx0YW4gbG9zIGZsdWpvc1wifTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImN1cnZhc1IgPSBGaWxlQXR0YWNobWVudChcImRhdG9zL3MyLTA4LXJvYnVzdGV6Lmpzb25cIikuanNvbigpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgcmVjYWxjdWxhclIgPSBJbnB1dHMudG9nZ2xlKHtsYWJlbDogXCJSZWNhbGN1bGFyIGxhIG3DqXRyaWNhIHRyYXMgY2FkYSByZXRpcm9cIiwgdmFsdWU6IHRydWV9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpc3RhUiA9IHtcbiAgY29uc3Qgbm9tYnJlcyA9IHthbGVhdG9yaWE6IFwiZmFsbGEgYWxlYXRvcmlhXCIsIGdyYWRvOiBcImF0YXF1ZSBwb3IgZ3JhZG9cIiwgaW50ZXJtZWRpYWNpb246IFwiYXRhcXVlIHBvciBpbnRlcm1lZGlhY2nDs25cIn07XG4gIGNvbnN0IGVsZWdpZGFzID0gY3VydmFzUi5maWx0ZXIoKGMpID0+IGMuZXN0cmF0ZWdpYSA9PT0gXCJhbGVhdG9yaWFcIiB8fCBjLnJlY2FsY3VsYXIgPT09IHJlY2FsY3VsYXJSKTtcbiAgY29uc3QgcHVudG9zID0gZWxlZ2lkYXMuZmxhdE1hcCgoYykgPT4gYy5maWxhcy5tYXAoKGYpID0+ICh7Li4uZiwgZXN0cmF0ZWdpYTogbm9tYnJlc1tjLmVzdHJhdGVnaWFdfSkpKTtcbiAgY29uc3QgcmVzdW1lbiA9IGVsZWdpZGFzLm1hcCgoYykgPT4gKHtlc3RyYXRlZ2lhOiBub21icmVzW2MuZXN0cmF0ZWdpYV0sIGFyZWE6IGMuYXJlYSxcbiAgICBzNTogYy5maWxhc1s1XS5zLCBzMTA6IGMuZmlsYXNbMTBdLnMsIG1pdGFkOiAoYy5maWxhcy5maW5kKChmKSA9PiBmLnMgPCAwLjUpID8/IHtyZXRpcmFkb3M6IE5hTn0pLnJldGlyYWRvc30pKTtcbiAgcmV0dXJuIHtwdW50b3MsIHJlc3VtZW4sIGJhbmRhOiBjdXJ2YXNSLmZpbmQoKGMpID0+IGMuZXN0cmF0ZWdpYSA9PT0gXCJhbGVhdG9yaWFcIikuZmlsYXN9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAzMjAsIG1hcmdpbkxlZnQ6IDUwLFxuICB4OiB7bGFiZWw6IFwiU3ViZXN0YWNpb25lcyByZXRpcmFkYXMg4oaSXCIsIGRvbWFpbjogWzAsIDUwXX0sIHk6IHtsYWJlbDogXCLihpEgRnJhY2Npw7NuIGVuIGxhIGNvbXBvbmVudGUgZ2lnYW50ZVwiLCBkb21haW46IFswLCAxXSwgZ3JpZDogdHJ1ZX0sXG4gIGNvbG9yOiB7ZG9tYWluOiBbXCJmYWxsYSBhbGVhdG9yaWFcIiwgXCJhdGFxdWUgcG9yIGdyYWRvXCIsIFwiYXRhcXVlIHBvciBpbnRlcm1lZGlhY2nDs25cIl0sIHJhbmdlOiBbQ09MT1JFUy5ncmlzLCBDT0xPUkVTLmF6dWwsIENPTE9SRVMucm9qb10sIGxlZ2VuZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5hcmVhWSh2aXN0YVIuYmFuZGEsIHt4OiBcInJldGlyYWRvc1wiLCB5MTogKGYpID0+IGYucyAtIGYuc2QsIHkyOiAoZikgPT4gZi5zICsgZi5zZCwgZmlsbDogQ09MT1JFUy5ncmlzLCBmaWxsT3BhY2l0eTogMC4xNX0pLFxuICAgIFBsb3QucnVsZVkoWzAuNV0sIHtzdHJva2U6IENPTE9SRVMuYW1iYXIsIHN0cm9rZURhc2hhcnJheTogXCI0IDNcIn0pLFxuICAgIFBsb3QubGluZSh2aXN0YVIucHVudG9zLCB7eDogXCJyZXRpcmFkb3NcIiwgeTogXCJzXCIsIHN0cm9rZTogXCJlc3RyYXRlZ2lhXCIsIHN0cm9rZVdpZHRoOiAyfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gICR7dmlzdGFSLnJlc3VtZW4ubWFwKChyKSA9PiBodG1sYDxkaXY+JHtyLmVzdHJhdGVnaWF9OiBTIGNvbiA1IHkgMTAgcmV0aXJvcyDCtyDDoXJlYTxiPiR7Zm9ybWF0b051bWVybygzKShyLnM1KX0geSAke2Zvcm1hdG9OdW1lcm8oMykoci5zMTApfSDCtyAke2Zvcm1hdG9OdW1lcm8oMykoci5hcmVhKX08L2I+PC9kaXY+YCl9XG4gICR7dmlzdGFSLnJlc3VtZW4ubWFwKChyKSA9PiBodG1sYDxkaXY+JHtyLmVzdHJhdGVnaWF9OiByZXRpcm9zIHBhcmEgYmFqYXIgZGUgMCw1PGI+JHtyLm1pdGFkfTwvYj48L2Rpdj5gKX1cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJzdG5OID0gRmlsZUF0dGFjaG1lbnQoXCJkYXRvcy9zMi1zdG4uanNvblwiKS5qc29uKClcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ0YWJsYU4gPSBhbmFsaXNpc05tZW5vczEoZ3JhZm8oc3RuTi5hcmlzdGFzLm1hcCgoZSkgPT4gW2UuYSwgZS5iXSksIHN0bk4ubm9kb3MubWFwKChuKSA9PiBuLmlkKSksXG4gIE9iamVjdC5mcm9tRW50cmllcyhzdG5OLm5vZG9zLm1hcCgobikgPT4gW24uaWQsIHtkZW1hbmRhX213OiBuLmRlbWFuZGFfbXcsIGdlbmVyYWNpb25fbXc6IG4uZ2VuZXJhY2lvbl9td31dKSkpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE1IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHNhbGVTID0gSW5wdXRzLnNlbGVjdCh0YWJsYU4ubWFwKChmKSA9PiBmLm5vZG8pLCB7bGFiZWw6IFwiU2FsZVwiLCB2YWx1ZTogXCJQcmltYXZlcmFcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE2IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZmlsYVMgPSB0YWJsYU4uZmluZCgoZikgPT4gZi5ub2RvID09PSBzYWxlUylcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDU2MCksIGhlaWdodDogNDgwLCBpbnNldDogMTIsIGFzcGVjdFJhdGlvOiAxLFxuICB4OiB7YXhpczogbnVsbH0sIHk6IHtheGlzOiBudWxsfSxcbiAgbWFya3M6IFtcbiAgICBQbG90Lmxpbmsoc3RuTi5hcmlzdGFzLCB7eDE6IChlKSA9PiBzdG5OLm5vZG9zLmZpbmQoKG4pID0+IG4uaWQgPT09IGUuYSkubG9uLCB5MTogKGUpID0+IHN0bk4ubm9kb3MuZmluZCgobikgPT4gbi5pZCA9PT0gZS5hKS5sYXQsXG4gICAgICB4MjogKGUpID0+IHN0bk4ubm9kb3MuZmluZCgobikgPT4gbi5pZCA9PT0gZS5iKS5sb24sIHkyOiAoZSkgPT4gc3RuTi5ub2Rvcy5maW5kKChuKSA9PiBuLmlkID09PSBlLmIpLmxhdCwgc3Ryb2tlOiBcIiNDQ0NcIn0pLFxuICAgIFBsb3QuZG90KHN0bk4ubm9kb3MsIHt4OiBcImxvblwiLCB5OiBcImxhdFwiLCByOiAobikgPT4gKG4uaWQgPT09IHNhbGVTIHx8IGZpbGFTLmFpc2xhZG9zLmluY2x1ZGVzKG4uaWQpID8gNyA6IDMuNSksXG4gICAgICBmaWxsOiAobikgPT4gKG4uaWQgPT09IHNhbGVTID8gQ09MT1JFUy5yb2pvIDogZmlsYVMuYWlzbGFkb3MuaW5jbHVkZXMobi5pZCkgPyBDT0xPUkVTLmFtYmFyIDogQ09MT1JFUy5henVsKSwgc3Ryb2tlOiBcIndoaXRlXCJ9KSxcbiAgICBQbG90LnRleHQoc3RuTi5ub2Rvcy5maWx0ZXIoKG4pID0+IG4uaWQgPT09IHNhbGVTKSwge3g6IFwibG9uXCIsIHk6IFwibGF0XCIsIHRleHQ6IFwiaWRcIiwgZHk6IC0xMiwgZm9udFNpemU6IDEwLCBzdHJva2U6IFwid2hpdGVcIiwgc3Ryb2tlV2lkdGg6IDMsIGZpbGw6IFwiYmxhY2tcIn0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTgiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkdyYWRvIHkgZGVtYW5kYSBwcm9waWE8Yj4ke2ZpbGFTLmdyYWRvfSBsw61uZWFzIMK3ICR7Zm9ybWF0b051bWVybygwKShmaWxhUy5kZW1hbmRhX3Byb3BpYV9tdyl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PlN1YmVzdGFjaW9uZXMgYWlzbGFkYXM8Yj4ke2ZpbGFTLm5vZG9zX2Fpc2xhZG9zID8gYCR7ZmlsYVMubm9kb3NfYWlzbGFkb3N9OiAke2ZpbGFTLmFpc2xhZG9zLmpvaW4oXCIsIFwiKX1gIDogXCJuaW5ndW5hXCJ9PC9iPjwvZGl2PlxuICA8ZGl2PkRlbWFuZGEgYWlzbGFkYTxiPiR7Zm9ybWF0b051bWVybygwKShmaWxhUy5kZW1hbmRhX2Fpc2xhZGFfbXcpfSBNVzwvYj48L2Rpdj5cbiAgPGRpdj5HZW5lcmFjacOzbiBhaXNsYWRhPGI+JHtmb3JtYXRvTnVtZXJvKDApKGZpbGFTLmdlbmVyYWNpb25fYWlzbGFkYV9tdyl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PlN1YmVzdGFjaW9uZXMgcXVlIGZhbGxhbiBlbCBOLTEgdG9wb2zDs2dpY288Yj4ke3RhYmxhTi5maWx0ZXIoKGYpID0+IGYubm9kb3NfYWlzbGFkb3MgPiAwKS5sZW5ndGh9IGRlICR7dGFibGFOLmxlbmd0aH08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3NhbGVOJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3JlY2FsY3VsYXJSJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3NhbGVTJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../semana2";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../semana2/07-colas-pesadas.html" class="pagination-link" aria-label="Leyes de potencias y colas pesadas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Leyes de potencias y colas pesadas</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../semana3/index.html" class="pagination-link" aria-label="Semana 3 · Redes II">
+        <span class="nav-page-text">Semana 3 · Redes II</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>

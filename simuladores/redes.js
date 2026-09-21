@@ -253,16 +253,25 @@ export function curvaRobustez(g, {estrategia = "aleatoria", recalcular = true, o
   return {filas, secuencia, area: filas.reduce((a, f) => a + f.fraccion_gigante, 0) / filas.length};
 }
 
-/** Verificación N-1 topológica: qué deja aislado la salida de cada nodo. */
-export function analisisNmenos1(g) {
+/** Verificación N-1 topológica: qué deja aislado la salida de cada nodo.
+ *  `atributos` es opcional: {nodo: {demanda_mw, generacion_mw}}. Con él se
+ *  reportan la demanda y la generación aisladas y la demanda propia, y el
+ *  orden por severidad es el de `analisis_n_menos_1` (nodos aislados,
+ *  demanda aislada, generación aislada; empates en el orden de `g.nodos`). */
+export function analisisNmenos1(g, atributos = {}) {
   const n = g.nodos.length, articulaciones = new Set(puntosArticulacion(g));
+  const valor = (nodo, clave) => atributos[nodo]?.[clave] ?? 0;
+  const suma = (nodos, clave) => nodos.reduce((a, x) => a + valor(x, clave), 0);
   return g.nodos.map((nodo) => {
     const trabajo = sinNodos(g, [nodo]);
     const gigante = new Set(componenteGigante(trabajo));
-    const aislados = trabajo.nodos.filter((x) => !gigante.has(x)).sort();
+    const aislados = trabajo.nodos.filter((x) => !gigante.has(x)).sort(compararTexto);
     return {nodo, grado: grado(g, nodo), nodos_aislados: aislados.length, aislados,
+      demanda_aislada_mw: suma(aislados, "demanda_mw"), generacion_aislada_mw: suma(aislados, "generacion_mw"),
+      demanda_propia_mw: valor(nodo, "demanda_mw"),
       fraccion_gigante: gigante.size / n, es_articulacion: articulaciones.has(nodo)};
-  }).sort((a, b) => b.nodos_aislados - a.nodos_aislados || compararTexto(a.nodo, b.nodo));
+  }).sort((a, b) => b.nodos_aislados - a.nodos_aislados || b.demanda_aislada_mw - a.demanda_aislada_mw
+    || b.generacion_aislada_mw - a.generacion_aislada_mw);
 }
 
 /** Cascada de sobrecargas de Motter y Lai: capacidad = (1 + tolerancia) · carga inicial. */
