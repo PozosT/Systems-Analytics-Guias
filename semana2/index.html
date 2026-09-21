@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Semana 4 · Dinámica de sistemas I – Systems Analytics · Guías de autoestudio</title>
+<title>Semana 2 · Redes I: topología y métricas – Systems Analytics · Guías de autoestudio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../semana4/01-del-cld-al-modelo.html" rel="next">
-<link href="../semana2/01-del-sistema-al-grafo.html" rel="prev">
+<link href="../semana2/01-del-sistema-al-grafo.html" rel="next">
+<link href="../semana1/04-no-linealidad.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -77,49 +77,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -132,7 +89,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana4/index.html">Semana 4 · Dinámica de sistemas I</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -200,7 +157,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Semana 2 · Redes I</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -217,7 +174,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link active">
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -430,8 +387,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Semana 4 · Dinámica de sistemas I</h1>
-<p class="subtitle lead">Stocks, flujos y retardos: por qué el sector eléctrico oscila</p>
+<h1 class="title">Semana 2 · Redes I: topología y métricas</h1>
+<p class="subtitle lead">El país conectado por una red</p>
 </div>
 
 
@@ -452,11 +409,13 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Colombia alterna períodos de sobreoferta y de escasez de capacidad de generación. Esta semana usted aprende a explicar ese vaivén con la estructura del sistema: inversión que responde al precio, construcción que tarda años y demanda que sigue creciendo.</p>
+<p>Esta semana usted convierte una infraestructura en un grafo y aprende a medirlo: grado, caminos, centralidades, robustez y cascadas. Al final podrá decir qué subestación es crítica, para qué pregunta y con qué límites.</p>
 </div>
 <section id="el-caso-de-la-semana" class="level2">
 <h2 class="anchored" data-anchor-id="el-caso-de-la-semana">El caso de la semana</h2>
-<p>Mercados eléctricos con matrices muy distintas, como Inglaterra y Gales, de base térmica, o Chile y el Nord Pool, con fuerte componente hidráulico, alternan períodos largos de holgura y de estrechez, como documentan Arango y Larsen (2011) con dos décadas de datos. Cuando sistemas distintos producen el mismo patrón, la explicación más probable está en la estructura que comparten. Al terminar la semana usted habrá construido, pieza a pieza, un modelo de tres stocks que reproduce ese patrón y que es el mismo del Laboratorio 3.</p>
+<p>El jueves 26 de abril de 2007, hacia las 10:10 de la mañana, Colombia se quedó sin luz. Las cifras publicadas sobre el alcance van del 80 % al 98 % del territorio, y el servicio se restableció en unas cuatro horas y media. El origen fue una maniobra ejecutada en la secuencia equivocada en la subestación Torca, de 230 kV, junto con un interruptor que no abrió cuando debía (Ministerio de Minas y Energía). La Superintendencia sancionó después a ISA con 923 millones de pesos.</p>
+<p>Un error local en una subestación apagó casi todo el país. Si el daño fue nacional, la explicación no está en la pieza sino en cómo están conectadas las piezas: el Sistema de Transmisión Nacional reúne las líneas y subestaciones de 220 kV o más, y a diciembre de 2023 sumaba 13 557 km en 220 y 230 kV y 3 655 km en 500 kV, más cuatro circuitos de 230 kV con Ecuador (XM).</p>
+<p>La pregunta de la semana: <strong>¿qué pasaría si falla la subestación más conectada del país?</strong> Al terminar tendrá tres respuestas distintas, una por cada herramienta: conectividad, criterio N-1 y cascada.</p>
 </section>
 <section id="ruta-de-la-semana" class="level2">
 <h2 class="anchored" data-anchor-id="ruta-de-la-semana">Ruta de la semana</h2>
@@ -472,61 +431,67 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">1</td>
-<td>Del pensamiento sistémico al modelo cuantitativo</td>
+<td>Del sistema al grafo</td>
 <td style="text-align: center;">55 min</td>
-<td><a href="../semana4/01-del-cld-al-modelo.html">Disponible</a></td>
+<td><a href="../semana2/01-del-sistema-al-grafo.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2</td>
-<td>Stocks y flujos</td>
-<td style="text-align: center;">65 min</td>
-<td><a href="../semana4/02-stocks-flujos.html">Disponible</a></td>
+<td>Grado, distribución y densidad</td>
+<td style="text-align: center;">55 min</td>
+<td>En preparación</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">3</td>
-<td>El formalismo <span class="math inline">dS/dt</span> y la integración numérica</td>
-<td style="text-align: center;">70 min</td>
-<td><a href="../semana4/03-formalismo-integracion.html">Disponible</a></td>
+<td>Caminos, distancia y conectividad</td>
+<td style="text-align: center;">65 min</td>
+<td>En preparación</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">4</td>
-<td>Auxiliares, constantes y funciones de tabla</td>
-<td style="text-align: center;">60 min</td>
-<td><a href="../semana4/04-auxiliares-no-linealidad.html">Disponible</a></td>
+<td>Centralidades</td>
+<td style="text-align: center;">65 min</td>
+<td>En preparación</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
-<td>Polaridad y lazos leídos desde la estructura</td>
+<td>Agrupamiento y mundo pequeño</td>
 <td style="text-align: center;">60 min</td>
-<td><a href="../semana4/05-polaridad-lazos.html">Disponible</a></td>
+<td>En preparación</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">6</td>
-<td>Retardos</td>
-<td style="text-align: center;">80 min</td>
-<td><a href="../semana4/06-retardos.html">Disponible</a></td>
+<td>Modelos de red</td>
+<td style="text-align: center;">60 min</td>
+<td>En preparación</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">7</td>
-<td>Consistencia dimensional y validación estructural</td>
-<td style="text-align: center;">55 min</td>
-<td><a href="../semana4/07-consistencia-validacion.html">Disponible</a></td>
+<td>Leyes de potencias y colas pesadas</td>
+<td style="text-align: center;">60 min</td>
+<td>En preparación</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">8</td>
-<td>Calibración con datos</td>
-<td style="text-align: center;">65 min</td>
-<td><a href="../semana4/08-calibracion.html">Disponible</a></td>
+<td>Robustez y criterio N-1</td>
+<td style="text-align: center;">70 min</td>
+<td>En preparación</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">9</td>
-<td>El modelo completo del ciclo inversión-capacidad</td>
-<td style="text-align: center;">85 min</td>
-<td><a href="../semana4/09-modelo-completo.html">Disponible</a></td>
+<td>Fallas en cascada</td>
+<td style="text-align: center;">70 min</td>
+<td>En preparación</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td>El SIN como red (Laboratorio 1)</td>
+<td style="text-align: center;">80 min</td>
+<td>En preparación</td>
 </tr>
 </tbody>
 </table>
-<p>Las nueve páginas suman unas nueve horas y media. El resto de las diez horas autónomas de la semana corresponde al Laboratorio 3 y al quiz.</p>
+<p>Las diez páginas suman unas diez horas y media. El Laboratorio 1 de la semana usa el mismo grafo que estas páginas.</p>
 
 
 </section>
@@ -939,13 +904,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../semana2/01-del-sistema-al-grafo.html" class="pagination-link" aria-label="Del sistema al grafo">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Del sistema al grafo</span>
+      <a href="../semana1/04-no-linealidad.html" class="pagination-link" aria-label="No linealidad">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">No linealidad</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../semana4/01-del-cld-al-modelo.html" class="pagination-link" aria-label="Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo">
-        <span class="nav-page-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../semana2/01-del-sistema-al-grafo.html" class="pagination-link" aria-label="Del sistema al grafo">
+        <span class="nav-page-text">Del sistema al grafo</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

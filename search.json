@@ -1204,6 +1204,36 @@
     ]
   },
   {
+    "objectID": "semana2/index.html",
+    "href": "semana2/index.html",
+    "title": "Semana 2 · Redes I: topología y métricas",
+    "section": "",
+    "text": "Idea clave\n\nEsta semana usted convierte una infraestructura en un grafo y aprende a medirlo: grado, caminos, centralidades, robustez y cascadas. Al final podrá decir qué subestación es crítica, para qué pregunta y con qué límites.",
+    "crumbs": [
+      "Semana 2 · Redes I"
+    ]
+  },
+  {
+    "objectID": "semana2/index.html#el-caso-de-la-semana",
+    "href": "semana2/index.html#el-caso-de-la-semana",
+    "title": "Semana 2 · Redes I: topología y métricas",
+    "section": "El caso de la semana",
+    "text": "El caso de la semana\nEl jueves 26 de abril de 2007, hacia las 10:10 de la mañana, Colombia se quedó sin luz. Las cifras publicadas sobre el alcance van del 80 % al 98 % del territorio, y el servicio se restableció en unas cuatro horas y media. El origen fue una maniobra ejecutada en la secuencia equivocada en la subestación Torca, de 230 kV, junto con un interruptor que no abrió cuando debía (Ministerio de Minas y Energía). La Superintendencia sancionó después a ISA con 923 millones de pesos.\nUn error local en una subestación apagó casi todo el país. Si el daño fue nacional, la explicación no está en la pieza sino en cómo están conectadas las piezas: el Sistema de Transmisión Nacional reúne las líneas y subestaciones de 220 kV o más, y a diciembre de 2023 sumaba 13 557 km en 220 y 230 kV y 3 655 km en 500 kV, más cuatro circuitos de 230 kV con Ecuador (XM).\nLa pregunta de la semana: ¿qué pasaría si falla la subestación más conectada del país? Al terminar tendrá tres respuestas distintas, una por cada herramienta: conectividad, criterio N-1 y cascada.",
+    "crumbs": [
+      "Semana 2 · Redes I"
+    ]
+  },
+  {
+    "objectID": "semana2/index.html#ruta-de-la-semana",
+    "href": "semana2/index.html#ruta-de-la-semana",
+    "title": "Semana 2 · Redes I: topología y métricas",
+    "section": "Ruta de la semana",
+    "text": "Ruta de la semana\n\n\n\n#\nConcepto\nTiempo\nPágina\n\n\n\n\n1\nDel sistema al grafo\n55 min\nDisponible\n\n\n2\nGrado, distribución y densidad\n55 min\nEn preparación\n\n\n3\nCaminos, distancia y conectividad\n65 min\nEn preparación\n\n\n4\nCentralidades\n65 min\nEn preparación\n\n\n5\nAgrupamiento y mundo pequeño\n60 min\nEn preparación\n\n\n6\nModelos de red\n60 min\nEn preparación\n\n\n7\nLeyes de potencias y colas pesadas\n60 min\nEn preparación\n\n\n8\nRobustez y criterio N-1\n70 min\nEn preparación\n\n\n9\nFallas en cascada\n70 min\nEn preparación\n\n\n10\nEl SIN como red (Laboratorio 1)\n80 min\nEn preparación\n\n\n\nLas diez páginas suman unas diez horas y media. El Laboratorio 1 de la semana usa el mismo grafo que estas páginas.",
+    "crumbs": [
+      "Semana 2 · Redes I"
+    ]
+  },
+  {
     "objectID": "semana1/index.html",
     "href": "semana1/index.html",
     "title": "Semana 1 · Introducción a los sistemas complejos",
@@ -1444,7 +1474,7 @@
     "href": "index.html#ruta-de-estudio",
     "title": "Cómo usar estas guías",
     "section": "Ruta de estudio",
-    "text": "Ruta de estudio\n\n\n\nSemana\nTema\nEstado\n\n\n\n\nSemana 1\nIntroducción a los sistemas complejos\nEn construcción: cuatro páginas\n\n\nSemana 4\nDinámica de sistemas I: stocks, flujos y retardos\nCompleta: nueve páginas\n\n\nSemana 5\nDinámica de sistemas II: políticas, escenarios e incertidumbre\nCompleta: diez páginas\n\n\nSemana 6\nIntegración y gobernanza\nCompleta: ocho páginas\n\n\n\nDedique a cada página entre 50 y 90 minutos, con pausas. La secuencia recomendada es leer la pregunta y la intuición, resolver los ejemplos con papel a la mano y dejar las preguntas de comprobación para el final, sin mirar atrás.",
+    "text": "Ruta de estudio\n\n\n\nSemana\nTema\nEstado\n\n\n\n\nSemana 1\nIntroducción a los sistemas complejos\nEn construcción: cuatro páginas\n\n\nSemana 2\nRedes I: topología y métricas\nEn construcción: una página\n\n\nSemana 4\nDinámica de sistemas I: stocks, flujos y retardos\nCompleta: nueve páginas\n\n\nSemana 5\nDinámica de sistemas II: políticas, escenarios e incertidumbre\nCompleta: diez páginas\n\n\nSemana 6\nIntegración y gobernanza\nCompleta: ocho páginas\n\n\n\nDedique a cada página entre 50 y 90 minutos, con pausas. La secuencia recomendada es leer la pregunta y la intuición, resolver los ejemplos con papel a la mano y dejar las preguntas de comprobación para el final, sin mirar atrás.",
     "crumbs": [
       "Cómo usar estas guías"
     ]
@@ -1623,6 +1653,94 @@
     "crumbs": [
       "Semana 1 · Sistemas complejos",
       "No linealidad"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html",
+    "href": "semana2/01-del-sistema-al-grafo.html",
+    "title": "Del sistema al grafo",
+    "section": "",
+    "text": "Ver el código en Python\nimport {grafo, resumenTopologico, componentes} from \"../simuladores/redes.js\"\nimport {formatoNumero} from \"../simuladores/mise_sd.js\"\nCOLORES = ({azul: \"#003366\", verde: \"#00693E\", ambar: \"#B26C00\", violeta: \"#5434A0\", gris: \"#5F5F5F\", rojo: \"#CE1126\"})",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html#la-pregunta",
+    "href": "semana2/01-del-sistema-al-grafo.html#la-pregunta",
+    "title": "Del sistema al grafo",
+    "section": "1. La pregunta",
+    "text": "1. La pregunta\nLa UPME decide cada año qué líneas nuevas se convocan y la operación de XM evalúa qué pasa si sale de servicio cada elemento del sistema. Las dos preguntas necesitan una representación del sistema que se pueda medir y recorrer, no un mapa bonito.\nEl apagón del 26 de abril de 2007 empezó con una maniobra en una subestación y terminó como un evento nacional. Para entender por qué, primero hay que poder escribir el sistema de una manera que permita preguntar «¿cuántos caminos independientes hay entre estos dos puntos?». ¿Cómo se convierte una infraestructura en algo que se pueda medir?",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html#la-intuición-del-mapa-al-grafo",
+    "href": "semana2/01-del-sistema-al-grafo.html#la-intuición-del-mapa-al-grafo",
+    "title": "Del sistema al grafo",
+    "section": "2. La intuición: del mapa al grafo",
+    "text": "2. La intuición: del mapa al grafo\n\n\nPaso a pasoSeis decisiones de abstracción\n\n\n\nEmpiece por la infraestructura. Cinco subestaciones y los corredores que las unen, ubicados sobre el territorio. Así se ve en un plano de la red.\n\n\n\nDecida qué es un nodo. Aquí, cada subestación. Podrían ser regiones enteras o barras dentro de una subestación: la escala se elige, y de ella dependen todas las métricas que vengan después.\n\n\n\nDecida qué es una arista. Cada corredor entre dos subestaciones. Si dos circuitos comparten trazado, contarlos como una arista o como dos cambia el resultado, y por eso la decisión se declara.\n\n\n\nGuarde los atributos. Tensión, longitud y capacidad viajan con la arista; demanda, generación y región, con el nodo. El grafo sin atributos responde preguntas de conectividad; con atributos responde algunas más.\n\n\n\nEscriba la matriz de adyacencia. Una casilla por par de nodos, con 1 si hay arista. Es simétrica porque la red no es dirigida, tiene ceros en la diagonal y la suma de todas sus entradas es 2m.\n\n\n\nPase a escala real. El sistema de transmisión estilizado del curso tiene 100 nodos y 131 aristas: su matriz tiene 10 000 casillas y apenas 262 unos. Las redes de infraestructura son dispersas, y esa es su primera característica medible.",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html#del-dibujo-a-la-notación",
+    "href": "semana2/01-del-sistema-al-grafo.html#del-dibujo-a-la-notación",
+    "title": "Del sistema al grafo",
+    "section": "3. Del dibujo a la notación",
+    "text": "3. Del dibujo a la notación\n\n\nDefiniciónGrafo\n\nUn grafo G = (V, E) es un conjunto de nodos V y un conjunto de aristas E, cada una un par de nodos. Se escribe n = |V| y m = |E|.\nVariantes que hay que declarar: dirigido si las aristas tienen sentido; ponderado si llevan un número asociado; simple si no hay aristas repetidas ni lazos de un nodo consigo mismo; multigrafo si se permiten aristas repetidas. La red de transmisión del curso se modela como grafo simple, no dirigido y con atributos.\n\n\n\nDefiniciónMatriz de adyacencia\n\nLa matriz de adyacencia A de un grafo de n nodos es de n \\times n, con A_{ij} = 1 si existe la arista \\{i,j\\} y 0 si no. En un grafo no dirigido es simétrica y\n\\sum_i \\sum_j A_{ij} = 2m,\nporque cada arista aparece dos veces. Esa identidad es la primera prueba de consistencia de cualquier grafo que usted construya.",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html#ejemplos-resueltos",
+    "href": "semana2/01-del-sistema-al-grafo.html#ejemplos-resueltos",
+    "title": "Del sistema al grafo",
+    "section": "4. Ejemplos resueltos",
+    "text": "4. Ejemplos resueltos\n\nUna red de cinco personas\n\n\nEjemplo●○○ básicoContar nodos, aristas y grados\n\nPlanteamiento. En un grupo de estudio, Ana habla con Beto y con Clara; Beto habla con Clara; Clara habla con Diana; Diana habla con Emilio. Escriba el grafo, los grados y verifique la identidad de la suma.\n\n\n\nPaso a pasoResolver a mano\n\n\nListe nodos y aristas. V = \\{\\text{Ana}, \\text{Beto}, \\text{Clara}, \\text{Diana}, \\text{Emilio}\\}, con n = 5. Las aristas son Ana-Beto, Ana-Clara, Beto-Clara, Clara-Diana y Diana-Emilio, así que m = 5.\n\n\nCuente los grados. Ana 2, Beto 2, Clara 3, Diana 2, Emilio 1.\n\n\nVerifique. 2 + 2 + 3 + 2 + 1 = 10 = 2m. La identidad se cumple, y por eso se llama el apretón de manos: cada arista aporta un grado a cada extremo.\n\n\nNote lo que el grafo no dice. No dice cuánto hablan, ni sobre qué, ni quién le hace caso a quién. En la red de transmisión ocurre lo mismo: el grafo no dice cuánta potencia fluye.\n\n\n\n\nUna red de distribución radial\n\n\nEjemplo●●○ intermedioÁrbol, ciclo y una decisión de operación\n\nPlanteamiento. Un municipio se alimenta a 13,2 kV desde una subestación A, con cinco puntos más (B, C, D, E y F) conectados en forma radial: A-B, A-C, B-D, C-E y C-F. Existe además un seccionador normalmente abierto entre B y E. ¿Qué cambia en el grafo al cerrarlo?\n\n\n\nPaso a pasoLeer la topología de operación\n\n\nCuente la red abierta. n = 6 y m = 5. Un grafo conexo con m = n - 1 es un árbol: entre cada par de nodos hay exactamente un camino.\n\n\nSaque la consecuencia. En un árbol, cualquier arista que falle deja aislada una parte de la red. Por eso las redes radiales son baratas y frágiles, y por eso las de transmisión son malladas.\n\n\nCierre el seccionador. Ahora m = 6 y aparece el ciclo A-B-E-C-A. Con ese ciclo, una falla en A-B ya no deja sin servicio a B: la energía puede llegar por el otro lado.\n\n\nDeclare la decisión de modelado. La misma red física tiene dos grafos según la configuración de operación. Un análisis de redes debe decir cuál configuración analiza; la topología de operación cambia con la hora y con la maniobra.\n\n\n\n\nEl sistema de transmisión estilizado\n\n\nEjemplo●●● avanzadoCien subestaciones y sus métricas globales\n\nPlanteamiento. Construya el grafo del sistema de transmisión con las tablas de mise_sd.redes y lea su resumen topológico. Después quédese solo con los corredores de 500 kV y vuelva a leerlo.\n\n\n\nPrediga antes de seguir\n\nSi se conservan solo los corredores de 500 kV, ¿qué pasa con la red?\n\nSigue conexa: el sistema tiene una malla de 500 kV en todo el país.\n\n\nSe parte en varias piezas y quedan muchas subestaciones sueltas.\n\n\nNo cambia nada, porque casi todas las líneas son de 500 kV.\n\n\n\n\nExploreEl grafo del sistema de transmisión\n\nFiltre por nivel de tensión y observe el resumen. Cada métrica de esta semana se calcula sobre este mismo grafo.\n\n\nVer el código en Python\nstn = FileAttachment(\"datos/s2-stn.json\").json()\n\n\n\n\n\n\n\n\n\nVer el código en Python\nviewof tensionS = Inputs.radio([\"toda la red\", \"solo 500 kV\", \"solo 220 y 230 kV\"], {value: \"toda la red\", label: \"Corredores\"})\n\n\n\n\n\n\n\n\n\nVer el código en Python\nvistaS = {\n  const filtro = {\"toda la red\": () =&gt; true, \"solo 500 kV\": (e) =&gt; e.tension_kv === 500,\n    \"solo 220 y 230 kV\": (e) =&gt; e.tension_kv &lt; 500}[tensionS];\n  const aristas = stn.aristas.filter(filtro);\n  const posicion = Object.fromEntries(stn.nodos.map((n) =&gt; [n.id, n]));\n  const g = grafo(aristas.map((e) =&gt; [e.a, e.b]), stn.nodos.map((n) =&gt; n.id));\n  const resumen = resumenTopologico(g);\n  const piezas = componentes(g);\n  return {aristas: aristas.map((e) =&gt; ({...e, x1: posicion[e.a].lon, y1: posicion[e.a].lat, x2: posicion[e.b].lon, y2: posicion[e.b].lat})),\n    resumen, piezas, km: aristas.reduce((a, e) =&gt; a + e.longitud_km, 0)};\n}\n\n\n\n\n\n\n\n\n\nVer el código en Python\nPlot.plot({\n  width: Math.min(width, 620), height: 520, marginLeft: 40, inset: 14,\n  x: {axis: null}, y: {axis: null}, aspectRatio: 1,\n  color: {domain: [\"220 y 230 kV\", \"500 kV\"], range: [COLORES.gris, COLORES.azul], legend: true},\n  marks: [\n    Plot.link(vistaS.aristas, {x1: \"x1\", y1: \"y1\", x2: \"x2\", y2: \"y2\", stroke: (e) =&gt; e.tension_kv === 500 ? \"500 kV\" : \"220 y 230 kV\",\n      strokeWidth: (e) =&gt; e.tension_kv === 500 ? 2.2 : 1}),\n    Plot.dot(stn.nodos, {x: \"lon\", y: \"lat\", r: (d) =&gt; 2 + Math.sqrt(d.demanda_mw + d.generacion_mw) / 8,\n      fill: (d) =&gt; d.tension_kv === 500 ? \"500 kV\" : \"220 y 230 kV\", stroke: \"white\", strokeWidth: 0.6}),\n  ],\n})\n\n\n\n\n\n\n\n\n\nVer el código en Python\nhtml`&lt;div class=\"lectura-simulador\"&gt;\n  &lt;div&gt;Nodos y aristas&lt;b&gt;${vistaS.resumen.nodos} y ${vistaS.resumen.aristas}&lt;/b&gt;&lt;/div&gt;\n  &lt;div&gt;Kilómetros de corredor&lt;b&gt;${formatoNumero(0)(vistaS.km)} km&lt;/b&gt;&lt;/div&gt;\n  &lt;div&gt;Grado medio&lt;b&gt;${formatoNumero(2)(vistaS.resumen.grado_medio)}&lt;/b&gt;&lt;/div&gt;\n  &lt;div&gt;Densidad&lt;b&gt;${formatoNumero(3)(vistaS.resumen.densidad)}&lt;/b&gt;&lt;/div&gt;\n  &lt;div&gt;Componentes&lt;b&gt;${vistaS.resumen.componentes}&lt;/b&gt;&lt;/div&gt;\n  &lt;div&gt;Subestaciones en la pieza mayor&lt;b&gt;${vistaS.piezas[0].length}&lt;/b&gt;&lt;/div&gt;\n&lt;/div&gt;`\n\n\n\n\n\n\n\n\nGrafo estilizado mise_sd.redes.stn_estilizado(), construido con las tablas de subestaciones y líneas del módulo del curso: 100 nodos y 131 aristas, con tensión, longitud y capacidad en cada corredor. La topología reproduce la estructura del sistema colombiano a grandes rasgos; el detalle real está en los planes de expansión de la UPME [POR VERIFICAR]. Las métricas se calculan en el navegador con simuladores/redes.js, probado contra NetworkX.\n\n\n\n\nPaso a pasoLeer el resumen\n\n\nCompare con su predicción. Usted anotó . La respuesta es la B: con solo 22 corredores de 500 kV, la mayoría de las subestaciones quedan aisladas y la red se parte en muchas piezas. La malla de 500 kV es un esqueleto, no una red completa.\n\n\nLea la red completa. 100 nodos, 131 aristas, grado medio 2,62 y densidad 0,026. Una red de infraestructura es dispersa: cada subestación se conecta con dos o tres vecinas, no con decenas.\n\n\nMire los kilómetros. Los 22 corredores de 500 kV suman 2 806 km y los 109 de 220 y 230 kV suman 5 029 km. La comparación con los 17 200 km reales del sistema recuerda que este grafo es una versión reducida.\n\n\nAnote lo que falta. El grafo no tiene impedancias, ni límites térmicos por tramo, ni el despacho de cada hora. Por eso sus respuestas son sobre conectividad y caminos, no sobre flujos de potencia; la página 9 vuelve sobre este límite.",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html#errores-comunes",
+    "href": "semana2/01-del-sistema-al-grafo.html#errores-comunes",
+    "title": "Del sistema al grafo",
+    "section": "5. Errores comunes",
+    "text": "5. Errores comunes\n\n\nError comúnTratar como dirigida una red que no lo es\n\n\n\nDibujar flechas de generación a demanda en el grafo de transmisión, como si la potencia tuviera una sola dirección posible.\n\n\nEn corriente alterna el flujo por una línea cambia de sentido con el despacho y la hidrología. El grafo es no dirigido, y el sentido del flujo es un resultado del despacho, no un atributo de la red.\n\n\n\n\n\nError comúnColapsar circuitos paralelos sin decirlo\n\nDos circuitos en el mismo corredor dan redundancia eléctrica ante la falla de uno, y ninguna redundancia ante un derrumbe que se lleve la torre. Contarlos como una arista es razonable, y hay que declararlo, porque cambia el conteo de caminos independientes.\n\n\n\nError comúnMezclar niveles de abstracción\n\nUn grafo con subestaciones de 500 kV, circuitos de distribución y plantas individuales mezcla escalas: el grado de un nodo deja de ser comparable con el de otro. Primero se fija la escala, después se mide.",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html#compruebe-lo-aprendido",
+    "href": "semana2/01-del-sistema-al-grafo.html#compruebe-lo-aprendido",
+    "title": "Del sistema al grafo",
+    "section": "6. Compruebe lo aprendido",
+    "text": "6. Compruebe lo aprendido\n\n\nCompruebe\n\nUn grafo tiene 40 nodos y la suma de los grados es 110. ¿Cuántas aristas tiene?\n\n\n\n\nCorrecto: la suma de grados es 2m.\n\n\n\n\n\nEsa es la suma de grados, no el número de aristas.\n\n\n\n\nCompruebe\n\n¿Qué caracteriza a un árbol?\n\nEs conexo y tiene m = n - 1: un solo camino entre cada par de nodos.\nCorrecto, y por eso cualquier falla lo parte.\n\n\nTiene un nodo central del que cuelgan los demás.\nEso es una estrella, un caso particular.\n\n\n\n\nCompruebe\n\nLa matriz de adyacencia de una red de transmisión es simétrica. ¿Qué significa?\n\nQue todas las líneas tienen la misma capacidad.\nLa matriz de adyacencia no guarda capacidades.\n\n\nQue el grafo es no dirigido: si A se conecta con B, B se conecta con A.\nCorrecto.\n\n\n\n\nCompruebe\n\nEn el simulador, al dejar solo los corredores de 500 kV, ¿qué métrica cambia más?\n\nLa densidad, que se multiplica.\nLa densidad baja, porque quedan menos aristas para los mismos nodos.\n\n\nEl número de componentes: la red deja de ser una sola pieza.\nCorrecto: el esqueleto de 500 kV no conecta a todas las subestaciones.\n\n\n\n\nCompruebe\n\n¿Cuál de estas preguntas puede responder el grafo sin atributos?\n\n¿Cuánta potencia fluye por la línea Cerromatoso-Primavera?\nEso exige un modelo eléctrico con impedancias y despacho.\n\n\n¿Cuántos caminos independientes hay entre Cuestecitas y Bogotá?\nCorrecto: es una pregunta de conectividad.\n\n\n\nEjercicios\n\nEjercicio 1 ●○○ · El grafo de un campus\nModele como grafo el campus de una universidad: edificios unidos por senderos. Diga qué es nodo, qué es arista, si el grafo es dirigido y qué atributos guardaría. Después nombre una pregunta que su grafo responde y una que no.\n\n\n\n\n\n\nTipSolución completa\n\n\n\n\n\nNodos: edificios y cruces de senderos, porque un sendero que se bifurca necesita un nodo en la bifurcación. Aristas: tramos de sendero entre dos nodos. No dirigido, salvo que haya escaleras o rampas de un solo sentido. Atributos: longitud en metros, si el tramo es cubierto y si es accesible en silla de ruedas.\nResponde: cuál es el camino más corto entre dos edificios, qué tramo, si se cierra, obliga a un rodeo grande, y qué edificios quedan incomunicados si se cierra un paso.\nNo responde: cuánta gente circula a cada hora, ni dónde se forman congestiones. Eso exige datos de flujo sobre el grafo, que es lo que la semana 3 pone encima de la red.\n\n\n\n\n\nEjercicio 2 ●●○ · De la matriz al dibujo\nDibuje el grafo de esta matriz, calcule los grados y diga si es un árbol:\nA = \\begin{pmatrix} 0&1&1&0&0 \\\\ 1&0&0&1&0 \\\\ 1&0&0&1&0 \\\\ 0&1&1&0&1 \\\\ 0&0&0&1&0 \\end{pmatrix}\n\n\n\n\n\n\nTipSolución completa\n\n\n\n\n\nLas aristas son 1-2, 1-3, 2-4, 3-4 y 4-5, así que n = 5 y m = 5. Los grados son 2, 2, 2, 3 y 1, y suman 10, igual a 2m.\nNo es un árbol: un árbol con 5 nodos tendría 4 aristas, y aquí hay 5. El ciclo es 1-2-4-3-1. Esa redundancia significa que la red sobrevive a la pérdida de cualquiera de las aristas del ciclo, pero no a la pérdida de 4-5, que deja aislado al nodo 5.",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
+    ]
+  },
+  {
+    "objectID": "semana2/01-del-sistema-al-grafo.html#en-resumen",
+    "href": "semana2/01-del-sistema-al-grafo.html#en-resumen",
+    "title": "Del sistema al grafo",
+    "section": "En resumen",
+    "text": "En resumen\n\n\nEn resumen\n\n\nUn grafo G=(V,E) representa la red; la abstracción se elige y se declara, con lo que se gana y lo que se pierde.\nLa matriz de adyacencia guarda el grafo en forma de números, es simétrica si la red no es dirigida y sus entradas suman 2m.\nUn árbol (m = n-1) tiene un solo camino entre cada par de nodos: es barato y frágil.\nEl STN estilizado del curso tiene 100 nodos, 131 aristas, grado medio 2,62 y densidad 0,026: las redes de infraestructura son dispersas.\nSolo con los corredores de 500 kV la red se parte en muchas piezas: la malla de alta tensión es un esqueleto.\n\n\nPara profundizar. La sección «De la infraestructura al grafo» de las notas de la semana 2 trae las tablas completas de subestaciones y líneas y el detalle de cada decisión de modelado. La siguiente página empieza a medir este grafo con la métrica más simple, el grado.",
+    "crumbs": [
+      "Semana 2 · Redes I",
+      "Del sistema al grafo"
     ]
   },
   {
