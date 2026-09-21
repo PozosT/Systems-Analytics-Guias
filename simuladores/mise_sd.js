@@ -782,3 +782,61 @@ export function ducha({agresividad = 1, pasosRetardo = 2, llaveInicial = 0.2,
   }
   return filas;
 }
+
+// ----------------------------------------------------------------------
+// Modelo de May: puntos de inflexión e histéresis (semana 1, concepto 9)
+// ----------------------------------------------------------------------
+
+/** Bisección con la misma secuencia de pasos que `_biseccion` de Python. */
+function biseccion(funcion, izquierda, derecha, iteraciones = 80) {
+  let valorIzquierda = funcion(izquierda);
+  for (let i = 0; i < iteraciones; i++) {
+    const medio = 0.5 * (izquierda + derecha), valorMedio = funcion(medio);
+    if ((valorMedio < 0) === (valorIzquierda < 0)) { izquierda = medio; valorIzquierda = valorMedio; } else derecha = medio;
+  }
+  return 0.5 * (izquierda + derecha);
+}
+
+/** Tasa de cambio del modelo de May (réplica de tasa_may). */
+export const tasaMay = (estado, presion, capacidad = 10) =>
+  estado * (1 - estado / capacidad) - presion * estado ** 2 / (1 + estado ** 2);
+
+/** Equilibrios positivos y su estabilidad (réplica de equilibrios_may): [[x, estable], ...]. */
+export function equilibriosMay(presion, capacidad = 10, celdas = 2000) {
+  const h = (x) => (1 - x / capacidad) - presion * x / (1 + x * x);
+  const derivadaH = (x) => -1 / capacidad - presion * (1 - x * x) / (1 + x * x) ** 2;
+  const salida = [];
+  let anteriorX = capacidad / celdas, anteriorH = h(anteriorX);
+  for (let k = 2; k <= celdas; k++) {
+    const x = capacidad * k / celdas, valor = h(x);
+    if ((valor < 0) !== (anteriorH < 0)) { const raiz = biseccion(h, anteriorX, x); salida.push([raiz, derivadaH(raiz) < 0]); }
+    anteriorX = x; anteriorH = valor;
+  }
+  return salida;
+}
+
+/** Puntos de inflexión (réplica de umbrales_may). */
+export function umbralesMay(capacidad = 10) {
+  const presion = (x) => (1 + x * x) * (1 - x / capacidad) / x;
+  const derivada = (x) => 2 * x ** 3 / capacidad - x * x + 1;
+  const bajo = biseccion(derivada, 0.5, capacidad / 3), alto = biseccion(derivada, capacidad / 3, capacidad);
+  return {presion_recuperacion: presion(bajo), estado_recuperacion: bajo, presion_colapso: presion(alto), estado_colapso: alto};
+}
+
+/** Ida y vuelta de la presión con Euler explícito (réplica de recorrido_may). */
+export function recorridoMay({presionMaxima, presionMinima = 1, velocidad = 0.002, paso = 0.1, capacidad = 10} = {}) {
+  const u = umbralesMay(capacidad);
+  const frontera = 0.5 * (u.estado_recuperacion + u.estado_colapso);
+  let estado = Math.max(...equilibriosMay(presionMinima, capacidad).filter((e) => e[1]).map((e) => e[0]));
+  const pasosIda = Math.round((presionMaxima - presionMinima) / (velocidad * paso));
+  const presiones = [presionMinima], estados = [estado];
+  let salto = null, regreso = null;
+  for (let k = 1; k <= 2 * pasosIda; k++) {
+    const presion = presionMinima + velocidad * paso * (k <= pasosIda ? k : 2 * pasosIda - k);
+    const nuevo = estado + paso * tasaMay(estado, presion, capacidad);
+    if (k <= pasosIda && salto === null && estado >= frontera && frontera > nuevo) salto = presion;
+    if (k > pasosIda && regreso === null && estado < frontera && frontera <= nuevo) regreso = presion;
+    estado = nuevo; presiones.push(presion); estados.push(estado);
+  }
+  return {presion: presiones, estado: estados, presion_salto: salto, presion_regreso: regreso, frontera};
+}
