@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="El informe final de los buses de Bogotá con datos verificados: la tabla de robustez de cuatro estrategias por cuatro mundos, la frontera del costo en salud, la realimentación del informe y la preparación del panel.">
+
+<title>Semana 8 · Informe final y panel – Systems Analytics · Guías de autoestudio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../caso-guia/05-avance-3.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../caso-guia/index.html">Caso guía · Buses eléctricos de Bogotá</a></li><li class="breadcrumb-item"><a href="../caso-guia/06-informe-final.html">Semana 8 · Informe final y panel</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Systems Analytics · Guías de autoestudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cómo usar estas guías</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · Sistemas complejos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complicado frente a complejo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/02-sistema-estructura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistema, estructura y comportamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/03-retroalimentacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retroalimentación y diagramas causales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">No linealidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/06-adaptacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adaptación y aprendizaje</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/07-emergencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emergencia y falacia de composición</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/08-eventos-extremos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Eventos extremos y colas pesadas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana1/10-mapa-causal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El mapa causal de la crisis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · Redes I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/01-del-sistema-al-grafo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del sistema al grafo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/02-grado-densidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grado, distribución y densidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/03-caminos-conectividad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caminos, distancia y conectividad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/04-centralidades.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Centralidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/05-mundo-pequeno.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agrupamiento y mundo pequeño</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/06-modelos-de-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos de red</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/07-colas-pesadas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leyes de potencias y colas pesadas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/08-robustez-n1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y criterio N-1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/09-cascadas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fallas en cascada</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana2/10-sin-como-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El SIN como red: el Laboratorio 1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Redes II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/01-dinamica-sobre-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dinámica sobre redes: nodos con estado y reglas locales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/02-rogers-bass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rogers y Bass: la curva en S de la adopción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/03-contagio-simple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio simple: SI, SIS y SIR sobre redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/04-contagio-complejo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contagio complejo y umbrales: cuando un vecino no basta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores y comunidades: quién se mueve con quién</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/07-bipartitas-mercado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes bipartitas y el mercado mayorista</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/08-limites-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Límites del enfoque de redes: de la red al stock agregado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana3/09-adopcion-solar-red.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La adopción solar como sistema en red</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana4/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 4 · Dinámica de sistemas I</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/01-del-cld-al-modelo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/02-stocks-flujos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stocks y flujos: el criterio de la fotografía</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/04-auxiliares-no-linealidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/05-polaridad-lazos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Polaridad y lazos: deducir el comportamiento sin simular</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/06-retardos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retardos: por qué el sistema llega tarde</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/07-consistencia-validacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consistencia dimensional y validación: someter el modelo a pruebas para romperlo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/08-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibración: afinar el modelo clavija por clavija</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/09-modelo-completo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana5/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Dinámica de sistemas II</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/01-refuerzo-exponencial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de refuerzo y crecimiento exponencial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/02-busqueda-de-meta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lazos de balance: búsqueda de meta</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/03-balance-retardo-oscilacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance más retardo: oscilación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/04-politicas-apalancamiento.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Políticas y puntos de apalancamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/05-sensibilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de sensibilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/06-incertidumbre-profunda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Riesgo contra incertidumbre profunda</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/07-escenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diseño de escenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/08-robustez-regret.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustez y arrepentimiento máximo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/09-rdm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a la toma de decisiones robusta (RDM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../semana6/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 6 · Integración y gobernanza</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El marco multicapa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/02-sistema-sociotecnico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El proyecto como sistema socio-técnico-ambiental</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/03-ostrom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gobernanza policéntrica (Ostrom)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/04-justicia-energetica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Justicia energética</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/05-consulta-previa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consulta previa y licencia social</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/06-redes-actores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Redes de actores con poder e intereses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/07-comunicar-complejidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comunicar complejidad a audiencias no técnicas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana6/08-windpeshi-cuatro-capas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windpeshi en cuatro capas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../caso-guia/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Caso guía · Buses eléctricos de Bogotá</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../caso-guia/01-ficha.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 1 · La ficha del caso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../caso-guia/02-esquema-redes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 2 · El esquema de redes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../caso-guia/03-avance-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 3 · Avance 1: caso y complejidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../caso-guia/04-avance-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 5 · Avance 2: el modelo calibrado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../caso-guia/05-avance-3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Semana 7 · Avance 3: escenarios, robustez y gobernanza</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../caso-guia/06-informe-final.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Semana 8 · Informe final y panel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul class="collapse">
+  <li><a href="#lo-que-pedía-la-entrega" id="toc-lo-que-pedía-la-entrega" class="nav-link active" data-scroll-target="#lo-que-pedía-la-entrega">Lo que pedía la entrega</a></li>
+  <li><a href="#la-entrega-del-equipo" id="toc-la-entrega-del-equipo" class="nav-link" data-scroll-target="#la-entrega-del-equipo">La entrega del equipo</a></li>
+  <li><a href="#explore-los-cuatro-mundos" id="toc-explore-los-cuatro-mundos" class="nav-link" data-scroll-target="#explore-los-cuatro-mundos">Explore los cuatro mundos</a></li>
+  <li><a href="#la-frontera-del-costo-en-salud" id="toc-la-frontera-del-costo-en-salud" class="nav-link" data-scroll-target="#la-frontera-del-costo-en-salud">La frontera del costo en salud</a></li>
+  <li><a href="#la-realimentación-docente" id="toc-la-realimentación-docente" class="nav-link" data-scroll-target="#la-realimentación-docente">La realimentación docente</a></li>
+  <li><a href="#el-panel" id="toc-el-panel" class="nav-link" data-scroll-target="#el-panel">El panel</a></li>
+  <li><a href="#la-trayectoria-completa" id="toc-la-trayectoria-completa" class="nav-link" data-scroll-target="#la-trayectoria-completa">La trayectoria completa</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../caso-guia/index.html">Caso guía · Buses eléctricos de Bogotá</a></li><li class="breadcrumb-item"><a href="../caso-guia/06-informe-final.html">Semana 8 · Informe final y panel</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Semana 8 · Informe final y panel</h1>
+<p class="subtitle lead">Caso guía · Hito 6 de 6</p>
+</div>
+
+<div>
+  <div class="description">
+    El informe final de los buses de Bogotá con datos verificados: la tabla de robustez de cuatro estrategias por cuatro mundos, la frontera del costo en salud, la realimentación del informe y la preparación del panel.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="38" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 37;"><span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>COLOR_ESTRATEGIA <span class="op">=</span> ({<span class="st">"mínimo legal"</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="st">"ley + patios anticipados"</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="st">"escalonada condicionada"</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="st">"mandato 100%"</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="ficha-pagina">
+<p><span class="dato">📅 Se entrega en la semana 8</span> <span class="dato">⚖ Informe 25 % y panel 5 %</span> <span class="dato">🎯 Verifica los RAC 1 a 4</span> <span class="dato">⏱ 60 minutos de lectura, más el informe en PDF</span></p>
+</div>
+<div class="objetivos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Al terminar esta página</span>
+</div>
+<ul>
+<li>Leer una tabla de robustez completa y explicar por qué gana la estrategia recomendada.</li>
+<li>Localizar la frontera de un parámetro frágil y convertirla en condición de validez.</li>
+<li>Preparar las respuestas a las dos preguntas que el jurado del panel hace siempre.</li>
+</ul>
+</div>
+<section id="lo-que-pedía-la-entrega" class="level2">
+<h2 class="anchored" data-anchor-id="lo-que-pedía-la-entrega">Lo que pedía la entrega</h2>
+<p>El informe final tiene de 5 000 a 7 000 palabras en siete secciones, vale el 25 % de la nota y verifica los cuatro resultados de aprendizaje. Sus requisitos duros son las siete secciones, al menos cuatro escenarios cualitativamente distintos, una tabla de robustez y recomendaciones priorizadas con condiciones de validez. El panel, de 15 minutos más preguntas ante un jurado técnico y otro no técnico, vale el 5 %.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Criterio del informe</th>
+<th style="text-align: center;">Peso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Resumen ejecutivo</td>
+<td style="text-align: center;">10 %</td>
+</tr>
+<tr class="even">
+<td>Caso y complejidad (secciones 1 y 2)</td>
+<td style="text-align: center;">10 %</td>
+</tr>
+<tr class="odd">
+<td>Redes (sección 3)</td>
+<td style="text-align: center;">15 %</td>
+</tr>
+<tr class="even">
+<td>Modelo de dinámica de sistemas (sección 4)</td>
+<td style="text-align: center;">20 %</td>
+</tr>
+<tr class="odd">
+<td>Gobernanza y justicia (sección 5)</td>
+<td style="text-align: center;">15 %</td>
+</tr>
+<tr class="even">
+<td>Escenarios, robustez y recomendaciones (sección 6)</td>
+<td style="text-align: center;">20 %</td>
+</tr>
+<tr class="odd">
+<td>Limitaciones y reproducibilidad (sección 7 y apéndice)</td>
+<td style="text-align: center;">10 %</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="la-entrega-del-equipo" class="level2">
+<h2 class="anchored" data-anchor-id="la-entrega-del-equipo">La entrega del equipo</h2>
+<p>El informe completo está aquí: <a href="informe-ejemplo-C.pdf">El aire que respira una flota. ¿Mínimo legal, mandato o escalones? (PDF)</a>. Esta página recorre las piezas que la trayectoria explica.</p>
+<div class="entrega caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Entrega del equipo</span><span class="caja-texto-titulo">Resumen ejecutivo, mensaje gobernante</span>
+</div>
+<p>Recomendamos cumplir la Ley 1964 de 2019 como piso, planear los patios de carga con dos años de compras por delante desde 2026 y reglamentar hoy una revisión en 2028 que eleve al 100 % la fracción eléctrica de las reposiciones si dos señales públicas lo confirman. Desaconsejamos quedarse en el mínimo legal con patios que persiguen a la flota y también adoptar de inmediato un mandato eléctrico total.</p>
+</div>
+<p>Compare ese mensaje con la recomendación del Avance 3, «un mandato eléctrico del 50 % en las licitaciones de 2026, con revisión en 2032». El instrumento cambió, el año de la revisión cambió y apareció la ley. La verificación de los datos, más que una corrección de detalle, cambió lo que el equipo le pide al decisor.</p>
+<section id="la-tabla-de-robustez" class="level3">
+<h3 class="anchored" data-anchor-id="la-tabla-de-robustez">La tabla de robustez</h3>
+<table class="caption-top table">
+<caption>Costo social anual medio 2026-2045 [MUSD/año] por estrategia y mundo, con el costo en salud central (6 kUSD/bus-año). Versión 2 del modelo del ejemplo C, con datos verificados.</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th style="text-align: right;">Viento de cola</th>
+<th style="text-align: right;">Cuesta arriba</th>
+<th style="text-align: right;">Diésel barato</th>
+<th style="text-align: right;">Pantano</th>
+<th style="text-align: right;">Máximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mínimo legal</td>
+<td style="text-align: right;">1068,8</td>
+<td style="text-align: right;">1080,2</td>
+<td style="text-align: right;">1057,5</td>
+<td style="text-align: right;">1067,7</td>
+<td style="text-align: right;">1080,2</td>
+</tr>
+<tr class="even">
+<td>ley + patios anticipados</td>
+<td style="text-align: right;">1070,8</td>
+<td style="text-align: right;">1066,6</td>
+<td style="text-align: right;">1058,4</td>
+<td style="text-align: right;">1054,9</td>
+<td style="text-align: right;">1070,8</td>
+</tr>
+<tr class="odd">
+<td>escalonada condicionada</td>
+<td style="text-align: right;">1064,4</td>
+<td style="text-align: right;">1062,2</td>
+<td style="text-align: right;">1058,4</td>
+<td style="text-align: right;">1054,9</td>
+<td style="text-align: right;">1064,4</td>
+</tr>
+<tr class="even">
+<td>mandato 100%</td>
+<td style="text-align: right;">1061,2</td>
+<td style="text-align: right;">1059,4</td>
+<td style="text-align: right;">1073,7</td>
+<td style="text-align: right;">1071,9</td>
+<td style="text-align: right;">1073,7</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<caption>Arrepentimiento [MUSD/año] frente a la mejor estrategia de cada mundo.</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th style="text-align: right;">Viento de cola</th>
+<th style="text-align: right;">Cuesta arriba</th>
+<th style="text-align: right;">Diésel barato</th>
+<th style="text-align: right;">Pantano</th>
+<th style="text-align: right;">Máximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mínimo legal</td>
+<td style="text-align: right;">7,6</td>
+<td style="text-align: right;">20,8</td>
+<td style="text-align: right;">0,0</td>
+<td style="text-align: right;">12,7</td>
+<td style="text-align: right;">20,8</td>
+</tr>
+<tr class="even">
+<td>ley + patios anticipados</td>
+<td style="text-align: right;">9,6</td>
+<td style="text-align: right;">7,3</td>
+<td style="text-align: right;">0,9</td>
+<td style="text-align: right;">0,0</td>
+<td style="text-align: right;">9,6</td>
+</tr>
+<tr class="odd">
+<td>escalonada condicionada</td>
+<td style="text-align: right;">3,3</td>
+<td style="text-align: right;">2,8</td>
+<td style="text-align: right;">0,9</td>
+<td style="text-align: right;">0,0</td>
+<td style="text-align: right;">3,3</td>
+</tr>
+<tr class="even">
+<td>mandato 100%</td>
+<td style="text-align: right;">0,0</td>
+<td style="text-align: right;">0,0</td>
+<td style="text-align: right;">16,2</td>
+<td style="text-align: right;">17,0</td>
+<td style="text-align: right;">17,0</td>
+</tr>
+</tbody>
+</table>
+<p>La escalonada condicionada nunca gana un mundo por mucho, pero tampoco pierde por mucho en ninguno: su arrepentimiento máximo es de 3,3 MUSD/año, frente a 9,6 de la ley con patios anticipados, 17,0 del mandato total y 20,8 del mínimo legal, y también gana por maximin. La tabla se lee de izquierda a derecha porque cada estrategia agrega una sola palanca a la anterior. Pasar del mínimo legal a la ley con patios anticipados elimina casi todo el costo de descoordinación en los mundos trabados; agregar la revisión de 2028 recupera la velocidad en los mundos favorables sin pagar el mandato en los desfavorables.</p>
+</section>
+</section>
+<section id="explore-los-cuatro-mundos" class="level2">
+<h2 class="anchored" data-anchor-id="explore-los-cuatro-mundos">Explore los cuatro mundos</h2>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Estrategia por mundo</span>
+</div>
+<p>Elija un mundo y compare las cuatro estrategias. En <em>Pantano</em>, observe cuántos buses quedan sin cupo con el mínimo legal; en <em>Viento de cola</em>, observe cuándo se dispara el escalón de la escalonada.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="95" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 94;"><span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>fin <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/cg-final.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="100" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 99;"><span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>viewof mundoF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(fin<span class="op">.</span><span class="at">tabla</span><span class="op">.</span><span class="at">mundos</span><span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"Pantano"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Mundo"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="105" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 104;"><span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>viewof serieF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"flota eléctrica"</span><span class="op">,</span> <span class="st">"buses sin cupo"</span><span class="op">,</span> <span class="st">"mandato vigente"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"buses sin cupo"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Variable"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="110" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 109;"><span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>puntosF <span class="op">=</span> fin<span class="op">.</span><span class="at">trayectorias</span><span class="op">.</span><span class="fu">filter</span>((c) <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">mundo</span> <span class="op">===</span> mundoF)<span class="op">.</span><span class="fu">flatMap</span>((c) <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">anio</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>  t<span class="op">,</span> <span class="dt">e</span><span class="op">:</span> c<span class="op">.</span><span class="at">estrategia</span><span class="op">,</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>  <span class="dt">v</span><span class="op">:</span> serieF <span class="op">===</span> <span class="st">"flota eléctrica"</span> <span class="op">?</span> c<span class="op">.</span><span class="at">electricos</span>[k] <span class="op">:</span> serieF <span class="op">===</span> <span class="st">"buses sin cupo"</span> <span class="op">?</span> c<span class="op">.</span><span class="at">sin_cupo</span>[k] <span class="op">:</span> c<span class="op">.</span><span class="at">mandato</span>[k]<span class="op">,</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>})))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="118" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 117;"><span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">340</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Año"</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="bu">String</span>(d)}<span class="op">,</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> serieF <span class="op">===</span> <span class="st">"mandato vigente"</span> <span class="op">?</span> <span class="st">"Fracción eléctrica mínima de las compras"</span> <span class="op">:</span> <span class="st">"Buses"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tickFormat</span><span class="op">:</span> serieF <span class="op">===</span> <span class="st">"mandato vigente"</span> <span class="op">?</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d) <span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> fin<span class="op">.</span><span class="at">tabla</span><span class="op">.</span><span class="at">estrategias</span><span class="op">,</span> <span class="dt">range</span><span class="op">:</span> fin<span class="op">.</span><span class="at">tabla</span><span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> COLOR_ESTRATEGIA[e])<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [Plot<span class="op">.</span><span class="fu">line</span>(puntosF<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"e"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span> Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])]<span class="op">,</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="130" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 129;"><span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="vs">  </span><span class="sc">${</span>fin<span class="op">.</span><span class="at">tabla</span><span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> {</span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> c <span class="op">=</span> fin<span class="op">.</span><span class="at">trayectorias</span><span class="op">.</span><span class="fu">find</span>((x) <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">mundo</span> <span class="op">===</span> mundoF <span class="op">&amp;&amp;</span> x<span class="op">.</span><span class="at">estrategia</span> <span class="op">===</span> e)<span class="op">;</span></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span>e<span class="sc">}</span><span class="vs">&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>c<span class="op">.</span><span class="at">sin_cupo</span>))<span class="sc">}</span><span class="vs"> sin cupo como máximo&lt;/b&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>  })<span class="sc">}</span></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Versión 2 del modelo del ejemplo C (<code>modelo_buses.py</code>), flota del SITP de diciembre de 2025 (10 502 buses) y parámetros derivados en <code>datos_caso.py</code>; los valores marcados [POR VERIFICAR] en el informe se discuten en su sección 7.</p>
+</div>
+</div>
+<p>En <em>Pantano</em>, el mínimo legal deja hasta 1 370 buses sin cupo hacia 2038, cuando las cuotas de la ley llegan antes que los patios, y la escalonada coincide con la ley con patios anticipados porque su escalón nunca se dispara. En <em>Viento de cola</em>, la señal percibida lleva el mandato de la escalonada al 86 % en 2028 y al 95 % en 2029.</p>
+</section>
+<section id="la-frontera-del-costo-en-salud" class="level2">
+<h2 class="anchored" data-anchor-id="la-frontera-del-costo-en-salud">La frontera del costo en salud</h2>
+<p>En el Avance 3, la cifra de la salud decidía la estrategia en casi todo su rango. Con los datos verificados, el informe final hace la misma prueba.</p>
+<div id="pred-cg-frontera" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>Con los datos verificados, ¿hasta qué costo en salud se mantiene la escalonada como ganadora por minimax regret?</p>
+<div class="opcion">
+<p>Hasta unos 6 kUSD/bus-año, el valor central.</p>
+</div>
+<div class="opcion">
+<p>Hasta unos 12 kUSD/bus-año, el techo del rango documentado.</p>
+</div>
+<div class="opcion">
+<p>Siempre gana, con cualquier valor.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">¿Dónde cambia la recomendación?</span>
+</div>
+<p>Mueva el costo en salud desde el valor central (6) hasta el techo del rango documentado (11,6) y más allá.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="170" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 169;"><span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>viewof saludF <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">24</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Costo en salud [kUSD/bus-año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="175" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 174;"><span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a>filaF <span class="op">=</span> fin<span class="op">.</span><span class="at">salud</span><span class="op">.</span><span class="fu">find</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">salud</span> <span class="op">===</span> saludF)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="180" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 179;"><span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Costo en salud [kUSD/bus-año]"</span>}<span class="op">,</span></span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Arrepentimiento máximo [MUSD/año]"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> fin<span class="op">.</span><span class="at">tabla</span><span class="op">.</span><span class="at">estrategias</span><span class="op">,</span> <span class="dt">range</span><span class="op">:</span> fin<span class="op">.</span><span class="at">tabla</span><span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> COLOR_ESTRATEGIA[e])<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rectX</span>([{<span class="dt">x1</span><span class="op">:</span> <span class="fl">1.9</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="fl">11.6</span>}]<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.08</span>})<span class="op">,</span></span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(fin<span class="op">.</span><span class="at">salud</span><span class="op">.</span><span class="fu">flatMap</span>((f) <span class="kw">=&gt;</span> fin<span class="op">.</span><span class="at">tabla</span><span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> ({<span class="dt">s</span><span class="op">:</span> f<span class="op">.</span><span class="at">salud</span><span class="op">,</span> <span class="dt">v</span><span class="op">:</span> f<span class="op">.</span><span class="at">max_arrepentimiento</span>[e]<span class="op">,</span> e})))<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"s"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"e"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([saludF]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">violeta</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4,3"</span>})<span class="op">,</span></span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="196" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 195;"><span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Gana por minimax regret&lt;b&gt;</span><span class="sc">${</span>filaF<span class="op">.</span><span class="at">minimax</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Gana por maximin&lt;b&gt;</span><span class="sc">${</span>filaF<span class="op">.</span><span class="at">maximin</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>La franja verde marca el rango documentado del costo en salud (1,9 a 11,6 kUSD/bus-año), derivado de la valoración del DNP y de la participación del SITP en las emisiones de PM2.5. Versión 2 del modelo del ejemplo C.</p>
+</div>
+</div>
+<p>Usted anotó <span class="mi-prediccion" data-para="pred-cg-frontera"></span>. La escalonada gana por los dos criterios en todo el rango documentado. Desde 13 kUSD/bus-año el minimax regret pasa al mandato total, y desde 16 también el maximin. La frontera queda así fuera de la evidencia disponible, pero a poco más del doble del valor central, y el informe la convierte en una regla: si el estudio de carga de enfermedad por corredor arroja más de unos 13 kUSD/bus-año, conviene adelantar el mandato total sin esperar la revisión de 2028 (recomendación 4).</p>
+</section>
+<section id="la-realimentación-docente" class="level2">
+<h2 class="anchored" data-anchor-id="la-realimentación-docente">La realimentación docente</h2>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-sobresaliente">Sobresaliente</span><span class="caja-texto-titulo">Resumen ejecutivo (10 %)</span>
+</div>
+<p>Pirámide completa, cifras ancladas y legible en cinco minutos por alguien que no sabe dinámica de sistemas. Nada del resumen sorprende al leer el informe. Nivel asignado: 92.</p>
+</div>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-sobresaliente">Sobresaliente</span><span class="caja-texto-titulo">Caso y complejidad (10 %)</span>
+</div>
+<p>El modo de referencia llega con la estructura de edades de la flota y el diagrama causal, ya con la holgura de cupos, se usa después en el modelo. La realimentación del Avance 1 se ve incorporada. Nivel asignado: 90.</p>
+</div>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-sobresaliente">Sobresaliente</span><span class="caja-texto-titulo">Redes (15 %)</span>
+</div>
+<p>La intermediación, la restricción de predios y la capa de exposición producen una recomendación derivada de la topología (Portal Sur y Portal Américas). Nivel asignado: 90.</p>
+</div>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-sobresaliente">Sobresaliente</span><span class="caja-texto-titulo">Modelo de dinámica de sistemas (20 %)</span>
+</div>
+<p>Parámetros derivados por script con fuente o marca, pruebas de condiciones extremas documentadas y estrategias probadas como cambios de estructura. Queda un límite declarado con honestidad: los retiros de primer orden reparten en el tiempo una ola de reposición que en la realidad se concentra entre 2026 y 2030. Nivel asignado: 92.</p>
+</div>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-sobresaliente">Sobresaliente</span><span class="caja-texto-titulo">Gobernanza y justicia (15 %)</span>
+</div>
+<p>La justicia del aire se dimensiona con su peso real (1,4 % del PM2.5), la valoración de la salud se discute como elección de la ciudad y el diagnóstico de Ostrom lleva a un remedio en la misma capa del problema, el convenio flota-patio-red. Nivel asignado: 90.</p>
+</div>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-sobresaliente">Sobresaliente</span><span class="caja-texto-titulo">Escenarios, robustez y recomendaciones (20 %)</span>
+</div>
+<p>Cuatro estrategias palanca por palanca, legales y en su mejor versión; seis recomendaciones priorizadas, cada una con condición de validez o señal, y una regla adaptativa ejecutable. Nivel asignado: 94.</p>
+</div>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-sobresaliente">Sobresaliente</span><span class="caja-texto-titulo">Limitaciones y reproducibilidad (10 %)</span>
+</div>
+<p>Seis limitaciones con la dirección de su sesgo, una agenda de «siguiente estudio» que un tercero podría ejecutar y un repositorio que regenera cada figura. Nivel asignado: 93.</p>
+</div>
+<p>La nota del informe es 91,7.</p>
+</section>
+<section id="el-panel" class="level2">
+<h2 class="anchored" data-anchor-id="el-panel">El panel</h2>
+<p>El panel dura 15 minutos más preguntas, y los tres integrantes presentan y responden. El equipo lo organizó como una pirámide, con el mensaje gobernante en la primera lámina, los tres argumentos del resumen ejecutivo en las tres siguientes, una lámina única con la tabla de robustez y su franja de salud, y el pedido concreto al decisor en la última.</p>
+<p>Los jurados preguntan siempre dos cosas. Estas fueron las respuestas del equipo.</p>
+<div class="entrega caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Entrega del equipo</span><span class="caja-texto-titulo">«¿Y si su modelo se equivoca?»</span>
+</div>
+<p>No le pedimos que acierte el mundo. La estrategia que recomendamos queda a menos de 3,3 millones de dólares anuales de la mejor en cualquiera de los cuatro mundos, y la decisión grande, subir al 100 %, se toma en 2028 con dos indicadores observados que la norma publica. Si el modelo se equivoca en los costos, lo sabremos en 2028 antes de haber comprado un solo bus de más.</p>
+</div>
+<div class="entrega caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Entrega del equipo</span><span class="caja-texto-titulo">«¿Por qué debo creerle a 6 mil dólares por bus?»</span>
+</div>
+<p>No hace falta creerle a esa cifra exacta. La recomendación se mantiene en todo el rango que permite la evidencia, de 1,9 a 11,6, y cambia hacia 13. Por eso pedimos el estudio de carga de enfermedad por corredor antes de 2028: es la cifra que puede mover la decisión, y hoy nadie la tiene medida en Bogotá.</p>
+</div>
+<div class="realimentacion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-nivel rubrica-bueno">Bueno</span><span class="caja-texto-titulo">Panel (nota 89,6)</span>
+</div>
+<p>Mensaje al inicio y sostenido (92), defensa técnica que señala la celda de la tabla donde cada pregunta ya fue considerada (90), tiempo y reparto equilibrados (90). La lámina de robustez comunica la decisión, pero su franja de salud necesitó explicación oral (visualización, 88), y una respuesta al jurado no técnico usó «arrepentimiento» sin traducirlo (audiencia, 85).</p>
+</div>
+</section>
+<section id="la-trayectoria-completa" class="level2">
+<h2 class="anchored" data-anchor-id="la-trayectoria-completa">La trayectoria completa</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Entrega</th>
+<th style="text-align: center;">Nota</th>
+<th style="text-align: center;">Puntos sobre 45</th>
+<th>Lo que decidió la nota</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Avance 1</td>
+<td style="text-align: center;">67,9</td>
+<td style="text-align: center;">3,4</td>
+<td>Un lazo con la paridad equivocada en el criterio de mayor peso</td>
+</tr>
+<tr class="even">
+<td>Avance 2</td>
+<td style="text-align: center;">71,0</td>
+<td style="text-align: center;">3,5</td>
+<td>Un tope silencioso y una ley ausente</td>
+</tr>
+<tr class="odd">
+<td>Avance 3</td>
+<td style="text-align: center;">78,9</td>
+<td style="text-align: center;">3,9</td>
+<td>Una estrategia ilegal y cuatro correcciones arrastradas</td>
+</tr>
+<tr class="even">
+<td>Informe final</td>
+<td style="text-align: center;">91,7</td>
+<td style="text-align: center;">22,9</td>
+<td>La verificación de cada cifra y la franqueza al reescribir la recomendación</td>
+</tr>
+<tr class="odd">
+<td>Panel</td>
+<td style="text-align: center;">89,6</td>
+<td style="text-align: center;">4,5</td>
+<td>Las dos preguntas ensayadas</td>
+</tr>
+<tr class="even">
+<td><strong>Proyecto</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>38,3 (85 %)</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="resumen caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">En resumen</span>
+</div>
+<ul>
+<li>Los avances pesan 15 de los 45 puntos, y en ellos se detectan casi todos los errores que habrían hundido el informe. Un avance flojo con buena realimentación vale más que un avance pulido que nadie discute.</li>
+<li>La verificación de datos cambió la recomendación del caso. Planéela para el Avance 2.</li>
+<li>Cada observación que se arrastra reaparece en la siguiente rúbrica, en el criterio de trayectoria.</li>
+<li>Lo propio de este caso, que no conviene copiar, son el caso, los stocks, los ejes de escenarios y la métrica. Lo transferible son los hábitos de cada «Para su proyecto».</li>
+</ul>
+</div>
+<p><strong>Volver al inicio:</strong> <a href="../caso-guia/index.html">el caso guía completo</a>.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG5DT0xPUl9FU1RSQVRFR0lBID0gKHtcIm3DrW5pbW8gbGVnYWxcIjogQ09MT1JFUy5yb2pvLCBcImxleSArIHBhdGlvcyBhbnRpY2lwYWRvc1wiOiBDT0xPUkVTLmdyaXMsIFwiZXNjYWxvbmFkYSBjb25kaWNpb25hZGFcIjogQ09MT1JFUy5henVsLCBcIm1hbmRhdG8gMTAwJVwiOiBDT0xPUkVTLmFtYmFyfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImZpbiA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvY2ctZmluYWwuanNvblwiKS5qc29uKClcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtdW5kb0YgPSBJbnB1dHMuc2VsZWN0KGZpbi50YWJsYS5tdW5kb3MsIHt2YWx1ZTogXCJQYW50YW5vXCIsIGxhYmVsOiBcIk11bmRvXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHNlcmllRiA9IElucHV0cy5yYWRpbyhbXCJmbG90YSBlbMOpY3RyaWNhXCIsIFwiYnVzZXMgc2luIGN1cG9cIiwgXCJtYW5kYXRvIHZpZ2VudGVcIl0sIHt2YWx1ZTogXCJidXNlcyBzaW4gY3Vwb1wiLCBsYWJlbDogXCJWYXJpYWJsZVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InB1bnRvc0YgPSBmaW4udHJheWVjdG9yaWFzLmZpbHRlcigoYykgPT4gYy5tdW5kbyA9PT0gbXVuZG9GKS5mbGF0TWFwKChjKSA9PiBjLmFuaW8ubWFwKCh0LCBrKSA9PiAoe1xuICB0LCBlOiBjLmVzdHJhdGVnaWEsXG4gIHY6IHNlcmllRiA9PT0gXCJmbG90YSBlbMOpY3RyaWNhXCIgPyBjLmVsZWN0cmljb3Nba10gOiBzZXJpZUYgPT09IFwiYnVzZXMgc2luIGN1cG9cIiA/IGMuc2luX2N1cG9ba10gOiBjLm1hbmRhdG9ba10sXG59KSkpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMzQwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIkHDsW9cIiwgdGlja0Zvcm1hdDogKGQpID0+IFN0cmluZyhkKX0sXG4gIHk6IHtsYWJlbDogc2VyaWVGID09PSBcIm1hbmRhdG8gdmlnZW50ZVwiID8gXCJGcmFjY2nDs24gZWzDqWN0cmljYSBtw61uaW1hIGRlIGxhcyBjb21wcmFzXCIgOiBcIkJ1c2VzXCIsIGdyaWQ6IHRydWUsXG4gICAgICB0aWNrRm9ybWF0OiBzZXJpZUYgPT09IFwibWFuZGF0byB2aWdlbnRlXCIgPyAoZCkgPT4gZm9ybWF0b1BvcmNlbnRhamUoZCkgOiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgY29sb3I6IHtkb21haW46IGZpbi50YWJsYS5lc3RyYXRlZ2lhcywgcmFuZ2U6IGZpbi50YWJsYS5lc3RyYXRlZ2lhcy5tYXAoKGUpID0+IENPTE9SX0VTVFJBVEVHSUFbZV0pLCBsZWdlbmQ6IHRydWV9LFxuICBtYXJrczogW1Bsb3QubGluZShwdW50b3NGLCB7eDogXCJ0XCIsIHk6IFwidlwiLCBzdHJva2U6IFwiZVwiLCBzdHJva2VXaWR0aDogMn0pLCBQbG90LnJ1bGVZKFswXSldLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gICR7ZmluLnRhYmxhLmVzdHJhdGVnaWFzLm1hcCgoZSkgPT4ge1xuICAgIGNvbnN0IGMgPSBmaW4udHJheWVjdG9yaWFzLmZpbmQoKHgpID0+IHgubXVuZG8gPT09IG11bmRvRiAmJiB4LmVzdHJhdGVnaWEgPT09IGUpO1xuICAgIHJldHVybiBodG1sYDxkaXY+JHtlfTxiPiR7Zm9ybWF0b051bWVybygwKShNYXRoLm1heCguLi5jLnNpbl9jdXBvKSl9IHNpbiBjdXBvIGNvbW8gbcOheGltbzwvYj48L2Rpdj5gO1xuICB9KX1cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBzYWx1ZEYgPSBJbnB1dHMucmFuZ2UoWzEsIDI0XSwge3ZhbHVlOiA2LCBzdGVwOiAxLCBsYWJlbDogXCJDb3N0byBlbiBzYWx1ZCBba1VTRC9idXMtYcOxb11cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJmaWxhRiA9IGZpbi5zYWx1ZC5maW5kKChmKSA9PiBmLnNhbHVkID09PSBzYWx1ZEYpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDMyMCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJDb3N0byBlbiBzYWx1ZCBba1VTRC9idXMtYcOxb11cIn0sXG4gIHk6IHtsYWJlbDogXCJBcnJlcGVudGltaWVudG8gbcOheGltbyBbTVVTRC9hw7FvXVwiLCBncmlkOiB0cnVlfSxcbiAgY29sb3I6IHtkb21haW46IGZpbi50YWJsYS5lc3RyYXRlZ2lhcywgcmFuZ2U6IGZpbi50YWJsYS5lc3RyYXRlZ2lhcy5tYXAoKGUpID0+IENPTE9SX0VTVFJBVEVHSUFbZV0pLCBsZWdlbmQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdFgoW3t4MTogMS45LCB4MjogMTEuNn1dLCB7eDE6IFwieDFcIiwgeDI6IFwieDJcIiwgZmlsbDogQ09MT1JFUy52ZXJkZSwgZmlsbE9wYWNpdHk6IDAuMDh9KSxcbiAgICBQbG90LmxpbmUoZmluLnNhbHVkLmZsYXRNYXAoKGYpID0+IGZpbi50YWJsYS5lc3RyYXRlZ2lhcy5tYXAoKGUpID0+ICh7czogZi5zYWx1ZCwgdjogZi5tYXhfYXJyZXBlbnRpbWllbnRvW2VdLCBlfSkpKSwge3g6IFwic1wiLCB5OiBcInZcIiwgc3Ryb2tlOiBcImVcIiwgc3Ryb2tlV2lkdGg6IDJ9KSxcbiAgICBQbG90LnJ1bGVYKFtzYWx1ZEZdLCB7c3Ryb2tlOiBDT0xPUkVTLnZpb2xldGEsIHN0cm9rZURhc2hhcnJheTogXCI0LDNcIn0pLFxuICAgIFBsb3QucnVsZVkoWzBdKSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5HYW5hIHBvciBtaW5pbWF4IHJlZ3JldDxiPiR7ZmlsYUYubWluaW1heH08L2I+PC9kaXY+XG4gIDxkaXY+R2FuYSBwb3IgbWF4aW1pbjxiPiR7ZmlsYUYubWF4aW1pbn08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ211bmRvRicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzZXJpZUYnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2FsdWRGJykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../caso-guia";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pozost\.github\.io\/Systems-Analytics-Guias\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../caso-guia/05-avance-3.html" class="pagination-link" aria-label="Semana 7 · Avance 3: escenarios, robustez y gobernanza">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Semana 7 · Avance 3: escenarios, robustez y gobernanza</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>MISE · Universidad de los Andes · Systems Analytics</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.js"></script>
+</body></html>
