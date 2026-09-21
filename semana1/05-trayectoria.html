@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Cuatro capas, cuatro preguntas para un solo sistema: estructura física, dinámica de mercado, red de actores y gobernanza, con sus acoples, aplicadas a un apagón, a la solar en techos y a Windpeshi.">
+<meta name="description" content="Por qué el pasado decide el presente: retardos materiales y de información, acumulaciones como memoria, rendimientos crecientes y lock-in, con la urna de Pólya, el gas importado y la matriz hidrodominante.">
 
-<title>El marco multicapa – Systems Analytics · Guías de autoestudio</title>
+<title>Retardos, memoria y dependencia de la trayectoria – Systems Analytics · Guías de autoestudio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,8 +72,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../semana6/02-sistema-sociotecnico.html" rel="next">
-<link href="../semana6/index.html" rel="prev">
+<link href="../semana2/index.html" rel="next">
+<link href="../semana1/04-no-linealidad.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -118,6 +118,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -130,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana6/index.html">Semana 6 · Integración y gobernanza</a></li><li class="breadcrumb-item"><a href="../semana6/01-marco-multicapa.html">El marco multicapa</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/05-trayectoria.html">Retardos, memoria y dependencia de la trayectoria</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -196,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link">
+  <a href="../semana1/05-trayectoria.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Retardos, memoria y dependencia de la trayectoria</span></a>
   </div>
 </li>
@@ -378,7 +421,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link active">
+  <a href="../semana6/01-marco-multicapa.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El marco multicapa</span></a>
   </div>
 </li>
@@ -437,7 +480,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
-  <li><a href="#la-intuición-una-ciudad-con-cuatro-pares-de-gafas" id="toc-la-intuición-una-ciudad-con-cuatro-pares-de-gafas" class="nav-link" data-scroll-target="#la-intuición-una-ciudad-con-cuatro-pares-de-gafas">2. La intuición: una ciudad con cuatro pares de gafas</a></li>
+  <li><a href="#la-intuición-el-teclado-qwerty" id="toc-la-intuición-el-teclado-qwerty" class="nav-link" data-scroll-target="#la-intuición-el-teclado-qwerty">2. La intuición: el teclado QWERTY</a></li>
   <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
   <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
   <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
@@ -449,15 +492,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana6/index.html">Semana 6 · Integración y gobernanza</a></li><li class="breadcrumb-item"><a href="../semana6/01-marco-multicapa.html">El marco multicapa</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/05-trayectoria.html">Retardos, memoria y dependencia de la trayectoria</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">El marco multicapa</h1>
-<p class="subtitle lead">Semana 6 · Concepto 1 de 8</p>
+<h1 class="title">Retardos, memoria y dependencia de la trayectoria</h1>
+<p class="subtitle lead">Semana 1 · Concepto 5 de 10</p>
 </div>
 
 <div>
   <div class="description">
-    Cuatro capas, cuatro preguntas para un solo sistema: estructura física, dinámica de mercado, red de actores y gobernanza, con sus acoples, aplicadas a un apagón, a la solar en techos y a Windpeshi.
+    Por qué el pasado decide el presente: retardos materiales y de información, acumulaciones como memoria, rendimientos crecientes y lock-in, con la urna de Pólya, el gas importado y la matriz hidrodominante.
   </div>
 </div>
 
@@ -477,62 +520,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="8" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 7;"><span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="9" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 8;"><span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {urnaPolya<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
-<div id="ojs-cell-1" data-nodetype="declaration">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 45 a 55 minutos</span> <span class="dato">📚 Requiere las semanas 2 a 5 (redes y dinámica de sistemas)</span> <span class="dato">🧪 Se aplica en el análisis de cuatro capas y en el juego de roles</span></p>
+<p><span class="dato">⏱ 55 a 65 minutos</span> <span class="dato">📚 Requiere <a href="../semana1/03-retroalimentacion.html">retroalimentación y diagramas causales</a></span> <span class="dato">🧪 Se aplica en el mapa causal, donde los retardos se marcan</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Al terminar esta página</span>
 </div>
 <ul>
-<li>Formular la pregunta que responde cada una de las cuatro capas de un proyecto o sistema energético.</li>
-<li>Identificar acoples entre capas y localizar el problema en la capa o en la costura donde vive.</li>
-<li>Explicar por qué una recomendación hecha desde una sola capa suele atacar el síntoma.</li>
+<li>Distinguir un retardo material de uno de información y señalarlos en un mapa causal.</li>
+<li>Explicar cómo los rendimientos crecientes producen dependencia de la trayectoria y <em>lock-in</em> (bloqueo).</li>
+<li>Predecir, con la urna de Pólya, cuándo un sistema converge a una sola opción por azar temprano.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Todo proyecto energético se puede mirar con cuatro pares de gafas: la infraestructura, el mercado, los actores y las reglas. Los fracasos caros rara vez ocurren dentro de una capa; ocurren en las costuras, donde una variable de una capa es condición de la otra.</p>
+<p>Las acumulaciones y los retardos le dan memoria a un sistema: lo que hay hoy se decidió hace años. Cuando además cada adopción hace más atractiva la siguiente, pequeños accidentes tempranos deciden el resultado, y el sistema se queda en él aunque la razón original desaparezca.</p>
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>Windpeshi tenía, en cada capa por separado, razones para avanzar: un recurso eólico excepcional, contratos de largo plazo, tecnología madura y un expediente en trámite. Aun así, Enel lo suspendió en mayo de 2023, y en 2026, con otro dueño, volvieron los bloqueos. El ingeniero, el economista y el abogado del proyecto tenían razón dentro de su capa. <strong>¿Qué se pierde cuando cada disciplina mira solo su capa, y cómo se ubica el lugar donde de verdad vive el problema?</strong></p>
+<p>La capacidad de generación con la que Colombia enfrentó El Niño de 2015 se decidió entre 2005 y 2012. El predominio hidráulico viene de medio siglo de embalses, y el Cargo por Confiabilidad de 2006 respondía a la memoria del racionamiento de 1992. Cuando llegó la crisis, el sistema respondió con lo que le habían dejado las decisiones anteriores.</p>
+<p>Desde 2016 una terminal en Cartagena regasifica gas importado para las térmicas de la Costa, con una capacidad inicial de 400 millones de pies cúbicos diarios (Global Energy Monitor, 2026); a diciembre de 2025 las reservas probadas de gas alcanzaban para unos 5,9 años de producción (El Colombiano, 2026). <strong>¿Por qué es tan difícil cambiar de camino una vez que un sistema lo ha tomado?</strong></p>
 </section>
-<section id="la-intuición-una-ciudad-con-cuatro-pares-de-gafas" class="level2">
-<h2 class="anchored" data-anchor-id="la-intuición-una-ciudad-con-cuatro-pares-de-gafas">2. La intuición: una ciudad con cuatro pares de gafas</h2>
+<section id="la-intuición-el-teclado-qwerty" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-teclado-qwerty">2. La intuición: el teclado QWERTY</h2>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La misma ciudad, cuatro veces</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Un accidente que se volvió norma</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s6-01-ciudad-1.svg" class="img-fluid" alt="Un plano con calles, tuberías y cables: la ciudad de concreto."></a></p>
-<p><strong>La ciudad de concreto.</strong> Calles, tuberías y cables. Responde qué se puede mover y por dónde.</p>
+<p><a href="../diagramas/svg/s1-05-qwerty-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-05-qwerty-1.svg" class="img-fluid" alt="Las letras QWERTY en un teclado."></a></p>
+<p><strong>Empiece por la razón original.</strong> Hacia 1870 las máquinas de escribir se trababan cuando se pulsaban seguidas dos teclas vecinas. La disposición QWERTY separaba las letras frecuentes y resolvía ese problema mecánico.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s6-01-ciudad-2.svg" class="img-fluid" alt="Encima, la ciudad de los flujos: empleos, arriendos y precios."></a></p>
-<p><strong>La ciudad de los flujos.</strong> Empleos, arriendos y precios que suben y bajan. Responde qué comportamiento sale de millones de decisiones económicas.</p>
+<p><a href="../diagramas/svg/s1-05-qwerty-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-05-qwerty-2.svg" class="img-fluid" alt="Escuelas y oficinas entrenan en QWERTY."></a></p>
+<p><strong>Agregue a las personas.</strong> Escuelas y oficinas entrenaron en esa disposición. Cada persona entrenada es un activo que solo sirve con teclados QWERTY: una acumulación.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s6-01-ciudad-3.svg" class="img-fluid" alt="Encima, la ciudad de la gente: vecinos conectados por relaciones."></a></p>
-<p><strong>La ciudad de la gente.</strong> Vecinos, juntas de acción comunal, gremios: quién conoce a quién y quién puede vetar qué. Responde quién mueve o frena las cosas.</p>
+<p><a href="../diagramas/svg/s1-05-qwerty-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-05-qwerty-3.svg" class="img-fluid" alt="Lazo de refuerzo entre usuarios y teclados."></a></p>
+<p><strong>Cierre el lazo.</strong> Más usuarios hacen más rentable fabricar teclados QWERTY, y más teclados hacen más útil aprenderlo. Es un lazo de refuerzo con <strong>rendimientos crecientes a la adopción</strong>.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s6-01-ciudad-4.svg" class="img-fluid" alt="Arriba, la ciudad de las reglas: plan de ordenamiento, licencias y costumbre."></a></p>
-<p><strong>La ciudad de las reglas.</strong> El plan de ordenamiento, las licencias, la costumbre. Responde quién decide sobre las decisiones.</p>
+<p><a href="../diagramas/svg/s1-05-qwerty-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-05-qwerty-4.svg" class="img-fluid" alt="Una alternativa bloqueada por el costo de reentrenar."></a></p>
+<p><strong>Traiga una alternativa.</strong> Cambiar exigiría que todos reaprendieran al mismo tiempo, y quien cambia primero pierde. La alternativa no entra aunque tenga méritos.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s6-01-ciudad-5.svg" class="img-fluid" alt="Una flecha roja atraviesa las cuatro capas: un trancón se entiende cruzándolas."></a></p>
-<p><strong>Un problema que las cruza.</strong> Un trancón crónico es a la vez una vía estrecha, un mercado de vivienda que expulsa gente lejos del empleo, vecinos que bloquean una obra y una norma que no se cumple. Nadie diría que la verdadera ciudad es una sola de las cuatro. Regla de oro: antes de declarar irracional algo que ve en una capa, busque en qué otra capa es perfectamente racional.</p>
+<p><a href="../diagramas/svg/s1-05-qwerty-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-05-qwerty-5.svg" class="img-fluid" alt="La razón original desapareció y el resultado persiste."></a></p>
+<p><strong>Observe el resultado.</strong> Los teclados electrónicos ya no se traban: la razón original desapareció hace décadas y QWERTY sigue ahí. Eso es un <strong>lock-in</strong>: el pasado decide el presente.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-05-qwerty-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s1-05-qwerty-6.svg" class="img-fluid" alt="La matriz hidráulica como el mismo fenómeno."></a></p>
+<p><strong>Pase al sector.</strong> Los embalses construidos durante décadas, los ingenieros formados para operarlos y las reglas pensadas para el agua hacen más barato seguir por el mismo camino que cambiarlo, aunque las condiciones cambien.</p>
 </div>
 </div>
 </section>
@@ -540,106 +598,143 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
 <div class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Las cuatro capas del análisis sistémico</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Retardo material y retardo de información</span>
 </div>
-<p>Todo proyecto o sistema energético se analiza en cuatro capas articuladas, cada una con su pregunta, sus herramientas y su escala temporal:</p>
-<ol type="1">
-<li><strong>Estructura física</strong>: ¿qué permite y qué restringe la infraestructura y el recurso? Redes, criterio N-1, cuellos de botella; de milisegundos a décadas.</li>
-<li><strong>Dinámica de mercado</strong>: ¿qué comportamiento emerge de las decisiones económicas acopladas? Stocks, lazos, retardos y políticas; de meses a décadas.</li>
-<li><strong>Red de actores</strong>: ¿quién puede impulsar, bloquear o transformar, y a través de qué relaciones? Redes sociales, matriz poder-interés, coaliciones y vetos; de meses a años.</li>
-<li><strong>Gobernanza</strong>: ¿quién decide sobre las decisiones, con qué legitimidad y con qué reglas de reparto? Diseño institucional, justicia, normas; de años a generaciones.</li>
-</ol>
-<p>El análisis tiene tres pasos: responder la pregunta de cada capa, identificar los <strong>acoples</strong> (dónde una variable de una capa es condición de frontera de otra) y localizar el problema en la capa, o en la costura, donde vive.</p>
+<p>Un <strong>retardo material</strong> ocurre cuando algo físico tarda en recorrer un proceso: una central tarda años en construirse, el agua tarda en llegar al embalse. Un <strong>retardo de información</strong> ocurre cuando la percepción de un cambio tarda: los inversionistas ven el precio alto meses después, el regulador reacciona cuando la crisis ya empezó.</p>
+<p>Toda <strong>acumulación</strong> es memoria: el nivel del embalse o la capacidad instalada de hoy son la suma de todo lo que entró y salió antes. La semana 4 formaliza esta idea con stocks y flujos.</p>
 </div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Dependencia de la trayectoria y lock-in</span>
+</div>
+<p>Un sistema tiene <strong>dependencia de la trayectoria</strong> cuando el orden y el momento de los eventos pasados, y no solo las condiciones actuales, determinan su estado. Hay <strong>lock-in</strong> cuando el sistema queda en un estado del que no sale aunque existan alternativas mejores.</p>
+<p>Arthur (1989) identificó cuatro fuentes de <strong>rendimientos crecientes a la adopción</strong>: economías de escala, aprendizaje, efectos de red y expectativas. Unruh (2000) llamó <em>carbon lock-in</em> a su versión energética: la infraestructura fósil, las instituciones y los hábitos se refuerzan entre sí.</p>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">La urna de Pólya generalizada</span>
+</div>
+<p>Un modelo mínimo de adopción con rendimientos crecientes: cada nuevo adoptante elige la tecnología A con probabilidad</p>
+<p><span class="math display">P(A) = \frac{n_A^{\,e}}{n_A^{\,e} + n_B^{\,e}},</span></p>
+<p>donde <span class="math inline">n_A</span> y <span class="math inline">n_B</span> cuentan los adoptantes previos. Con <span class="math inline">e = 1</span> es la urna de Pólya clásica: cada historia converge a una participación distinta, fijada por el azar temprano. Con <span class="math inline">e &gt; 1</span> la tecnología que va adelante gana más de lo que le corresponde, y cada historia termina con una sola.</p>
+</div>
+<p>La matriz eléctrica colombiana es un ejemplo de trayectoria: cada decisión respondió a la crisis anterior con lo que dejaba la decisión previa.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Las capas y sus acoples</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La trayectoria de la matriz, hito a hito</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s6-01-capas-1.svg" class="img-fluid" alt="Capa 1: estructura física."></a></p>
-<p><strong>Capa 1, estructura física.</strong> La semana 2 y la semana 3 le dieron sus herramientas: la topología del sistema de transmisión, el criterio N-1 y los cuellos de botella.</p>
+<p><a href="../diagramas/svg/s1-05-trayectoria-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-05-trayectoria-1.svg" class="img-fluid" alt="1960 a 1990: grandes embalses."></a></p>
+<p><strong>1960 a 1990.</strong> El país construye grandes embalses y la matriz se vuelve hidráulica. Es una ventaja de costo que se convierte en exposición al clima.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s6-01-capas-2.svg" class="img-fluid" alt="Capa 2: dinámica de mercado."></a></p>
-<p><strong>Capa 2, dinámica de mercado.</strong> Las semanas 4 y 5: el ciclo de inversión, el aprendizaje, las palancas y los escenarios.</p>
+<p><a href="../diagramas/svg/s1-05-trayectoria-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-05-trayectoria-2.svg" class="img-fluid" alt="1992 y 1993: racionamiento."></a></p>
+<p><strong>1992 y 1993.</strong> Un racionamiento de casi un año enseña que el agua sola no basta. Esa memoria guiará las reglas de las décadas siguientes.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s6-01-capas-3.svg" class="img-fluid" alt="Capa 3: red de actores."></a></p>
-<p><strong>Capa 3, red de actores.</strong> Las mismas métricas de red de la semana 3, ahora sobre personas e instituciones: quién está en el centro, quién es puente y quién puede vetar.</p>
+<p><a href="../diagramas/svg/s1-05-trayectoria-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-05-trayectoria-3.svg" class="img-fluid" alt="1994: Leyes 142 y 143."></a></p>
+<p><strong>1994.</strong> Las Leyes 142 y 143 crean el mercado mayorista. La expansión pasa a depender de las señales de precio, sobre una matriz que ya era hidráulica.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s6-01-capas-4.svg" class="img-fluid" alt="Capa 4: gobernanza."></a></p>
-<p><strong>Capa 4, gobernanza.</strong> Las reglas sobre las reglas: consulta previa, reparto de costos y beneficios, diseño institucional. Es la capa nueva de esta semana.</p>
+<p><a href="../diagramas/svg/s1-05-trayectoria-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-05-trayectoria-4.svg" class="img-fluid" alt="2006 a 2008: Cargo por Confiabilidad y primera subasta."></a></p>
+<p><strong>2006 a 2008.</strong> El Cargo por Confiabilidad (Resolución CREG 071 de 2006) y su primera subasta remuneran energía firme para años secos, con reglas diseñadas para un sistema hidráulico.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s6-01-capas-5.svg" class="img-fluid" alt="Flechas de acople entre capas vecinas y una flecha larga de la gobernanza a la física."></a></p>
-<p><strong>Dibuje los acoples.</strong> Cada capa condiciona a sus vecinas, y la gobernanza alcanza directamente a la física: una consulta previa define dónde puede ir una torre. Un análisis multicapa sin flechas entre capas es una lista.</p>
+<p><a href="../diagramas/svg/s1-05-trayectoria-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s1-05-trayectoria-5.svg" class="img-fluid" alt="2015 y 2016: El Niño, la crisis y la regasificación."></a></p>
+<p><strong>2015 y 2016.</strong> El Niño pone a prueba esas reglas. La respuesta incluye gas importado por Cartagena, una solución que a su vez crea nuevos compromisos de largo plazo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-05-trayectoria-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s1-05-trayectoria-6.svg" class="img-fluid" alt="2019 a 2024: subastas de renovables y El Niño 2023-2024."></a></p>
+<p><strong>2019 a 2024.</strong> Llegan las subastas de renovables y otro El Niño. Cada decisión resolvió el problema de su momento y estrechó las opciones de la siguiente: la trayectoria es la memoria del sistema.</p>
 </div>
 </div>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
-<section id="un-apagón-leído-cuatro-veces" class="level3">
-<h3 class="anchored" data-anchor-id="un-apagón-leído-cuatro-veces">Un apagón, leído cuatro veces</h3>
+<section id="retardos-en-el-día-a-día" class="level3">
+<h3 class="anchored" data-anchor-id="retardos-en-el-día-a-día">Retardos en el día a día</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Cuatro respuestas verdaderas y ninguna suficiente</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Material o de información?</span>
 </div>
-<p><strong>Planteamiento.</strong> Una tormenta tumba una línea y deja sin luz a media ciudad intermedia durante horas. Hágale a ese apagón la pregunta de cada capa y decida dónde está la corrección duradera.</p>
+<p><strong>Planteamiento.</strong> Clasifique cada retardo: (a) la ducha que tarda en calentarse; (b) el termostato que mide la temperatura cada cinco minutos; (c) la planta hidroeléctrica que tarda siete años en construirse; (d) el precio de bolsa que llega a la factura del usuario con meses de rezago.</p>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Recorrer las capas</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Clasificar y marcar</span>
 </div>
 <div class="paso">
-<p><strong>Capa física.</strong> ¿Por qué la salida de un solo activo tumbó el servicio? Porque la subred operaba sin redundancia N-1: había un cuello de botella topológico.</p>
+<p><strong>Pregunte qué se demora.</strong> Si lo que tarda es algo físico que recorre un proceso, el retardo es material; si lo que tarda es enterarse, es de información.</p>
 </div>
 <div class="paso">
-<p><strong>Capa de mercado.</strong> ¿Por qué llevaba años sin refuerzos? Porque la remuneración de la distribución no premiaba invertir en confiabilidad fuera de las zonas densas: una subinversión racional para quien la decide.</p>
+<p><strong>Aplique el criterio.</strong> (a) El agua caliente recorre la tubería: <strong>material</strong>. (b) El termostato tarda en enterarse: <strong>información</strong>. (c) El concreto y las turbinas tardan en instalarse: <strong>material</strong>. (d) La señal de precio tarda en llegar: <strong>información</strong>.</p>
 </div>
 <div class="paso">
-<p><strong>Capa de actores.</strong> ¿Por qué nadie lo forzó? Porque los usuarios afectados están dispersos y sin voz organizada, y el operador local concentra la información técnica.</p>
+<p><strong>Marque en el mapa.</strong> Los cuatro van con la doble raya sobre la flecha. Distinguirlos importa porque se atacan de manera distinta: un retardo de información se acorta con mejores datos; uno material, casi nunca.</p>
 </div>
 <div class="paso">
-<p><strong>Capa de gobernanza.</strong> ¿Por qué las reglas lo permitieron? Porque los indicadores de calidad promediaban regiones y el regulador medía lo agregado, no lo local.</p>
-</div>
-<div class="paso">
-<p><strong>Localice la corrección.</strong> Las cuatro respuestas son verdaderas. La corrección duradera, cambiar el indicador regulatorio para que la confiabilidad local cuente, vive dos capas por encima del cable que se cayó. Quien solo miró la capa física recomendará podar árboles.</p>
+<p><strong>Conecte con la crisis.</strong> En 2015 los dos tipos se sumaron: la capacidad que habría ayudado estaba en construcción (material) y la señal de escasez llegó a los usuarios con retraso (información).</p>
 </div>
 </div>
 </section>
-<section id="la-solar-en-techos-en-cuatro-capas" class="level3">
-<h3 class="anchored" data-anchor-id="la-solar-en-techos-en-cuatro-capas">La solar en techos, en cuatro capas</h3>
+<section id="el-lock-in-del-gas" class="level3">
+<h3 class="anchored" data-anchor-id="el-lock-in-del-gas">El lock-in del gas</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Por qué se frena una adopción que el mercado empuja</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Una decisión razonable que estrecha el camino</span>
 </div>
-<p><strong>Planteamiento.</strong> En la primera página de la semana 5, la solar en techos de un barrio crecía como una logística por voz a voz. En la práctica, la adopción urbana se frena antes de lo que esa curva predice. Un equipo debe recomendar qué hacer.</p>
+<p><strong>Planteamiento.</strong> Después de la crisis de 2015 y 2016, el país aseguró gas importado para las térmicas de la Costa con una terminal de regasificación en Cartagena. ¿Qué rendimientos crecientes activa esa decisión y qué opciones futuras estrecha?</p>
 </div>
-<div id="pred-capas" class="prediccion caja">
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la decisión como trayectoria</span>
+</div>
+<div class="paso">
+<p><strong>Reconozca la razón.</strong> Frente a una sequía severa, el gas importado da respaldo firme sin depender de la lluvia. La decisión fue razonable con la información de su momento.</p>
+</div>
+<div class="paso">
+<p><strong>Nombre los rendimientos crecientes.</strong> La terminal es un costo hundido que se recupera usándola (escala); los operadores aprenden a manejarla (aprendizaje); las térmicas se diseñan para ese gas (red de activos complementarios); y los contratos se firman a quince o veinte años (expectativas).</p>
+</div>
+<div class="paso">
+<p><strong>Mire el contexto que cambió.</strong> Con reservas probadas para unos 5,9 años de producción a diciembre de 2025, el país empezó a importar gas también para la demanda residencial e industrial desde finales de 2024 (El Colombiano, 2024 y 2026). La infraestructura de importación pasó de respaldo a necesidad.</p>
+</div>
+<div class="paso">
+<p><strong>Saque la lección.</strong> Cada contrato y cada activo que depende del gas importado hace más costoso cambiar de camino. Un análisis honesto no juzga la decisión de 2016 con lo que se sabe hoy: señala qué opciones cierra hacia adelante.</p>
+</div>
+</div>
+</section>
+<section id="la-urna-de-pólya-y-el-azar-temprano" class="level3">
+<h3 class="anchored" data-anchor-id="la-urna-de-pólya-y-el-azar-temprano">La urna de Pólya y el azar temprano</h3>
+<div class="ejemplo caja" data-nivel="avanzado">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Veinte historias con las mismas reglas</span>
+</div>
+<p><strong>Planteamiento.</strong> Dos tecnologías compiten por 2 000 adoptantes, con las reglas de la urna de Pólya y arranque de un adoptante por tecnología. Simule veinte historias con exponente 1 y con exponente 2, y cuente cuántas terminan en lock-in (más del 90 % para una sola).</p>
+</div>
+<div id="pred-urna" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>Si el equipo analiza el frenazo solo con la capa de mercado, ¿qué recomendará?</p>
+<p>Con exponente 2, ¿cuántas de las 20 historias terminan con más del 90 % de los adoptantes en una sola tecnología?</p>
 <div class="opcion">
-<p>Aumentar el subsidio a la instalación.</p>
+<p>Pocas: el azar se promedia y cada tecnología queda cerca de la mitad.</p>
 </div>
 <div class="opcion">
-<p>Reforzar los transformadores de los circuitos saturados.</p>
+<p>Cerca de la mitad.</p>
 </div>
 <div class="opcion">
-<p>Cambiar las reglas de conexión y de reparto de los costos de red.</p>
+<p>Las veinte.</p>
 </div>
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Encienda y apague capas</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La urna de Pólya</span>
 </div>
-<p>Marque las capas que el equipo analiza y lea qué diagnóstico obtiene, qué hueco queda y qué recomendaría.</p>
+<p>Cambie el exponente y compare las veinte trayectorias. Todas usan las mismas reglas; lo único que cambia de una a otra es el azar.</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="171" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 170;"><span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>viewof capasS <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>([<span class="st">"estructura física"</span><span class="op">,</span> <span class="st">"dinámica de mercado"</span><span class="op">,</span> <span class="st">"red de actores"</span><span class="op">,</span> <span class="st">"gobernanza"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> [<span class="st">"dinámica de mercado"</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Capas analizadas"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="219" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 218;"><span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a>viewof exponenteU <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="dv">1</span><span class="op">,</span> <span class="fl">1.5</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Exponente de los rendimientos crecientes"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (x) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(<span class="dv">1</span>)(x)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
@@ -650,16 +745,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="176" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 175;"><span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>contenidoS <span class="op">=</span> ({</span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>  <span class="st">"estructura física"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"Cada circuito de distribución admite hasta cierta penetración antes de tener problemas de tensión y protecciones: pasado ese umbral, cada techo nuevo exige refuerzos."</span><span class="op">,</span></span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve el tope técnico por transformador, que satura la adopción antes de que se acaben los techos."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"reforzar los circuitos saturados"</span>}<span class="op">,</span></span>
-<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>  <span class="st">"dinámica de mercado"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"La adopción es una logística: el voz a voz la acelera y la saturación de techos la frena. El subsidio sube la tasa de contagio."</span><span class="op">,</span></span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve por qué la curva se aplana antes de que se acaben los techos ni por qué el voz a voz pierde fuerza."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"aumentar el subsidio"</span>}<span class="op">,</span></span>
-<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>  <span class="st">"red de actores"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"El distribuidor pierde ingresos con cada autogenerador y controla los tiempos de conexión: tiene poder de retardo sobre todo el lazo de refuerzo."</span><span class="op">,</span></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve que el retardo en las conexiones lo produce un actor con incentivos propios."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"poner plazos de conexión vigilados"</span>}<span class="op">,</span></span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gobernanza"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"Nadie definió cómo se reparten los costos de la red entre quienes tienen techo y quienes no: la pregunta distributiva decide la legitimidad del esquema."</span><span class="op">,</span></span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve que el conflicto sobre quién paga la red puede frenar todo el sistema."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"fijar reglas de conexión y de reparto de costos de red"</span>}<span class="op">,</span></span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="224" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 223;"><span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>urnaU <span class="op">=</span> {</span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> trayectorias <span class="op">=</span> <span class="fu">urnaPolya</span>({<span class="dt">adoptantes</span><span class="op">:</span> <span class="dv">2000</span><span class="op">,</span> <span class="dt">historias</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">exponente</span><span class="op">:</span> exponenteU<span class="op">,</span> <span class="dt">semilla</span><span class="op">:</span> <span class="dv">1989</span>})<span class="op">;</span></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> finales <span class="op">=</span> trayectorias<span class="op">.</span><span class="fu">map</span>((t) <span class="kw">=&gt;</span> t[t<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> trayectorias<span class="op">.</span><span class="fu">flatMap</span>((t<span class="op">,</span> h) <span class="kw">=&gt;</span> t<span class="op">.</span><span class="fu">filter</span>((_<span class="op">,</span> i) <span class="kw">=&gt;</span> i <span class="op">%</span> <span class="dv">10</span> <span class="op">===</span> <span class="dv">0</span>)<span class="op">.</span><span class="fu">map</span>((v<span class="op">,</span> i) <span class="kw">=&gt;</span> ({<span class="dt">historia</span><span class="op">:</span> h<span class="op">,</span> <span class="dt">adoptantes</span><span class="op">:</span> i <span class="op">*</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">participacion</span><span class="op">:</span> v})))<span class="op">;</span></span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {finales<span class="op">,</span> puntos<span class="op">,</span></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a>    <span class="dt">lockin</span><span class="op">:</span> finales<span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> f <span class="op">&gt;</span> <span class="fl">0.9</span> <span class="op">||</span> f <span class="op">&lt;</span> <span class="fl">0.1</span>)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ganaA</span><span class="op">:</span> finales<span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> f <span class="op">&gt;</span> <span class="fl">0.5</span>)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a>    <span class="dt">minimo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>finales)<span class="op">,</span> <span class="dt">maximo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>finales)}<span class="op">;</span></span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -670,9 +764,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="190" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 189;"><span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(contenidoS)<span class="op">.</span><span class="fu">map</span>(([capa<span class="op">,</span> c]) <span class="kw">=&gt;</span> capasS<span class="op">.</span><span class="fu">includes</span>(capa)</span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>  <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>COLORES<span class="op">.</span><span class="at">verde</span><span class="sc">}</span><span class="vs">;padding-left:.6rem"&gt;&lt;b&gt;</span><span class="sc">${</span>capa<span class="sc">}</span><span class="vs">:&lt;/b&gt; </span><span class="sc">${</span>c<span class="op">.</span><span class="at">diagnostico</span><span class="sc">}</span><span class="vs">&lt;/p&gt;`</span></span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>COLORES<span class="op">.</span><span class="at">rojo</span><span class="sc">}</span><span class="vs">;padding-left:.6rem;color:#555"&gt;&lt;b&gt;hueco en </span><span class="sc">${</span>capa<span class="sc">}</span><span class="vs">:&lt;/b&gt; </span><span class="sc">${</span>c<span class="op">.</span><span class="at">hueco</span><span class="sc">}</span><span class="vs">&lt;/p&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="237" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 236;"><span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Adoptantes →"</span>}<span class="op">,</span></span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ Participación de la tecnología A"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="st">"%"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(urnaU<span class="op">.</span><span class="at">puntos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"adoptantes"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"participacion"</span><span class="op">,</span> <span class="dt">z</span><span class="op">:</span> <span class="st">"historia"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.45</span>})<span class="op">,</span></span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.1</span><span class="op">,</span> <span class="fl">0.9</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4,4"</span>})<span class="op">,</span></span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="expression">
@@ -683,11 +783,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="197" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 196;"><span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capas analizadas&lt;b&gt;</span><span class="sc">${</span>capasS<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> de 4&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Recomendación del equipo&lt;b&gt;</span><span class="sc">${</span>capasS<span class="op">.</span><span class="at">length</span> <span class="op">?</span> capasS<span class="op">.</span><span class="fu">map</span>((c) <span class="kw">=&gt;</span> contenidoS[c]<span class="op">.</span><span class="at">recomendacion</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">"; "</span>) <span class="op">:</span> <span class="st">"ninguna"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;¿Ve el acople actores-física?&lt;b&gt;</span><span class="sc">${</span>capasS<span class="op">.</span><span class="fu">includes</span>(<span class="st">"red de actores"</span>) <span class="op">&amp;&amp;</span> capasS<span class="op">.</span><span class="fu">includes</span>(<span class="st">"estructura física"</span>) <span class="op">?</span> <span class="st">"sí: el distribuidor usa su control técnico como poder"</span> <span class="op">:</span> <span class="st">"no"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="250" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 249;"><span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Historias en lock-in&lt;b&gt;</span><span class="sc">${</span>urnaU<span class="op">.</span><span class="at">lockin</span><span class="sc">}</span><span class="vs"> de 20&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Historias que gana A&lt;b&gt;</span><span class="sc">${</span>urnaU<span class="op">.</span><span class="at">ganaA</span><span class="sc">}</span><span class="vs"> de 20&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Participación final de A&lt;b&gt;de </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(urnaU<span class="op">.</span><span class="at">minimo</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs"> a </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(urnaU<span class="op">.</span><span class="at">maximo</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
@@ -696,56 +796,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="nota-datos">
-<p>Diagnósticos cualitativos con base en el ejemplo de las notas de la semana 6. No hay modelo numérico detrás de este selector.</p>
+<p>Modelo <code>mise_sd.modelos.urna_polya</code> con 2 000 adoptantes, 20 historias, un adoptante inicial por tecnología y semilla 1989; modelo didáctico inspirado en Arthur (1989). El generador de números aleatorios es el mismo en Python y en el navegador, así que las veinte historias son idénticas en los dos. Líneas ámbar: umbrales de lock-in del 10 % y el 90 %.</p>
 </div>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el selector</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer las historias</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-capas"></span>. Desde la capa de mercado sola, la única palanca visible es el subsidio: la respuesta es la A. Es una recomendación razonable dentro de su capa y probablemente inútil si el freno está en otra.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-urna"></span>. La respuesta es la C: con exponente 2, las veinte historias terminan con una sola tecnología, doce con A y ocho con B.</p>
 </div>
 <div class="paso">
-<p><strong>Agregue la capa física.</strong> Aparece un tope técnico por circuito que la logística no tiene. La recomendación se vuelve reforzar la red.</p>
+<p><strong>Mire el caso clásico.</strong> Con exponente 1, solo 6 de las 20 historias terminan en lock-in, y las participaciones finales de A van del 7 % al 94 %. Cada historia se estabiliza en un valor distinto, fijado por los primeros adoptantes.</p>
 </div>
 <div class="paso">
-<p><strong>Agregue la red de actores.</strong> Aparece un actor con poder de retardo, el distribuidor, cuyos ingresos caen con cada autogenerador. Con la capa física también encendida, se ve el acople: el control técnico de la conexión funciona como poder.</p>
+<p><strong>Note cuándo se decide.</strong> En las dos versiones, las curvas se separan en los primeros cien adoptantes y después casi no se mueven. Lo que pasa al principio pesa mucho más que lo que pasa después: eso es la memoria del sistema.</p>
 </div>
 <div class="paso">
-<p><strong>Agregue la gobernanza.</strong> Aparece la pregunta de fondo: quién paga la red. Una regla de reparto mal resuelta puede frenar todo el sistema aunque los subsidios suban y los transformadores se refuercen.</p>
-</div>
-<div class="paso">
-<p><strong>Localice el problema.</strong> El diagnóstico completo anticipa el patrón real: adopción exponencial, fricción creciente de conexión y un debate regulatorio sobre quién paga la red. La recomendación más duradera vive en la gobernanza y se apoya en las otras tres.</p>
-</div>
-</div>
-</section>
-<section id="windpeshi-primera-pasada" class="level3">
-<h3 class="anchored" data-anchor-id="windpeshi-primera-pasada">Windpeshi, primera pasada</h3>
-<div class="ejemplo caja" data-nivel="avanzado">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Un proyecto que no fracasó en ninguna capa</span>
-</div>
-<p><strong>Planteamiento.</strong> Haga una primera pasada de Windpeshi por las cuatro capas. La página 8 de la semana lo desarrolla en detalle.</p>
-</div>
-<div class="pasos caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Cuatro capas y sus costuras</span>
-</div>
-<div class="paso">
-<p><strong>Capa física.</strong> El recurso eólico es excepcional, pero la energía no sirve sin evacuación. Windpeshi evacúa por una línea propia de 220 kV hasta la subestación Cuestecitas, que también cruza territorio wayuu. La primera ola de parques de La Guajira depende de otro corredor, la línea Colectora de 500 kV y unos 475 km (convocatoria UPME 06-2017), de la que dependen siete parques de unos 1 050 MW, con entrada prevista para 2027.</p>
-</div>
-<div class="paso">
-<p><strong>Capa de mercado.</strong> Los contratos de subasta fijaron cronogramas e ingresos: cada mes de retraso es lucro cesante y multas. El tiempo del contrato y el tiempo del territorio corren a velocidades incompatibles, un retardo que la <a href="../semana6/02-sistema-sociotecnico.html">página 2</a> modela.</p>
-</div>
-<div class="paso">
-<p><strong>Capa de actores.</strong> Decenas de comunidades wayuu con autoridades propias y sin representación centralizada, varias empresas compitiendo por las mismas vías y las mismas consultas, y un Estado repartido entre ministerios, la ANLA y autoridades locales con poca presencia.</p>
-</div>
-<div class="paso">
-<p><strong>Capa de gobernanza.</strong> La consulta previa proyecto por proyecto y comunidad por comunidad, pensada para obras puntuales, se aplicó a una transformación territorial completa. La Contraloría General (2021) documentó consultas sin cerrar, comunidades que se retiraron de acuerdos protocolizados y retrasos en licencias y transmisión.</p>
-</div>
-<div class="paso">
-<p><strong>Localice el problema.</strong> Windpeshi no fracasó en ninguna capa: fracasó en las costuras. El retraso del mercado presiona a la empresa, la presión choca con el tiempo de las comunidades, el conflicto bloquea la obra y el bloqueo alarga el retraso. Por eso ninguna solución de una sola capa, ni más policía, ni más dinero, ni más abogados, lo habría resuelto.</p>
+<p><strong>Saque la consecuencia de política.</strong> Si una tecnología va a ganar por rendimientos crecientes, el momento de intervenir es el comienzo. Por eso la semana 5 estudia las subastas de renovables como un empujón temprano, y por eso un subsidio tardío rinde tan poco.</p>
 </div>
 </div>
 </section>
@@ -754,28 +822,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Elegir la capa por comodidad disciplinar</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Omitir retardos evidentes</span>
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>Los ingenieros entregan flujos de carga, los economistas precios, y la pregunta del caso, que vivía en los actores, queda «para el capítulo social».</p>
+<p>Un mapa causal donde «precio alto» lleva a «más capacidad» sin ninguna marca, como si la planta apareciera al mes siguiente.</p>
 </div>
 <div class="bien">
-<p>La capa se elige por dónde vive el problema, no por dónde vive el analista. Si la causa está en la gobernanza, ahí va el mayor esfuerzo.</p>
+<p>La doble raya en precio → inversión (información) y en inversión → capacidad (material, de tres a siete años). Sin esos retardos, el mapa no puede explicar por qué el sistema sobrecorrige.</p>
 </div>
 </div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tratar las otras capas como contexto</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer el lock-in como un error del pasado</span>
 </div>
-<p>Mirar las cuatro capas pero congelar tres como telón de fondo es el error fino. Las capas se acoplan dinámicamente: el conflicto alarga retardos de mercado, el retraso presiona a los actores, la física redistribuye poder. Si el análisis no tiene flechas entre capas, es una lista.</p>
+<p>QWERTY, los embalses o la terminal de gas fueron decisiones razonables en su momento. El problema del lock-in no es la decisión original sino que el sistema se queda en ella cuando las condiciones cambian. La pregunta útil es qué hace costoso salir y quién paga ese costo.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">El reduccionismo invertido</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Suponer que el pasado reciente es la mejor guía</span>
 </div>
-<p>Tan errado como «todo es ingeniería» es «todo es política». Proyectos con licencia social impecable fracasan por un transformador que no llega o un lazo de mercado mal leído. Ninguna capa, tampoco la de moda, tiene el monopolio de la explicación.</p>
+<p>Un sistema con memoria larga puede verse estable durante años mientras acumula el problema. Los diez años de buena hidrología antes de 2015 no decían nada sobre la exposición del sistema a una sequía severa: la memoria corta engaña.</p>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -784,31 +852,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Qué pregunta responde la capa de gobernanza?</p>
-<div class="opcion">
-<p>¿Quién tiene más contactos en la red de actores?</p>
-<p><span class="porque">Esa es la capa de actores.</span></p>
-</div>
+<p>Una central térmica tarda cuatro años en construirse. ¿Qué tipo de retardo es?</p>
 <div class="opcion" data-correcta="si">
-<p>¿Quién decide sobre las decisiones y con qué reglas de reparto?</p>
-<p><span class="porque">Correcto.</span></p>
+<p>Material.</p>
+<p><span class="porque">Correcto: lo que tarda es la obra física.</span></p>
 </div>
 <div class="opcion">
-<p>¿Qué precio de bolsa hace rentable el proyecto?</p>
-<p><span class="porque">Esa es la capa de mercado.</span></p>
+<p>De información.</p>
+<p><span class="porque">Revise el criterio: ¿se demora algo físico o enterarse?</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>En el apagón, ¿dónde vive la corrección duradera?</p>
+<p>¿Qué hace falta para que haya lock-in?</p>
 <div class="opcion">
-<p>En la capa física: podar árboles y reparar la línea.</p>
-<p><span class="porque">Eso repara el síntoma. Revise el último paso del ejemplo básico.</span></p>
+<p>Que la tecnología elegida sea la peor disponible.</p>
+<p><span class="porque">No hace falta que sea mala: basta con que cambiar sea más costoso que quedarse.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>En la gobernanza: el indicador regulatorio que hacía invisible la confiabilidad local.</p>
+<p>Rendimientos crecientes que hacen más atractiva la opción que ya va adelante.</p>
 <p><span class="porque">Correcto.</span></p>
 </div>
 </div>
@@ -816,49 +880,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>«El distribuidor demora las conexiones de autogeneradores.» ¿Dónde se ubica?</p>
-<div class="opcion">
-<p>Solo en la capa física, porque la conexión es técnica.</p>
-<p><span class="porque">El trámite es técnico, pero quien lo controla tiene incentivos. Revise el selector de capas.</span></p>
-</div>
+<p>En la urna con exponente 1, ¿qué determina la participación final de cada historia?</p>
 <div class="opcion" data-correcta="si">
-<p>En la costura entre actores y física: un actor usa su control de un proceso técnico como poder.</p>
-<p><span class="porque">Correcto: el remedio suele ser regulatorio.</span></p>
+<p>Los primeros adoptantes, elegidos por azar.</p>
+<p><span class="porque">Correcto: las curvas se separan al principio y después casi no se mueven.</span></p>
+</div>
+<div class="opcion">
+<p>La calidad de cada tecnología.</p>
+<p><span class="porque">En el modelo las dos tecnologías son idénticas.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Un informe describe las cuatro capas de su caso en cuatro capítulos separados, sin referencias cruzadas. ¿Qué le falta?</p>
+<p>¿Cuál de estas es una fuente de rendimientos crecientes según Arthur?</p>
 <div class="opcion" data-correcta="si">
-<p>Los acoples: cómo una variable de una capa condiciona a otra.</p>
-<p><span class="porque">Correcto: sin flechas entre capas es una lista.</span></p>
+<p>El aprendizaje: cada instalación enseña a hacer la siguiente más barata.</p>
+<p><span class="porque">Correcto, y es el lazo de la curva de Wright de la semana 5.</span></p>
 </div>
 <div class="opcion">
-<p>Una quinta capa.</p>
-<p><span class="porque">Cuatro bastan si se conectan. Revise el segundo error común.</span></p>
+<p>El agotamiento del recurso.</p>
+<p><span class="porque">Eso produce rendimientos decrecientes.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Por qué no habría bastado «más policía» para destrabar Windpeshi?</p>
-<div class="opcion">
-<p>Porque la fuerza pública no tiene competencia en La Guajira.</p>
-<p><span class="porque">El argumento es estructural, no de competencias. Revise el último paso del ejemplo avanzado.</span></p>
-</div>
+<p>Con el simulador y exponente 1,5, ¿qué pasa?</p>
 <div class="opcion" data-correcta="si">
-<p>Porque actúa en una sola capa y deja intacto el lazo entre retraso, presión, agravio y bloqueo que atraviesa las costuras.</p>
-<p><span class="porque">Correcto.</span></p>
+<p>Todas las historias terminan en lock-in, aunque unas lo alcanzan más tarde.</p>
+<p><span class="porque">Correcto: basta un exponente algo mayor que 1.</span></p>
+</div>
+<div class="opcion">
+<p>Queda igual que con exponente 1.</p>
+<p><span class="porque">Pruebe en el simulador.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
 <h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
-<section id="ejercicio-1-clasifique-afirmaciones-por-capa" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-1-clasifique-afirmaciones-por-capa">Ejercicio 1 ●○○ · Clasifique afirmaciones por capa</h4>
-<p>Ubique cada afirmación en su capa o costura: (i) «la línea Colectora está atrasada varios años»; (ii) «el precio de bolsa superó el precio de escasez en octubre»; (iii) «la gobernación no tiene un interlocutor único para las comunidades»; (iv) «la consulta previa del proyecto X se cerró sin acuerdo»; (v) «el distribuidor demora las conexiones de autogeneradores».</p>
+<section id="ejercicio-1-retardos-del-sector" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-retardos-del-sector">Ejercicio 1 ●○○ · Retardos del sector</h4>
+<p>Nombre dos retardos materiales y dos de información en el sistema eléctrico colombiano, e indique en cada caso cuánto duran aproximadamente y qué pasa si se ignoran en un análisis.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -871,38 +935,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ol type="i">
-<li><p>Física en la superficie: el hecho es físico, pero sus causas viven arriba (la consulta de la línea es gobernanza; su financiación, mercado). Se clasifica el problema, no el titular.</p></li>
-<li><p>Mercado: la señal de escasez operando.</p></li>
-<li><p>Gobernanza: es una falla en la arquitectura de interlocución, no de un actor individual.</p></li>
-<li><p>Costura entre gobernanza y actores: el evento es institucional y sus causas usuales, como la representación disputada o la mala fe procedimental, viven en las dos capas.</p></li>
-<li><p>Costura entre actores y física: un actor usa su control sobre un proceso técnico como poder; el remedio es regulatorio.</p></li>
-</ol>
+<p><strong>Materiales</strong>: la construcción de una central (de tres a cinco años para térmicas y solares grandes, siete o más para hidroeléctricas) y la de una línea de transmisión (varios años, con consultas y licencias). Ignorarlos hace creer que la capacidad responde al precio de inmediato, y el modelo no oscila cuando el sistema real sí.</p>
+<p><strong>De información</strong>: la percepción del precio por los inversionistas (meses a un año, según cómo promedien) y la llegada del precio de bolsa a la tarifa del usuario (meses). Ignorarlos hace creer que la demanda responde en el mismo mes a la escasez, y sobrestima el ahorro que una señal de precio produce durante una crisis.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="ejercicio-2-el-diagrama-de-acoples-de-la-solar-en-techos" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-2-el-diagrama-de-acoples-de-la-solar-en-techos">Ejercicio 2 ●●○ · El diagrama de acoples de la solar en techos</h4>
-<p>Dibuje las cuatro capas como cajas y al menos cinco flechas entre ellas para el caso de la solar en techos, cada una con una frase. ¿Hay algún lazo de retroalimentación que atraviese las cuatro capas?</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Pista
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Empiece por el efecto de la adopción sobre la red y siga el dinero: quién paga los refuerzos y quién revisa esas reglas.</p>
-</div>
-</div>
-</div>
+<section id="ejercicio-2-la-urna-a-mano" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-la-urna-a-mano">Ejercicio 2 ●●○ · La urna a mano</h4>
+<p>Con exponente 1 y un adoptante inicial por tecnología, calcule la probabilidad de que los tres primeros adoptantes elijan A. Compare con el caso sin rendimientos crecientes, en que cada adoptante elige A con probabilidad 1/2.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -911,10 +954,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Cinco flechas mínimas: (1) física → mercado: el límite técnico por transformador acota la logística de adopción; (2) mercado → física: la adopción acelerada obliga refuerzos de red; (3) actores → mercado: el distribuidor retrasa conexiones y baja la tasa efectiva de adopción; (4) gobernanza → actores: la regla de cargos de respaldo redefine el interés del distribuidor, que puede volverse aliado si la red se remunera por sus servicios; (5) mercado → gobernanza: la caída de ingresos regulados presiona la revisión tarifaria.</p>
-<p>El lazo que cruza las cuatro capas: la adopción obliga refuerzos (2), los refuerzos encarecen los cargos y presionan la revisión tarifaria (5), la nueva regla cambia el interés del distribuidor (4), y ese interés acelera o frena las conexiones (3), que regulan la adopción. Nadie lo diseñó y nadie puede gestionarlo desde una sola capa.</p>
+<p><strong>Con la urna</strong>: el primero elige A con <span class="math inline">1/2</span>; si lo hizo, hay 2 de A y 1 de B, y el segundo elige A con <span class="math inline">2/3</span>; el tercero, con <span class="math inline">3/4</span>. La probabilidad es <span class="math inline">\tfrac{1}{2} \times \tfrac{2}{3} \times \tfrac{3}{4} = \tfrac{1}{4}</span>.</p>
+<p><strong>Sin rendimientos crecientes</strong>: <span class="math inline">\left(\tfrac{1}{2}\right)^3 = \tfrac{1}{8}</span>.</p>
+<p>La urna duplica la probabilidad de una racha temprana. Una vez que la racha ocurre, A tiene 4 de 5 en la urna y la siguiente elección la favorece con 80 %: el azar temprano se amplifica y se congela, que es exactamente lo que muestran las trayectorias del simulador.</p>
 </div>
 </div>
 </div>
@@ -928,24 +972,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Cuatro capas, cuatro preguntas: <strong>física</strong> (¿qué permite la infraestructura?), <strong>mercado</strong> (¿qué comportamiento emerge?), <strong>actores</strong> (¿quién impulsa o bloquea?) y <strong>gobernanza</strong> (¿quién decide y con qué reglas?).</li>
-<li>El análisis responde cada pregunta, dibuja los <strong>acoples</strong> y localiza el problema en su capa o <strong>costura</strong>.</li>
-<li>Una recomendación hecha desde una sola capa suele atacar el síntoma: podar árboles, subir el subsidio, poner más policía.</li>
-<li>Windpeshi no fracasó en ninguna capa; fracasó en las costuras.</li>
+<li>Los <strong>retardos</strong> son materiales (algo físico tarda) o de información (enterarse tarda); se marcan con doble raya.</li>
+<li>Las <strong>acumulaciones</strong> son la memoria del sistema: lo que hay hoy es la suma de lo que se decidió antes.</li>
+<li>Los <strong>rendimientos crecientes</strong> (escala, aprendizaje, red y expectativas) producen <strong>dependencia de la trayectoria</strong> y <strong>lock-in</strong>.</li>
+<li>En la urna de Pólya, con exponente 1 solo <strong>6 de 20</strong> historias terminan en lock-in; con exponente 2, <strong>las 20</strong>.</li>
+<li>El momento de intervenir en una competencia entre tecnologías es <strong>el comienzo</strong>, antes de que el azar temprano se congele.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «El marco multicapa» de las notas de la semana 6 trae la figura de las cuatro capas y el ejercicio de defender la capa donde vive la causa raíz de Windpeshi. En el informe final, las secciones 3, 4 y 5 cubren las capas, y cada una debería cerrar con un párrafo sobre lo que esa capa impone a las demás.</p>
+<p><strong>Para profundizar.</strong> La sección «Retardos, memoria y dependencia de la trayectoria» de las notas de la semana 1 trae la línea de tiempo completa de la matriz eléctrica y la discusión del lock-in del gas. La semana 4 convierte los retardos en ecuaciones, y la semana 5 estudia cómo una política puede aprovechar los rendimientos crecientes en lugar de padecerlos.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgY2FwYXNTID0gSW5wdXRzLmNoZWNrYm94KFtcImVzdHJ1Y3R1cmEgZsOtc2ljYVwiLCBcImRpbsOhbWljYSBkZSBtZXJjYWRvXCIsIFwicmVkIGRlIGFjdG9yZXNcIiwgXCJnb2Jlcm5hbnphXCJdLCB7dmFsdWU6IFtcImRpbsOhbWljYSBkZSBtZXJjYWRvXCJdLCBsYWJlbDogXCJDYXBhcyBhbmFsaXphZGFzXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY29udGVuaWRvUyA9ICh7XG4gIFwiZXN0cnVjdHVyYSBmw61zaWNhXCI6IHtkaWFnbm9zdGljbzogXCJDYWRhIGNpcmN1aXRvIGRlIGRpc3RyaWJ1Y2nDs24gYWRtaXRlIGhhc3RhIGNpZXJ0YSBwZW5ldHJhY2nDs24gYW50ZXMgZGUgdGVuZXIgcHJvYmxlbWFzIGRlIHRlbnNpw7NuIHkgcHJvdGVjY2lvbmVzOiBwYXNhZG8gZXNlIHVtYnJhbCwgY2FkYSB0ZWNobyBudWV2byBleGlnZSByZWZ1ZXJ6b3MuXCIsXG4gICAgaHVlY286IFwiTm8gdmUgZWwgdG9wZSB0w6ljbmljbyBwb3IgdHJhbnNmb3JtYWRvciwgcXVlIHNhdHVyYSBsYSBhZG9wY2nDs24gYW50ZXMgZGUgcXVlIHNlIGFjYWJlbiBsb3MgdGVjaG9zLlwiLCByZWNvbWVuZGFjaW9uOiBcInJlZm9yemFyIGxvcyBjaXJjdWl0b3Mgc2F0dXJhZG9zXCJ9LFxuICBcImRpbsOhbWljYSBkZSBtZXJjYWRvXCI6IHtkaWFnbm9zdGljbzogXCJMYSBhZG9wY2nDs24gZXMgdW5hIGxvZ8Otc3RpY2E6IGVsIHZveiBhIHZveiBsYSBhY2VsZXJhIHkgbGEgc2F0dXJhY2nDs24gZGUgdGVjaG9zIGxhIGZyZW5hLiBFbCBzdWJzaWRpbyBzdWJlIGxhIHRhc2EgZGUgY29udGFnaW8uXCIsXG4gICAgaHVlY286IFwiTm8gdmUgcG9yIHF1w6kgbGEgY3VydmEgc2UgYXBsYW5hIGFudGVzIGRlIHF1ZSBzZSBhY2FiZW4gbG9zIHRlY2hvcyBuaSBwb3IgcXXDqSBlbCB2b3ogYSB2b3ogcGllcmRlIGZ1ZXJ6YS5cIiwgcmVjb21lbmRhY2lvbjogXCJhdW1lbnRhciBlbCBzdWJzaWRpb1wifSxcbiAgXCJyZWQgZGUgYWN0b3Jlc1wiOiB7ZGlhZ25vc3RpY286IFwiRWwgZGlzdHJpYnVpZG9yIHBpZXJkZSBpbmdyZXNvcyBjb24gY2FkYSBhdXRvZ2VuZXJhZG9yIHkgY29udHJvbGEgbG9zIHRpZW1wb3MgZGUgY29uZXhpw7NuOiB0aWVuZSBwb2RlciBkZSByZXRhcmRvIHNvYnJlIHRvZG8gZWwgbGF6byBkZSByZWZ1ZXJ6by5cIixcbiAgICBodWVjbzogXCJObyB2ZSBxdWUgZWwgcmV0YXJkbyBlbiBsYXMgY29uZXhpb25lcyBsbyBwcm9kdWNlIHVuIGFjdG9yIGNvbiBpbmNlbnRpdm9zIHByb3Bpb3MuXCIsIHJlY29tZW5kYWNpb246IFwicG9uZXIgcGxhem9zIGRlIGNvbmV4acOzbiB2aWdpbGFkb3NcIn0sXG4gIFwiZ29iZXJuYW56YVwiOiB7ZGlhZ25vc3RpY286IFwiTmFkaWUgZGVmaW5pw7MgY8OzbW8gc2UgcmVwYXJ0ZW4gbG9zIGNvc3RvcyBkZSBsYSByZWQgZW50cmUgcXVpZW5lcyB0aWVuZW4gdGVjaG8geSBxdWllbmVzIG5vOiBsYSBwcmVndW50YSBkaXN0cmlidXRpdmEgZGVjaWRlIGxhIGxlZ2l0aW1pZGFkIGRlbCBlc3F1ZW1hLlwiLFxuICAgIGh1ZWNvOiBcIk5vIHZlIHF1ZSBlbCBjb25mbGljdG8gc29icmUgcXVpw6luIHBhZ2EgbGEgcmVkIHB1ZWRlIGZyZW5hciB0b2RvIGVsIHNpc3RlbWEuXCIsIHJlY29tZW5kYWNpb246IFwiZmlqYXIgcmVnbGFzIGRlIGNvbmV4acOzbiB5IGRlIHJlcGFydG8gZGUgY29zdG9zIGRlIHJlZFwifSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXY+JHtPYmplY3QuZW50cmllcyhjb250ZW5pZG9TKS5tYXAoKFtjYXBhLCBjXSkgPT4gY2FwYXNTLmluY2x1ZGVzKGNhcGEpXG4gID8gaHRtbGA8cCBzdHlsZT1cImJvcmRlci1sZWZ0OjRweCBzb2xpZCAke0NPTE9SRVMudmVyZGV9O3BhZGRpbmctbGVmdDouNnJlbVwiPjxiPiR7Y2FwYX06PC9iPiAke2MuZGlhZ25vc3RpY299PC9wPmBcbiAgOiBodG1sYDxwIHN0eWxlPVwiYm9yZGVyLWxlZnQ6NHB4IHNvbGlkICR7Q09MT1JFUy5yb2pvfTtwYWRkaW5nLWxlZnQ6LjZyZW07Y29sb3I6IzU1NVwiPjxiPmh1ZWNvIGVuICR7Y2FwYX06PC9iPiAke2MuaHVlY299PC9wPmApfTwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+Q2FwYXMgYW5hbGl6YWRhczxiPiR7Y2FwYXNTLmxlbmd0aH0gZGUgNDwvYj48L2Rpdj5cbiAgPGRpdj5SZWNvbWVuZGFjacOzbiBkZWwgZXF1aXBvPGI+JHtjYXBhc1MubGVuZ3RoID8gY2FwYXNTLm1hcCgoYykgPT4gY29udGVuaWRvU1tjXS5yZWNvbWVuZGFjaW9uKS5qb2luKFwiOyBcIikgOiBcIm5pbmd1bmFcIn08L2I+PC9kaXY+XG4gIDxkaXY+wr9WZSBlbCBhY29wbGUgYWN0b3Jlcy1mw61zaWNhPzxiPiR7Y2FwYXNTLmluY2x1ZGVzKFwicmVkIGRlIGFjdG9yZXNcIikgJiYgY2FwYXNTLmluY2x1ZGVzKFwiZXN0cnVjdHVyYSBmw61zaWNhXCIpID8gXCJzw606IGVsIGRpc3RyaWJ1aWRvciB1c2Egc3UgY29udHJvbCB0w6ljbmljbyBjb21vIHBvZGVyXCIgOiBcIm5vXCJ9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdjYXBhc1MnKSJ9XX0=
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7dXJuYVBvbHlhLCBmb3JtYXRvTnVtZXJvLCBmb3JtYXRvUG9yY2VudGFqZX0gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBleHBvbmVudGVVID0gSW5wdXRzLnJhZGlvKFsxLCAxLjUsIDJdLCB7dmFsdWU6IDEsIGxhYmVsOiBcIkV4cG9uZW50ZSBkZSBsb3MgcmVuZGltaWVudG9zIGNyZWNpZW50ZXNcIiwgZm9ybWF0OiAoeCkgPT4gZm9ybWF0b051bWVybygxKSh4KX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ1cm5hVSA9IHtcbiAgY29uc3QgdHJheWVjdG9yaWFzID0gdXJuYVBvbHlhKHthZG9wdGFudGVzOiAyMDAwLCBoaXN0b3JpYXM6IDIwLCBleHBvbmVudGU6IGV4cG9uZW50ZVUsIHNlbWlsbGE6IDE5ODl9KTtcbiAgY29uc3QgZmluYWxlcyA9IHRyYXllY3Rvcmlhcy5tYXAoKHQpID0+IHRbdC5sZW5ndGggLSAxXSk7XG4gIGNvbnN0IHB1bnRvcyA9IHRyYXllY3Rvcmlhcy5mbGF0TWFwKCh0LCBoKSA9PiB0LmZpbHRlcigoXywgaSkgPT4gaSAlIDEwID09PSAwKS5tYXAoKHYsIGkpID0+ICh7aGlzdG9yaWE6IGgsIGFkb3B0YW50ZXM6IGkgKiAxMCwgcGFydGljaXBhY2lvbjogdn0pKSk7XG4gIHJldHVybiB7ZmluYWxlcywgcHVudG9zLFxuICAgIGxvY2tpbjogZmluYWxlcy5maWx0ZXIoKGYpID0+IGYgPiAwLjkgfHwgZiA8IDAuMSkubGVuZ3RoLFxuICAgIGdhbmFBOiBmaW5hbGVzLmZpbHRlcigoZikgPT4gZiA+IDAuNSkubGVuZ3RoLFxuICAgIG1pbmltbzogTWF0aC5taW4oLi4uZmluYWxlcyksIG1heGltbzogTWF0aC5tYXgoLi4uZmluYWxlcyl9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDMwMCwgbWFyZ2luTGVmdDogNTAsXG4gIHg6IHtsYWJlbDogXCJBZG9wdGFudGVzIOKGklwifSxcbiAgeToge2xhYmVsOiBcIuKGkSBQYXJ0aWNpcGFjacOzbiBkZSBsYSB0ZWNub2xvZ8OtYSBBXCIsIGRvbWFpbjogWzAsIDFdLCB0aWNrRm9ybWF0OiBcIiVcIiwgZ3JpZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKHVybmFVLnB1bnRvcywge3g6IFwiYWRvcHRhbnRlc1wiLCB5OiBcInBhcnRpY2lwYWNpb25cIiwgejogXCJoaXN0b3JpYVwiLCBzdHJva2U6IENPTE9SRVMuYXp1bCwgc3Ryb2tlT3BhY2l0eTogMC40NX0pLFxuICAgIFBsb3QucnVsZVkoWzAuMSwgMC45XSwge3N0cm9rZTogQ09MT1JFUy5hbWJhciwgc3Ryb2tlRGFzaGFycmF5OiBcIjQsNFwifSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5IaXN0b3JpYXMgZW4gbG9jay1pbjxiPiR7dXJuYVUubG9ja2lufSBkZSAyMDwvYj48L2Rpdj5cbiAgPGRpdj5IaXN0b3JpYXMgcXVlIGdhbmEgQTxiPiR7dXJuYVUuZ2FuYUF9IGRlIDIwPC9iPjwvZGl2PlxuICA8ZGl2PlBhcnRpY2lwYWNpw7NuIGZpbmFsIGRlIEE8Yj5kZSAke2Zvcm1hdG9Qb3JjZW50YWplKHVybmFVLm1pbmltbywgMCl9IGEgJHtmb3JtYXRvUG9yY2VudGFqZSh1cm5hVS5tYXhpbW8sIDApfTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnZXhwb25lbnRlVScpIn1dfQ==
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-window._ojs.paths.runtimeToDoc = "../../semana6";
+window._ojs.paths.runtimeToDoc = "../../semana1";
 window._ojs.paths.runtimeToRoot = "../..";
 window._ojs.paths.docToRoot = "..";
 window._ojs.selfContained = false;
@@ -1358,13 +1403,13 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../semana6/index.html" class="pagination-link" aria-label="Semana 6 · Integración y gobernanza">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Semana 6 · Integración y gobernanza</span>
+      <a href="../semana1/04-no-linealidad.html" class="pagination-link" aria-label="No linealidad">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">No linealidad</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../semana6/02-sistema-sociotecnico.html" class="pagination-link" aria-label="El proyecto como sistema socio-técnico-ambiental">
-        <span class="nav-page-text">El proyecto como sistema socio-técnico-ambiental</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../semana2/index.html" class="pagination-link" aria-label="Semana 2 · Redes I">
+        <span class="nav-page-text">Semana 2 · Redes I</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

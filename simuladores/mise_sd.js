@@ -399,6 +399,28 @@ export function vpnConNino(probabilidad_nino, {inversion, margen_normal, margen_
 }
 
 /** Costo futuro con curva de Wright y despliegue exponencial (réplica de mise_sd.modelos.costo_wright). */
+/** Generador congruencial lineal, idéntico a GeneradorCongruencial de mise_sd.modelos. */
+export function generadorCongruencial(semilla = 1) {
+  let estado = (Math.floor(semilla) % 4294967296) || 1;
+  return () => { estado = Number((BigInt(estado) * 1664525n + 1013904223n) % 4294967296n); return estado / 4294967296; };
+}
+
+/** Urna de Pólya generalizada (réplica de urna_polya): participación de A tras cada adopción. */
+export function urnaPolya({adoptantes = 2000, historias = 20, exponente = 1, base = [1, 1], semilla = 1989} = {}) {
+  const azar = generadorCongruencial(semilla), salida = [];
+  for (let h = 0; h < historias; h++) {
+    let nA = base[0], nB = base[1];
+    const fila = [nA / (nA + nB)];
+    for (let paso = 1; paso <= adoptantes; paso++) {
+      const pa = Math.pow(nA, exponente), pb = Math.pow(nB, exponente);
+      if (azar() < pa / (pa + pb)) nA += 1; else nB += 1;
+      fila.push(nA / (nA + nB));
+    }
+    salida.push(fila);
+  }
+  return salida;
+}
+
 /** Escalera de oferta en hidrología normal: [nombre, potencia GW, precio COP/kWh]. */
 export const ESCALERA_NORMAL = [["Filo de agua y menores", 1.5, 40], ["Hidráulica ofertada a precio bajo", 8.5, 110],
   ["Carbón", 1.3, 190], ["Gas", 2.3, 260], ["Líquidos", 1.2, 480]];
