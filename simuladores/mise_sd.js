@@ -399,6 +399,18 @@ export function vpnConNino(probabilidad_nino, {inversion, margen_normal, margen_
 }
 
 /** Costo futuro con curva de Wright y despliegue exponencial (réplica de mise_sd.modelos.costo_wright). */
+/** Equilibrio de usuario en la red de Braess (réplica de equilibrio_braess). */
+export function equilibrioBraess({conductores = 4000, capacidad = 100, tiempo_fijo = 45, tiempo_conector = null} = {}) {
+  const n = conductores, k = capacidad, b = tiempo_fijo, sin = n / (2 * k) + b;
+  if (tiempo_conector === null) return {ruta_superior: n / 2, ruta_inferior: n / 2, ruta_conector: 0, tiempo: sin, tiempo_sin_conector: sin};
+  const c = tiempo_conector;
+  let x, x3, tiempo;
+  if (c <= b - n / k) { x = 0; x3 = n; tiempo = 2 * n / k + c; }
+  else if (c <= b - n / (2 * k)) { x = n - k * (b - c); x3 = 2 * k * (b - c) - n; tiempo = 2 * b - c; }
+  else { x = n / 2; x3 = 0; tiempo = sin; }
+  return {ruta_superior: x, ruta_inferior: x, ruta_conector: x3, tiempo, tiempo_sin_conector: sin};
+}
+
 /** Generador congruencial lineal, idéntico a GeneradorCongruencial de mise_sd.modelos. */
 export function generadorCongruencial(semilla = 1) {
   let estado = (Math.floor(semilla) % 4294967296) || 1;
