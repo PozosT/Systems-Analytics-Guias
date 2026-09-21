@@ -399,6 +399,30 @@ export function vpnConNino(probabilidad_nino, {inversion, margen_normal, margen_
 }
 
 /** Costo futuro con curva de Wright y despliegue exponencial (réplica de mise_sd.modelos.costo_wright). */
+/** Escalera de oferta en hidrología normal: [nombre, potencia GW, precio COP/kWh]. */
+export const ESCALERA_NORMAL = [["Filo de agua y menores", 1.5, 40], ["Hidráulica ofertada a precio bajo", 8.5, 110],
+  ["Carbón", 1.3, 190], ["Gas", 2.3, 260], ["Líquidos", 1.2, 480]];
+
+/** Escalera de oferta durante El Niño, con agua a valor de escasez. */
+export const ESCALERA_NINO = [["Filo de agua y menores", 0.9, 40], ["Hidráulica ofertada a precio bajo", 4.0, 180],
+  ["Carbón", 1.3, 190], ["Gas", 2.3, 260], ["Líquidos", 1.2, 480], ["Agua a valor de escasez", 3.0, 1500]];
+
+/** Despacho por orden de mérito y precio marginal (réplica de orden_merito). */
+export function ordenMerito(bloques, demanda) {
+  const ordenados = [...bloques].sort((a, b) => a[2] - b[2]);
+  let restante = demanda, costo = 0, precio_marginal = 0, bloque_marginal = "";
+  const despacho = [];
+  for (const [nombre, potencia, precio] of ordenados) {
+    const usado = Math.max(Math.min(potencia, restante), 0);
+    if (usado > 0) { precio_marginal = precio; bloque_marginal = nombre; }
+    despacho.push({nombre, potencia, usado, precio});
+    costo += usado * precio;
+    restante = Math.max(restante - usado, 0);
+  }
+  return {precio_marginal, bloque_marginal, despacho, no_servida: restante,
+    capacidad_total: bloques.reduce((a, b) => a + b[1], 0), costo_total: costo};
+}
+
 /** VPN de una térmica de respaldo con y sin despacho forzado (réplica de vpn_termica_crisis). */
 export function vpnTermicaCrisis({inversion = 70, capacidad_mw = 200, energia_cargo_gwh = 1300, precio_cargo_usd_mwh = 15,
   margen_energia_usd_mwh = 10, factor_planta_normal = 0.05, costos_fijos = 6, anios = 10, tasa_descuento = 0.10,

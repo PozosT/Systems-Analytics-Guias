@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Por qué un VPN correcto puede equivocarse: la diferencia entre un sistema descomponible y uno donde el resultado depende de la interacción, con los cuatro dominios de Cynefin y el caso de una térmica de respaldo en la crisis de 2015.">
+<meta name="description" content="Cuando el efecto deja de ser proporcional a la causa: umbrales, saturación y convexidad, la desigualdad de Jensen y la curva de oferta por orden de mérito que convierte un 5 % de demanda en el triple de precio.">
 
-<title>Complicado frente a complejo – Systems Analytics · Guías de autoestudio</title>
+<title>No linealidad – Systems Analytics · Guías de autoestudio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,8 +72,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../semana1/02-sistema-estructura.html" rel="next">
-<link href="../semana1/index.html" rel="prev">
+<link href="../semana4/index.html" rel="next">
+<link href="../semana1/03-retroalimentacion.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -173,7 +173,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/01-complicado-complejo.html">Complicado frente a complejo</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/04-no-linealidad.html">No linealidad</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -215,7 +215,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link active">
+  <a href="../semana1/01-complicado-complejo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Complicado frente a complejo</span></a>
   </div>
 </li>
@@ -233,7 +233,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link">
+  <a href="../semana1/04-no-linealidad.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">No linealidad</span></a>
   </div>
 </li>
@@ -445,7 +445,7 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
-  <li><a href="#la-intuición-un-reloj-y-un-trancón" id="toc-la-intuición-un-reloj-y-un-trancón" class="nav-link" data-scroll-target="#la-intuición-un-reloj-y-un-trancón">2. La intuición: un reloj y un trancón</a></li>
+  <li><a href="#la-intuición-el-tiempo-de-viaje" id="toc-la-intuición-el-tiempo-de-viaje" class="nav-link" data-scroll-target="#la-intuición-el-tiempo-de-viaje">2. La intuición: el tiempo de viaje</a></li>
   <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
   <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
   <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
@@ -457,15 +457,15 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/01-complicado-complejo.html">Complicado frente a complejo</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/04-no-linealidad.html">No linealidad</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Complicado frente a complejo</h1>
-<p class="subtitle lead">Semana 1 · Concepto 1 de 10</p>
+<h1 class="title">No linealidad</h1>
+<p class="subtitle lead">Semana 1 · Concepto 4 de 10</p>
 </div>
 
 <div>
   <div class="description">
-    Por qué un VPN correcto puede equivocarse: la diferencia entre un sistema descomponible y uno donde el resultado depende de la interacción, con los cuatro dominios de Cynefin y el caso de una térmica de respaldo en la crisis de 2015.
+    Cuando el efecto deja de ser proporcional a la causa: umbrales, saturación y convexidad, la desigualdad de Jensen y la curva de oferta por orden de mérito que convierte un 5 % de demanda en el triple de precio.
   </div>
 </div>
 
@@ -485,7 +485,7 @@ window.Quarto = {
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="9" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 8;"><span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {vpnTermicaCrisis<span class="op">,</span> formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="9" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 8;"><span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {ordenMerito<span class="op">,</span> ESCALERA_NORMAL<span class="op">,</span> ESCALERA_NINO<span class="op">,</span> formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
@@ -504,58 +504,54 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 50 a 60 minutos</span> <span class="dato">📚 Primera página del curso: no requiere nada previo</span> <span class="dato">🧪 Se aplica en la ficha del proyecto y en la sección 1 del informe</span></p>
+<p><span class="dato">⏱ 55 a 65 minutos</span> <span class="dato">📚 Requiere <a href="../semana1/03-retroalimentacion.html">retroalimentación y diagramas causales</a></span> <span class="dato">🧪 Se aplica en el mapa causal, donde las no linealidades se marcan</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Al terminar esta página</span>
 </div>
 <ul>
-<li>Distinguir un sistema complicado de uno complejo con un criterio operativo, no con una impresión.</li>
-<li>Ubicar una decisión del sector eléctrico en los cuatro dominios de Cynefin y elegir el método que le corresponde.</li>
-<li>Explicar qué supuestos de un VPN estático fallan cuando el sistema es complejo, y cuantificar el efecto en un caso.</li>
+<li>Reconocer las cuatro formas de no linealidad que aparecen en el sector: umbral, saturación, rendimientos decrecientes y convexidad.</li>
+<li>Aplicar la desigualdad de Jensen para explicar por qué el promedio de las entradas no da el promedio de las salidas.</li>
+<li>Leer una curva de oferta por orden de mérito y anticipar dónde un cambio pequeño produce un salto grande.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Un sistema complicado se puede descomponer: el todo es la suma de sus partes y un experto con suficiente detalle lo predice. En uno complejo, el resultado nace de la interacción, así que conocer cada parte por separado deja fuera lo que decide el desenlace.</p>
+<p>En una relación no lineal, el efecto de un cambio depende del estado en que se encuentre el sistema. El mismo megavatio, el mismo carro o el mismo punto de embalse valen poco cuando hay holgura y muchísimo cuando el sistema está cerca de su límite.</p>
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>En 2014 varias térmicas de respaldo del Caribe se evaluaron con flujos de caja tranquilos: ingresos del cargo por confiabilidad, unas pocas horas de generación al año y costos fijos conocidos. Quince meses después, entre septiembre de 2015 y abril de 2016, esas mismas plantas generaban día y noche cobrando un precio de escasez de 302,43 COP/kWh, por debajo de su costo de combustible, mientras el precio de bolsa superaba al de escasez durante 206 días seguidos (XM; Resolución CREG 178 de 2015).</p>
-<p>El VPN de 2014 estaba bien calculado. La fórmula es correcta, la aritmética también. <strong>¿Qué tenía ese sistema que la evaluación financiera no vio?</strong></p>
+<p>Entre el 1 de septiembre y el 8 de octubre de 2015, el embalse agregado bajó de 69,5 % a cerca de 63 %, unos seis puntos. En ese mismo lapso el precio de bolsa pasó de 244 a 1 942,7 COP/kWh, casi ocho veces más (XM). En 2010 el embalse llegó a tocar el 40 % y los precios mensuales rara vez superaron los 300 COP/kWh.</p>
+<p>Seis puntos de embalse costaron ocho veces el precio en un año, y treinta puntos no lo movieron en otro. <strong>¿Cómo puede el mismo cambio tener efectos tan distintos?</strong></p>
 </section>
-<section id="la-intuición-un-reloj-y-un-trancón" class="level2">
-<h2 class="anchored" data-anchor-id="la-intuición-un-reloj-y-un-trancón">2. La intuición: un reloj y un trancón</h2>
+<section id="la-intuición-el-tiempo-de-viaje" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-tiempo-de-viaje">2. La intuición: el tiempo de viaje</h2>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos sistemas que fallan de maneras distintas</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Una vía que se llena</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-01-reloj-trancon-1.svg" class="img-fluid" alt="Un reloj que se atrasa dos segundos al día."></a></p>
-<p><strong>Mire el reloj.</strong> Se atrasa 2 segundos al día. Con esa sola pieza de información usted ya sabe todo lo que hará el reloj mañana, el mes entrante y el año que viene.</p>
+<p><a href="../diagramas/svg/s1-04-via-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-04-via-1.svg" class="img-fluid" alt="Ejes de ocupación de la vía y minutos de viaje."></a></p>
+<p><strong>Fije la relación.</strong> El tiempo de viaje depende de qué tan ocupada esté la vía: <span class="math inline">t(\rho) = 10/(1-\rho)</span> minutos, donde <span class="math inline">\rho</span> va de 0 a 1. Con la vía vacía, el viaje toma 10 minutos.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-01-reloj-trancon-2.svg" class="img-fluid" alt="En 30 días el reloj acumula 60 segundos de atraso."></a></p>
-<p><strong>Sume.</strong> En 30 días acumula 60 segundos. El todo es la suma de las partes, y por eso el reloj se arregla pieza a pieza: se ajusta el mecanismo y el error desaparece.</p>
+<p><a href="../diagramas/svg/s1-04-via-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-04-via-2.svg" class="img-fluid" alt="La curva del tiempo de viaje crece despacio y después se dispara."></a></p>
+<p><strong>Mire la forma.</strong> La curva casi no sube al principio y se dispara cerca del límite. Entre 0,5 y 0,6 el viaje pasa de 20 a 25 minutos; entre 0,9 y 0,95, de 100 a 200.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-01-reloj-trancon-3.svg" class="img-fluid" alt="Un trancón en la calle 100 con dos carriles de carros."></a></p>
-<p><strong>Ahora mire el trancón.</strong> El mismo viaje toma entre 35 y 70 minutos. El viernes pasado tomó 40. Conocer cada carro, cada motor y cada conductor no le dice cuánto tardará mañana.</p>
+<p><a href="../diagramas/svg/s1-04-via-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-04-via-3.svg" class="img-fluid" alt="Dos días marcados: ocupación 0,5 con 20 minutos y 0,9 con 100 minutos."></a></p>
+<p><strong>Tome dos días.</strong> Un día tranquilo con ocupación 0,5 y 20 minutos de viaje; un día pesado con 0,9 y 100 minutos. Los dos son días reales de la misma vía.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-01-reloj-trancon-4.svg" class="img-fluid" alt="Flechas entre los carros: cada uno frena porque el de adelante frenó."></a></p>
-<p><strong>Mire las flechas.</strong> Cada conductor frena porque el de adelante frenó, y su frenada hace frenar al de atrás. El tiempo de viaje sale de esa interacción, no de la suma de los carros.</p>
+<p><a href="../diagramas/svg/s1-04-via-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-04-via-4.svg" class="img-fluid" alt="El promedio de los dos días es 60 minutos y el viaje con ocupación media es 33."></a></p>
+<p><strong>Promedie mal y promedie bien.</strong> El promedio de los dos tiempos es 60 minutos. El tiempo que corresponde a la ocupación promedio, 0,7, es de 33 minutos. Las dos cifras son distintas, y la primera es la verdadera.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-01-reloj-trancon-5.svg" class="img-fluid" alt="El reloj se arregla pieza a pieza; el trancón exige mirar las interacciones."></a></p>
-<p><strong>Saque el criterio.</strong> Si entender cada parte por separado basta, el sistema es <strong>complicado</strong>. Si el resultado depende de cómo se afectan las partes entre sí, es <strong>complejo</strong>. La diferencia no está en el tamaño ni en la dificultad.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-reloj-trancon-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s1-01-reloj-trancon-6.svg" class="img-fluid" alt="El VPN es el reloj; el despacho de 2015 y 2016 fue el trancón."></a></p>
-<p><strong>Pase al sector eléctrico.</strong> El VPN de la térmica funciona como el reloj: cada año aporta su flujo y el total es la suma. El despacho de 2015 y 2016 funcionó como el trancón: el precio y las horas de generación dependían de la lluvia, de las ofertas de los demás y de reglas que cambiaban sobre la marcha.</p>
+<p><a href="../diagramas/svg/s1-04-via-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-04-via-5.svg" class="img-fluid" alt="La misma curva describe el precio de bolsa frente al nivel del embalse."></a></p>
+<p><strong>Pase al sector.</strong> La misma curva describe el precio frente al nivel del embalse. Por eso seis puntos de embalse en 2015 valieron ocho veces el precio, y treinta puntos en 2010, casi nada: el sistema estaba en otro punto de la curva.</p>
 </div>
 </div>
 </section>
@@ -563,183 +559,187 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
 <div class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Sistema complicado y sistema complejo</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Relación lineal</span>
 </div>
-<p>Un sistema es <strong>complicado</strong> cuando se puede descomponer: el comportamiento del todo se deduce del de sus partes y de cómo están ensambladas. Un avión tiene millones de piezas y sigue siendo complicado.</p>
-<p>Un sistema es <strong>complejo</strong> cuando su comportamiento nace de la interacción entre muchos elementos que se adaptan. Mitchell (2009) identifica cinco rasgos que lo delatan: <strong>retroalimentación</strong>, <strong>no linealidad</strong>, <strong>adaptación</strong>, <strong>emergencia</strong> y <strong>eventos extremos</strong>. Los nueve conceptos siguientes de la semana son, uno a uno, esos rasgos.</p>
-</div>
-<p>Los cuatro dominios de Cynefin ordenan la decisión antes de elegir el método:</p>
-<div class="pasos caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Los cuatro dominios y su método</span>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-01-cynefin-1.svg" class="img-fluid" alt="Dominio claro: causa y efecto evidentes."></a></p>
-<p><strong>Claro.</strong> La relación entre causa y efecto es evidente para cualquiera. Se aplica la mejor práctica conocida y se sigue adelante.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-01-cynefin-2.svg" class="img-fluid" alt="Dominio complicado: causa y efecto separables con análisis experto."></a></p>
-<p><strong>Complicado.</strong> La relación existe y es estable, pero hace falta análisis experto para verla. Es el terreno de los modelos de ingeniería y de las buenas prácticas.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-01-cynefin-3.svg" class="img-fluid" alt="Dominio complejo: el patrón se reconoce después."></a></p>
-<p><strong>Complejo.</strong> El patrón solo se reconoce en retrospectiva. El método cambia: se sondea con intervenciones pequeñas, se observa la respuesta y se ajusta.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-01-cynefin-4.svg" class="img-fluid" alt="Dominio caótico: sin relación estable entre causa y efecto."></a></p>
-<p><strong>Caótico.</strong> No hay relación estable que aprovechar. Primero se actúa para estabilizar, después se observa. Un apagón en curso vive aquí.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s1-01-cynefin-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s1-01-cynefin-5.svg" class="img-fluid" alt="Ejemplos del sector en cada dominio."></a></p>
-<p><strong>Ubique sus decisiones.</strong> Leer un medidor es claro. Programar el mantenimiento de una turbina es complicado. Anticipar el despacho durante El Niño es complejo. Operar durante un apagón es caótico. El error caro del sector es tratar lo complejo como si fuera complicado.</p>
-</div>
+<p>Una relación <span class="math inline">f</span> es <strong>lineal</strong> cuando cumple dos propiedades:</p>
+<p><span class="math display">f(a\,x) = a\,f(x) \quad \text{(proporcionalidad)}, \qquad f(x_1 + x_2) = f(x_1) + f(x_2) \quad \text{(superposición)}.</span></p>
+<p>En una relación lineal, el efecto de un cambio es el mismo sin importar el punto de partida, y los efectos se suman. Todo lo demás es <strong>no lineal</strong>.</p>
 </div>
 <div class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">El valor presente neto y sus supuestos</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Cuatro formas de no linealidad</span>
 </div>
-<p>La fórmula del <strong>VPN</strong> descuenta los flujos de caja futuros a una tasa <span class="math inline">r</span> durante <span class="math inline">T</span> años:</p>
-<p><span class="math display">\text{VPN} = -I_0 + \sum_{t=1}^{T} \frac{FC_t}{(1+r)^t} \quad [\text{MUSD}].</span></p>
-<p>La fórmula no se equivoca; los supuestos con que se arman los <span class="math inline">FC_t</span> sí pueden hacerlo:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Supuesto implícito</th>
-<th>Qué lo rompe</th>
-<th>Concepto de la semana</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>El precio sigue una trayectoria conocida</td>
-<td>El precio nace de la interacción</td>
-<td>7, emergencia</td>
-</tr>
-<tr class="even">
-<td>Las horas de despacho son estables</td>
-<td>El orden de mérito cambia con el embalse</td>
-<td>4, no linealidad</td>
-</tr>
-<tr class="odd">
-<td>Las reglas del juego no cambian</td>
-<td>El regulador responde a la crisis</td>
-<td>6, adaptación</td>
-</tr>
-<tr class="even">
-<td>Los demás actores hacen lo de siempre</td>
-<td>Todos reaccionan a la misma señal</td>
-<td>6, adaptación</td>
-</tr>
-<tr class="odd">
-<td>Los choques son pequeños y aislados</td>
-<td>Sequía, incendio y falla coinciden</td>
-<td>8, eventos extremos</td>
-</tr>
-<tr class="even">
-<td>El pasado reciente predice el futuro</td>
-<td>El sistema tiene memoria larga</td>
-<td>5, trayectoria</td>
-</tr>
-<tr class="odd">
-<td>Cada año es independiente</td>
-<td>Un mal año agrava el siguiente</td>
-<td>3, retroalimentación</td>
-</tr>
-</tbody>
-</table>
+<ol type="1">
+<li><strong>Umbral</strong>: nada pasa hasta cierto punto y después todo pasa. El precio de escasez se activa así.</li>
+<li><strong>Saturación</strong>: más entrada deja de producir más salida. Una línea de transmisión congestionada no transporta más por más generación disponible.</li>
+<li><strong>Rendimientos decrecientes</strong>: cada unidad adicional aporta menos. La eficiencia de una planta mejora cada vez menos con más inversión.</li>
+<li><strong>Convexidad o concavidad</strong>: la pendiente crece o decrece con el nivel. La curva del tiempo de viaje y la del precio frente al embalse son convexas.</li>
+</ol>
+</div>
+<div class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Desigualdad de Jensen</span>
+</div>
+<p>Si <span class="math inline">f</span> es <strong>convexa</strong> (su pendiente crece), entonces para cualquier variable aleatoria <span class="math inline">X</span>:</p>
+<p><span class="math display">\mathbb{E}[f(X)] \geq f(\mathbb{E}[X]).</span></p>
+<p>En palabras: <strong>el promedio de los resultados es mayor que el resultado del promedio</strong>. Con funciones cóncavas la desigualdad se invierte. La consecuencia práctica es que promediar las entradas antes de aplicar la relación subestima el costo esperado cuando la relación es convexa, que es el caso del precio de bolsa.</p>
+</div>
+<p>La curva de oferta del sistema hace visible esa convexidad:</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La escalera del orden de mérito</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-04-escalera-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s1-04-escalera-1.svg" class="img-fluid" alt="Primeros bloques de la escalera: filo de agua e hidráulica barata."></a></p>
+<p><strong>Ordene la oferta por precio.</strong> Cada tecnología ofrece potencia a un precio. Primero entran el filo de agua y la hidráulica ofertada barata, que en hidrología normal cubren 10 GW a 110 COP/kWh o menos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-04-escalera-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-04-escalera-2.svg" class="img-fluid" alt="La escalera completa en hidrología normal, con carbón, gas y líquidos."></a></p>
+<p><strong>Complete la escalera.</strong> Después vienen carbón, gas y líquidos, con peldaños cada vez más altos. El precio de bolsa es el del último bloque necesario para cubrir la demanda.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-04-escalera-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-04-escalera-3.svg" class="img-fluid" alt="Con 9,5 o 10,0 GW el precio es 110 COP/kWh."></a></p>
+<p><strong>Ubique dos horas.</strong> Con 9,5 GW y con 10,0 GW, dos horas que difieren en 5 %, el precio es el mismo: 110 COP/kWh. El peldaño es tan largo que la demanda se mueve dentro de él.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-04-escalera-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-04-escalera-4.svg" class="img-fluid" alt="Con El Niño hay menos agua barata."></a></p>
+<p><strong>Traiga El Niño.</strong> El agua ofertada barata se reduce de 8,5 a 4,0 GW y sube de precio. La escalera se acorta por abajo y el sistema opera más arriba.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-04-escalera-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-04-escalera-5.svg" class="img-fluid" alt="Aparece el bloque de agua a valor de escasez, a 1 500 COP/kWh."></a></p>
+<p><strong>Agregue el último peldaño.</strong> Cuando el agua se vuelve escasa, los embalses la ofrecen a su valor de oportunidad, muy por encima del costo de los líquidos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s1-04-escalera-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s1-04-escalera-6.svg" class="img-fluid" alt="Con 9,5 GW el precio es 480 y con 10,0 GW es 1 500."></a></p>
+<p><strong>Repita las dos horas.</strong> Ahora 9,5 GW dan 480 COP/kWh y 10,0 GW dan 1 500: un 5 % más de demanda triplica el precio. La curva es la misma; cambió el punto de operación.</p>
+</div>
 </div>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
-<section id="el-reloj-y-el-trancón-con-números" class="level3">
-<h3 class="anchored" data-anchor-id="el-reloj-y-el-trancón-con-números">El reloj y el trancón, con números</h3>
+<section id="la-tabla-del-tiempo-de-viaje" class="level3">
+<h3 class="anchored" data-anchor-id="la-tabla-del-tiempo-de-viaje">La tabla del tiempo de viaje</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">¿Cuál de los dos puedo predecir?</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Cuánto cuesta el mismo carro</span>
 </div>
-<p><strong>Planteamiento.</strong> Un reloj se atrasa 2 segundos al día. Un viaje por la calle 100 tomó 40 minutos el viernes pasado, y en los últimos meses ha tomado entre 35 y 70 minutos. ¿Cuánto se atrasará el reloj en un mes y cuánto tardará el viaje del próximo viernes?</p>
+<p><strong>Planteamiento.</strong> Con <span class="math inline">t(\rho) = 10/(1-\rho)</span>, calcule el tiempo de viaje para ocupaciones de 0,5, 0,6, 0,7, 0,8, 0,9 y 0,95, y diga cuánto agrega pasar de 0,8 a 0,9 frente a pasar de 0,5 a 0,6.</p>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Predecir cada sistema</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Llenar la tabla</span>
 </div>
 <div class="paso">
-<p><strong>Prediga el reloj.</strong> El atraso se suma: <span class="math inline">30 \times 2 = 60</span> segundos en un mes. La predicción tiene una sola cifra y un error pequeño, porque el mecanismo no depende de nada externo.</p>
+<p><strong>Evalúe los primeros valores.</strong> <span class="math inline">t(0{,}5) = 10/0{,}5 = 20</span> min. <span class="math inline">t(0{,}6) = 10/0{,}4 = 25</span> min. <span class="math inline">t(0{,}7) = 10/0{,}3 = 33{,}3</span> min.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Ocupación</th>
+<th style="text-align: center;">0,5</th>
+<th style="text-align: center;">0,6</th>
+<th style="text-align: center;">0,7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Minutos</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">33,3</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="paso">
-<p><strong>Intente predecir el viaje.</strong> Lo honesto es un rango: entre 35 y 70 minutos. El valor del próximo viernes depende de cuántos salgan a esa hora, de si llueve y de si alguien se accidenta. Esas decisiones se influyen entre sí.</p>
+<p><strong>Siga hasta el límite.</strong> <span class="math inline">t(0{,}8) = 50</span>, <span class="math inline">t(0{,}9) = 100</span>, <span class="math inline">t(0{,}95) = 200</span> minutos.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Ocupación</th>
+<th style="text-align: center;">0,8</th>
+<th style="text-align: center;">0,9</th>
+<th style="text-align: center;">0,95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Minutos</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">200</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="paso">
-<p><strong>Note la diferencia.</strong> El reloj admite una predicción puntual; el trancón, solo una distribución. En el primero, más detalle mejora la predicción; en el segundo, más detalle sobre cada carro no la mejora casi nada.</p>
+<p><strong>Compare los dos saltos.</strong> De 0,5 a 0,6 el viaje crece 5 minutos. De 0,8 a 0,9 crece 50. El mismo 10 % de ocupación adicional cuesta diez veces más, y esa es la definición operativa de no linealidad.</p>
 </div>
 <div class="paso">
-<p><strong>Aplique el criterio.</strong> Pregúntese si conocer cada parte por separado basta. Si la respuesta es sí, hay un problema complicado y conviene un experto. Si es no, hay un problema complejo y conviene un modelo de interacciones, que es lo que construye este curso.</p>
+<p><strong>Saque la consecuencia de política.</strong> Quitar carros de una vía saturada rinde mucho más que quitarlos de una vía holgada. En el sistema eléctrico, el mismo megavatio de ahorro vale mucho más en octubre de 2015 que en un abril lluvioso.</p>
 </div>
 </div>
 </section>
-<section id="el-costo-variable-de-una-térmica" class="level3">
-<h3 class="anchored" data-anchor-id="el-costo-variable-de-una-térmica">El costo variable de una térmica</h3>
+<section id="jensen-con-el-nivel-del-embalse" class="level3">
+<h3 class="anchored" data-anchor-id="jensen-con-el-nivel-del-embalse">Jensen con el nivel del embalse</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Lo complicado tiene respuesta exacta</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">El costo esperado no es el costo del escenario promedio</span>
 </div>
-<p><strong>Planteamiento.</strong> Una térmica a gas tiene un consumo específico de 10 MMBtu/MWh, paga el gas a 12 USD/MMBtu y gasta 8 USD/MWh en operación y mantenimiento variables. ¿Cuál es su costo variable y cuántas horas al año va a generar?</p>
+<p><strong>Planteamiento.</strong> El próximo trimestre el embalse puede quedar en 70 % con probabilidad 0,3, en 55 % con probabilidad 0,4 o en 40 % con probabilidad 0,3. A esos niveles corresponden precios de 150, 250 y 900 COP/kWh. Un analista calcula el precio esperado con el nivel esperado. ¿Cuánto se equivoca?</p>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos preguntas de naturaleza distinta</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Los dos cálculos</span>
 </div>
 <div class="paso">
-<p><strong>Calcule el costo variable.</strong> <span class="math inline">10 \times 12 = 120</span> USD/MWh de combustible, más 8 de operación: <strong>128 USD/MWh</strong>. La cifra es exacta, verificable y no depende de lo que hagan los demás.</p>
+<p><strong>Calcule el nivel esperado.</strong> <span class="math inline">0{,}3 \times 70 + 0{,}4 \times 55 + 0{,}3 \times 40 = 21 + 22 + 12 = 55</span> %. El escenario promedio es el del medio.</p>
 </div>
 <div class="paso">
-<p><strong>Intente la segunda pregunta.</strong> Las horas de generación dependen del despacho, y el despacho ordena todas las plantas del país por costo. Entrar o no entrar depende del costo de las demás, del nivel de los embalses y de la demanda de esa hora.</p>
+<p><strong>Evalúe el precio en ese nivel.</strong> Al 55 % corresponde un precio de <strong>250 COP/kWh</strong>. Ese es el cálculo del analista.</p>
 </div>
 <div class="paso">
-<p><strong>Compare.</strong> La primera pregunta es complicada y tiene respuesta exacta. La segunda es compleja y solo admite escenarios. Un estudio financiero que trata a las dos igual proyecta horas de generación con la misma confianza con que calcula el costo variable.</p>
+<p><strong>Calcule ahora el precio esperado.</strong> <span class="math inline">0{,}3 \times 150 + 0{,}4 \times 250 + 0{,}3 \times 900 = 45 + 100 + 270 = 415</span> COP/kWh.</p>
 </div>
 <div class="paso">
-<p><strong>Saque la consecuencia.</strong> Cuando el sistema entra en escasez, esa planta puede pasar de generar el 5 % del año a generar casi todo el año, y con el precio regulado por debajo de su costo cada MWh generado resta caja. Eso es exactamente lo que ocurrió en 2015 y 2016.</p>
+<p><strong>Mida el error.</strong> La diferencia es de 165 COP/kWh, un 66 % por encima del cálculo del escenario promedio. Todo el exceso viene del escenario seco, que es poco probable y muy caro: eso es la convexidad.</p>
+</div>
+<div class="paso">
+<p><strong>Traduzca a decisión.</strong> Un contrato de cobertura vale mucho más de lo que sugiere el escenario promedio. Por eso la semana 5 evalúa estrategias en varios escenarios en vez de en uno central, y la semana 1 insiste en marcar las no linealidades en el mapa causal.</p>
 </div>
 </div>
 </section>
-<section id="el-vpn-de-la-térmica-de-respaldo" class="level3">
-<h3 class="anchored" data-anchor-id="el-vpn-de-la-térmica-de-respaldo">El VPN de la térmica de respaldo</h3>
+<section id="la-curva-de-oferta-y-el-salto-de-precio" class="level3">
+<h3 class="anchored" data-anchor-id="la-curva-de-oferta-y-el-salto-de-precio">La curva de oferta y el salto de precio</h3>
 <div class="ejemplo caja" data-nivel="avanzado">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Un cálculo correcto con una conclusión equivocada</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Un 5 % de demanda y el triple de precio</span>
 </div>
-<p><strong>Planteamiento.</strong> Una térmica a líquidos de 200 MW se compra por 70 MUSD. Recibe una obligación de energía firme de 1 300 GWh/año a 15 USD/MWh, genera el 5 % del año con un margen de 10 USD/MWh y tiene costos fijos de 6 MUSD/año. Con 10 años de horizonte y una tasa de 10 %, ¿cuál es su VPN? ¿Y si llega una crisis en la que debe generar 210 días perdiendo 50 USD por cada MWh?</p>
+<p><strong>Planteamiento.</strong> Con las dos escaleras de oferta, calcule el precio marginal para demandas entre 7 y 13 GW, y encuentre dónde están los saltos.</p>
 </div>
-<div id="pred-vpn" class="prediccion caja">
+<div id="pred-escalera" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>¿Cuántos días de despacho forzado hacen que el VPN pase a negativo?</p>
+<p>Durante El Niño, si la demanda pasa de 9,5 a 10,0 GW, el precio de bolsa…</p>
 <div class="opcion">
-<p>Unos 30 días.</p>
+<p>Sube cerca de un 5 %, igual que la demanda.</p>
 </div>
 <div class="opcion">
-<p>Cerca de 110 días.</p>
+<p>Se triplica.</p>
 </div>
 <div class="opcion">
-<p>Más de 250 días.</p>
+<p>No cambia, porque el sistema tiene reserva.</p>
 </div>
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El VPN de la térmica, con y sin crisis</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La escalera de oferta</span>
 </div>
-<p>Empiece con los valores del planteamiento. Mueva los días de despacho forzado hasta que el VPN cruce el cero y compare con su predicción; después mueva el precio del cargo para ver cuánto pesa la sensibilidad clásica.</p>
+<p>Cambie de hidrología y mueva la demanda peldaño a peldaño. Fíjese en el precio que aparece al cruzar cada borde y en cuánto sube con un 5 % más de demanda.</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="217" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 216;"><span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>viewof diasV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">300</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Días de despacho forzado"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="228" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 227;"><span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>viewof hidrologiaE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"normal"</span><span class="op">,</span> <span class="st">"El Niño"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"El Niño"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Hidrología"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
@@ -750,7 +750,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="222" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 221;"><span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>viewof brechaV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Pérdida por MWh generado [USD/MWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="233" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 232;"><span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a>viewof demandaE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">7</span><span class="op">,</span> <span class="fl">13.5</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">9.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Demanda [GW]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -761,7 +761,18 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="227" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 226;"><span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>viewof cargoV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">12</span><span class="op">,</span> <span class="dv">18</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Precio del cargo por confiabilidad [USD/MWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="238" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 237;"><span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>despachoE <span class="op">=</span> {</span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> escalera <span class="op">=</span> hidrologiaE <span class="op">===</span> <span class="st">"normal"</span> <span class="op">?</span> ESCALERA_NORMAL <span class="op">:</span> ESCALERA_NINO<span class="op">;</span></span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">ordenMerito</span>(escalera<span class="op">,</span> demandaE)<span class="op">;</span></span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> masCinco <span class="op">=</span> <span class="fu">ordenMerito</span>(escalera<span class="op">,</span> demandaE <span class="op">*</span> <span class="fl">1.05</span>)<span class="op">;</span></span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> barras <span class="op">=</span> [<span class="op">...</span>escalera]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a[<span class="dv">2</span>] <span class="op">-</span> b[<span class="dv">2</span>])<span class="op">.</span><span class="fu">map</span>(([nombre<span class="op">,</span> potencia<span class="op">,</span> precio]) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> fila <span class="op">=</span> {nombre<span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> x <span class="op">+</span> potencia<span class="op">,</span> precio}<span class="op">;</span></span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>    x <span class="op">+=</span> potencia<span class="op">;</span></span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fila<span class="op">;</span></span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {base<span class="op">,</span> masCinco<span class="op">,</span> barras<span class="op">,</span> <span class="dt">salto</span><span class="op">:</span> masCinco<span class="op">.</span><span class="at">precio_marginal</span> <span class="op">/</span> base<span class="op">.</span><span class="at">precio_marginal</span>}<span class="op">;</span></span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
@@ -772,10 +783,21 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="232" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 231;"><span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a>casoV <span class="op">=</span> <span class="fu">vpnTermicaCrisis</span>({<span class="dt">dias_despacho_forzado</span><span class="op">:</span> diasV<span class="op">,</span> <span class="dt">brecha_costo_precio_usd_mwh</span><span class="op">:</span> brechaV<span class="op">,</span> <span class="dt">precio_cargo_usd_mwh</span><span class="op">:</span> cargoV})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="254" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 253;"><span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span></span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"GW ofertados →"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">14</span>]}<span class="op">,</span></span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ Precio de oferta [COP/kWh]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1600</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rect</span>(despachoE<span class="op">.</span><span class="at">barras</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"precio"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.75</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span>})<span class="op">,</span></span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(despachoE<span class="op">.</span><span class="at">barras</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> (d<span class="op">.</span><span class="at">x1</span> <span class="op">+</span> d<span class="op">.</span><span class="at">x2</span>) <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"precio"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"nombre"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">8</span>})<span class="op">,</span></span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([demandaE]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([demandaE <span class="op">*</span> <span class="fl">1.05</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4,4"</span>})<span class="op">,</span></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="ojs-cell-5" data-nodetype="declaration">
+<div id="ojs-cell-5" data-nodetype="expression">
 
 </div>
 </div>
@@ -783,20 +805,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="237" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 236;"><span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">700</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
-<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"inversión"</span><span class="op">,</span> <span class="st">"flujos descontados"</span><span class="op">,</span> <span class="st">"pérdida de la crisis"</span><span class="op">,</span> <span class="st">"VPN"</span>]}<span class="op">,</span></span>
-<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"↑ MUSD"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>([</span>
-<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"inversión"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="op">-</span><span class="dv">70</span>}<span class="op">,</span></span>
-<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"flujos descontados"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> casoV<span class="op">.</span><span class="at">anualidad</span> <span class="op">*</span> casoV<span class="op">.</span><span class="at">flujo_anual</span>}<span class="op">,</span></span>
-<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"pérdida de la crisis"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="op">-</span>casoV<span class="op">.</span><span class="at">valor_presente_perdida</span>}<span class="op">,</span></span>
-<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">concepto</span><span class="op">:</span> <span class="st">"VPN"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> casoV<span class="op">.</span><span class="at">vpn_con_crisis</span>}<span class="op">,</span></span>
-<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"concepto"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">concepto</span> <span class="op">===</span> <span class="st">"VPN"</span> <span class="op">?</span> (d<span class="op">.</span><span class="at">valor</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">verde</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span>) <span class="op">:</span> (d<span class="op">.</span><span class="at">valor</span> <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">azul</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>)})<span class="op">,</span></span>
-<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
-<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="270" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 269;"><span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Precio marginal&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(despachoE<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">precio_marginal</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Bloque marginal&lt;b&gt;</span><span class="sc">${</span>despachoE<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">bloque_marginal</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Con 5 % más de demanda&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(despachoE<span class="op">.</span><span class="at">masCinco</span><span class="op">.</span><span class="at">precio_marginal</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Veces el precio&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(despachoE<span class="op">.</span><span class="at">salto</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Demanda no servida&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(despachoE<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">no_servida</span>)<span class="sc">}</span><span class="vs"> GW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="expression">
@@ -804,48 +819,28 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="255" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 254;"><span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Flujo anual de caja&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">flujo_anual</span>)<span class="sc">}</span><span class="vs"> MUSD/año&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;VPN sin crisis&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">vpn_base</span>)<span class="sc">}</span><span class="vs"> MUSD&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Energía generada en la crisis&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">energia_crisis_gwh</span>)<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Pérdida en valor presente&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">valor_presente_perdida</span>)<span class="sc">}</span><span class="vs"> MUSD&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;VPN con crisis&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(casoV<span class="op">.</span><span class="at">vpn_con_crisis</span>)<span class="sc">}</span><span class="vs"> MUSD&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-7" data-nodetype="expression">
-
-</div>
-</div>
-</div>
 <div class="nota-datos">
-<p>Modelo <code>mise_sd.modelos.vpn_termica_crisis</code> con los parámetros del planteamiento; cifras ilustrativas del orden de magnitud de una térmica de respaldo del Caribe, no de un proyecto real. El precio de escasez de 302,43 COP/kWh y los 206 días por encima de él son datos de XM para 2015 y 2016.</p>
+<p>Modelo <code>mise_sd.modelos.orden_merito</code> con las escaleras <code>ESCALERA_NORMAL</code> y <code>ESCALERA_NINO</code>, tomadas de <code>notas/semana1/figuras/fig_s1_04_orden_merito.py</code>: bloques estilizados calibrados al orden de magnitud del parque colombiano y a los precios de 2015 y 2016. El precio de escasez de referencia es 302,43 COP/kWh (XM).</p>
 </div>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver el ejemplo</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer los saltos</span>
 </div>
 <div class="paso">
-<p><strong>Arme el flujo anual.</strong> El cargo aporta <span class="math inline">1\,300\,000 \times 15 / 10^6 = 19{,}5</span> MUSD/año. La energía aporta <span class="math inline">200 \times 8\,760 \times 0{,}05 \times 10 / 10^6 = 0{,}9</span> MUSD/año. Restados los 6 de costos fijos, quedan <strong>14,4 MUSD/año</strong>.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-escalera"></span>. La respuesta es la B: con El Niño, 9,5 GW dan 480 COP/kWh y 10,0 GW dan 1 500, más del triple con un 5 % más de demanda.</p>
 </div>
 <div class="paso">
-<p><strong>Descuente.</strong> Con 10 años al 10 %, el factor de anualidad es 6,145, así que los flujos valen hoy 88,3 MUSD. Contra la inversión de 70, el <strong>VPN es de 18,3 MUSD</strong>: el proyecto pasa el filtro con holgura.</p>
+<p><strong>Repita en hidrología normal.</strong> Las mismas dos horas dan 110 COP/kWh en los dos casos. La demanda se mueve dentro del peldaño largo de hidráulica barata y el precio ni se entera.</p>
 </div>
 <div class="paso">
-<p><strong>Haga la sensibilidad clásica.</strong> Si el precio del cargo varía un 20 %, el VPN va de −5,6 a 42,3 MUSD. El analista concluye que el riesgo está acotado y que el punto crítico es el cargo.</p>
+<p><strong>Busque los bordes.</strong> Mueva la demanda lentamente: el precio se queda quieto dentro de cada bloque y salta al cruzar un borde. Un sistema que opera cerca de un borde es un sistema con riesgo de precio, aunque su margen de capacidad parezca cómodo.</p>
 </div>
 <div class="paso">
-<p><strong>Traiga la crisis.</strong> Con 210 días de despacho forzado al 85 % de la capacidad, la planta genera 856,8 GWh y pierde 50 USD en cada MWh: 42,8 MUSD, que en valor presente son 35,4. El <strong>VPN cae a −17,1 MUSD</strong>.</p>
+<p><strong>Note la asimetría.</strong> Bajar la demanda un 5 % desde 10,0 GW devuelve el precio a 480, pero bajar otro 5 % no lo baja proporcionalmente: cada peldaño tiene su propio tamaño. Las sensibilidades hacia arriba y hacia abajo no son simétricas.</p>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-vpn"></span>. La respuesta es la B: el VPN cruza el cero cerca de los 110 días de despacho forzado, poco más de un trimestre. La sensibilidad del 20 % sobre el cargo nunca exploró ese mundo, porque movía un parámetro y dejaba fija la estructura.</p>
-</div>
-<div class="paso">
-<p><strong>Saque la lección.</strong> El error no estuvo en la aritmética sino en el supuesto de que las horas de generación eran un dato. En un sistema complejo, la variable que decide el resultado suele ser la que el modelo trató como constante.</p>
+<p><strong>Conecte con el mapa causal.</strong> En el mapa de la página anterior, el enlace nivel <span class="math inline">\to^{-}</span> precio es esta curva. Marcarlo como no lineal, y no como una flecha cualquiera, es lo que exige el Avance 1.</p>
 </div>
 </div>
 </section>
@@ -854,28 +849,28 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir complicado con complejo</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Extrapolar una tendencia lineal</span>
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>«Este proyecto es complejo: tiene 400 páginas de anexos y doce contratos.»</p>
+<p>«El embalse bajó 6 puntos y el precio subió 1 700 COP/kWh; si baja 12, subirá 3 400.»</p>
 </div>
 <div class="bien">
-<p>El tamaño y el detalle hacen a un sistema complicado. Lo complejo es que el resultado dependa de la interacción: si cada parte se puede analizar por separado, el sistema es complicado por grande que sea.</p>
+<p>Cada punto de embalse adicional cuesta más que el anterior, y a partir de cierto nivel aparece el bloque de escasez. La extrapolación lineal subestima el riesgo justo donde importa.</p>
 </div>
 </div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer «complejo» como «imposible de analizar»</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Promediar las entradas antes de aplicar la relación</span>
 </div>
-<p>Lo complejo se analiza con otras herramientas: lazos, escenarios, redes y robustez, que son las de este curso. La conclusión útil cambia de forma: en vez de «el VPN es 18,3 MUSD», queda «el VPN es positivo mientras el despacho forzado no pase de unos 110 días al año, y esta es la señal que lo anticipa».</p>
+<p>Calcular el precio del nivel de embalse esperado da 250 COP/kWh; calcular el precio esperado da 415. El primer número parece más preciso y es el equivocado. Ante una relación convexa, siempre se promedian las salidas.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Creer que la sensibilidad clásica captura la complejidad</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Suponer que la sensibilidad es simétrica</span>
 </div>
-<p>Mover un parámetro a la vez, con la estructura intacta, explora un solo mundo. La crisis de 2015 cambió al tiempo el precio, las horas de generación y las reglas. Por eso la semana 5 reemplaza la sensibilidad por escenarios y por la tabla de robustez.</p>
+<p>Un análisis que reporta «±10 % de demanda» como si los dos lados costaran lo mismo esconde la asimetría de la escalera. Con El Niño, 5 % más de demanda triplica el precio y 5 % menos lo devuelve a un tercio: el riesgo vive en una sola dirección.</p>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -884,81 +879,77 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Un motor de avión tiene 25 000 piezas y su falla se diagnostica pieza por pieza. ¿Qué es?</p>
+<p>¿Cuál de estas relaciones es lineal?</p>
 <div class="opcion" data-correcta="si">
-<p>Complicado: se descompone, aunque sea enorme.</p>
-<p><span class="porque">Correcto: el tamaño no lo vuelve complejo.</span></p>
+<p>Energía facturada y consumo, con una tarifa única por kWh.</p>
+<p><span class="porque">Correcto: duplicar el consumo duplica la factura.</span></p>
 </div>
 <div class="opcion">
-<p>Complejo, por el número de piezas.</p>
-<p><span class="porque">Revise el criterio del cuadro 5 de la intuición.</span></p>
+<p>Precio de bolsa y nivel del embalse.</p>
+<p><span class="porque">Es convexa: revise la curva de la intuición.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Cuál de estas decisiones vive en el dominio complejo de Cynefin?</p>
-<div class="opcion">
-<p>Calcular el costo variable de una térmica con su consumo específico.</p>
-<p><span class="porque">Esa cuenta tiene respuesta exacta. Revise el ejemplo intermedio.</span></p>
-</div>
+<p>Una línea de transmisión llega a su capacidad máxima. ¿Qué tipo de no linealidad es?</p>
 <div class="opcion" data-correcta="si">
-<p>Anticipar cuántas horas despachará esa térmica el año entrante.</p>
-<p><span class="porque">Correcto: depende de lo que hagan los demás y del clima.</span></p>
+<p>Saturación.</p>
+<p><span class="porque">Correcto: más entrada ya no produce más salida.</span></p>
 </div>
 <div class="opcion">
-<p>Leer el medidor de un cliente.</p>
-<p><span class="porque">Eso es el dominio claro.</span></p>
+<p>Umbral.</p>
+<p><span class="porque">Un umbral es lo contrario: nada pasa hasta cierto punto y después todo pasa.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>En el ejemplo avanzado, ¿qué supuesto del VPN falló?</p>
-<div class="opcion">
-<p>La tasa de descuento del 10 %.</p>
-<p><span class="porque">La tasa no cambió durante la crisis. Revise la tabla de supuestos.</span></p>
-</div>
+<p>Con la función convexa del ejemplo intermedio, ¿qué es mayor?</p>
 <div class="opcion" data-correcta="si">
-<p>Que las horas de generación eran un dato estable.</p>
-<p><span class="porque">Correcto: pasaron del 5 % del año a 210 días seguidos.</span></p>
+<p>El promedio de los precios de los tres escenarios.</p>
+<p><span class="porque">Correcto: es la desigualdad de Jensen, 415 frente a 250.</span></p>
+</div>
+<div class="opcion">
+<p>El precio del escenario promedio.</p>
+<p><span class="porque">Ese cálculo subestima. Revise la definición de Jensen.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Con el simulador, ¿qué mueve más el VPN?</p>
+<p>En hidrología normal, la demanda pasa de 9,5 a 10,0 GW. ¿Qué ocurre con el precio?</p>
 <div class="opcion">
-<p>Un 20 % de variación en el precio del cargo.</p>
-<p><span class="porque">Eso mueve el VPN unos 24 MUSD. Pruebe con 210 días de despacho forzado.</span></p>
+<p>Sube un 5 %.</p>
+<p><span class="porque">Pruebe en el simulador con la hidrología normal.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Un trimestre largo de despacho forzado por debajo del costo.</p>
-<p><span class="porque">Correcto: 210 días restan 35,4 MUSD en valor presente y dan vuelta al signo.</span></p>
+<p>No cambia: sigue en 110 COP/kWh.</p>
+<p><span class="porque">Correcto: las dos horas caen dentro del mismo peldaño.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>«El sistema es complejo, así que no vale la pena modelarlo.» ¿Qué falla en esa frase?</p>
-<div class="opcion" data-correcta="si">
-<p>Confunde complejidad con imposibilidad: cambia el tipo de conclusión, no la posibilidad de analizar.</p>
-<p><span class="porque">Correcto.</span></p>
-</div>
+<p>¿Por qué importa marcar las no linealidades en un mapa causal?</p>
 <div class="opcion">
-<p>Nada: con interacciones no se puede modelar.</p>
-<p><span class="porque">Revise el segundo error común.</span></p>
+<p>Porque hacen el diagrama más completo.</p>
+<p><span class="porque">La razón es más concreta.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Porque señalan dónde un cambio pequeño puede producir un efecto desproporcionado.</p>
+<p><span class="porque">Correcto, y por eso el Avance 1 pide al menos dos con su tipo y su evidencia.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
 <h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
-<section id="ejercicio-1-clasificar-tres-sistemas" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-1-clasificar-tres-sistemas">Ejercicio 1 ●○○ · Clasificar tres sistemas</h4>
-<p>Clasifique como complicado o complejo, y justifique en una línea: (a) el mantenimiento programado de una subestación; (b) la formación del precio de bolsa en un día de sequía; (c) el cronograma de construcción de una línea de transmisión que cruza tres municipios.</p>
+<section id="ejercicio-1-la-vía-y-el-minuto-ahorrado" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-la-vía-y-el-minuto-ahorrado">Ejercicio 1 ●○○ · La vía y el minuto ahorrado</h4>
+<p>Con <span class="math inline">t(\rho) = 10/(1-\rho)</span>, calcule cuántos minutos ahorra quitar un 5 % de ocupación cuando la vía está en 0,6 y cuando está en 0,9. Explique en una frase qué política de tráfico sugiere el resultado.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -971,16 +962,15 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ol type="a">
-<li><strong>Complicado</strong>: el plan se descompone en tareas con duraciones conocidas y un experto lo optimiza. (b) <strong>Complejo</strong>: el precio surge de las ofertas de todos los generadores, del nivel de los embalses y de la demanda, y cada agente reacciona a lo que espera de los demás. (c) <strong>Complejo</strong>, aunque parezca un cronograma: las comunidades, las autoridades locales y los contratistas se adaptan a lo que ocurre, y el atraso de un permiso cambia la negociación siguiente. La semana 6 muestra este caso en detalle.</li>
-</ol>
+<p>En 0,6: <span class="math inline">t(0{,}6) = 25</span> y <span class="math inline">t(0{,}55) = 22{,}2</span>, un ahorro de <strong>2,8 minutos</strong>. En 0,9: <span class="math inline">t(0{,}9) = 100</span> y <span class="math inline">t(0{,}85) = 66{,}7</span>, un ahorro de <strong>33,3 minutos</strong>, doce veces más.</p>
+<p>La política que sugiere: concentrar los incentivos de teletrabajo o de transporte público en las horas y los corredores más congestionados, porque el mismo esfuerzo rinde mucho más cerca del límite. En el sistema eléctrico, el equivalente es la respuesta de demanda en las horas críticas, que la campaña de 2016 usó a escala nacional.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="ejercicio-2-el-vpn-con-una-crisis-más-corta" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-2-el-vpn-con-una-crisis-más-corta">Ejercicio 2 ●●○ · El VPN con una crisis más corta</h4>
-<p>Con el simulador, suponga una crisis de 150 días y que el regulador compensa después la mitad de la pérdida, un año más tarde. ¿Cuál es el VPN? ¿Cambia la recomendación de inversión?</p>
+<section id="ejercicio-2-dos-cambios-que-se-cancelan" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-dos-cambios-que-se-cancelan">Ejercicio 2 ●●○ · Dos cambios que se cancelan</h4>
+<p>Con la escalera de El Niño, el sistema opera con 10,0 GW de demanda. Un plan de eficiencia baja la demanda a 9,4 GW, y al mismo tiempo sale de servicio medio gigavatio de hidráulica ofertada barata. ¿Cuál es el precio antes y después?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -993,8 +983,9 @@ window.Quarto = {
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Con 150 días la planta genera 612 GWh y pierde 30,6 MUSD, que en valor presente son 25,3. La compensación de 15,3 MUSD un año después vale hoy 11,5. El VPN queda en <span class="math inline">18{,}3 - 25{,}3 + 11{,}5 = 4{,}5</span> MUSD: positivo, pero muy por debajo del cálculo original y dependiente de una decisión regulatoria que en 2014 nadie había prometido.</p>
-<p>La recomendación cambia de forma: en vez de aprobar por el VPN, conviene aprobar con condiciones, por ejemplo un contrato de suministro que cubra la brecha de costo o una cláusula de revisión si el despacho forzado supera cierto umbral. Esa manera de recomendar es la que el curso practica desde la semana 5.</p>
+<p><strong>Antes</strong>: con 10,0 GW la demanda entra en el bloque de agua a valor de escasez, así que el precio es <strong>1 500 COP/kWh</strong>.</p>
+<p><strong>Después</strong>: la escalera pierde 0,5 GW de hidráulica barata, así que los bloques acumulan 0,9, 4,4, 5,7, 8,0 y 9,2 GW hasta los líquidos. Con 9,4 GW de demanda se necesita otra vez el agua a valor de escasez: el precio sigue en <strong>1 500 COP/kWh</strong>.</p>
+<p><strong>Lectura</strong>: bajar la demanda un 6 % no sirvió de nada porque la oferta se redujo al tiempo. En un sistema no lineal, lo que decide el precio es la distancia al borde del peldaño, y esa distancia depende de los dos lados del balance. Por eso la semana 4 modela oferta y demanda juntas, con stocks y flujos.</p>
 </div>
 </div>
 </div>
@@ -1008,21 +999,21 @@ window.Quarto = {
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Un sistema <strong>complicado</strong> se descompone; uno <strong>complejo</strong> debe su comportamiento a la <strong>interacción</strong> entre las partes.</li>
-<li>Los cinco rasgos de lo complejo son <strong>retroalimentación, no linealidad, adaptación, emergencia y eventos extremos</strong>, y son los conceptos de esta semana.</li>
-<li><strong>Cynefin</strong> dice qué método corresponde a cada decisión; el error caro es tratar lo complejo como complicado.</li>
-<li>El <strong>VPN</strong> no se equivoca como fórmula: fallan sus supuestos sobre precios, horas de despacho, reglas y choques.</li>
-<li>En el caso, el VPN pasa de <strong>+18,3 a −17,1 MUSD</strong> con 210 días de despacho forzado, y cruza el cero cerca de los <strong>110 días</strong>.</li>
+<li>Una relación es <strong>lineal</strong> si cumple proporcionalidad y superposición; todo lo demás es no lineal.</li>
+<li>Las cuatro formas frecuentes son <strong>umbral, saturación, rendimientos decrecientes y convexidad</strong>.</li>
+<li><strong>Jensen</strong>: con una función convexa, el promedio de los resultados supera al resultado del promedio (415 frente a 250 COP/kWh en el ejemplo).</li>
+<li>La <strong>curva de oferta</strong> convierte un 5 % más de demanda en el triple de precio cuando el sistema opera en el peldaño de escasez, y en nada cuando opera en el peldaño de agua barata.</li>
+<li>El efecto de una acción depende del <strong>punto de operación</strong>: el mismo megavatio ahorrado vale poco con holgura y muchísimo en escasez.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Complicado frente a complejo» de las notas de la semana 1 trae la tabla completa de supuestos del VPN y los ejercicios de Cynefin. La ficha del proyecto integrador pide justamente esta clasificación para el caso elegido: en qué dominio vive la decisión que usted analiza. La <a href="../semana1/02-sistema-estructura.html">página siguiente</a> empieza a desarmar ese sistema en elementos, interconexiones y propósito.</p>
+<p><strong>Para profundizar.</strong> La sección «No linealidad» de las notas de la semana 1 trae la nube de precio contra nivel de embalse con datos de XM y más ejercicios de Jensen. La semana 4 convierte esta curva en una función de tabla dentro del modelo, y la semana 5 la usa para construir escenarios.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7dnBuVGVybWljYUNyaXNpcywgZm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBkaWFzViA9IElucHV0cy5yYW5nZShbMCwgMzAwXSwge3ZhbHVlOiAwLCBzdGVwOiAxMCwgbGFiZWw6IFwiRMOtYXMgZGUgZGVzcGFjaG8gZm9yemFkb1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBicmVjaGFWID0gSW5wdXRzLnJhbmdlKFswLCAxMDBdLCB7dmFsdWU6IDUwLCBzdGVwOiA1LCBsYWJlbDogXCJQw6lyZGlkYSBwb3IgTVdoIGdlbmVyYWRvIFtVU0QvTVdoXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBjYXJnb1YgPSBJbnB1dHMucmFuZ2UoWzEyLCAxOF0sIHt2YWx1ZTogMTUsIHN0ZXA6IDAuNSwgbGFiZWw6IFwiUHJlY2lvIGRlbCBjYXJnbyBwb3IgY29uZmlhYmlsaWRhZCBbVVNEL01XaF1cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJjYXNvViA9IHZwblRlcm1pY2FDcmlzaXMoe2RpYXNfZGVzcGFjaG9fZm9yemFkbzogZGlhc1YsIGJyZWNoYV9jb3N0b19wcmVjaW9fdXNkX213aDogYnJlY2hhViwgcHJlY2lvX2NhcmdvX3VzZF9td2g6IGNhcmdvVn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDcwMCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA2MCwgbWFyZ2luQm90dG9tOiA1MCxcbiAgeDoge2xhYmVsOiBudWxsLCBkb21haW46IFtcImludmVyc2nDs25cIiwgXCJmbHVqb3MgZGVzY29udGFkb3NcIiwgXCJww6lyZGlkYSBkZSBsYSBjcmlzaXNcIiwgXCJWUE5cIl19LFxuICB5OiB7bGFiZWw6IFwi4oaRIE1VU0RcIiwgZ3JpZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5iYXJZKFtcbiAgICAgIHtjb25jZXB0bzogXCJpbnZlcnNpw7NuXCIsIHZhbG9yOiAtNzB9LFxuICAgICAge2NvbmNlcHRvOiBcImZsdWpvcyBkZXNjb250YWRvc1wiLCB2YWxvcjogY2Fzb1YuYW51YWxpZGFkICogY2Fzb1YuZmx1am9fYW51YWx9LFxuICAgICAge2NvbmNlcHRvOiBcInDDqXJkaWRhIGRlIGxhIGNyaXNpc1wiLCB2YWxvcjogLWNhc29WLnZhbG9yX3ByZXNlbnRlX3BlcmRpZGF9LFxuICAgICAge2NvbmNlcHRvOiBcIlZQTlwiLCB2YWxvcjogY2Fzb1YudnBuX2Nvbl9jcmlzaXN9LFxuICAgIF0sIHt4OiBcImNvbmNlcHRvXCIsIHk6IFwidmFsb3JcIiwgZmlsbDogKGQpID0+IGQuY29uY2VwdG8gPT09IFwiVlBOXCIgPyAoZC52YWxvciA+PSAwID8gQ09MT1JFUy52ZXJkZSA6IENPTE9SRVMucm9qbykgOiAoZC52YWxvciA+PSAwID8gQ09MT1JFUy5henVsIDogQ09MT1JFUy5ncmlzKX0pLFxuICAgIFBsb3QucnVsZVkoWzBdKSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkZsdWpvIGFudWFsIGRlIGNhamE8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YuZmx1am9fYW51YWwpfSBNVVNEL2HDsW88L2I+PC9kaXY+XG4gIDxkaXY+VlBOIHNpbiBjcmlzaXM8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YudnBuX2Jhc2UpfSBNVVNEPC9iPjwvZGl2PlxuICA8ZGl2PkVuZXJnw61hIGdlbmVyYWRhIGVuIGxhIGNyaXNpczxiPiR7Zm9ybWF0b051bWVybygxKShjYXNvVi5lbmVyZ2lhX2NyaXNpc19nd2gpfSBHV2g8L2I+PC9kaXY+XG4gIDxkaXY+UMOpcmRpZGEgZW4gdmFsb3IgcHJlc2VudGU8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YudmFsb3JfcHJlc2VudGVfcGVyZGlkYSl9IE1VU0Q8L2I+PC9kaXY+XG4gIDxkaXY+VlBOIGNvbiBjcmlzaXM8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkoY2Fzb1YudnBuX2Nvbl9jcmlzaXMpfSBNVVNEPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdkaWFzVicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdicmVjaGFWJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NhcmdvVicpIn1dfQ==
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7b3JkZW5NZXJpdG8sIEVTQ0FMRVJBX05PUk1BTCwgRVNDQUxFUkFfTklOTywgZm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBoaWRyb2xvZ2lhRSA9IElucHV0cy5yYWRpbyhbXCJub3JtYWxcIiwgXCJFbCBOacOxb1wiXSwge3ZhbHVlOiBcIkVsIE5pw7FvXCIsIGxhYmVsOiBcIkhpZHJvbG9nw61hXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGRlbWFuZGFFID0gSW5wdXRzLnJhbmdlKFs3LCAxMy41XSwge3ZhbHVlOiA5LjUsIHN0ZXA6IDAuMSwgbGFiZWw6IFwiRGVtYW5kYSBbR1ddXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiZGVzcGFjaG9FID0ge1xuICBjb25zdCBlc2NhbGVyYSA9IGhpZHJvbG9naWFFID09PSBcIm5vcm1hbFwiID8gRVNDQUxFUkFfTk9STUFMIDogRVNDQUxFUkFfTklOTztcbiAgY29uc3QgYmFzZSA9IG9yZGVuTWVyaXRvKGVzY2FsZXJhLCBkZW1hbmRhRSk7XG4gIGNvbnN0IG1hc0NpbmNvID0gb3JkZW5NZXJpdG8oZXNjYWxlcmEsIGRlbWFuZGFFICogMS4wNSk7XG4gIGxldCB4ID0gMDtcbiAgY29uc3QgYmFycmFzID0gWy4uLmVzY2FsZXJhXS5zb3J0KChhLCBiKSA9PiBhWzJdIC0gYlsyXSkubWFwKChbbm9tYnJlLCBwb3RlbmNpYSwgcHJlY2lvXSkgPT4ge1xuICAgIGNvbnN0IGZpbGEgPSB7bm9tYnJlLCB4MTogeCwgeDI6IHggKyBwb3RlbmNpYSwgcHJlY2lvfTtcbiAgICB4ICs9IHBvdGVuY2lhO1xuICAgIHJldHVybiBmaWxhO1xuICB9KTtcbiAgcmV0dXJuIHtiYXNlLCBtYXNDaW5jbywgYmFycmFzLCBzYWx0bzogbWFzQ2luY28ucHJlY2lvX21hcmdpbmFsIC8gYmFzZS5wcmVjaW9fbWFyZ2luYWx9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDMyMCwgbWFyZ2luTGVmdDogNjAsIG1hcmdpbkJvdHRvbTogNDAsXG4gIHg6IHtsYWJlbDogXCJHVyBvZmVydGFkb3Mg4oaSXCIsIGRvbWFpbjogWzAsIDE0XX0sXG4gIHk6IHtsYWJlbDogXCLihpEgUHJlY2lvIGRlIG9mZXJ0YSBbQ09QL2tXaF1cIiwgZG9tYWluOiBbMCwgMTYwMF0sIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucmVjdChkZXNwYWNob0UuYmFycmFzLCB7eDE6IFwieDFcIiwgeDI6IFwieDJcIiwgeTE6IDAsIHkyOiBcInByZWNpb1wiLCBmaWxsOiBDT0xPUkVTLmF6dWwsIGZpbGxPcGFjaXR5OiAwLjc1LCBzdHJva2U6IFwid2hpdGVcIn0pLFxuICAgIFBsb3QudGV4dChkZXNwYWNob0UuYmFycmFzLCB7eDogKGQpID0+IChkLngxICsgZC54MikgLyAyLCB5OiBcInByZWNpb1wiLCB0ZXh0OiBcIm5vbWJyZVwiLCBkeTogLTgsIGZvbnRTaXplOiA4fSksXG4gICAgUGxvdC5ydWxlWChbZGVtYW5kYUVdLCB7c3Ryb2tlOiBDT0xPUkVTLnJvam8sIHN0cm9rZVdpZHRoOiAyfSksXG4gICAgUGxvdC5ydWxlWChbZGVtYW5kYUUgKiAxLjA1XSwge3N0cm9rZTogQ09MT1JFUy5yb2pvLCBzdHJva2VEYXNoYXJyYXk6IFwiNCw0XCJ9KSxcbiAgICBQbG90LnJ1bGVZKFswXSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5QcmVjaW8gbWFyZ2luYWw8Yj4ke2Zvcm1hdG9OdW1lcm8oMCkoZGVzcGFjaG9FLmJhc2UucHJlY2lvX21hcmdpbmFsKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5CbG9xdWUgbWFyZ2luYWw8Yj4ke2Rlc3BhY2hvRS5iYXNlLmJsb3F1ZV9tYXJnaW5hbH08L2I+PC9kaXY+XG4gIDxkaXY+Q29uIDUgJSBtw6FzIGRlIGRlbWFuZGE8Yj4ke2Zvcm1hdG9OdW1lcm8oMCkoZGVzcGFjaG9FLm1hc0NpbmNvLnByZWNpb19tYXJnaW5hbCl9IENPUC9rV2g8L2I+PC9kaXY+XG4gIDxkaXY+VmVjZXMgZWwgcHJlY2lvPGI+JHtmb3JtYXRvTnVtZXJvKDEpKGRlc3BhY2hvRS5zYWx0byl9PC9iPjwvZGl2PlxuICA8ZGl2PkRlbWFuZGEgbm8gc2VydmlkYTxiPiR7Zm9ybWF0b051bWVybygyKShkZXNwYWNob0UuYmFzZS5ub19zZXJ2aWRhKX0gR1c8L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2hpZHJvbG9naWFFJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2RlbWFuZGFFJykifV19
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
@@ -1439,13 +1430,13 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../semana1/index.html" class="pagination-link" aria-label="Semana 1 · Sistemas complejos">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Semana 1 · Sistemas complejos</span>
+      <a href="../semana1/03-retroalimentacion.html" class="pagination-link" aria-label="Retroalimentación y diagramas causales">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Retroalimentación y diagramas causales</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../semana1/02-sistema-estructura.html" class="pagination-link" aria-label="Sistema, estructura y comportamiento">
-        <span class="nav-page-text">Sistema, estructura y comportamiento</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../semana4/index.html" class="pagination-link" aria-label="Semana 4 · Dinámica de sistemas I">
+        <span class="nav-page-text">Semana 4 · Dinámica de sistemas I</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
