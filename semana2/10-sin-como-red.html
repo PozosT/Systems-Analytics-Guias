@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Las herramientas de la semana reunidas en el Laboratorio 1: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, N-1 y cascada), la eólica de La Guajira y los límites de la topología.">
+<meta name="description" content="Las herramientas de la semana reunidas en el Laboratorio 1: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, salida de subestación y cascada), la eólica de La Guajira y los límites de la topología, con un flujo DC de cuatro barras resuelto a mano.">
 
 <title>El SIN como red: el Laboratorio 1 – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-189071c1cfc9baef9b9de50def1ee7e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -117,8 +117,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<meta name="guias-mise:fecha" content="2 de octubre de 2026">
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -133,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -264,7 +265,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+ <span class="menu-text">Puntos de quiebre y regímenes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -382,7 +383,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de quiebre</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -474,6 +475,12 @@ window.Quarto = {
  <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/10-nino-perillas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo ante El Niño y sus perillas</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -543,6 +550,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El arco del Laboratorio 4</span></a>
   </div>
 </li>
       </ul>
@@ -653,6 +666,35 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Para consultar</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../recursos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -676,6 +718,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/10-sin-como-red.html">El SIN como red: el Laboratorio 1</a></li></ol></nav>
 <div class="quarto-title">
@@ -685,7 +728,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Las herramientas de la semana reunidas en el Laboratorio 1: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, N-1 y cascada), la eólica de La Guajira y los límites de la topología.
+    Las herramientas de la semana reunidas en el Laboratorio 1: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, salida de subestación y cascada), la eólica de La Guajira y los límites de la topología, con un flujo DC de cuatro barras resuelto a mano.
   </div>
 </div>
 
@@ -705,7 +748,7 @@ window.Quarto = {
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="34" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 33;"><span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {grafo<span class="op">,</span> analisisNmenos1<span class="op">,</span> cascadaMotterLai<span class="op">,</span> componentes<span class="op">,</span> centralidades<span class="op">,</span> corteMinimoVertices} <span class="im">from</span> <span class="st">"../simuladores/redes.js"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="34" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 33;"><span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {grafo<span class="op">,</span> analisisNmenos1<span class="op">,</span> cascadaMotterLai<span class="op">,</span> componentes<span class="op">,</span> centralidades<span class="op">,</span> corteMinimoVertices<span class="op">,</span> trazosMapa} <span class="im">from</span> <span class="st">"../simuladores/redes.js"</span></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -732,7 +775,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 80 a 90 minutos</span> <span class="dato">📚 Requiere las páginas 1 a 9 de la semana</span> <span class="dato">🧪 Es el Laboratorio 1 completo y la base de la sección 3 del informe</span></p>
+<p><span class="dato">⏱ 85 a 95 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, el laboratorio en siete pasos, las tres respuestas para Primavera, los tres ejemplos con el tablero (son el Laboratorio 1), los errores comunes con el flujo de cuatro barras, las preguntas y el resumen, unos 65 min; amplían: la exploración libre del tablero, el código plegado y los ejercicios</span> <span class="dato">📚 Requiere las páginas 1 a 9 de la semana, en especial <a href="../semana2/08-robustez-n1.html">robustez y criterio N-1</a> y <a href="../semana2/09-cascadas.html">fallas en cascada</a></span> <span class="dato">🧪 Es el Laboratorio 1 completo y la base de la sección 3 del informe</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -740,8 +783,8 @@ window.Quarto = {
 </div>
 <ul>
 <li>Recorrer en orden los siete pasos del análisis de una red de transmisión y verificar cada uno antes de seguir.</li>
-<li>Responder una pregunta de decisión con tres herramientas (conectividad, N-1 y cascada) y explicar por qué sus respuestas son compatibles.</li>
-<li>Distinguir las métricas globales de las locales al evaluar un proyecto que se conecta a la red, y declarar los límites de la topología.</li>
+<li>Responder una pregunta de decisión con tres herramientas (conectividad, salida de subestación y cascada) y explicar por qué sus respuestas son compatibles.</li>
+<li>Distinguir las métricas globales de las locales al evaluar un proyecto que se conecta a la red, y mostrar con un flujo DC de cuatro barras lo que la topología no ve.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
@@ -753,7 +796,7 @@ window.Quarto = {
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
 <p>La semana empezó con una pregunta de junta directiva: <strong>¿qué pasaría si falla la subestación más conectada del país?</strong> Había dos intuiciones en competencia. Una decía que sería un desastre, porque por ahí pasa todo. La otra decía que no pasaría mucho, porque una subestación con tantas líneas tiene rodeos por todos lados.</p>
-<p>Esta página responde la pregunta con todo lo aprendido, sobre el sistema de transmisión estilizado de 100 subestaciones y 131 líneas que usa el Laboratorio 1. La respuesta final le da la razón a las dos intuiciones, cada una en su pregunta.</p>
+<p>Esta página responde la pregunta con todo lo aprendido, sobre el sistema de transmisión estilizado que usa el Laboratorio 1: la red en servicio en 2026, con 100 subestaciones y 134 líneas. La respuesta final le da la razón a las dos intuiciones, cada una en su pregunta, y muestra que, con cada una de las tres herramientas, la subestación que más daño hace es otra.</p>
 </section>
 <section id="la-intuición-el-laboratorio-en-siete-pasos" class="level2">
 <h2 class="anchored" data-anchor-id="la-intuición-el-laboratorio-en-siete-pasos">2. La intuición: el laboratorio en siete pasos</h2>
@@ -762,49 +805,49 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del archivo de datos a la respuesta</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s2-10-laboratorio-1.svg" class="img-fluid" alt="Paso 1: cargar y verificar los datos."></a></p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s2-10-laboratorio-1.svg" class="img-fluid" loading="lazy" alt="Paso 1: cargar y verificar los datos."></a></p>
 <p><strong>Cargue y verifique.</strong> Antes de calcular, compruebe que toda línea une subestaciones declaradas, que no hay líneas repetidas y que la red es conexa. Una red desconectada en este punto casi siempre es un nombre mal digitado.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s2-10-laboratorio-2.svg" class="img-fluid" alt="Paso 2: visualizar."></a></p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s2-10-laboratorio-2.svg" class="img-fluid" loading="lazy" alt="Paso 2: visualizar."></a></p>
 <p><strong>Dibuje el mapa.</strong> Es la primera verificación visual: regiones en su lugar, el esqueleto de 500 kV de norte a sur y ninguna línea que cruce el país de manera absurda.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s2-10-laboratorio-3.svg" class="img-fluid" alt="Paso 3: centralidades."></a></p>
-<p><strong>Calcule centralidades.</strong> Primavera encabeza las cuatro medidas. Lo que se entrega es la lectura: Ocaña, con tres líneas, supera en intermediación a Sabanalarga, con seis.</p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s2-10-laboratorio-3.svg" class="img-fluid" loading="lazy" alt="Paso 3: centralidades."></a></p>
+<p><strong>Calcule centralidades.</strong> Primavera encabeza el grado, la cercanía y el vector propio, pero en intermediación empata en la práctica con San Carlos, La Virginia y Cerromatoso: las cuatro rondan 0,33. Lo que se entrega es la lectura de las excepciones: Nueva Esperanza, con cuatro líneas, supera en intermediación a Copey y Sabanalarga, con seis, y Ocaña, con tres, a Cuestecitas, con cinco.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s2-10-laboratorio-4.svg" class="img-fluid" alt="Paso 4: distribución de grado y modelos."></a></p>
-<p><strong>Compare con modelos.</strong> Grado medio 2,62, máximo 8 y cola exponencial: la red no tiene hubs gigantes. Su fragilidad, si la tiene, vendrá de nodos que unen regiones.</p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s2-10-laboratorio-4.svg" class="img-fluid" loading="lazy" alt="Paso 4: distribución de grado y modelos."></a></p>
+<p><strong>Compare con modelos.</strong> Grado medio 2,68, máximo 7 y una cola exponencial o más liviana: la red no tiene hubs gigantes. Su fragilidad, si la tiene, vendrá de nodos que unen regiones.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s2-10-laboratorio-5.svg" class="img-fluid" alt="Paso 5: N-1 topológico."></a></p>
-<p><strong>Aplique el N-1.</strong> 20 subestaciones y 22 líneas aíslan parte de la red. La más severa es Sabanalarga, con 1 130 MW de demanda aislada.</p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s2-10-laboratorio-5.svg" class="img-fluid" loading="lazy" alt="Paso 5: salidas de subestaciones y de líneas."></a></p>
+<p><strong>Pruebe las salidas.</strong> Por subestaciones (contingencias N-k de barra), 20 aíslan a otras; la más severa es Sabanalarga, que se lleva 120 MW propios y aísla el anillo de Barranquilla, con 600 MW de demanda y 1 400 MW de generación, una isla que podría sostenerse si controla su frecuencia. Por líneas (cribado del N-1), 22 son puentes y 11 de ellos desconectan demanda.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s2-10-laboratorio-6.svg" class="img-fluid" alt="Paso 6: cascada."></a></p>
-<p><strong>Simule la cascada.</strong> Con <span class="math inline">\alpha = 0{,}5</span>, una cascada que empieza en cualquier subestación deja en promedio el 93 % de la red unida; la que empieza en Primavera, el 27 %.</p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s2-10-laboratorio-6.svg" class="img-fluid" loading="lazy" alt="Paso 6: cascada."></a></p>
+<p><strong>Simule la cascada.</strong> Con <span class="math inline">\alpha = 0{,}5</span>, una cascada que empieza en cualquier subestación deja en promedio el 93 % de la red unida; la que empieza en Primavera, el 48 %, porque parte la red en dos mitades. La peor es la que empieza en Porce III, con el 28 %.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s2-10-laboratorio-7.svg" class="img-fluid" alt="Paso 7: falla aleatoria frente a ataque."></a></p>
-<p><strong>Compare azar y ataque.</strong> Tres retiros dirigidos por intermediación hacen lo que al azar exige retirar la cuarta parte de la red.</p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s2-10-laboratorio-7.svg" class="img-fluid" loading="lazy" alt="Paso 7: falla aleatoria frente a ataque."></a></p>
+<p><strong>Compare azar y ataque.</strong> Áreas de 0,274 al azar, 0,104 con ataque por grado y 0,074 con ataque por intermediación. Los tres primeros retiros dirigidos (San Carlos, La Virginia y Cerromatoso) dejan unido el 96 %, como tres al azar; el cuarto, Sogamoso, baja la red al 56 %, lo que al azar exige 24 retiros, casi la cuarta parte de la red.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-laboratorio-8.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s2-10-laboratorio-8.svg" class="img-fluid" alt="Las siete cifras responden la pregunta de la semana."></a></p>
+<p><a href="../diagramas/svg/s2-10-laboratorio-8.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s2-10-laboratorio-8.svg" class="img-fluid" loading="lazy" alt="Las siete cifras responden la pregunta de la semana."></a></p>
 <p><strong>Reúna las cifras.</strong> Cada paso aporta una cifra verificada; juntas responden la pregunta del decisor.</p>
 </div>
 </div>
 </section>
 <section id="tres-preguntas-tres-herramientas" class="level2">
 <h2 class="anchored" data-anchor-id="tres-preguntas-tres-herramientas">3. Tres preguntas, tres herramientas</h2>
-<div class="definicion caja">
+<div id="definicion-las-tres-respuestas-de-la-semana" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Las tres respuestas de la semana</span>
 </div>
 <p>Ante la salida de un nodo <span class="math inline">i</span>, cada herramienta mide una cosa distinta:</p>
 <ul>
 <li><strong>Conectividad</strong>: la fracción de nodos que sigue en la componente gigante, <span class="math inline">S_i = N_i / n</span>, y quiénes quedan aislados.</li>
-<li><strong>Criterio N-1 topológico</strong>: la demanda y la generación aisladas, en MW, <span class="math inline">D^{\text{ais}}_i = \sum_{j \text{ aislado}} d_j</span> y <span class="math inline">P^{\text{ais}}_i = \sum_{j \text{ aislado}} p_j</span>.</li>
+<li><strong>Salida de subestación</strong> (una contingencia N-k de barra): la demanda propia que se pierde, <span class="math inline">d_i</span>, y la demanda y la generación aisladas, en MW, <span class="math inline">D^{\text{ais}}_i = \sum_{j \text{ aislado}} d_j</span> y <span class="math inline">P^{\text{ais}}_i = \sum_{j \text{ aislado}} p_j</span>, leídas isla por isla para saber cuáles tienen generación suficiente.</li>
 <li><strong>Cascada de Motter y Lai</strong>: la fracción sobreviviente <span class="math inline">G_i(\alpha)</span> después de que la carga se redistribuye, para un barrido de la tolerancia <span class="math inline">\alpha</span>.</li>
 </ul>
 <p>Las dos primeras describen el efecto inmediato de la salida; la tercera, lo que pasa cuando el sistema reacciona.</p>
@@ -814,24 +857,24 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Tres respuestas para Primavera</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-primavera-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s2-10-primavera-1.svg" class="img-fluid" alt="Primavera: 8 líneas y el 48 % de los caminos más cortos."></a></p>
-<p><strong>Plantee.</strong> Primavera tiene 8 líneas y por ella pasa el 48 % de los caminos más cortos del sistema. Cada herramienta le hará una pregunta distinta.</p>
+<p><a href="../diagramas/svg/s2-10-primavera-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s2-10-primavera-1.svg" class="img-fluid" loading="lazy" alt="Primavera: 7 líneas y el 33 % de los caminos más cortos."></a></p>
+<p><strong>Plantee.</strong> Primavera tiene 7 líneas, más que cualquier otra subestación, y por ella pasa el 33 % de los caminos más cortos del sistema, casi lo mismo que por San Carlos, La Virginia y Cerromatoso. Cada herramienta le hará una pregunta distinta.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-primavera-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s2-10-primavera-2.svg" class="img-fluid" alt="Conectividad: el 96 % sigue unido."></a></p>
+<p><a href="../diagramas/svg/s2-10-primavera-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s2-10-primavera-2.svg" class="img-fluid" loading="lazy" alt="Conectividad: el 96 % sigue unido."></a></p>
 <p><strong>Pregunte quién queda aislado.</strong> La red sigue unida salvo tres ramales, Malena, Termocentro y Termosierra: el 96 % de las subestaciones queda en la componente gigante. La segunda intuición tenía razón: con tantas líneas, la red rodea a Primavera.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-primavera-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s2-10-primavera-3.svg" class="img-fluid" alt="N-1: 740 MW de generación y 60 MW de demanda aislados."></a></p>
-<p><strong>Pregunte qué se desconecta.</strong> Se aíslan 60 MW de demanda y 740 MW de generación térmica. Es un daño moderado: Sabanalarga, con dos líneas menos, aísla 1 130 MW de demanda.</p>
+<p><a href="../diagramas/svg/s2-10-primavera-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s2-10-primavera-3.svg" class="img-fluid" loading="lazy" alt="Salida de subestación: 40 MW propios, 60 MW de demanda y 740 MW de generación aislados."></a></p>
+<p><strong>Pregunte qué se pierde de inmediato.</strong> Primavera se lleva sus 40 MW propios y aísla 60 MW de demanda y 740 MW de generación térmica; la isla de Malena y Termosierra tiene 460 MW para sus 60 MW. Es un daño moderado: Sabanalarga, con una línea menos, aísla el anillo de Barranquilla y sus 600 MW de demanda.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-primavera-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s2-10-primavera-4.svg" class="img-fluid" alt="Cascada: G = 0,27."></a></p>
-<p><strong>Pregunte qué pasa cuando la carga busca otro camino.</strong> Los caminos que cruzaban Primavera se redistribuyen hacia Ocaña, Bogotá y Antioquia. Con <span class="math inline">\alpha = 0{,}5</span> la mayor isla reúne 27 subestaciones y 2 600 de los 11 700 MW de demanda; con <span class="math inline">\alpha = 1</span>, 39 subestaciones y 4 620 MW. La primera intuición también tenía razón.</p>
+<p><a href="../diagramas/svg/s2-10-primavera-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s2-10-primavera-4.svg" class="img-fluid" loading="lazy" alt="Cascada: G = 0,48; la red se parte en dos mitades."></a></p>
+<p><strong>Pregunte qué pasa cuando la carga busca otro camino.</strong> Los caminos que cruzaban Primavera se desvían sobre todo hacia Porce III, cuya carga casi se duplica, y hacia Ituango y Chivor. Con <span class="math inline">\alpha = 0{,}5</span> caen ocho subestaciones más y la red se parte en dos: la mayor isla reúne 48 subestaciones y 6 760 de los 11 700 MW de demanda, pero solo 6 034 MW de generación, y la segunda, con la Costa y los Santanderes, tiene 3 934 MW de generación para 3 990 MW de demanda. Ninguna alcanza a servir toda su carga, y las islas con generación suficiente suman apenas 60 MW. Con <span class="math inline">\alpha = 1</span>, solo cae Barranca y queda unido el 94 %. La primera intuición también tenía razón, siempre que las holguras sean estrechas.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s2-10-primavera-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s2-10-primavera-5.svg" class="img-fluid" alt="Tres respuestas compatibles."></a></p>
-<p><strong>Concilie.</strong> Las tres respuestas son compatibles porque responden preguntas distintas. Un informe que diera solo una le ocultaría al decisor las otras dos.</p>
+<p><a href="../diagramas/svg/s2-10-primavera-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s2-10-primavera-5.svg" class="img-fluid" loading="lazy" alt="Tres respuestas compatibles; la salida más severa es Sabanalarga y el peor disparador de cascada, Porce III."></a></p>
+<p><strong>Concilie.</strong> Las tres respuestas son compatibles porque responden preguntas distintas. Un informe que diera solo una le ocultaría al decisor las otras dos. Y el informe útil dice además qué subestación hace más daño con cada herramienta, porque en cada lista de daño la primera es otra: la salida más severa es la de Sabanalarga, y el peor disparador de cascada con <span class="math inline">\alpha = 0{,}5</span> es Porce III, con <span class="math inline">G = 0{,}28</span>.</p>
 </div>
 </div>
 </section>
@@ -841,7 +884,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="las-tres-respuestas-en-ocho-subestaciones">Las tres respuestas en ocho subestaciones</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Norte cumple el N-1 y aun así provoca una cascada</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">La salida de Norte no aísla a nadie y aun así provoca una cascada</span>
 </div>
 <p><strong>Planteamiento.</strong> Vuelva al sistema de ocho subestaciones de la página de robustez (Hidro de 300 MW, Térmica de 150 MW, 300 MW de demanda). Dé las tres respuestas para la salida de Norte, con <span class="math inline">\alpha = 0{,}5</span>.</p>
 </div>
@@ -853,16 +896,16 @@ window.Quarto = {
 <p><strong>Conectividad.</strong> Norte no es punto de articulación: sin Norte, las otras siete subestaciones siguen unidas, <span class="math inline">S = 7/8</span>.</p>
 </div>
 <div class="paso">
-<p><strong>N-1 topológico.</strong> Nadie queda aislado: 0 MW de demanda y 0 MW de generación. La red principal tiene 450 MW para 220 MW de demanda. En la tabla N-1, Norte «cumple».</p>
+<p><strong>Salida de subestación.</strong> Nadie más queda aislado, pero se pierden los 80 MW propios de Norte. La red principal tiene 450 MW para 220 MW de demanda.</p>
 </div>
 <div class="paso">
 <p><strong>Cargas antes y después.</strong> En la red intacta, Oeste está en 3 caminos más cortos; con <span class="math inline">\alpha = 0{,}5</span>, su capacidad es 4,5. Sin Norte, todos los caminos de Hidro hacia las otras cinco subestaciones pasan por Oeste: su carga sube a 5.</p>
 </div>
 <div class="paso">
-<p><strong>Cascada.</strong> Como <span class="math inline">5 &gt; 4{,}5</span>, Oeste cae en la primera ronda y deja aislada a Hidro con sus 300 MW. En lo que queda (Sur, Este, Pueblo, Vereda y Térmica) las cargas bajan y la cascada se detiene. <span class="math inline">G = 5/8 = 0{,}625</span>, con 150 MW de generación para 150 MW de demanda.</p>
+<p><strong>Cascada.</strong> Como <span class="math inline">5 &gt; 4{,}5</span>, Oeste cae en la primera ronda y deja aislada a Hidro con sus 300 MW. En lo que queda (Sur, Este, Pueblo, Vereda y Térmica) las cargas bajan y la cascada se detiene. <span class="math inline">G = 5/8 = 0{,}625</span>, y esa isla tiene 150 MW de generación para 150 MW de demanda, sin reserva.</p>
 </div>
 <div class="paso">
-<p><strong>Concilie.</strong> Norte pasa las dos primeras pruebas y falla la tercera. Con <span class="math inline">\alpha = 1</span>, la capacidad de Oeste sube a 6 y no hay cascada. La lectura para el planeador: la línea Hidro-Oeste es la que queda sin respaldo cuando sale Norte, y su holgura decide el resultado.</p>
+<p><strong>Concilie.</strong> Norte no aísla a nadie, se lleva solo su demanda propia y aun así desata una cascada. Con <span class="math inline">\alpha = 1</span>, la capacidad de Oeste sube a 6 y no hay cascada. La lectura para el planeador: la línea Hidro-Oeste es la que queda sin respaldo cuando sale Norte, y su holgura decide el resultado.</p>
 </div>
 </div>
 </section>
@@ -870,9 +913,9 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="san-carlos-con-el-tablero-del-laboratorio">San Carlos con el tablero del laboratorio</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Las tres respuestas para la segunda subestación más central</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Las tres respuestas para la subestación con más intermediación</span>
 </div>
-<p><strong>Planteamiento.</strong> San Carlos es la subestación con la segunda mayor intermediación del sistema estilizado. Use el tablero para dar sus tres respuestas con <span class="math inline">\alpha = 0{,}5</span>, 1 y 2.</p>
+<p><strong>Planteamiento.</strong> San Carlos tiene la mayor intermediación del sistema estilizado, 0,330, en un empate práctico con La Virginia, Cerromatoso y Primavera. Use el tablero para dar sus tres respuestas con <span class="math inline">\alpha = 0{,}5</span>, 1 y 2.</p>
 </div>
 <div id="pred-sancarlos" class="prediccion caja">
 <div class="caja-titulo">
@@ -883,10 +926,10 @@ window.Quarto = {
 <p>Nada: si su salida no aísla a nadie, tampoco puede provocar una cascada.</p>
 </div>
 <div class="opcion">
-<p>Una cascada que deja en pie cerca del 90 % de la red, como el promedio.</p>
+<p>Que deje en pie cerca del 90 % de la red, como el promedio de las subestaciones.</p>
 </div>
 <div class="opcion">
-<p>Una cascada que parte la red y deja una isla mayor con menos de la mitad de las subestaciones.</p>
+<p>Que parta la red y deje una isla mayor con cerca de la mitad de las subestaciones.</p>
 </div>
 </div>
 <div class="simulador caja">
@@ -972,9 +1015,12 @@ window.Quarto = {
 <span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> gigante <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(<span class="fu">componentes</span>(cascada<span class="op">.</span><span class="at">grafo_final</span>)[<span class="dv">0</span>] <span class="op">??</span> [])<span class="op">;</span></span>
 <span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ronda <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(cascada<span class="op">.</span><span class="at">fallas_por_ronda</span><span class="op">.</span><span class="fu">flatMap</span>((r<span class="op">,</span> k) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="fu">map</span>((x) <span class="kw">=&gt;</span> [x<span class="op">,</span> k])))<span class="op">;</span></span>
 <span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> demandaIsla <span class="op">=</span> datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> gigante<span class="op">.</span><span class="fu">has</span>(n<span class="op">.</span><span class="at">id</span>))<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> n) <span class="kw">=&gt;</span> a <span class="op">+</span> n<span class="op">.</span><span class="at">demanda_mw</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> corte <span class="op">=</span> eolicaT <span class="op">?</span> <span class="fu">corteMinimoVertices</span>(grafoT<span class="op">,</span> [<span class="st">"Windpeshi"</span><span class="op">,</span> <span class="st">"Colectora"</span>]<span class="op">,</span> [<span class="st">"Primavera"</span>]) <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {fila<span class="op">,</span> central<span class="op">,</span> cascada<span class="op">,</span> gigante<span class="op">,</span> ronda<span class="op">,</span> demandaIsla<span class="op">,</span> corte<span class="op">,</span> <span class="dt">criticas</span><span class="op">:</span> n1<span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">nodos_aislados</span> <span class="op">&gt;</span> <span class="dv">0</span>)<span class="op">.</span><span class="at">length</span>}<span class="op">;</span></span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> atributo <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">.</span><span class="at">id</span><span class="op">,</span> n]))<span class="op">;</span></span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> conGeneracion <span class="op">=</span> <span class="fu">componentes</span>(cascada<span class="op">.</span><span class="at">grafo_final</span>)<span class="op">.</span><span class="fu">map</span>((c) <span class="kw">=&gt;</span> ({<span class="dt">d</span><span class="op">:</span> c<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> x) <span class="kw">=&gt;</span> a <span class="op">+</span> atributo[x]<span class="op">.</span><span class="at">demanda_mw</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">,</span></span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>    <span class="dt">g</span><span class="op">:</span> c<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> x) <span class="kw">=&gt;</span> a <span class="op">+</span> atributo[x]<span class="op">.</span><span class="at">generacion_mw</span><span class="op">,</span> <span class="dv">0</span>)}))<span class="op">.</span><span class="fu">filter</span>((i) <span class="kw">=&gt;</span> i<span class="op">.</span><span class="at">d</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> i<span class="op">.</span><span class="at">g</span> <span class="op">&gt;=</span> i<span class="op">.</span><span class="at">d</span>)<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> i) <span class="kw">=&gt;</span> a <span class="op">+</span> i<span class="op">.</span><span class="at">d</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> corte <span class="op">=</span> eolicaT <span class="op">?</span> <span class="fu">corteMinimoVertices</span>(grafoT<span class="op">,</span> [<span class="st">"Windpeshi"</span><span class="op">,</span> <span class="st">"Colectora"</span>]<span class="op">,</span> [<span class="st">"Primavera"</span>]) <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {fila<span class="op">,</span> central<span class="op">,</span> cascada<span class="op">,</span> gigante<span class="op">,</span> ronda<span class="op">,</span> demandaIsla<span class="op">,</span> conGeneracion<span class="op">,</span> corte<span class="op">,</span> <span class="dt">criticas</span><span class="op">:</span> n1<span class="op">.</span><span class="fu">filter</span>((f) <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">nodos_aislados</span> <span class="op">&gt;</span> <span class="dv">0</span>)<span class="op">.</span><span class="at">length</span>}<span class="op">;</span></span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
@@ -985,21 +1031,20 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="263" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 262;"><span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">560</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">480</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">24</span><span class="op">,</span> <span class="dt">aspectRatio</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb9-265"><a href="#cb9-265" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
-<span id="cb9-266"><a href="#cb9-266" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"sale"</span><span class="op">,</span> <span class="st">"aislada por la salida"</span><span class="op">,</span> <span class="st">"cae en la cascada"</span><span class="op">,</span> <span class="st">"isla mayor al final"</span><span class="op">,</span> <span class="st">"otra isla"</span>]<span class="op">,</span></span>
-<span id="cb9-267"><a href="#cb9-267" aria-hidden="true" tabindex="-1"></a>    <span class="dt">range</span><span class="op">:</span> [<span class="st">"#000"</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="st">"#BBB"</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb9-268"><a href="#cb9-268" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb9-269"><a href="#cb9-269" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(datosT<span class="op">.</span><span class="at">aristas</span><span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">a</span>)<span class="op">.</span><span class="at">lon</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">a</span>)<span class="op">.</span><span class="at">lat</span><span class="op">,</span></span>
-<span id="cb9-270"><a href="#cb9-270" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">b</span>)<span class="op">.</span><span class="at">lon</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> e<span class="op">.</span><span class="at">b</span>)<span class="op">.</span><span class="at">lat</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#DDD"</span>})<span class="op">,</span></span>
-<span id="cb9-271"><a href="#cb9-271" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(datosT<span class="op">.</span><span class="at">nodos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Windpeshi"</span> <span class="op">||</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Colectora"</span> <span class="op">?</span> <span class="dv">7</span> <span class="op">:</span> <span class="fl">4.5</span>)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span></span>
-<span id="cb9-272"><a href="#cb9-272" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleT <span class="op">?</span> <span class="st">"sale"</span> <span class="op">:</span> tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">aislados</span><span class="op">.</span><span class="fu">includes</span>(n<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> <span class="st">"aislada por la salida"</span></span>
-<span id="cb9-273"><a href="#cb9-273" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> tableroT<span class="op">.</span><span class="at">ronda</span>[n<span class="op">.</span><span class="at">id</span>] <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">?</span> <span class="st">"cae en la cascada"</span> <span class="op">:</span> tableroT<span class="op">.</span><span class="at">gigante</span><span class="op">.</span><span class="fu">has</span>(n<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> <span class="st">"isla mayor al final"</span> <span class="op">:</span> <span class="st">"otra isla"</span>)})<span class="op">,</span></span>
-<span id="cb9-274"><a href="#cb9-274" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleT <span class="op">||</span> (eolicaT <span class="op">&amp;&amp;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Windpeshi"</span> <span class="op">||</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Colectora"</span>)))<span class="op">,</span></span>
-<span id="cb9-275"><a href="#cb9-275" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"id"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">12</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span>})<span class="op">,</span></span>
-<span id="cb9-276"><a href="#cb9-276" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb9-277"><a href="#cb9-277" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="266" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 265;"><span id="cb9-266"><a href="#cb9-266" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-267"><a href="#cb9-267" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">560</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">480</span><span class="op">,</span> <span class="dt">inset</span><span class="op">:</span> <span class="dv">24</span><span class="op">,</span> <span class="dt">aspectRatio</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb9-268"><a href="#cb9-268" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb9-269"><a href="#cb9-269" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"sale"</span><span class="op">,</span> <span class="st">"aislada por la salida"</span><span class="op">,</span> <span class="st">"cae en la cascada"</span><span class="op">,</span> <span class="st">"isla mayor al final"</span><span class="op">,</span> <span class="st">"otra isla"</span>]<span class="op">,</span></span>
+<span id="cb9-270"><a href="#cb9-270" aria-hidden="true" tabindex="-1"></a>    <span class="dt">range</span><span class="op">:</span> [<span class="st">"#000"</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="st">"#BBB"</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb9-271"><a href="#cb9-271" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-272"><a href="#cb9-272" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(<span class="fu">trazosMapa</span>(datosT)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">z</span><span class="op">:</span> <span class="st">"clave"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#DDD"</span>})<span class="op">,</span></span>
+<span id="cb9-273"><a href="#cb9-273" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(datosT<span class="op">.</span><span class="at">nodos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Windpeshi"</span> <span class="op">||</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Colectora"</span> <span class="op">?</span> <span class="dv">7</span> <span class="op">:</span> <span class="fl">4.5</span>)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span></span>
+<span id="cb9-274"><a href="#cb9-274" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> (n) <span class="kw">=&gt;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleT <span class="op">?</span> <span class="st">"sale"</span> <span class="op">:</span> tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">aislados</span><span class="op">.</span><span class="fu">includes</span>(n<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> <span class="st">"aislada por la salida"</span></span>
+<span id="cb9-275"><a href="#cb9-275" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> tableroT<span class="op">.</span><span class="at">ronda</span>[n<span class="op">.</span><span class="at">id</span>] <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">?</span> <span class="st">"cae en la cascada"</span> <span class="op">:</span> tableroT<span class="op">.</span><span class="at">gigante</span><span class="op">.</span><span class="fu">has</span>(n<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> <span class="st">"isla mayor al final"</span> <span class="op">:</span> <span class="st">"otra isla"</span>)})<span class="op">,</span></span>
+<span id="cb9-276"><a href="#cb9-276" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">filter</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleT <span class="op">||</span> (eolicaT <span class="op">&amp;&amp;</span> (n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Windpeshi"</span> <span class="op">||</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="st">"Colectora"</span>)))<span class="op">,</span></span>
+<span id="cb9-277"><a href="#cb9-277" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">x</span><span class="op">:</span> <span class="st">"lon"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"lat"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"id"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">12</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span>})<span class="op">,</span></span>
+<span id="cb9-278"><a href="#cb9-278" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-279"><a href="#cb9-279" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="expression">
@@ -1010,15 +1055,16 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="282" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 281;"><span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Grado e intermediación&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">central</span><span class="op">.</span><span class="at">grado</span><span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(tableroT<span class="op">.</span><span class="at">central</span><span class="op">.</span><span class="at">intermediacion</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Conectividad: sigue unido&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(<span class="dv">100</span> <span class="op">*</span> tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">fraccion_gigante</span>)<span class="sc">}</span><span class="vs"> %&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;N-1: demanda y generación aisladas&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">demanda_aislada_mw</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">generacion_aislada_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cascada: fallas por ronda y G&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">cascada</span><span class="op">.</span><span class="at">fallas_por_ronda</span><span class="op">.</span><span class="fu">map</span>((r) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">length</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(tableroT<span class="op">.</span><span class="at">cascada</span><span class="op">.</span><span class="at">fraccion_sobreviviente</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cascada: demanda en la isla mayor&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">demandaIsla</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subestaciones que fallan el N-1&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">criticas</span><span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span>datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Corte de vértices eólica-Primavera&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">corte</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">corte</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">corte</span><span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> <span class="st">"eólica sin conectar"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="284" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 283;"><span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Grado e intermediación&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">central</span><span class="op">.</span><span class="at">grado</span><span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">3</span>)(tableroT<span class="op">.</span><span class="at">central</span><span class="op">.</span><span class="at">intermediacion</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Conectividad: sigue unido&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(<span class="dv">100</span> <span class="op">*</span> tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">fraccion_gigante</span>)<span class="sc">}</span><span class="vs"> %&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Salida: demanda propia y generación propia perdidas&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">demanda_propia_mw</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">find</span>((n) <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">id</span> <span class="op">===</span> saleT)<span class="op">.</span><span class="at">generacion_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Salida: demanda y generación aisladas&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">demanda_aislada_mw</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">fila</span><span class="op">.</span><span class="at">generacion_aislada_mw</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cascada: fallas por ronda y G&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">cascada</span><span class="op">.</span><span class="at">fallas_por_ronda</span><span class="op">.</span><span class="fu">map</span>((r) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">length</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(tableroT<span class="op">.</span><span class="at">cascada</span><span class="op">.</span><span class="at">fraccion_sobreviviente</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cascada: demanda en la isla mayor y en islas con generación suficiente&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">demandaIsla</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(tableroT<span class="op">.</span><span class="at">conGeneracion</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Subestaciones cuya salida aísla a otras&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">criticas</span><span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span>datosT<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Corte de vértices eólica-Primavera&lt;b&gt;</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">corte</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">corte</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>tableroT<span class="op">.</span><span class="at">corte</span><span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> <span class="st">"eólica sin conectar"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="expression">
@@ -1027,7 +1073,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Grafo estilizado <code>mise_sd.redes.stn_estilizado()</code>, con y sin <code>incluir_eolica_guajira=True</code> (Windpeshi, 205 MW, y Colectora, 1 050 MW, ambas conectadas a Cuestecitas); demanda y generación sintéticas con fines didácticos. Métricas calculadas en el navegador con <code>simuladores/redes.js</code>, que reproduce <code>mise_sd.redes</code>. Cargas de la cascada topológicas, no flujos de potencia.</p>
+<p>Grafo estilizado <code>mise_sd.redes.stn_estilizado()</code> de la red en servicio en 2026, con y sin <code>incluir_eolica_guajira=True</code> (Windpeshi, 205 MW, y Colectora, 1 050 MW, ambas conectadas a Cuestecitas, más el tramo Cuestecitas–La Loma de la obra Colectora); demanda y generación sintéticas con fines didácticos. Métricas calculadas en el navegador con la réplica en JavaScript de <code>mise_sd.redes</code>. Cargas de la cascada topológicas, no flujos de potencia; la demanda de las islas con generación suficiente es una cota superior de lo que podría seguir en servicio.</p>
 </div>
 </div>
 <div class="pasos caja">
@@ -1035,13 +1081,13 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el tablero para San Carlos</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-sancarlos"></span>. La respuesta es la C. San Carlos no aísla a nadie (el 99 % sigue unido y 0 MW quedan aislados), pero por ella pasa el 39 % de los caminos más cortos, y con <span class="math inline">\alpha = 0{,}5</span> fallan 15 subestaciones en la primera ronda y 14 en la segunda: <span class="math inline">G = 0{,}40</span> y la isla mayor atiende 3 650 MW.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-sancarlos">(la opción que eligió arriba)</span>. Lo esperado era que partiera la red. San Carlos no aísla a nadie (el 99 % sigue unido y 0 MW quedan aislados) y su salida se lleva sus 1 240 MW de generación, que la reserva debe cubrir. Por ella pasa el 33 % de los caminos más cortos, y con <span class="math inline">\alpha = 0{,}5</span> fallan 13 subestaciones en la primera ronda y 6 en la segunda: <span class="math inline">G = 0{,}52</span>, la isla mayor reúne 5 650 MW de demanda y las islas con generación suficiente, 6 010 MW.</p>
 </div>
 <div class="paso">
-<p><strong>Suba la tolerancia.</strong> Con <span class="math inline">\alpha = 1</span> fallan 14 y 9 subestaciones, <span class="math inline">G = 0{,}41</span> y otra vez 3 650 MW: duplicar la holgura casi no cambia el resultado. Con <span class="math inline">\alpha = 2</span> la cascada tiene tres rondas (8, 1 y 6 fallas), <span class="math inline">G = 0{,}75</span> y se atienden 8 910 MW.</p>
+<p><strong>Suba la tolerancia.</strong> Con <span class="math inline">\alpha = 1</span> la cascada empeora: dura tres rondas (11, 4 y 7 fallas), <span class="math inline">G = 0{,}44</span>, la isla mayor reúne 4 330 MW y las islas con generación suficiente, 4 740 MW. Con más holgura, Nueva Esperanza y Tesalia resisten la primera ronda, la red sigue casi unida y los caminos desviados más que duplican la carga de Bacatá y Alférez, que caen con ellas en la segunda. Con <span class="math inline">\alpha = 2</span> hay tres rondas (9, 3 y 5 fallas), <span class="math inline">G = 0{,}72</span>, la isla mayor reúne 8 790 MW y las islas con generación suficiente, 9 080 MW.</p>
 </div>
 <div class="paso">
-<p><strong>Redacte.</strong> «Si falla San Carlos, la red sigue completa y ninguna demanda queda aislada de inmediato. Sin embargo, por San Carlos pasa el 39 % de los caminos más cortos de la red; con una holgura del 50 % o del 100 %, la redistribución deja al sistema partido en islas y la mayor atiende menos de un tercio de la demanda. Con una holgura del 200 %, la red conserva tres cuartas partes de sus nodos. Estas cifras son topológicas y deben confirmarse con flujos de carga.»</p>
+<p><strong>Redacte.</strong> «Si sale San Carlos, el sistema pierde 1 240 MW de generación, pero la red sigue completa y ninguna demanda queda aislada de inmediato. Sin embargo, por San Carlos pasa el 33 % de los caminos más cortos de la red; con una holgura del 50 % o del 100 %, la redistribución parte el sistema en islas, y las que tienen generación suficiente reúnen entre el 41 y el 51 % de la demanda. Con una holgura del 200 %, la red conserva el 72 % de sus nodos. Estas cifras son topológicas y deben confirmarse con flujos de carga.»</p>
 </div>
 </div>
 </section>
@@ -1051,21 +1097,21 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Qué le hace al sistema conectar 1 255 MW eólicos en Cuestecitas?</span>
 </div>
-<p><strong>Planteamiento.</strong> Con el parámetro <code>incluir_eolica_guajira=True</code>, el sistema estilizado agrega Windpeshi (205 MW) y Colectora (1 050 MW), ambas conectadas a Cuestecitas. Compare las métricas globales y las locales antes y después de conectarlas.</p>
+<p><strong>Planteamiento.</strong> La red base es la de 2026, en la que Cuestecitas sale al 500 kV por un solo corredor, Copey–Cuestecitas, en servicio desde el 17 de octubre de 2025 (El Tiempo, 2025). La obra Colectora, con entrada prevista para abril de 2027 (Superservicios, 2026), es una obra planeada: <code>incluir_planeadas=True</code> la agrega como subestación sin generación, junto con las demás obras en construcción. Con el parámetro <code>incluir_eolica_guajira=True</code>, en cambio, el sistema estilizado agrega Windpeshi (205 MW), con su línea a Cuestecitas, y Colectora (1 050 MW), con los dos corredores de su obra, Colectora–Cuestecitas y Cuestecitas–La Loma: 102 subestaciones y 137 líneas. Compare las métricas globales y las locales antes y después de conectar la eólica.</p>
 </div>
 <div id="pred-eolica" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>El área bajo la curva de robustez ante falla aleatoria era 0,266. ¿Cuánto vale con la eólica conectada?</p>
-<div class="opcion">
-<p>Casi lo mismo.</p>
-</div>
+<p>El área bajo la curva de robustez ante falla aleatoria de la red base es 0,272. ¿Cuánto vale con la eólica conectada?</p>
 <div class="opcion">
 <p>Mucho menos: 1 255 MW nuevos en un solo punto debilitan la red.</p>
 </div>
 <div class="opcion">
-<p>Mucho más: dos subestaciones y dos líneas nuevas refuerzan la red.</p>
+<p>Casi lo mismo, dentro del ruido de la propia medida.</p>
+</div>
+<div class="opcion">
+<p>Mucho más: dos subestaciones y tres líneas nuevas refuerzan la red.</p>
 </div>
 </div>
 <p>Active «Eólica de La Guajira conectada» en el tablero y elija Cuestecitas.</p>
@@ -1074,13 +1120,13 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Global frente a local</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-eolica"></span>. La respuesta es la A: el área pasa de 0,266 a 0,264 (200 repeticiones, semilla 7), y el número de subestaciones que fallan el N-1 sigue en 20, porque Cuestecitas ya era punto de articulación por los ramales de Riohacha y Maicao.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-eolica">(la opción que eligió arriba)</span>. Lo esperado era casi lo mismo: el área pasa de 0,272 a 0,271 (200 repeticiones, semilla 7), una diferencia menor que el ruido de la medida, porque 20 semillas dan entre 0,267 y 0,276 en la red base. Por la misma razón, el 0,274 de la página 8 y el 0,272 de aquí son la misma curva con semillas distintas. El número de subestaciones cuya salida aísla a otras sigue en 20, porque Cuestecitas ya era punto de articulación por los ramales de Riohacha y Maicao.</p>
 </div>
 <div class="paso">
-<p><strong>Mire Cuestecitas.</strong> Pasa de grado 5 a 7 y su intermediación sube de 0,064 a 0,101. Su salida, que antes aislaba 190 MW de demanda, ahora aísla además 1 255 MW de generación, más que cualquier otra subestación del norte salvo Sabanalarga.</p>
+<p><strong>Mire Cuestecitas.</strong> Pasa de grado 5 a 8 y su intermediación sube de 0,058 a 0,099. Su salida se lleva sus 90 MW propios y, si antes aislaba 190 MW de demanda, ahora aísla además 1 255 MW de generación, más que cualquier otra subestación del norte salvo Sabanalarga.</p>
 </div>
 <div class="paso">
-<p><strong>Cuente el corte.</strong> El corte mínimo de vértices entre los parques y Primavera tiene un solo elemento: Cuestecitas. Toda la energía eólica depende de una subestación.</p>
+<p><strong>Cuente el corte.</strong> La obra Colectora le da a Cuestecitas una segunda salida al 500 kV, hacia La Loma, pero los dos parques llegan solo a Cuestecitas. Por eso el corte mínimo de vértices entre los parques y Primavera tiene un solo elemento, Cuestecitas, y toda la energía eólica depende de esa subestación.</p>
 </div>
 <div class="paso">
 <p><strong>Saque la lección de método.</strong> Un indicador agregado de robustez puede quedar igual mientras el riesgo se concentra en un punto, porque la red tiene cien nodos y el problema está en uno. Para un proyecto que conecta generación nueva, las cifras relevantes son las locales: cuánta generación depende de cada subestación y cuántos elementos separan al proyecto del resto del sistema.</p>
@@ -1099,10 +1145,10 @@ window.Quarto = {
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>«Primavera cumple el criterio N-1 salvo por tres ramales: su salida no es un riesgo sistémico.»</p>
+<p>«La salida de Primavera solo aísla tres ramales: no es un riesgo sistémico.»</p>
 </div>
 <div class="bien">
-<p>«Su salida aísla 60 MW de demanda y 740 MW de generación. Además, por ella pasa el 48 % de los caminos más cortos: con holguras del 50 %, la redistribución puede dejar la mayor isla con 2 600 de 11 700 MW. Las cifras son topológicas y deben confirmarse con flujos de carga.»</p>
+<p>«Su salida se lleva 40 MW propios y aísla 60 MW de demanda, en una isla con generación propia, y 740 MW de generación. Además, por ella pasa el 33 % de los caminos más cortos: con holguras del 50 %, la redistribución puede partir la red en dos mitades, ninguna con generación para toda su carga (la mayor, 6 034 MW para 6 760 MW). Las cifras son topológicas y deben confirmarse con flujos de carga.»</p>
 </div>
 </div>
 </div>
@@ -1110,7 +1156,82 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Olvidar que la potencia no sigue caminos más cortos</span>
 </div>
-<p>En corriente alterna, la potencia se reparte por todos los caminos según las impedancias (leyes de Kirchhoff). Una línea que no pertenece a ningún camino más corto puede ir cargada al límite. Hines, Cotilla-Sánchez y Blumsack (2010) encontraron que la vulnerabilidad topológica y la simulada con flujos apenas se correlacionan. El paso siguiente de un estudio real es un flujo de carga.</p>
+<p>En corriente alterna, la potencia se reparte por todos los caminos según las reactancias (leyes de Kirchhoff). Una línea que no pertenece a ningún camino más corto puede ir cargada al límite, y una red que pasa el cribado topológico puede fallar el N-1 por sobrecarga. Hines, Cotilla-Sánchez y Blumsack (2010) encontraron que la vulnerabilidad topológica y la simulada con flujos apenas se correlacionan. El paso siguiente de un estudio real es un flujo de carga, al menos en su versión DC, que el visor siguiente resuelve a mano.</p>
+</div>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Kirchhoff frente al camino más corto en cuatro barras</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-10-flujo-dc-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s2-10-flujo-dc-1.svg" class="img-fluid" loading="lazy" alt="Planta y Ciudad unidas por una línea directa de reactancia 0,40 y por dos rutas de dos líneas, por Norte (0,10 y 0,10) y por Sur (0,20 y 0,20)."></a></p>
+<p><strong>Plantee la red.</strong> Una planta inyecta 300 MW que consume una ciudad, por tres rutas: una línea directa larga (<span class="math inline">x = 0{,}40</span>), dos líneas cortas por Norte (<span class="math inline">0{,}10</span> cada una) y dos por Sur (<span class="math inline">0{,}20</span> cada una), en por unidad sobre 100 MVA. Límites: 200 MW la directa, 250 MW las de Norte y 120 MW las de Sur.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-10-flujo-dc-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s2-10-flujo-dc-2.svg" class="img-fluid" loading="lazy" alt="El camino más corto en saltos es la directa; en reactancia, la ruta por Norte."></a></p>
+<p><strong>Pregunte a la topología.</strong> En saltos, el camino más corto es la directa, y Norte y Sur tienen intermediación cero. En reactancia, el más corto es la ruta por Norte, con <span class="math inline">0{,}20</span>. Cualquiera de las dos lecturas mandaría los 300 MW por una sola ruta, y las dos violarían un límite.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-10-flujo-dc-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s2-10-flujo-dc-3.svg" class="img-fluid" loading="lazy" alt="Reactancia y susceptancia de cada ruta: Norte 0,20 y 5; directa 0,40 y 2,5; Sur 0,40 y 2,5."></a></p>
+<p><strong>Escriba el flujo DC.</strong> Con tensiones cercanas a 1 p.u., resistencias despreciables y ángulos pequeños, el flujo de cada línea es</p>
+<p><span class="math display">F_{ij} = \frac{\theta_i - \theta_j}{x_{ij}} \quad [\text{p.u.}; \times 100 \text{ MVA} \to \text{MW}],</span></p>
+<p>y en cada barra los flujos que salen suman la inyección. Las reactancias en serie se suman: <span class="math inline">0{,}40</span> la directa, <span class="math inline">0{,}20</span> Norte y <span class="math inline">0{,}40</span> Sur.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-10-flujo-dc-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../diagramas/svg/s2-10-flujo-dc-4.svg" class="img-fluid" loading="lazy" alt="Flujos con la red completa: 75 MW por la directa, 150 MW por Norte y 75 MW por Sur."></a></p>
+<p><strong>Reparta por susceptancias.</strong> Las tres rutas sienten la misma diferencia de ángulos, así que cada una lleva un flujo proporcional a <span class="math inline">b = 1/x</span>: 2,5, 5 y 2,5, que suman 10. Resultado: 75, 150 y 75 MW, con <span class="math inline">\theta_{\text{Planta}} - \theta_{\text{Ciudad}} = 3{,}0/10 = 0{,}30</span> rad. Norte, con intermediación cero, lleva la mitad.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s2-10-flujo-dc-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../diagramas/svg/s2-10-flujo-dc-5.svg" class="img-fluid" loading="lazy" alt="Sin la línea Planta-Norte, la directa y la ruta Sur llevan 150 MW cada una; Sur supera su límite."></a></p>
+<p><strong>Saque una línea y use el LODF.</strong> Si sale la línea <span class="math inline">k</span>, que llevaba <span class="math inline">F_k^0</span>, cada línea <span class="math inline">l</span> cambia en <span class="math inline">\Delta F_l = \mathrm{LODF}_{l,k}\, F_k^0</span>. Sin Planta-Norte, sus 150 MW se reparten entre la directa y Sur según sus susceptancias, 2,5 y 2,5: <span class="math inline">\mathrm{LODF} = 0{,}5</span>. La directa queda en 150 MW (75 % de su límite) y Sur en 150 MW, el 125 % de sus 120 MW.</p>
+</div>
+<div class="paso">
+<p><strong>Compare con el cribado.</strong> Ninguna de las cinco líneas es un puente, así que el cribado topológico decía «pasa» para todas. El flujo DC encuentra que las dos líneas de Norte, justo las de la ruta que la intermediación ignora, violan el N-1. Si sale la directa, sus 75 MW se reparten 2/3 a Norte y 1/3 a Sur: 200 y 100 MW, dentro de los límites.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="El mismo flujo DC en Python, como en las notas">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>El mismo flujo DC en Python, como en las notas
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="5f2de851" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>lineas <span class="op">=</span> [(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.10</span>), (<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.10</span>), (<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.40</span>), (<span class="dv">0</span>, <span class="dv">3</span>, <span class="fl">0.20</span>), (<span class="dv">3</span>, <span class="dv">2</span>, <span class="fl">0.20</span>)]  <span class="co"># Planta 0, Norte 1, Ciudad 2, Sur 3</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>inyeccion <span class="op">=</span> np.array([<span class="fl">3.0</span>, <span class="fl">0.0</span>, <span class="op">-</span><span class="fl">3.0</span>, <span class="fl">0.0</span>])          <span class="co"># p.u. sobre 100 MVA</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> flujos(inyeccion, lineas):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> np.zeros((<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j, x <span class="kw">in</span> lineas:</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        B[[i, j], [i, j]] <span class="op">+=</span> <span class="dv">1</span> <span class="op">/</span> x</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        B[i, j] <span class="op">-=</span> <span class="dv">1</span> <span class="op">/</span> x<span class="op">;</span> B[j, i] <span class="op">-=</span> <span class="dv">1</span> <span class="op">/</span> x</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> np.zeros(<span class="dv">4</span>)                              <span class="co"># Planta es la referencia</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    theta[<span class="dv">1</span>:] <span class="op">=</span> np.linalg.solve(B[<span class="dv">1</span>:, <span class="dv">1</span>:], inyeccion[<span class="dv">1</span>:])</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array([(theta[i] <span class="op">-</span> theta[j]) <span class="op">/</span> x <span class="cf">for</span> i, j, x <span class="kw">in</span> lineas])</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> flujos(inyeccion, lineas) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">0</span>                                                <span class="co"># sale Planta-Norte</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>i, j, _ <span class="op">=</span> lineas[k]</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>ptdf <span class="op">=</span> flujos(np.eye(<span class="dv">4</span>)[i] <span class="op">-</span> np.eye(<span class="dv">4</span>)[j], lineas)   <span class="co"># transferencia de i a j</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>lodf <span class="op">=</span> ptdf <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> ptdf[k])</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>lodf[k] <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>                                         <span class="co"># la línea que sale pierde todo</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Flujos [MW]:"</span>, np.<span class="bu">round</span>(base, <span class="dv">1</span>))</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"LODF:"</span>, np.<span class="bu">round</span>(lodf, <span class="dv">2</span>))</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tras la salida [MW]:"</span>, np.<span class="bu">round</span>(base <span class="op">+</span> lodf <span class="op">*</span> base[k], <span class="dv">1</span>) <span class="op">+</span> <span class="fl">0.0</span>)   <span class="co"># + 0.0 evita el «-0.»</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Flujos [MW]: [150. 150.  75.  75.  75.]
+LODF: [-1.  -1.   0.5  0.5  0.5]
+Tras la salida [MW]: [  0.   0. 150. 150. 150.]</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
@@ -1122,7 +1243,7 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Juzgar un proyecto por métricas globales</span>
 </div>
-<p>Con la eólica de La Guajira, el área de robustez pasa de 0,266 a 0,264 y el corte de vértices de los parques es 1. Reportar solo la primera cifra ocultaría el punto único de falla. Puede comprobarlo en el tablero.</p>
+<p>Con la eólica de La Guajira, el área de robustez pasa de 0,272 a 0,271, una diferencia dentro del ruido de la medida, y el corte de vértices de los parques es 1. Reportar solo la primera cifra ocultaría el punto único de falla. Puede comprobarlo en el tablero.</p>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -1131,32 +1252,36 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Una subestación cumple el N-1 topológico. ¿Qué puede concluir sobre una cascada que empiece en ella?</p>
+<p>La salida de una subestación no aísla a ninguna otra. ¿Qué puede concluir sobre una cascada que empiece en ella?</p>
+<div class="opcion">
+<p>Que no puede provocar una cascada, porque nadie queda aislado.</p>
+<p><span class="porque">Revise el ejemplo de Norte en ocho subestaciones.</span></p>
+</div>
 <div class="opcion" data-correcta="si">
-<p>Nada todavía: la cascada depende de la carga que pasa por ella y de la holgura de las demás.</p>
-<p><span class="porque">Correcto: Norte y San Carlos cumplen el N-1 y provocan cascadas.</span></p>
+<p>Nada todavía: depende de su carga y de la holgura de las demás.</p>
+<p><span class="porque">Correcto: Norte y San Carlos no aíslan a nadie y provocan cascadas.</span></p>
 </div>
 <div class="opcion">
-<p>Que no puede provocar una cascada.</p>
-<p><span class="porque">Revise el ejemplo de Norte en ocho subestaciones.</span></p>
+<p>Que la cascada será pequeña, porque la red tiene rodeos.</p>
+<p><span class="porque">Los rodeos son justamente por donde se redistribuye la carga; revise San Carlos en el tablero.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Qué herramienta responde «qué pasa cuando la carga busca otro camino»?</p>
+<p>La junta preguntó qué pasaría si falla la subestación más conectada. Además de responder por ella, ¿qué debe agregar el informe?</p>
 <div class="opcion" data-correcta="si">
-<p>La cascada de Motter y Lai.</p>
-<p><span class="porque">Correcto.</span></p>
+<p>Qué subestación hace más daño con cada herramienta, porque puede ser otra.</p>
+<p><span class="porque">Correcto: en el sistema estilizado, la salida más severa es la de Sabanalarga y el peor disparador de cascada, Porce III, y ninguna de las dos es Primavera.</span></p>
 </div>
 <div class="opcion">
-<p>El criterio N-1 topológico.</p>
-<p><span class="porque">El N-1 describe el efecto inmediato de la salida, antes de que la carga se redistribuya.</span></p>
+<p>Nada más, porque la más conectada es la más crítica con cualquier herramienta.</p>
+<p><span class="porque">Revise qué aísla la salida de Sabanalarga y qué deja la cascada que empieza en Porce III con el tablero.</span></p>
 </div>
 <div class="opcion">
-<p>La curva de robustez ante falla aleatoria.</p>
-<p><span class="porque">La curva acumula salidas independientes; no redistribuye carga.</span></p>
+<p>Solo la cascada de la más conectada, porque esa herramienta incluye a las otras dos.</p>
+<p><span class="porque">La cascada describe lo que pasa cuando la carga se redistribuye, no quién queda aislado ni qué se pierde de inmediato; revise las tres preguntas.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1164,13 +1289,35 @@ window.Quarto = {
 <span class="caja-etiqueta">Compruebe</span>
 </div>
 <p>En el tablero, con la eólica conectada, ¿qué cifra revela el riesgo del proyecto?</p>
-<div class="opcion" data-correcta="si">
-<p>La generación que aísla la salida de Cuestecitas y su corte de vértices de un elemento.</p>
-<p><span class="porque">Correcto: las cifras locales.</span></p>
-</div>
 <div class="opcion">
 <p>El área bajo la curva de falla aleatoria.</p>
-<p><span class="porque">Esa cifra casi no cambia (0,266 a 0,264). Revise la lección de método.</span></p>
+<p><span class="porque">Esa cifra casi no cambia (0,272 a 0,271), dentro del ruido. Revise la lección de método.</span></p>
+</div>
+<div class="opcion">
+<p>El número de subestaciones cuya salida aísla a otras.</p>
+<p><span class="porque">Sigue en 20 con y sin la eólica; revise qué cambia en Cuestecitas.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Lo que aísla la salida de Cuestecitas y su corte de un elemento.</p>
+<p><span class="porque">Correcto: las cifras locales.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la red de cuatro barras, ¿por qué la salida de la línea Planta-Norte viola el N-1 si la red sigue conexa?</p>
+<div class="opcion" data-correcta="si">
+<p>Porque su flujo se reparte en las otras rutas y Sur se sobrecarga.</p>
+<p><span class="porque">Correcto: con LODF de 0,5, Sur llega a 150 MW frente a 120.</span></p>
+</div>
+<div class="opcion">
+<p>Porque Planta-Norte era el camino más corto en saltos de la red.</p>
+<p><span class="porque">El más corto en saltos es la directa; revise qué dice la topología en el visor.</span></p>
+</div>
+<div class="opcion">
+<p>Porque Norte queda aislado y se pierde la demanda de esa barra.</p>
+<p><span class="porque">Norte sigue unido por Norte-Ciudad y no tiene demanda; revise el reparto de flujos.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1178,13 +1325,17 @@ window.Quarto = {
 <span class="caja-etiqueta">Compruebe</span>
 </div>
 <p>¿Por qué la primera y la segunda intuición del caso ancla tienen razón a la vez?</p>
+<div class="opcion">
+<p>Porque el sistema estilizado no es el real, y en él todo vale.</p>
+<p><span class="porque">Que la red sea estilizada limita las cifras, no la lógica; revise qué pregunta responde cada herramienta.</span></p>
+</div>
 <div class="opcion" data-correcta="si">
-<p>Porque responden preguntas distintas: qué queda aislado y qué pasa cuando la carga se redistribuye.</p>
+<p>Porque responden preguntas distintas: qué queda aislado y qué pasa después.</p>
 <p><span class="porque">Correcto.</span></p>
 </div>
 <div class="opcion">
-<p>Porque el sistema estilizado no es el real.</p>
-<p><span class="porque">El argumento vale también en el sistema real; revise las tres preguntas.</span></p>
+<p>Porque Primavera tiene muchas líneas y mucha intermediación a la vez.</p>
+<p><span class="porque">Esas dos cifras describen a Primavera, pero no explican por qué las respuestas difieren; revise las tres preguntas.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1192,13 +1343,17 @@ window.Quarto = {
 <span class="caja-etiqueta">Compruebe</span>
 </div>
 <p>¿Qué necesita un informe para que las cifras de este laboratorio sirvan a un operador?</p>
+<div class="opcion">
+<p>Calcular más centralidades sobre el mismo grafo.</p>
+<p><span class="porque">Todas las centralidades son topológicas; revise los límites de la sección 5.</span></p>
+</div>
+<div class="opcion">
+<p>Usar la red completa del país en lugar de la estilizada.</p>
+<p><span class="porque">Más nodos no agregan la física que falta; revise el flujo de cuatro barras.</span></p>
+</div>
 <div class="opcion" data-correcta="si">
 <p>Confirmarlas con flujos de carga y datos reales de XM y la UPME.</p>
 <p><span class="porque">Correcto: la topología prioriza dónde mirar; los megavatios para decidir exigen modelos eléctricos.</span></p>
-</div>
-<div class="opcion">
-<p>Calcular más centralidades.</p>
-<p><span class="porque">Todas las centralidades son topológicas; revise los límites de la sección 5.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
@@ -1206,28 +1361,6 @@ window.Quarto = {
 <section id="ejercicio-1-las-tres-respuestas-para-sur" class="level4">
 <h4 class="anchored" data-anchor-id="ejercicio-1-las-tres-respuestas-para-sur">Ejercicio 1 ●○○ · Las tres respuestas para Sur</h4>
 <p>En el sistema de ocho subestaciones, dé las tres respuestas para la salida de Sur con <span class="math inline">\alpha = 0{,}25</span> y con <span class="math inline">\alpha = 0{,}5</span>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución completa
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Conectividad.</strong> Sur es punto de articulación: la Térmica queda aislada y <span class="math inline">S = 6/8</span>.</p>
-<p><strong>N-1.</strong> 0 MW de demanda y 150 MW de generación aislados; la red principal conserva 300 MW para 240 MW de demanda.</p>
-<p><strong>Cascada.</strong> Sin Sur, la carga de Norte pasa de 4,5 a 6. Con <span class="math inline">\alpha = 0{,}25</span> su capacidad es 5,6 y Norte cae; Hidro y Oeste quedan separados de Este, Pueblo y Vereda, y la isla mayor (Este, Pueblo y Vereda) tiene 90 MW de demanda y ninguna generación: <span class="math inline">G = 3/8</span>. Con <span class="math inline">\alpha = 0{,}5</span> la capacidad es 6,75 y no hay cascada: <span class="math inline">G = 6/8</span>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ejercicio-2-reforzar-sabanalarga" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-2-reforzar-sabanalarga">Ejercicio 2 ●●○ · Reforzar Sabanalarga</h4>
-<p>El planeador quiere que la salida de Sabanalarga deje de aislar demanda. (a) Pruebe por separado dos refuerzos, una línea Bolívar-Chinú y una línea Nueva Barranquilla-Santa Marta, y reporte qué aísla la salida de Sabanalarga en cada caso. (b) ¿Hace falta construir ambas? (c) ¿Qué pasa con la cascada que empieza en Primavera con <span class="math inline">\alpha = 0{,}5</span>?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1240,11 +1373,55 @@ window.Quarto = {
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>Conectividad.</strong> Sur es punto de articulación: la Térmica queda aislada y <span class="math inline">S = 6/8</span>.</p>
+<p><strong>Salida de subestación.</strong> Se pierden los 60 MW propios de Sur y la Térmica queda aislada con 150 MW de generación; la red principal conserva 300 MW para 240 MW de demanda.</p>
+<p><strong>Cascada.</strong> Sin Sur, la carga de Norte pasa de 4,5 a 6. Con <span class="math inline">\alpha = 0{,}25</span> su capacidad es 5,6 y Norte cae; Hidro y Oeste quedan separados de Este, Pueblo y Vereda, y la isla mayor (Este, Pueblo y Vereda) tiene 90 MW de demanda y ninguna generación: <span class="math inline">G = 3/8</span>, aunque la única isla que podría seguir en servicio es la de Hidro y Oeste, con 300 MW para 70 MW. Con <span class="math inline">\alpha = 0{,}5</span> la capacidad es 6,75 y no hay cascada: <span class="math inline">G = 6/8</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2-reforzar-sabanalarga" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-reforzar-sabanalarga">Ejercicio 2 ●●○ · Reforzar Sabanalarga</h4>
+<p>El planeador quiere que la salida de Sabanalarga deje de aislar el anillo de Barranquilla (600 MW de demanda). (a) Pruebe por separado dos refuerzos de 220 kV, una línea Nueva Barranquilla-Santa Marta, hacia el Magdalena, y una línea Tebsa-Ternera, hacia el anillo de Cartagena, y reporte qué aísla la salida de Sabanalarga en cada caso. (b) Si las dos lo resuelven, ¿cuál elegiría? Compare su longitud y lo que aísla la salida simultánea de Sabanalarga y Bolívar. (c) ¿Qué pasa con las cascadas que empiezan en Porce III y en Primavera con <span class="math inline">\alpha = 0{,}5</span>?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ol type="a">
-<li><p>Con Bolívar-Chinú, la salida de Sabanalarga aísla solo el anillo de Barranquilla: 4 nodos, 600 MW de demanda y 1 400 MW de generación. Con Nueva Barranquilla-Santa Marta, solo el de Cartagena: 4 nodos, 530 MW y 314 MW.</p></li>
-<li><p>Hacen falta ambas: cada línea da un segundo camino a uno de los dos anillos. Con las dos, la salida de Sabanalarga no aísla nada.</p></li>
-<li><p>La cascada desde Primavera sigue en <span class="math inline">G \approx 0{,}27</span>. Su carga viene de los caminos entre las regiones del interior y la Costa, que ninguno de los dos refuerzos toca: resolver un problema de N-1 no resuelve uno de cascada.</p></li>
+<li><p>Con cualquiera de las dos, la salida de Sabanalarga deja de aislar subestaciones (sus 120 MW propios se siguen perdiendo), Sabanalarga deja de ser punto de articulación y las subestaciones cuya salida aísla a otras bajan de 20 a 19.</p></li>
+<li><p>Para esa salida son equivalentes, así que hace falta otro criterio. En longitud, Nueva Barranquilla-Santa Marta mide 72,7 km en línea recta y Tebsa-Ternera, 97,8 km. En independencia de la ruta nueva, Tebsa-Ternera lleva Barranquilla hacia Cartagena, que también sale por Sabanalarga y por Bolívar: si fallan a la vez Sabanalarga y Bolívar, los dos anillos quedan aislados juntos, con 1 050 MW de demanda, lo mismo que sin refuerzo. Con Nueva Barranquilla-Santa Marta, esa salida doble aísla solo Cartagena, con 450 MW. Por las dos razones, Nueva Barranquilla-Santa Marta es preferible. Falta verificar la capacidad: el anillo tiene 800 MW de excedente y una línea de 220 kV lleva unos 300 MW, de modo que sin Sabanalarga su generación tendría que bajar, y cuánto lo dirá un flujo de carga.</p></li>
+<li><p>Las dos cascadas siguen igual: <span class="math inline">G = 0{,}28</span> desde Porce III y 0,48 desde Primavera, con cualquiera de los refuerzos. Su carga viene de los caminos entre las regiones del interior y de los que cruzan a la Costa por Cerromatoso y La Loma, que ninguno de los dos refuerzos toca: resolver un problema de salida de subestación no resuelve uno de cascada. Y una línea nueva cambia los caminos más cortos: la cascada que empieza en la propia Sabanalarga baja de <span class="math inline">G = 0{,}91</span> a 0,83 con cualquiera de las dos líneas, porque los caminos de Barranquilla se desvían por la ruta nueva y sobrecargan a quienes la reciben.</p></li>
 </ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-3-la-otra-salida-de-las-cuatro-barras" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-3-la-otra-salida-de-las-cuatro-barras">Ejercicio 3 ●●○ · La otra salida de las cuatro barras</h4>
+<p>En la red de cuatro barras del visor, calcule a mano los flujos después de la salida de la línea directa y compárelos con los límites. ¿Hasta cuánto habría que subir el límite de las líneas de Sur para que las cinco salidas cumplan el N-1?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La directa llevaba 75 MW. Al salir, se reparten entre las rutas que quedan según sus susceptancias, 5 para Norte y 2,5 para Sur: <span class="math inline">\mathrm{LODF}_{\text{Norte}} = 5/7{,}5 = 0{,}67</span> y <span class="math inline">\mathrm{LODF}_{\text{Sur}} = 2{,}5/7{,}5 = 0{,}33</span>.</p>
+<p>Norte pasa a <span class="math inline">150 + 0{,}67 \times 75 = 200</span> MW (80 % de 250) y Sur a <span class="math inline">75 + 0{,}33 \times 75 = 100</span> MW (83 % de 120): cumple. Comprobación con ángulos: con susceptancia total 7,5, <span class="math inline">\theta_{\text{Planta}} - \theta_{\text{Ciudad}} = 3/7{,}5 = 0{,}40</span> rad, y los flujos son <span class="math inline">0{,}40/0{,}20 = 2</span> p.u. por Norte y <span class="math inline">0{,}40/0{,}40 = 1</span> p.u. por Sur.</p>
+<p>El caso más exigente para Sur es la salida de una línea de Norte, que la lleva a 150 MW. Con un límite de 150 MW en Sur, las cinco salidas cumplen; en la práctica se dejaría además un margen.</p>
 </div>
 </div>
 </div>
@@ -1301,9 +1478,9 @@ window.Quarto = {
 <td style="text-align: center;">secciones 2 y 7</td>
 </tr>
 <tr class="odd">
-<td><a href="../semana2/08-robustez-n1.html">robustez y N-1</a></td>
+<td><a href="../semana2/08-robustez-n1.html">robustez, N-1 y salidas de subestación</a></td>
 <td>pasos 5 y 7</td>
-<td>puntos únicos de falla en MW</td>
+<td>puntos únicos de falla en MW, con la demanda propia y la de cada isla</td>
 <td style="text-align: center;">secciones 3 y 6</td>
 </tr>
 <tr class="even">
@@ -1314,7 +1491,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>La rúbrica de la sección 3 valora que la robustez se reporte en las unidades del decisor (megavatios, usuarios, proyectos aislados), que el barrido de <span class="math inline">\alpha</span> reemplace a un solo valor y que el grupo distinga lo que muestra la topología de lo que exigiría un estudio eléctrico.</p>
+<p>La rúbrica de la sección 3 valora que la robustez se reporte en las unidades del decisor (megavatios, usuarios, proyectos aislados), que el barrido de <span class="math inline">\alpha</span> reemplace a un solo valor y que el grupo distinga lo que muestra la topología de lo que exigiría un estudio eléctrico. Si el decisor pregunta por un elemento concreto, responda por ese y por el que más daño hace con cada herramienta, como se hizo aquí con Primavera, Sabanalarga y Porce III. El caso guía muestra <a href="../caso-guia/02-esquema-redes.html">el esquema de redes que entregó un equipo, con la realimentación que recibió</a>.</p>
 </section>
 <section id="en-resumen" class="level2">
 <h2 class="anchored" data-anchor-id="en-resumen">En resumen</h2>
@@ -1323,9 +1500,11 @@ window.Quarto = {
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>El Laboratorio 1 tiene <strong>siete pasos</strong>: cargar y verificar, visualizar, centralidades, grado y modelos, N-1, cascada, y azar frente a ataque.</li>
-<li>Para Primavera, <strong>tres respuestas compatibles</strong>: el 96 % sigue unido; se aíslan 60 MW de demanda y 740 MW de generación; con <span class="math inline">\alpha = 0{,}5</span> la cascada deja <span class="math inline">G = 0{,}27</span> y 2 600 de 11 700 MW en la isla mayor.</li>
-<li>Cumplir el N-1 <strong>no descarta</strong> una cascada: Norte, en ocho subestaciones, y San Carlos, en el sistema, lo muestran.</li>
+<li>El Laboratorio 1 tiene <strong>siete pasos</strong>: cargar y verificar, visualizar, centralidades, grado y modelos, salidas de subestaciones y de líneas, cascada, y azar frente a ataque.</li>
+<li>Para Primavera, <strong>tres respuestas compatibles</strong>: el 96 % sigue unido; su salida se lleva 40 MW propios y aísla 60 MW de demanda y 740 MW de generación; con <span class="math inline">\alpha = 0{,}5</span> la cascada deja <span class="math inline">G = 0{,}48</span> y parte la red en dos mitades, la mayor con 6 760 MW de demanda y solo 6 034 MW de generación.</li>
+<li>Con cada herramienta, la <strong>subestación más dañina es otra</strong>: la salida más severa es la de Sabanalarga y el peor disparador de cascada, Porce III (<span class="math inline">G = 0{,}28</span>). El informe responde por la subestación que pregunta el decisor y por la que más daño hace con cada herramienta.</li>
+<li>Que una salida <strong>no aísle a nadie no descarta</strong> una cascada: Norte, en ocho subestaciones, y San Carlos, en el sistema, lo muestran.</li>
+<li>La <strong>potencia</strong> se reparte por todas las rutas según sus reactancias: en cuatro barras, una ruta con intermediación cero lleva la mitad del flujo, y su salida sobrecarga otra línea sin partir la red.</li>
 <li>Con la eólica de La Guajira, las métricas <strong>globales</strong> casi no cambian y las <strong>locales</strong> revelan un punto único de falla en Cuestecitas.</li>
 <li>La topología prioriza dónde mirar; los megavatios para decidir exigen <strong>flujos de carga</strong> y datos reales.</li>
 </ul>
@@ -1337,7 +1516,7 @@ window.Quarto = {
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Z3JhZm8sIGFuYWxpc2lzTm1lbm9zMSwgY2FzY2FkYU1vdHRlckxhaSwgY29tcG9uZW50ZXMsIGNlbnRyYWxpZGFkZXMsIGNvcnRlTWluaW1vVmVydGljZXN9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9yZWRlcy5qc1wiXG5pbXBvcnQge2Zvcm1hdG9OdW1lcm99IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJyZWRlc1QgPSAoe2Jhc2U6IGF3YWl0IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczItc3RuLmpzb25cIikuanNvbigpLCBlb2xpY2E6IGF3YWl0IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczItMTAtc3RuLWVvbGljYS5qc29uXCIpLmpzb24oKX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgZW9saWNhVCA9IElucHV0cy50b2dnbGUoe2xhYmVsOiBcIkXDs2xpY2EgZGUgTGEgR3VhamlyYSBjb25lY3RhZGFcIiwgdmFsdWU6IGZhbHNlfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdG9zVCA9IGVvbGljYVQgPyByZWRlc1QuZW9saWNhIDogcmVkZXNULmJhc2VcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImdyYWZvVCA9IGdyYWZvKGRhdG9zVC5hcmlzdGFzLm1hcCgoZSkgPT4gW2UuYSwgZS5iXSksIGRhdG9zVC5ub2Rvcy5tYXAoKG4pID0+IG4uaWQpKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHNhbGVUID0gSW5wdXRzLnNlbGVjdChkYXRvc1Qubm9kb3MubWFwKChuKSA9PiBuLmlkKS5zb3J0KChhLCBiKSA9PiBhLmxvY2FsZUNvbXBhcmUoYiwgXCJlc1wiKSksIHtsYWJlbDogXCJTYWxlXCIsIHZhbHVlOiBcIlNhbiBDYXJsb3NcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgYWxmYVQgPSBJbnB1dHMucmFuZ2UoWzAsIDNdLCB7dmFsdWU6IDAuNSwgc3RlcDogMC4wNSwgbGFiZWw6IFwiVG9sZXJhbmNpYSDOsVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InRhYmxlcm9UID0ge1xuICBjb25zdCBhdHJpYnV0b3MgPSBPYmplY3QuZnJvbUVudHJpZXMoZGF0b3NULm5vZG9zLm1hcCgobikgPT4gW24uaWQsIHtkZW1hbmRhX213OiBuLmRlbWFuZGFfbXcsIGdlbmVyYWNpb25fbXc6IG4uZ2VuZXJhY2lvbl9td31dKSk7XG4gIGNvbnN0IG4xID0gYW5hbGlzaXNObWVub3MxKGdyYWZvVCwgYXRyaWJ1dG9zKTtcbiAgY29uc3QgZmlsYSA9IG4xLmZpbmQoKGYpID0+IGYubm9kbyA9PT0gc2FsZVQpO1xuICBjb25zdCBjZW50cmFsID0gY2VudHJhbGlkYWRlcyhncmFmb1QpLmZpbmQoKGYpID0+IGYubm9kbyA9PT0gc2FsZVQpO1xuICBjb25zdCBjYXNjYWRhID0gY2FzY2FkYU1vdHRlckxhaShncmFmb1QsIFtzYWxlVF0sIGFsZmFUKTtcbiAgY29uc3QgZ2lnYW50ZSA9IG5ldyBTZXQoY29tcG9uZW50ZXMoY2FzY2FkYS5ncmFmb19maW5hbClbMF0gPz8gW10pO1xuICBjb25zdCByb25kYSA9IE9iamVjdC5mcm9tRW50cmllcyhjYXNjYWRhLmZhbGxhc19wb3Jfcm9uZGEuZmxhdE1hcCgociwgaykgPT4gci5tYXAoKHgpID0+IFt4LCBrXSkpKTtcbiAgY29uc3QgZGVtYW5kYUlzbGEgPSBkYXRvc1Qubm9kb3MuZmlsdGVyKChuKSA9PiBnaWdhbnRlLmhhcyhuLmlkKSkucmVkdWNlKChhLCBuKSA9PiBhICsgbi5kZW1hbmRhX213LCAwKTtcbiAgY29uc3QgY29ydGUgPSBlb2xpY2FUID8gY29ydGVNaW5pbW9WZXJ0aWNlcyhncmFmb1QsIFtcIldpbmRwZXNoaVwiLCBcIkNvbGVjdG9yYVwiXSwgW1wiUHJpbWF2ZXJhXCJdKSA6IG51bGw7XG4gIHJldHVybiB7ZmlsYSwgY2VudHJhbCwgY2FzY2FkYSwgZ2lnYW50ZSwgcm9uZGEsIGRlbWFuZGFJc2xhLCBjb3J0ZSwgY3JpdGljYXM6IG4xLmZpbHRlcigoZikgPT4gZi5ub2Rvc19haXNsYWRvcyA+IDApLmxlbmd0aH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDU2MCksIGhlaWdodDogNDgwLCBpbnNldDogMjQsIGFzcGVjdFJhdGlvOiAxLFxuICB4OiB7YXhpczogbnVsbH0sIHk6IHtheGlzOiBudWxsfSxcbiAgY29sb3I6IHtkb21haW46IFtcInNhbGVcIiwgXCJhaXNsYWRhIHBvciBsYSBzYWxpZGFcIiwgXCJjYWUgZW4gbGEgY2FzY2FkYVwiLCBcImlzbGEgbWF5b3IgYWwgZmluYWxcIiwgXCJvdHJhIGlzbGFcIl0sXG4gICAgcmFuZ2U6IFtcIiMwMDBcIiwgQ09MT1JFUy5hbWJhciwgQ09MT1JFUy5yb2pvLCBDT0xPUkVTLmF6dWwsIFwiI0JCQlwiXSwgbGVnZW5kOiB0cnVlfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmsoZGF0b3NULmFyaXN0YXMsIHt4MTogKGUpID0+IGRhdG9zVC5ub2Rvcy5maW5kKChuKSA9PiBuLmlkID09PSBlLmEpLmxvbiwgeTE6IChlKSA9PiBkYXRvc1Qubm9kb3MuZmluZCgobikgPT4gbi5pZCA9PT0gZS5hKS5sYXQsXG4gICAgICB4MjogKGUpID0+IGRhdG9zVC5ub2Rvcy5maW5kKChuKSA9PiBuLmlkID09PSBlLmIpLmxvbiwgeTI6IChlKSA9PiBkYXRvc1Qubm9kb3MuZmluZCgobikgPT4gbi5pZCA9PT0gZS5iKS5sYXQsIHN0cm9rZTogXCIjREREXCJ9KSxcbiAgICBQbG90LmRvdChkYXRvc1Qubm9kb3MsIHt4OiBcImxvblwiLCB5OiBcImxhdFwiLCByOiAobikgPT4gKG4uaWQgPT09IFwiV2luZHBlc2hpXCIgfHwgbi5pZCA9PT0gXCJDb2xlY3RvcmFcIiA/IDcgOiA0LjUpLCBzdHJva2U6IFwid2hpdGVcIixcbiAgICAgIGZpbGw6IChuKSA9PiAobi5pZCA9PT0gc2FsZVQgPyBcInNhbGVcIiA6IHRhYmxlcm9ULmZpbGEuYWlzbGFkb3MuaW5jbHVkZXMobi5pZCkgPyBcImFpc2xhZGEgcG9yIGxhIHNhbGlkYVwiXG4gICAgICAgIDogdGFibGVyb1Qucm9uZGFbbi5pZF0gIT09IHVuZGVmaW5lZCA/IFwiY2FlIGVuIGxhIGNhc2NhZGFcIiA6IHRhYmxlcm9ULmdpZ2FudGUuaGFzKG4uaWQpID8gXCJpc2xhIG1heW9yIGFsIGZpbmFsXCIgOiBcIm90cmEgaXNsYVwiKX0pLFxuICAgIFBsb3QudGV4dChkYXRvc1Qubm9kb3MuZmlsdGVyKChuKSA9PiBuLmlkID09PSBzYWxlVCB8fCAoZW9saWNhVCAmJiAobi5pZCA9PT0gXCJXaW5kcGVzaGlcIiB8fCBuLmlkID09PSBcIkNvbGVjdG9yYVwiKSkpLFxuICAgICAge3g6IFwibG9uXCIsIHk6IFwibGF0XCIsIHRleHQ6IFwiaWRcIiwgZHk6IC0xMiwgZm9udFNpemU6IDEwLCBzdHJva2U6IFwid2hpdGVcIiwgc3Ryb2tlV2lkdGg6IDMsIGZpbGw6IFwiYmxhY2tcIn0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTAiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkdyYWRvIGUgaW50ZXJtZWRpYWNpw7NuPGI+JHt0YWJsZXJvVC5jZW50cmFsLmdyYWRvfSDCtyAke2Zvcm1hdG9OdW1lcm8oMykodGFibGVyb1QuY2VudHJhbC5pbnRlcm1lZGlhY2lvbil9PC9iPjwvZGl2PlxuICA8ZGl2PkNvbmVjdGl2aWRhZDogc2lndWUgdW5pZG88Yj4ke2Zvcm1hdG9OdW1lcm8oMCkoMTAwICogdGFibGVyb1QuZmlsYS5mcmFjY2lvbl9naWdhbnRlKX0gJTwvYj48L2Rpdj5cbiAgPGRpdj5OLTE6IGRlbWFuZGEgeSBnZW5lcmFjacOzbiBhaXNsYWRhczxiPiR7Zm9ybWF0b051bWVybygwKSh0YWJsZXJvVC5maWxhLmRlbWFuZGFfYWlzbGFkYV9tdyl9IHkgJHtmb3JtYXRvTnVtZXJvKDApKHRhYmxlcm9ULmZpbGEuZ2VuZXJhY2lvbl9haXNsYWRhX213KX0gTVc8L2I+PC9kaXY+XG4gIDxkaXY+Q2FzY2FkYTogZmFsbGFzIHBvciByb25kYSB5IEc8Yj4ke3RhYmxlcm9ULmNhc2NhZGEuZmFsbGFzX3Bvcl9yb25kYS5tYXAoKHIpID0+IHIubGVuZ3RoKS5qb2luKFwiLCBcIil9IMK3ICR7Zm9ybWF0b051bWVybygyKSh0YWJsZXJvVC5jYXNjYWRhLmZyYWNjaW9uX3NvYnJldml2aWVudGUpfTwvYj48L2Rpdj5cbiAgPGRpdj5DYXNjYWRhOiBkZW1hbmRhIGVuIGxhIGlzbGEgbWF5b3I8Yj4ke2Zvcm1hdG9OdW1lcm8oMCkodGFibGVyb1QuZGVtYW5kYUlzbGEpfSBNVzwvYj48L2Rpdj5cbiAgPGRpdj5TdWJlc3RhY2lvbmVzIHF1ZSBmYWxsYW4gZWwgTi0xPGI+JHt0YWJsZXJvVC5jcml0aWNhc30gZGUgJHtkYXRvc1Qubm9kb3MubGVuZ3RofTwvYj48L2Rpdj5cbiAgPGRpdj5Db3J0ZSBkZSB2w6lydGljZXMgZcOzbGljYS1QcmltYXZlcmE8Yj4ke3RhYmxlcm9ULmNvcnRlID8gYCR7dGFibGVyb1QuY29ydGUubGVuZ3RofTogJHt0YWJsZXJvVC5jb3J0ZS5qb2luKFwiLCBcIil9YCA6IFwiZcOzbGljYSBzaW4gY29uZWN0YXJcIn08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2VvbGljYVQnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2FsZVQnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYWxmYVQnKSJ9XX0=
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Z3JhZm8sIGFuYWxpc2lzTm1lbm9zMSwgY2FzY2FkYU1vdHRlckxhaSwgY29tcG9uZW50ZXMsIGNlbnRyYWxpZGFkZXMsIGNvcnRlTWluaW1vVmVydGljZXMsIHRyYXpvc01hcGF9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9yZWRlcy5qc1wiXG5pbXBvcnQge2Zvcm1hdG9OdW1lcm99IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJyZWRlc1QgPSAoe2Jhc2U6IGF3YWl0IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczItc3RuLmpzb25cIikuanNvbigpLCBlb2xpY2E6IGF3YWl0IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczItMTAtc3RuLWVvbGljYS5qc29uXCIpLmpzb24oKX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgZW9saWNhVCA9IElucHV0cy50b2dnbGUoe2xhYmVsOiBcIkXDs2xpY2EgZGUgTGEgR3VhamlyYSBjb25lY3RhZGFcIiwgdmFsdWU6IGZhbHNlfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdG9zVCA9IGVvbGljYVQgPyByZWRlc1QuZW9saWNhIDogcmVkZXNULmJhc2VcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImdyYWZvVCA9IGdyYWZvKGRhdG9zVC5hcmlzdGFzLm1hcCgoZSkgPT4gW2UuYSwgZS5iXSksIGRhdG9zVC5ub2Rvcy5tYXAoKG4pID0+IG4uaWQpKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHNhbGVUID0gSW5wdXRzLnNlbGVjdChkYXRvc1Qubm9kb3MubWFwKChuKSA9PiBuLmlkKS5zb3J0KChhLCBiKSA9PiBhLmxvY2FsZUNvbXBhcmUoYiwgXCJlc1wiKSksIHtsYWJlbDogXCJTYWxlXCIsIHZhbHVlOiBcIlNhbiBDYXJsb3NcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgYWxmYVQgPSBJbnB1dHMucmFuZ2UoWzAsIDNdLCB7dmFsdWU6IDAuNSwgc3RlcDogMC4wNSwgbGFiZWw6IFwiVG9sZXJhbmNpYSDOsVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InRhYmxlcm9UID0ge1xuICBjb25zdCBhdHJpYnV0b3MgPSBPYmplY3QuZnJvbUVudHJpZXMoZGF0b3NULm5vZG9zLm1hcCgobikgPT4gW24uaWQsIHtkZW1hbmRhX213OiBuLmRlbWFuZGFfbXcsIGdlbmVyYWNpb25fbXc6IG4uZ2VuZXJhY2lvbl9td31dKSk7XG4gIGNvbnN0IG4xID0gYW5hbGlzaXNObWVub3MxKGdyYWZvVCwgYXRyaWJ1dG9zKTtcbiAgY29uc3QgZmlsYSA9IG4xLmZpbmQoKGYpID0+IGYubm9kbyA9PT0gc2FsZVQpO1xuICBjb25zdCBjZW50cmFsID0gY2VudHJhbGlkYWRlcyhncmFmb1QpLmZpbmQoKGYpID0+IGYubm9kbyA9PT0gc2FsZVQpO1xuICBjb25zdCBjYXNjYWRhID0gY2FzY2FkYU1vdHRlckxhaShncmFmb1QsIFtzYWxlVF0sIGFsZmFUKTtcbiAgY29uc3QgZ2lnYW50ZSA9IG5ldyBTZXQoY29tcG9uZW50ZXMoY2FzY2FkYS5ncmFmb19maW5hbClbMF0gPz8gW10pO1xuICBjb25zdCByb25kYSA9IE9iamVjdC5mcm9tRW50cmllcyhjYXNjYWRhLmZhbGxhc19wb3Jfcm9uZGEuZmxhdE1hcCgociwgaykgPT4gci5tYXAoKHgpID0+IFt4LCBrXSkpKTtcbiAgY29uc3QgZGVtYW5kYUlzbGEgPSBkYXRvc1Qubm9kb3MuZmlsdGVyKChuKSA9PiBnaWdhbnRlLmhhcyhuLmlkKSkucmVkdWNlKChhLCBuKSA9PiBhICsgbi5kZW1hbmRhX213LCAwKTtcbiAgY29uc3QgYXRyaWJ1dG8gPSBPYmplY3QuZnJvbUVudHJpZXMoZGF0b3NULm5vZG9zLm1hcCgobikgPT4gW24uaWQsIG5dKSk7XG4gIGNvbnN0IGNvbkdlbmVyYWNpb24gPSBjb21wb25lbnRlcyhjYXNjYWRhLmdyYWZvX2ZpbmFsKS5tYXAoKGMpID0+ICh7ZDogYy5yZWR1Y2UoKGEsIHgpID0+IGEgKyBhdHJpYnV0b1t4XS5kZW1hbmRhX213LCAwKSxcbiAgICBnOiBjLnJlZHVjZSgoYSwgeCkgPT4gYSArIGF0cmlidXRvW3hdLmdlbmVyYWNpb25fbXcsIDApfSkpLmZpbHRlcigoaSkgPT4gaS5kID4gMCAmJiBpLmcgPj0gaS5kKS5yZWR1Y2UoKGEsIGkpID0+IGEgKyBpLmQsIDApO1xuICBjb25zdCBjb3J0ZSA9IGVvbGljYVQgPyBjb3J0ZU1pbmltb1ZlcnRpY2VzKGdyYWZvVCwgW1wiV2luZHBlc2hpXCIsIFwiQ29sZWN0b3JhXCJdLCBbXCJQcmltYXZlcmFcIl0pIDogbnVsbDtcbiAgcmV0dXJuIHtmaWxhLCBjZW50cmFsLCBjYXNjYWRhLCBnaWdhbnRlLCByb25kYSwgZGVtYW5kYUlzbGEsIGNvbkdlbmVyYWNpb24sIGNvcnRlLCBjcml0aWNhczogbjEuZmlsdGVyKChmKSA9PiBmLm5vZG9zX2Fpc2xhZG9zID4gMCkubGVuZ3RofTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNTYwKSwgaGVpZ2h0OiA0ODAsIGluc2V0OiAyNCwgYXNwZWN0UmF0aW86IDEsXG4gIHg6IHtheGlzOiBudWxsfSwgeToge2F4aXM6IG51bGx9LFxuICBjb2xvcjoge2RvbWFpbjogW1wic2FsZVwiLCBcImFpc2xhZGEgcG9yIGxhIHNhbGlkYVwiLCBcImNhZSBlbiBsYSBjYXNjYWRhXCIsIFwiaXNsYSBtYXlvciBhbCBmaW5hbFwiLCBcIm90cmEgaXNsYVwiXSxcbiAgICByYW5nZTogW1wiIzAwMFwiLCBDT0xPUkVTLmFtYmFyLCBDT0xPUkVTLnJvam8sIENPTE9SRVMuYXp1bCwgXCIjQkJCXCJdLCBsZWdlbmQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QubGluZSh0cmF6b3NNYXBhKGRhdG9zVCksIHt4OiBcInhcIiwgeTogXCJ5XCIsIHo6IFwiY2xhdmVcIiwgc3Ryb2tlOiBcIiNERERcIn0pLFxuICAgIFBsb3QuZG90KGRhdG9zVC5ub2Rvcywge3g6IFwibG9uXCIsIHk6IFwibGF0XCIsIHI6IChuKSA9PiAobi5pZCA9PT0gXCJXaW5kcGVzaGlcIiB8fCBuLmlkID09PSBcIkNvbGVjdG9yYVwiID8gNyA6IDQuNSksIHN0cm9rZTogXCJ3aGl0ZVwiLFxuICAgICAgZmlsbDogKG4pID0+IChuLmlkID09PSBzYWxlVCA/IFwic2FsZVwiIDogdGFibGVyb1QuZmlsYS5haXNsYWRvcy5pbmNsdWRlcyhuLmlkKSA/IFwiYWlzbGFkYSBwb3IgbGEgc2FsaWRhXCJcbiAgICAgICAgOiB0YWJsZXJvVC5yb25kYVtuLmlkXSAhPT0gdW5kZWZpbmVkID8gXCJjYWUgZW4gbGEgY2FzY2FkYVwiIDogdGFibGVyb1QuZ2lnYW50ZS5oYXMobi5pZCkgPyBcImlzbGEgbWF5b3IgYWwgZmluYWxcIiA6IFwib3RyYSBpc2xhXCIpfSksXG4gICAgUGxvdC50ZXh0KGRhdG9zVC5ub2Rvcy5maWx0ZXIoKG4pID0+IG4uaWQgPT09IHNhbGVUIHx8IChlb2xpY2FUICYmIChuLmlkID09PSBcIldpbmRwZXNoaVwiIHx8IG4uaWQgPT09IFwiQ29sZWN0b3JhXCIpKSksXG4gICAgICB7eDogXCJsb25cIiwgeTogXCJsYXRcIiwgdGV4dDogXCJpZFwiLCBkeTogLTEyLCBmb250U2l6ZTogMTAsIHN0cm9rZTogXCJ3aGl0ZVwiLCBzdHJva2VXaWR0aDogMywgZmlsbDogXCJibGFja1wifSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+R3JhZG8gZSBpbnRlcm1lZGlhY2nDs248Yj4ke3RhYmxlcm9ULmNlbnRyYWwuZ3JhZG99IMK3ICR7Zm9ybWF0b051bWVybygzKSh0YWJsZXJvVC5jZW50cmFsLmludGVybWVkaWFjaW9uKX08L2I+PC9kaXY+XG4gIDxkaXY+Q29uZWN0aXZpZGFkOiBzaWd1ZSB1bmlkbzxiPiR7Zm9ybWF0b051bWVybygwKSgxMDAgKiB0YWJsZXJvVC5maWxhLmZyYWNjaW9uX2dpZ2FudGUpfSAlPC9iPjwvZGl2PlxuICA8ZGl2PlNhbGlkYTogZGVtYW5kYSBwcm9waWEgeSBnZW5lcmFjacOzbiBwcm9waWEgcGVyZGlkYXM8Yj4ke2Zvcm1hdG9OdW1lcm8oMCkodGFibGVyb1QuZmlsYS5kZW1hbmRhX3Byb3BpYV9tdyl9IHkgJHtmb3JtYXRvTnVtZXJvKDApKGRhdG9zVC5ub2Rvcy5maW5kKChuKSA9PiBuLmlkID09PSBzYWxlVCkuZ2VuZXJhY2lvbl9tdyl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PlNhbGlkYTogZGVtYW5kYSB5IGdlbmVyYWNpw7NuIGFpc2xhZGFzPGI+JHtmb3JtYXRvTnVtZXJvKDApKHRhYmxlcm9ULmZpbGEuZGVtYW5kYV9haXNsYWRhX213KX0geSAke2Zvcm1hdG9OdW1lcm8oMCkodGFibGVyb1QuZmlsYS5nZW5lcmFjaW9uX2Fpc2xhZGFfbXcpfSBNVzwvYj48L2Rpdj5cbiAgPGRpdj5DYXNjYWRhOiBmYWxsYXMgcG9yIHJvbmRhIHkgRzxiPiR7dGFibGVyb1QuY2FzY2FkYS5mYWxsYXNfcG9yX3JvbmRhLm1hcCgocikgPT4gci5sZW5ndGgpLmpvaW4oXCIsIFwiKX0gwrcgJHtmb3JtYXRvTnVtZXJvKDIpKHRhYmxlcm9ULmNhc2NhZGEuZnJhY2Npb25fc29icmV2aXZpZW50ZSl9PC9iPjwvZGl2PlxuICA8ZGl2PkNhc2NhZGE6IGRlbWFuZGEgZW4gbGEgaXNsYSBtYXlvciB5IGVuIGlzbGFzIGNvbiBnZW5lcmFjacOzbiBzdWZpY2llbnRlPGI+JHtmb3JtYXRvTnVtZXJvKDApKHRhYmxlcm9ULmRlbWFuZGFJc2xhKX0geSAke2Zvcm1hdG9OdW1lcm8oMCkodGFibGVyb1QuY29uR2VuZXJhY2lvbil9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PlN1YmVzdGFjaW9uZXMgY3V5YSBzYWxpZGEgYcOtc2xhIGEgb3RyYXM8Yj4ke3RhYmxlcm9ULmNyaXRpY2FzfSBkZSAke2RhdG9zVC5ub2Rvcy5sZW5ndGh9PC9iPjwvZGl2PlxuICA8ZGl2PkNvcnRlIGRlIHbDqXJ0aWNlcyBlw7NsaWNhLVByaW1hdmVyYTxiPiR7dGFibGVyb1QuY29ydGUgPyBgJHt0YWJsZXJvVC5jb3J0ZS5sZW5ndGh9OiAke3RhYmxlcm9ULmNvcnRlLmpvaW4oXCIsIFwiKX1gIDogXCJlw7NsaWNhIHNpbiBjb25lY3RhclwifTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnZW9saWNhVCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzYWxlVCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhbGZhVCcpIn1dfQ==
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
@@ -1768,14 +1947,30 @@ window._ojs.runtime.interpretFromScriptTags();
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>MISE · Universidad de los Andes · Systems Analytics</p>
+<p>MISE · Universidad de los Andes · Systems Analytics. ¿Vio un error o algo confuso? Cuéntelo en el foro del curso en Bloque Neón, con el título de la página.</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+<p>Datos sintéticos con fines didácticos cuando así se indica.</p>
 </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../recursos.html" aria-current="page">
+<p>Recursos</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../glosario.html">
+<p>Glosario</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../referencias.html">
+<p>Referencias</p>
+</a>
+  </li>  
+</ul>
+    </div>
   </div>
 </footer>
 <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});

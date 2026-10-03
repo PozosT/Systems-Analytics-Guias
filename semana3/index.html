@@ -47,7 +47,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-189071c1cfc9baef9b9de50def1ee7e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -76,6 +76,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<meta name="guias-mise:fecha" content="2 de octubre de 2026">
 
 
 </head>
@@ -180,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+ <span class="menu-text">Puntos de quiebre y regímenes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -298,7 +299,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de quiebre</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -390,6 +391,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/10-nino-perillas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo ante El Niño y sus perillas</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -459,6 +466,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El arco del Laboratorio 4</span></a>
   </div>
 </li>
       </ul>
@@ -569,6 +582,35 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Para consultar</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../recursos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -586,6 +628,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -616,17 +659,19 @@ ul.task-list li input[type="checkbox"] {
 <section id="el-caso-de-la-semana" class="level2">
 <h2 class="anchored" data-anchor-id="el-caso-de-la-semana">El caso de la semana</h2>
 <p>Imagine dos casas de la misma cuadra en Medellín o en Bogotá, con techos, facturas e ingresos parecidos y acceso a los mismos incentivos. Una instala paneles en 2023; la otra sigue sin hacerlo en 2026. La primera cuenta que el vecino de enfrente instaló dos años antes y le mostró la factura; la segunda dice que no conoce a nadie con paneles. La economía de la decisión explica una parte de la adopción, y la otra depende de con quién habla cada hogar y cuántos vecinos ya dieron el paso.</p>
-<p>El marco colombiano se armó por capas. La Ley 1715 de 2014 creó los créditos de energía y cuatro incentivos tributarios; la Resolución CREG 030 de 2018 reglamentó la autogeneración a pequeña escala con un límite de penetración del 15 % de la capacidad de cada circuito; y en 2021 la Ley 2099 amplió la deducción de renta a 15 años mientras la Resolución CREG 174 subió ese límite al 50 % y obligó a ofrecer el trámite en línea. Las cifras siguen la forma de una curva que arranca lenta y se acelera: en agosto de 2024 operaban 8 766 autogeneradores a pequeña escala con 187 MW (SER Colombia), y al cierre de 2025 el registro de la UPME contaba 24 447 techos solares, 9 360 de ellos nuevos en ese año (Ministerio de Minas y Energía). Fuera de Colombia hay evidencia de que el contagio es real: en California, una instalación adicional en un código postal aumenta en 0,78 puntos porcentuales la probabilidad de otra en el mismo código postal (Bollinger y Gillingham, 2012).</p>
-<p>La pregunta de la semana: <strong>si el subsidio explica solo parte de la adopción, ¿qué explica el resto?</strong> Una buena respuesta da cuenta de cuatro rasgos: la curva en S, el agrupamiento por barrios, la desigualdad entre quienes adoptan primero y la sensibilidad a las reglas que discute una red de actores.</p>
+<p>El marco colombiano se armó por capas. La Ley 1715 de 2014 creó los créditos de energía y cuatro incentivos tributarios; la Resolución CREG 030 de 2018 reglamentó la autogeneración a pequeña escala y fijó en el 15 % de la capacidad de cada circuito el estándar para conectarse sin estudios; y en 2021 la Ley 2099 amplió la deducción de renta a 15 años mientras la Resolución CREG 174 subió ese estándar al 50 % y obligó a ofrecer el trámite en línea. Por encima del estándar, la conexión pide un estudio y puede requerir obras. Las cifras siguen la forma de una curva que arranca lenta y se acelera: en agosto de 2024 operaban 8 766 autogeneradores a pequeña escala con 187 MW (SER Colombia), y al cierre de 2025 el registro de la UPME contaba 24 447 techos solares, 9 360 de ellos nuevos en ese año (Ministerio de Minas y Energía). Fuera de Colombia hay evidencia de efectos de pares que resiste los controles por los factores comunes de cada zona: en California, una instalación adicional en un código postal aumenta en 0,78 puntos porcentuales la probabilidad de otra en el mismo código postal (Bollinger y Gillingham, 2012).</p>
+<p>La pregunta de la semana: <strong>si el subsidio explica solo parte de la adopción, ¿qué explica el resto?</strong> Una buena respuesta da cuenta de cuatro rasgos que la literatura documenta en otros países y que en Colombia todavía no se han medido hogar por hogar: la curva en S, el agrupamiento por barrios, la desigualdad entre quienes adoptan primero (que aquí refuerza el régimen tarifario por estrato) y la sensibilidad a las reglas que discute una red de actores.</p>
 </section>
 <section id="ruta-de-la-semana" class="level2">
 <h2 class="anchored" data-anchor-id="ruta-de-la-semana">Ruta de la semana</h2>
+<p>Cada página tiene una <strong>ruta mínima</strong>, que basta para el Laboratorio 2, el quiz y el Avance 1, y un recorrido completo que la amplía. La ficha de cada página dice qué incluye su ruta mínima.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: center;">#</th>
 <th>Concepto</th>
-<th style="text-align: center;">Tiempo</th>
+<th style="text-align: center;">Ruta mínima</th>
+<th style="text-align: center;">Página completa</th>
 <th>Página</th>
 </tr>
 </thead>
@@ -634,60 +679,77 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: center;">1</td>
 <td>Dinámica sobre redes</td>
+<td style="text-align: center;">30 min</td>
 <td style="text-align: center;">70 min</td>
 <td><a href="../semana3/01-dinamica-sobre-redes.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2</td>
 <td>Rogers y Bass: la curva en S</td>
+<td style="text-align: center;">35 min</td>
 <td style="text-align: center;">70 min</td>
 <td><a href="../semana3/02-rogers-bass.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">3</td>
 <td>Contagio simple</td>
+<td style="text-align: center;">40 min</td>
 <td style="text-align: center;">80 min</td>
 <td><a href="../semana3/03-contagio-simple.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">4</td>
 <td>Contagio complejo y umbrales</td>
-<td style="text-align: center;">70 min</td>
+<td style="text-align: center;">45 min</td>
+<td style="text-align: center;">80 min</td>
 <td><a href="../semana3/04-contagio-complejo.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
 <td>Intervenir la difusión</td>
+<td style="text-align: center;">40 min</td>
 <td style="text-align: center;">80 min</td>
 <td><a href="../semana3/05-intervenir-difusion.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">6</td>
 <td>Redes de actores y comunidades</td>
+<td style="text-align: center;">35 min</td>
 <td style="text-align: center;">70 min</td>
 <td><a href="../semana3/06-redes-actores.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">7</td>
 <td>Redes bipartitas y el mercado mayorista</td>
+<td style="text-align: center;">40 min</td>
 <td style="text-align: center;">65 min</td>
 <td><a href="../semana3/07-bipartitas-mercado.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">8</td>
 <td>Límites del enfoque de redes</td>
+<td style="text-align: center;">35 min</td>
 <td style="text-align: center;">65 min</td>
 <td><a href="../semana3/08-limites-redes.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">9</td>
 <td>La adopción solar en red (Laboratorio 2)</td>
+<td style="text-align: center;">55 min</td>
 <td style="text-align: center;">85 min</td>
 <td><a href="../semana3/09-adopcion-solar-red.html">Disponible</a></td>
 </tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><strong>5 h 55 min</strong></td>
+<td style="text-align: center;"><strong>11 h 05 min</strong></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<p>Las nueve páginas suman unas once horas. El Laboratorio 2 usa los mismos modelos y redes que estas páginas, y el Avance 1 del proyecto, que se entrega esta semana, encuentra aquí material para sus tres exigencias: el contagio entre vecinos es un lazo de refuerzo, el umbral de adopción es una no linealidad y una cascada que se dispara o se detiene es un evento extremo con mecanismo.</p>
+<p><strong>Cómo repartir las diez horas autónomas.</strong> Las nueve páginas completas no caben en la semana junto con lo que se entrega, así que el plan recomendado es este: la ruta mínima de las nueve páginas, cerca de seis horas; el Laboratorio 2, que reutiliza los modelos y las redes de estas páginas, unos 90 minutos; las lecturas de la semana (Barabási, capítulos 5, 6 y 10, y Watts, 2002), cerca de una hora, y el Avance 1, unos 90 minutos, incluidos los 40 minutos de lectura del caso guía. Suman unas diez horas. Lo que amplía cada página (el ejemplo avanzado ●●● cuando no es parte del laboratorio, la exploración libre de los simuladores, el código plegado y los ejercicios adicionales) queda para quien tenga tiempo o para preparar el informe final. Las notas en PDF de la semana son el texto de referencia: consúltelas por concepto, cuando una página remita a ellas.</p>
+<p><strong>La entrega de esta semana.</strong> El Avance 1 (1 500 palabras, 5 %) encuentra aquí material para sus tres exigencias: el contagio entre vecinos es un lazo de refuerzo, el umbral de adopción es una no linealidad y una cascada que se dispara o se detiene es un evento extremo con mecanismo. El caso guía muestra <a href="../caso-guia/03-avance-1.html">el Avance 1 de un equipo, con la realimentación que recibió</a>.</p>
 
 
 </section>
@@ -1114,14 +1176,30 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>MISE · Universidad de los Andes · Systems Analytics</p>
+<p>MISE · Universidad de los Andes · Systems Analytics. ¿Vio un error o algo confuso? Cuéntelo en el foro del curso en Bloque Neón, con el título de la página.</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+<p>Datos sintéticos con fines didácticos cuando así se indica.</p>
 </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../recursos.html" aria-current="page">
+<p>Recursos</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../glosario.html">
+<p>Glosario</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../referencias.html">
+<p>Referencias</p>
+</a>
+  </li>  
+</ul>
+    </div>
   </div>
 </footer>
 

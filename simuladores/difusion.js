@@ -66,11 +66,36 @@ export function granovetter(umbrales, {enFraccion = false, activosIniciales = 0}
   return serie;
 }
 
-/** Momentos del grado y umbrales de campo medio (SIS y SIR). */
+/** Mayor valor propio de la adyacencia (réplica de difusion.radio_espectral). Iteración de
+ *  potencias sobre A + I (el corrimiento evita la oscilación en redes bipartitas) con el
+ *  cociente de Rayleigh, que converge al doble de velocidad que el vector. */
+export function radioEspectral(g, {iteraciones = 20000, tolerancia = 1e-13} = {}) {
+  const nodos = g.nodos, n = nodos.length;
+  if (!nodos.some((v) => g.vecinos.get(v).length > 0)) return 0;
+  const indice = new Map(nodos.map((v, i) => [v, i]));
+  const vecinos = nodos.map((v) => g.vecinos.get(v).map((u) => indice.get(u)));
+  let x = new Float64Array(n).fill(1 / Math.sqrt(n)), valor = 0;
+  for (let paso = 0; paso < iteraciones; paso++) {
+    const y = Float64Array.from(x);
+    for (let i = 0; i < n; i++) for (const j of vecinos[i]) y[i] += x[j];
+    let rayleigh = 0, norma = 0;
+    for (let i = 0; i < n; i++) { rayleigh += x[i] * y[i]; norma += y[i] * y[i]; }
+    norma = Math.sqrt(norma);
+    for (let i = 0; i < n; i++) x[i] = y[i] / norma;
+    const anterior = valor;
+    valor = rayleigh - 1;
+    if (paso > 0 && Math.abs(valor - anterior) < tolerancia * Math.max(1, valor)) break;
+  }
+  return valor;
+}
+
+/** Momentos del grado y umbrales de SIS y SIR: campo medio y red fija (réplica de difusion.umbral_epidemico). */
 export function umbralEpidemico(g) {
   const k = g.nodos.map((n) => grado(g, n));
   const k1 = k.reduce((a, x) => a + x, 0) / k.length, k2 = k.reduce((a, x) => a + x * x, 0) / k.length;
-  return {k_medio: k1, k2_medio: k2, lambda_sis: k1 / k2, t_sir: k2 > k1 ? k1 / (k2 - k1) : Infinity};
+  const lambdaMax = radioEspectral(g);
+  return {k_medio: k1, k2_medio: k2, lambda_sis: k2 > 0 ? k1 / k2 : Infinity, t_sir: k2 > k1 ? k1 / (k2 - k1) : Infinity,
+    lambda_max: lambdaMax, lambda_sis_red_fija: lambdaMax > 0 ? 1 / lambdaMax : Infinity};
 }
 
 /** Siembra de k nodos: "grado", "intermediacion", "aleatoria" o "grupo" (mismas reglas que Python). */
@@ -226,13 +251,17 @@ export function bassDiscreto(p, q, m, periodos, {acumuladoInicial = 0} = {}) {
 }
 
 /** Ajuste de Bass por mínimos cuadrados (Levenberg–Marquardt con cotas).
- *  Mismas cotas que `ajustar_bass`: p en [1e-6, 1], q en [0, 5], m en [0,5·último, 100·último]
- *  o `mMaximo`; con `mFijo` solo se ajustan p y q. Devuelve p, q, m, errores y RMSE. */
+ *  Mismas cotas que `ajustar_bass`: p en [1e-6, 1], q en [0, 5] y m entre el mayor dato y
+ *  100 veces ese dato (o `mMaximo`); con `mFijo` solo se ajustan p y q. Devuelve p, q, m,
+ *  errores, RMSE y `cotas_activas`, que dice qué parámetro quedó pegado a una cota
+ *  (ese valor lo eligió el límite, no los datos). */
 export function ajustarBass(t, acumulado, {pInicial = 0.01, qInicial = 0.3, mInicial = null, mMaximo = null, mFijo = null} = {}) {
   const ultimo = Math.max(...acumulado);
   const tope = mMaximo ?? 100 * ultimo;
+  if (mFijo === null && !(tope > ultimo)) throw new Error("mMaximo debe ser mayor que el mayor dato de la serie.");
   const libres = mFijo === null ? 3 : 2;
-  const inf = [1e-6, 0, 0.5 * ultimo], sup = [1, 5, tope];
+  // m no puede ser menor que lo ya adoptado: cota inferior en el mayor dato (como ajustar_bass)
+  const inf = [1e-6, 0, ultimo], sup = [1, 5, tope];
   let x = [pInicial, qInicial, Math.min(Math.max(mInicial ?? 2 * ultimo, ultimo * 1.0001), tope * 0.999)].slice(0, libres);
   const curva = (v) => bass(v[0], v[1], mFijo ?? v[2], t).map((f) => f.acumulado);
   const residuos = (v) => curva(v).map((c, i) => c - acumulado[i]);
@@ -274,9 +303,15 @@ export function ajustarBass(t, acumulado, {pInicial = 0.01, qInicial = 0.3, mIni
   const s2 = actual / Math.max(n - libres, 1);
   const inversa = x.map((_, j) => resolver(JTJ, x.map((__, i) => (i === j ? 1 : 0))));
   const errores = x.map((_, i) => Math.sqrt(Math.max(inversa[i][i] * s2, 0)));
+  // Parámetros pegados a una cota (tolerancia relativa 1e-4, como _cotas_activas en Python)
+  const cotas_activas = {};
+  ["p", "q", "m"].slice(0, libres).forEach((nombre, i) => {
+    if (Math.abs(x[i] - inf[i]) <= 1e-4 * Math.max(Math.abs(inf[i]), 1e-6)) cotas_activas[nombre] = "inferior";
+    else if (Math.abs(x[i] - sup[i]) <= 1e-4 * Math.max(Math.abs(sup[i]), 1e-6)) cotas_activas[nombre] = "superior";
+  });
   return {p: x[0], q: x[1], m: mFijo ?? x[2], errores: {p: errores[0], q: errores[1], m: mFijo === null ? errores[2] : 0},
     correlacion_p_m: mFijo === null ? inversa[0][2] / Math.sqrt(inversa[0][0] * inversa[2][2]) : 0,
-    rmse: Math.sqrt(actual / n)};
+    rmse: Math.sqrt(actual / n), cotas_activas, m_identificado: !("m" in cotas_activas)};
 }
 
 // ----------------------------------------------------------------------
@@ -387,17 +422,9 @@ export function salidaDeNodo(red, nodo) {
 // Semillas para conjuntos de corridas
 // ----------------------------------------------------------------------
 
-/** Semilla de la corrida c de un conjunto. El generador `azar` es congruencial:
- *  con semillas consecutivas (1, 2, 3...) las primeras extracciones de cada corrida
- *  quedan casi iguales y en línea recta, y un conjunto de corridas cortas sale sesgado
- *  (el votante en una estrella de cinco nodos da 0,62 en lugar de 0,50). Esta función
- *  mezcla c con el finalizador de MurmurHash3, que no es lineal. */
-export function semillaCorrida(c, base = 0) {
-  let h = (c + base + 0x9e3779b9) | 0;
-  h = Math.imul(h ^ (h >>> 16), 0x85ebca6b);
-  h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35);
-  return ((h ^ (h >>> 16)) >>> 0) || 1;
-}
+// `semillaCorrida` vive en redes.js (la usa también sigmaMundoPequeno) y se
+// reexporta aquí para no cambiar las importaciones de las páginas.
+export {semillaCorrida} from "./redes.js";
 
 // ----------------------------------------------------------------------
 // Contagio complejo e intervención (guía S3, conceptos 4 y 5).

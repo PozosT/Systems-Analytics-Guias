@@ -39,7 +39,11 @@ export const formatoPorcentaje = (d, decimales = 0) => `${formatoNumero(decimale
  */
 export function simular(modelo, {tFinal, paso = 0.05, metodo = "rk4", tInicial = 0} = {}) {
   const nombres = modelo.stocks.map((s) => s.nombre);
-  const numeroPasos = Math.round((tFinal - tInicial) / paso);
+  // Misma malla que mise_sd.core.malla_temporal: si el horizonte no es
+  // múltiplo del paso, el último paso es parcial y termina en tFinal.
+  const instantes = malla(tFinal, paso, tInicial);
+  const numeroPasos = instantes.length - 1;
+  const parcial = numeroPasos > 0 && instantes[numeroPasos] !== tInicial + numeroPasos * paso;
   let y = modelo.stocks.map((s) => s.inicial);
   const tiempo = [];
   const variables = {};
@@ -63,18 +67,19 @@ export function simular(modelo, {tFinal, paso = 0.05, metodo = "rk4", tInicial =
   };
 
   for (let k = 0; k <= numeroPasos; k++) {
-    const t = tInicial + k * paso;
+    const t = instantes[k];
     registrar(t, y);
     if (k === numeroPasos) break;
+    const h = parcial && k === numeroPasos - 1 ? instantes[k + 1] - t : paso;
     if (metodo === "euler") {
       const d = derivadas(t, y);
-      y = y.map((v, i) => v + paso * d[i]);
+      y = y.map((v, i) => v + h * d[i]);
     } else {
       const k1 = derivadas(t, y);
-      const k2 = derivadas(t + paso / 2, y.map((v, i) => v + paso / 2 * k1[i]));
-      const k3 = derivadas(t + paso / 2, y.map((v, i) => v + paso / 2 * k2[i]));
-      const k4 = derivadas(t + paso, y.map((v, i) => v + paso * k3[i]));
-      y = y.map((v, i) => v + paso / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]));
+      const k2 = derivadas(t + h / 2, y.map((v, i) => v + h / 2 * k1[i]));
+      const k3 = derivadas(t + h / 2, y.map((v, i) => v + h / 2 * k2[i]));
+      const k4 = derivadas(t + h, y.map((v, i) => v + h * k3[i]));
+      y = y.map((v, i) => v + h / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]));
     }
   }
   return {tiempo, variables};
@@ -94,8 +99,17 @@ export function filasLargas(resultado, nombres, etiquetas = {}) {
 // Funciones de entrada y retardos (réplica de mise_sd.retardos)
 // ----------------------------------------------------------------------
 
-export const malla = (tFinal, paso, tInicial = 0) =>
-  Array.from({length: Math.round((tFinal - tInicial) / paso) + 1}, (_, k) => tInicial + k * paso);
+/** Malla de tInicial a tFinal (réplica de mise_sd.core.malla_temporal): si el horizonte
+ *  no es múltiplo del paso, agrega un último paso parcial que termina en tFinal. */
+export function malla(tFinal, paso, tInicial = 0) {
+  if (!(paso > 0)) throw new Error("El paso debe ser positivo.");
+  if (!(tFinal > tInicial)) throw new Error("tFinal debe ser mayor que tInicial.");
+  const cociente = (tFinal - tInicial) / paso, entero = Math.round(cociente);
+  if (Math.abs(cociente - entero) <= 1e-9 * Math.max(1, cociente))
+    return Array.from({length: entero + 1}, (_, k) => tInicial + k * paso);
+  const completos = Math.floor(cociente);
+  return [...Array.from({length: completos + 1}, (_, k) => tInicial + k * paso), tFinal];
+}
 
 export const escalon = (tiempo, tInicio = 0, altura = 1, base = 0) =>
   tiempo.map((t) => (t >= tInicio ? base + altura : base));
@@ -105,7 +119,19 @@ const EPS = 1e-9;
 export const pulso = (tiempo, tInicio, duracion, altura = 1, base = 0) =>
   tiempo.map((t) => (t >= tInicio - EPS && t < tInicio + duracion - EPS ? base + altura : base));
 
+/** Euler explícito diverge si el paso llega al doble de la constante de cada etapa
+ *  (réplica de `_verificar_paso_euler`; en el navegador no se emite la advertencia
+ *  de oscilación, solo el error). */
+function _verificarPasoEuler(tiempo, tauEtapa, nombre) {
+  let paso = 0;
+  for (let k = 0; k < tiempo.length - 1; k++) paso = Math.max(paso, tiempo[k + 1] - tiempo[k]);
+  if (tiempo.length > 1 && paso >= 2 * tauEtapa)
+    throw new Error(`${nombre}: el paso ${paso} es mayor o igual que el doble de la constante de cada etapa (${tauEtapa}); Euler explícito diverge.`);
+}
+
 export function retardoPrimerOrden(tiempo, entrada, tau, salidaInicial = null) {
+  if (!(tau > 0)) throw new Error("La constante de tiempo tau debe ser positiva.");
+  _verificarPasoEuler(tiempo, tau, "retardoPrimerOrden");
   const salida = [salidaInicial ?? entrada[0]];
   for (let k = 0; k < tiempo.length - 1; k++) {
     const paso = tiempo[k + 1] - tiempo[k];
@@ -114,17 +140,19 @@ export function retardoPrimerOrden(tiempo, entrada, tau, salidaInicial = null) {
   return salida;
 }
 
+/** Retardo de orden n (réplica de retardo_orden_n): todas las etapas se alimentan
+ *  con los valores del paso anterior, así el retardo medio discreto es exactamente tau. */
 export function retardoOrdenN(tiempo, entrada, tau, n = 3, salidaInicial = null) {
-  const etapas = Array(n).fill(salidaInicial ?? entrada[0]);
+  if (!(Number.isInteger(n) && n >= 1)) throw new Error("El orden n debe ser un entero positivo.");
+  if (!(tau > 0)) throw new Error("La constante de tiempo tau debe ser positiva.");
   const tauEtapa = tau / n;
+  _verificarPasoEuler(tiempo, tauEtapa, "retardoOrdenN");
+  let etapas = Array(n).fill(salidaInicial ?? entrada[0]);
   const salida = [etapas[n - 1]];
   for (let k = 0; k < tiempo.length - 1; k++) {
     const paso = tiempo[k + 1] - tiempo[k];
-    let alimentacion = entrada[k];
-    for (let j = 0; j < n; j++) {
-      etapas[j] = etapas[j] + paso * (alimentacion - etapas[j]) / tauEtapa;
-      alimentacion = etapas[j];
-    }
+    const alimentaciones = [entrada[k], ...etapas.slice(0, n - 1)];
+    etapas = etapas.map((s, j) => s + paso * (alimentaciones[j] - s) / tauEtapa);
     salida.push(etapas[n - 1]);
   }
   return salida;
@@ -188,159 +216,456 @@ export function area(tiempo, serie) {
 // Modelos canónicos (réplica de mise_sd.modelos)
 // ----------------------------------------------------------------------
 
+/** Energía [GWh] que entrega 1 MW operando un año completo (réplica de mise_sd.modelos.GWH_POR_MW_ANIO). */
+export const GWH_POR_MW_ANIO = 8.76;
+
+/** Factor estacional continuo de los aportes, media 1 por año (réplica de factor_estacional_aportes). */
+export const factorEstacionalAportes = (t, amplitud) => (amplitud === 0 ? 1
+  : 1 + amplitud * (Math.cos(4 * Math.PI * t - 1.5 * Math.PI) + 0.5 * Math.cos(2 * Math.PI * t - 1.25 * Math.PI)));
+
+/** Margen de energía en el equilibrio de referencia (réplica de mise_sd.modelos.margen_energia_referencia). */
+export const margenEnergiaReferencia = ({participacion_hidraulica = 0.65, factor_aportes = 0.62, disponibilidad_termica = 0.85,
+  participacion_hidraulica_referencia = 0.80} = {}) => participacion_hidraulica_referencia
+  + disponibilidad_termica * (1 - participacion_hidraulica) * participacion_hidraulica_referencia
+  / (factor_aportes * participacion_hidraulica) - 1;
+
+/** Curva de precio del modelo ancla: valor del agua por margen de energía (réplica de precio_bolsa_energia). */
+export const precioBolsaEnergia = (nivel, margen, {precio_referencia = 150, nivel_referencia = 0.65, sensibilidad_precio = 3,
+  sensibilidad_margen = 1, margen_referencia = null} = {}) => precio_referencia * Math.exp(
+  -sensibilidad_precio * (nivel - nivel_referencia)
+  - sensibilidad_margen * (margen - (margen_referencia ?? margenEnergiaReferencia())));
+
 export const PARAMETROS_CICLO = {
-  capacidad_inicial: 12000, proyectos_iniciales: 2500, demanda_inicial: 8000,
-  crecimiento_demanda: 0.03, margen_objetivo: 0.30, retardo_constructor: 4,
-  vida_util: 30, precio_referencia: 150, sensibilidad_precio: 4,
-  elasticidad_inversion: 3, elasticidad_demanda: 0, peso_cartera: 0,
+  // Stocks iniciales (año 0 ≈ 2000)
+  capacidad_inicial: 12700, proyectos_iniciales: 1500, demanda_inicial: 41500, nivel_embalse_inicial: 0.65,
+  precio_esperado_inicial: null,
+  // Demanda e inversión
+  crecimiento_demanda: 0.03, elasticidad_demanda: 0, retardo_constructor: 4, vida_util: 30,
+  // Parque y embalse
+  participacion_hidraulica: 0.65, factor_aportes: 0.62, regulacion_embalse: 1.5, disponibilidad_termica: 0.85,
+  participacion_hidraulica_referencia: 0.80, nivel_referencia: 0.65, factor_carga: 0.80,
+  // Precio y expectativas
+  precio_referencia: 150, sensibilidad_precio: 3, sensibilidad_margen: 1, precio_escasez: 400,
+  elasticidad_inversion: 3, tiempo_expectativas: 1, respuesta_maxima_inversion: 10, peso_cartera: 0,
+  // Hidrología (El Niño y estacionalidad apagados por omisión)
+  periodo_nino: 0, duracion_nino: 1, intensidad_nino: 0.35, fase_nino: 15, rampa_nino: 0.25,
+  amplitud_estacional: 0, factor_hidrologico: null,
 };
 
-/** Modelo de tres stocks del ciclo inversión-capacidad (semana 4). */
+/** Ciclo inversión-capacidad con energía embalsada, cinco stocks (semana 4; réplica de mise_sd.modelos.ciclo_inversion_capacidad). */
 export function cicloInversionCapacidad(parametros = {}) {
   const p = {...PARAMETROS_CICLO, ...parametros};
+  const h = p.participacion_hidraulica, rRef = p.participacion_hidraulica_referencia, c = GWH_POR_MW_ANIO;
+  const capacidadPorDemanda = rRef / (c * p.factor_aportes * h);
+  const hidrologia = p.factor_hidrologico ?? ((t) =>
+    (1 - p.intensidad_nino * pulsoNino(t, p.periodo_nino, p.duracion_nino, p.fase_nino, p.rampa_nino))
+    * factorEstacionalAportes(t, p.amplitud_estacional));
   return {
     nombre: "ciclo_inversion_capacidad",
     constantes: {
+      gwh_por_mw_anio: c,
       crecimiento_demanda_anual: p.crecimiento_demanda,
-      margen_objetivo: p.margen_objetivo,
+      elasticidad_demanda: p.elasticidad_demanda,
       retardo_constructor: p.retardo_constructor,
       vida_util: p.vida_util,
+      participacion_hidraulica: h,
+      factor_aportes: p.factor_aportes,
+      regulacion_embalse: p.regulacion_embalse,
+      disponibilidad_termica: p.disponibilidad_termica,
+      participacion_hidraulica_referencia: rRef,
+      nivel_referencia: p.nivel_referencia,
+      factor_carga: p.factor_carga,
       precio_referencia: p.precio_referencia,
       sensibilidad_precio: p.sensibilidad_precio,
+      sensibilidad_margen: p.sensibilidad_margen,
+      precio_escasez: p.precio_escasez,
       elasticidad_inversion: p.elasticidad_inversion,
-      elasticidad_demanda: p.elasticidad_demanda,
+      tiempo_expectativas: p.tiempo_expectativas,
+      respuesta_maxima_inversion: p.respuesta_maxima_inversion,
       peso_cartera: p.peso_cartera,
-      tasa_inversion_referencia: 1 / p.vida_util + p.crecimiento_demanda,
+      capacidad_por_demanda: capacidadPorDemanda,
+      margen_energia_referencia: margenEnergiaReferencia(p),
+      tasa_inversion_referencia: (1 / p.vida_util + p.crecimiento_demanda) * (1 + p.crecimiento_demanda * p.retardo_constructor),
     },
     stocks: [
       {nombre: "capacidad_instalada", inicial: p.capacidad_inicial,
         entradas: ["puesta_en_servicio"], salidas: ["retiros"]},
       {nombre: "proyectos_en_construccion", inicial: p.proyectos_iniciales,
         entradas: ["inicio_proyectos"], salidas: ["puesta_en_servicio"]},
-      {nombre: "demanda", inicial: p.demanda_inicial,
-        entradas: ["crecimiento_demanda"], salidas: []},
+      {nombre: "demanda", inicial: p.demanda_inicial, entradas: ["crecimiento_demanda"], salidas: []},
+      {nombre: "energia_embalsada", inicial: p.nivel_embalse_inicial * p.regulacion_embalse * h * p.capacidad_inicial,
+        entradas: ["aportes"], salidas: ["turbinamiento", "vertimiento"]},
+      {nombre: "precio_esperado", inicial: p.precio_esperado_inicial ?? p.precio_referencia,
+        entradas: ["ajuste_expectativa"], salidas: []},
     ],
     auxiliares: [
-      ["margen_reserva", (t, e) => (e.capacidad_instalada - e.demanda) / e.demanda],
-      ["precio_bolsa", (t, e) => e.precio_referencia
-        * Math.exp(-e.sensibilidad_precio * (e.margen_reserva - e.margen_objetivo))],
-      ["margen_percibido", (t, e) => e.margen_reserva + e.peso_cartera * (e.proyectos_en_construccion
-        - e.retardo_constructor * e.tasa_inversion_referencia * e.capacidad_instalada) / e.demanda],
-      ["precio_percibido", (t, e) => e.precio_referencia
-        * Math.exp(-e.sensibilidad_precio * (e.margen_percibido - e.margen_objetivo))],
+      ["capacidad_hidraulica", (t, e) => e.participacion_hidraulica * e.capacidad_instalada],
+      ["capacidad_termica", (t, e) => (1 - e.participacion_hidraulica) * e.capacidad_instalada],
+      ["capacidad_embalse", (t, e) => e.regulacion_embalse * e.capacidad_hidraulica],
+      ["nivel_embalse", (t, e) => e.energia_embalsada / Math.max(e.capacidad_embalse, 1e-9)],
+      ["factor_hidrologico", (t, e) => hidrologia(t)],
+      ["aportes_medios", (t, e) => e.factor_aportes * e.gwh_por_mw_anio * e.capacidad_hidraulica],
+      ["generacion_hidraulica_maxima", (t, e) => e.gwh_por_mw_anio * e.capacidad_hidraulica],
+      ["generacion_termica_maxima", (t, e) => e.disponibilidad_termica * e.gwh_por_mw_anio * e.capacidad_termica],
+      ["turbinamiento_regla", (t, e) => e.demanda * e.participacion_hidraulica_referencia
+        * Math.max(e.nivel_embalse, 0) / e.nivel_referencia],
+      ["margen_energia", (t, e) => (e.aportes_medios * e.factor_hidrologico + e.generacion_termica_maxima
+        - e.demanda) / e.demanda],
+      ["precio_bolsa", (t, e) => e.precio_referencia * Math.exp(
+        -e.sensibilidad_precio * (e.nivel_embalse - e.nivel_referencia)
+        - e.sensibilidad_margen * (e.margen_energia - e.margen_energia_referencia))],
+      ["demanda_pico", (t, e) => e.demanda / (e.gwh_por_mw_anio * e.factor_carga)],
+      ["margen_reserva", (t, e) => (e.capacidad_instalada - e.demanda_pico) / e.demanda_pico],
+      ["capacidad_referencia", (t, e) => e.capacidad_por_demanda * e.demanda],
+      ["cartera_normal", (t, e) => e.retardo_constructor * (1 / e.vida_util + e.crecimiento_demanda_anual)
+        * e.capacidad_referencia],
+      ["multiplicador_inversion", (t, e) => {
+        const cociente = (Math.max(e.precio_esperado, 0) / e.precio_referencia) ** e.elasticidad_inversion;
+        const tope = e.respuesta_maxima_inversion;
+        return tope * cociente / (tope - 1 + cociente);
+      }],
     ],
     flujos: [
-      ["inicio_proyectos", (t, e) => e.tasa_inversion_referencia * e.capacidad_instalada
-        * (e.precio_percibido / e.precio_referencia) ** e.elasticidad_inversion],
+      ["aportes", (t, e) => e.aportes_medios * e.factor_hidrologico],
+      ["turbinamiento", (t, e) => Math.min(e.generacion_hidraulica_maxima, e.demanda, e.turbinamiento_regla)],
+      ["vertimiento", (t, e) => Math.max(0, e.aportes - e.turbinamiento) * Math.max(e.nivel_embalse, 0) ** 2],
+      ["generacion_termica", (t, e) => Math.min(e.generacion_termica_maxima, Math.max(0, e.demanda - e.turbinamiento))],
+      ["deficit", (t, e) => e.demanda - e.turbinamiento - e.generacion_termica],
+      ["inicio_proyectos", (t, e) => Math.max(0, e.tasa_inversion_referencia * e.capacidad_referencia
+        * e.multiplicador_inversion
+        - e.peso_cartera * (e.proyectos_en_construccion - e.cartera_normal) / e.retardo_constructor)],
       ["puesta_en_servicio", (t, e) => e.proyectos_en_construccion / e.retardo_constructor],
       ["retiros", (t, e) => e.capacidad_instalada / e.vida_util],
       ["crecimiento_demanda", (t, e) => e.crecimiento_demanda_anual * e.demanda
         * (e.precio_bolsa / e.precio_referencia) ** (-e.elasticidad_demanda)],
+      ["ajuste_expectativa", (t, e) => (e.precio_bolsa - e.precio_esperado) / e.tiempo_expectativas],
     ],
   };
 }
 
 export const PARAMETROS_MERCADO = {
-  capacidad_firme_inicial: 13000, proyectos_firme_iniciales: 2700, retardo_constructor_firme: 4, vida_util_firme: 30,
+  // Segmento firme: hereda el modelo de la semana 4 (año 0 ≈ 2015)
+  capacidad_firme_inicial: 16400, proyectos_firme_iniciales: 3000, demanda_inicial: 66000, nivel_embalse_inicial: 0.65,
+  precio_esperado_inicial: null, crecimiento_demanda: 0.03, elasticidad_demanda: 0, retardo_constructor_firme: 4,
+  vida_util_firme: 30, participacion_hidraulica: 0.65, factor_aportes: 0.62, regulacion_embalse: 1.5,
+  disponibilidad_termica: 0.85, participacion_hidraulica_referencia: 0.80, nivel_referencia: 0.65, factor_carga: 0.80,
+  precio_referencia: 150, sensibilidad_precio: 3, sensibilidad_margen: 1, elasticidad_inversion: 3,
+  tiempo_expectativas: 1, expectativa_logaritmica: true, respuesta_maxima_inversion: 10, peso_cartera: 0,
+  // Hidrología: El Niño reduce los aportes (apagado por omisión)
+  periodo_nino: 0, duracion_nino: 1.5, intensidad_nino: 0.35, fase_nino: 8, rampa_nino: 0.25, amplitud_estacional: 0,
+  factor_hidrologico: null,
+  // Energía firme del segmento firme (ENFICC estilizada)
+  aportes_criticos: 0.45, duracion_critica: 2,
+  // Segmento FNCER
   capacidad_fncer_inicial: 100, proyectos_fncer_iniciales: 50, retardo_constructor_fncer: 1.5, vida_util_fncer: 25,
-  costo_fncer_inicial: 300, tasa_aprendizaje: 0.20, credito_capacidad_fncer: 0.30, elasticidad_fncer: 3,
-  semilla_mercado_fncer: 200, canibalizacion: 2,
-  demanda_inicial: 11000, crecimiento_demanda: 0.03, margen_objetivo: 0.30, precio_referencia: 150,
-  sensibilidad_precio: 4, elasticidad_inversion: 3,
-  periodo_nino: 0, duracion_nino: 1.5, intensidad_nino: 0.10,
-  prima_cxc: 0, subasta_fncer: 0, impuesto_carbono: 0, inicio_subasta: 0, duracion_subasta: null,
-  meta_subasta_firme: 0, tiempo_ajuste_subasta: 2, congestion_social: 0,
+  factor_planta_fncer: 0.24, firmeza_fncer: 0.5, participacion_referencia_fncer: 0.05, elasticidad_fncer: 2,
+  costo_fncer_inicial: 125, fraccion_costo_local: 0.35, caida_costo_global: 0.15, piso_costo_global: 50,
+  tasa_aprendizaje: 0.10, canibalizacion: 2.5, limite_vertimiento: 0.25,
+  // Cargo por Confiabilidad, subasta FNCER, impuesto
+  prima_cxc: 0, inicio_cargo: 0, duracion_cargo: null, precio_escasez: 400, meta_subasta_firme: 0, tiempo_ajuste_subasta: 2,
+  banda_curva_demanda: 0.04, subasta_fncer: 0, inicio_subasta: 0, duracion_subasta: null, duracion_contratos: 20,
+  impuesto_carbono: 0,
+  // Consulta: congestión, abandono y confianza (semana 6)
+  congestion_social: 0, umbral_espera: 5, tiempo_abandono: 2, ancho_abandono: 1,
+  usar_confianza: false, confianza_inicial: 0.6, confianza_referencia: null, plazo_tolerado: 4, tiempo_erosion: 1,
+  sensibilidad_incumplimiento: 5, tiempo_recuperacion: 4, transferencias_comunidades: 0, transferencias_referencia: 0.02,
+  fraccion_institucional: 0.5,
 };
 
-/** Ciclo con CxC, FNCER y aprendizaje (semana 5; réplica de mise_sd.modelos.mercado_con_politicas). */
+const rampaCoseno = (x, ancho) => (x <= 0 ? 0 : x >= ancho ? 1 : 0.5 * (1 - Math.cos(Math.PI * x / ancho)));
+
+/** Intensidad relativa de El Niño en t (0 a 1), con bordes de coseno (réplica de mise_sd.modelos.pulso_nino). */
+export function pulsoNino(t, periodo, duracion, fase, rampa) {
+  if (periodo <= 0 || duracion <= 0) return 0;
+  const inicio = fase - rampa / 2;
+  if (t < inicio) return 0;
+  const desfase = (t - inicio) % periodo;
+  if (rampa <= 0) return desfase < duracion ? 1 : 0;
+  return rampaCoseno(desfase, rampa) * rampaCoseno(duracion + rampa - desfase, rampa);
+}
+
+/** ENFICC estilizada del segmento firme [GWh/año por MW] (réplica de mise_sd.modelos.energia_firme_por_mw). */
+export const energiaFirmePorMw = ({participacion_hidraulica = 0.65, factor_aportes = 0.62, regulacion_embalse = 1.5,
+  disponibilidad_termica = 0.85, aportes_criticos = 0.45, duracion_critica = 2} = {}) =>
+  disponibilidad_termica * GWH_POR_MW_ANIO * (1 - participacion_hidraulica)
+  + aportes_criticos * factor_aportes * GWH_POR_MW_ANIO * participacion_hidraulica
+  + regulacion_embalse * participacion_hidraulica / duracion_critica;
+
+/** Multiplicador M r^ε / (M − 1 + r^ε) (réplica de mise_sd.modelos._respuesta_saturada). */
+const respuestaSaturada = (cociente, elasticidad, tope) => {
+  const potencia = Math.max(cociente, 0) ** elasticidad;
+  return tope * potencia / (tope - 1 + potencia);
+};
+
+/**
+ * Modelo de la semana 5: el de la semana 4 con FNCER, Cargo por Confiabilidad, subastas, impuesto y consulta
+ * (versión 2; réplica de mise_sd.modelos.mercado_con_politicas). Mismos nombres y ecuaciones que en Python.
+ */
 export function mercadoConPoliticas(parametros = {}) {
   const p = {...PARAMETROS_MERCADO, ...parametros};
-  const acumuladaInicial = Math.max(p.capacidad_fncer_inicial, 1);
+  const h = p.participacion_hidraulica, rRef = p.participacion_hidraulica_referencia, c = GWH_POR_MW_ANIO, g = p.crecimiento_demanda;
+  const hidrologia = p.factor_hidrologico ?? ((t) =>
+    (1 - p.intensidad_nino * pulsoNino(t, p.periodo_nino, p.duracion_nino, p.fase_nino, p.rampa_nino))
+    * factorEstacionalAportes(t, p.amplitud_estacional));
+  const ajuste = (stock, senal) => (t, e) => (e.expectativa_logaritmica > 0
+    ? e[stock] * Math.log(Math.max(e[senal], 1e-9) / e[stock]) / e.tiempo_expectativas
+    : (e[senal] - e[stock]) / e.tiempo_expectativas);
   return {
     nombre: "mercado_con_politicas",
     constantes: {
-      crecimiento_demanda_anual: p.crecimiento_demanda, margen_objetivo: p.margen_objetivo,
-      retardo_firme: p.retardo_constructor_firme, retardo_fncer: p.retardo_constructor_fncer,
-      vida_firme: p.vida_util_firme, vida_fncer: p.vida_util_fncer,
-      precio_referencia: p.precio_referencia, sensibilidad_precio: p.sensibilidad_precio,
-      elasticidad_inversion: p.elasticidad_inversion, elasticidad_fncer: p.elasticidad_fncer,
-      credito_fncer: p.credito_capacidad_fncer, costo_fncer_inicial: p.costo_fncer_inicial,
-      fncer_acumulada_inicial: acumuladaInicial, exponente_wright: Math.log2(1 / (1 - p.tasa_aprendizaje)),
-      semilla_fncer: p.semilla_mercado_fncer, canibalizacion: p.canibalizacion,
-      tasa_firme: 1 / p.vida_util_firme + p.crecimiento_demanda, tasa_fncer: 1 / p.vida_util_fncer + p.crecimiento_demanda,
-      prima_cxc: p.prima_cxc, subasta_fncer: p.subasta_fncer, impuesto_carbono: p.impuesto_carbono,
-      inicio_subasta: p.inicio_subasta, fin_subasta: p.duracion_subasta === null ? Infinity : p.inicio_subasta + p.duracion_subasta,
+      gwh_por_mw_anio: c, crecimiento_demanda_anual: g, elasticidad_demanda: p.elasticidad_demanda,
+      retardo_constructor: p.retardo_constructor_firme, vida_util: p.vida_util_firme, participacion_hidraulica: h,
+      factor_aportes: p.factor_aportes, regulacion_embalse: p.regulacion_embalse, disponibilidad_termica: p.disponibilidad_termica,
+      participacion_hidraulica_referencia: rRef, nivel_referencia: p.nivel_referencia, factor_carga: p.factor_carga,
+      precio_referencia: p.precio_referencia, sensibilidad_precio: p.sensibilidad_precio, sensibilidad_margen: p.sensibilidad_margen,
+      precio_escasez: p.precio_escasez, elasticidad_inversion: p.elasticidad_inversion, tiempo_expectativas: p.tiempo_expectativas,
+      expectativa_logaritmica: p.expectativa_logaritmica ? 1 : 0, respuesta_maxima_inversion: p.respuesta_maxima_inversion,
+      peso_cartera: p.peso_cartera, capacidad_por_demanda: rRef / (c * p.factor_aportes * h),
+      margen_energia_referencia: margenEnergiaReferencia(p),
+      tasa_inversion_referencia: (1 / p.vida_util_firme + g) * (1 + g * p.retardo_constructor_firme),
       periodo_nino: p.periodo_nino, duracion_nino: p.duracion_nino, intensidad_nino: p.intensidad_nino,
+      fase_nino: p.fase_nino, rampa_nino: p.rampa_nino,
+      energia_firme_por_mw: energiaFirmePorMw(p),
+      retardo_fncer: p.retardo_constructor_fncer, vida_fncer: p.vida_util_fncer, factor_planta_fncer: p.factor_planta_fncer,
+      firmeza_fncer: p.firmeza_fncer, participacion_referencia_fncer: p.participacion_referencia_fncer,
+      elasticidad_fncer: p.elasticidad_fncer,
+      tasa_inversion_fncer: (1 / p.vida_util_fncer + g) * (1 + g * p.retardo_constructor_fncer),
+      canibalizacion: p.canibalizacion, limite_vertimiento: p.limite_vertimiento,
+      costo_global_inicial: p.costo_fncer_inicial * (1 - p.fraccion_costo_local),
+      costo_local_inicial: p.costo_fncer_inicial * p.fraccion_costo_local,
+      caida_costo_global: p.caida_costo_global, piso_costo_global: p.piso_costo_global,
+      exponente_wright: Math.log2(1 / (1 - p.tasa_aprendizaje)), fncer_acumulada_inicial: Math.max(p.capacidad_fncer_inicial, 1),
+      prima_cxc: p.prima_cxc, inicio_cargo: p.inicio_cargo,
+      fin_cargo: p.duracion_cargo === null ? Infinity : p.inicio_cargo + p.duracion_cargo,
       meta_subasta_firme: p.meta_subasta_firme, tiempo_ajuste_subasta: p.tiempo_ajuste_subasta,
-      congestion_social: p.congestion_social,
+      banda_curva_demanda: p.banda_curva_demanda, subasta_fncer: p.subasta_fncer, inicio_subasta: p.inicio_subasta,
+      fin_subasta: p.duracion_subasta === null ? Infinity : p.inicio_subasta + p.duracion_subasta,
+      duracion_contratos: p.duracion_contratos, impuesto_carbono: p.impuesto_carbono,
+      congestion_social: p.congestion_social, umbral_espera: p.umbral_espera, tiempo_abandono: p.tiempo_abandono,
+      ancho_abandono: p.ancho_abandono, usar_confianza: p.usar_confianza ? 1 : 0,
+      confianza_referencia: p.confianza_referencia ?? p.confianza_inicial, plazo_tolerado: p.plazo_tolerado,
+      tiempo_erosion: p.tiempo_erosion, sensibilidad_incumplimiento: p.sensibilidad_incumplimiento,
+      tiempo_recuperacion: p.tiempo_recuperacion, transferencias_comunidades: p.transferencias_comunidades,
+      transferencias_referencia: p.transferencias_referencia, fraccion_institucional: p.fraccion_institucional,
     },
     stocks: [
       {nombre: "capacidad_firme", inicial: p.capacidad_firme_inicial, entradas: ["puesta_firme"], salidas: ["retiros_firme"]},
       {nombre: "proyectos_firme", inicial: p.proyectos_firme_iniciales, entradas: ["inicios_firme"], salidas: ["puesta_firme"]},
-      {nombre: "capacidad_fncer", inicial: p.capacidad_fncer_inicial, entradas: ["puesta_fncer"], salidas: ["retiros_fncer"]},
-      {nombre: "proyectos_fncer", inicial: p.proyectos_fncer_iniciales, entradas: ["inicios_fncer"], salidas: ["puesta_fncer"]},
-      {nombre: "fncer_acumulada", inicial: acumuladaInicial, entradas: ["puesta_fncer_acumulada"], salidas: []},
       {nombre: "demanda", inicial: p.demanda_inicial, entradas: ["crecimiento_demanda"], salidas: []},
+      {nombre: "energia_embalsada", inicial: p.nivel_embalse_inicial * p.regulacion_embalse * h * p.capacidad_firme_inicial,
+        entradas: ["aportes"], salidas: ["turbinamiento", "vertimiento"]},
+      {nombre: "precio_esperado", inicial: p.precio_esperado_inicial ?? p.precio_referencia, entradas: ["ajuste_precio_esperado"], salidas: []},
+      {nombre: "capacidad_fncer", inicial: p.capacidad_fncer_inicial, entradas: ["puesta_fncer"], salidas: ["retiros_fncer"]},
+      {nombre: "proyectos_fncer", inicial: p.proyectos_fncer_iniciales, entradas: ["inicios_fncer"], salidas: ["puesta_fncer", "abandono_fncer"]},
+      {nombre: "fncer_acumulada", inicial: Math.max(p.capacidad_fncer_inicial, 1), entradas: ["puesta_fncer_acumulada"], salidas: []},
+      {nombre: "ingreso_esperado_fncer", inicial: p.precio_referencia, entradas: ["ajuste_ingreso_fncer"], salidas: []},
+      {nombre: "proyectos_subastados", inicial: 0, entradas: ["adjudicacion_fncer"], salidas: ["puesta_subastada", "abandono_subastado"]},
+      {nombre: "valor_cartera_subastada", inicial: 0, entradas: ["valor_adjudicado"], salidas: ["valor_puesto", "valor_abandonado"]},
+      {nombre: "contratos_fncer", inicial: 0, entradas: ["puesta_subastada"], salidas: ["vencimiento_contratos"]},
+      {nombre: "valor_contratos", inicial: 0, entradas: ["valor_puesto"], salidas: ["valor_vencido"]},
+      {nombre: "confianza", inicial: p.confianza_inicial, entradas: ["recuperacion_confianza"], salidas: ["erosion_confianza"]},
     ],
     auxiliares: [
-      ["capacidad_equivalente", (t, e) => e.capacidad_firme + e.credito_fncer * e.capacidad_fncer],
-      ["factor_nino", (t, e) => 1 + (e.periodo_nino > 0 && (t % e.periodo_nino) < e.duracion_nino ? e.intensidad_nino : 0)],
-      ["demanda_efectiva", (t, e) => e.demanda * e.factor_nino],
-      ["margen_reserva", (t, e) => (e.capacidad_equivalente - e.demanda_efectiva) / e.demanda_efectiva],
-      ["precio_bolsa", (t, e) => e.precio_referencia * Math.exp(-e.sensibilidad_precio * (e.margen_reserva - e.margen_objetivo))],
-      ["costo_fncer", (t, e) => e.costo_fncer_inicial * (e.fncer_acumulada / e.fncer_acumulada_inicial) ** (-e.exponente_wright)],
-      ["penetracion_fncer", (t, e) => e.capacidad_fncer / e.demanda],
-      ["precio_capturado_fncer", (t, e) => e.precio_bolsa * Math.exp(-e.canibalizacion * e.penetracion_fncer)],
-      ["ingreso_firme", (t, e) => Math.max(e.precio_bolsa + e.prima_cxc - e.impuesto_carbono, 1)],
-      ["margen_proyectado", (t, e) => e.margen_reserva
-        + (e.proyectos_firme - e.retardo_firme * e.tasa_firme * e.capacidad_firme) / e.demanda_efectiva],
-      ["subasta_firme", (t, e) => e.meta_subasta_firme > 0
-        ? Math.max(0, e.meta_subasta_firme - e.margen_proyectado) * e.demanda_efectiva / e.tiempo_ajuste_subasta : 0],
-      ["retardo_fncer_efectivo", (t, e) => e.retardo_fncer + e.congestion_social * e.proyectos_fncer / 1000],
+      // Parque firme y embalse (semana 4)
+      ["capacidad_hidraulica", (t, e) => e.participacion_hidraulica * e.capacidad_firme],
+      ["capacidad_termica", (t, e) => (1 - e.participacion_hidraulica) * e.capacidad_firme],
+      ["capacidad_embalse", (t, e) => e.regulacion_embalse * e.capacidad_hidraulica],
+      ["nivel_embalse", (t, e) => e.energia_embalsada / Math.max(e.capacidad_embalse, 1e-9)],
+      ["factor_hidrologico", (t, e) => hidrologia(t)],
+      ["factor_nino", (t, e) => pulsoNino(t, e.periodo_nino, e.duracion_nino, e.fase_nino, e.rampa_nino)],
+      ["aportes_medios", (t, e) => e.factor_aportes * e.gwh_por_mw_anio * e.capacidad_hidraulica],
+      ["generacion_hidraulica_maxima", (t, e) => e.gwh_por_mw_anio * e.capacidad_hidraulica],
+      ["generacion_termica_maxima", (t, e) => e.disponibilidad_termica * e.gwh_por_mw_anio * e.capacidad_termica],
+      // FNCER: energía, vertimiento y demanda residual
+      ["energia_fncer_nominal", (t, e) => e.gwh_por_mw_anio * e.factor_planta_fncer * e.capacidad_fncer],
+      ["participacion_energia_fncer", (t, e) => e.energia_fncer_nominal / e.demanda],
+      ["participacion_aprovechada_fncer", (t, e) => e.participacion_energia_fncer
+        * (1 + (e.participacion_energia_fncer / e.limite_vertimiento) ** 4) ** -0.25],
+      ["fraccion_aprovechada", (t, e) => (e.participacion_energia_fncer > 1e-12
+        ? e.participacion_aprovechada_fncer / e.participacion_energia_fncer : 1)],
+      ["generacion_fncer", (t, e) => e.participacion_aprovechada_fncer * e.demanda],
+      ["vertimiento_fncer", (t, e) => e.energia_fncer_nominal - e.generacion_fncer],
+      ["demanda_residual", (t, e) => Math.max(0, e.demanda - e.generacion_fncer)],
+      ["turbinamiento_regla", (t, e) => e.demanda_residual * e.participacion_hidraulica_referencia
+        * Math.max(e.nivel_embalse, 0) / e.nivel_referencia],
+      // Margen de energía, despacho y precio
+      ["margen_energia", (t, e) => (e.aportes_medios * e.factor_hidrologico + e.generacion_termica_maxima + e.generacion_fncer
+        - e.demanda) / e.demanda],
+      ["turbinamiento_despacho", (t, e) => Math.min(e.generacion_hidraulica_maxima, e.demanda_residual, e.turbinamiento_regla)],
+      ["generacion_termica_despacho", (t, e) => Math.min(e.generacion_termica_maxima,
+        Math.max(0, e.demanda_residual - e.turbinamiento_despacho))],
+      ["utilizacion_termica", (t, e) => (e.generacion_termica_maxima > 1e-9
+        ? Math.min(1, e.generacion_termica_despacho / e.generacion_termica_maxima) : 0)],
+      ["traslado_carbono", (t, e) => e.impuesto_carbono * e.utilizacion_termica],
+      ["precio_bolsa", (t, e) => e.precio_referencia * Math.exp(
+        -e.sensibilidad_precio * (e.nivel_embalse - e.nivel_referencia)
+        - e.sensibilidad_margen * (e.margen_energia - e.margen_energia_referencia)) + e.traslado_carbono],
+      ["demanda_pico", (t, e) => e.demanda / (e.gwh_por_mw_anio * e.factor_carga)],
+      ["margen_reserva", (t, e) => (e.capacidad_firme + e.capacidad_fncer - e.demanda_pico) / e.demanda_pico],
+      ["penetracion_fncer", (t, e) => e.capacidad_fncer / e.demanda_pico],
+      // Energía firme (ENFICC) y Cargo por Confiabilidad
+      ["energia_firme", (t, e) => e.energia_firme_por_mw * e.capacidad_firme],
+      ["energia_firme_fncer", (t, e) => e.firmeza_fncer * e.energia_fncer_nominal],
+      ["margen_firme", (t, e) => (e.energia_firme + e.energia_firme_fncer - e.demanda) / e.demanda],
+      ["prima_vigente", (t, e) => (e.inicio_cargo <= t && t < e.fin_cargo ? e.prima_cxc : 0)],
+      ["cxc_activo", (t, e) => (e.prima_vigente > 0 || e.meta_subasta_firme > 0 ? 1 : 0)],
+      ["margen_proyectado", (t, e) => e.margen_firme + e.energia_firme_por_mw * (e.proyectos_firme
+        - e.retardo_constructor * (1 / e.vida_util + e.crecimiento_demanda_anual) * e.capacidad_firme) / e.demanda],
+      ["factor_curva_demanda", (t, e) => Math.min(2, Math.max(0, 1 + (e.meta_subasta_firme - e.margen_proyectado)
+        / e.banda_curva_demanda))],
+      ["cargo_confiabilidad", (t, e) => (e.meta_subasta_firme > 0
+        ? Math.max(e.prima_vigente, Math.max(0, e.precio_referencia - e.precio_esperado) * e.factor_curva_demanda)
+        : e.prima_vigente)],
+      ["obligaciones_energia_firme", (t, e) => (e.cxc_activo > 0
+        ? Math.min(e.energia_firme, e.demanda * (1 + e.meta_subasta_firme)) : 0)],
+      ["fraccion_comprometida", (t, e) => (e.energia_firme > 1e-9
+        ? Math.min(1, e.obligaciones_energia_firme / e.energia_firme) : 0)],
+      ["cobertura_demanda", (t, e) => Math.min(1, e.obligaciones_energia_firme / e.demanda)],
+      ["renta_escasez", (t, e) => Math.max(0, e.precio_bolsa - e.precio_escasez)],
+      ["participacion_termica_generada", (t, e) => (e.turbinamiento_despacho + e.generacion_termica_despacho > 1e-9
+        ? e.generacion_termica_despacho / (e.turbinamiento_despacho + e.generacion_termica_despacho)
+        : 1 - e.participacion_hidraulica)],
+      ["ingreso_energia_firme", (t, e) => e.precio_bolsa - e.fraccion_comprometida * e.renta_escasez
+        - e.impuesto_carbono * e.participacion_termica_generada],
+      ["pago_opcion", (t, e) => e.cobertura_demanda * e.renta_escasez],
+      ["pago_cargo", (t, e) => e.cargo_confiabilidad * e.obligaciones_energia_firme / e.demanda],
+      ["ingreso_firme", (t, e) => e.precio_esperado + e.cargo_confiabilidad * e.fraccion_comprometida],
+      // Inversión firme (regla de la semana 4)
+      ["capacidad_referencia", (t, e) => e.capacidad_por_demanda * e.demanda_residual],
+      ["cartera_normal", (t, e) => e.retardo_constructor * (1 / e.vida_util + e.crecimiento_demanda_anual) * e.capacidad_referencia],
+      ["multiplicador_inversion", (t, e) => respuestaSaturada(e.ingreso_firme / e.precio_referencia, e.elasticidad_inversion,
+        e.respuesta_maxima_inversion)],
+      ["inicios_firme_mercado", (t, e) => Math.max(0, e.tasa_inversion_referencia * e.capacidad_referencia
+        * e.multiplicador_inversion - e.peso_cartera * (e.proyectos_firme - e.cartera_normal) / e.retardo_constructor)],
+      ["subasta_firme", (t, e) => (e.meta_subasta_firme > 0
+        ? Math.max(0, e.meta_subasta_firme - e.margen_proyectado) * e.demanda / (e.energia_firme_por_mw * e.tiempo_ajuste_subasta)
+        : 0)],
+      // FNCER: ingreso, costo, congestión e inversión
+      ["precio_capturado_fncer", (t, e) => e.precio_bolsa * Math.exp(-e.canibalizacion * e.participacion_aprovechada_fncer)],
+      ["ingreso_fncer", (t, e) => e.precio_capturado_fncer * e.fraccion_aprovechada * (1 - e.transferencias_comunidades)],
+      ["costo_global_fncer", (t, e) => e.piso_costo_global
+        + (e.costo_global_inicial - e.piso_costo_global) * Math.exp(-e.caida_costo_global * t)],
+      ["costo_local_fncer", (t, e) => e.costo_local_inicial * (e.fncer_acumulada / e.fncer_acumulada_inicial) ** (-e.exponente_wright)],
+      ["costo_fncer", (t, e) => e.costo_global_fncer + e.costo_local_fncer],
+      ["factor_desconfianza", (t, e) => (e.usar_confianza > 0
+        ? e.fraccion_institucional + (1 - e.fraccion_institucional) * (1 - e.confianza) / (1 - e.confianza_referencia) : 1)],
+      ["retardo_fncer_efectivo", (t, e) => e.retardo_fncer + e.congestion_social * e.factor_desconfianza * e.proyectos_fncer / 1000],
+      ["fraccion_abandono", (t, e) => {
+        const exceso = e.retardo_fncer_efectivo - e.umbral_espera;
+        return exceso <= 0 ? 0 : exceso * exceso / (exceso * exceso + e.ancho_abandono ** 2);
+      }],
+      ["tasa_abandono", (t, e) => e.fraccion_abandono * e.factor_desconfianza / e.tiempo_abandono],
+      ["espera_excedente", (t, e) => Math.max(0, e.retardo_fncer_efectivo - e.plazo_tolerado) / e.plazo_tolerado],
+      ["incumplimiento", (t, e) => e.sensibilidad_incumplimiento * e.tasa_abandono],
+      ["confianza_indicada", (t, e) => Math.min(1, e.confianza_referencia * (1 + e.transferencias_comunidades / e.transferencias_referencia)
+        / (1 + e.espera_excedente + e.incumplimiento))],
+      ["capacidad_referencia_fncer", (t, e) => e.participacion_referencia_fncer * e.demanda / (e.gwh_por_mw_anio * e.factor_planta_fncer)],
+      ["multiplicador_fncer", (t, e) => respuestaSaturada(e.ingreso_esperado_fncer / e.costo_fncer, e.elasticidad_fncer,
+        e.respuesta_maxima_inversion)],
+      ["inicios_fncer_mercado", (t, e) => e.tasa_inversion_fncer * e.capacidad_referencia_fncer * e.multiplicador_fncer
+        * e.retardo_fncer / e.retardo_fncer_efectivo],
+      ["subasta_vigente", (t, e) => (e.inicio_subasta <= t && t < e.fin_subasta ? e.subasta_fncer : 0)],
+      // Contratos por diferencias y lo que paga la demanda
+      ["precio_contratos", (t, e) => (e.contratos_fncer > 1e-9 ? e.valor_contratos / e.contratos_fncer : 0)],
+      ["costo_contratos", (t, e) => (e.precio_contratos - e.precio_capturado_fncer) * e.gwh_por_mw_anio * e.factor_planta_fncer
+        * e.contratos_fncer * e.fraccion_aprovechada / e.demanda],
+      ["precio_demanda", (t, e) => e.precio_bolsa - e.pago_opcion + e.pago_cargo + e.costo_contratos],
     ],
     flujos: [
-      ["inicios_firme", (t, e) => e.tasa_firme * e.capacidad_firme * (e.ingreso_firme / e.precio_referencia) ** e.elasticidad_inversion
-        + e.subasta_firme],
-      ["puesta_firme", (t, e) => e.proyectos_firme / e.retardo_firme],
-      ["retiros_firme", (t, e) => e.capacidad_firme / e.vida_firme],
-      ["inicios_fncer", (t, e) => e.tasa_fncer * Math.max(e.capacidad_fncer, e.semilla_fncer)
-        * (e.precio_capturado_fncer / e.costo_fncer) ** e.elasticidad_fncer
-        + (e.inicio_subasta <= t && t < e.fin_subasta ? e.subasta_fncer : 0)],
+      ["aportes", (t, e) => e.aportes_medios * e.factor_hidrologico],
+      ["turbinamiento", (t, e) => e.turbinamiento_despacho],
+      ["vertimiento", (t, e) => Math.max(0, e.aportes - e.turbinamiento) * Math.max(e.nivel_embalse, 0) ** 2],
+      ["generacion_termica", (t, e) => e.generacion_termica_despacho],
+      ["deficit", (t, e) => e.demanda_residual - e.turbinamiento - e.generacion_termica],
+      ["inicios_firme", (t, e) => e.inicios_firme_mercado + e.subasta_firme],
+      ["puesta_firme", (t, e) => e.proyectos_firme / e.retardo_constructor],
+      ["retiros_firme", (t, e) => e.capacidad_firme / e.vida_util],
+      ["crecimiento_demanda", (t, e) => e.crecimiento_demanda_anual * e.demanda
+        * (e.precio_bolsa / e.precio_referencia) ** (-e.elasticidad_demanda)],
+      ["ajuste_precio_esperado", ajuste("precio_esperado", "ingreso_energia_firme")],
+      ["inicios_fncer", (t, e) => e.inicios_fncer_mercado + e.subasta_vigente],
       ["puesta_fncer", (t, e) => e.proyectos_fncer / e.retardo_fncer_efectivo],
+      ["abandono_fncer", (t, e) => e.proyectos_fncer * e.tasa_abandono],
       ["puesta_fncer_acumulada", (t, e) => e.puesta_fncer],
       ["retiros_fncer", (t, e) => e.capacidad_fncer / e.vida_fncer],
-      ["crecimiento_demanda", (t, e) => e.crecimiento_demanda_anual * e.demanda],
+      ["ajuste_ingreso_fncer", ajuste("ingreso_esperado_fncer", "ingreso_fncer")],
+      ["adjudicacion_fncer", (t, e) => e.subasta_vigente],
+      ["puesta_subastada", (t, e) => e.proyectos_subastados / e.retardo_fncer_efectivo],
+      ["abandono_subastado", (t, e) => e.proyectos_subastados * e.tasa_abandono],
+      ["valor_adjudicado", (t, e) => e.subasta_vigente * e.costo_fncer],
+      ["valor_puesto", (t, e) => e.valor_cartera_subastada / e.retardo_fncer_efectivo],
+      ["valor_abandonado", (t, e) => e.valor_cartera_subastada * e.tasa_abandono],
+      ["vencimiento_contratos", (t, e) => e.contratos_fncer / e.duracion_contratos],
+      ["valor_vencido", (t, e) => e.valor_contratos / e.duracion_contratos],
+      ["erosion_confianza", (t, e) => e.usar_confianza * Math.max(0, e.confianza - e.confianza_indicada) / e.tiempo_erosion],
+      ["recuperacion_confianza", (t, e) => e.usar_confianza * Math.max(0, e.confianza_indicada - e.confianza) / e.tiempo_recuperacion],
     ],
   };
 }
 
-/** Escenarios, estrategias y métrica del Laboratorio 4 (réplica de notas/semana5/figuras/escenarios_lab4.py). */
+/**
+ * Mundos, estrategias y métrica del Laboratorio 4 (réplica de notas/semana5/figuras/escenarios_lab4.py).
+ * ESCENARIOS_LAB4 son los cuatro mundos de la matriz 2×2; MUNDOS_LAB4 agrega la sequía de diseño (la hidrología
+ * crítica de la ENFICC), que es la tabla principal de cinco mundos.
+ */
 export const ESCENARIOS_LAB4 = {
-  "Viento a favor": {tasa_aprendizaje: 0.25, credito_capacidad_fncer: 0.40, crecimiento_demanda: 0.02, periodo_nino: 7, intensidad_nino: 0.10},
-  "Contrarreloj": {tasa_aprendizaje: 0.25, credito_capacidad_fncer: 0.40, crecimiento_demanda: 0.045, periodo_nino: 4, intensidad_nino: 0.15},
-  "Siesta": {tasa_aprendizaje: 0.10, credito_capacidad_fncer: 0.20, crecimiento_demanda: 0.02, periodo_nino: 7, intensidad_nino: 0.10},
-  "Tormenta": {tasa_aprendizaje: 0.10, credito_capacidad_fncer: 0.20, crecimiento_demanda: 0.045, periodo_nino: 4, intensidad_nino: 0.15},
+  "Viento a favor": {caida_costo_global: 0.20, crecimiento_demanda: 0.02, periodo_nino: 7, intensidad_nino: 0.30},
+  "Contrarreloj": {caida_costo_global: 0.20, crecimiento_demanda: 0.045, periodo_nino: 4, intensidad_nino: 0.40},
+  "Siesta": {caida_costo_global: 0.08, crecimiento_demanda: 0.02, periodo_nino: 7, intensidad_nino: 0.30},
+  "Tormenta": {caida_costo_global: 0.08, crecimiento_demanda: 0.045, periodo_nino: 4, intensidad_nino: 0.40},
 };
-export const ESTRATEGIAS_LAB4 = {"mercado solo": {}, "seguro CxC": {prima_cxc: 50}, "impulso FNCER": {subasta_fncer: 300}};
-export const MARGEN_CRITICO = 0.12;
-export const COSTO_RACIONAMIENTO = 1500;
-export const RELACION_FACTORES_CARGA = 0.30;
+export const ESTRATEGIAS_LAB4 = {
+  "mercado solo": {}, "seguro CxC": {prima_cxc: 35}, "CxC por subasta": {meta_subasta_firme: 0.05},
+  "impulso FNCER": {subasta_fncer: 300}, "paquete": {meta_subasta_firme: 0.05, subasta_fncer: 150},
+  "cargo 15 + FNCER 300": {prima_cxc: 15, subasta_fncer: 300},
+};
+/** Sequía de diseño: hidrología crítica de la ENFICC (aportes al 45 % durante 2 años) en el año 20, demanda de 4,5 %/año. */
+export const ESTRES_LAB4 = {caida_costo_global: 0.08, crecimiento_demanda: 0.045, periodo_nino: 100, fase_nino: 20,
+  duracion_nino: 2, intensidad_nino: 0.55};
+export const SEQUIA_DE_DISENO = "Sequía de diseño";
+/** Los cinco mundos de la tabla principal: la matriz 2×2 más la sequía de diseño. */
+export const MUNDOS_LAB4 = {...ESCENARIOS_LAB4, [SEQUIA_DE_DISENO]: ESTRES_LAB4};
+export const T_FINAL_LAB4 = 40;
+export const PASO_LAB4 = 0.05;
+/** Costo de racionamiento [COP/kWh del modelo]: primer escalón de la UPME reescalado con el precio de escasez [POR VERIFICAR]. */
+export const COSTO_RACIONAMIENTO = 2100;
 
-/** Costo medio para la demanda [COP/kWh] de una corrida (réplica de escenarios_lab4.costo_para_demanda). */
-export function costoParaDemanda(resultado, {prima_cxc = 0, subasta_fncer = 0, costo_racionamiento = COSTO_RACIONAMIENTO,
-  relacion_factores_carga = RELACION_FACTORES_CARGA, margen_critico = MARGEN_CRITICO} = {}) {
+/** Media temporal por la regla del trapecio (réplica de escenarios_lab4.media_temporal). */
+export const mediaTemporal = (tiempo, serie) => area(tiempo, serie) / (tiempo[tiempo.length - 1] - tiempo[0]);
+
+/**
+ * Costo medio para la demanda [COP/kWh] de una corrida (réplica de escenarios_lab4.costo_para_demanda):
+ * media temporal por trapecio de precio_demanda + costo de racionamiento · deficit / demanda. El cargo, la
+ * opción, los contratos y el déficit ya vienen del modelo; las claves de estrategia que se pasen se ignoran.
+ */
+export function costoParaDemanda(resultado, {costo_racionamiento = COSTO_RACIONAMIENTO} = {}) {
   const v = resultado.variables;
-  const media = (serie) => serie.reduce((a, x) => a + x, 0) / serie.length;
-  const racionamiento = costo_racionamiento * media(v.margen_reserva.map((m) => Math.max(0, margen_critico - m)));
-  let sobrecosto = 0;
-  if (subasta_fncer > 0) {
-    sobrecosto = media(resultado.tiempo.map((t, k) => {
-      const subastada = Math.min(v.capacidad_fncer[k], subasta_fncer * t);
-      const porcion = relacion_factores_carga * subastada / v.demanda[k];
-      return Math.max(0, v.costo_fncer[k] - v.precio_bolsa[k]) * porcion;
-    }));
-  }
-  return media(v.precio_bolsa) + prima_cxc + sobrecosto + racionamiento;
+  const serie = resultado.tiempo.map((_, k) => v.precio_demanda[k] + costo_racionamiento * v.deficit[k] / v.demanda[k]);
+  return mediaTemporal(resultado.tiempo, serie);
+}
+
+/** Parámetros de una celda: un mundo de MUNDOS_LAB4 (o «estrés», alias de la sequía de diseño) y una estrategia. */
+export const parametrosLab4 = (escenario, estrategia) =>
+  ({...(escenario === "estrés" ? ESTRES_LAB4 : MUNDOS_LAB4[escenario]), ...ESTRATEGIAS_LAB4[estrategia]});
+
+/** Corrida de una celda del Laboratorio 4 con la malla del texto (RK4, paso 0,05 años, 40 años). */
+export const correrLab4 = (escenario, estrategia) =>
+  simular(mercadoConPoliticas(parametrosLab4(escenario, estrategia)), {tFinal: T_FINAL_LAB4, paso: PASO_LAB4});
+
+/** Máxima fracción de la demanda racionada en una corrida (réplica de escenarios_lab4.deficit_maximo). */
+export const deficitMaximo = (resultado) =>
+  Math.max(...resultado.variables.deficit.map((d, k) => d / resultado.variables.demanda[k]));
+
+/**
+ * Tabla del Laboratorio 4: corre cada celda una vez y devuelve las corridas, la matriz estrategias × mundos del
+ * costo para la demanda y el déficit máximo de cada celda. Por omisión, los cinco mundos y las seis estrategias.
+ */
+export function tablaLab4({mundos = Object.keys(MUNDOS_LAB4), estrategias = Object.keys(ESTRATEGIAS_LAB4),
+  costo_racionamiento = COSTO_RACIONAMIENTO} = {}) {
+  const corridas = estrategias.map((e) => mundos.map((m) => correrLab4(m, e)));
+  return {mundos, estrategias, corridas,
+    costos: corridas.map((fila) => fila.map((r) => costoParaDemanda(r, {costo_racionamiento}))),
+    deficit: corridas.map((fila) => fila.map(deficitMaximo))};
 }
 
 /** Reserva con meta del operador y presión comercial (réplica de mise_sd.modelos.reserva_con_dos_metas). */
@@ -529,12 +854,14 @@ export function telarana({rondas = 16, oferta_inicial = 80, sensibilidad_oferta 
  * (réplica de mise_sd.modelos.inventario_con_retardo).
  */
 export function inventarioConRetardo({inventario_inicial = 60, meta = 120, consumo = 30, tiempo_ajuste = 1,
-  retardo = 2, orden = 3, peso_transito = 0, pedidos_minimos = 0} = {}) {
+  retardo = 2, orden = 3, peso_transito = 0, pedidos_minimos = 0, tiempo_minimo_uso = 0.25} = {}) {
+  if (!(tiempo_ajuste > 0) || !(retardo > 0)) throw new Error("El tiempo de ajuste y el retardo deben ser positivos.");
   const etapas = Array.from({length: orden}, (_, k) => `transito_${k + 1}`);
   const flujos = ["pedidos", ...Array.from({length: orden - 1}, (_, k) => `avance_${k + 1}`), "llegadas"];
   return {
     nombre: "inventario_con_retardo",
-    constantes: {meta, consumo, tiempo_ajuste, peso_transito, transito_normal: consumo * retardo, tiempo_etapa: retardo / orden},
+    constantes: {meta, consumo, tiempo_ajuste, peso_transito, transito_normal: consumo * retardo, tiempo_etapa: retardo / orden,
+      tiempo_minimo_uso},
     stocks: [
       ...etapas.map((etapa, k) => ({nombre: etapa, inicial: consumo * retardo / orden, entradas: [flujos[k]], salidas: [flujos[k + 1]]})),
       {nombre: "inventario", inicial: inventario_inicial, entradas: ["llegadas"], salidas: ["uso"]},
@@ -546,7 +873,7 @@ export function inventarioConRetardo({inventario_inicial = 60, meta = 120, consu
         return pedidos_minimos === null ? bruto : Math.max(pedidos_minimos, bruto);
       }],
       ...etapas.map((etapa, k) => [flujos[k + 1], (t, e) => e[etapa] / e.tiempo_etapa]),
-      ["uso", (t, e) => e.consumo],
+      ["uso", (t, e) => Math.min(e.consumo, e.inventario / e.tiempo_minimo_uso)],
     ],
   };
 }
@@ -562,30 +889,38 @@ export function adopcionLogistica({techos = 10000, contagio = 0.5, adoptantes_in
   };
 }
 
-/** La bañera de Sterman [L, min] (réplica de mise_sd.modelos.banera). */
-export function banera({nivel_inicial = 80, caudal_grifo = 5, caudal_desague = 3, tau_desague = null} = {}) {
+/** La bañera de Sterman [L, min] (réplica de mise_sd.modelos.banera). El desagüe
+ *  constante no saca agua que no hay: salida = min(caudal, nivel / tiempo mínimo de vaciado). */
+export function banera({nivel_inicial = 80, caudal_grifo = 5, caudal_desague = 3, tau_desague = null,
+  tiempo_vaciado_minimo = 0.25} = {}) {
+  if (tau_desague !== null && !(tau_desague > 0)) throw new Error("tau_desague debe ser positivo (o null para un desagüe constante).");
   return {
     nombre: "banera",
-    constantes: {caudal_grifo, caudal_desague, tau_desague: tau_desague || 0},
+    constantes: {caudal_grifo, caudal_desague, tau_desague: tau_desague || 0, tiempo_vaciado_minimo},
     stocks: [{nombre: "nivel", inicial: nivel_inicial, entradas: ["entrada"], salidas: ["salida"]}],
     auxiliares: [],
     flujos: [
       ["entrada", (t, e) => e.caudal_grifo],
-      ["salida", tau_desague ? (t, e) => e.nivel / e.tau_desague : (t, e) => e.caudal_desague],
+      ["salida", tau_desague ? (t, e) => e.nivel / e.tau_desague
+        : (t, e) => Math.min(e.caudal_desague, e.nivel / e.tiempo_vaciado_minimo)],
     ],
   };
 }
 
 /**
  * Cobertura de contratos con retardo de negociación [GWh, años]
- * (réplica de mise_sd.modelos.cobertura_contratos).
+ * (réplica de mise_sd.modelos.cobertura_contratos). Las compras, max(0, brecha)/T,
+ * pasan por la negociación; los vencimientos, max(0, −brecha)/T, salen directo de
+ * la cobertura. Ningún stock queda negativo.
  */
 export function coberturaContratos({cobertura_inicial = 60, meta = 100, tiempo_ajuste = 0.5,
   retardo_negociacion = 0.5, etapas = 3} = {}) {
+  if (!(tiempo_ajuste > 0)) throw new Error("El tiempo de ajuste debe ser positivo.");
   const conRetardo = retardo_negociacion > 0;
   const stocks = [{nombre: "cobertura", inicial: cobertura_inicial,
-    entradas: [conRetardo ? "firma" : "compras"], salidas: []}];
-  const flujos = [["compras", (t, e) => e.brecha / e.tiempo_ajuste]];
+    entradas: [conRetardo ? "firma" : "compras"], salidas: ["vencimientos"]}];
+  const flujos = [["compras", (t, e) => Math.max(0, e.brecha) / e.tiempo_ajuste],
+    ["vencimientos", (t, e) => Math.max(0, -e.brecha) / e.tiempo_ajuste]];
   if (conRetardo) {
     for (let k = 1; k <= etapas; k++) {
       stocks.push({nombre: `negociacion_${k}`, inicial: 0,
@@ -815,8 +1150,10 @@ export function equilibriosMay(presion, capacidad = 10, celdas = 2000) {
   return salida;
 }
 
-/** Puntos de inflexión (réplica de umbrales_may). */
+/** Puntos de inflexión (réplica de umbrales_may); solo existen si capacidad > 3√3 ≈ 5,196. */
 export function umbralesMay(capacidad = 10) {
+  if (capacidad <= 3 * Math.sqrt(3))
+    throw new Error(`Con capacidad ${capacidad} (menor o igual que 3√3 ≈ 5,196) el modelo de May no tiene puntos de inflexión.`);
   const presion = (x) => (1 + x * x) * (1 - x / capacidad) / x;
   const derivada = (x) => 2 * x ** 3 / capacidad - x * x + 1;
   const bajo = biseccion(derivada, 0.5, capacidad / 3), alto = biseccion(derivada, capacidad / 3, capacidad);

@@ -167,15 +167,21 @@ export function cercania(g) {
 }
 
 /** Centralidad de vector propio por iteración de potencia sobre A + I (norma 2 = 1);
- *  sumar la identidad no cambia el vector propio y evita oscilar en redes casi bipartitas. */
+ *  sumar la identidad no cambia el vector propio y evita oscilar en redes casi bipartitas.
+ *  En una red desconectada se calcula sobre la componente gigante y los demás nodos
+ *  quedan en NaN, como en mise_sd.redes.centralidades. */
 export function vectorPropio(g, {iteraciones = 1000, tolerancia = 1e-10} = {}) {
-  let x = Object.fromEntries(g.nodos.map((n) => [n, 1 / Math.sqrt(g.nodos.length)]));
+  const comps = componentes(g);
+  const nodos = comps.length ? comps[0] : [];
+  const x = Object.fromEntries(g.nodos.map((n) => [n, NaN]));
+  if (nodos.length < 2) return x;
+  for (const n of nodos) x[n] = 1 / Math.sqrt(nodos.length);
   for (let paso = 0; paso < iteraciones; paso++) {
-    const y = Object.fromEntries(g.nodos.map((n) => [n, x[n]]));
-    for (const n of g.nodos) for (const v of g.vecinos.get(n)) y[n] += x[v];
+    const y = Object.fromEntries(nodos.map((n) => [n, x[n]]));
+    for (const n of nodos) for (const v of g.vecinos.get(n)) y[n] += x[v];
     const norma = Math.sqrt(Object.values(y).reduce((a, b) => a + b * b, 0)) || 1;
     let cambio = 0;
-    for (const n of g.nodos) { const nuevo = y[n] / norma; cambio += Math.abs(nuevo - x[n]); x[n] = nuevo; }
+    for (const n of nodos) { const nuevo = y[n] / norma; cambio += Math.abs(nuevo - x[n]); x[n] = nuevo; }
     if (cambio < tolerancia) break;
   }
   return x;
@@ -250,10 +256,16 @@ export function curvaRobustez(g, {estrategia = "aleatoria", recalcular = true, o
     trabajo = sinNodos(trabajo, [objetivo]);
     filas.push({nodos_retirados: paso, fraccion_retirada: paso / n, fraccion_gigante: fraccionComponenteGigante(trabajo, n)});
   }
-  return {filas, secuencia, area: filas.reduce((a, f) => a + f.fraccion_gigante, 0) / filas.length};
+  // Área por la regla del trapecio sobre la fracción retirada, como area_bajo_curva
+  let area = 0;
+  for (let k = 0; k < filas.length - 1; k++)
+    area += (filas[k + 1].fraccion_retirada - filas[k].fraccion_retirada) * (filas[k].fraccion_gigante + filas[k + 1].fraccion_gigante) / 2;
+  return {filas, secuencia, area};
 }
 
-/** Verificación N-1 topológica: qué deja aislado la salida de cada nodo.
+/** Prueba de salida de subestación (contingencia N-k de barra): qué deja
+ *  aislado la salida de cada nodo. El nombre se conserva por compatibilidad;
+ *  el N-1 propiamente dicho es la salida de un solo elemento.
  *  `atributos` es opcional: {nodo: {demanda_mw, generacion_mw}}. Con él se
  *  reportan la demanda y la generación aisladas y la demanda propia, y el
  *  orden por severidad es el de `analisis_n_menos_1` (nodos aislados,
@@ -305,6 +317,18 @@ export function azar(semilla = 1) {
   return () => { estado = (estado * 1664525 + 1013904223) >>> 0; return estado / 4294967296; };
 }
 
+/** Semilla de la corrida c de un conjunto. El generador `azar` es congruencial:
+ *  con semillas consecutivas (1, 2, 3...) las primeras extracciones de cada corrida
+ *  quedan casi iguales y en línea recta, y un conjunto de corridas cortas sale sesgado
+ *  (el votante en una estrella de cinco nodos da 0,62 en lugar de 0,50). Esta función
+ *  mezcla c con el finalizador de MurmurHash3, que no es lineal. */
+export function semillaCorrida(c, base = 0) {
+  let h = (c + base + 0x9e3779b9) | 0;
+  h = Math.imul(h ^ (h >>> 16), 0x85ebca6b);
+  h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35);
+  return ((h ^ (h >>> 16)) >>> 0) || 1;
+}
+
 /** Red aleatoria de Erdős y Rényi G(n, p). */
 export function erdosRenyi(n, p, semilla = 1) {
   const u = azar(semilla), aristas = [];
@@ -325,8 +349,12 @@ export function redAleatoriaConMAristas(n, m, semilla = 1) {
   return grafo(aristas, [...Array(n).keys()]);
 }
 
-/** Red libre de escala de Barabási y Albert: m enlaces por nodo nuevo, con apego preferencial. */
+/** Red libre de escala de Barabási y Albert: m enlaces por nodo nuevo, con apego preferencial.
+ *  Arranca de un núcleo completo de m nodos, así que exige m >= 2 (con m = 1 el núcleo no
+ *  tiene aristas y el apego preferencial no tiene a quién elegir) y n > m. */
 export function barabasiAlbert(n, m, semilla = 1) {
+  if (!(Number.isInteger(m) && m >= 2)) throw new Error("barabasiAlbert necesita un entero m >= 2.");
+  if (!(Number.isInteger(n) && n > m)) throw new Error("barabasiAlbert necesita n > m.");
   const u = azar(semilla), aristas = [], repetidos = [];
   for (let i = 0; i < m; i++) for (let j = i + 1; j < m; j++) { aristas.push([i, j]); repetidos.push(i, j); }
   for (let nuevo = m; nuevo < n; nuevo++) {
@@ -363,19 +391,65 @@ export function wattsStrogatz(n, k, p, semilla = 1) {
   return grafo(aristas, [...Array(n).keys()]);
 }
 
-/** Coeficiente sigma de mundo pequeño frente a redes G(n, m) equivalentes. */
-export function sigmaMundoPequeno(g, {repeticiones = 20, semilla = 1} = {}) {
-  const agrupamiento = agrupamientoMedio(g), {longitudMedia} = distanciasGigante(g);
+/** Repeticiones por omisión de las referencias aleatorias (como REPETICIONES_MUNDO_PEQUENO
+ *  de mise_sd.redes): el agrupamiento de una G(n, m) dispersa es tan ruidoso que sigma
+ *  solo queda estable a ±0,05 con unas 10 000 redes. En el navegador eso tarda; una
+ *  página interactiva debe pasar menos repeticiones y decirlo. */
+export const REPETICIONES_MUNDO_PEQUENO = 10000;
+
+/** Promedios de agrupamiento y longitud media (componente gigante) de redes G(n, m)
+ *  equivalentes; la corrida r usa la semilla semillaCorrida(r, semilla). */
+function _referenciasAleatorias(g, repeticiones, semilla) {
+  if (!(repeticiones >= 1)) throw new Error("repeticiones debe ser al menos 1.");
   let sumaC = 0, sumaL = 0;
   for (let r = 0; r < repeticiones; r++) {
-    const aleatoria = redAleatoriaConMAristas(g.nodos.length, numeroDeAristas(g), semilla + r);
+    const aleatoria = redAleatoriaConMAristas(g.nodos.length, numeroDeAristas(g), semillaCorrida(r, semilla));
     sumaC += agrupamientoMedio(aleatoria);
     sumaL += distanciasGigante(aleatoria).longitudMedia;
   }
-  const c = sumaC / repeticiones, l = sumaL / repeticiones, n = g.nodos.length, k = gradoMedio(g);
+  return {c: sumaC / repeticiones, l: sumaL / repeticiones};
+}
+
+/** Coeficiente sigma de mundo pequeño frente a redes G(n, m) equivalentes (réplica de
+ *  sigma_mundo_pequeno). Sigma > 1 no basta: devuelve también los dos cocientes, que
+ *  deben leerse por separado (agrupamiento ≫ 1 y longitud ≈ 1). */
+export function sigmaMundoPequeno(g, {repeticiones = REPETICIONES_MUNDO_PEQUENO, semilla = 1} = {}) {
+  const agrupamiento = agrupamientoMedio(g), {longitudMedia} = distanciasGigante(g);
+  const {c, l} = _referenciasAleatorias(g, repeticiones, semilla);
+  const n = g.nodos.length, k = gradoMedio(g);
+  const cocienteAgrupamiento = c > 0 ? agrupamiento / c : Infinity, cocienteLongitud = longitudMedia / l;
   return {agrupamiento, longitud_media: longitudMedia, agrupamiento_aleatorio: c, longitud_media_aleatoria: l,
     agrupamiento_teorico: k / n, longitud_teorica: k > 1 ? Math.log(n) / Math.log(k) : Infinity,
-    sigma: c > 0 ? (agrupamiento / c) / (longitudMedia / l) : Infinity};
+    cociente_agrupamiento: cocienteAgrupamiento, cociente_longitud: cocienteLongitud,
+    sigma: cocienteAgrupamiento / cocienteLongitud};
+}
+
+/** Anillo regular con n nodos y exactamente m aristas: primero los vecinos a distancia 1,
+ *  luego a distancia 2, y así hasta completar m (réplica de red_reticular_equivalente). */
+export function redReticularEquivalente(n, m) {
+  if (n < 3) throw new Error("La retícula necesita al menos 3 nodos.");
+  if (!(m >= 0 && m <= n * (n - 1) / 2)) throw new Error("El número de aristas debe estar entre 0 y n(n-1)/2.");
+  const vistas = new Set(), aristas = [];
+  for (let d = 1; aristas.length < m; d++) {
+    for (let i = 0; i < n && aristas.length < m; i++) {
+      const j = (i + d) % n, clave = i < j ? `${i}|${j}` : `${j}|${i}`;
+      if (j === i || vistas.has(clave)) continue;
+      vistas.add(clave); aristas.push([i, j]);
+    }
+  }
+  return grafo(aristas, [...Array(n).keys()]);
+}
+
+/** Coeficiente omega de mundo pequeño (Telesford et al., 2011; réplica de omega_mundo_pequeno):
+ *  L_aleatoria / L − C / C_retícula, con la retícula de redReticularEquivalente.
+ *  Cerca de 0: mundo pequeño; de +1: aleatoria; de −1: retícula. */
+export function omegaMundoPequeno(g, {repeticiones = REPETICIONES_MUNDO_PEQUENO, semilla = 1} = {}) {
+  const agrupamiento = agrupamientoMedio(g), {longitudMedia} = distanciasGigante(g);
+  const {l} = _referenciasAleatorias(g, repeticiones, semilla);
+  const cReticula = agrupamientoMedio(redReticularEquivalente(g.nodos.length, numeroDeAristas(g)));
+  if (!(cReticula > 0)) throw new Error("La retícula equivalente no tiene triángulos; omega no está definido.");
+  return {agrupamiento, longitud_media: longitudMedia, longitud_media_aleatoria: l,
+    agrupamiento_reticular: cReticula, omega: l / longitudMedia - agrupamiento / cReticula};
 }
 
 /** Muestra de una ley de potencias por transformada inversa. */
@@ -479,9 +553,17 @@ export function corteMinimoAristas(g, grupoA, grupoB) {
   return corte.sort((x, y) => compararTexto(x[0], y[0]) || compararTexto(x[1], y[1]));
 }
 
-/** Corte mínimo de vértices entre dos grupos: nodos cuya salida simultánea los separa. */
+/** Corte mínimo de vértices entre dos grupos: nodos cuya salida simultánea los separa.
+ *  Como en corte_minimo_entre_grupos(tipo="nodos"), los grupos no deben tocarse ni cubrir
+ *  la red: si algún nodo de un grupo es vecino de uno del otro, lanza un error. */
 export function corteMinimoVertices(g, grupoA, grupoB) {
   const enA = new Set(grupoA), enB = new Set(grupoB);
+  for (const n of enA) if (enB.has(n)) throw new Error("Los grupos deben ser disjuntos.");
+  const vecinos = [];
+  for (const u of enA) for (const v of g.vecinos.get(u) ?? []) if (enB.has(v)) vecinos.push(`${u}–${v}`);
+  if (vecinos.length)
+    throw new Error(`No hay corte de nodos: hay líneas directas entre los grupos (${vecinos.slice(0, 3).join(", ")}). ` +
+      "Los grupos no deben cubrir la red ni tocarse.");
   const lado = (n) => (enA.has(n) ? "__fuente__" : enB.has(n) ? "__sumidero__" : null);
   const aristas = [];
   const interiores = g.nodos.filter((n) => lado(n) === null);
@@ -531,4 +613,36 @@ export function transitividad(g) {
     for (let i = 0; i < k; i++) for (let j = i + 1; j < k; j++) if (g.vecinos.get(vs[i]).includes(vs[j])) triangulos3++;
   }
   return triadas ? triangulos3 / triadas : 0;
+}
+
+// ---------------------------------------------------------------------------
+// Dibujo de mapas (no replica una función de cálculo de mise_sd.redes)
+// ---------------------------------------------------------------------------
+
+// Puntos para dibujar cada arista de una red exportada a JSON ({nodos, aristas}, con lon,
+// lat y tension_kv) con Plot.line(..., {x: "x", y: "y", z: "clave"}). Las aristas van
+// rectas, salvo un corredor de 500 kV cuyo trazo recto pasaría a menos de `tolerancia`
+// grados de otra subestación de 500 kV (en el STN estilizado, Porce III–Sogamoso sobre
+// Primavera): ese se dibuja en arco, como en mise_sd.graficas.aristas_sobre_nodos, para que
+// no parezca llegar a ella.
+export function trazosMapa(red, {tolerancia = 0.12, puntos = 20} = {}) {
+  const posicion = Object.fromEntries(red.nodos.map((n) => [n.id, n]));
+  const de500 = red.nodos.filter((n) => n.tension_kv >= 500);
+  return red.aristas.flatMap((e) => {
+    const a = posicion[e.a], b = posicion[e.b], clave = `${e.a}|${e.b}`;
+    const dx = b.lon - a.lon, dy = b.lat - a.lat, l2 = dx * dx + dy * dy;
+    const tapa = e.tension_kv >= 500 && de500.some((w) => {
+      if (w.id === e.a || w.id === e.b) return false;
+      const t = ((w.lon - a.lon) * dx + (w.lat - a.lat) * dy) / l2;
+      return t > 0.05 && t < 0.95 && Math.hypot(a.lon + t * dx - w.lon, a.lat + t * dy - w.lat) < tolerancia;
+    });
+    if (!tapa) return [{x: a.lon, y: a.lat, clave, a: e.a, b: e.b}, {x: b.lon, y: b.lat, clave, a: e.a, b: e.b}];
+    const signo = dx >= 0 ? 1 : -1;
+    const cx = (a.lon + b.lon) / 2 - signo * 0.3 * dy, cy = (a.lat + b.lat) / 2 + signo * 0.3 * dx;
+    return Array.from({length: puntos + 1}, (_, i) => {
+      const s = i / puntos;
+      return {x: (1 - s) ** 2 * a.lon + 2 * s * (1 - s) * cx + s * s * b.lon,
+        y: (1 - s) ** 2 * a.lat + 2 * s * (1 - s) * cy + s * s * b.lat, clave, a: e.a, b: e.b};
+    });
+  });
 }

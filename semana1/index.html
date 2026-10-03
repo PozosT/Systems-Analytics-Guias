@@ -47,7 +47,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-189071c1cfc9baef9b9de50def1ee7e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -76,6 +76,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<meta name="guias-mise:fecha" content="2 de octubre de 2026">
 
 
 </head>
@@ -180,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+ <span class="menu-text">Puntos de quiebre y regímenes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -298,7 +299,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de quiebre</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -390,6 +391,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/10-nino-perillas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo ante El Niño y sus perillas</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -459,6 +466,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El arco del Laboratorio 4</span></a>
   </div>
 </li>
       </ul>
@@ -569,6 +582,35 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Para consultar</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../recursos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -586,6 +628,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -611,21 +654,39 @@ ul.task-list li input[type="checkbox"] {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Esta semana usted aprende a ver un proyecto energético como un sistema: con lazos que se alimentan, respuestas que dejan de ser proporcionales, memoria del pasado y eventos que la estadística tranquila no anticipa. El resultado es un mapa causal, el primer entregable del proyecto.</p>
+<p>Esta semana usted aprende a ver un proyecto energético como un sistema: con lazos que se alimentan, respuestas que dejan de ser proporcionales, memoria del pasado y eventos que la estadística tranquila no anticipa. La práctica de la semana es un mapa causal de la crisis de El Niño, y la entrega del proyecto es la ficha del caso de su grupo.</p>
 </div>
 <section id="el-caso-de-la-semana" class="level2">
 <h2 class="anchored" data-anchor-id="el-caso-de-la-semana">El caso de la semana</h2>
-<p>Entre septiembre de 2015 y abril de 2016, el sistema eléctrico colombiano pasó seis meses al borde del racionamiento. El 8 de octubre de 2015 el precio de bolsa promedió 1 942,7 COP/kWh, más de diez veces la mediana de 2014 (183 COP/kWh), y durante 206 días seguidos estuvo por encima del precio de escasez (XM). El fenómeno de El Niño llevó el índice ONI a 2,6, el más alto de la serie desde 1950, y los aportes de octubre quedaron en 49,7 % de su media histórica. El embalse agregado bajó de 69,5 % el 1 de septiembre a 38,9 % el 1 de abril.</p>
+<p>Entre septiembre de 2015 y abril de 2016, el sistema eléctrico colombiano pasó seis meses al borde del racionamiento. El 8 de octubre de 2015 el precio de bolsa promedió 1 942,7 COP/kWh, más de diez veces la mediana de 2014 (183 COP/kWh), y durante 206 días estuvo por encima del precio de escasez (XM). El fenómeno de El Niño llevó el índice ONI a 2,6, el valor más alto de la serie de la NOAA, que empieza en 1950, y los aportes de octubre quedaron en 49,7 % de su media histórica. El embalse agregado bajó de 69,5 % el 1 de septiembre a 38,9 % el 1 de abril.</p>
 <p>Nada de eso ocurrió por una sola causa. Las térmicas que debían ser el seguro del sistema generaban por debajo de su costo con un precio de escasez de 302,43 COP/kWh; un incendio dejó fuera los 560 MW de Guatapé y atrapó el 28 % de las reservas del embalse; y la campaña «Apagar paga» consiguió un ahorro promedio de 5,88 %, por encima de la meta del 5 %. Un VPN calculado en 2014 no vio venir ninguna de esas interacciones, y esa es la pregunta que abre el curso: <strong>¿qué tiene un sistema como este que la evaluación financiera clásica no captura?</strong></p>
+<div id="vocabulario" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Vocabulario del caso</span>
+</div>
+<p>Estas palabras aparecen desde la primera página. Las notas de la semana las presentan en el caso ancla.</p>
+<ul>
+<li><strong>Precio de bolsa</strong> [COP/kWh]: el precio de la energía en el mercado mayorista que administra XM. En cada hora lo fija la oferta más cara que se necesita para cubrir la demanda.</li>
+<li><strong>Cargo por Confiabilidad</strong>: pago que reciben, desde la Resolución CREG 071 de 2006, los generadores que se comprometen a entregar energía firme cuando el sistema la necesite.</li>
+<li><strong>Obligación de energía firme (OEF)</strong> [GWh/año]: ese compromiso, la energía que cada generador debe poder entregar en condiciones críticas, como una sequía, a cambio del cargo.</li>
+<li><strong>Precio de escasez</strong> [COP/kWh]: un umbral fijado por la regulación. Cuando el precio de bolsa lo supera, los generadores deben entregar su energía firme, y esa energía se liquida al precio de escasez y no al de bolsa. En octubre de 2015 valía 302,43 COP/kWh; desde 2017 se calcula con otra regla, el precio marginal de escasez (Resolución CREG 140 de 2017).</li>
+<li><strong>Embalse agregado</strong> [% del volumen útil]: la suma de los embalses del país. El volumen útil es la parte del agua que se puede turbinar.</li>
+<li><strong>Reservas utilizables</strong> [% del volumen útil]: el agua del embalse agregado que el sistema puede usar de verdad. El incendio de Guatapé la redujo sin cambiar el volumen, porque el agua de El Peñol quedó sin central que la turbinara.</li>
+<li><strong>Aportes hídricos</strong> [% de la media histórica]: el agua que los ríos llevan a los embalses y a las plantas, comparada con la media histórica del mismo mes.</li>
+<li><strong>ONI</strong>: el Índice Oceánico de El Niño de la NOAA, la anomalía de temperatura del Pacífico ecuatorial en promedios de tres meses. Cinco trimestres seguidos con +0,5 °C o más definen un episodio de El Niño. Mide el océano, no la sequía en Colombia.</li>
+</ul>
+</div>
 </section>
 <section id="ruta-de-la-semana" class="level2">
 <h2 class="anchored" data-anchor-id="ruta-de-la-semana">Ruta de la semana</h2>
+<p>Cada página tiene una <strong>ruta mínima</strong>, que basta para la práctica, el foro y el quiz, y un recorrido completo que la amplía. La ficha de cada página dice qué incluye su ruta mínima.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: center;">#</th>
 <th>Concepto</th>
-<th style="text-align: center;">Tiempo</th>
+<th style="text-align: center;">Ruta mínima</th>
+<th style="text-align: center;">Página completa</th>
 <th>Página</th>
 </tr>
 </thead>
@@ -633,66 +694,84 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: center;">1</td>
 <td>Complicado frente a complejo</td>
+<td style="text-align: center;">30 min</td>
 <td style="text-align: center;">55 min</td>
 <td><a href="../semana1/01-complicado-complejo.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2</td>
 <td>Sistema, estructura y comportamiento</td>
+<td style="text-align: center;">30 min</td>
 <td style="text-align: center;">50 min</td>
 <td><a href="../semana1/02-sistema-estructura.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">3</td>
 <td>Retroalimentación y diagramas causales</td>
-<td style="text-align: center;">70 min</td>
+<td style="text-align: center;">40 min</td>
+<td style="text-align: center;">75 min</td>
 <td><a href="../semana1/03-retroalimentacion.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">4</td>
 <td>No linealidad</td>
+<td style="text-align: center;">35 min</td>
 <td style="text-align: center;">60 min</td>
 <td><a href="../semana1/04-no-linealidad.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
 <td>Retardos, memoria y dependencia de la trayectoria</td>
+<td style="text-align: center;">35 min</td>
 <td style="text-align: center;">60 min</td>
 <td><a href="../semana1/05-trayectoria.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">6</td>
 <td>Adaptación y aprendizaje</td>
+<td style="text-align: center;">30 min</td>
 <td style="text-align: center;">55 min</td>
 <td><a href="../semana1/06-adaptacion.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">7</td>
 <td>Emergencia y falacia de composición</td>
+<td style="text-align: center;">30 min</td>
 <td style="text-align: center;">60 min</td>
 <td><a href="../semana1/07-emergencia.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">8</td>
 <td>Eventos extremos y colas pesadas</td>
+<td style="text-align: center;">35 min</td>
 <td style="text-align: center;">65 min</td>
 <td><a href="../semana1/08-eventos-extremos.html">Disponible</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">9</td>
-<td>Puntos de inflexión y regímenes</td>
+<td>Puntos de quiebre y regímenes</td>
+<td style="text-align: center;">35 min</td>
 <td style="text-align: center;">65 min</td>
 <td><a href="../semana1/09-regimenes.html">Disponible</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">10</td>
 <td>El mapa causal de la crisis</td>
+<td style="text-align: center;">40 min</td>
 <td style="text-align: center;">80 min</td>
 <td><a href="../semana1/10-mapa-causal.html">Disponible</a></td>
 </tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><strong>5 h 40 min</strong></td>
+<td style="text-align: center;"><strong>10 h 25 min</strong></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<p>Las diez páginas suman unas diez horas. El resto del tiempo autónomo de la semana corresponde al foro, al quiz y a la ficha del proyecto.</p>
+<p><strong>Cómo repartir las diez horas autónomas.</strong> Las diez páginas completas no caben en la semana junto con lo que se entrega, así que el plan recomendado es este: la ruta mínima de las diez páginas, unas 5 h 40 min; la práctica del mapa causal, unos 90 minutos; el foro, cerca de una hora; el quiz, media hora, y la ficha del proyecto, cerca de una hora. Suman 9 h 40 min y dejan un margen pequeño para imprevistos. Lo que amplía cada página (el ejemplo avanzado ●●●, la exploración libre de los simuladores, el código plegado y los ejercicios adicionales) queda para quien tenga tiempo o para la semana 3, cuando prepare el Avance 1. Las notas en PDF de la semana son el texto de referencia: consúltelas por concepto, cuando una página remita a ellas.</p>
+<p><strong>La entrega de esta semana.</strong> La ficha del caso no lleva nota, pero sin ficha aprobada no se califica el Avance 1. El caso guía muestra <a href="../caso-guia/01-ficha.html">la ficha de un equipo, con la realimentación que recibió</a>.</p>
 
 
 </section>
@@ -1119,14 +1198,30 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>MISE · Universidad de los Andes · Systems Analytics</p>
+<p>MISE · Universidad de los Andes · Systems Analytics. ¿Vio un error o algo confuso? Cuéntelo en el foro del curso en Bloque Neón, con el título de la página.</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+<p>Datos sintéticos con fines didácticos cuando así se indica.</p>
 </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../recursos.html" aria-current="page">
+<p>Recursos</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../glosario.html">
+<p>Glosario</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../referencias.html">
+<p>Referencias</p>
+</a>
+  </li>  
+</ul>
+    </div>
   </div>
 </footer>
 

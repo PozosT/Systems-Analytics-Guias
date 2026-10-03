@@ -1,11 +1,14 @@
 /* componentes.css — Cajas didácticas, visor paso a paso y preguntas.
-   Paleta del curso (mise-notas.sty y mise_sd.graficas). */
+   Paleta del curso (mise-notas.sty y mise_sd.graficas). El ámbar del curso
+   (#B26C00) solo alcanza 4,2:1 sobre blanco: se usa en bordes y trazos, y
+   el texto ámbar usa --mise-ambar-texto (#945A00, 5,6:1), según WCAG 2.1 AA. */
 :root {
   --mise-azul: #003366;
   --mise-azul-suave: #e8f0f8;
   --mise-verde: #00693e;
   --mise-verde-suave: #ebf6ee;
   --mise-ambar: #b26c00;
+  --mise-ambar-texto: #945a00;
   --mise-ambar-suave: #fff8e3;
   --mise-violeta: #5434a0;
   --mise-violeta-suave: #f3f0fb;
@@ -42,7 +45,7 @@
 .ejemplo { background: var(--mise-verde-suave); border-left: 5px solid var(--mise-verde); }
 .ejemplo .caja-etiqueta, .ejemplo .caja-nivel { color: var(--mise-verde); }
 .error-comun { background: var(--mise-ambar-suave); border-left: 5px solid var(--mise-ambar); }
-.error-comun .caja-etiqueta { color: var(--mise-ambar); }
+.error-comun .caja-etiqueta { color: var(--mise-ambar-texto); }
 .error-comun .caja-etiqueta::before { content: "⚠ "; }
 .caso-colombia {
   border-left: 6px solid transparent;
@@ -63,6 +66,15 @@
 /* Observable Inputs fija --label-width: 120px en cada formulario */
 .simulador form[class^="oi-"] { --label-width: 13rem; }
 @media (max-width: 36rem) { .simulador form[class^="oi-"] { --label-width: 100%; } }
+/* Casilla numérica en español (componentes.js): ocupa el lugar de la
+   casilla type=number de Observable, que queda oculta */
+form[class^="oi-"] input.numero-original { display: none !important; }
+form[class^="oi-"] input.numero-es {
+  font-variant-numeric: tabular-nums; flex-shrink: 1.5; text-overflow: ellipsis;
+}
+form[class^="oi-"] input.numero-es[aria-invalid="true"] {
+  border-color: var(--mise-rojo); outline: 2px solid var(--mise-rojo); outline-offset: -1px;
+}
 .lectura-simulador {
   display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.6rem 0 0.8rem;
 }
@@ -88,21 +100,30 @@
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 0.6rem; border-top: 1px solid #e5e9ee; padding: 0.7rem 0 0.5rem; margin-top: 0.4rem;
 }
-.pasos-puntos { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.pasos-puntos { display: flex; gap: 0.1rem; flex-wrap: wrap; }
+/* El botón es la zona táctil (≥ 24 px); el punto visible se dibuja con ::before */
 .pasos-punto {
-  width: 0.8rem; height: 0.8rem; border-radius: 50%; padding: 0;
-  border: 2px solid var(--mise-verde); background: #fff; cursor: pointer;
+  width: 1.5rem; height: 1.5rem; min-width: 24px; min-height: 24px; padding: 0;
+  border: none; background: transparent; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; border-radius: 50%;
 }
-.pasos-punto.visto { background: #9fcfb5; border-color: #9fcfb5; }
-.pasos-punto.actual { background: var(--mise-verde); }
+.pasos-punto::before {
+  content: ""; width: 0.8rem; height: 0.8rem; border-radius: 50%; box-sizing: border-box;
+  border: 2px solid var(--mise-verde); background: #fff;
+}
+/* Visto: verde medio (3,4:1 sobre blanco); actual: verde pleno con anillo */
+.pasos-punto.visto::before { background: #4f9a76; border-color: #4f9a76; }
+.pasos-punto.actual::before { background: var(--mise-verde); box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--mise-verde); }
 .pasos-navegacion { display: flex; align-items: center; gap: 0.6rem; }
 .pasos-contador { font-size: 0.85rem; color: var(--mise-gris); min-width: 6.5rem; text-align: center; }
 .pasos-boton {
   border: 1px solid var(--mise-verde); color: var(--mise-verde); background: #fff;
   border-radius: 5px; padding: 0.3rem 0.8rem; font-size: 0.9rem; cursor: pointer;
+  min-height: 2rem;
 }
 .pasos-boton.pasos-principal { background: var(--mise-verde); color: #fff; }
-.pasos-boton:disabled { opacity: 0.35; cursor: default; }
+/* aria-disabled en vez de disabled: el botón conserva el foco al llegar al extremo */
+.pasos-boton:disabled, .pasos-boton[aria-disabled="true"] { opacity: 0.4; cursor: default; }
 .pasos-boton { white-space: nowrap; }
 @media (max-width: 36rem) {
   .pasos-navegacion { width: 100%; justify-content: space-between; }
@@ -112,20 +133,34 @@
 }
 .pasos-todos {
   border: none; background: none; color: var(--mise-gris); font-size: 0.8rem;
-  text-decoration: underline; cursor: pointer;
+  text-decoration: underline; cursor: pointer; min-height: 24px; padding: 0.25rem 0.4rem;
 }
+/* Con el dedo (pantallas táctiles), zonas de 44 px */
+@media (pointer: coarse) {
+  .pasos-punto { width: 2rem; height: 2.75rem; }
+  .pasos-boton, .pasos-todos { min-height: 2.75rem; }
+}
+/* Foco visible en todos los controles de las guías */
+.pasos-boton:focus-visible, .pasos-punto:focus-visible, .pasos-todos:focus-visible,
+.quiz-activo .opcion:focus-visible, .boton-estudiada:focus-visible, .paso:focus-visible,
+.tabla-desplazable:focus-visible {
+  outline: 3px solid var(--mise-azul); outline-offset: 2px;
+}
+.paso:focus { outline: none; }
+.paso:focus-visible { border-radius: 4px; }
 
 /* ---------------- Preguntas y predicciones ---------------- */
 .quiz { background: #fff; border: 1px solid #d9e2ec; border-top: 4px solid var(--mise-violeta); }
 .quiz .caja-etiqueta { color: var(--mise-violeta); }
 .prediccion { background: #fff; border: 1px dashed var(--mise-ambar); border-top: 4px solid var(--mise-ambar); }
-.prediccion .caja-etiqueta { color: var(--mise-ambar); }
+.prediccion .caja-etiqueta { color: var(--mise-ambar-texto); }
 .opcion {
   border: 1px solid #d9e2ec; border-radius: 6px; padding: 0.45rem 0.75rem 0.1rem 2.6rem;
   margin: 0.45rem 0; position: relative;
 }
 .quiz-activo .opcion { cursor: pointer; }
-.quiz-activo .opcion:hover, .quiz-activo .opcion:focus { border-color: var(--mise-azul); outline: none; }
+.quiz-activo .opcion:hover, .quiz-activo .opcion:focus { border-color: var(--mise-azul); }
+.quiz-activo .opcion:focus:not(:focus-visible) { outline: none; }
 .opcion-letra {
   position: absolute; left: 0.6rem; top: 0.45rem; width: 1.4rem; height: 1.4rem; border-radius: 50%;
   background: var(--mise-gris-suave); font-size: 0.8rem; font-weight: 700;
@@ -139,7 +174,7 @@
 .porque { font-size: 0.9rem; color: #333; border-top: 1px dotted #ccc; padding-top: 0.3rem; }
 .quiz-aviso { font-weight: 600; font-size: 0.9rem; min-height: 1.2rem; margin: 0.3rem 0; }
 .explicacion { border-left: 3px solid var(--mise-verde); padding-left: 0.8rem; }
-.mi-prediccion { font-weight: 600; color: var(--mise-ambar); }
+.mi-prediccion { font-weight: 600; color: var(--mise-ambar-texto); }
 
 /* ---------------- Contraste lado a lado ---------------- */
 .lado-a-lado { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
@@ -156,14 +191,34 @@
 /* ---------------- Impresión: todo desplegado ---------------- */
 @media print {
   .paso[hidden], .porque[hidden], .explicacion[hidden] { display: block !important; }
-  .pasos-barra, .quiz-aviso { display: none !important; }
+  .pasos-barra, .quiz-aviso, .saltar-contenido, .aviso-carga, .progreso-pagina,
+  .tabla-pista, #quarto-sidebar, .nav-page { display: none !important; }
+  /* Soluciones, pistas y código plegados se imprimen desplegados */
+  .callout .callout-collapse.collapse, .callout .collapse:not(.show) { display: block !important; height: auto !important; }
+  details > :not(summary) { display: block !important; }
+  details::details-content { content-visibility: visible; display: block; }
+  .pasos-activo .paso { min-height: 0; }
   .caja { break-inside: avoid; }
+  main table { display: table !important; overflow: visible !important; }
 }
 
 /* ---------------- Teléfonos: tablas con desplazamiento propio ---------------- */
 @media (max-width: 36rem) {
   main table { display: block; overflow-x: auto; max-width: 100%; }
+  /* Sombra en el borde que sigue oculto: señal de que la tabla se desplaza */
+  main table.tabla-desplazable {
+    background:
+      linear-gradient(to right, #fff 30%, rgba(255, 255, 255, 0)) left center,
+      linear-gradient(to left, #fff 30%, rgba(255, 255, 255, 0)) right center,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0)) left center,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0)) right center;
+    background-repeat: no-repeat;
+    background-size: 2.5rem 100%, 2.5rem 100%, 0.9rem 100%, 0.9rem 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
 }
+.tabla-pista { font-size: 0.8rem; color: var(--mise-gris); margin: 0.2rem 0 0.2rem; }
+.tabla-pista::before { content: "↔ "; }
 
 /* ---------------- Ecuaciones anchas: desplazamiento propio ---------------- */
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.2rem 0; }
@@ -179,6 +234,52 @@
 .realimentacion .caja-etiqueta { color: var(--mise-violeta); }
 .realimentacion .caja-etiqueta::before { content: "✎ "; }
 .rubrica-insuficiente { color: var(--mise-rojo); }
-.rubrica-aceptable { color: var(--mise-ambar); }
+.rubrica-aceptable { color: var(--mise-ambar-texto); }
 .rubrica-bueno { color: var(--mise-azul); }
 .rubrica-sobresaliente { color: var(--mise-verde); }
+
+/* ---------------- Accesibilidad: salto, textos ocultos y avisos ---------------- */
+.visualmente-oculto {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.saltar-contenido {
+  position: absolute; left: 0.5rem; top: -4rem; z-index: 2000;
+  background: var(--mise-azul); color: #fff; padding: 0.6rem 1rem; border-radius: 0 0 6px 6px;
+  font-weight: 600; text-decoration: none;
+}
+.saltar-contenido:focus { top: 0; color: #fff; outline: 3px solid var(--mise-amarillo-co); }
+.aviso-sin-js, .aviso-carga {
+  border: 1px solid #e3c98f; border-left: 5px solid var(--mise-ambar); background: var(--mise-ambar-suave);
+  color: #1f2328; border-radius: 6px; padding: 0.6rem 0.9rem; margin: 0.6rem 0 1rem; font-size: 0.92rem;
+}
+.aviso-sin-js { margin: 0.5rem; }
+.aviso-carga strong, .aviso-sin-js strong { color: var(--mise-ambar-texto); }
+
+/* ---------------- Cierre de página: progreso, fecha y reporte de errores ---------------- */
+.cierre-pagina {
+  margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e5e9ee;
+  font-size: 0.88rem; color: var(--mise-gris);
+}
+.progreso-pagina { margin-bottom: 0.6rem; }
+.boton-estudiada {
+  border: 1px solid var(--mise-verde); color: var(--mise-verde); background: #fff;
+  border-radius: 5px; padding: 0.35rem 0.9rem; font-size: 0.92rem; cursor: pointer; min-height: 2.75rem;
+}
+.boton-estudiada[aria-pressed="true"] { background: var(--mise-verde); color: #fff; }
+.boton-estudiada[aria-pressed="true"]::before { content: "✓ "; }
+.progreso-aviso { margin-left: 0.6rem; }
+.marca-estudiada { color: var(--mise-verde); font-weight: 700; margin-left: 0.3rem; }
+.avance-semana { white-space: nowrap; }
+
+/* ---------------- Glosario ---------------- */
+.glosario dt { font-weight: 650; color: var(--mise-azul); margin-top: 1rem; }
+.glosario dd { margin-left: 0; padding-left: 0.9rem; border-left: 3px solid var(--mise-azul-suave); }
+.glosario dd p { margin-bottom: 0.3rem; }
+.glosario .glosario-fuente { font-size: 0.85rem; color: var(--mise-gris); }
+.glosario-letras { display: flex; flex-wrap: wrap; gap: 0.3rem 0.6rem; font-weight: 600; }
+.glosario-letras a { display: inline-block; min-width: 24px; min-height: 24px; text-align: center; }
+
+/* ---------------- Referencias: URL largas que no desbordan el teléfono ---------------- */
+.csl-entry, .csl-entry a, main a[href^="http"] { overflow-wrap: anywhere; }
+.csl-entry { margin-bottom: 0.6rem; padding-left: 1.5rem; text-indent: -1.5rem; }

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="La distinción de Knight entre riesgo e incertidumbre, por qué el valor presente neto esperado deja de orientar cuando nadie puede defender las probabilidades, y cómo mostrar un abanico de futuros en lugar de un promedio.">
+<meta name="description" content="La distinción de Knight entre riesgo e incertidumbre, qué hace profunda una incertidumbre (desacuerdo sobre el modelo, las probabilidades o la valoración), por qué el valor presente neto esperado deja de orientar cuando nadie puede defender las probabilidades, y cómo mostrar un abanico de futuros en lugar de un promedio.">
 
 <title>Riesgo contra incertidumbre profunda – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-189071c1cfc9baef9b9de50def1ee7e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -117,8 +117,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<meta name="guias-mise:fecha" content="2 de octubre de 2026">
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -133,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -264,7 +265,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+ <span class="menu-text">Puntos de quiebre y regímenes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -382,7 +383,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de quiebre</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -474,6 +475,12 @@ window.Quarto = {
  <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/10-nino-perillas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo ante El Niño y sus perillas</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -543,6 +550,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El arco del Laboratorio 4</span></a>
   </div>
 </li>
       </ul>
@@ -653,6 +666,35 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Para consultar</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../recursos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -675,6 +717,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/06-incertidumbre-profunda.html">Riesgo contra incertidumbre profunda</a></li></ol></nav>
 <div class="quarto-title">
@@ -684,7 +727,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    La distinción de Knight entre riesgo e incertidumbre, por qué el valor presente neto esperado deja de orientar cuando nadie puede defender las probabilidades, y cómo mostrar un abanico de futuros en lugar de un promedio.
+    La distinción de Knight entre riesgo e incertidumbre, qué hace profunda una incertidumbre (desacuerdo sobre el modelo, las probabilidades o la valoración), por qué el valor presente neto esperado deja de orientar cuando nadie puede defender las probabilidades, y cómo mostrar un abanico de futuros en lugar de un promedio.
   </div>
 </div>
 
@@ -723,7 +766,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 50 a 60 minutos</span> <span class="dato">📚 Requiere <a href="../semana5/01-refuerzo-exponencial.html">refuerzo y curva de Wright</a> y <a href="../semana5/05-sensibilidad.html">sensibilidad</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4</span></p>
+<p><span class="dato">⏱ 60 a 65 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la idea clave, la intuición, la definición con el visor del valor esperado, el ejemplo ●○○, el error «Contrabandear distribuciones», las tres primeras preguntas y el resumen, unos 20 min; amplían: los ejemplos ●●○ y ●●● con sus simuladores, los otros dos errores, las preguntas 4 y 5 y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana5/01-refuerzo-exponencial.html">refuerzo y curva de Wright</a> y <a href="../semana5/05-sensibilidad.html">sensibilidad</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -739,7 +782,7 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Hay riesgo cuando se puede defender una distribución de probabilidad; hay incertidumbre profunda cuando expertos razonables no la acuerdan. Bajo incertidumbre profunda, promediar esconde la pregunta importante, y el trabajo pasa de predecir a explorar futuros.</p>
+<p>Hay riesgo cuando se puede defender una distribución de probabilidad; hay incertidumbre profunda cuando expertos razonables no acuerdan el modelo del sistema, las probabilidades de las entradas o la manera de valorar los resultados. Bajo incertidumbre profunda, promediar esconde la pregunta importante, y el trabajo pasa de predecir a explorar futuros.</p>
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
@@ -753,34 +796,34 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos apuestas a rojo</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-06-ruleta-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-06-ruleta-1.svg" class="img-fluid" alt="Una ruleta con 18 casillas rojas, 18 negras y una verde."></a></p>
+<p><a href="../diagramas/svg/s5-06-ruleta-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-06-ruleta-1.svg" class="img-fluid" loading="lazy" alt="Una ruleta con 18 casillas rojas, 18 negras y una verde."></a></p>
 <p><strong>Mesa A, la ruleta.</strong> Usted no sabe qué número saldrá, pero sabe que hay 18 casillas rojas de 37. La probabilidad de rojo se conoce.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-06-ruleta-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-06-ruleta-2.svg" class="img-fluid" alt="Cálculo del valor esperado de una apuesta de 100 pesos a rojo: 97,3 pesos."></a></p>
+<p><a href="../diagramas/svg/s5-06-ruleta-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-06-ruleta-2.svg" class="img-fluid" loading="lazy" alt="Cálculo del valor esperado de una apuesta de 100 pesos a rojo: 97,3 pesos."></a></p>
 <p><strong>El valor esperado.</strong> Una apuesta de 100 COP a rojo paga el doble. Su valor esperado es <span class="math inline">100 \times 2 \times 18/37 = 97{,}3</span> COP. Usted sabe exactamente qué compra: una pérdida media de 2,7 COP por apuesta.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-06-ruleta-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-06-ruleta-3.svg" class="img-fluid" alt="Una urna con bolas de colores ocultos y un signo de interrogación."></a></p>
+<p><a href="../diagramas/svg/s5-06-ruleta-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-06-ruleta-3.svg" class="img-fluid" loading="lazy" alt="Una urna con bolas de colores ocultos y un signo de interrogación."></a></p>
 <p><strong>Mesa B, la urna.</strong> La urna tiene bolas rojas y negras, sin decir cuántas de cada una. ¿Qué probabilidad le asigna a sacar roja?</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-06-ruleta-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-06-ruleta-4.svg" class="img-fluid" alt="Tres supuestos sobre la urna: 20, 50 y 80 por ciento de rojas, con valores esperados de 40, 100 y 160 pesos."></a></p>
+<p><a href="../diagramas/svg/s5-06-ruleta-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-06-ruleta-4.svg" class="img-fluid" loading="lazy" alt="Tres supuestos sobre la urna: 20, 50 y 80 por ciento de rojas, con valores esperados de 40, 100 y 160 pesos."></a></p>
 <p><strong>Tres analistas.</strong> Uno supone 20 % de rojas y calcula 40 COP; otro supone 50 % y calcula 100 COP; el tercero supone 80 % y calcula 160 COP. Los tres usaron bien la fórmula. El resultado lo decidió el supuesto, y nadie puede defender un supuesto sobre los otros.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-06-ruleta-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-06-ruleta-5.svg" class="img-fluid" alt="La ruleta como la hidrología del próximo año y la urna como El Niño en 2040 y el costo del almacenamiento en 2045."></a></p>
-<p><strong>El sector eléctrico.</strong> La hidrología del próximo año se parece a la ruleta: hay un siglo de datos. La frecuencia de El Niño en 2040 o el costo del almacenamiento en 2045 se parecen a la urna. Las herramientas de la ruleta aceptan datos de la urna sin quejarse, basta con inventar la probabilidad, y devuelven números con muchos decimales.</p>
+<p><a href="../diagramas/svg/s5-06-ruleta-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-06-ruleta-5.svg" class="img-fluid" loading="lazy" alt="La ruleta como la hidrología del próximo año y la urna como El Niño en 2040 y el costo del almacenamiento en 2045."></a></p>
+<p><strong>El sector eléctrico.</strong> La hidrología del próximo año se parece a la ruleta: hay un siglo de datos. La frecuencia de El Niño en 2040 o el costo del almacenamiento en 2045 se parecen a la urna. Las herramientas de la ruleta aceptan datos de la urna, basta con inventar la probabilidad, y devuelven números con muchos decimales.</p>
 </div>
 </div>
 </section>
 <section id="del-dibujo-a-la-ecuación" class="level2">
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
-<div class="definicion caja">
+<div id="definicion-riesgo-e-incertidumbre-profunda" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Riesgo e incertidumbre profunda</span>
 </div>
-<p>Una cantidad incierta es un <strong>riesgo</strong> cuando los analistas relevantes acuerdan una distribución de probabilidad defendible para ella, por historia estadística estable, por física o porque un mercado la cotiza. Hay <strong>incertidumbre profunda</strong> cuando expertos razonables no acuerdan la distribución, el rango o incluso el modelo causal de la cantidad (Marchau et al., 2019). La distinción depende del horizonte: la misma variable puede ser riesgo a un año e incertidumbre profunda a veinte.</p>
+<p>Una cantidad incierta es un <strong>riesgo</strong> cuando los analistas relevantes acuerdan una distribución de probabilidad defendible para ella, por historia estadística estable, por física o porque un mercado la cotiza. Hay <strong>incertidumbre profunda</strong> cuando los expertos y los actores no conocen o no acuerdan el modelo del sistema, las distribuciones de probabilidad de las entradas o la valoración de los resultados (Marchau et al., 2019). Eso no significa que falten pronósticos: Way et al.&nbsp;(2022) publican pronósticos probabilísticos de costos tecnológicos; lo profundo es el desacuerdo entre esos pronósticos y otros igualmente defendibles, y entre los valores con que cada actor juzga un mismo resultado. La distinción depende del horizonte: la misma variable puede ser riesgo a un año e incertidumbre profunda a veinte.</p>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
@@ -793,11 +836,11 @@ window.Quarto = {
 </div>
 <div class="paso">
 <p><strong>Mire la distribución que resume ese número.</strong></p>
-<div id="e3a5e035" class="cell" data-execution_count="2">
+<div id="17fc6938" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="06-incertidumbre-profunda_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Con p = 0,5 el valor esperado es 10, pero la mitad de las veces el proyecto pierde 10."><img src="06-incertidumbre-profunda_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" alt="Con p = 0,5 el valor esperado es 10, pero la mitad de las veces el proyecto pierde 10."></a></p>
+<p><a href="06-incertidumbre-profunda_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Con p = 0,5 el valor esperado es 10, pero la mitad de las veces el proyecto pierde 10."><img src="06-incertidumbre-profunda_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Con p = 0,5 el valor esperado es 10, pero la mitad de las veces el proyecto pierde 10."></a></p>
 <figcaption>Con p = 0,5 el valor esperado es 10, pero la mitad de las veces el proyecto pierde 10.</figcaption>
 </figure>
 </div>
@@ -807,11 +850,11 @@ window.Quarto = {
 </div>
 <div class="paso">
 <p><strong>Quite la probabilidad.</strong></p>
-<div id="a2ab9d1e" class="cell" data-execution_count="3">
+<div id="93bcb7f8" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="06-incertidumbre-profunda_files/figure-html/cell-4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="El valor esperado en función de una probabilidad que nadie puede defender; la franja muestra el rango que distintos expertos consideran plausible (ilustrativo)."><img src="06-incertidumbre-profunda_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img" alt="El valor esperado en función de una probabilidad que nadie puede defender; la franja muestra el rango que distintos expertos consideran plausible (ilustrativo)."></a></p>
+<p><a href="06-incertidumbre-profunda_files/figure-html/cell-4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="El valor esperado en función de una probabilidad que nadie puede defender; la franja muestra el rango que distintos expertos consideran plausible (ilustrativo)."><img src="06-incertidumbre-profunda_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="El valor esperado en función de una probabilidad que nadie puede defender; la franja muestra el rango que distintos expertos consideran plausible (ilustrativo)."></a></p>
 <figcaption>El valor esperado en función de una probabilidad que nadie puede defender; la franja muestra el rango que distintos expertos consideran plausible (ilustrativo).</figcaption>
 </figure>
 </div>
@@ -820,7 +863,7 @@ window.Quarto = {
 <p>Si los expertos defienden valores de <span class="math inline">p</span> entre 0,1 y 0,6, el valor esperado va de <span class="math inline">-6</span> a <span class="math inline">+14</span> y cambia de signo en <span class="math inline">p = 0{,}25</span>. La recomendación depende de un número que nadie puede defender.</p>
 </div>
 <div class="paso">
-<p><strong>Nombre las tres vías del colapso.</strong> (i) <strong>No hay pesos</strong>: sin probabilidades, cualquier promedio es una elección disfrazada. (ii) <strong>No linealidad</strong>: en sistemas con umbrales y refuerzos, el resultado del futuro promedio difiere del promedio de los resultados, como vio con el umbral de la tasa de aprendizaje. (iii) <strong>Colas</strong>: la pregunta del decisor suele ser en qué futuro se arruina, y el promedio borra justo esa información.</p>
+<p><strong>Nombre las tres vías del colapso.</strong> (i) <strong>No hay pesos</strong>: sin probabilidades, cualquier promedio es una elección disfrazada. (ii) <strong>No linealidad</strong>: en sistemas con umbrales, techos y refuerzos, el resultado del futuro promedio difiere del promedio de los resultados, como vio en la <a href="../semana5/05-sensibilidad.html">página anterior</a> con la tasa de aprendizaje local, cuya respuesta se aplana arriba. (iii) <strong>Colas</strong>: la pregunta del decisor suele ser en qué futuro se arruina, y el promedio borra justo esa información.</p>
 </div>
 <div class="paso">
 <p><strong>Cambie de pregunta.</strong> Bajo incertidumbre profunda, la pregunta pasa de «¿qué estrategia es óptima en el futuro esperado?» a «¿qué estrategia se comporta aceptablemente en todos los futuros plausibles?». Las páginas de escenarios y de robustez construyen las herramientas.</p>
@@ -848,7 +891,7 @@ window.Quarto = {
 <p><strong>Clasifique los riesgos.</strong> (i) Demanda del próximo trimestre: estacionalidad y crecimiento bien muestreados a ese plazo. (iii) Disponibilidad de una térmica: estadística de fallas de plantas similares. (v) Vida útil de un panel instalado: degradación física caracterizada por fabricantes y campo. Las tres son <strong>riesgo</strong>.</p>
 </div>
 <div class="paso">
-<p><strong>Clasifique las profundas.</strong> (ii) Costo del hidrógeno en 2045: depende de curvas de aprendizaje, infraestructura y demanda internacional que nadie sabe ponderar. (iv) Regulación de la generación distribuida en 2040: un futuro político e institucional. Las dos son <strong>incertidumbre profunda</strong>.</p>
+<p><strong>Clasifique las profundas.</strong> (ii) Costo del hidrógeno en 2045: depende de curvas de aprendizaje, infraestructura y demanda internacional, y los pronósticos publicados no coinciden. (iv) Regulación de la generación distribuida en 2040: un futuro político e institucional en el que, además, distribuidores, usuarios con paneles y usuarios sin ellos valoran distinto el mismo resultado. Las dos son <strong>incertidumbre profunda</strong>.</p>
 </div>
 <div class="paso">
 <p><strong>Reconozca la zona gris.</strong> (vi) Fecha de la interconexión: hay cronogramas y experiencia de gestión, que son riesgo, pero los hitos dependen de acuerdos binacionales, licencias y consultas cuyos extremos nadie acota bien. Se trata como riesgo con distribución ancha o como eje de escenarios, según cuánto pese en la decisión.</p>
@@ -861,7 +904,7 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Térmica de respaldo o solar con contrato</span>
 </div>
-<p><strong>Planteamiento.</strong> Un inversionista compara dos proyectos de 20 años, con tasa de descuento del 10 %. Una <strong>térmica de respaldo</strong> cuesta 80 millones de USD y gana 3 millones en un año normal y 33 en un año de El Niño, cuando los precios de escasez la despachan. Una <strong>solar con contrato de largo plazo</strong> cuesta 60 millones y gana 8 en un año normal y 9 en uno de El Niño. La probabilidad anual de El Niño es <span class="math inline">p</span>:</p>
+<p><strong>Planteamiento.</strong> Un inversionista compara dos proyectos de 20 años, con tasa de descuento del 10 %. Una <strong>térmica de respaldo</strong> cuesta 80 millones de USD y gana 3 millones en un año normal y 33 en un año de El Niño, cuando la bolsa sube y la térmica, despachada por orden de mérito, vende a precios altos. Si tiene obligaciones de energía firme, la energía comprometida se liquida al precio de escasez, el umbral de bolsa que activa la opción del Cargo por Confiabilidad. Una <strong>solar con contrato de largo plazo</strong> cuesta 60 millones y gana 8 en un año normal y 9 en uno de El Niño. La probabilidad anual de El Niño es <span class="math inline">p</span>:</p>
 <p><span class="math display">\text{VPN} = -\text{inversión} + 8{,}51 \times \bigl[p \cdot \text{margen}_{\text{Niño}} + (1 - p) \cdot \text{margen}_{\text{normal}}\bigr],</span></p>
 <p>donde 8,51 es el factor de valor presente de 20 años al 10 %. ¿Cuál conviene?</p>
 </div>
@@ -976,13 +1019,16 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la decisión</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-nino"></span>. Con <span class="math inline">p = 0{,}20</span> la solar vale 9,8 millones y la térmica <span class="math inline">-3{,}4</span>. Con <span class="math inline">p = 0{,}30</span> la térmica vale 22,2 millones y la solar 10,7. La respuesta es la B: el promedio histórico no resuelve una decisión cuyo umbral está a cinco puntos de distancia.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-nino">(la opción que eligió arriba)</span>. Con <span class="math inline">p = 0{,}20</span> la solar vale 9,8 millones y la térmica <span class="math inline">-3{,}4</span>. Con <span class="math inline">p = 0{,}30</span> la térmica vale 22,2 millones y la solar 10,7. La respuesta esperada era que la recomendación cambia con una probabilidad un poco mayor, dentro del rango plausible: el promedio histórico no resuelve una decisión cuyo umbral está a cinco puntos de distancia.</p>
 </div>
 <div class="paso">
 <p><strong>Mire el riesgo de cada proyecto.</strong> La solar con contrato casi no depende de <span class="math inline">p</span>: su VPN va de 8,1 a 13,2 millones en toda la gráfica. La térmica va de <span class="math inline">-54{,}5</span> a <span class="math inline">+98{,}8</span>. La primera es poco sensible a lo que no se sabe; la segunda es una apuesta sobre el clima.</p>
 </div>
 <div class="paso">
-<p><strong>Saque la lección.</strong> Cuando la probabilidad es incierta en profundidad, el análisis útil muestra la recomendación como función de ella y pregunta qué proyecto es aceptable en todo el rango. Esa es la idea de la robustez, que la página 8 convierte en método.</p>
+<p><strong>Mire el modelo de la semana.</strong> Allí la frecuencia de El Niño también decide. El Niño reduce los aportes a los embalses y, por la convexidad del precio frente al nivel del embalse y al margen de energía, encarece la electricidad. Sin El Niño, el precio medio de 40 años es de 147,0 COP/kWh del modelo; con un episodio cada 5 años que deja los aportes en el 65 % de la media durante año y medio, sube a 159,2 (+12,2). Con la hidrología de los mundos suaves del Laboratorio 4 (un episodio cada 7 años, aportes al 70 %) sube a 152,3 (+5,3), y con la de los exigentes (cada 4 años, aportes al 60 %), a 162,0 (+15,0). La distancia entre los dos regímenes, cerca de 10 COP/kWh, supera la que separa a casi todas las estrategias del laboratorio (escala del modelo; datos sintéticos con fines didácticos).</p>
+</div>
+<div class="paso">
+<p><strong>Saque la lección.</strong> Cuando la probabilidad es incierta en profundidad, el análisis útil muestra la recomendación como función de ella y pregunta qué proyecto es aceptable en todo el rango. Por eso el Laboratorio 4 no le pone una probabilidad a El Niño: cruza un régimen de cada 7 años con uno de cada 4 como escenarios. Esa es la idea de la robustez, que la página 8 convierte en método.</p>
 </div>
 </div>
 </section>
@@ -1033,7 +1079,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="329" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 328;"><span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a>viewof aprendizajeW <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.05</span><span class="op">,</span> <span class="fl">0.40</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.20</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tasa de aprendizaje LR"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="333" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 332;"><span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a>viewof aprendizajeW <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.05</span><span class="op">,</span> <span class="fl">0.40</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.20</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tasa de aprendizaje LR"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
@@ -1044,7 +1090,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="334" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 333;"><span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a>viewof despliegueW <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.10</span><span class="op">,</span> <span class="fl">0.40</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.25</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Crecimiento del despliegue g [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="338" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 337;"><span id="cb7-338"><a href="#cb7-338" aria-hidden="true" tabindex="-1"></a>viewof despliegueW <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.10</span><span class="op">,</span> <span class="fl">0.40</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.25</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Crecimiento del despliegue g [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
@@ -1055,15 +1101,15 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="339" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 338;"><span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>abanicoW <span class="op">=</span> {</span>
-<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> anios <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">41</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> k <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
-<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> futuros <span class="op">=</span> [<span class="fl">0.08</span><span class="op">,</span> <span class="fl">0.15</span><span class="op">,</span> <span class="fl">0.25</span><span class="op">,</span> <span class="fl">0.35</span>]<span class="op">.</span><span class="fu">flatMap</span>((lr) <span class="kw">=&gt;</span> [<span class="fl">0.15</span><span class="op">,</span> <span class="fl">0.35</span>]<span class="op">.</span><span class="fu">flatMap</span>((g) <span class="kw">=&gt;</span></span>
-<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a>    anios<span class="op">.</span><span class="fu">map</span>((t) <span class="kw">=&gt;</span> ({<span class="dt">anio</span><span class="op">:</span> <span class="dv">2025</span> <span class="op">+</span> t<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="fu">costoWright</span>(t<span class="op">,</span> lr<span class="op">,</span> g)<span class="op">,</span> <span class="dt">futuro</span><span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>lr<span class="sc">}</span><span class="vs">-</span><span class="sc">${</span>g<span class="sc">}</span><span class="vs">`</span>}))))<span class="op">;</span></span>
-<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mia <span class="op">=</span> anios<span class="op">.</span><span class="fu">map</span>((t) <span class="kw">=&gt;</span> ({<span class="dt">anio</span><span class="op">:</span> <span class="dv">2025</span> <span class="op">+</span> t<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="fu">costoWright</span>(t<span class="op">,</span> aprendizajeW<span class="op">,</span> despliegueW)}))<span class="op">;</span></span>
-<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> extremos <span class="op">=</span> (t) <span class="kw">=&gt;</span> [<span class="fu">costoWright</span>(t<span class="op">,</span> <span class="fl">0.35</span><span class="op">,</span> <span class="fl">0.35</span>)<span class="op">,</span> <span class="fu">costoWright</span>(t<span class="op">,</span> <span class="fl">0.08</span><span class="op">,</span> <span class="fl">0.15</span>)]<span class="op">;</span></span>
-<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {futuros<span class="op">,</span> mia<span class="op">,</span> <span class="dt">c10</span><span class="op">:</span> <span class="fu">costoWright</span>(<span class="dv">10</span><span class="op">,</span> aprendizajeW<span class="op">,</span> despliegueW)<span class="op">,</span> <span class="dt">c20</span><span class="op">:</span> <span class="fu">costoWright</span>(<span class="dv">20</span><span class="op">,</span> aprendizajeW<span class="op">,</span> despliegueW)<span class="op">,</span></span>
-<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cociente10</span><span class="op">:</span> <span class="fu">extremos</span>(<span class="dv">10</span>)[<span class="dv">1</span>] <span class="op">/</span> <span class="fu">extremos</span>(<span class="dv">10</span>)[<span class="dv">0</span>]<span class="op">,</span> <span class="dt">cociente20</span><span class="op">:</span> <span class="fu">extremos</span>(<span class="dv">20</span>)[<span class="dv">1</span>] <span class="op">/</span> <span class="fu">extremos</span>(<span class="dv">20</span>)[<span class="dv">0</span>]}<span class="op">;</span></span>
-<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="343" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 342;"><span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a>abanicoW <span class="op">=</span> {</span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> anios <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">41</span>}<span class="op">,</span> (_<span class="op">,</span> k) <span class="kw">=&gt;</span> k <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> futuros <span class="op">=</span> [<span class="fl">0.08</span><span class="op">,</span> <span class="fl">0.15</span><span class="op">,</span> <span class="fl">0.25</span><span class="op">,</span> <span class="fl">0.35</span>]<span class="op">.</span><span class="fu">flatMap</span>((lr) <span class="kw">=&gt;</span> [<span class="fl">0.15</span><span class="op">,</span> <span class="fl">0.35</span>]<span class="op">.</span><span class="fu">flatMap</span>((g) <span class="kw">=&gt;</span></span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a>    anios<span class="op">.</span><span class="fu">map</span>((t) <span class="kw">=&gt;</span> ({<span class="dt">anio</span><span class="op">:</span> <span class="dv">2025</span> <span class="op">+</span> t<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="fu">costoWright</span>(t<span class="op">,</span> lr<span class="op">,</span> g)<span class="op">,</span> <span class="dt">futuro</span><span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>lr<span class="sc">}</span><span class="vs">-</span><span class="sc">${</span>g<span class="sc">}</span><span class="vs">`</span>}))))<span class="op">;</span></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mia <span class="op">=</span> anios<span class="op">.</span><span class="fu">map</span>((t) <span class="kw">=&gt;</span> ({<span class="dt">anio</span><span class="op">:</span> <span class="dv">2025</span> <span class="op">+</span> t<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="fu">costoWright</span>(t<span class="op">,</span> aprendizajeW<span class="op">,</span> despliegueW)}))<span class="op">;</span></span>
+<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> extremos <span class="op">=</span> (t) <span class="kw">=&gt;</span> [<span class="fu">costoWright</span>(t<span class="op">,</span> <span class="fl">0.35</span><span class="op">,</span> <span class="fl">0.35</span>)<span class="op">,</span> <span class="fu">costoWright</span>(t<span class="op">,</span> <span class="fl">0.08</span><span class="op">,</span> <span class="fl">0.15</span>)]<span class="op">;</span></span>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {futuros<span class="op">,</span> mia<span class="op">,</span> <span class="dt">c10</span><span class="op">:</span> <span class="fu">costoWright</span>(<span class="dv">10</span><span class="op">,</span> aprendizajeW<span class="op">,</span> despliegueW)<span class="op">,</span> <span class="dt">c20</span><span class="op">:</span> <span class="fu">costoWright</span>(<span class="dv">20</span><span class="op">,</span> aprendizajeW<span class="op">,</span> despliegueW)<span class="op">,</span></span>
+<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cociente10</span><span class="op">:</span> <span class="fu">extremos</span>(<span class="dv">10</span>)[<span class="dv">1</span>] <span class="op">/</span> <span class="fu">extremos</span>(<span class="dv">10</span>)[<span class="dv">0</span>]<span class="op">,</span> <span class="dt">cociente20</span><span class="op">:</span> <span class="fu">extremos</span>(<span class="dv">20</span>)[<span class="dv">1</span>] <span class="op">/</span> <span class="fu">extremos</span>(<span class="dv">20</span>)[<span class="dv">0</span>]}<span class="op">;</span></span>
+<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
@@ -1074,15 +1120,15 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="352" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 351;"><span id="cb9-352"><a href="#cb9-352" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb9-353"><a href="#cb9-353" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
-<span id="cb9-354"><a href="#cb9-354" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Año"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">2025</span><span class="op">,</span> <span class="dv">2045</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="bu">String</span>(d)}<span class="op">,</span></span>
-<span id="cb9-355"><a href="#cb9-355" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Costo relativo (2025 = 100, escala log)"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb9-356"><a href="#cb9-356" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb9-357"><a href="#cb9-357" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(abanicoW<span class="op">.</span><span class="at">futuros</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">z</span><span class="op">:</span> <span class="st">"futuro"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#BDBDBD"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.2</span>})<span class="op">,</span></span>
-<span id="cb9-358"><a href="#cb9-358" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(abanicoW<span class="op">.</span><span class="at">mia</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">violeta</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.6</span>})<span class="op">,</span></span>
-<span id="cb9-359"><a href="#cb9-359" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb9-360"><a href="#cb9-360" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="356" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 355;"><span id="cb9-356"><a href="#cb9-356" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-357"><a href="#cb9-357" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">280</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb9-358"><a href="#cb9-358" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Año"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">2025</span><span class="op">,</span> <span class="dv">2045</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="bu">String</span>(d)}<span class="op">,</span></span>
+<span id="cb9-359"><a href="#cb9-359" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Costo relativo (2025 = 100, escala log)"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb9-360"><a href="#cb9-360" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-361"><a href="#cb9-361" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(abanicoW<span class="op">.</span><span class="at">futuros</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">z</span><span class="op">:</span> <span class="st">"futuro"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#BDBDBD"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.2</span>})<span class="op">,</span></span>
+<span id="cb9-362"><a href="#cb9-362" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(abanicoW<span class="op">.</span><span class="at">mia</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">violeta</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.6</span>})<span class="op">,</span></span>
+<span id="cb9-363"><a href="#cb9-363" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-364"><a href="#cb9-364" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="expression">
@@ -1093,12 +1139,12 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="365" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 364;"><span id="cb10-365"><a href="#cb10-365" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb10-366"><a href="#cb10-366" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Su curva en 2035&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(abanicoW<span class="op">.</span><span class="at">c10</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-367"><a href="#cb10-367" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Su curva en 2045&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(abanicoW<span class="op">.</span><span class="at">c20</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-368"><a href="#cb10-368" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cociente entre extremos del abanico en 2035&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(abanicoW<span class="op">.</span><span class="at">cociente10</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-369"><a href="#cb10-369" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cociente entre extremos del abanico en 2045&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(abanicoW<span class="op">.</span><span class="at">cociente20</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb10-370"><a href="#cb10-370" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="369" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 368;"><span id="cb10-369"><a href="#cb10-369" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb10-370"><a href="#cb10-370" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Su curva en 2035&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(abanicoW<span class="op">.</span><span class="at">c10</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-371"><a href="#cb10-371" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Su curva en 2045&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(abanicoW<span class="op">.</span><span class="at">c20</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-372"><a href="#cb10-372" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cociente entre extremos del abanico en 2035&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(abanicoW<span class="op">.</span><span class="at">cociente10</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-373"><a href="#cb10-373" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cociente entre extremos del abanico en 2045&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(abanicoW<span class="op">.</span><span class="at">cociente20</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-374"><a href="#cb10-374" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="expression">
@@ -1115,7 +1161,7 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el abanico sin convertirlo en promedio</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-abanico"></span>. En 2035 el futuro más caro vale 7,4 veces el más barato; en 2045, 54 veces. La respuesta es la C: las curvas se separan en forma multiplicativa, así que tratar el rango como una varianza alrededor del centro se equivoca más cuanto más largo es el horizonte.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-abanico">(la opción que eligió arriba)</span>. En 2035 el futuro más caro vale 7,4 veces el más barato; en 2045, 54 veces. La respuesta esperada era que el cociente crece mucho más que el doble: las curvas se separan en forma multiplicativa, así que tratar el rango como una varianza alrededor del centro se equivoca más cuanto más largo es el horizonte.</p>
 </div>
 <div class="paso">
 <p><strong>Lleve el abanico a una decisión.</strong> Un proyecto de almacenamiento rinde un VPN de +300 si el costo de 2045 cae al 20 % del actual y de −200 si queda en el 60 %. Cuatro de los ocho futuros quedan por debajo de 20 (19,4; 15,5; 5,5 y 1,3) y uno por encima de 60 (69,7).</p>
@@ -1135,18 +1181,18 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Contrabandear distribuciones</span>
 </div>
-<p>Poner una distribución triangular a una cantidad de incertidumbre profunda «para poder correr el Monte Carlo» esconde el desacuerdo debajo de percentiles.</p>
-<div id="ac5f9bee" class="cell" data-execution_count="4">
+<p>Poner una distribución triangular a una cantidad de incertidumbre profunda «para poder correr el Monte Carlo» esconde el desacuerdo debajo de percentiles. Existen pronósticos probabilísticos serios, como los de Way et al.&nbsp;(2022) para costos tecnológicos; el problema aparece cuando otros igualmente defendibles dan distribuciones distintas y el análisis elige una sin decirlo.</p>
+<div id="5d445923" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="06-incertidumbre-profunda_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Dos analistas ponen distribuciones triangulares distintas a la probabilidad anual de El Niño y simulan el VPN de la térmica del ejemplo intermedio. Cifras sintéticas con fines didácticos."><img src="06-incertidumbre-profunda_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" alt="Dos analistas ponen distribuciones triangulares distintas a la probabilidad anual de El Niño y simulan el VPN de la térmica del ejemplo intermedio. Cifras sintéticas con fines didácticos."></a></p>
+<p><a href="06-incertidumbre-profunda_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Dos analistas ponen distribuciones triangulares distintas a la probabilidad anual de El Niño y simulan el VPN de la térmica del ejemplo intermedio. Cifras sintéticas con fines didácticos."><img src="06-incertidumbre-profunda_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Dos analistas ponen distribuciones triangulares distintas a la probabilidad anual de El Niño y simulan el VPN de la térmica del ejemplo intermedio. Cifras sintéticas con fines didácticos."></a></p>
 <figcaption>Dos analistas ponen distribuciones triangulares distintas a la probabilidad anual de El Niño y simulan el VPN de la térmica del ejemplo intermedio. Cifras sintéticas con fines didácticos.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Cada histograma parece preciso, y los dos llevan a recomendaciones opuestas: con la media del primero (0,9 millones) gana la solar; con la del segundo (26,4 millones), la térmica. Si los expertos no acuerdan la distribución, el análisis muestra el desacuerdo con escenarios en lugar de promediarlo.</p>
+<p>Cada histograma parece preciso, y los dos llevan a recomendaciones opuestas: con la media del primero (1,0 millones) gana la solar; con la del segundo (26,6 millones), la térmica. Si los expertos no acuerdan la distribución, el análisis muestra el desacuerdo con escenarios en lugar de promediarlo.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
@@ -1176,16 +1222,16 @@ window.Quarto = {
 </div>
 <p>¿Cuál de estas cantidades es un riesgo?</p>
 <div class="opcion" data-correcta="si">
-<p>Las pérdidas técnicas de una red de distribución el próximo mes.</p>
+<p>Las pérdidas técnicas de una red el próximo mes.</p>
 <p><span class="porque">Correcto: hay historia estable y el horizonte es corto.</span></p>
 </div>
 <div class="opcion">
 <p>El precio internacional del hidrógeno verde en 2045.</p>
-<p><span class="porque">Nadie puede defender una distribución para ese precio. Revise el ejemplo básico.</span></p>
+<p><span class="porque">Los pronósticos publicados no coinciden y nadie puede defender uno sobre los otros. Revise el ejemplo básico.</span></p>
 </div>
 <div class="opcion">
 <p>La regulación de las comunidades energéticas en 2040.</p>
-<p><span class="porque">Es un futuro político e institucional.</span></p>
+<p><span class="porque">Es un futuro político e institucional. Revise el ejemplo básico.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1194,12 +1240,42 @@ window.Quarto = {
 </div>
 <p>¿Por qué la frecuencia de El Niño puede ser riesgo para el año entrante e incertidumbre profunda para 2040?</p>
 <div class="opcion">
-<p>Porque El Niño se vuelve más aleatorio con el tiempo.</p>
+<p>Porque El Niño se vuelve más aleatorio a medida que pasa el tiempo.</p>
 <p><span class="porque">El proceso es igual de aleatorio; lo que cambia es si el pasado representa el futuro.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Porque la distribución histórica sirve si el clima se parece a la muestra, y a veinte años esa condición deja de ser defendible.</p>
-<p><span class="porque">Correcto: la clasificación depende del horizonte.</span></p>
+<p>Porque a veinte años no es defendible que el clima siga la muestra.</p>
+<p><span class="porque">Correcto: la distribución histórica sirve mientras el clima se parezca a la muestra, y la clasificación depende del horizonte.</span></p>
+</div>
+<div class="opcion">
+<p>Porque en 2040 habrá menos datos históricos que hoy para estimarla bien.</p>
+<p><span class="porque">Habrá más datos, no menos. Revise qué condición necesita una distribución histórica para servir.</span></p>
+</div>
+<div class="opcion">
+<p>Porque El Niño no tiene ninguna regularidad estadística conocida.</p>
+<p><span class="porque">Sí la tiene: la NOAA registra episodios desde 1950. Revise la pregunta de la página.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>Dos analistas corren un Monte Carlo con distribuciones triangulares distintas sobre la misma cantidad y obtienen recomendaciones opuestas. ¿Qué revela?</p>
+<div class="opcion">
+<p>Que uno de los dos cometió un error de programación.</p>
+<p><span class="porque">Los dos cálculos pueden ser correctos. Revise el primer error común.</span></p>
+</div>
+<div class="opcion">
+<p>Que conviene promediar las dos recomendaciones.</p>
+<p><span class="porque">Promediar dos distribuciones elegidas a mano esconde el desacuerdo. Revise el primer error común.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que cada distribución fue una elección del analista.</p>
+<p><span class="porque">Correcto: si expertos razonables no acuerdan la distribución, la cantidad es incertidumbre profunda.</span></p>
+</div>
+<div class="opcion">
+<p>Que faltaron simulaciones para que coincidieran.</p>
+<p><span class="porque">Con 20 000 muestras cada histograma es estable; la diferencia viene de los supuestos.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1208,30 +1284,16 @@ window.Quarto = {
 </div>
 <p>En el ejemplo intermedio, un comité exige «la probabilidad correcta» para decidir. ¿Qué le propone?</p>
 <div class="opcion">
-<p>Usar el promedio histórico, 0,2.</p>
+<p>Usar el promedio histórico, 0,2, porque es el dato disponible.</p>
 <p><span class="porque">La recomendación cambia a partir de 0,253, dentro del rango plausible. Revise el simulador.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Mostrar la recomendación en todo el rango plausible y buscar la opción aceptable en todos los casos.</p>
-<p><span class="porque">Correcto.</span></p>
+<p>Mostrar la decisión en todo el rango y buscar la opción aceptable.</p>
+<p><span class="porque">Correcto: es el paso de la optimalidad a la robustez.</span></p>
 </div>
 <div class="opcion">
-<p>Tomar el caso más desfavorable para la térmica.</p>
+<p>Tomar el caso más desfavorable para la térmica y decidir solo con él.</p>
 <p><span class="porque">El peor caso de un proyecto puede ser el mejor de otro; hace falta compararlos en todo el rango.</span></p>
-</div>
-</div>
-<div class="quiz caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Compruebe</span>
-</div>
-<p>Dos analistas corren un Monte Carlo con distribuciones triangulares distintas sobre la misma cantidad y obtienen recomendaciones opuestas. ¿Qué revela?</p>
-<div class="opcion" data-correcta="si">
-<p>Que la distribución era una elección de cada analista: la cantidad es incertidumbre profunda.</p>
-<p><span class="porque">Correcto.</span></p>
-</div>
-<div class="opcion">
-<p>Que uno de los dos cometió un error de programación.</p>
-<p><span class="porque">Los dos cálculos pueden ser correctos. Revise el primer error común.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1244,8 +1306,12 @@ window.Quarto = {
 <p><span class="porque">Los futuros los eligió un analista; su número no es una frecuencia.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Que el proyecto es rentable en unos futuros plausibles y no en otros, y que la decisión necesita un criterio distinto del promedio.</p>
-<p><span class="porque">Correcto.</span></p>
+<p>Que es rentable en unos futuros y no en otros.</p>
+<p><span class="porque">Correcto: la decisión necesita un criterio distinto del promedio, como la robustez.</span></p>
+</div>
+<div class="opcion">
+<p>Que hay que agregar futuros hasta que gane un lado.</p>
+<p><span class="porque">El número de futuros lo fija quien los dibuja; más curvas no crean probabilidades. Revise el abanico.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
@@ -1268,7 +1334,7 @@ window.Quarto = {
 <ol type="a">
 <li><p>Con 50–50: <span class="math inline">0{,}5 \times 300 - 0{,}5 \times 200 = +50</span>. Con 40–60: <span class="math inline">120 - 120 = 0</span>. Con 30–70: <span class="math inline">90 - 140 = -50</span>.</p></li>
 <li><p><span class="math inline">300\,p - 200\,(1 - p) = 0</span> da <span class="math inline">p = 0{,}4</span>.</p></li>
-<li><p>«El 50–50 es una elección sin defensa, y con 40–60 la recomendación ya no se sostiene.» «La pregunta útil es si existe una estrategia aceptable en los dos futuros: entrada escalonada, opciones o esperar señales.» En lugar del promedio, una tabla de estrategias contra futuros, como la de la página de robustez.</p></li>
+<li><p>«El 50–50 es una elección sin defensa: con 40–60 el VPN esperado cae a cero y con 30–70 se vuelve negativo.» «La pregunta útil es si existe una estrategia aceptable en los dos futuros: entrada escalonada, opciones o esperar señales.» En lugar del promedio, una tabla de estrategias contra futuros, como la de la página de robustez.</p></li>
 </ol>
 </div>
 </div>
@@ -1276,9 +1342,25 @@ window.Quarto = {
 </section>
 <section id="ejercicio-2-el-abanico-del-costo-fncer-en-el-modelo" class="level4">
 <h4 class="anchored" data-anchor-id="ejercicio-2-el-abanico-del-costo-fncer-en-el-modelo">Ejercicio 2 ●●○ · El abanico del costo FNCER en el modelo</h4>
-<p>Con <code>mercado_con_politicas</code>, construya seis futuros del costo FNCER combinando tasas de aprendizaje de 10, 20 y 30 % con subastas de 100 y 300 MW/año. Reporte el rango a 10 y a 20 años y redacte tres frases para un comité: qué se sabe, qué no se sabe y qué observable de corto plazo distinguiría entre las curvas.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<p>Con <code>mercado_con_politicas</code> sin El Niño, construya un abanico del costo FNCER con las 18 combinaciones de tres supuestos: la caída anual del componente global del costo (0,08, 0,15 y 0,20 por año, los ritmos lento, medio y rápido del Laboratorio 4), la tasa de aprendizaje local (5, 10 y 20 %) y la subasta FNCER (100 y 300 MW/año). Reporte el rango a 10 y a 20 años, diga qué supuesto abre más el abanico, compárelo con el abanico del almacenamiento del ejemplo avanzado y redacte tres frases para un comité: qué se sabe, qué no se sabe y qué observable de corto plazo distinguiría entre las curvas.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Para saber qué supuesto abre más el abanico, promedie el costo del año 20 de las combinaciones que comparten cada valor de un supuesto y compare los promedios.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1287,18 +1369,24 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A 10 años el costo va de 39 COP/kWh (aprendizaje 30 %, subasta 300) a 210 COP/kWh (10 %, subasta 100): un factor de 5,4. A 20 años va de 17 a 186 COP/kWh, un factor de 11. El abanico se abre con el horizonte porque el despliegue acumulado diverge entre futuros.</p>
-<p>«Sabemos que el costo caerá con lo construido, no con el calendario.» «No sabemos a qué velocidad: los futuros defendibles difieren en un factor de 11 a veinte años.» «El precio adjudicado en las próximas subastas distinguirá entre las curvas mejor que cualquier estudio de gabinete.»</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> aprendizaje <span class="kw">in</span> (<span class="fl">0.10</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>):</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> subasta <span class="kw">in</span> (<span class="fl">100.0</span>, <span class="fl">300.0</span>):</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> integrar(mercado_con_politicas(tasa_aprendizaje<span class="op">=</span>aprendizaje, subasta_fncer<span class="op">=</span>subasta),</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                     t_final<span class="op">=</span><span class="fl">20.0</span>, paso_salida<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(aprendizaje, subasta, <span class="bu">round</span>(r[<span class="st">"costo_fncer"</span>][<span class="dv">100</span>]), <span class="bu">round</span>(r[<span class="st">"costo_fncer"</span>][<span class="dv">200</span>]))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A 10 años el costo va de 66,8 COP/kWh (caída global rápida, aprendizaje de 20 % y subasta de 300) a 98,5 (caída lenta, aprendizaje de 5 % y subasta de 100); a 20 años, de 59,9 a 88,4. El factor entre extremos es de 1,5 en los dos horizontes, mucho menor que el factor de 54 del almacenamiento, y no crece con el horizonte, porque el modelo pone un piso al componente global y el aprendizaje local solo actúa sobre el 35 % del costo inicial. El supuesto que más abre el abanico a 20 años es el aprendizaje local (costo medio de 84,4, 74,9 y 62,7 con 5, 10 y 20 %, porque el componente local queda en 31,5, 22,1 y 9,9); lo siguen la caída global (77,6, 72,7 y 71,7) y, muy atrás, el tamaño de la subasta (74,5 frente a 73,5). El ancho del abanico depende de la estructura supuesta: con piso o sin piso es otra incertidumbre del modelo, no de sus parámetros. Las cifras están en la escala del modelo (bolsa de referencia de 150 COP/kWh; año 0 ≈ 2015) y son datos sintéticos con fines didácticos.</p>
+<p>«Sabemos que el costo FNCER seguirá bajando, sobre todo por el mercado mundial, y que tiene un piso.» «No sabemos cuánto aprenderá el país en la parte local (permisos, conexión, financiación): los futuros defendibles difieren en un 50 % a diez y a veinte años; además, la subasta de 2021 adjudicó cerca de 156 COP/kWh [POR VERIFICAR] después de los 95,65 de 2019, un choque global que el modelo, con su caída suave, no representa.» «El observable que separa las curvas es la diferencia entre el costo adjudicado en subastas sucesivas y un índice internacional de precios de equipos: esa diferencia es la parte local, y su caída con el acumulado nacional mide el aprendizaje local.»</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>costos <span class="op">=</span> []</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> caida, aprendizaje, subasta <span class="kw">in</span> itertools.product((<span class="fl">0.08</span>, <span class="fl">0.15</span>, <span class="fl">0.20</span>), (<span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.20</span>), (<span class="fl">100.0</span>, <span class="fl">300.0</span>)):</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> integrar(mercado_con_politicas(caida_costo_global<span class="op">=</span>caida, tasa_aprendizaje<span class="op">=</span>aprendizaje,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                                       subasta_fncer<span class="op">=</span>subasta), t_final<span class="op">=</span><span class="fl">20.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    costos.append((caida, aprendizaje, subasta, np.interp(<span class="dv">10</span>, r.tiempo, r[<span class="st">"costo_fncer"</span>]), r[<span class="st">"costo_fncer"</span>][<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>costos <span class="op">=</span> np.array(costos)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"10 años: </span><span class="sc">{</span>costos[:, <span class="dv">3</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.1f}</span><span class="ss"> a </span><span class="sc">{</span>costos[:, <span class="dv">3</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1f}</span><span class="ss">; 20 años: </span><span class="sc">{</span>costos[:, <span class="dv">4</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.1f}</span><span class="ss"> a </span><span class="sc">{</span>costos[:, <span class="dv">4</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1f}</span><span class="ss">"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> columna, nombre <span class="kw">in</span> ((<span class="dv">1</span>, <span class="st">"aprendizaje local"</span>), (<span class="dv">0</span>, <span class="st">"caída global"</span>), (<span class="dv">2</span>, <span class="st">"subasta"</span>)):</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(nombre, [<span class="bu">round</span>(costos[costos[:, columna] <span class="op">==</span> v, <span class="dv">4</span>].mean(), <span class="dv">1</span>) <span class="cf">for</span> v <span class="kw">in</span> np.unique(costos[:, columna])])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1312,14 +1400,14 @@ window.Quarto = {
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li><strong>Riesgo</strong>: hay una distribución defendible. <strong>Incertidumbre profunda</strong>: expertos razonables no acuerdan distribución, rango ni modelo causal. La clasificación depende del horizonte.</li>
+<li><strong>Riesgo</strong>: hay una distribución defendible. <strong>Incertidumbre profunda</strong>: expertos y actores razonables no acuerdan el modelo, las distribuciones o la valoración de los resultados, aunque existan pronósticos probabilísticos. La clasificación depende del horizonte.</li>
 <li>El <strong>VPN esperado</strong> colapsa sin pesos defendibles, con no linealidades y cuando importan las colas.</li>
-<li>En el ejemplo de El Niño, la recomendación cambia en <span class="math inline">p = 0{,}253</span>, dentro del rango histórico.</li>
+<li>En el ejemplo de El Niño, la recomendación cambia en <span class="math inline">p = 0{,}253</span>, dentro del rango histórico. En el modelo de la semana, el régimen de El Niño (un episodio cada 7 o cada 4 años) mueve el precio medio de +5,3 a +15,0 COP/kWh, más de lo que separa a casi todas las estrategias del Laboratorio 4.</li>
 <li>Un <strong>abanico</strong> con supuestos explícitos muestra qué puede pasar; contar curvas no da probabilidades. El costo del almacenamiento en 2045 abarca un factor de 54.</li>
-<li>Poner distribuciones inventadas a la incertidumbre profunda la esconde; la respuesta es explorar futuros y buscar estrategias robustas.</li>
+<li>Poner distribuciones inventadas a la incertidumbre profunda la esconde; la respuesta es explorar futuros y buscar estrategias robustas. El ancho de un abanico depende también de la estructura supuesta, como un piso de costo.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Riesgo e incertidumbre profunda» de las notas de la semana 5 trae la figura de los dos mundos de Knight y el ejercicio de estacionariedad con <code>mise_sd.datos.aportes_hidricos_mensuales</code>. En el Laboratorio 4 la frecuencia de El Niño y el costo FNCER se tratan como incertidumbres profundas.</p>
+<p><strong>Para profundizar.</strong> La sección «Riesgo e incertidumbre profunda» de las notas de la semana 5 trae la figura de los dos mundos de Knight y el ejercicio de estacionariedad con <code>mise_sd.datos.aportes_hidricos_mensuales</code>. En el Laboratorio 4 la frecuencia de El Niño y el ritmo global del costo FNCER se tratan como incertidumbres profundas con este protocolo, y la sequía crítica con que se define la energía firme entra como la cola contra la que asegura el Cargo por Confiabilidad.</p>
 
 
 </section>
@@ -1757,14 +1845,30 @@ window._ojs.runtime.interpretFromScriptTags();
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>MISE · Universidad de los Andes · Systems Analytics</p>
+<p>MISE · Universidad de los Andes · Systems Analytics. ¿Vio un error o algo confuso? Cuéntelo en el foro del curso en Bloque Neón, con el título de la página.</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+<p>Datos sintéticos con fines didácticos cuando así se indica.</p>
 </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../recursos.html" aria-current="page">
+<p>Recursos</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../glosario.html">
+<p>Glosario</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../referencias.html">
+<p>Referencias</p>
+</a>
+  </li>  
+</ul>
+    </div>
   </div>
 </footer>
 <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="El borrador de la red física y de actores de los buses de Bogotá: por qué el grado elegía mal los patios, qué agregó la intermediación y qué actor faltaba en la red.">
+<meta name="description" content="El borrador de la red física y de actores de los buses de Bogotá: por qué ni el grado ni la intermediación ubican patios, qué responde la p-mediana sobre una red con distancias y qué actor faltaba en la red.">
 
 <title>Semana 2 · El esquema de redes – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-189071c1cfc9baef9b9de50def1ee7e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -114,6 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<meta name="guias-mise:fecha" content="2 de octubre de 2026">
 
 
 </head>
@@ -218,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+ <span class="menu-text">Puntos de quiebre y regímenes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -336,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de quiebre</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -428,6 +429,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/10-nino-perillas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo ante El Niño y sus perillas</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -497,6 +504,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El arco del Laboratorio 4</span></a>
   </div>
 </li>
       </ul>
@@ -607,6 +620,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Para consultar</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../recursos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -619,7 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#lo-que-pedía-la-entrega" id="toc-lo-que-pedía-la-entrega" class="nav-link active" data-scroll-target="#lo-que-pedía-la-entrega">Lo que pedía la entrega</a></li>
   <li><a href="#la-entrega-del-equipo" id="toc-la-entrega-del-equipo" class="nav-link" data-scroll-target="#la-entrega-del-equipo">La entrega del equipo</a></li>
-  <li><a href="#explore-la-red-antes-de-leer-la-realimentación" id="toc-explore-la-red-antes-de-leer-la-realimentación" class="nav-link" data-scroll-target="#explore-la-red-antes-de-leer-la-realimentación">Explore la red antes de leer la realimentación</a></li>
+  <li><a href="#explore-el-borrador-antes-de-leer-la-realimentación" id="toc-explore-el-borrador-antes-de-leer-la-realimentación" class="nav-link" data-scroll-target="#explore-el-borrador-antes-de-leer-la-realimentación">Explore el borrador antes de leer la realimentación</a></li>
   <li><a href="#la-realimentación-docente" id="toc-la-realimentación-docente" class="nav-link" data-scroll-target="#la-realimentación-docente">La realimentación docente</a></li>
   <li><a href="#lo-que-cambió" id="toc-lo-que-cambió" class="nav-link" data-scroll-target="#lo-que-cambió">Lo que cambió</a></li>
   <li><a href="#para-su-proyecto" id="toc-para-su-proyecto" class="nav-link" data-scroll-target="#para-su-proyecto">Para su proyecto</a></li>
@@ -628,6 +670,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../caso-guia/index.html">Caso guía · Buses eléctricos de Bogotá</a></li><li class="breadcrumb-item"><a href="../caso-guia/02-esquema-redes.html">Semana 2 · El esquema de redes</a></li></ol></nav>
 <div class="quarto-title">
@@ -637,7 +680,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    El borrador de la red física y de actores de los buses de Bogotá: por qué el grado elegía mal los patios, qué agregó la intermediación y qué actor faltaba en la red.
+    El borrador de la red física y de actores de los buses de Bogotá: por qué ni el grado ni la intermediación ubican patios, qué responde la p-mediana sobre una red con distancias y qué actor faltaba en la red.
   </div>
 </div>
 
@@ -676,15 +719,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">📅 Se entrega en la semana 2</span> <span class="dato">⚖ Sin nota; alimenta la sección 3 del informe</span> <span class="dato">⏱ 30 minutos de lectura</span> <span class="dato">📚 Requiere centralidades (semana 2, concepto 4)</span></p>
+<p><span class="dato">📅 Se entrega en la semana 2</span> <span class="dato">⚖ Sin nota; alimenta la sección 3 del informe</span> <span class="dato">⏱ 35 minutos de lectura</span> <span class="dato">📚 Requiere centralidades (semana 2, concepto 4)</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Al terminar esta página</span>
 </div>
 <ul>
-<li>Elegir la centralidad que corresponde a la pregunta.</li>
-<li>Combinar una métrica topológica con una restricción física y una capa de justicia.</li>
+<li>Elegir la métrica que responde a la pregunta de la decisión, y no la que está a mano.</li>
+<li>Construir la red con lo que la pregunta necesita: distancias, toda la flota y las restricciones de predios.</li>
 <li>Detectar en una red de actores el nodo ausente que controla el retardo del caso.</li>
 </ul>
 </div>
@@ -704,8 +747,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Red de actores.</strong> TRANSMILENIO S.A., Secretaría de Movilidad, operadores concesionarios, fabricantes de buses, conductores y Concejo de Bogotá. Calcularemos el grado de cada actor para identificar a los más influyentes.</p>
 </div>
 </section>
-<section id="explore-la-red-antes-de-leer-la-realimentación" class="level2">
-<h2 class="anchored" data-anchor-id="explore-la-red-antes-de-leer-la-realimentación">Explore la red antes de leer la realimentación</h2>
+<section id="explore-el-borrador-antes-de-leer-la-realimentación" class="level2">
+<h2 class="anchored" data-anchor-id="explore-el-borrador-antes-de-leer-la-realimentación">Explore el borrador antes de leer la realimentación</h2>
 <div id="pred-cg-red" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
@@ -723,7 +766,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La malla troncal estilizada</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La malla troncal del borrador</span>
 </div>
 <p>Cambie la métrica de grado a intermediación y compare el orden de los candidatos. Después active la capa de exposición y observe qué candidatos quedan en las zonas donde más se respira PM2.5.</p>
 <div class="cell">
@@ -812,65 +855,156 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="nota-datos">
-<p>Malla troncal estilizada de 13 nodos y 14 aristas del ejemplo C (<code>fig_c_analisis.py</code>), con intermediación normalizada de NetworkX. Zonas expuestas según el Inventario de Emisiones 2023 y la RMCAB 2024.</p>
+<p>Malla troncal estilizada de 13 nodos y 14 aristas, sin distancias, del borrador del ejemplo C; intermediación normalizada de NetworkX. Zonas expuestas según el Inventario de Emisiones 2023 y la RMCAB 2024. Datos sintéticos con fines didácticos.</p>
 </div>
 </div>
-<p>Usted anotó <span class="mi-prediccion" data-para="pred-cg-red"></span>. Con la intermediación, el Centro sigue primero (0,60), pero el segundo lugar pasa a Portal Sur (0,39), por delante de Calle 72 (0,36), y el empate de grado 3 entre cuatro nodos se deshace: Calle 26 queda en 0,26 y Portal Américas en 0,21. La métrica cambió el orden justo donde el grado no distinguía nada.</p>
+<p>Usted anotó <span class="mi-prediccion" data-para="pred-cg-red">(la opción que eligió arriba)</span>. Con la intermediación, el Centro sigue primero (0,60), pero el segundo lugar pasa a Portal Sur (0,39), por delante de Calle 72 (0,36), y el empate de grado 3 entre cuatro nodos se deshace: Calle 26 queda en 0,26 y Portal Américas en 0,21. Cambiar de métrica cambia el orden; la pregunta es si alguna de las dos responde lo que el equipo quiere saber.</p>
 </section>
 <section id="la-realimentación-docente" class="level2">
 <h2 class="anchored" data-anchor-id="la-realimentación-docente">La realimentación docente</h2>
 <div class="realimentacion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Realimentación docente</span><span class="caja-texto-titulo">La métrica responde a otra pregunta</span>
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-texto-titulo">Ninguna de las dos métricas ubica patios</span>
 </div>
-<p>El grado cuenta las conexiones inmediatas de un nodo. Un patio, en cambio, atiende rutas que atraviesan la ciudad, y lo que importa es cuántos recorridos pasan por él y cuántos kilómetros en vacío ahorra; esa pregunta la responde la intermediación. En esta malla el grado además empata cuatro nodos, de modo que su propuesta de Calle 72 y Calle 26 se apoya en un desempate que la métrica no hizo.</p>
+<p>Un patio se ubica para que los buses recorran la menor distancia en vacío entre el patio y su zona de operación. Esa pregunta pide distancias, y la responde la <strong>p-mediana</strong>: los p nodos que minimizan la distancia media de cada bus a su patio más cercano. Con un solo patio, la <strong>cercanía</strong> da una primera aproximación. El grado cuenta vecinos y la intermediación cuenta caminos que pasan por un nodo; ninguna de las dos mide kilómetros. En esta malla, además, el grado empata cuatro nodos, de modo que su propuesta de Calle 72 y Calle 26 se apoya en un desempate que la métrica no hizo.</p>
 </div>
 <div class="realimentacion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Realimentación docente</span><span class="caja-texto-titulo">El mejor nodo topológico no tiene predios</span>
+<span class="caja-etiqueta">Realimentación docente</span><span class="caja-texto-titulo">La red no tiene lo que la pregunta necesita</span>
 </div>
-<p>El Centro encabeza cualquier ranking, pero en el Centro no hay lotes disponibles para un patio de buses. Combinen la métrica con la restricción física, y el ranking útil empezará por los nodos periféricos de alta intermediación.</p>
+<p>Para medir kilómetros en vacío, las aristas deben pesar su longitud. Para ubicar patios, la red debe incluir dónde se guardan los buses: el 70 % de la flota es zonal (TRANSMILENIO S.A., 2026) y opera en 13 zonas que su malla troncal no tiene. Agreguen las zonas de operación, pesen las aristas en kilómetros y asignen a cada nodo los buses que se guardan allí. Excluyan, por último, los nodos sin predios para un patio: el Centro encabeza cualquier ranking topológico, y allí no hay lotes.</p>
 </div>
 <div class="realimentacion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Realimentación docente</span><span class="caja-texto-titulo">Falta una capa: quién respira el diésel</span>
 </div>
-<p>Superpongan la exposición a material particulado. La RMCAB registró en 2024 el mayor promedio anual de PM2.5 en la estación Carvajal-Sevillana, en Kennedy (33,2 µg/m³), y el inventario de emisiones concentra las emisiones en el suroccidente (Secretaría Distrital de Ambiente, 2026; Alcaldía de Bogotá, 2025). Si un nodo es a la vez intermediario y puerta de una zona expuesta, electrificar sus corredores primero aprovecha la topología y la justicia al mismo tiempo.</p>
+<p>Superpongan la exposición a material particulado. La RMCAB registró en 2024 el mayor promedio anual de PM2.5 en la estación Carvajal-Sevillana, en Kennedy (33,2 µg/m³), y el inventario de emisiones concentra las emisiones en el suroccidente (Secretaría Distrital de Ambiente, 2026; Alcaldía de Bogotá, 2025). Si un patio que minimiza recorridos atiende además una zona expuesta, electrificar primero sus rutas aprovecha la topología y la justicia al mismo tiempo.</p>
 </div>
 <div class="realimentacion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Realimentación docente</span><span class="caja-texto-titulo">Falta el actor que fija el retardo</span>
 </div>
-<p>Su red de actores omite al distribuidor de energía (Enel Colombia), que ejecuta los refuerzos de red de cada patio con su propio calendario regulado. Es el actor que controla el retardo de los patios, y ese retardo, como verán en la semana 4, decide si la electrificación avanza o se estrangula. Agréguenlo y midan también la intermediación de los actores: el grado de un actor dice con cuántos habla, y la intermediación, por dónde tiene que pasar un acuerdo.</p>
+<p>Su red de actores omite al distribuidor de energía (Enel Colombia), que ejecuta las conexiones de cada patio con su propio calendario regulado. Es el actor que controla el retardo de los patios, y ese retardo, como verán en la semana 4, decide si la electrificación avanza a tiempo o acumula buses sin dónde cargar. Agréguenlo, y midan también la intermediación de los actores: el grado de un actor dice con cuántos habla, y la intermediación, por dónde tiene que pasar un acuerdo. Ahí la intermediación sí responde a la pregunta.</p>
 </div>
 </section>
 <section id="lo-que-cambió" class="level2">
 <h2 class="anchored" data-anchor-id="lo-que-cambió">Lo que cambió</h2>
-<p>La sección 3 del informe final usa la intermediación, descarta el Centro por falta de predios y superpone la capa de exposición. Portal Sur (0,39) y Portal Américas (0,21) quedan como prioridad porque combinan intermediación alta y exposición, y esa lectura se convierte en la recomendación 3 del informe: un convenio flota-patio-red con prioridad para esos dos nodos. La red de actores pasa de seis a cuatro actores decisivos, con el distribuidor incluido, y cada uno aparece después en una recomendación.</p>
+<p>La sección 3 del informe final usa una red de 26 nodos: los 13 troncales y las 13 zonas de operación, con 39 aristas pesadas en kilómetros y la flota repartida entre los nodos donde se guarda. La p-mediana con tres patios elige Portal Suba, Portal Américas y Portal Tunal, con 8,6 km en vacío por bus; dos de ellos atienden las zonas más expuestas (Kennedy, Bosa, Fontibón y Ciudad Bolívar), y por eso el informe los prioriza en su recomendación 3. La intermediación queda para lo que mide: los nodos por donde pasan más caminos, que son los que más perturba un cierre como el de las estaciones de la obra del metro. La red de actores pasa de seis a cuatro actores decisivos, con Enel incluido.</p>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La red del informe</span>
+</div>
+<p>Mueva el número de patios y observe cómo cae la distancia en vacío. Compare luego la cercanía con la intermediación: ¿cuál de las dos se parece más a lo que elige la p-mediana?</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="157" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 156;"><span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>viewof numeroPatios <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Número de patios (p)"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="162" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 161;"><span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a>viewof metricaFinal <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"cercanía"</span><span class="op">,</span> <span class="st">"intermediación"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"cercanía"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tamaño del nodo según"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="167" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 166;"><span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>vistaFinal <span class="op">=</span> {</span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> inf <span class="op">=</span> red<span class="op">.</span><span class="at">informe</span><span class="op">;</span></span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> solucion <span class="op">=</span> inf<span class="op">.</span><span class="at">p_mediana</span>[<span class="bu">String</span>(numeroPatios)]<span class="op">;</span></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> elegidos <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(solucion<span class="op">.</span><span class="at">patios</span>)<span class="op">;</span></span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> valor <span class="op">=</span> (n) <span class="kw">=&gt;</span> metricaFinal <span class="op">===</span> <span class="st">"cercanía"</span> <span class="op">?</span> n<span class="op">.</span><span class="at">cercania</span> <span class="op">:</span> n<span class="op">.</span><span class="at">intermediacion</span><span class="op">;</span></span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> posicion <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span>(inf<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> [n<span class="op">.</span><span class="at">id</span><span class="op">,</span> n]))<span class="op">;</span></span>
+<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> aristas <span class="op">=</span> inf<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">map</span>(({a<span class="op">,</span> b<span class="op">,</span> troncal}) <span class="kw">=&gt;</span> ({<span class="dt">x1</span><span class="op">:</span> posicion<span class="op">.</span><span class="fu">get</span>(a)<span class="op">.</span><span class="at">x</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> posicion<span class="op">.</span><span class="fu">get</span>(a)<span class="op">.</span><span class="at">y</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> posicion<span class="op">.</span><span class="fu">get</span>(b)<span class="op">.</span><span class="at">x</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> posicion<span class="op">.</span><span class="fu">get</span>(b)<span class="op">.</span><span class="at">y</span><span class="op">,</span> troncal}))<span class="op">;</span></span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> inf<span class="op">.</span><span class="at">nodos</span><span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> ({<span class="op">...</span>n<span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> <span class="fu">valor</span>(n)<span class="op">,</span> <span class="dt">etiqueta</span><span class="op">:</span> n<span class="op">.</span><span class="at">id</span><span class="op">.</span><span class="fu">replace</span>(<span class="st">"Portal "</span><span class="op">,</span> <span class="st">"P. "</span>)<span class="op">.</span><span class="fu">replace</span>(<span class="st">"-Zona Franca"</span><span class="op">,</span> <span class="st">""</span>)<span class="op">,</span> <span class="dt">color</span><span class="op">:</span> n<span class="op">.</span><span class="at">expuesta</span> <span class="op">?</span> <span class="st">"zona expuesta"</span> <span class="op">:</span> <span class="st">"resto de la red"</span>}))<span class="op">;</span></span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> orden <span class="op">=</span> [<span class="op">...</span>puntos]<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> <span class="op">!</span>p<span class="op">.</span><span class="at">sin_predios</span>)<span class="op">.</span><span class="fu">sort</span>((p<span class="op">,</span> q) <span class="kw">=&gt;</span> q<span class="op">.</span><span class="at">valor</span> <span class="op">-</span> p<span class="op">.</span><span class="at">valor</span>)<span class="op">;</span></span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {aristas<span class="op">,</span> puntos<span class="op">,</span> orden<span class="op">,</span> <span class="dt">elegidos</span><span class="op">:</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> elegidos<span class="op">.</span><span class="fu">has</span>(p<span class="op">.</span><span class="at">id</span>))<span class="op">,</span> <span class="dt">km</span><span class="op">:</span> solucion<span class="op">.</span><span class="at">km</span><span class="op">,</span> <span class="dt">minimo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>puntos<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">valor</span>))<span class="op">,</span> <span class="dt">maximo</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>puntos<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">valor</span>))}<span class="op">;</span></span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="182" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 181;"><span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">520</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">640</span><span class="op">,</span> <span class="dt">insetTop</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">insetLeft</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">insetRight</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span></span>
+<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> {<span class="dt">axis</span><span class="op">:</span> <span class="kw">null</span>}<span class="op">,</span></span>
+<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"resto de la red"</span><span class="op">,</span> <span class="st">"zona expuesta"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> COLORES<span class="op">.</span><span class="at">rojo</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>  <span class="dt">r</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [vistaFinal<span class="op">.</span><span class="at">minimo</span><span class="op">,</span> vistaFinal<span class="op">.</span><span class="at">maximo</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">13</span>]}<span class="op">,</span></span>
+<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(vistaFinal<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">troncal</span>)<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y2"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#BBB"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span>})<span class="op">,</span></span>
+<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">link</span>(vistaFinal<span class="op">.</span><span class="at">aristas</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> <span class="op">!</span>d<span class="op">.</span><span class="at">troncal</span>)<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y2"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#BBB"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3,3"</span>})<span class="op">,</span></span>
+<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vistaFinal<span class="op">.</span><span class="at">puntos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"color"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.85</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span>})<span class="op">,</span></span>
+<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vistaFinal<span class="op">.</span><span class="at">elegidos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">16</span><span class="op">,</span> <span class="dt">symbol</span><span class="op">:</span> <span class="st">"square"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"none"</span>})<span class="op">,</span></span>
+<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(vistaFinal<span class="op">.</span><span class="at">puntos</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"etiqueta"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">16</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">10</span>})<span class="op">,</span></span>
+<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="199" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 198;"><span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Patios de la p-mediana&lt;b&gt;</span><span class="sc">${</span>vistaFinal<span class="op">.</span><span class="at">elegidos</span><span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">id</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Distancia en vacío por bus&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(vistaFinal<span class="op">.</span><span class="at">km</span>)<span class="sc">}</span><span class="vs"> km&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Primer nodo con predios según </span><span class="sc">${</span>metricaFinal<span class="sc">}</span><span class="vs">&lt;b&gt;</span><span class="sc">${</span>vistaFinal<span class="op">.</span><span class="at">orden</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Red estilizada del informe del ejemplo C: 26 nodos y 39 aristas, con longitudes estimadas desde posiciones aproximadas y la flota zonal repartida por igual entre las 13 zonas de operación (TRANSMILENIO S.A., 2026). Cercanía e intermediación ponderadas por kilómetros; p-mediana resuelta por enumeración, sin los cuatro nodos sin predios. Datos sintéticos con fines didácticos.</p>
+</div>
+</div>
+<p>Con tres patios, la distancia en vacío baja de 16,9 km (un patio, en Portal Américas) a 8,6 km por bus. La cercanía pone primero al Centro, a Calle 72 y a Calle 26, que no tienen predios; entre los nodos con predios, sus primeros lugares (Portal El Dorado, Kennedy y Portal Américas) quedan en el suroccidente, cerca de lo que elige la p-mediana. La intermediación premia otra vez los nodos de paso, porque mide otra cosa.</p>
 <div class="lado-a-lado">
 <div class="mal">
-<p>Patios en el Centro, Calle 72 y Calle 26, elegidos por grado. Red de actores sin el distribuidor.</p>
+<p>Patios en el Centro, Calle 72 y Calle 26, elegidos por grado sobre la malla troncal sin distancias. Red de actores sin el distribuidor.</p>
 </div>
 <div class="bien">
-<p>Patios priorizados en Portal Sur y Portal Américas, por intermediación, con la restricción de predios y la capa de exposición. El distribuidor entra a la red y al cronograma.</p>
+<p>Patios en Portal Suba, Portal Américas y Portal Tunal, elegidos por p-mediana sobre una red en kilómetros con la flota zonal, sin los nodos sin predios y con la capa de exposición. El distribuidor entra a la red y al cronograma.</p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Otro grupo quiere ubicar un único taller de mantenimiento mayor que atienda a toda la flota con el menor recorrido total desde todos los portales. ¿Qué métrica le conviene?</p>
+<p>Un grupo que estudia la geotermia en el Nevado del Ruiz debe ubicar dos centros de mantenimiento para atender 14 pozos dispersos, con el menor desplazamiento total de las cuadrillas. ¿Qué le conviene calcular?</p>
 <div class="opcion">
-<p>La intermediación.</p>
-<p><span class="porque">La intermediación mide cuántos caminos pasan por un nodo, lo que importa para un patio de paso. Para minimizar la distancia total a todos los nodos, revise otra centralidad.</span></p>
+<p>La intermediación de cada pozo en la red de caminos.</p>
+<p><span class="porque">La intermediación cuenta cuántos caminos más cortos pasan por un nodo. Un centro de mantenimiento se ubica por distancias a los pozos que atiende; revise qué métrica suma distancias.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>La cercanía.</p>
-<p><span class="porque">Correcto: la cercanía es el inverso de la distancia media a todos los demás nodos, justo lo que se quiere minimizar para un taller único.</span></p>
+<p>La 2-mediana sobre la red de caminos con distancias, ponderada por las visitas que necesita cada pozo.</p>
+<p><span class="porque">Correcto: elige los dos nodos que minimizan la distancia total ponderada de cada pozo a su centro más cercano, que es exactamente la pregunta.</span></p>
 </div>
 <div class="opcion">
-<p>El grado.</p>
-<p><span class="porque">El grado solo mira a los vecinos inmediatos; un nodo con muchos vecinos puede estar lejos del resto de la red.</span></p>
+<p>El grado de cada pozo, porque los más conectados quedan más a mano.</p>
+<p><span class="porque">El grado solo mira a los vecinos inmediatos y no usa distancias; un nodo con muchos vecinos puede quedar lejos de casi todos los pozos.</span></p>
 </div>
 </div>
 </section>
@@ -881,10 +1015,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Formule la pregunta de red antes de elegir la métrica: <strong>qué decisión</strong> toma el decisor con el ranking.</li>
-<li>Una métrica topológica sola rara vez decide. Crúcela con <strong>restricciones físicas</strong> y con una <strong>capa de justicia</strong> si el caso la tiene.</li>
+<li>Formule la pregunta de red antes de elegir la métrica: <strong>qué decisión</strong> toma el decisor con el resultado.</li>
+<li>Construya la red con lo que la pregunta necesita: <strong>pesos</strong> con las unidades de la decisión (kilómetros, megavatios, minutos), <strong>toda la población</strong> que la red atiende y las <strong>restricciones físicas</strong>.</li>
+<li>Use cada centralidad para lo que mide. La intermediación sirve para cuellos de botella, intermediarios y vetos; para ubicar instalaciones, la p-mediana o la cercanía.</li>
 <li>En la red de actores, busque al que <strong>controla un retardo</strong> del modelo. Suele ser el que falta.</li>
-<li>Lo propio de este caso, que no conviene copiar, son la malla, la capa de PM2.5 y los portales priorizados.</li>
+<li>Lo propio de este caso, que no conviene copiar, son la red, la capa de PM2.5 y los patios elegidos.</li>
 </ul>
 </div>
 <p><strong>Siguiente hito:</strong> <a href="../caso-guia/03-avance-1.html">el Avance 1 de la semana 3</a>.</p>
@@ -894,7 +1029,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InJlZCA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvY2ctcmVkLmpzb25cIikuanNvbigpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgbWV0cmljYSA9IElucHV0cy5yYWRpbyhbXCJncmFkb1wiLCBcImludGVybWVkaWFjacOzblwiXSwge3ZhbHVlOiBcImdyYWRvXCIsIGxhYmVsOiBcIlRhbWHDsW8gZGVsIG5vZG8gc2Vnw7puXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGV4cG9zaWNpb24gPSBJbnB1dHMudG9nZ2xlKHtsYWJlbDogXCJDYXBhIGRlIGV4cG9zaWNpw7NuIGEgUE0yLjVcIiwgdmFsdWU6IGZhbHNlfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpc3RhUmVkID0ge1xuICBjb25zdCB2YWxvciA9IChuKSA9PiBtZXRyaWNhID09PSBcImdyYWRvXCIgPyBuLmdyYWRvIDogbi5pbnRlcm1lZGlhY2lvbjtcbiAgY29uc3QgcG9zaWNpb24gPSBuZXcgTWFwKHJlZC5ub2Rvcy5tYXAoKG4pID0+IFtuLmlkLCBuXSkpO1xuICBjb25zdCBhcmlzdGFzID0gcmVkLmFyaXN0YXMubWFwKCh7YSwgYn0pID0+ICh7eDE6IHBvc2ljaW9uLmdldChhKS54LCB5MTogcG9zaWNpb24uZ2V0KGEpLnksIHgyOiBwb3NpY2lvbi5nZXQoYikueCwgeTI6IHBvc2ljaW9uLmdldChiKS55fSkpO1xuICBjb25zdCBwdW50b3MgPSByZWQubm9kb3MubWFwKChuKSA9PiAoey4uLm4sIHZhbG9yOiB2YWxvcihuKSwgY29sb3I6IGV4cG9zaWNpb24gJiYgbi5leHB1ZXN0YSA/IFwiem9uYSBleHB1ZXN0YVwiIDogXCJyZXN0byBkZSBsYSBtYWxsYVwifSkpO1xuICBjb25zdCBvcmRlbiA9IFsuLi5wdW50b3NdLnNvcnQoKHAsIHEpID0+IHEudmFsb3IgLSBwLnZhbG9yKTtcbiAgcmV0dXJuIHthcmlzdGFzLCBwdW50b3MsIG9yZGVuLCBtYXhpbW86IE1hdGgubWF4KC4uLnB1bnRvcy5tYXAoKHApID0+IHAudmFsb3IpKX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogNDMwLCBpbnNldFRvcDogMzAsIGluc2V0Qm90dG9tOiAyMCwgaW5zZXRMZWZ0OiA2MCwgaW5zZXRSaWdodDogNjAsXG4gIHg6IHtheGlzOiBudWxsfSwgeToge2F4aXM6IG51bGx9LFxuICBjb2xvcjoge2RvbWFpbjogW1wicmVzdG8gZGUgbGEgbWFsbGFcIiwgXCJ6b25hIGV4cHVlc3RhXCJdLCByYW5nZTogW0NPTE9SRVMuYXp1bCwgQ09MT1JFUy5yb2pvXSwgbGVnZW5kOiBleHBvc2ljaW9ufSxcbiAgcjoge2RvbWFpbjogWzAsIHZpc3RhUmVkLm1heGltb10sIHJhbmdlOiBbMywgMjJdfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmsodmlzdGFSZWQuYXJpc3Rhcywge3gxOiBcIngxXCIsIHkxOiBcInkxXCIsIHgyOiBcIngyXCIsIHkyOiBcInkyXCIsIHN0cm9rZTogXCIjQkJCXCIsIHN0cm9rZVdpZHRoOiAyfSksXG4gICAgUGxvdC5kb3QodmlzdGFSZWQucHVudG9zLCB7eDogXCJ4XCIsIHk6IFwieVwiLCByOiBcInZhbG9yXCIsIGZpbGw6IFwiY29sb3JcIiwgZmlsbE9wYWNpdHk6IDAuODUsIHN0cm9rZTogXCJ3aGl0ZVwifSksXG4gICAgUGxvdC50ZXh0KHZpc3RhUmVkLnB1bnRvcywge3g6IFwieFwiLCB5OiBcInlcIiwgdGV4dDogXCJpZFwiLCBkeTogLTI0LCBmb250U2l6ZTogMTJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICAke3Zpc3RhUmVkLm9yZGVuLnNsaWNlKDAsIDQpLm1hcCgocCwgaykgPT4gaHRtbGA8ZGl2PiR7ayArIDF9LsK6ICR7cC5pZH08Yj4ke21ldHJpY2EgPT09IFwiZ3JhZG9cIiA/IHAuZ3JhZG8gOiBmb3JtYXRvTnVtZXJvKDIpKHAuaW50ZXJtZWRpYWNpb24pfTwvYj48L2Rpdj5gKX1cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbWV0cmljYScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdleHBvc2ljaW9uJykifV19
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InJlZCA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvY2ctcmVkLmpzb25cIikuanNvbigpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgbWV0cmljYSA9IElucHV0cy5yYWRpbyhbXCJncmFkb1wiLCBcImludGVybWVkaWFjacOzblwiXSwge3ZhbHVlOiBcImdyYWRvXCIsIGxhYmVsOiBcIlRhbWHDsW8gZGVsIG5vZG8gc2Vnw7puXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGV4cG9zaWNpb24gPSBJbnB1dHMudG9nZ2xlKHtsYWJlbDogXCJDYXBhIGRlIGV4cG9zaWNpw7NuIGEgUE0yLjVcIiwgdmFsdWU6IGZhbHNlfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpc3RhUmVkID0ge1xuICBjb25zdCB2YWxvciA9IChuKSA9PiBtZXRyaWNhID09PSBcImdyYWRvXCIgPyBuLmdyYWRvIDogbi5pbnRlcm1lZGlhY2lvbjtcbiAgY29uc3QgcG9zaWNpb24gPSBuZXcgTWFwKHJlZC5ub2Rvcy5tYXAoKG4pID0+IFtuLmlkLCBuXSkpO1xuICBjb25zdCBhcmlzdGFzID0gcmVkLmFyaXN0YXMubWFwKCh7YSwgYn0pID0+ICh7eDE6IHBvc2ljaW9uLmdldChhKS54LCB5MTogcG9zaWNpb24uZ2V0KGEpLnksIHgyOiBwb3NpY2lvbi5nZXQoYikueCwgeTI6IHBvc2ljaW9uLmdldChiKS55fSkpO1xuICBjb25zdCBwdW50b3MgPSByZWQubm9kb3MubWFwKChuKSA9PiAoey4uLm4sIHZhbG9yOiB2YWxvcihuKSwgY29sb3I6IGV4cG9zaWNpb24gJiYgbi5leHB1ZXN0YSA/IFwiem9uYSBleHB1ZXN0YVwiIDogXCJyZXN0byBkZSBsYSBtYWxsYVwifSkpO1xuICBjb25zdCBvcmRlbiA9IFsuLi5wdW50b3NdLnNvcnQoKHAsIHEpID0+IHEudmFsb3IgLSBwLnZhbG9yKTtcbiAgcmV0dXJuIHthcmlzdGFzLCBwdW50b3MsIG9yZGVuLCBtYXhpbW86IE1hdGgubWF4KC4uLnB1bnRvcy5tYXAoKHApID0+IHAudmFsb3IpKX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogNDMwLCBpbnNldFRvcDogMzAsIGluc2V0Qm90dG9tOiAyMCwgaW5zZXRMZWZ0OiA2MCwgaW5zZXRSaWdodDogNjAsXG4gIHg6IHtheGlzOiBudWxsfSwgeToge2F4aXM6IG51bGx9LFxuICBjb2xvcjoge2RvbWFpbjogW1wicmVzdG8gZGUgbGEgbWFsbGFcIiwgXCJ6b25hIGV4cHVlc3RhXCJdLCByYW5nZTogW0NPTE9SRVMuYXp1bCwgQ09MT1JFUy5yb2pvXSwgbGVnZW5kOiBleHBvc2ljaW9ufSxcbiAgcjoge2RvbWFpbjogWzAsIHZpc3RhUmVkLm1heGltb10sIHJhbmdlOiBbMywgMjJdfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmsodmlzdGFSZWQuYXJpc3Rhcywge3gxOiBcIngxXCIsIHkxOiBcInkxXCIsIHgyOiBcIngyXCIsIHkyOiBcInkyXCIsIHN0cm9rZTogXCIjQkJCXCIsIHN0cm9rZVdpZHRoOiAyfSksXG4gICAgUGxvdC5kb3QodmlzdGFSZWQucHVudG9zLCB7eDogXCJ4XCIsIHk6IFwieVwiLCByOiBcInZhbG9yXCIsIGZpbGw6IFwiY29sb3JcIiwgZmlsbE9wYWNpdHk6IDAuODUsIHN0cm9rZTogXCJ3aGl0ZVwifSksXG4gICAgUGxvdC50ZXh0KHZpc3RhUmVkLnB1bnRvcywge3g6IFwieFwiLCB5OiBcInlcIiwgdGV4dDogXCJpZFwiLCBkeTogLTI0LCBmb250U2l6ZTogMTJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICAke3Zpc3RhUmVkLm9yZGVuLnNsaWNlKDAsIDQpLm1hcCgocCwgaykgPT4gaHRtbGA8ZGl2PiR7ayArIDF9LsK6ICR7cC5pZH08Yj4ke21ldHJpY2EgPT09IFwiZ3JhZG9cIiA/IHAuZ3JhZG8gOiBmb3JtYXRvTnVtZXJvKDIpKHAuaW50ZXJtZWRpYWNpb24pfTwvYj48L2Rpdj5gKX1cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBudW1lcm9QYXRpb3MgPSBJbnB1dHMucmFuZ2UoWzEsIDRdLCB7dmFsdWU6IDMsIHN0ZXA6IDEsIGxhYmVsOiBcIk7Dum1lcm8gZGUgcGF0aW9zIChwKVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtZXRyaWNhRmluYWwgPSBJbnB1dHMucmFkaW8oW1wiY2VyY2Fuw61hXCIsIFwiaW50ZXJtZWRpYWNpw7NuXCJdLCB7dmFsdWU6IFwiY2VyY2Fuw61hXCIsIGxhYmVsOiBcIlRhbWHDsW8gZGVsIG5vZG8gc2Vnw7puXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpc3RhRmluYWwgPSB7XG4gIGNvbnN0IGluZiA9IHJlZC5pbmZvcm1lO1xuICBjb25zdCBzb2x1Y2lvbiA9IGluZi5wX21lZGlhbmFbU3RyaW5nKG51bWVyb1BhdGlvcyldO1xuICBjb25zdCBlbGVnaWRvcyA9IG5ldyBTZXQoc29sdWNpb24ucGF0aW9zKTtcbiAgY29uc3QgdmFsb3IgPSAobikgPT4gbWV0cmljYUZpbmFsID09PSBcImNlcmNhbsOtYVwiID8gbi5jZXJjYW5pYSA6IG4uaW50ZXJtZWRpYWNpb247XG4gIGNvbnN0IHBvc2ljaW9uID0gbmV3IE1hcChpbmYubm9kb3MubWFwKChuKSA9PiBbbi5pZCwgbl0pKTtcbiAgY29uc3QgYXJpc3RhcyA9IGluZi5hcmlzdGFzLm1hcCgoe2EsIGIsIHRyb25jYWx9KSA9PiAoe3gxOiBwb3NpY2lvbi5nZXQoYSkueCwgeTE6IHBvc2ljaW9uLmdldChhKS55LCB4MjogcG9zaWNpb24uZ2V0KGIpLngsIHkyOiBwb3NpY2lvbi5nZXQoYikueSwgdHJvbmNhbH0pKTtcbiAgY29uc3QgcHVudG9zID0gaW5mLm5vZG9zLm1hcCgobikgPT4gKHsuLi5uLCB2YWxvcjogdmFsb3IobiksIGV0aXF1ZXRhOiBuLmlkLnJlcGxhY2UoXCJQb3J0YWwgXCIsIFwiUC4gXCIpLnJlcGxhY2UoXCItWm9uYSBGcmFuY2FcIiwgXCJcIiksIGNvbG9yOiBuLmV4cHVlc3RhID8gXCJ6b25hIGV4cHVlc3RhXCIgOiBcInJlc3RvIGRlIGxhIHJlZFwifSkpO1xuICBjb25zdCBvcmRlbiA9IFsuLi5wdW50b3NdLmZpbHRlcigocCkgPT4gIXAuc2luX3ByZWRpb3MpLnNvcnQoKHAsIHEpID0+IHEudmFsb3IgLSBwLnZhbG9yKTtcbiAgcmV0dXJuIHthcmlzdGFzLCBwdW50b3MsIG9yZGVuLCBlbGVnaWRvczogcHVudG9zLmZpbHRlcigocCkgPT4gZWxlZ2lkb3MuaGFzKHAuaWQpKSwga206IHNvbHVjaW9uLmttLCBtaW5pbW86IE1hdGgubWluKC4uLnB1bnRvcy5tYXAoKHApID0+IHAudmFsb3IpKSwgbWF4aW1vOiBNYXRoLm1heCguLi5wdW50b3MubWFwKChwKSA9PiBwLnZhbG9yKSl9O1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNTIwKSwgaGVpZ2h0OiA2NDAsIGluc2V0VG9wOiAyMCwgaW5zZXRMZWZ0OiA0MCwgaW5zZXRSaWdodDogNDAsXG4gIHg6IHtheGlzOiBudWxsfSwgeToge2F4aXM6IG51bGx9LFxuICBjb2xvcjoge2RvbWFpbjogW1wicmVzdG8gZGUgbGEgcmVkXCIsIFwiem9uYSBleHB1ZXN0YVwiXSwgcmFuZ2U6IFtDT0xPUkVTLmF6dWwsIENPTE9SRVMucm9qb10sIGxlZ2VuZDogdHJ1ZX0sXG4gIHI6IHtkb21haW46IFt2aXN0YUZpbmFsLm1pbmltbywgdmlzdGFGaW5hbC5tYXhpbW9dLCByYW5nZTogWzIsIDEzXX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5rKHZpc3RhRmluYWwuYXJpc3Rhcy5maWx0ZXIoKGQpID0+IGQudHJvbmNhbCksIHt4MTogXCJ4MVwiLCB5MTogXCJ5MVwiLCB4MjogXCJ4MlwiLCB5MjogXCJ5MlwiLCBzdHJva2U6IFwiI0JCQlwiLCBzdHJva2VXaWR0aDogMi41fSksXG4gICAgUGxvdC5saW5rKHZpc3RhRmluYWwuYXJpc3Rhcy5maWx0ZXIoKGQpID0+ICFkLnRyb25jYWwpLCB7eDE6IFwieDFcIiwgeTE6IFwieTFcIiwgeDI6IFwieDJcIiwgeTI6IFwieTJcIiwgc3Ryb2tlOiBcIiNCQkJcIiwgc3Ryb2tlV2lkdGg6IDEsIHN0cm9rZURhc2hhcnJheTogXCIzLDNcIn0pLFxuICAgIFBsb3QuZG90KHZpc3RhRmluYWwucHVudG9zLCB7eDogXCJ4XCIsIHk6IFwieVwiLCByOiBcInZhbG9yXCIsIGZpbGw6IFwiY29sb3JcIiwgZmlsbE9wYWNpdHk6IDAuODUsIHN0cm9rZTogXCJ3aGl0ZVwifSksXG4gICAgUGxvdC5kb3QodmlzdGFGaW5hbC5lbGVnaWRvcywge3g6IFwieFwiLCB5OiBcInlcIiwgcjogMTYsIHN5bWJvbDogXCJzcXVhcmVcIiwgc3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VXaWR0aDogMywgZmlsbDogXCJub25lXCJ9KSxcbiAgICBQbG90LnRleHQodmlzdGFGaW5hbC5wdW50b3MsIHt4OiBcInhcIiwgeTogXCJ5XCIsIHRleHQ6IFwiZXRpcXVldGFcIiwgZHk6IC0xNiwgZm9udFNpemU6IDEwfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+UGF0aW9zIGRlIGxhIHAtbWVkaWFuYTxiPiR7dmlzdGFGaW5hbC5lbGVnaWRvcy5tYXAoKHApID0+IHAuaWQpLmpvaW4oXCIsIFwiKX08L2I+PC9kaXY+XG4gIDxkaXY+RGlzdGFuY2lhIGVuIHZhY8OtbyBwb3IgYnVzPGI+JHtmb3JtYXRvTnVtZXJvKDEpKHZpc3RhRmluYWwua20pfSBrbTwvYj48L2Rpdj5cbiAgPGRpdj5QcmltZXIgbm9kbyBjb24gcHJlZGlvcyBzZWfDum4gJHttZXRyaWNhRmluYWx9PGI+JHt2aXN0YUZpbmFsLm9yZGVuWzBdLmlkfTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbWV0cmljYScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdleHBvc2ljaW9uJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ251bWVyb1BhdGlvcycpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdtZXRyaWNhRmluYWwnKSJ9XX0=
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
@@ -1325,14 +1460,30 @@ window._ojs.runtime.interpretFromScriptTags();
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>MISE · Universidad de los Andes · Systems Analytics</p>
+<p>MISE · Universidad de los Andes · Systems Analytics. ¿Vio un error o algo confuso? Cuéntelo en el foro del curso en Bloque Neón, con el título de la página.</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+<p>Datos sintéticos con fines didácticos cuando así se indica.</p>
 </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../recursos.html" aria-current="page">
+<p>Recursos</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../glosario.html">
+<p>Glosario</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../referencias.html">
+<p>Referencias</p>
+</a>
+  </li>  
+</ul>
+    </div>
   </div>
 </footer>
 

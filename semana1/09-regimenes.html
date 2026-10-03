@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cuándo un cambio pequeño hace que un sistema pase a otro modo de funcionamiento y por qué el regreso cuesta más que la caída: el vaso que se inclina, el modelo de May con histéresis y el margen que separó a 2016 de un racionamiento.">
 
-<title>Puntos de inflexión y regímenes – Systems Analytics · Guías de autoestudio</title>
+<title>Puntos de quiebre y regímenes – Systems Analytics · Guías de autoestudio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-189071c1cfc9baef9b9de50def1ee7e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -117,8 +117,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<meta name="guias-mise:fecha" content="2 de octubre de 2026">
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -133,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -173,7 +174,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/09-regimenes.html">Puntos de inflexión y regímenes</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/09-regimenes.html">Puntos de quiebre y regímenes</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -264,7 +265,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+ <span class="menu-text">Puntos de quiebre y regímenes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -382,7 +383,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de quiebre</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -474,6 +475,12 @@ window.Quarto = {
  <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/10-nino-perillas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo ante El Niño y sus perillas</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -543,6 +550,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El arco del Laboratorio 4</span></a>
   </div>
 </li>
       </ul>
@@ -653,6 +666,35 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Para consultar</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../recursos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -675,10 +717,11 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/09-regimenes.html">Puntos de inflexión y regímenes</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana1/index.html">Semana 1 · Sistemas complejos</a></li><li class="breadcrumb-item"><a href="../semana1/09-regimenes.html">Puntos de quiebre y regímenes</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Puntos de inflexión y regímenes</h1>
+<h1 class="title">Puntos de quiebre y regímenes</h1>
 <p class="subtitle lead">Semana 1 · Concepto 9 de 10</p>
 </div>
 
@@ -723,7 +766,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana1/03-retroalimentacion.html">retroalimentación</a> y <a href="../semana1/04-no-linealidad.html">no linealidad</a></span> <span class="dato">🧪 El Avance 1 pide identificar umbrales y discutir si los cambios son reversibles</span></p>
+<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la intuición, las definiciones y el diagrama de equilibrios, los ejemplos ●○○ y ●●○, los errores comunes, las preguntas y el resumen, unos 35 min; amplían: el ejemplo ●●● de 2016 con su simulador y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana1/03-retroalimentacion.html">retroalimentación</a> y <a href="../semana1/04-no-linealidad.html">no linealidad</a></span> <span class="dato">🧪 El Avance 1 pide identificar umbrales y discutir si los cambios son reversibles</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -743,8 +786,8 @@ window.Quarto = {
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>El 14 de febrero de 2016 el embalse agregado del SIN estaba en 47,4 %. Al día siguiente, el incendio de Guatapé dejó atrapado el 28 % de las reservas, y XM calculó que las reservas utilizables quedaban en 34,1 % (XM, 2017). Entre el 15 de enero y el 14 de febrero el embalse había perdido 10,6 puntos porcentuales, unos 0,35 por día; entre el 14 de febrero y el 31 de marzo perdió 8,4 puntos, unos 0,18 por día (XM, series diarias).</p>
-<p>Más generación térmica, el ahorro de los usuarios y algo más de lluvia redujeron a la mitad la velocidad de vaciado. <strong>¿Qué tan cerca estuvo el sistema de pasar del régimen de un mercado tenso al de un racionamiento, y por qué esa diferencia de velocidad importaba tanto?</strong></p>
+<p>El 14 de febrero de 2016 el <a href="../semana1/index.html#vocabulario">embalse agregado</a> del SIN estaba en 47,4 %. Al día siguiente, el incendio de Guatapé dejó atrapado el 28 % de las reservas, y XM calculó que las <a href="../semana1/index.html#vocabulario">reservas utilizables</a> quedaban en 34,1 % (XM, 2017). Entre el 15 de enero y el 14 de febrero el embalse había perdido 10,6 puntos porcentuales, unos 0,35 por día; entre el 14 de febrero y el 31 de marzo perdió 8,4 puntos, unos 0,18 por día (XM, series diarias).</p>
+<p>Más generación térmica, el ahorro de los usuarios y algo más de lluvia redujeron a la mitad la velocidad de vaciado; también la propia salida de Guatapé, que dejó quieta el agua de El Peñol, contada en el embalse agregado aunque no se pudiera usar. <strong>¿Qué tan cerca estuvo el sistema de pasar del régimen de un mercado tenso al de un racionamiento, y por qué esa diferencia de velocidad importaba tanto?</strong></p>
 </section>
 <section id="la-intuición-el-vaso-que-se-inclina" class="level2">
 <h2 class="anchored" data-anchor-id="la-intuición-el-vaso-que-se-inclina">2. La intuición: el vaso que se inclina</h2>
@@ -753,45 +796,45 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos valles y un umbral</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-paisaje-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-09-paisaje-1.svg" class="img-fluid" alt="Paisaje con dos valles; la bola está en el valle de pie."></a></p>
+<p><a href="../diagramas/svg/s1-09-paisaje-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s1-09-paisaje-1.svg" class="img-fluid" loading="lazy" alt="Paisaje con dos valles; la bola está en el valle de pie."></a></p>
 <p><strong>Dibuje el paisaje.</strong> Un vaso de pie es una bola en el fondo de un valle: si se la empuja un poco, vuelve. El otro valle, «volcado», también existe, pero la bola no llega a él.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-paisaje-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-09-paisaje-2.svg" class="img-fluid" alt="El valle de pie se vuelve menos profundo."></a></p>
+<p><a href="../diagramas/svg/s1-09-paisaje-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s1-09-paisaje-2.svg" class="img-fluid" loading="lazy" alt="El valle de pie se vuelve menos profundo."></a></p>
 <p><strong>Incline el vaso.</strong> El paisaje se deforma y el valle «de pie» se vuelve menos profundo. El vaso todavía se endereza solo, pero tarda más: es la <strong>desaceleración crítica</strong>.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-paisaje-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-09-paisaje-3.svg" class="img-fluid" alt="El valle desaparece y la bola rueda."></a></p>
+<p><a href="../diagramas/svg/s1-09-paisaje-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s1-09-paisaje-3.svg" class="img-fluid" loading="lazy" alt="El valle desaparece y la bola rueda."></a></p>
 <p><strong>Llegue al umbral.</strong> El valle desaparece. Un grado más de inclinación y la bola rueda al otro valle: el vaso se vuelca.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-paisaje-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-09-paisaje-4.svg" class="img-fluid" alt="La bola en el valle volcado."></a></p>
+<p><a href="../diagramas/svg/s1-09-paisaje-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s1-09-paisaje-4.svg" class="img-fluid" loading="lazy" alt="La bola en el valle volcado."></a></p>
 <p><strong>Mire el régimen nuevo.</strong> Mientras el vaso estaba de pie dominaba un lazo de balance (el peso lo endereza); pasado el umbral domina uno de refuerzo (cuanto más se inclina, más brazo tiene el peso para seguir inclinándolo).</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-paisaje-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-09-paisaje-5.svg" class="img-fluid" alt="El paisaje vuelve a su forma, pero la bola sigue en el valle volcado."></a></p>
-<p><strong>Retire la presión.</strong> Enderezar el paisaje no devuelve la bola, que sigue en el valle de la derecha. Levantar el vaso caído tampoco devuelve el agua. Volver cuesta más que caer: es la <strong>histéresis</strong>.</p>
+<p><a href="../diagramas/svg/s1-09-paisaje-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s1-09-paisaje-5.svg" class="img-fluid" loading="lazy" alt="El paisaje vuelve a su forma, pero la bola sigue en el valle volcado."></a></p>
+<p><strong>Retire la presión.</strong> Enderezar el paisaje no devuelve la bola, que sigue en el valle de la derecha: para volver hay que inclinarlo hacia el otro lado, hasta el umbral opuesto. El camino de regreso es distinto del de ida: es la <strong>histéresis</strong>. El agua derramada es otra cosa: no vuelve por ningún camino, y eso es <strong>irreversibilidad</strong>.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-paisaje-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s1-09-paisaje-6.svg" class="img-fluid" alt="Los valles como regímenes del mercado eléctrico."></a></p>
-<p><strong>Pase al sector.</strong> En el SIN, los valles son el mercado tenso y el racionamiento, y la sequía acumulada deforma el paisaje. Cerca del umbral, las palancas pequeñas pesan mucho más.</p>
+<p><a href="../diagramas/svg/s1-09-paisaje-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s1-09-paisaje-6.svg" class="img-fluid" loading="lazy" alt="Los valles como regímenes del mercado eléctrico."></a></p>
+<p><strong>Pase al sector, con cuidado.</strong> En el SIN, el mercado tenso y el racionamiento funcionan con reglas y lazos distintos, y la sequía acumulada acerca el sistema al umbral que los separa. A diferencia del vaso, ese umbral es un nivel de reservas que se cruza, y que el racionamiento sea un segundo valle estable es una hipótesis, no un hecho comprobado.</p>
 </div>
 </div>
 </section>
 <section id="del-dibujo-a-la-ecuación" class="level2">
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
-<div class="definicion caja">
+<div id="definicion-regimen-punto-de-quiebre-e-histeresis" class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Régimen, punto de inflexión e histéresis</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Régimen, punto de quiebre e histéresis</span>
 </div>
-<p>Un <strong>régimen</strong> es un modo de funcionamiento en el que dominan ciertos lazos de retroalimentación y hacia el cual el sistema regresa tras perturbaciones pequeñas. Un <em>tipping point</em> (punto de inflexión o umbral crítico) es la condición en la que un cambio pequeño hace que el sistema abandone su régimen y pase a otro, típicamente porque un lazo de refuerzo toma el control (Scheffer et al., 2001).</p>
+<p>Un <strong>régimen</strong> es un modo de funcionamiento en el que dominan ciertos lazos de retroalimentación y hacia el cual el sistema regresa tras perturbaciones pequeñas. Un <em>tipping point</em> (punto de quiebre o umbral crítico) es la condición en la que un cambio pequeño hace que el sistema abandone su régimen y pase a otro, típicamente porque un lazo de refuerzo toma el control (Scheffer et al., 2001). No lo confunda con el punto de inflexión de una curva en S, que solo marca un cambio de curvatura sin cambio de régimen (la curva de Bass de la semana 3).</p>
 <p>Hay <strong>histéresis</strong> cuando el camino de regreso es distinto del de ida: para devolver el sistema a su régimen original no basta con retirar la presión que lo sacó; hace falta llevarla bastante más atrás del umbral por el que salió.</p>
 </div>
-<div class="definicion caja">
+<div id="definicion-el-modelo-de-may" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">El modelo de May</span>
 </div>
-<p>Un recurso <span class="math inline">x</span> [adimensional] se regenera de forma logística hasta la capacidad <span class="math inline">K</span> y una presión externa <span class="math inline">c</span> [adimensional] lo consume con una respuesta que se satura:</p>
+<p>Un recurso <span class="math inline">x</span> [adimensional] se regenera de forma logística hasta la capacidad <span class="math inline">K</span> y una presión externa <span class="math inline">c</span> [adimensional] lo consume con una respuesta que se satura (May, 1977). Piense en un bosque que abastece de leña a una planta de biomasa: cuando hay mucha biomasa, la planta corta lo que su capacidad permite; cuando hay poca, encontrarla cuesta y la extracción cae rápido.</p>
 <p><span class="math display">\frac{dx}{dt} = x\left(1 - \frac{x}{K}\right) - \frac{c\,x^2}{1 + x^2}.</span></p>
 <p>Los equilibrios son los valores de <span class="math inline">x</span> donde la regeneración iguala al consumo. Con <span class="math inline">K = 10</span> hay un solo equilibrio para presiones bajas o altas, y tres entre <span class="math inline">c = 1{,}79</span> y <span class="math inline">c = 2{,}60</span>: dos estables (los regímenes) y uno inestable (la frontera entre ellos). Es el modelo que usan Scheffer y coautores para ilustrar los cambios de régimen.</p>
 </div>
@@ -800,35 +843,35 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El diagrama de equilibrios, rama por rama</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-histeresis-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-09-histeresis-1.svg" class="img-fluid" alt="Rama alta de equilibrios."></a></p>
+<p><a href="../diagramas/svg/s1-09-histeresis-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s1-09-histeresis-1.svg" class="img-fluid" loading="lazy" alt="Rama alta de equilibrios."></a></p>
 <p><strong>Trace la rama alta.</strong> Con poca presión, el recurso se sostiene en un nivel alto: <span class="math inline">x = 8{,}9</span> con <span class="math inline">c = 1</span>. Al subir <span class="math inline">c</span>, el equilibrio baja despacio.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-histeresis-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-09-histeresis-2.svg" class="img-fluid" alt="Rama baja de equilibrios."></a></p>
+<p><a href="../diagramas/svg/s1-09-histeresis-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s1-09-histeresis-2.svg" class="img-fluid" loading="lazy" alt="Rama baja de equilibrios."></a></p>
 <p><strong>Trace la rama baja.</strong> Con mucha presión existe otro régimen estable, el recurso agotado: <span class="math inline">x = 0{,}68</span> con <span class="math inline">c = 2</span>.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-histeresis-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-09-histeresis-3.svg" class="img-fluid" alt="Rama inestable entre las dos."></a></p>
+<p><a href="../diagramas/svg/s1-09-histeresis-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s1-09-histeresis-3.svg" class="img-fluid" loading="lazy" alt="Rama inestable entre las dos."></a></p>
 <p><strong>Trace la frontera.</strong> Entre las dos ramas hay un equilibrio inestable (<span class="math inline">x = 2</span> con <span class="math inline">c = 2</span>). Por encima de él, el sistema sube a la rama alta; por debajo, cae a la baja.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-histeresis-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-09-histeresis-4.svg" class="img-fluid" alt="Colapso en c = 2,60."></a></p>
+<p><a href="../diagramas/svg/s1-09-histeresis-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s1-09-histeresis-4.svg" class="img-fluid" loading="lazy" alt="Colapso en c = 2,60."></a></p>
 <p><strong>Recorra la ida.</strong> En <span class="math inline">c = 2{,}60</span> la rama alta se junta con la frontera y desaparece. El sistema, que bajaba despacio, cae de golpe a la rama baja.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-histeresis-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s1-09-histeresis-5.svg" class="img-fluid" alt="Recuperación en c = 1,79."></a></p>
+<p><a href="../diagramas/svg/s1-09-histeresis-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s1-09-histeresis-5.svg" class="img-fluid" loading="lazy" alt="Recuperación en c = 1,79."></a></p>
 <p><strong>Recorra la vuelta.</strong> Bajar la presión a 2,5 o a 2,0 no basta. El sistema sigue en la rama baja hasta <span class="math inline">c = 1{,}79</span>, donde esa rama desaparece y el recurso se recupera.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s1-09-histeresis-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s1-09-histeresis-6.svg" class="img-fluid" alt="La zona de histéresis."></a></p>
+<p><a href="../diagramas/svg/s1-09-histeresis-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s1-09-histeresis-6.svg" class="img-fluid" loading="lazy" alt="La zona de histéresis."></a></p>
 <p><strong>Nombre la zona.</strong> Entre 1,79 y 2,60 el estado depende de la historia. Eso es la histéresis: salir costó subir la presión hasta 2,60; volver exige bajarla hasta 1,79.</p>
 </div>
 </div>
-<div class="definicion caja">
+<div id="definicion-senales-tempranas" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Señales tempranas</span>
 </div>
-<p>Cerca de un punto de inflexión el sistema se recupera cada vez más despacio de las perturbaciones (desaceleración crítica). Sus huellas en los datos son el aumento de la varianza y de la autocorrelación de las fluctuaciones, que pueden servir como <strong>señales tempranas</strong> del cambio (Scheffer et al., 2009). Son indicios probabilísticos: pueden fallar con ruido alto o con cambios bruscos de la presión.</p>
+<p>Cerca de un punto de quiebre el sistema se recupera cada vez más despacio de las perturbaciones (desaceleración crítica). Sus huellas en los datos son el aumento de la varianza y de la autocorrelación de las fluctuaciones, que pueden servir como <strong>señales tempranas</strong> del cambio (Scheffer et al., 2009). Son indicios probabilísticos: pueden fallar con ruido alto o con cambios bruscos de la presión.</p>
 </div>
 </section>
 <section id="ejemplos-resueltos" class="level2">
@@ -852,10 +895,10 @@ window.Quarto = {
 <p><strong>Ubique el umbral.</strong> El ángulo en que el centro de gravedad pasa por encima del borde de la base. Un grado antes, el vaso regresa; un grado después, se vuelca.</p>
 </div>
 <div class="paso">
-<p><strong>Nombre los lazos.</strong> De pie domina un lazo de balance: la inclinación crea un torque que la corrige. Pasado el umbral domina uno de refuerzo: la inclinación crea un torque que la aumenta. El punto de inflexión es el cambio de dominio entre los dos lazos.</p>
+<p><strong>Nombre los lazos.</strong> De pie domina un lazo de balance: la inclinación crea un torque que la corrige. Pasado el umbral domina uno de refuerzo: la inclinación crea un torque que la aumenta. El punto de quiebre es el cambio de dominio entre los dos lazos.</p>
 </div>
 <div class="paso">
-<p><strong>Describa la histéresis.</strong> Volver a poner el vaso de pie exige levantarlo con la mano y llenarlo otra vez. Retirar la fuerza que lo inclinó no basta.</p>
+<p><strong>Describa la histéresis.</strong> Volver a poner el vaso de pie exige levantarlo con la mano, una fuerza en sentido contrario; retirar la fuerza que lo inclinó no basta. El agua derramada no vuelve por ningún camino: esa parte es irreversible, que es algo distinto.</p>
 </div>
 </div>
 </section>
@@ -865,7 +908,7 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Subir la presión y bajarla otra vez</span>
 </div>
-<p><strong>Planteamiento.</strong> En el modelo de May con <span class="math inline">K = 10</span>, la presión sube despacio desde <span class="math inline">c = 1</span> hasta un máximo y luego baja al mismo ritmo hasta un mínimo. ¿Cuándo salta el sistema y cuándo regresa?</p>
+<p><strong>Planteamiento.</strong> Una planta de biomasa amplía su capacidad poco a poco y después la reduce. En el modelo de May con <span class="math inline">K = 10</span>, la presión de extracción sube despacio desde <span class="math inline">c = 1</span> hasta un máximo y luego baja al mismo ritmo hasta un mínimo. ¿Cuándo colapsa el bosque y cuándo se recupera?</p>
 </div>
 <div id="pred-may" class="prediccion caja">
 <div class="caja-titulo">
@@ -876,10 +919,10 @@ window.Quarto = {
 <p>En la rama alta: si la presión volvió por debajo del umbral, el recurso vuelve a su nivel.</p>
 </div>
 <div class="opcion">
-<p>En la rama baja: la presión no bajó lo suficiente.</p>
+<p>En un punto intermedio entre las dos ramas.</p>
 </div>
 <div class="opcion">
-<p>En un punto intermedio entre las dos ramas.</p>
+<p>En la rama baja: la presión no bajó lo suficiente.</p>
 </div>
 </div>
 <div class="simulador caja">
@@ -988,7 +1031,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Modelo de May con <span class="math inline">K = 10</span>, <code>recorridoMay</code> de <code>simuladores/mise_sd.js</code>, que reproduce <code>mise_sd.modelos.recorrido_may</code>: Euler explícito con paso 0,1 y presión que cambia 0,002 por unidad de tiempo. Bandas azules, equilibrios estables; puntos grises, frontera inestable. Modelo estilizado con fines didácticos.</p>
+<p>Modelo de May (1977) con <span class="math inline">K = 10</span>, <code>recorridoMay</code> del simulador del curso, que reproduce <code>mise_sd.modelos.recorrido_may</code>: Euler explícito con paso 0,1 y presión que cambia 0,002 por unidad de tiempo. Bandas azules, equilibrios estables; puntos grises, frontera inestable. Modelo estilizado con fines didácticos.</p>
 </div>
 </div>
 <div class="pasos caja">
@@ -996,7 +1039,7 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la ida y la vuelta</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-may"></span>. La respuesta es la B: con máximo 2,8 y mínimo 2,0, el recurso termina en <span class="math inline">x = 0{,}68</span>, en la rama baja, aunque la presión final sea menor que la del umbral de colapso.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-may">(la opción que eligió arriba)</span>. La respuesta es «en la rama baja»: con máximo 2,8 y mínimo 2,0, el recurso termina en <span class="math inline">x = 0{,}68</span>, en la rama baja, aunque la presión final sea menor que la del umbral de colapso.</p>
 </div>
 <div class="paso">
 <p><strong>Lea el salto.</strong> El salto ocurre en <span class="math inline">c = 2{,}68</span>, un poco después del umbral teórico de 2,60: como la presión sigue subiendo mientras el sistema cae, la caída se registra con retraso.</p>
@@ -1023,10 +1066,10 @@ window.Quarto = {
 </div>
 <p>La velocidad de vaciado bajó de 0,35 a 0,18 puntos por día. ¿Cuánto cambió la fecha en que se habría cruzado el umbral?</p>
 <div class="opcion">
-<p>Unos pocos días.</p>
+<p>Unas cinco semanas.</p>
 </div>
 <div class="opcion">
-<p>Unas cinco semanas.</p>
+<p>Unos pocos días.</p>
 </div>
 <div class="opcion">
 <p>Nada: el umbral es el mismo.</p>
@@ -1123,16 +1166,16 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el margen</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-margen"></span>. La respuesta es la B. El margen era de <span class="math inline">34{,}1 - 20 = 14{,}1</span> puntos. Al ritmo de enero y febrero se agotaba en <span class="math inline">14{,}1/0{,}35 \approx 40</span> días, hacia el 27 de marzo, antes del fondo del 1 de abril. Al ritmo de febrero y marzo alcanzaba para unos 78 días, hasta comienzos de mayo.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-margen">(la opción que eligió arriba)</span>. La respuesta es «unas cinco semanas». El margen era de <span class="math inline">34{,}1 - 20 = 14{,}1</span> puntos. Al ritmo de enero y febrero se agotaba en <span class="math inline">14{,}1/0{,}35 \approx 40</span> días, hacia el 27 de marzo, antes del fondo del 1 de abril. Al ritmo de febrero y marzo alcanzaba para unos 78 días, hasta comienzos de mayo.</p>
 </div>
 <div class="paso">
 <p><strong>Pese el ahorro.</strong> La campaña de ahorro redujo la demanda en 5,88 % (MinEnergía, 2016), unos 10,6 GWh por día con una demanda de 180 GWh por día. Frente a una capacidad útil de unos 17 200 GWh, son 0,06 puntos de embalse por día, una tercera parte de la velocidad de vaciado de marzo.</p>
 </div>
 <div class="paso">
-<p><strong>Lea el régimen.</strong> El sistema estuvo a unas semanas del umbral estilizado, y la diferencia la hicieron varias palancas pequeñas que actuaron a la vez sobre la velocidad de vaciado. Cerca de un umbral, las decisiones que parecen marginales valen mucho más que en el régimen cómodo.</p>
+<p><strong>Lea el plazo.</strong> El sistema estuvo a unas semanas del umbral estilizado, y la diferencia la hicieron varias palancas que actuaron a la vez sobre la velocidad de vaciado. Lo que da valor a una palanca pequeña cerca del umbral es la fecha límite, la llegada de las lluvias: con el umbral de 20 %, quitar el ahorro de la campaña habría movido el cruce del 4 de mayo al 14 de abril, después del fondo en los dos casos. El segundo ejercicio muestra un umbral en que esa misma palanca decide de qué lado del plazo cae el cruce. Una advertencia: con Guatapé fuera, El Peñol dejó de turbinarse y siguió recibiendo agua, así que la velocidad del agregado subestima la de las reservas utilizables y el margen real fue algo menor.</p>
 </div>
 <div class="paso">
-<p><strong>Mire la histéresis del caso.</strong> El precio regresó rápido: de 833 COP/kWh de promedio en marzo a 335 en abril y 142 en mayo (XM). Las reglas no regresaron: la compensación a las térmicas se trasladó a los usuarios en 36 meses y la crisis llevó a redefinir el precio de escasez en 2017 (CREG 140 de 2017). Algunas variables tienen memoria corta y otras, larga.</p>
+<p><strong>Distinga qué regresó y por qué.</strong> El precio regresó rápido: de 833 COP/kWh de promedio en marzo a 335 en abril y 142 en mayo (XM). El embalse tardó meses, porque es una acumulación: eso es inercia. Las reglas no regresaron: la compensación a las térmicas se trasladó a los usuarios en 36 meses y la CREG redefinió el precio de escasez en 2017 (CREG 140 de 2017). Eso no es histéresis sino adaptación de tercer nivel, una decisión deliberada del regulador (<a href="../semana1/06-adaptacion.html">página 6</a>). Este umbral, además, es un nivel que se cruza y no un segundo equilibrio como el del bosque; si el mercado tiene histéresis en sentido estricto, habría que buscarla en la confianza de inversionistas y comunidades.</p>
 </div>
 <div class="paso">
 <p><strong>Amplíe la escala.</strong> La misma lente sirve para la transición energética. Cuando el costo de una tecnología cruza cierto umbral, se activan lazos de refuerzo a su favor (aprendizaje, escala, instaladores) y la adopción se acelera. Farmer y coautores (2019) proponen buscar esos puntos de intervención sensibles. La semana 5 los explora con escenarios.</p>
@@ -1174,14 +1217,18 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Qué caracteriza a un punto de inflexión?</p>
+<p>¿Qué caracteriza a un punto de quiebre?</p>
+<div class="opcion">
+<p>Un cambio grande en la presión produce un efecto grande.</p>
+<p><span class="porque">Eso es proporcionalidad. Revise el vaso: un grado de diferencia separa los dos regímenes.</span></p>
+</div>
 <div class="opcion" data-correcta="si">
-<p>Un cambio pequeño hace que el sistema pase a otro régimen, porque cambia el lazo que domina.</p>
+<p>Un cambio pequeño cambia el lazo dominante y lleva a otro régimen.</p>
 <p><span class="porque">Correcto.</span></p>
 </div>
 <div class="opcion">
-<p>Un cambio grande produce un efecto grande.</p>
-<p><span class="porque">Eso es proporcionalidad. Revise el vaso: un grado de diferencia separa los dos regímenes.</span></p>
+<p>El sistema deja de responder a cualquier cambio de la presión.</p>
+<p><span class="porque">Cerca del umbral el sistema responde más despacio, pero responde. Revise la desaceleración crítica.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1189,13 +1236,17 @@ window.Quarto = {
 <span class="caja-etiqueta">Compruebe</span>
 </div>
 <p>En el modelo de May, la presión sube a 2,8 y baja a 2,2. ¿Dónde queda el recurso?</p>
-<div class="opcion" data-correcta="si">
-<p>En la rama baja, porque 2,2 está por encima del umbral de recuperación (1,79).</p>
-<p><span class="porque">Correcto.</span></p>
-</div>
 <div class="opcion">
 <p>En la rama alta, porque 2,2 está por debajo del umbral de colapso (2,60).</p>
 <p><span class="porque">Ese umbral decide la caída, no el regreso. Revise el paso de la vuelta en el diagrama.</span></p>
+</div>
+<div class="opcion">
+<p>En la frontera inestable, entre las dos ramas.</p>
+<p><span class="porque">Un equilibrio inestable no retiene al sistema. Revise el paso de la frontera.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>En la rama baja, porque 2,2 está por encima del umbral de recuperación (1,79).</p>
+<p><span class="porque">Correcto.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1208,8 +1259,12 @@ window.Quarto = {
 <p><span class="porque">Correcto: es la desaceleración crítica.</span></p>
 </div>
 <div class="opcion">
-<p>Sus promedios se mantienen estables.</p>
+<p>Sus promedios se mantienen estables durante meses.</p>
 <p><span class="porque">Un sistema cerca del umbral puede verse tranquilo en promedio. Revise el segundo error común.</span></p>
+</div>
+<div class="opcion">
+<p>Sus fluctuaciones se vuelven más pequeñas y más breves.</p>
+<p><span class="porque">Ocurre lo contrario: la varianza y la autocorrelación crecen. Revise las señales tempranas.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1217,27 +1272,35 @@ window.Quarto = {
 <span class="caja-etiqueta">Compruebe</span>
 </div>
 <p>Con el umbral estilizado de 20 % y un vaciado de 0,24 puntos por día, ¿cuántos días de margen quedaban?</p>
-<div class="opcion" data-correcta="si">
-<p>Unos 59.</p>
-<p><span class="porque">Correcto: <span class="math inline">14{,}1/0{,}24 \approx 58{,}8</span>. Compruébelo en el simulador.</span></p>
-</div>
 <div class="opcion">
 <p>Unos 14.</p>
 <p><span class="porque">Esos son los puntos de margen, no los días. Divida por la velocidad.</span></p>
+</div>
+<div class="opcion">
+<p>Unos 40.</p>
+<p><span class="porque">Esos son los días al ritmo de enero y febrero, 0,35 puntos por día. Ponga 0,24 en el simulador.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Unos 59.</p>
+<p><span class="porque">Correcto: <span class="math inline">14{,}1/0{,}24 \approx 58{,}8</span>. Compruébelo en el simulador.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Tras la crisis de 2016, el precio regresó en dos meses y las reglas no. ¿Qué ilustra?</p>
+<p>Tras la crisis de 2016, el precio regresó en dos meses, pero la CREG redefinió el precio de escasez en 2017. ¿Cómo se clasifica ese cambio de reglas?</p>
+<div class="opcion">
+<p>Histéresis: el sistema quedó atrapado en otro equilibrio.</p>
+<p><span class="porque">La histéresis exige dos estados estables y un regreso que el sistema no logra solo. Revise el paso «Distinga qué regresó y por qué».</span></p>
+</div>
 <div class="opcion" data-correcta="si">
-<p>Que distintas variables del sistema tienen memorias distintas: el régimen de reglas quedó desplazado.</p>
-<p><span class="porque">Correcto.</span></p>
+<p>Adaptación: una decisión deliberada del regulador.</p>
+<p><span class="porque">Correcto: es aprendizaje de tercer nivel, como en la página 6.</span></p>
 </div>
 <div class="opcion">
-<p>Que no hubo cambio de régimen, porque el precio volvió.</p>
-<p><span class="porque">Mire también la estructura: reglas y precio de escasez cambiaron de forma duradera.</span></p>
+<p>Irreversibilidad: las reglas viejas ya no pueden volver.</p>
+<p><span class="porque">Nada impide en principio volver a una regla; lo que pasó es que el regulador eligió otra.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
@@ -1286,7 +1349,7 @@ window.Quarto = {
 <ol type="a">
 <li><p>Al ritmo de enero y febrero, <span class="math inline">9{,}1/0{,}35 = 26</span> días, hacia el 12 de marzo; al de febrero y marzo, <span class="math inline">9{,}1/0{,}18 \approx 51</span> días, hacia el 6 de abril.</p></li>
 <li><p>Sin campaña, el vaciado habría sido de unos <span class="math inline">0{,}18 + 0{,}06 = 0{,}24</span> puntos por día, y el margen de <span class="math inline">9{,}1/0{,}24 \approx 38</span> días, hasta alrededor del 24 de marzo, antes del fondo del 1 de abril. El cálculo es aproximado, porque la campaña empezó el 7 de marzo.</p></li>
-<li><p>Cerca del umbral, una palanca que reduce el vaciado en solo 0,06 puntos por día desplaza la fecha crítica cerca de dos semanas, que en 2016 era la distancia entre llegar o no a la temporada de lluvias. Lejos del umbral, la misma palanca habría pasado desapercibida.</p></li>
+<li><p>La palanca de 0,06 puntos por día mueve el cruce unos 13 días con este umbral (38 frente a 51 días) y unos 20 con el de 20 % (59 frente a 79): en días, mueve más cuanto más lejos está el umbral. Lo que la vuelve decisiva aquí es el plazo. Con 25 %, la campaña separa un cruce el 24 de marzo, antes del fondo del 1 de abril, de uno el 6 de abril, cuando ya llovía; con 20 %, las dos fechas (14 de abril y 4 de mayo) caen después de las lluvias y la campaña no cambia el desenlace. Cerca de un umbral con fecha límite, una palanca pequeña vale por el lado del plazo en que deja el cruce.</p></li>
 </ol>
 </div>
 </div>
@@ -1301,13 +1364,13 @@ window.Quarto = {
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Un <strong>régimen</strong> es un modo de funcionamiento estable; un <strong>punto de inflexión</strong> es el umbral donde un cambio pequeño lo hace pasar a otro, porque cambia el lazo que domina.</li>
-<li>Hay <strong>histéresis</strong> cuando volver exige más que retirar la presión: en el modelo de May, el colapso ocurre en <span class="math inline">c = 2{,}60</span> y la recuperación solo en <span class="math inline">c = 1{,}79</span>.</li>
+<li>Un <strong>régimen</strong> es un modo de funcionamiento estable; un <strong>punto de quiebre</strong> es el umbral donde un cambio pequeño lo hace pasar a otro, porque cambia el lazo que domina.</li>
+<li>Hay <strong>histéresis</strong> cuando volver exige más que retirar la presión: en el modelo de May, el colapso ocurre en <span class="math inline">c = 2{,}60</span> y la recuperación solo en <span class="math inline">c = 1{,}79</span>. No toda falta de regreso es histéresis: el agua derramada es irreversibilidad, el embalse lento es inercia y una regla nueva es adaptación.</li>
 <li>Cerca del umbral aparecen <strong>señales tempranas</strong>: recuperación lenta, más varianza y más autocorrelación.</li>
-<li>En 2016, bajar el vaciado de 0,35 a 0,18 puntos por día movió el cruce del umbral estilizado de finales de marzo a comienzos de mayo: cerca de un umbral, <strong>las palancas pequeñas valen mucho</strong>.</li>
+<li>En 2016, bajar el vaciado de 0,35 a 0,18 puntos por día movió el cruce del umbral estilizado de finales de marzo a comienzos de mayo. Cerca de un umbral con <strong>fecha límite</strong>, una palanca pequeña vale por el lado del plazo en que deja el cruce.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Puntos de inflexión y regímenes» de las notas de la semana 1 trae la simulación con ruido y las señales tempranas calculadas en ventanas móviles. La página siguiente reúne todos los conceptos de la semana en el mapa causal de la crisis de El Niño.</p>
+<p><strong>Para profundizar.</strong> La sección «Puntos de quiebre y regímenes» de las notas de la semana 1 trae la simulación con ruido y las señales tempranas calculadas en ventanas móviles. La página siguiente reúne todos los conceptos de la semana en el mapa causal de la crisis de El Niño.</p>
 
 
 </section>
@@ -1745,14 +1808,30 @@ window._ojs.runtime.interpretFromScriptTags();
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>MISE · Universidad de los Andes · Systems Analytics</p>
+<p>MISE · Universidad de los Andes · Systems Analytics. ¿Vio un error o algo confuso? Cuéntelo en el foro del curso en Bloque Neón, con el título de la página.</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+<p>Datos sintéticos con fines didácticos cuando así se indica.</p>
 </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../recursos.html" aria-current="page">
+<p>Recursos</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../glosario.html">
+<p>Glosario</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../referencias.html">
+<p>Referencias</p>
+</a>
+  </li>  
+</ul>
+    </div>
   </div>
 </footer>
 <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});

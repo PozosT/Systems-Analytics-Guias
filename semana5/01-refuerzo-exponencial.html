@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Cómo reconocer un lazo de refuerzo, medir su tiempo de duplicación con la regla del 70, leer la curva de aprendizaje de Wright y buscar el lazo de balance que tarde o temprano lo frena.">
+<meta name="description" content="Cómo reconocer un lazo de refuerzo por su tasa de crecimiento fraccional, medir su tiempo de duplicación con la regla del 70, distinguirlo de una rampa o de una meta que se mueve, y medir cuánto refuerza el aprendizaje local de las FNCER en Colombia.">
 
 <title>Lazos de refuerzo y crecimiento exponencial – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-47806306204d07dfa8167d6763a520c7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-189071c1cfc9baef9b9de50def1ee7e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/guias-mise-1.0.0/componentes.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -117,8 +117,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<meta name="guias-mise:fecha" content="2 de octubre de 2026">
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -133,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -264,7 +265,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana1/09-regimenes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Puntos de inflexión y regímenes</span></a>
+ <span class="menu-text">Puntos de quiebre y regímenes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -382,7 +383,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana3/05-intervenir-difusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de inflexión</span></a>
+ <span class="menu-text">Intervenir la difusión: semillas, subsidios y puntos de quiebre</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -474,6 +475,12 @@ window.Quarto = {
  <span class="menu-text">El modelo completo: anatomía del ciclo inversión-capacidad</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana4/10-nino-perillas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El modelo ante El Niño y sus perillas</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -543,6 +550,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../semana5/10-modelo-politicas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">El modelo con Cargo por Confiabilidad y FNCER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El arco del Laboratorio 4</span></a>
   </div>
 </li>
       </ul>
@@ -653,6 +666,35 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Para consultar</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../recursos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glosario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glosario</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -675,6 +717,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana5/index.html">Semana 5 · Dinámica de sistemas II</a></li><li class="breadcrumb-item"><a href="../semana5/01-refuerzo-exponencial.html">Lazos de refuerzo y crecimiento exponencial</a></li></ol></nav>
 <div class="quarto-title">
@@ -684,7 +727,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Cómo reconocer un lazo de refuerzo, medir su tiempo de duplicación con la regla del 70, leer la curva de aprendizaje de Wright y buscar el lazo de balance que tarde o temprano lo frena.
+    Cómo reconocer un lazo de refuerzo por su tasa de crecimiento fraccional, medir su tiempo de duplicación con la regla del 70, distinguirlo de una rampa o de una meta que se mueve, y medir cuánto refuerza el aprendizaje local de las FNCER en Colombia.
   </div>
 </div>
 
@@ -704,7 +747,7 @@ window.Quarto = {
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> adopcionLogistica<span class="op">,</span> mercadoConPoliticas<span class="op">,</span> regresionLineal<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="16" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> adopcionLogistica<span class="op">,</span> mercadoConPoliticas<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
@@ -723,27 +766,27 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana4/05-polaridad-lazos.html">polaridad y lazos</a> y <a href="../semana4/02-stocks-flujos.html">stocks y flujos</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4</span></p>
+<p><span class="dato">⏱ 65 a 70 minutos</span> <span class="dato">📚 Requiere <a href="../semana4/05-polaridad-lazos.html">polaridad y lazos</a> y <a href="../semana4/02-stocks-flujos.html">stocks y flujos</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4</span> <span class="dato">🧭 Ruta mínima: la pregunta, la idea clave, la intuición, las definiciones con el visor de los lazos FNCER, el ejemplo ●○○, el error «Extrapolar la exponencial sin buscarle el freno», las tres primeras preguntas y el resumen, unos 25 min; amplían: los ejemplos ●●○ y ●●● con sus simuladores, los otros dos errores, las preguntas 4 a 6, el código y los ejercicios</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Al terminar esta página</span>
 </div>
 <ul>
-<li>Calcular tiempos de duplicación con la regla del 70 y diagnosticar un crecimiento exponencial en escala semilogarítmica.</li>
-<li>Leer la curva de aprendizaje de Wright y explicar por qué el costo depende de lo construido y no del calendario.</li>
-<li>Identificar el lazo de balance que frena un refuerzo y predecir dónde se dobla la curva.</li>
+<li>Calcular tiempos de duplicación con la regla del 70 y distinguir un refuerzo de una rampa o de una meta lejana por su tasa de crecimiento fraccional.</li>
+<li>Leer la curva de aprendizaje de Wright y separar, en el costo de las FNCER, la parte que aprende con lo construido en el país de la que cae con el despliegue mundial.</li>
+<li>Medir cuánto refuerza un lazo y predecir qué cambia si se corta, en lugar de suponer que todo crecimiento rápido es exponencial.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Un lazo de refuerzo hace crecer un stock un porcentaje fijo por unidad de tiempo, no una cantidad fija. Parece manso en las primeras duplicaciones y de pronto cambia el sistema entero; y siempre hay un lazo de balance esperándolo al final del tramo recto.</p>
+<p>Un lazo de refuerzo hace crecer un stock en un porcentaje fijo por unidad de tiempo; una rampa lo hace crecer en una cantidad fija, y una meta lejana lo hace correr al principio y frenar después. Que exista un lazo de refuerzo no basta para que haya exponencial: hay que medir cuánto refuerza y qué balance lo espera.</p>
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>Entre 2010 y 2020 el costo nivelado de la energía solar fotovoltaica a gran escala cayó un 85 % en el mundo, de 0,381 a 0,057 USD/kWh, y la caída llegó al 90 % en 2023 (IRENA). Ningún plan energético de 2010 anticipó esa caída: los pronósticos quedaron obsoletos en pocos años. Los planificadores extrapolaban líneas rectas sobre un proceso gobernado por un círculo que se retroalimenta: cada panel instalado abarata el siguiente, y cada panel más barato multiplica las instalaciones. <strong>¿Por qué las proyecciones en línea recta se quedan cortas frente a un lazo de refuerzo?</strong></p>
+<p>Entre 2010 y 2020 el costo nivelado de la energía solar fotovoltaica a gran escala cayó un 85 % en el mundo, de 0,381 a 0,057 USD/kWh, y la caída llegó al 90 % en 2023 (IRENA). Los pronósticos de la época subestimaron esa caída una y otra vez (Way et al., 2022), porque extrapolaban líneas rectas sobre un proceso que se retroalimenta: cada panel instalado en el mundo abarata el siguiente, y cada panel más barato multiplica las instalaciones. A Colombia el abaratamiento llegó sobre todo desde afuera. En la subasta de contratos de largo plazo de 2019 se adjudicaron 1 298 MW a un precio promedio de 95,65 COP/kWh (UPME). <strong>¿Por qué las proyecciones en línea recta se quedan cortas frente a un lazo de refuerzo, y qué parte de ese refuerzo puede mover un país?</strong></p>
 </section>
 <section id="la-intuición-monedas-que-se-duplican" class="level2">
 <h2 class="anchored" data-anchor-id="la-intuición-monedas-que-se-duplican">2. La intuición: monedas que se duplican</h2>
@@ -753,73 +796,109 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Duplicar contra sumar</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-monedas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-01-monedas-1.svg" class="img-fluid" alt="Una moneda en el año cero."></a></p>
+<p><a href="../diagramas/svg/s5-01-monedas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s5-01-monedas-1.svg" class="img-fluid" loading="lazy" alt="Una moneda en el año cero."></a></p>
 <p><strong>Año 0.</strong> Una moneda en cada cuenta. La primera crece al 10 % anual; la segunda suma una moneda cada 7 años.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-monedas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-01-monedas-2.svg" class="img-fluid" alt="Dos monedas en el año 7; las dos cuentas coinciden."></a></p>
+<p><a href="../diagramas/svg/s5-01-monedas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s5-01-monedas-2.svg" class="img-fluid" loading="lazy" alt="Dos monedas en el año 7; las dos cuentas coinciden."></a></p>
 <p><strong>Año 7.</strong> Con 10 % anual, el capital se duplica en unos 7 años: dos monedas. La cuenta lineal también tiene dos. Nada las distingue todavía.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-monedas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-01-monedas-3.svg" class="img-fluid" alt="Cuatro monedas en el año 14 contra tres de la cuenta lineal."></a></p>
+<p><a href="../diagramas/svg/s5-01-monedas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s5-01-monedas-3.svg" class="img-fluid" loading="lazy" alt="Cuatro monedas en el año 14 contra tres de la cuenta lineal."></a></p>
 <p><strong>Año 14.</strong> La exponencial tiene 4 monedas; la lineal, 3. La diferencia parece pequeña.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-monedas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-01-monedas-4.svg" class="img-fluid" alt="Ocho monedas en el año 21 contra cuatro de la cuenta lineal."></a></p>
+<p><a href="../diagramas/svg/s5-01-monedas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s5-01-monedas-4.svg" class="img-fluid" loading="lazy" alt="Ocho monedas en el año 21 contra cuatro de la cuenta lineal."></a></p>
 <p><strong>Año 21.</strong> 8 contra 4. La exponencial dobló a la lineal.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-monedas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-01-monedas-5.svg" class="img-fluid" alt="Dieciséis monedas en el año 28 contra cinco de la cuenta lineal."></a></p>
+<p><a href="../diagramas/svg/s5-01-monedas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s5-01-monedas-5.svg" class="img-fluid" loading="lazy" alt="Dieciséis monedas en el año 28 contra cinco de la cuenta lineal."></a></p>
 <p><strong>Año 28.</strong> 16 contra 5. Una sola duplicación más agregó tantas monedas como todo lo acumulado antes. Con las exponenciales, el peligro es cansarse antes del despegue.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-monedas-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-01-monedas-6.svg" class="img-fluid" alt="La misma gráfica con la etiqueta: capacidad FNCER acumulada, cada duplicación abarata el costo."></a></p>
-<p><strong>La transición energética.</strong> Cambie las monedas por megavatios solares y eólicos construidos en el mundo. Cada duplicación del acumulado abarata el costo en un porcentaje fijo, y el costo más bajo acelera las instalaciones.</p>
+<p><a href="../diagramas/svg/s5-01-monedas-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-01-monedas-6.svg" class="img-fluid" loading="lazy" alt="La misma gráfica con la etiqueta: capacidad solar y eólica acumulada en el mundo, cada duplicación abarata el costo."></a></p>
+<p><strong>La transición energética.</strong> Cambie las monedas por megavatios solares y eólicos construidos en el mundo. Cada duplicación del acumulado mundial abarata el costo en un porcentaje fijo, y el costo más bajo acelera las instalaciones. Fíjese en la condición: el interés se capitaliza. Si el banco pagara los intereses en otra cuenta, el ahorro crecería como una rampa.</p>
 </div>
 </div>
 </section>
 <section id="del-dibujo-a-la-ecuación" class="level2">
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
-<div class="definicion caja">
+<div id="definicion-crecimiento-exponencial-tasa-fraccional-y-tiempo-de-duplicacion" class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Crecimiento exponencial y tiempo de duplicación</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Crecimiento exponencial, tasa fraccional y tiempo de duplicación</span>
 </div>
-<p>Un stock cuyo flujo neto es proporcional a su propio nivel, <span class="math inline">dS/dt = r\,S</span> con <span class="math inline">r &gt; 0</span> [1/año], crece como <span class="math inline">S(t) = S_0\,e^{rt}</span>. Su <strong>tiempo de duplicación</strong> es</p>
+<p>Un stock cuyo flujo neto es proporcional a su propio nivel, <span class="math inline">dS/dt = r\,S</span> con <span class="math inline">r &gt; 0</span> [1/año], crece como <span class="math inline">S(t) = S_0\,e^{rt}</span>. Su <strong>tasa de crecimiento fraccional</strong>, <span class="math inline">(dS/dt)/S</span> [1/año], es constante e igual a <span class="math inline">r</span>. La de una rampa, <span class="math inline">dS/dt = a</span>, vale <span class="math inline">a/S</span> y cae a medida que el stock crece. El <strong>tiempo de duplicación</strong> del refuerzo es</p>
 <p><span class="math display">T_d = \frac{\ln 2}{r} \approx \frac{70}{100\,r} \quad [\text{años}],</span></p>
-<p>la <strong>regla del 70</strong>. En escala semilogarítmica la trayectoria es una recta de pendiente <span class="math inline">r</span>.</p>
+<p>la <strong>regla del 70</strong>. En escala semilogarítmica la trayectoria exponencial es una recta de pendiente <span class="math inline">r</span>.</p>
 </div>
-<div class="definicion caja">
+<div id="definicion-fuerza-de-un-lazo-de-refuerzo" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Fuerza de un lazo de refuerzo</span>
+</div>
+<p>Si la entrada a un stock crece con el propio stock como <span class="math inline">S^{\eta}</span>, la <strong>elasticidad del lazo</strong> <span class="math inline">\eta</span> mide cuánto refuerza: con <span class="math inline">\eta = 1</span> el refuerzo es pleno y la tasa fraccional es constante; con <span class="math inline">0 &lt; \eta &lt; 1</span> el lazo refuerza, pero la tasa fraccional cae a medida que el stock crece; con <span class="math inline">\eta = 0</span> la entrada no depende del stock y el crecimiento es una rampa. Un lazo de refuerzo débil existe y empuja, pero no produce una exponencial.</p>
+</div>
+<div id="definicion-curva-de-aprendizaje-de-wright" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Curva de aprendizaje de Wright</span>
 </div>
 <p>El costo unitario de una tecnología cae un porcentaje fijo, la <strong>tasa de aprendizaje</strong> <span class="math inline">LR</span>, con cada duplicación de la capacidad acumulada construida <span class="math inline">Q</span>:</p>
 <p><span class="math display">c(Q) = c_0\left(\frac{Q}{Q_0}\right)^{-b}, \qquad b = \log_2\frac{1}{1 - LR}.</span></p>
-<p>El curso usa <span class="math inline">LR = 20\,\%</span> (<span class="math inline">b = 0{,}32</span>), un valor conservador de largo plazo; en la década 2010–2020 las tasas observadas para la solar fueron de 34 a 39 % (IRENA).</p>
+<p>Entre 2010 y 2020 la fotovoltaica mundial mostró tasas de 34 a 39 % (IRENA, 2021), excepcionales incluso para ella. Como tasa de largo plazo, o como tasa local de un solo país, son altas: la historia larga de los módulos solares ronda el 20 % por duplicación [POR VERIFICAR].</p>
 </div>
+<div id="definicion-el-costo-de-las-fncer-en-el-modelo-del-curso" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">El costo de las FNCER en el modelo del curso</span>
+</div>
+<p>En <code>mercado_con_politicas</code> el costo nivelado de las FNCER, <span class="math inline">C_R</span> [COP/kWh en la escala del modelo, donde 150 es la bolsa con hidrología media], suma dos partes:</p>
+<p><span class="math display">\begin{aligned}
+C_R &amp;= C_{\text{global}}(t) + C_{\text{local}}(A),\\
+C_{\text{global}}(t) &amp;= 50 + 31{,}25\;e^{-0{,}15\,t},\\
+C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
+\end{aligned}</span></p>
+<p>La <strong>parte global</strong>, el 65 % del costo inicial de 125 COP/kWh (año 0 ≈ 2015), cae 15 % al año hacia un piso porque la decide el despliegue mundial, que Colombia no controla. La <strong>parte local</strong>, el 35 % restante (balance de planta, permisos, conexión, financiación), sigue la curva de Wright con <span class="math inline">LR = 10\,\%</span> sobre la capacidad FNCER acumulada en el país, <span class="math inline">A</span> [MW], con <span class="math inline">A_0 = 100</span> MW [POR VERIFICAR la fracción local y las tasas]. Sin ninguna subasta el modelo da 101,1 COP/kWh en el año 4 (≈ 2019), y con una subasta de 300 MW/año, 96,7, cerca de los 95,65 adjudicados en la subasta de 2019.</p>
+</div>
+<div id="100644d1" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="01-refuerzo-exponencial_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Costo FNCER del modelo sin política y con una subasta de 300 MW/año desde el año 0, junto a su componente global, que es el mismo en los dos casos. Escala del modelo (año 0 ≈ 2015); datos sintéticos con fines didácticos. El punto rojo es el precio promedio adjudicado en la subasta de 2019 (UPME)."><img src="01-refuerzo-exponencial_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Costo FNCER del modelo sin política y con una subasta de 300 MW/año desde el año 0, junto a su componente global, que es el mismo en los dos casos. Escala del modelo (año 0 ≈ 2015); datos sintéticos con fines didácticos. El punto rojo es el precio promedio adjudicado en la subasta de 2019 (UPME)."></a></p>
+<figcaption>Costo FNCER del modelo sin política y con una subasta de 300 MW/año desde el año 0, junto a su componente global, que es el mismo en los dos casos. Escala del modelo (año 0 ≈ 2015); datos sintéticos con fines didácticos. El punto rojo es el precio promedio adjudicado en la subasta de 2019 (UPME).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La distancia entre la línea gris y cada curva es la parte local. La subasta la achica más rápido: en el año 4 el costo queda en 96,7 COP/kWh frente a 101,1 sin política, y en el año 10, en 81,6 frente a 84,7. Las dos curvas terminan juntas (68,7 y 69,9 en el año 40) porque manda la parte global, que baja de 81,2 a 50,1 en los dos casos y explica el 57 % de la caída de 40 años sin subasta (el 55 % con ella). Si un analista midiera la tasa de aprendizaje con la pendiente del costo total contra el acumulado nacional, encontraría 7,3 % por duplicación sin subasta y 7,7 % con ella: una <strong>tasa aparente</strong> que mezcla el aprendizaje local con la caída mundial. El modelo no reproduce el alza de la subasta de 2021, adjudicada a unos 156 COP/kWh [POR VERIFICAR], frente a 90 a 94 que da el modelo en el año 6: fue un choque mundial pasajero (cadenas de suministro, tasa de cambio) que una parte global suave no representa.</p>
+<p>¿Dónde está el lazo de refuerzo? El visor dibuja la estructura del segmento FNCER del modelo, flecha por flecha.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La espiral aprendizaje-costo y su freno</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Los lazos del despliegue FNCER</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-lazo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s5-01-lazo-1.svg" class="img-fluid" alt="Los inicios de proyectos FNCER aumentan la capacidad acumulada, signo positivo."></a></p>
-<p><strong>Despliegue → acumulado (+).</strong> Cada proyecto que se inicia termina sumando capacidad construida.</p>
+<p><a href="../diagramas/svg/s5-01-lazo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s5-01-lazo-1.svg" class="img-fluid" loading="lazy" alt="El tamaño del mercado, en gris, aumenta los inicios de proyectos FNCER, que aumentan la capacidad FNCER con retardo. Ninguna flecha vuelve de la capacidad a los inicios."></a></p>
+<p><strong>Ubique la escala.</strong> Los inversionistas de mercado inician proyectos FNCER en proporción al <strong>tamaño del mercado</strong>, la demanda, multiplicada por el atractivo económico:</p>
+<p><span class="math display">\begin{aligned}
+\text{inicios} &amp;= \iota_R\,K_{R,\text{ref}}\,f_R\!\left(\frac{r_e}{C_R}\right) \quad [\text{MW/año}],\\
+K_{R,\text{ref}} &amp;= \frac{0{,}05\,D}{8{,}76 \times 0{,}24} \quad [\text{MW}],
+\end{aligned}</span></p>
+<p>con <span class="math inline">K_{R,\text{ref}}</span> la capacidad que tendría una participación del 5 % en la energía (<span class="math inline">D</span> en GWh/año, factor de planta 0,24), <span class="math inline">\iota_R \approx 0{,}073</span>/año la tasa que repone los retiros, acompaña la demanda y llena la cartera, y <span class="math inline">f_R</span> un multiplicador que vale 1 cuando el ingreso esperado <span class="math inline">r_e</span> iguala el costo. La capacidad instalada no aparece en la regla: un parque más no arrastra inversión por su tamaño.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-lazo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s5-01-lazo-2.svg" class="img-fluid" alt="La capacidad acumulada reduce el costo nivelado, signo negativo."></a></p>
-<p><strong>Acumulado → costo (−).</strong> Es la curva de Wright. Con <span class="math inline">LR = 20\,\%</span>, al duplicar el acumulado el costo pasa de <span class="math inline">c</span> a <span class="math inline">0{,}8\,c</span>.</p>
+<p><a href="../diagramas/svg/s5-01-lazo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s5-01-lazo-2.svg" class="img-fluid" loading="lazy" alt="Los inicios aumentan el acumulado nacional con retardo, el acumulado reduce el costo FNCER y el costo reduce los inicios: lazo R3 con dos enlaces negativos."></a></p>
+<p><strong>Encuentre el refuerzo (R3).</strong> Los inicios terminan sumando capacidad acumulada en el país (+, con el retardo de la obra); el acumulado abarata la parte local del costo (−, Wright al 10 %); un costo menor anima los inicios (−). Dos negativos, un número par: <strong>refuerzo</strong>, R3, el aprendizaje local. Es el único lazo de refuerzo del segmento.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-lazo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s5-01-lazo-3.svg" class="img-fluid" alt="El costo reduce los inicios, signo negativo, y se cierra el lazo R1 con dos enlaces negativos."></a></p>
-<p><strong>Costo → inicios (−) y cierre del lazo.</strong> Un costo más alto frena la inversión. Dos negativos, un número par: <strong>refuerzo</strong>, R1. En el modelo del curso los inicios crecen con el cociente <span class="math inline">(\text{precio capturado}/\text{costo})^{3}</span>.</p>
+<p><a href="../diagramas/svg/s5-01-lazo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s5-01-lazo-3.svg" class="img-fluid" loading="lazy" alt="El costo global, una variable exógena en gris, aumenta el costo FNCER."></a></p>
+<p><strong>El costo global entra desde afuera.</strong> El 65 % del costo cae con el despliegue mundial. Es una variable exógena: ninguna flecha del sistema colombiano regresa a ella. Por eso el costo baja aunque el país no construya nada.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-lazo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s5-01-lazo-4.svg" class="img-fluid" alt="Los inicios aumentan la penetración FNCER y la penetración reduce el precio capturado."></a></p>
-<p><strong>Busque el freno.</strong> Más FNCER instaladas es más penetración (+). Como las solares generan todas a la misma hora, bajan el precio que ellas mismas capturan (−):</p>
-<p><span class="math display">p_{\text{capturado}} = p\; e^{-2\,\cdot\,\text{penetración}}.</span></p>
+<p><a href="../diagramas/svg/s5-01-lazo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s5-01-lazo-4.svg" class="img-fluid" loading="lazy" alt="La capacidad aumenta la energía FNCER aprovechada, que reduce el ingreso esperado con retardo; el ingreso aumenta los inicios: lazo B9."></a></p>
+<p><strong>Busque el primer freno (B9).</strong> Más capacidad es más energía FNCER aprovechada (+). Como las solares generan todas a la misma hora, bajan el precio que ellas mismas capturan, y cerca del límite que absorbe la red se vierte una fracción creciente de su energía (−, con el retardo de las expectativas):</p>
+<p><span class="math display">p_{\text{capturado}} = p\; e^{-2{,}5\, s_{ap}},</span></p>
+<p>con <span class="math inline">s_{ap}</span> la fracción de la demanda que cubre la energía FNCER aprovechada. El ingreso esperado mueve los inicios (+). Un negativo, impar: <strong>balance</strong>, B9, la canibalización y el vertimiento.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-01-lazo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s5-01-lazo-5.svg" class="img-fluid" alt="El precio capturado aumenta los inicios y se cierra el lazo B1 con un enlace negativo."></a></p>
-<p><strong>Cierre el lazo de balance.</strong> Un precio capturado menor frena la inversión (+ entre precio capturado e inicios). Un negativo, impar: <strong>balance</strong>, B1, la canibalización. Todo refuerzo real opera rodeado de balances que tarde o temprano toman el mando: el resultado típico es una curva en S.</p>
+<p><a href="../diagramas/svg/s5-01-lazo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s5-01-lazo-5.svg" class="img-fluid" loading="lazy" alt="La energía FNCER aprovechada reduce el precio de bolsa, y el precio de bolsa aumenta el ingreso esperado: lazo B8."></a></p>
+<p><strong>Busque el segundo freno (B8).</strong> La energía FNCER entra primero al despacho: conserva agua en los embalses y sube el margen de energía, y las dos cosas bajan el precio de bolsa (−). Una bolsa más baja reduce el ingreso esperado (+). Un negativo: <strong>balance</strong>, B8. La bolsa, además, sube y baja con el ciclo de inversión del segmento firme (<a href="../semana5/03-balance-retardo-oscilacion.html">página 3</a>). Un refuerzo débil rodeado de dos balances: la pregunta útil es cuánto refuerza.</p>
 </div>
 </div>
 </section>
@@ -866,7 +945,7 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la logística</span>
 </div>
 <div class="paso">
-<p><strong>Identifique los lazos.</strong> <span class="math inline">\beta\,A</span> es el contagio, un lazo de refuerzo. <span class="math inline">(1 - A/N)</span> es la saturación, un lazo de balance.</p>
+<p><strong>Identifique los lazos.</strong> <span class="math inline">\beta\,A</span> es el contagio, un lazo de refuerzo pleno: la entrada es proporcional a los adoptantes, con elasticidad 1. <span class="math inline">(1 - A/N)</span> es la saturación, un lazo de balance.</p>
 </div>
 <div class="paso">
 <p><strong>Lea la fase temprana.</strong> Mientras <span class="math inline">A \ll N</span>, la saturación casi no actúa y la adopción crece al 50 % anual: se duplica cada <span class="math inline">70/50 = 1{,}4</span> años. De 20 techos se llega a 1 000 en unos 8 años.</p>
@@ -884,21 +963,21 @@ window.Quarto = {
 <p>llega a la mitad de los techos.</p>
 </div>
 <div class="opcion">
-<p>llega a los mismos 10 000 techos, pero más tarde.</p>
+<p>nunca se satura.</p>
 </div>
 <div class="opcion">
-<p>nunca se satura.</p>
+<p>llega a los mismos 10 000 techos, pero más tarde.</p>
 </div>
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Adopción logística</span>
 </div>
-<p>Compare <span class="math inline">\beta = 0{,}5</span> con <span class="math inline">\beta = 0{,}25</span>. ¿Qué cambia, el destino o el calendario?</p>
+<p>El simulador arranca en el caso base, <span class="math inline">\beta = 0{,}5</span>. Bájelo a <span class="math inline">0{,}25</span> y compare con su predicción. ¿Qué cambia, el destino o el calendario?</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="210" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 209;"><span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>viewof contagioL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.25</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Contagio β [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="263" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 262;"><span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a>viewof contagioL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Contagio β [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
@@ -909,18 +988,18 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="215" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 214;"><span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a>logisticaL <span class="op">=</span> {</span>
-<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionLogistica</span>({<span class="dt">contagio</span><span class="op">:</span> contagioL})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
-<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> A <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">adoptantes</span><span class="op">,</span> I <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">instalaciones</span><span class="op">;</span></span>
-<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> I<span class="op">.</span><span class="fu">indexOf</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>I))<span class="op">;</span></span>
-<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> primero <span class="op">=</span> (umbral) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">tiempo</span>[A<span class="op">.</span><span class="fu">findIndex</span>((a) <span class="kw">=&gt;</span> a <span class="op">&gt;=</span> umbral)]<span class="op">;</span></span>
-<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionLogistica</span>({<span class="dt">contagio</span><span class="op">:</span> <span class="fl">0.5</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
-<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
-<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> j) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">A</span><span class="op">:</span> A[j]<span class="op">,</span> <span class="dt">I</span><span class="op">:</span> I[j]}))<span class="op">,</span></span>
-<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> j) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">A</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">adoptantes</span>[j]}))<span class="op">,</span></span>
-<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>    <span class="dt">tPico</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span>[k]<span class="op">,</span> <span class="dt">aPico</span><span class="op">:</span> A[k]<span class="op">,</span> <span class="dt">t1000</span><span class="op">:</span> <span class="fu">primero</span>(<span class="dv">1000</span>)<span class="op">,</span> <span class="dt">t90</span><span class="op">:</span> <span class="fu">primero</span>(<span class="dv">9000</span>)<span class="op">,</span> <span class="dt">final</span><span class="op">:</span> A<span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">,</span></span>
-<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
-<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="268" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 267;"><span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a>logisticaL <span class="op">=</span> {</span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionLogistica</span>({<span class="dt">contagio</span><span class="op">:</span> contagioL})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> A <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">adoptantes</span><span class="op">,</span> I <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">instalaciones</span><span class="op">;</span></span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> I<span class="op">.</span><span class="fu">indexOf</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>I))<span class="op">;</span></span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> primero <span class="op">=</span> (umbral) <span class="kw">=&gt;</span> r<span class="op">.</span><span class="at">tiempo</span>[A<span class="op">.</span><span class="fu">findIndex</span>((a) <span class="kw">=&gt;</span> a <span class="op">&gt;=</span> umbral)]<span class="op">;</span></span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionLogistica</span>({<span class="dt">contagio</span><span class="op">:</span> <span class="fl">0.5</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> j) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">A</span><span class="op">:</span> A[j]<span class="op">,</span> <span class="dt">I</span><span class="op">:</span> I[j]}))<span class="op">,</span></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> j) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">A</span><span class="op">:</span> base<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">adoptantes</span>[j]}))<span class="op">,</span></span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a>    <span class="dt">tPico</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span>[k]<span class="op">,</span> <span class="dt">aPico</span><span class="op">:</span> A[k]<span class="op">,</span> <span class="dt">t1000</span><span class="op">:</span> <span class="fu">primero</span>(<span class="dv">1000</span>)<span class="op">,</span> <span class="dt">t90</span><span class="op">:</span> <span class="fu">primero</span>(<span class="dv">9000</span>)<span class="op">,</span> <span class="dt">final</span><span class="op">:</span> A<span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -931,17 +1010,17 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="231" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 230;"><span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
-<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
-<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Techos con paneles"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
-<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">10000</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
-<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(logisticaL<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
-<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(logisticaL<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
-<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">t</span><span class="op">:</span> logisticaL<span class="op">.</span><span class="at">tPico</span><span class="op">,</span> <span class="dt">A</span><span class="op">:</span> logisticaL<span class="op">.</span><span class="at">aPico</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">6</span>})<span class="op">,</span></span>
-<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="284" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 283;"><span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">60</span>]}<span class="op">,</span></span>
+<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Techos con paneles"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">10000</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(logisticaL<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(logisticaL<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">t</span><span class="op">:</span> logisticaL<span class="op">.</span><span class="at">tPico</span><span class="op">,</span> <span class="dt">A</span><span class="op">:</span> logisticaL<span class="op">.</span><span class="at">aPico</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"A"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">6</span>})<span class="op">,</span></span>
+<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="expression">
@@ -952,11 +1031,11 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="246" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 245;"><span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Llega a 1 000 techos&lt;b&gt;año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">t1000</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Máximo de instalaciones&lt;b&gt;año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">tPico</span>)<span class="sc">}</span><span class="vs">, con </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(logisticaL<span class="op">.</span><span class="at">aPico</span>)<span class="sc">}</span><span class="vs"> adoptantes&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Llega al 90 %&lt;b&gt;</span><span class="sc">${</span>logisticaL<span class="op">.</span><span class="at">t90</span> <span class="op">===</span> <span class="kw">undefined</span> <span class="op">?</span> <span class="st">"después del año 60"</span> <span class="op">:</span> <span class="vs">`año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">t90</span>)<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="299" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 298;"><span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Llega a 1 000 techos&lt;b&gt;año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">t1000</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Máximo de instalaciones&lt;b&gt;año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">tPico</span>)<span class="sc">}</span><span class="vs">, con </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(logisticaL<span class="op">.</span><span class="at">aPico</span>)<span class="sc">}</span><span class="vs"> adoptantes&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Llega al 90 %&lt;b&gt;</span><span class="sc">${</span>logisticaL<span class="op">.</span><span class="at">t90</span> <span class="op">===</span> <span class="kw">undefined</span> <span class="op">?</span> <span class="st">"después del año 60"</span> <span class="op">:</span> <span class="vs">`año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(logisticaL<span class="op">.</span><span class="at">t90</span>)<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
@@ -965,43 +1044,68 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Modelo <code>mise_sd.modelos.adopcion_logistica</code>, con cifras ilustrativas. Línea gris: <span class="math inline">\beta = 0{,}5</span>. Punto ámbar: el máximo de instalaciones anuales.</p>
+<p>Modelo <code>adopcion_logistica</code> del curso, con cifras ilustrativas. Línea gris: el caso base, <span class="math inline">\beta = 0{,}5</span>. Punto ámbar: el máximo de instalaciones anuales.</p>
 </div>
 </div>
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-contagio"></span>. Con <span class="math inline">\beta = 0{,}5</span> la adopción llega a 1 000 techos en el año 8,1, instala más paneles en el año 12,5 (con unos 5 000 adoptantes, la mitad del mercado) y alcanza el 90 % en el año 16,9. Con <span class="math inline">\beta = 0{,}25</span> el máximo se retrasa al año 24,9 y el 90 % al año 33,7, pero el destino es el mismo: los 10 000 techos, la respuesta B. Las campañas de visibilidad mueven el <strong>cuándo</strong>; la saturación decide el <strong>cuánto</strong>. Y evaluar un programa por sus dos primeros años, cuando la exponencial todavía gatea, es la manera clásica de cancelar un refuerzo que iba a funcionar.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-contagio">(la opción que eligió arriba)</span>. Con <span class="math inline">\beta = 0{,}5</span> la adopción llega a 1 000 techos en el año 8,1, instala más paneles en el año 12,5 (con unos 5 000 adoptantes, la mitad del mercado) y alcanza el 90 % en el año 16,9. Con <span class="math inline">\beta = 0{,}25</span> el máximo se retrasa al año 24,9 y el 90 % al año 33,7, y el destino es el mismo: la respuesta esperada era que llega a los 10 000 techos, más tarde. Las campañas de visibilidad mueven el <strong>cuándo</strong>; la saturación decide el <strong>cuánto</strong>. Y evaluar un programa por sus dos primeros años, cuando la exponencial todavía gatea, es la manera clásica de cancelar un refuerzo que iba a funcionar.</p>
 </section>
-<section id="la-espiral-aprendizaje-costo-de-las-fncer" class="level3">
-<h3 class="anchored" data-anchor-id="la-espiral-aprendizaje-costo-de-las-fncer">La espiral aprendizaje-costo de las FNCER</h3>
+<section id="la-espiral-aprendizaje-costo-de-las-fncer-medida" class="level3">
+<h3 class="anchored" data-anchor-id="la-espiral-aprendizaje-costo-de-las-fncer-medida">La espiral aprendizaje-costo de las FNCER, medida</h3>
 <div class="ejemplo caja" data-nivel="avanzado">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">La subasta compra posición en la curva de aprendizaje</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Cuánto refuerza el aprendizaje local?</span>
 </div>
-<p><strong>Planteamiento.</strong> En el modelo de la semana, <code>mercado_con_politicas</code>, las FNCER casi no despegan solas: sin subasta, la capacidad sigue cerca de 100 MW y el costo nivelado en el año 30 es de 222 COP/kWh. Una subasta adjudica inicios de proyectos por fuera de la bolsa. Compare dos programas del mismo tamaño, 300 MW/año durante 20 años: uno que empieza en el año 0 y otro que empieza en el año 10.</p>
+<p><strong>Planteamiento.</strong> En el modelo de la semana, <code>mercado_con_politicas</code>, sin ninguna política, la capacidad FNCER que el mercado instala por su cuenta pasa de 100 MW en el año 0 (≈ 2015) a 628 MW en el año 5, 1 739 MW en el año 10, 4 420 MW en el año 20 y 10 998 MW en el año 40 (datos sintéticos con fines didácticos). En los primeros años parece una exponencial. ¿Lo es? ¿Qué lazo produce la trayectoria y cuánto aporta la espiral aprendizaje-costo?</p>
 </div>
-<div id="pred-calendario" class="prediccion caja">
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Diagnosticar el despliegue</span>
+</div>
+<div class="paso">
+<p><strong>Defina la prueba.</strong> La tasa fraccional <span class="math inline">g = (\text{puesta en servicio} - \text{retiros})/K_R</span> [1/año] es constante en un refuerzo pleno. En una rampa cae como <span class="math inline">1/K_R</span>, y en un stock que persigue una meta lejana cae a medida que se acerca.</p>
+</div>
+<div class="paso">
+<p><strong>Mida la tasa.</strong> La tasa fraccional vale 27,4 % anual en el año 4, 12,8 % en el 12, 5,4 % en el 22 y 3,6 % en el 40. Las duplicaciones sucesivas desde 100 MW tardan 1,5; 1,9; 2,7; 3,5; 5,6 y 11,8 años. Una exponencial tendría todas iguales: esta trayectoria no lo es.</p>
+</div>
+<div class="paso">
+<p><strong>Extrapole como lo haría un analista apurado.</strong> Con la tasa del año 4 (27,4 %, duplicación cada <span class="math inline">70/27{,}4 \approx 2{,}6</span> años) y los 485 MW de ese año, el año 20 tendría</p>
+<p><span class="math display">485 \times e^{0{,}274 \times 16} \approx 38\,800 \ \text{MW},</span></p>
+<p>casi nueve veces los 4 420 MW que da el modelo.</p>
+</div>
+<div class="paso">
+<p><strong>Explique la forma.</strong> La regla de inversión empuja la capacidad hacia la que sostiene la inversión de mercado, y esa meta crece con la demanda y con el atractivo. Al principio la capacidad está muy lejos de la meta y crece rápido; al acercarse, su tasa fraccional baja hacia el crecimiento de la meta, que en el largo plazo es el de la demanda, 3 % anual. Es una búsqueda de meta con la meta en movimiento (<a href="../semana5/02-busqueda-de-meta.html">página 2</a>).</p>
+</div>
+<div class="paso">
+<p><strong>Mida la fuerza de R3.</strong> Un 1 % más de acumulado nacional baja la parte local del costo 0,152 %; como esa parte pesa cerca de un tercio del costo total, el costo baja 0,05 %, y los inicios suben de 0,07 a 0,09 %. La elasticidad del lazo es <span class="math inline">\eta \approx 0{,}08</span>, muy lejos del 1 de un refuerzo pleno. Por cada duplicación del acumulado nacional el costo total baja entre 3,4 y 2,8 %.</p>
+</div>
+<div class="paso">
+<p><strong>Sume las vueltas.</strong> Débil por vuelta no significa irrelevante. En 40 años el acumulado nacional pasa de 100 a unos 18 600 MW, siete duplicaciones y media, y la parte local del costo baja de 43,8 a 19,8 COP/kWh. R3 no produce la forma de la curva, pero sí cambia su altura. ¿Cuánto? Es la pregunta del simulador.</p>
+</div>
+</div>
+<div id="pred-s5-01-sin-aprendizaje" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>En el año 30, ¿cómo es el costo nivelado FNCER del programa temprano frente al tardío?</p>
+<p>Si apaga el aprendizaje local (<span class="math inline">LR = 0</span>, el lazo R3 cortado), la capacidad FNCER del año 40…</p>
 <div class="opcion">
-<p>Igual, porque los dos programas suman 6 000 MW subastados.</p>
+<p>se queda cerca de los 100 MW iniciales, porque sin la espiral no hay despliegue.</p>
 </div>
 <div class="opcion">
-<p>Más bajo en el programa temprano.</p>
+<p>baja, pero el mercado igual instala varios gigavatios.</p>
 </div>
 <div class="opcion">
-<p>Más bajo en el programa tardío, porque la tecnología madura sola con el tiempo.</p>
+<p>no cambia, porque el costo lo decide el mundo.</p>
 </div>
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tamaño y calendario de la subasta</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El aprendizaje local y su freno</span>
 </div>
-<p>Ponga 300 MW/año y compare los dos calendarios. Después cambie el tamaño: ¿cuánto acelera el despegue una subasta más grande?</p>
+<p>Los valores iniciales son el caso base del modelo. Ponga la tasa de aprendizaje en 0 y compare la capacidad del año 40 con su predicción. Después pruebe 0,20 y, con la tasa en 0,10, suba la canibalización a 5: ¿qué mueve más la capacidad del año 40?</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="287" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 286;"><span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>viewof subastaE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">600</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Subasta [MW/año, durante 20 años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="372" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 371;"><span id="cb6-372"><a href="#cb6-372" aria-hidden="true" tabindex="-1"></a>viewof aprendizajeR <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">0.3</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tasa de aprendizaje local LR [por duplicación]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
@@ -1012,7 +1116,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="292" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 291;"><span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a>viewof inicioE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"desde el año 0"</span><span class="op">,</span> <span class="st">"desde el año 10"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"desde el año 10"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Calendario"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="377" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 376;"><span id="cb7-377"><a href="#cb7-377" aria-hidden="true" tabindex="-1"></a>viewof canibalizacionR <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">2.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Canibalización (exponente del precio capturado)"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
@@ -1023,22 +1127,29 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="297" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 296;"><span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a>espiralE <span class="op">=</span> {</span>
-<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> inicio <span class="op">=</span> inicioE<span class="op">.</span><span class="fu">endsWith</span>(<span class="st">"10"</span>) <span class="op">?</span> <span class="dv">10</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (subasta<span class="op">,</span> desde) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>({<span class="dt">subasta_fncer</span><span class="op">:</span> subasta<span class="op">,</span> <span class="dt">inicio_subasta</span><span class="op">:</span> desde<span class="op">,</span> <span class="dt">duracion_subasta</span><span class="op">:</span> <span class="dv">20</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.05</span>})<span class="op">;</span></span>
-<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">correr</span>(subastaE<span class="op">,</span> inicio)<span class="op">;</span></span>
-<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> otro <span class="op">=</span> <span class="fu">correr</span>(subastaE<span class="op">,</span> inicio <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">10</span> <span class="op">:</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">;</span></span>
-<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k30 <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="dv">30</span> <span class="op">/</span> <span class="fl">0.05</span>)<span class="op">;</span></span>
-<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> x <span class="op">=</span> []<span class="op">,</span> y <span class="op">=</span> []<span class="op">;</span></span>
-<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>  r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">forEach</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> { <span class="cf">if</span> (v<span class="op">.</span><span class="at">capacidad_fncer</span>[k] <span class="op">&gt;</span> <span class="dv">1000</span> <span class="op">&amp;&amp;</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[k] <span class="op">&lt;</span> <span class="dv">8000</span>) { x<span class="op">.</span><span class="fu">push</span>(t)<span class="op">;</span> y<span class="op">.</span><span class="fu">push</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(v<span class="op">.</span><span class="at">capacidad_fncer</span>[k]))<span class="op">;</span> } })<span class="op">;</span></span>
-<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tasa <span class="op">=</span> x<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">10</span> <span class="op">?</span> <span class="fu">regresionLineal</span>(x<span class="op">,</span> y)<span class="op">.</span><span class="at">pendiente</span> <span class="op">:</span> <span class="kw">null</span><span class="op">;</span></span>
-<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
-<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">K</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[k]<span class="op">,</span> <span class="dt">Q</span><span class="op">:</span> v<span class="op">.</span><span class="at">fncer_acumulada</span>[k]<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> v<span class="op">.</span><span class="at">costo_fncer</span>[k]}))<span class="op">,</span></span>
-<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a>    <span class="dt">otro</span><span class="op">:</span> otro<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">K</span><span class="op">:</span> otro<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">capacidad_fncer</span>[k]}))<span class="op">,</span></span>
-<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cap30</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[k30]<span class="op">,</span> <span class="dt">costo30</span><span class="op">:</span> v<span class="op">.</span><span class="at">costo_fncer</span>[k30]<span class="op">,</span> <span class="dt">costoOtro30</span><span class="op">:</span> otro<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">costo_fncer</span>[k30]<span class="op">,</span> tasa<span class="op">,</span></span>
-<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
-<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="382" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 381;"><span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a>refuerzoR <span class="op">=</span> {</span>
+<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> paso <span class="op">=</span> <span class="fl">0.05</span><span class="op">;</span></span>
+<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> en <span class="op">=</span> (anio) <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(anio <span class="op">/</span> paso)<span class="op">;</span></span>
+<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> correr <span class="op">=</span> (lr<span class="op">,</span> cb) <span class="kw">=&gt;</span> <span class="fu">simular</span>(<span class="fu">mercadoConPoliticas</span>({<span class="dt">tasa_aprendizaje</span><span class="op">:</span> lr<span class="op">,</span> <span class="dt">canibalizacion</span><span class="op">:</span> cb})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> paso})<span class="op">;</span></span>
+<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">correr</span>(aprendizajeR<span class="op">,</span> canibalizacionR)<span class="op">;</span></span>
+<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> base <span class="op">=</span> <span class="fu">correr</span>(<span class="fl">0.1</span><span class="op">,</span> <span class="fl">2.5</span>)<span class="op">;</span></span>
+<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> v <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">,</span> b <span class="op">=</span> base<span class="op">.</span><span class="at">variables</span><span class="op">;</span></span>
+<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tasa <span class="op">=</span> (s<span class="op">,</span> k) <span class="kw">=&gt;</span> (s<span class="op">.</span><span class="at">puesta_fncer</span>[k] <span class="op">-</span> s<span class="op">.</span><span class="at">retiros_fncer</span>[k]) <span class="op">/</span> s<span class="op">.</span><span class="at">capacidad_fncer</span>[k]<span class="op">;</span></span>
+<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> g4 <span class="op">=</span> <span class="fu">tasa</span>(v<span class="op">,</span> <span class="fu">en</span>(<span class="dv">4</span>))<span class="op">,</span> k4 <span class="op">=</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[<span class="fu">en</span>(<span class="dv">4</span>)]<span class="op">;</span></span>
+<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> extrapolada <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">filter</span>((t) <span class="kw">=&gt;</span> t <span class="op">&gt;=</span> <span class="dv">4</span> <span class="op">&amp;&amp;</span> t <span class="op">&lt;=</span> <span class="dv">20</span>)<span class="op">.</span><span class="fu">map</span>((t) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">K</span><span class="op">:</span> k4 <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(g4 <span class="op">*</span> (t <span class="op">-</span> <span class="dv">4</span>)) <span class="op">/</span> <span class="dv">1000</span>}))<span class="op">;</span></span>
+<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">K</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[k] <span class="op">/</span> <span class="dv">1000</span><span class="op">,</span> <span class="dt">g</span><span class="op">:</span> <span class="fu">tasa</span>(v<span class="op">,</span> k)}))<span class="op">;</span></span>
+<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filasBase <span class="op">=</span> base<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">K</span><span class="op">:</span> b<span class="op">.</span><span class="at">capacidad_fncer</span>[k] <span class="op">/</span> <span class="dv">1000</span><span class="op">,</span> <span class="dt">g</span><span class="op">:</span> <span class="fu">tasa</span>(b<span class="op">,</span> k)}))<span class="op">;</span></span>
+<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> capacidades <span class="op">=</span> [<span class="op">...</span>filas<span class="op">,</span> <span class="op">...</span>filasBase<span class="op">,</span> <span class="op">...</span>extrapolada]<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">K</span>)<span class="op">;</span></span>
+<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tasas <span class="op">=</span> [<span class="op">...</span>filas<span class="op">,</span> <span class="op">...</span>filasBase]<span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">t</span> <span class="op">&gt;=</span> <span class="fl">0.5</span>)<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">g</span>)<span class="op">;</span></span>
+<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb8-397"><a href="#cb8-397" aria-hidden="true" tabindex="-1"></a>    filas<span class="op">,</span> <span class="dt">base</span><span class="op">:</span> filasBase<span class="op">,</span> extrapolada<span class="op">,</span></span>
+<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dominioK</span><span class="op">:</span> [<span class="fl">0.8</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>capacidades)<span class="op">,</span> <span class="fl">1.25</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>capacidades)]<span class="op">,</span></span>
+<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dominioG</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">1.1</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>tasas)]<span class="op">,</span></span>
+<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a>    <span class="dt">k10</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[<span class="fu">en</span>(<span class="dv">10</span>)]<span class="op">,</span> <span class="dt">k20</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[<span class="fu">en</span>(<span class="dv">20</span>)]<span class="op">,</span> <span class="dt">k40</span><span class="op">:</span> v<span class="op">.</span><span class="at">capacidad_fncer</span>[<span class="fu">en</span>(<span class="dv">40</span>)]<span class="op">,</span></span>
+<span id="cb8-401"><a href="#cb8-401" aria-hidden="true" tabindex="-1"></a>    g4<span class="op">,</span> <span class="dt">g40</span><span class="op">:</span> <span class="fu">tasa</span>(v<span class="op">,</span> <span class="fu">en</span>(<span class="dv">40</span>))<span class="op">,</span> <span class="dt">extrapolada20</span><span class="op">:</span> extrapolada<span class="op">.</span><span class="fu">at</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">.</span><span class="at">K</span> <span class="op">*</span> <span class="dv">1000</span><span class="op">,</span></span>
+<span id="cb8-402"><a href="#cb8-402" aria-hidden="true" tabindex="-1"></a>    <span class="dt">participacion40</span><span class="op">:</span> v<span class="op">.</span><span class="at">participacion_aprovechada_fncer</span>[<span class="fu">en</span>(<span class="dv">40</span>)]<span class="op">,</span> <span class="dt">costo40</span><span class="op">:</span> v<span class="op">.</span><span class="at">costo_fncer</span>[<span class="fu">en</span>(<span class="dv">40</span>)]<span class="op">,</span></span>
+<span id="cb8-403"><a href="#cb8-403" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb8-404"><a href="#cb8-404" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
@@ -1049,15 +1160,16 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="317" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 316;"><span id="cb9-317"><a href="#cb9-317" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb9-318"><a href="#cb9-318" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
-<span id="cb9-319"><a href="#cb9-319" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">40</span>]}<span class="op">,</span></span>
-<span id="cb9-320"><a href="#cb9-320" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad FNCER [MW, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">50</span><span class="op">,</span> <span class="dv">40000</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
-<span id="cb9-321"><a href="#cb9-321" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb9-322"><a href="#cb9-322" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(espiralE<span class="op">.</span><span class="at">otro</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"K"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
-<span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(espiralE<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"K"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
-<span id="cb9-324"><a href="#cb9-324" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb9-325"><a href="#cb9-325" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="409" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 408;"><span id="cb9-409"><a href="#cb9-409" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-410"><a href="#cb9-410" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb9-411"><a href="#cb9-411" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">40</span>]}<span class="op">,</span></span>
+<span id="cb9-412"><a href="#cb9-412" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad FNCER [GW, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> refuerzoR<span class="op">.</span><span class="at">dominioK</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">1</span>)}<span class="op">,</span></span>
+<span id="cb9-413"><a href="#cb9-413" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-414"><a href="#cb9-414" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(refuerzoR<span class="op">.</span><span class="at">extrapolada</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"K"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"2 3"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.8</span>})<span class="op">,</span></span>
+<span id="cb9-415"><a href="#cb9-415" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(refuerzoR<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"K"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb9-416"><a href="#cb9-416" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(refuerzoR<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"K"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb9-417"><a href="#cb9-417" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-418"><a href="#cb9-418" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="expression">
@@ -1068,12 +1180,17 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="330" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 329;"><span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">230</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
-<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Capacidad acumulada construida [MW, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
-<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Costo nivelado [COP/kWh, escala log]"</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">"log"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [Plot<span class="op">.</span><span class="fu">line</span>(espiralE<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"Q"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})]<span class="op">,</span></span>
-<span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="423" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 422;"><span id="cb10-423"><a href="#cb10-423" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb10-424"><a href="#cb10-424" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">220</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb10-425"><a href="#cb10-425" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">40</span>]}<span class="op">,</span></span>
+<span id="cb10-426"><a href="#cb10-426" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tasa fraccional [1/año]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> refuerzoR<span class="op">.</span><span class="at">dominioG</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb10-427"><a href="#cb10-427" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb10-428"><a href="#cb10-428" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.03</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb10-429"><a href="#cb10-429" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="dv">39</span><span class="op">,</span> <span class="dt">g</span><span class="op">:</span> <span class="fl">0.03</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"g"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"crecimiento de la demanda"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"end"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">7</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">11</span>})<span class="op">,</span></span>
+<span id="cb10-430"><a href="#cb10-430" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(refuerzoR<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"g"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.4</span>})<span class="op">,</span></span>
+<span id="cb10-431"><a href="#cb10-431" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(refuerzoR<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"g"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span>})<span class="op">,</span></span>
+<span id="cb10-432"><a href="#cb10-432" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb10-433"><a href="#cb10-433" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="expression">
@@ -1084,12 +1201,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="340" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 339;"><span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capacidad FNCER en el año 30&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(espiralE<span class="op">.</span><span class="at">cap30</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Costo nivelado en el año 30&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(espiralE<span class="op">.</span><span class="at">costo30</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Costo con el otro calendario&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(espiralE<span class="op">.</span><span class="at">costoOtro30</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Despegue (1 a 8 GW)&lt;b&gt;</span><span class="sc">${</span>espiralE<span class="op">.</span><span class="at">tasa</span> <span class="op">===</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">"no despega"</span> <span class="op">:</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(espiralE<span class="op">.</span><span class="at">tasa</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> anual, duplica en </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(<span class="dv">2</span>) <span class="op">/</span> espiralE<span class="op">.</span><span class="at">tasa</span>)<span class="sc">}</span><span class="vs"> años`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="438" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 437;"><span id="cb11-438"><a href="#cb11-438" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb11-439"><a href="#cb11-439" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capacidad FNCER en los años 10, 20 y 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(refuerzoR<span class="op">.</span><span class="at">k10</span>)<span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(refuerzoR<span class="op">.</span><span class="at">k20</span>)<span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(refuerzoR<span class="op">.</span><span class="at">k40</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-440"><a href="#cb11-440" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Tasa fraccional en el año 4 y en el año 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(refuerzoR<span class="op">.</span><span class="at">g4</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> · </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(refuerzoR<span class="op">.</span><span class="at">g40</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> anual&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-441"><a href="#cb11-441" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Año 20 extrapolando la tasa del año 4&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(refuerzoR<span class="op">.</span><span class="at">extrapolada20</span>)<span class="sc">}</span><span class="vs"> MW&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-442"><a href="#cb11-442" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Participación de la energía FNCER aprovechada en el año 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(refuerzoR<span class="op">.</span><span class="at">participacion40</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> de la demanda&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-443"><a href="#cb11-443" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Costo FNCER en el año 40&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(refuerzoR<span class="op">.</span><span class="at">costo40</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-444"><a href="#cb11-444" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-11" data-nodetype="expression">
@@ -1098,24 +1216,24 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code>, con parámetros sintéticos con fines didácticos (año 0 ≈ 2015). Línea gris: el mismo tamaño de subasta con el otro calendario. La recta de la segunda gráfica es la curva de Wright del modelo.</p>
+<p>Modelo estilizado <code>mercado_con_politicas</code> del curso, sin políticas, con parámetros sintéticos con fines didácticos (año 0 ≈ 2015; precios en la escala del modelo). Línea gris: el caso base (<span class="math inline">LR = 0{,}10</span>, canibalización 2,5). Línea ámbar punteada: la exponencial que se obtiene al extrapolar la tasa del año 4 hasta el año 20.</p>
 </div>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la espiral</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el resultado</span>
 </div>
 <div class="paso">
-<p><strong>Mida el refuerzo.</strong> Con la subasta temprana, entre 1 y 8 GW la capacidad FNCER crece un 11,9 % anual: se duplica cada 5,8 años, como anticipa la regla del 70 (<span class="math inline">70/12</span>). Con la subasta tardía el despegue es más empinado (14,4 % anual) porque arranca cuando el precio ya es más alto, pero empieza diez años después. En escala semilogarítmica ese tramo es recto.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s5-01-sin-aprendizaje">(la opción que eligió arriba)</span>. Con <span class="math inline">LR = 0</span> la capacidad del año 40 baja de 10 998 a 7 998 MW y el costo de ese año queda en 93,8 COP/kWh en lugar de 69,9: la respuesta esperada era que baja, pero el mercado igual instala varios gigavatios. El despliegue no depende de la espiral nacional, porque el mundo abarata la tecnología y la demanda crece.</p>
 </div>
 <div class="paso">
-<p><strong>Lea la curva de Wright.</strong> En escala log-log, costo contra acumulado es una recta: cada duplicación de lo construido abarata el costo un 20 %.</p>
+<p><strong>Mire la otra dirección.</strong> Con <span class="math inline">LR = 0{,}20</span>, el doble, la capacidad del año 40 sube a 13 379 MW: un 22 % más, lejos del doble. La tasa fraccional del año 40 casi no cambia (3,6 %), porque el aprendizaje sube la meta pero no la convierte en exponencial.</p>
 </div>
 <div class="paso">
-<p><strong>Compare los calendarios.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-calendario"></span>. En el año 30 el programa temprano deja el costo en 55,9 COP/kWh y 12 221 MW instalados; el tardío, en 63,5 COP/kWh y 9 553 MW. La respuesta es la B: el costo cae con lo construido, y el programa temprano construye antes y alimenta el refuerzo durante más años.</p>
+<p><strong>Compare con el freno.</strong> Con canibalización 5 y <span class="math inline">LR = 0{,}10</span>, la capacidad del año 40 baja a 8 757 MW y la participación aprovechada, de 10,5 % a 8,4 % de la demanda; con canibalización 1 sube a 13 060 MW. El lazo de balance B9 decide el nivel tanto como la espiral, y empuja en contra.</p>
 </div>
 <div class="paso">
-<p><strong>Saque la lección de política.</strong> La subasta no solo compra megavatios: compra <strong>posición en la curva de aprendizaje</strong>. Los primeros gigavatios caros pagan el descuento de todos los siguientes, y esperar a que la tecnología baje sola pospone la bajada. Es la lectura de Farmer et al.&nbsp;(2019) sobre los puntos de intervención sensibles.</p>
+<p><strong>Lea la política.</strong> Una subasta de 300 MW/año adelanta el despliegue (3 720 MW en el año 10, frente a 1 739) y abarata la parte local, pero no enciende un lazo dormido. Si conviene pagarla depende de lo que compre ese adelanto, una pregunta que la <a href="../semana5/08-robustez-regret.html">página de robustez</a> responde con la tabla del Laboratorio 4.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="El diagnóstico en Python">
@@ -1130,22 +1248,32 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="bf70e367" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.core <span class="im">import</span> integrar</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> mercado_con_politicas</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nombre, inicio <span class="kw">in</span> ((<span class="st">"temprano"</span>, <span class="fl">0.0</span>), (<span class="st">"tardío"</span>, <span class="fl">10.0</span>)):</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> integrar(mercado_con_politicas(subasta_fncer<span class="op">=</span><span class="fl">300.0</span>, inicio_subasta<span class="op">=</span>inicio, duracion_subasta<span class="op">=</span><span class="fl">20.0</span>),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                 t_final<span class="op">=</span><span class="fl">40.0</span>, paso_salida<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    capacidad, tiempo <span class="op">=</span> r[<span class="st">"capacidad_fncer"</span>], r.tiempo</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    tramo <span class="op">=</span> (capacidad <span class="op">&gt;</span> <span class="dv">1_000</span>) <span class="op">&amp;</span> (capacidad <span class="op">&lt;</span> <span class="dv">8_000</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    tasa, _ <span class="op">=</span> np.polyfit(tiempo[tramo], np.log(capacidad[tramo]), <span class="dv">1</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nombre<span class="sc">:9s}</span><span class="ss"> tasa de despegue = </span><span class="sc">{</span>tasa<span class="sc">:.1%}</span><span class="ss">   duplicación = </span><span class="sc">{</span>np<span class="sc">.</span>log(<span class="dv">2</span>) <span class="op">/</span> tasa<span class="sc">:.1f}</span><span class="ss"> años   "</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"costo en el año 30 = </span><span class="sc">{</span>r[<span class="st">'costo_fncer'</span>][<span class="dv">300</span>]<span class="sc">:.1f}</span><span class="ss"> COP/kWh"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f8ef3595" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> correr(<span class="op">**</span>parametros):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> integrar(mercado_con_politicas(<span class="op">**</span>parametros), t_final<span class="op">=</span><span class="fl">40.0</span>, paso_salida<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> correr()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>capacidad <span class="op">=</span> r[<span class="st">"capacidad_fncer"</span>]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>tasa_fraccional <span class="op">=</span> (r[<span class="st">"puesta_fncer"</span>] <span class="op">-</span> r[<span class="st">"retiros_fncer"</span>]) <span class="op">/</span> capacidad</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>indice <span class="op">=</span> <span class="kw">lambda</span> anio: <span class="bu">int</span>(<span class="bu">round</span>(anio <span class="op">/</span> <span class="fl">0.05</span>))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>instantes <span class="op">=</span> [r.tiempo[np.argmax(capacidad <span class="op">&gt;=</span> <span class="dv">100</span> <span class="op">*</span> <span class="dv">2</span><span class="op">**</span>k)] <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>)]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"años de cada duplicación:"</span>, np.<span class="bu">round</span>(np.diff([<span class="fl">0.0</span>] <span class="op">+</span> instantes), <span class="dv">2</span>))</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> anio <span class="kw">in</span> (<span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">22</span>, <span class="dv">40</span>):</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"año </span><span class="sc">{</span>anio<span class="sc">:2d}</span><span class="ss">: tasa fraccional = </span><span class="sc">{</span>tasa_fraccional[indice(anio)]<span class="sc">:.1%}</span><span class="ss">"</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>extrapolado <span class="op">=</span> capacidad[indice(<span class="dv">4</span>)] <span class="op">*</span> np.exp(tasa_fraccional[indice(<span class="dv">4</span>)] <span class="op">*</span> <span class="dv">16</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"año 20 extrapolando la tasa del año 4: </span><span class="sc">{</span>extrapolado<span class="sc">:.0f}</span><span class="ss"> MW; modelo: </span><span class="sc">{</span>capacidad[indice(<span class="dv">20</span>)]<span class="sc">:.0f}</span><span class="ss"> MW"</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>sin_r3 <span class="op">=</span> correr(tasa_aprendizaje<span class="op">=</span><span class="fl">0.0</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"año 40: </span><span class="sc">{</span>capacidad[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> MW con aprendizaje local; </span><span class="sc">{</span>sin_r3[<span class="st">'capacidad_fncer'</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> MW sin él"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>temprano  tasa de despegue = 11.9%   duplicación = 5.8 años   costo en el año 30 = 55.9 COP/kWh
-tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el año 30 = 63.5 COP/kWh</code></pre>
+<pre><code>años de cada duplicación: [ 1.5   1.85  2.7   3.45  5.6  11.75]
+año  4: tasa fraccional = 27.4%
+año 12: tasa fraccional = 12.8%
+año 22: tasa fraccional = 5.4%
+año 40: tasa fraccional = 3.6%
+año 20 extrapolando la tasa del año 4: 38832 MW; modelo: 4420 MW
+año 40: 10998 MW con aprendizaje local; 7998 MW sin él</code></pre>
 </div>
 </div>
 </div>
@@ -1159,13 +1287,13 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Extrapolar la exponencial sin buscarle el freno</span>
 </div>
-<p>Toda exponencial real es el tramo inicial de una curva en S. El análisis profesional identifica el lazo de balance que la espera y estima dónde está el codo, aunque sea con un orden de magnitud.</p>
-<div id="294f5bfd" class="cell" data-execution_count="3">
+<p>Toda exponencial real es el tramo inicial de otra cosa: una curva en S o la aproximación a una meta. El análisis profesional identifica el lazo de balance que la espera y estima dónde está el codo, aunque sea con un orden de magnitud. En el modelo de la semana, extrapolar la tasa del año 4 sobrestima por nueve la capacidad FNCER del año 20.</p>
+<div id="9e38c572" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="01-refuerzo-exponencial_files/figure-html/cell-4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos."><img src="01-refuerzo-exponencial_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img" alt="Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos."></a></p>
-<figcaption>Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos.</figcaption>
+<p><a href="01-refuerzo-exponencial_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos. Cifras ilustrativas."><img src="01-refuerzo-exponencial_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos. Cifras ilustrativas."></a></p>
+<figcaption>Adopción con contagio de 0,5 por año: exponencial pura frente a logística con 10 000 techos. Cifras ilustrativas.</figcaption>
 </figure>
 </div>
 </div>
@@ -1175,31 +1303,32 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir crecimiento rápido con refuerzo</span>
 </div>
-<p>Una rampa agresiva (500 MW cada año) crece cantidades fijas, no porcentajes. La prueba es la escala semilogarítmica: solo el refuerzo dibuja una recta.</p>
-<div id="1e2c0cf4" class="cell" data-execution_count="4">
+<p>Tres estructuras crecen rápido al comienzo: el refuerzo pleno (tasa fraccional constante), la rampa (cantidad fija por año, tasa que cae como <span class="math inline">1/S</span>) y la búsqueda de una meta lejana (tasa que cae hacia el crecimiento de la meta). La prueba es la tasa fraccional en el tiempo, o la escala semilogarítmica, donde solo el refuerzo pleno dibuja una recta. Una subasta de 300 MW/año es una rampa: con 1 000 MW instalados suma 30 % al año; con 10 000 MW, solo 3 %.</p>
+<div id="cfd1b271" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="01-refuerzo-exponencial_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas."><img src="01-refuerzo-exponencial_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" alt="Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas."></a></p>
+<p><a href="01-refuerzo-exponencial_files/figure-html/cell-6-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas."><img src="01-refuerzo-exponencial_files/figure-html/cell-6-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas."></a></p>
 <figcaption>Una rampa y una exponencial que van de 1 000 a 10 000 MW en 20 años, en escala lineal y semilogarítmica. Cifras ilustrativas.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Diagnóstico errado, política errada: las rampas se empujan año tras año; los refuerzos se siembran.</p>
+<p>En el simulador del ejemplo avanzado, la FNCER del modelo es el tercer caso: su curva se dobla hacia abajo en escala semilogarítmica y su tasa baja hacia la línea gris del crecimiento de la demanda. Diagnóstico errado, política errada: las rampas se empujan año tras año, las metas se mueven y los refuerzos se siembran.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer la curva de Wright como función del tiempo</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Atribuir al país toda la curva de aprendizaje</span>
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>«Esperemos diez años a que la tecnología se abarate y entonces subastamos.»</p>
+<p>«Si subastamos, cada duplicación de lo construido en Colombia abarata el costo un 20 %; si no subastamos, el costo se queda donde está.»</p>
 </div>
 <div class="bien">
-<p>El costo cae con lo construido, no con el calendario. Si nadie construye, el costo no baja (salvo lo que aporten otros mercados). En el simulador, el programa tardío termina más caro en el año 30.</p>
+<p>El 65 % del costo inicial es global y cae con el despliegue mundial, haga lo que haga el país; el 35 % local aprende al 10 % con lo construido aquí. En el modelo, sin subasta el costo pasa de 125 a 84,7 COP/kWh en el año 10, y con 300 MW/año desde el año 0, a 81,6.</p>
 </div>
 </div>
+<p>Una curva de Wright estimada con el acumulado de un solo país atribuye a la experiencia nacional lo que hizo el calendario mundial: en el modelo, la tasa aparente es 7,3 a 7,7 %, más del doble del efecto del aprendizaje local sobre el costo total. El error opuesto también existe, concluir que esperar sale gratis. Es cierto que el calendario mueve poco el costo (un programa de 300 MW/año durante 20 años que empieza en el año 10 deja el costo del año 30 en 70,6 COP/kWh, igual que si empieza en el año 0, aunque en los años intermedios llega a costar 4,4 COP/kWh más), pero una subasta se juzga por lo que hace al sistema. Esa cuenta se hace en la <a href="../semana5/08-robustez-regret.html">página de robustez</a>.</p>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -1215,11 +1344,11 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 </div>
 <div class="opcion">
 <p>Unos 35 años.</p>
-<p><span class="porque">Ese valor sale de dividir 70 entre 2, no entre 3,5.</span></p>
+<p><span class="porque">Ese valor sale de dividir 70 entre 2, no entre 3,5. Revise la regla del 70.</span></p>
 </div>
 <div class="opcion">
-<p>Unos 29 años, porque <span class="math inline">100/3{,}5 \approx 29</span>.</p>
-<p><span class="porque">Esa cuenta supone crecimiento lineal: la duplicación exponencial es más rápida.</span></p>
+<p>Unos 29 años.</p>
+<p><span class="porque">Esa cuenta, <span class="math inline">100/3{,}5</span>, supone crecimiento lineal; la duplicación exponencial es más rápida.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1228,26 +1357,38 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 </div>
 <p>¿Cómo distingue en una gráfica un crecimiento exponencial de una rampa rápida?</p>
 <div class="opcion">
-<p>La exponencial siempre sube más rápido.</p>
-<p><span class="porque">Al principio una rampa puede subir más rápido que una exponencial.</span></p>
+<p>La exponencial siempre sube más rápido que cualquier rampa.</p>
+<p><span class="porque">Al principio una rampa puede subir más rápido. Revise la figura del segundo error común.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>En escala semilogarítmica la exponencial es una recta y la rampa se curva.</p>
-<p><span class="porque">Correcto.</span></p>
+<p>En escala semilogarítmica la exponencial es una recta.</p>
+<p><span class="porque">Correcto: y la rampa se curva hacia abajo, porque su tasa fraccional cae.</span></p>
+</div>
+<div class="opcion">
+<p>En escala lineal la exponencial es una recta.</p>
+<p><span class="porque">En escala lineal la recta es la rampa. Revise la definición de crecimiento exponencial.</span></p>
+</div>
+<div class="opcion">
+<p>Solo se distinguen con varias décadas de datos.</p>
+<p><span class="porque">La tasa fraccional las separa con pocos años de datos: constante en una, decreciente en la otra.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Con una tasa de aprendizaje del 20 %, ¿cuánto vale el costo cuando la capacidad acumulada se multiplica por cuatro?</p>
+<p>Con una tasa de aprendizaje del 20 % por duplicación, ¿cuánto vale el costo cuando la capacidad acumulada se multiplica por cuatro?</p>
 <div class="opcion">
 <p>80 % del costo inicial.</p>
-<p><span class="porque">Eso corresponde a una sola duplicación.</span></p>
+<p><span class="porque">Eso corresponde a una sola duplicación; multiplicar por cuatro son dos.</span></p>
+</div>
+<div class="opcion">
+<p>60 % del costo inicial.</p>
+<p><span class="porque">Restar dos veces el 20 % suma las caídas; la tasa se aplica sobre el costo ya reducido.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
 <p>64 % del costo inicial.</p>
-<p><span class="porque">Correcto: dos duplicaciones, <span class="math inline">0{,}8 \times 0{,}8 = 0{,}64</span>.</span></p>
+<p><span class="porque">Correcto: dos duplicaciones, <span class="math inline">0{,}8 \times 0{,}8 = 0{,}64</span>. Es la aritmética de Wright; el modelo del curso aplica un 10 % solo a la parte local del costo, y al comienzo cuadruplicar el acumulado nacional baja el costo total cerca de un 7 %.</span></p>
 </div>
 <div class="opcion">
 <p>20 % del costo inicial.</p>
@@ -1260,11 +1401,11 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 </div>
 <p>En la logística de adopción, ¿cuándo se instalan más paneles por año?</p>
 <div class="opcion">
-<p>Al principio, cuando hay más techos disponibles.</p>
+<p>Al principio, cuando sobran techos.</p>
 <p><span class="porque">Al principio hay pocos adoptantes que contagien.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Cuando la mitad del mercado ya adoptó.</p>
+<p>Cuando adoptó la mitad del mercado.</p>
 <p><span class="porque">Correcto: ahí se equilibran contagio y saturación.</span></p>
 </div>
 <div class="opcion">
@@ -1276,21 +1417,47 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Qué lazo frena la espiral aprendizaje-costo en el modelo de la semana?</p>
+<p>En el modelo de la semana, la tasa fraccional de la capacidad FNCER sin política baja del 27 % anual en el año 4 al 3,6 % en el año 40. ¿Qué indica?</p>
+<div class="opcion">
+<p>Un refuerzo pleno que se duplica cada 2,6 años.</p>
+<p><span class="porque">Un refuerzo pleno tendría la tasa constante. Revise la definición de tasa fraccional.</span></p>
+</div>
 <div class="opcion" data-correcta="si">
-<p>La canibalización: más FNCER bajan el precio que ellas mismas capturan.</p>
-<p><span class="porque">Correcto: es un lazo de balance con un enlace negativo.</span></p>
+<p>Un stock que persigue una meta lejana que crece con la demanda.</p>
+<p><span class="porque">Correcto: lejos de la meta crece rápido; al acercarse, su tasa baja hacia el crecimiento de la meta, cerca del 3 % de la demanda.</span></p>
 </div>
 <div class="opcion">
-<p>El retardo constructor de las FNCER.</p>
-<p><span class="porque">Un retardo demora la respuesta, pero no frena el crecimiento por sí mismo.</span></p>
+<p>Un error del modelo, porque las FNCER crecen siempre en forma exponencial.</p>
+<p><span class="porque">Que algo crezca rápido al principio no lo vuelve exponencial. Revise el segundo error común.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>¿Qué lazo de refuerzo actúa sobre la inversión FNCER de mercado en el modelo de la semana?</p>
+<div class="opcion">
+<p>La escala: más capacidad instalada trae más inicios de proyectos.</p>
+<p><span class="porque">La regla de inversión escala con el tamaño del mercado, no con la capacidad instalada. Revise el primer paso del visor de los lazos.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>El aprendizaje local: lo construido en el país abarata el costo.</p>
+<p><span class="porque">Correcto: es R3, con una elasticidad cercana a 0,08; débil por vuelta, pero cortarlo resta 3 GW en el año 40.</span></p>
+</div>
+<div class="opcion">
+<p>La canibalización: más energía FNCER baja el precio capturado.</p>
+<p><span class="porque">Ese lazo tiene un solo enlace negativo. Cuente las polaridades de B9.</span></p>
+</div>
+<div class="opcion">
+<p>La caída del costo global, que abarata cada parque nuevo.</p>
+<p><span class="porque">El costo global es exógeno: ninguna flecha del sistema colombiano vuelve a él.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
 <h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
 <section id="ejercicio-1-regla-del-70" class="level4">
 <h4 class="anchored" data-anchor-id="ejercicio-1-regla-del-70">Ejercicio 1 ●○○ · Regla del 70</h4>
-<p>Sin calculadora: (a) la demanda crece al 3,5 % anual, ¿cuándo se duplica? (b) Un embalse pierde 2 % de su volumen útil al año por sedimentación, ¿en cuántos años queda a la mitad? (c) La capacidad FNCER crece al 12 % anual en su despegue, ¿cuántas duplicaciones caben en 12 años?</p>
+<p>Sin calculadora: (a) la demanda crece al 3,5 % anual, ¿cuándo se duplica? (b) Un embalse pierde 2 % de su volumen útil al año por sedimentación, ¿en cuántos años queda a la mitad? (c) La distancia entre el costo global de las FNCER del modelo y su piso se reduce un 15 % por año. ¿Cada cuánto se reduce a la mitad, y qué fracción de esa distancia queda al cabo de 12 años?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1306,7 +1473,7 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 <ol type="a">
 <li><p><span class="math inline">70/3{,}5 = 20</span> años.</p></li>
 <li><p>La regla funciona igual para decrecer: <span class="math inline">70/2 = 35</span> años para quedar a la mitad.</p></li>
-<li><p>Cada duplicación tarda <span class="math inline">70/12 \approx 5{,}8</span> años, así que en 12 años caben unas dos duplicaciones: la capacidad se multiplica por cerca de cuatro.</p></li>
+<li><p>Cada <span class="math inline">70/15 \approx 4{,}7</span> años (la cuenta exacta da <span class="math inline">\ln 2/0{,}15 = 4{,}6</span>). En 12 años caben unas <span class="math inline">12/4{,}7 \approx 2{,}6</span> reducciones a la mitad, y queda <span class="math inline">2^{-2{,}6} \approx 0{,}17</span>, cerca de un sexto de la distancia. La cuenta exacta, <span class="math inline">e^{-0{,}15 \times 12} = 0{,}165</span>, lo confirma. Esta pieza del modelo sí es exponencial, a diferencia de la capacidad FNCER.</p></li>
 </ol>
 </div>
 </div>
@@ -1346,7 +1513,7 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 <ol type="a">
 <li><p><span class="math inline">70/100 = 0{,}7</span> años.</p></li>
 <li><p>El calendario escala con <span class="math inline">1/\beta</span>: si <span class="math inline">\beta = 0{,}5</span> da el año 12,5, <span class="math inline">\beta = 1</span> da la mitad, cerca del año 6,2. La simulación lo confirma (año 6,2).</p></li>
-<li><p>No: el mercado final sigue siendo de 10 000 techos. El contagio cambia el calendario; la saturación fija el destino.</p></li>
+<li><p>El mercado final sigue siendo de 10 000 techos. El contagio cambia el calendario; la saturación fija el destino.</p></li>
 </ol>
 </div>
 </div>
@@ -1361,21 +1528,22 @@ tardío    tasa de despegue = 14.4%   duplicación = 4.8 años   costo en el añ
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Un lazo de <strong>refuerzo</strong> hace crecer un stock un porcentaje fijo: <span class="math inline">S(t) = S_0\,e^{rt}</span>, con tiempo de duplicación <span class="math inline">T_d \approx 70/(100\,r)</span>.</li>
-<li>En escala <strong>semilogarítmica</strong> la exponencial es una recta; una rampa se curva.</li>
-<li><strong>Curva de Wright</strong>: el costo cae un porcentaje fijo por cada duplicación de lo construido. Depende del acumulado, no del calendario.</li>
-<li>Todo refuerzo real encuentra un <strong>balance</strong>: saturación de techos, canibalización de precios. El resultado típico es una curva en S.</li>
-<li>Una subasta temprana compra posición en la curva de aprendizaje: en el modelo, 55,9 frente a 63,5 COP/kWh en el año 30 con el mismo tamaño de programa.</li>
+<li>Un lazo de <strong>refuerzo pleno</strong> hace crecer un stock un porcentaje fijo: <span class="math inline">S(t) = S_0\,e^{rt}</span>, con tiempo de duplicación <span class="math inline">T_d \approx 70/(100\,r)</span>.</li>
+<li>La <strong>tasa fraccional</strong> separa el refuerzo pleno (constante) de la rampa y de la búsqueda de una meta lejana (decrecientes). En escala <strong>semilogarítmica</strong> solo la exponencial es una recta.</li>
+<li>La <strong>fuerza</strong> de un lazo de refuerzo es la elasticidad de la entrada frente al stock: con <span class="math inline">\eta = 1</span> hay exponencial; con <span class="math inline">\eta</span> pequeño el lazo empuja sin producirla.</li>
+<li><strong>Curva de Wright</strong>: el costo cae un porcentaje fijo por cada duplicación de lo construido. En el modelo, el 65 % del costo FNCER inicial es global y cae con el despliegue mundial; el 35 % local aprende al 10 % con lo construido en el país. La tasa aparente, 7,3 a 7,7 %, mezcla las dos.</li>
+<li>Sin política, la FNCER del modelo no crece como una exponencial: su tasa fraccional baja del 27,4 % al 3,6 % anual. El único refuerzo es el aprendizaje local R3, débil por vuelta (<span class="math inline">\eta \approx 0{,}08</span>) pero acumulativo: cortarlo deja 8,0 GW en el año 40 en lugar de 11,0.</li>
+<li>Todo refuerzo real encuentra un <strong>balance</strong>: la saturación de techos, la canibalización y el vertimiento (B9), el agua que conserva la FNCER (B8). Los parámetros del balance mueven el destino; los del refuerzo, sobre todo el calendario.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Lazos de refuerzo y crecimiento exponencial» de las notas de la semana 5 trae la figura de Wright del modelo y el ejercicio de la subasta retrasada. En el Laboratorio 4 usted medirá tiempos de duplicación sobre el modelo con políticas. La página siguiente estudia el lazo que frena todo refuerzo: <a href="../semana5/02-busqueda-de-meta.html">la búsqueda de meta</a>.</p>
+<p><strong>Para profundizar.</strong> La sección «Lazos de refuerzo y crecimiento exponencial» de las notas de la semana 5 trae la figura de la FNCER frente a la exponencial, la curva de Wright aparente y más ejercicios, entre ellos el del programa de subastas que empieza diez años tarde. En el Laboratorio 4 usted medirá tasas fraccionales y tiempos de duplicación sobre el modelo con políticas. La página siguiente estudia el lazo que frena todo refuerzo: <a href="../semana5/02-busqueda-de-meta.html">la búsqueda de meta</a>.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgYWRvcGNpb25Mb2dpc3RpY2EsIG1lcmNhZG9Db25Qb2xpdGljYXMsIHJlZ3Jlc2lvbkxpbmVhbCwgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgY29udGFnaW9MID0gSW5wdXRzLnJhbmdlKFswLjEsIDFdLCB7dmFsdWU6IDAuMjUsIHN0ZXA6IDAuMDUsIGxhYmVsOiBcIkNvbnRhZ2lvIM6yIFsxL2HDsW9dXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibG9naXN0aWNhTCA9IHtcbiAgY29uc3QgciA9IHNpbXVsYXIoYWRvcGNpb25Mb2dpc3RpY2Eoe2NvbnRhZ2lvOiBjb250YWdpb0x9KSwge3RGaW5hbDogNjAsIHBhc286IDAuMDV9KTtcbiAgY29uc3QgQSA9IHIudmFyaWFibGVzLmFkb3B0YW50ZXMsIEkgPSByLnZhcmlhYmxlcy5pbnN0YWxhY2lvbmVzO1xuICBjb25zdCBrID0gSS5pbmRleE9mKE1hdGgubWF4KC4uLkkpKTtcbiAgY29uc3QgcHJpbWVybyA9ICh1bWJyYWwpID0+IHIudGllbXBvW0EuZmluZEluZGV4KChhKSA9PiBhID49IHVtYnJhbCldO1xuICBjb25zdCBiYXNlID0gc2ltdWxhcihhZG9wY2lvbkxvZ2lzdGljYSh7Y29udGFnaW86IDAuNX0pLCB7dEZpbmFsOiA2MCwgcGFzbzogMC4wNX0pO1xuICByZXR1cm4ge1xuICAgIGZpbGFzOiByLnRpZW1wby5tYXAoKHQsIGopID0+ICh7dCwgQTogQVtqXSwgSTogSVtqXX0pKSxcbiAgICBiYXNlOiBiYXNlLnRpZW1wby5tYXAoKHQsIGopID0+ICh7dCwgQTogYmFzZS52YXJpYWJsZXMuYWRvcHRhbnRlc1tqXX0pKSxcbiAgICB0UGljbzogci50aWVtcG9ba10sIGFQaWNvOiBBW2tdLCB0MTAwMDogcHJpbWVybygxMDAwKSwgdDkwOiBwcmltZXJvKDkwMDApLCBmaW5hbDogQS5hdCgtMSksXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDYwXX0sXG4gIHk6IHtsYWJlbDogXCJUZWNob3MgY29uIHBhbmVsZXNcIiwgZ3JpZDogdHJ1ZSwgdGlja0Zvcm1hdDogZm9ybWF0b051bWVybygwKX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5ydWxlWShbMTAwMDBdLCB7c3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LmxpbmUobG9naXN0aWNhTC5iYXNlLCB7eDogXCJ0XCIsIHk6IFwiQVwiLCBzdHJva2U6IFwiIzlFOUU5RVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNSA0XCIsIHN0cm9rZVdpZHRoOiAxLjR9KSxcbiAgICBQbG90LmxpbmUobG9naXN0aWNhTC5maWxhcywge3g6IFwidFwiLCB5OiBcIkFcIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgICBQbG90LmRvdChbe3Q6IGxvZ2lzdGljYUwudFBpY28sIEE6IGxvZ2lzdGljYUwuYVBpY299XSwge3g6IFwidFwiLCB5OiBcIkFcIiwgZmlsbDogQ09MT1JFUy5hbWJhciwgcjogNn0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+TGxlZ2EgYSAxIDAwMCB0ZWNob3M8Yj5hw7FvICR7Zm9ybWF0b051bWVybygxKShsb2dpc3RpY2FMLnQxMDAwKX08L2I+PC9kaXY+XG4gIDxkaXY+TcOheGltbyBkZSBpbnN0YWxhY2lvbmVzPGI+YcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkobG9naXN0aWNhTC50UGljbyl9LCBjb24gJHtmb3JtYXRvTnVtZXJvKDApKGxvZ2lzdGljYUwuYVBpY28pfSBhZG9wdGFudGVzPC9iPjwvZGl2PlxuICA8ZGl2PkxsZWdhIGFsIDkwICU8Yj4ke2xvZ2lzdGljYUwudDkwID09PSB1bmRlZmluZWQgPyBcImRlc3B1w6lzIGRlbCBhw7FvIDYwXCIgOiBgYcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkobG9naXN0aWNhTC50OTApfWB9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHN1YmFzdGFFID0gSW5wdXRzLnJhbmdlKFswLCA2MDBdLCB7dmFsdWU6IDMwMCwgc3RlcDogNTAsIGxhYmVsOiBcIlN1YmFzdGEgW01XL2HDsW8sIGR1cmFudGUgMjAgYcOxb3NdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGluaWNpb0UgPSBJbnB1dHMucmFkaW8oW1wiZGVzZGUgZWwgYcOxbyAwXCIsIFwiZGVzZGUgZWwgYcOxbyAxMFwiXSwge3ZhbHVlOiBcImRlc2RlIGVsIGHDsW8gMTBcIiwgbGFiZWw6IFwiQ2FsZW5kYXJpb1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImVzcGlyYWxFID0ge1xuICBjb25zdCBpbmljaW8gPSBpbmljaW9FLmVuZHNXaXRoKFwiMTBcIikgPyAxMCA6IDA7XG4gIGNvbnN0IGNvcnJlciA9IChzdWJhc3RhLCBkZXNkZSkgPT4gc2ltdWxhcihtZXJjYWRvQ29uUG9saXRpY2FzKHtzdWJhc3RhX2ZuY2VyOiBzdWJhc3RhLCBpbmljaW9fc3ViYXN0YTogZGVzZGUsIGR1cmFjaW9uX3N1YmFzdGE6IDIwfSksIHt0RmluYWw6IDQwLCBwYXNvOiAwLjA1fSk7XG4gIGNvbnN0IHIgPSBjb3JyZXIoc3ViYXN0YUUsIGluaWNpbyk7XG4gIGNvbnN0IG90cm8gPSBjb3JyZXIoc3ViYXN0YUUsIGluaWNpbyA9PT0gMCA/IDEwIDogMCk7XG4gIGNvbnN0IHYgPSByLnZhcmlhYmxlcztcbiAgY29uc3QgazMwID0gTWF0aC5yb3VuZCgzMCAvIDAuMDUpO1xuICBjb25zdCB4ID0gW10sIHkgPSBbXTtcbiAgci50aWVtcG8uZm9yRWFjaCgodCwgaykgPT4geyBpZiAodi5jYXBhY2lkYWRfZm5jZXJba10gPiAxMDAwICYmIHYuY2FwYWNpZGFkX2ZuY2VyW2tdIDwgODAwMCkgeyB4LnB1c2godCk7IHkucHVzaChNYXRoLmxvZyh2LmNhcGFjaWRhZF9mbmNlcltrXSkpOyB9IH0pO1xuICBjb25zdCB0YXNhID0geC5sZW5ndGggPiAxMCA/IHJlZ3Jlc2lvbkxpbmVhbCh4LCB5KS5wZW5kaWVudGUgOiBudWxsO1xuICByZXR1cm4ge1xuICAgIGZpbGFzOiByLnRpZW1wby5tYXAoKHQsIGspID0+ICh7dCwgSzogdi5jYXBhY2lkYWRfZm5jZXJba10sIFE6IHYuZm5jZXJfYWN1bXVsYWRhW2tdLCBjOiB2LmNvc3RvX2ZuY2VyW2tdfSkpLFxuICAgIG90cm86IG90cm8udGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBLOiBvdHJvLnZhcmlhYmxlcy5jYXBhY2lkYWRfZm5jZXJba119KSksXG4gICAgY2FwMzA6IHYuY2FwYWNpZGFkX2ZuY2VyW2szMF0sIGNvc3RvMzA6IHYuY29zdG9fZm5jZXJbazMwXSwgY29zdG9PdHJvMzA6IG90cm8udmFyaWFibGVzLmNvc3RvX2ZuY2VyW2szMF0sIHRhc2EsXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjUwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDQwXX0sXG4gIHk6IHtsYWJlbDogXCJDYXBhY2lkYWQgRk5DRVIgW01XLCBlc2NhbGEgbG9nXVwiLCB0eXBlOiBcImxvZ1wiLCBkb21haW46IFs1MCwgNDAwMDBdLCBncmlkOiB0cnVlLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmUoZXNwaXJhbEUub3Rybywge3g6IFwidFwiLCB5OiBcIktcIiwgc3Ryb2tlOiBcIiM5RTlFOUVcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjUgNFwiLCBzdHJva2VXaWR0aDogMS40fSksXG4gICAgUGxvdC5saW5lKGVzcGlyYWxFLmZpbGFzLCB7eDogXCJ0XCIsIHk6IFwiS1wiLCBzdHJva2U6IENPTE9SRVMudmVyZGUsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDIzMCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJDYXBhY2lkYWQgYWN1bXVsYWRhIGNvbnN0cnVpZGEgW01XLCBlc2NhbGEgbG9nXVwiLCB0eXBlOiBcImxvZ1wiLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgeToge2xhYmVsOiBcIkNvc3RvIG5pdmVsYWRvIFtDT1Ava1doLCBlc2NhbGEgbG9nXVwiLCB0eXBlOiBcImxvZ1wiLCBncmlkOiB0cnVlfSxcbiAgbWFya3M6IFtQbG90LmxpbmUoZXNwaXJhbEUuZmlsYXMsIHt4OiBcIlFcIiwgeTogXCJjXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi40fSldLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTEiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkNhcGFjaWRhZCBGTkNFUiBlbiBlbCBhw7FvIDMwPGI+JHtmb3JtYXRvTnVtZXJvKDApKGVzcGlyYWxFLmNhcDMwKX0gTVc8L2I+PC9kaXY+XG4gIDxkaXY+Q29zdG8gbml2ZWxhZG8gZW4gZWwgYcOxbyAzMDxiPiR7Zm9ybWF0b051bWVybygxKShlc3BpcmFsRS5jb3N0bzMwKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5Db3N0byBjb24gZWwgb3RybyBjYWxlbmRhcmlvPGI+JHtmb3JtYXRvTnVtZXJvKDEpKGVzcGlyYWxFLmNvc3RvT3RybzMwKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5EZXNwZWd1ZSAoMSBhIDggR1cpPGI+JHtlc3BpcmFsRS50YXNhID09PSBudWxsID8gXCJubyBkZXNwZWdhXCIgOiBgJHtmb3JtYXRvUG9yY2VudGFqZShlc3BpcmFsRS50YXNhLCAxKX0gYW51YWwsIGR1cGxpY2EgZW4gJHtmb3JtYXRvTnVtZXJvKDEpKE1hdGgubG9nKDIpIC8gZXNwaXJhbEUudGFzYSl9IGHDsW9zYH08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NvbnRhZ2lvTCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzdWJhc3RhRScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdpbmljaW9FJykifV19
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgYWRvcGNpb25Mb2dpc3RpY2EsIG1lcmNhZG9Db25Qb2xpdGljYXMsIGZvcm1hdG9OdW1lcm8sIGZvcm1hdG9Qb3JjZW50YWplfSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvbWlzZV9zZC5qc1wiXG5DT0xPUkVTID0gKHthenVsOiBcIiMwMDMzNjZcIiwgdmVyZGU6IFwiIzAwNjkzRVwiLCBhbWJhcjogXCIjQjI2QzAwXCIsIHZpb2xldGE6IFwiIzU0MzRBMFwiLCBncmlzOiBcIiM1RjVGNUZcIiwgcm9qbzogXCIjQ0UxMTI2XCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGNvbnRhZ2lvTCA9IElucHV0cy5yYW5nZShbMC4xLCAxXSwge3ZhbHVlOiAwLjUsIHN0ZXA6IDAuMDUsIGxhYmVsOiBcIkNvbnRhZ2lvIM6yIFsxL2HDsW9dXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibG9naXN0aWNhTCA9IHtcbiAgY29uc3QgciA9IHNpbXVsYXIoYWRvcGNpb25Mb2dpc3RpY2Eoe2NvbnRhZ2lvOiBjb250YWdpb0x9KSwge3RGaW5hbDogNjAsIHBhc286IDAuMDV9KTtcbiAgY29uc3QgQSA9IHIudmFyaWFibGVzLmFkb3B0YW50ZXMsIEkgPSByLnZhcmlhYmxlcy5pbnN0YWxhY2lvbmVzO1xuICBjb25zdCBrID0gSS5pbmRleE9mKE1hdGgubWF4KC4uLkkpKTtcbiAgY29uc3QgcHJpbWVybyA9ICh1bWJyYWwpID0+IHIudGllbXBvW0EuZmluZEluZGV4KChhKSA9PiBhID49IHVtYnJhbCldO1xuICBjb25zdCBiYXNlID0gc2ltdWxhcihhZG9wY2lvbkxvZ2lzdGljYSh7Y29udGFnaW86IDAuNX0pLCB7dEZpbmFsOiA2MCwgcGFzbzogMC4wNX0pO1xuICByZXR1cm4ge1xuICAgIGZpbGFzOiByLnRpZW1wby5tYXAoKHQsIGopID0+ICh7dCwgQTogQVtqXSwgSTogSVtqXX0pKSxcbiAgICBiYXNlOiBiYXNlLnRpZW1wby5tYXAoKHQsIGopID0+ICh7dCwgQTogYmFzZS52YXJpYWJsZXMuYWRvcHRhbnRlc1tqXX0pKSxcbiAgICB0UGljbzogci50aWVtcG9ba10sIGFQaWNvOiBBW2tdLCB0MTAwMDogcHJpbWVybygxMDAwKSwgdDkwOiBwcmltZXJvKDkwMDApLCBmaW5hbDogQS5hdCgtMSksXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDYwXX0sXG4gIHk6IHtsYWJlbDogXCJUZWNob3MgY29uIHBhbmVsZXNcIiwgZ3JpZDogdHJ1ZSwgdGlja0Zvcm1hdDogZm9ybWF0b051bWVybygwKX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5ydWxlWShbMTAwMDBdLCB7c3Ryb2tlOiBDT0xPUkVTLnZlcmRlLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LmxpbmUobG9naXN0aWNhTC5iYXNlLCB7eDogXCJ0XCIsIHk6IFwiQVwiLCBzdHJva2U6IFwiIzlFOUU5RVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNSA0XCIsIHN0cm9rZVdpZHRoOiAxLjR9KSxcbiAgICBQbG90LmxpbmUobG9naXN0aWNhTC5maWxhcywge3g6IFwidFwiLCB5OiBcIkFcIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjR9KSxcbiAgICBQbG90LmRvdChbe3Q6IGxvZ2lzdGljYUwudFBpY28sIEE6IGxvZ2lzdGljYUwuYVBpY299XSwge3g6IFwidFwiLCB5OiBcIkFcIiwgZmlsbDogQ09MT1JFUy5hbWJhciwgcjogNn0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+TGxlZ2EgYSAxIDAwMCB0ZWNob3M8Yj5hw7FvICR7Zm9ybWF0b051bWVybygxKShsb2dpc3RpY2FMLnQxMDAwKX08L2I+PC9kaXY+XG4gIDxkaXY+TcOheGltbyBkZSBpbnN0YWxhY2lvbmVzPGI+YcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkobG9naXN0aWNhTC50UGljbyl9LCBjb24gJHtmb3JtYXRvTnVtZXJvKDApKGxvZ2lzdGljYUwuYVBpY28pfSBhZG9wdGFudGVzPC9iPjwvZGl2PlxuICA8ZGl2PkxsZWdhIGFsIDkwICU8Yj4ke2xvZ2lzdGljYUwudDkwID09PSB1bmRlZmluZWQgPyBcImRlc3B1w6lzIGRlbCBhw7FvIDYwXCIgOiBgYcOxbyAke2Zvcm1hdG9OdW1lcm8oMSkobG9naXN0aWNhTC50OTApfWB9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGFwcmVuZGl6YWplUiA9IElucHV0cy5yYW5nZShbMCwgMC4zXSwge3ZhbHVlOiAwLjEsIHN0ZXA6IDAuMDUsIGxhYmVsOiBcIlRhc2EgZGUgYXByZW5kaXphamUgbG9jYWwgTFIgW3BvciBkdXBsaWNhY2nDs25dXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGNhbmliYWxpemFjaW9uUiA9IElucHV0cy5yYW5nZShbMSwgNV0sIHt2YWx1ZTogMi41LCBzdGVwOiAwLjUsIGxhYmVsOiBcIkNhbmliYWxpemFjacOzbiAoZXhwb25lbnRlIGRlbCBwcmVjaW8gY2FwdHVyYWRvKVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InJlZnVlcnpvUiA9IHtcbiAgY29uc3QgcGFzbyA9IDAuMDU7XG4gIGNvbnN0IGVuID0gKGFuaW8pID0+IE1hdGgucm91bmQoYW5pbyAvIHBhc28pO1xuICBjb25zdCBjb3JyZXIgPSAobHIsIGNiKSA9PiBzaW11bGFyKG1lcmNhZG9Db25Qb2xpdGljYXMoe3Rhc2FfYXByZW5kaXphamU6IGxyLCBjYW5pYmFsaXphY2lvbjogY2J9KSwge3RGaW5hbDogNDAsIHBhc299KTtcbiAgY29uc3QgciA9IGNvcnJlcihhcHJlbmRpemFqZVIsIGNhbmliYWxpemFjaW9uUik7XG4gIGNvbnN0IGJhc2UgPSBjb3JyZXIoMC4xLCAyLjUpO1xuICBjb25zdCB2ID0gci52YXJpYWJsZXMsIGIgPSBiYXNlLnZhcmlhYmxlcztcbiAgY29uc3QgdGFzYSA9IChzLCBrKSA9PiAocy5wdWVzdGFfZm5jZXJba10gLSBzLnJldGlyb3NfZm5jZXJba10pIC8gcy5jYXBhY2lkYWRfZm5jZXJba107XG4gIGNvbnN0IGc0ID0gdGFzYSh2LCBlbig0KSksIGs0ID0gdi5jYXBhY2lkYWRfZm5jZXJbZW4oNCldO1xuICBjb25zdCBleHRyYXBvbGFkYSA9IHIudGllbXBvLmZpbHRlcigodCkgPT4gdCA+PSA0ICYmIHQgPD0gMjApLm1hcCgodCkgPT4gKHt0LCBLOiBrNCAqIE1hdGguZXhwKGc0ICogKHQgLSA0KSkgLyAxMDAwfSkpO1xuICBjb25zdCBmaWxhcyA9IHIudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBLOiB2LmNhcGFjaWRhZF9mbmNlcltrXSAvIDEwMDAsIGc6IHRhc2Eodiwgayl9KSk7XG4gIGNvbnN0IGZpbGFzQmFzZSA9IGJhc2UudGllbXBvLm1hcCgodCwgaykgPT4gKHt0LCBLOiBiLmNhcGFjaWRhZF9mbmNlcltrXSAvIDEwMDAsIGc6IHRhc2EoYiwgayl9KSk7XG4gIGNvbnN0IGNhcGFjaWRhZGVzID0gWy4uLmZpbGFzLCAuLi5maWxhc0Jhc2UsIC4uLmV4dHJhcG9sYWRhXS5tYXAoKGQpID0+IGQuSyk7XG4gIGNvbnN0IHRhc2FzID0gWy4uLmZpbGFzLCAuLi5maWxhc0Jhc2VdLmZpbHRlcigoZCkgPT4gZC50ID49IDAuNSkubWFwKChkKSA9PiBkLmcpO1xuICByZXR1cm4ge1xuICAgIGZpbGFzLCBiYXNlOiBmaWxhc0Jhc2UsIGV4dHJhcG9sYWRhLFxuICAgIGRvbWluaW9LOiBbMC44ICogTWF0aC5taW4oLi4uY2FwYWNpZGFkZXMpLCAxLjI1ICogTWF0aC5tYXgoLi4uY2FwYWNpZGFkZXMpXSxcbiAgICBkb21pbmlvRzogWzAsIDEuMSAqIE1hdGgubWF4KC4uLnRhc2FzKV0sXG4gICAgazEwOiB2LmNhcGFjaWRhZF9mbmNlcltlbigxMCldLCBrMjA6IHYuY2FwYWNpZGFkX2ZuY2VyW2VuKDIwKV0sIGs0MDogdi5jYXBhY2lkYWRfZm5jZXJbZW4oNDApXSxcbiAgICBnNCwgZzQwOiB0YXNhKHYsIGVuKDQwKSksIGV4dHJhcG9sYWRhMjA6IGV4dHJhcG9sYWRhLmF0KC0xKS5LICogMTAwMCxcbiAgICBwYXJ0aWNpcGFjaW9uNDA6IHYucGFydGljaXBhY2lvbl9hcHJvdmVjaGFkYV9mbmNlcltlbig0MCldLCBjb3N0bzQwOiB2LmNvc3RvX2ZuY2VyW2VuKDQwKV0sXG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDc2MCksIGhlaWdodDogMjYwLCBtYXJnaW5MZWZ0OiA2MCxcbiAgeDoge2xhYmVsOiBcIlRpZW1wbyBbYcOxb3NdXCIsIGRvbWFpbjogWzAsIDQwXX0sXG4gIHk6IHtsYWJlbDogXCJDYXBhY2lkYWQgRk5DRVIgW0dXLCBlc2NhbGEgbG9nXVwiLCB0eXBlOiBcImxvZ1wiLCBkb21haW46IHJlZnVlcnpvUi5kb21pbmlvSywgZ3JpZDogdHJ1ZSwgdGlja0Zvcm1hdDogZm9ybWF0b051bWVybygxKX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lKHJlZnVlcnpvUi5leHRyYXBvbGFkYSwge3g6IFwidFwiLCB5OiBcIktcIiwgc3Ryb2tlOiBDT0xPUkVTLmFtYmFyLCBzdHJva2VEYXNoYXJyYXk6IFwiMiAzXCIsIHN0cm9rZVdpZHRoOiAxLjh9KSxcbiAgICBQbG90LmxpbmUocmVmdWVyem9SLmJhc2UsIHt4OiBcInRcIiwgeTogXCJLXCIsIHN0cm9rZTogXCIjOUU5RTlFXCIsIHN0cm9rZURhc2hhcnJheTogXCI1IDRcIiwgc3Ryb2tlV2lkdGg6IDEuNH0pLFxuICAgIFBsb3QubGluZShyZWZ1ZXJ6b1IuZmlsYXMsIHt4OiBcInRcIiwgeTogXCJLXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi40fSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAyMjAsIG1hcmdpbkxlZnQ6IDYwLFxuICB4OiB7bGFiZWw6IFwiVGllbXBvIFthw7Fvc11cIiwgZG9tYWluOiBbMCwgNDBdfSxcbiAgeToge2xhYmVsOiBcIlRhc2EgZnJhY2Npb25hbCBbMS9hw7FvXVwiLCBkb21haW46IHJlZnVlcnpvUi5kb21pbmlvRywgZ3JpZDogdHJ1ZSwgdGlja0Zvcm1hdDogKGQpID0+IGZvcm1hdG9Qb3JjZW50YWplKGQsIDApfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVZKFswLjAzXSwge3N0cm9rZTogQ09MT1JFUy5ncmlzLCBzdHJva2VEYXNoYXJyYXk6IFwiNCAzXCJ9KSxcbiAgICBQbG90LnRleHQoW3t0OiAzOSwgZzogMC4wM31dLCB7eDogXCJ0XCIsIHk6IFwiZ1wiLCB0ZXh0OiAoKSA9PiBcImNyZWNpbWllbnRvIGRlIGxhIGRlbWFuZGFcIiwgdGV4dEFuY2hvcjogXCJlbmRcIiwgZHk6IC03LCBmaWxsOiBDT0xPUkVTLmdyaXMsIGZvbnRTaXplOiAxMX0pLFxuICAgIFBsb3QubGluZShyZWZ1ZXJ6b1IuYmFzZSwge3g6IFwidFwiLCB5OiBcImdcIiwgc3Ryb2tlOiBcIiM5RTlFOUVcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjUgNFwiLCBzdHJva2VXaWR0aDogMS40fSksXG4gICAgUGxvdC5saW5lKHJlZnVlcnpvUi5maWxhcywge3g6IFwidFwiLCB5OiBcImdcIiwgc3Ryb2tlOiBDT0xPUkVTLmF6dWwsIHN0cm9rZVdpZHRoOiAyLjJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5DYXBhY2lkYWQgRk5DRVIgZW4gbG9zIGHDsW9zIDEwLCAyMCB5IDQwPGI+JHtmb3JtYXRvTnVtZXJvKDApKHJlZnVlcnpvUi5rMTApfSDCtyAke2Zvcm1hdG9OdW1lcm8oMCkocmVmdWVyem9SLmsyMCl9IMK3ICR7Zm9ybWF0b051bWVybygwKShyZWZ1ZXJ6b1IuazQwKX0gTVc8L2I+PC9kaXY+XG4gIDxkaXY+VGFzYSBmcmFjY2lvbmFsIGVuIGVsIGHDsW8gNCB5IGVuIGVsIGHDsW8gNDA8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKHJlZnVlcnpvUi5nNCwgMSl9IMK3ICR7Zm9ybWF0b1BvcmNlbnRhamUocmVmdWVyem9SLmc0MCwgMSl9IGFudWFsPC9iPjwvZGl2PlxuICA8ZGl2PkHDsW8gMjAgZXh0cmFwb2xhbmRvIGxhIHRhc2EgZGVsIGHDsW8gNDxiPiR7Zm9ybWF0b051bWVybygwKShyZWZ1ZXJ6b1IuZXh0cmFwb2xhZGEyMCl9IE1XPC9iPjwvZGl2PlxuICA8ZGl2PlBhcnRpY2lwYWNpw7NuIGRlIGxhIGVuZXJnw61hIEZOQ0VSIGFwcm92ZWNoYWRhIGVuIGVsIGHDsW8gNDA8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKHJlZnVlcnpvUi5wYXJ0aWNpcGFjaW9uNDAsIDEpfSBkZSBsYSBkZW1hbmRhPC9iPjwvZGl2PlxuICA8ZGl2PkNvc3RvIEZOQ0VSIGVuIGVsIGHDsW8gNDA8Yj4ke2Zvcm1hdG9OdW1lcm8oMSkocmVmdWVyem9SLmNvc3RvNDApfSBDT1Ava1doPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdjb250YWdpb0wnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYXByZW5kaXphamVSJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NhbmliYWxpemFjaW9uUicpIn1dfQ==
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
@@ -1806,14 +1974,30 @@ window._ojs.runtime.interpretFromScriptTags();
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>MISE · Universidad de los Andes · Systems Analytics</p>
+<p>MISE · Universidad de los Andes · Systems Analytics. ¿Vio un error o algo confuso? Cuéntelo en el foro del curso en Bloque Neón, con el título de la página.</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-<p>Material docente con datos sintéticos con fines didácticos cuando así se indica.</p>
+<p>Datos sintéticos con fines didácticos cuando así se indica.</p>
 </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../recursos.html" aria-current="page">
+<p>Recursos</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../glosario.html">
+<p>Glosario</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../referencias.html">
+<p>Referencias</p>
+</a>
+  </li>  
+</ul>
+    </div>
   </div>
 </footer>
 <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
