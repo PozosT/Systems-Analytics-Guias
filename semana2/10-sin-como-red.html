@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Las herramientas de la semana reunidas en el Laboratorio 1: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, salida de subestación y cascada), la eólica de La Guajira y los límites de la topología, con un flujo DC de cuatro barras resuelto a mano.">
+<meta name="description" content="Las herramientas de la semana reunidas en un solo análisis: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, salida de subestación y cascada), la eólica de La Guajira y los límites de la topología, con un flujo DC de cuatro barras resuelto a mano.">
 
-<title>El SIN como red: el Laboratorio 1 – Systems Analytics · Guías de autoestudio</title>
+<title>El SIN como red – Systems Analytics · Guías de autoestudio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<meta name="guias-mise:fecha" content="2 de octubre de 2026">
+<meta name="guias-mise:fecha" content="9 de noviembre de 2026">
 
   <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -174,7 +174,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/10-sin-como-red.html">El SIN como red: el Laboratorio 1</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/10-sin-como-red.html">El SIN como red</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -342,7 +342,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana2/10-sin-como-red.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">El SIN como red: el Laboratorio 1</span></a>
+ <span class="menu-text">El SIN como red</span></a>
   </div>
 </li>
       </ul>
@@ -555,7 +555,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">El arco del Laboratorio 4</span></a>
+ <span class="menu-text">El arco completo: del modelo a la recomendación</span></a>
   </div>
 </li>
       </ul>
@@ -678,7 +678,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../recursos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+ <span class="menu-text">Recursos: notas y Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -706,7 +706,7 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
-  <li><a href="#la-intuición-el-laboratorio-en-siete-pasos" id="toc-la-intuición-el-laboratorio-en-siete-pasos" class="nav-link" data-scroll-target="#la-intuición-el-laboratorio-en-siete-pasos">2. La intuición: el laboratorio en siete pasos</a></li>
+  <li><a href="#la-intuición-el-análisis-en-siete-pasos" id="toc-la-intuición-el-análisis-en-siete-pasos" class="nav-link" data-scroll-target="#la-intuición-el-análisis-en-siete-pasos">2. La intuición: el análisis en siete pasos</a></li>
   <li><a href="#tres-preguntas-tres-herramientas" id="toc-tres-preguntas-tres-herramientas" class="nav-link" data-scroll-target="#tres-preguntas-tres-herramientas">3. Tres preguntas, tres herramientas</a></li>
   <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
   <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
@@ -720,15 +720,15 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 <a class="saltar-contenido" href="#quarto-document-content">Saltar al contenido</a><noscript><div class="aviso-sin-js" role="note"><strong>Esta página funciona mejor con JavaScript.</strong> Sin él, el texto y todos los pasos se leen completos, pero las fórmulas aparecen en notación LaTeX, los simuladores no corren y las preguntas muestran sus pistas sin esperar su respuesta.</div></noscript>
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/10-sin-como-red.html">El SIN como red: el Laboratorio 1</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../semana2/index.html">Semana 2 · Redes I</a></li><li class="breadcrumb-item"><a href="../semana2/10-sin-como-red.html">El SIN como red</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">El SIN como red: el Laboratorio 1</h1>
+<h1 class="title">El SIN como red</h1>
 <p class="subtitle lead">Semana 2 · Concepto 10 de 10</p>
 </div>
 
 <div>
   <div class="description">
-    Las herramientas de la semana reunidas en el Laboratorio 1: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, salida de subestación y cascada), la eólica de La Guajira y los límites de la topología, con un flujo DC de cuatro barras resuelto a mano.
+    Las herramientas de la semana reunidas en un solo análisis: los siete pasos del análisis del sistema de transmisión estilizado, las tres respuestas para Primavera (conectividad, salida de subestación y cascada), la eólica de La Guajira y los límites de la topología, con un flujo DC de cuatro barras resuelto a mano.
   </div>
 </div>
 
@@ -775,7 +775,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 85 a 95 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, el laboratorio en siete pasos, las tres respuestas para Primavera, los tres ejemplos con el tablero (son el Laboratorio 1), los errores comunes con el flujo de cuatro barras, las preguntas y el resumen, unos 65 min; amplían: la exploración libre del tablero, el código plegado y los ejercicios</span> <span class="dato">📚 Requiere las páginas 1 a 9 de la semana, en especial <a href="../semana2/08-robustez-n1.html">robustez y criterio N-1</a> y <a href="../semana2/09-cascadas.html">fallas en cascada</a></span> <span class="dato">🧪 Es el Laboratorio 1 completo y la base de la sección 3 del informe</span></p>
+<p><span class="dato">⏱ 85 a 95 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, el análisis en siete pasos, las tres respuestas para Primavera, los tres ejemplos con el tablero, los errores comunes con el flujo de cuatro barras, las preguntas y el resumen, unos 65 min; amplían: la exploración libre del tablero, el código plegado y los ejercicios</span> <span class="dato">📚 Requiere las páginas 1 a 9 de la semana, en especial <a href="../semana2/08-robustez-n1.html">robustez y criterio N-1</a> y <a href="../semana2/09-cascadas.html">fallas en cascada</a></span> <span class="dato">🧪 Es la base de la sección 3 del informe</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -796,10 +796,10 @@ window.Quarto = {
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
 <p>La semana empezó con una pregunta de junta directiva: <strong>¿qué pasaría si falla la subestación más conectada del país?</strong> Había dos intuiciones en competencia. Una decía que sería un desastre, porque por ahí pasa todo. La otra decía que no pasaría mucho, porque una subestación con tantas líneas tiene rodeos por todos lados.</p>
-<p>Esta página responde la pregunta con todo lo aprendido, sobre el sistema de transmisión estilizado que usa el Laboratorio 1: la red en servicio en 2026, con 100 subestaciones y 134 líneas. La respuesta final le da la razón a las dos intuiciones, cada una en su pregunta, y muestra que, con cada una de las tres herramientas, la subestación que más daño hace es otra.</p>
+<p>Esta página responde la pregunta con todo lo aprendido, sobre el sistema de transmisión estilizado de la semana: la red en servicio en 2026, con 100 subestaciones y 134 líneas. La respuesta final le da la razón a las dos intuiciones, cada una en su pregunta, y muestra que, con cada una de las tres herramientas, la subestación que más daño hace es otra.</p>
 </section>
-<section id="la-intuición-el-laboratorio-en-siete-pasos" class="level2">
-<h2 class="anchored" data-anchor-id="la-intuición-el-laboratorio-en-siete-pasos">2. La intuición: el laboratorio en siete pasos</h2>
+<section id="la-intuición-el-análisis-en-siete-pasos" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-el-análisis-en-siete-pasos">2. La intuición: el análisis en siete pasos</h2>
 <div class="pasos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del archivo de datos a la respuesta</span>
@@ -909,8 +909,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="san-carlos-con-el-tablero-del-laboratorio" class="level3">
-<h3 class="anchored" data-anchor-id="san-carlos-con-el-tablero-del-laboratorio">San Carlos con el tablero del laboratorio</h3>
+<section id="san-carlos-con-el-tablero" class="level3">
+<h3 class="anchored" data-anchor-id="san-carlos-con-el-tablero">San Carlos con el tablero</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Las tres respuestas para la subestación con más intermediación</span>
@@ -934,7 +934,7 @@ window.Quarto = {
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tablero del Laboratorio 1</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tablero del SIN como red</span>
 </div>
 <p>Elija la subestación que sale, la tolerancia de la cascada y si la eólica de La Guajira está conectada. Empiece con San Carlos y <span class="math inline">\alpha = 0{,}5</span> y compare con su predicción.</p>
 <div class="cell">
@@ -1073,7 +1073,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Grafo estilizado <code>mise_sd.redes.stn_estilizado()</code> de la red en servicio en 2026, con y sin <code>incluir_eolica_guajira=True</code> (Windpeshi, 205 MW, y Colectora, 1 050 MW, ambas conectadas a Cuestecitas, más el tramo Cuestecitas–La Loma de la obra Colectora); demanda y generación sintéticas con fines didácticos. Métricas calculadas en el navegador con la réplica en JavaScript de <code>mise_sd.redes</code>. Cargas de la cascada topológicas, no flujos de potencia; la demanda de las islas con generación suficiente es una cota superior de lo que podría seguir en servicio.</p>
+<p>Grafo estilizado del STN, con la red en servicio en 2026, con y sin la eólica de La Guajira (Windpeshi, 205 MW, y Colectora, 1 050 MW, ambas conectadas a Cuestecitas, más el tramo Cuestecitas–La Loma de la obra Colectora); demanda y generación sintéticas con fines didácticos. Métricas calculadas en el navegador. Cargas de la cascada topológicas, no flujos de potencia; la demanda de las islas con generación suficiente es una cota superior de lo que podría seguir en servicio.</p>
 </div>
 </div>
 <div class="pasos caja">
@@ -1200,7 +1200,7 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="5f2de851" class="cell" data-execution_count="2">
+<div id="6618c4f0" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>lineas <span class="op">=</span> [(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.10</span>), (<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.10</span>), (<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.40</span>), (<span class="dv">0</span>, <span class="dv">3</span>, <span class="fl">0.20</span>), (<span class="dv">3</span>, <span class="dv">2</span>, <span class="fl">0.20</span>)]  <span class="co"># Planta 0, Norte 1, Ciudad 2, Sur 3</span></span>
@@ -1342,7 +1342,7 @@ Tras la salida [MW]: [  0.   0. 150. 150. 150.]</code></pre>
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Qué necesita un informe para que las cifras de este laboratorio sirvan a un operador?</p>
+<p>¿Qué necesita un informe para que las cifras de este análisis sirvan a un operador?</p>
 <div class="opcion">
 <p>Calcular más centralidades sobre el mismo grafo.</p>
 <p><span class="porque">Todas las centralidades son topológicas; revise los límites de la sección 5.</span></p>
@@ -1430,12 +1430,12 @@ Tras la salida [MW]: [  0.   0. 150. 150. 150.]</code></pre>
 </section>
 <section id="del-concepto-al-proyecto" class="level2">
 <h2 class="anchored" data-anchor-id="del-concepto-al-proyecto">7. Del concepto al proyecto</h2>
-<p>La semana empezó con una pregunta de junta directiva y termina con tres respuestas verificadas. La tabla conecta cada concepto con el Laboratorio 1, con el esquema de redes que su grupo entrega esta semana y con el informe final.</p>
+<p>La semana empezó con una pregunta de junta directiva y termina con tres respuestas verificadas. La tabla conecta cada concepto con el paso del análisis en que se usa, con el esquema de redes que su grupo entrega esta semana y con el informe final.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>concepto</th>
-<th>en el Laboratorio 1</th>
+<th>en el análisis del SIN</th>
 <th>en el esquema de redes</th>
 <th style="text-align: center;">en el informe final</th>
 </tr>
@@ -1500,7 +1500,7 @@ Tras la salida [MW]: [  0.   0. 150. 150. 150.]</code></pre>
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>El Laboratorio 1 tiene <strong>siete pasos</strong>: cargar y verificar, visualizar, centralidades, grado y modelos, salidas de subestaciones y de líneas, cascada, y azar frente a ataque.</li>
+<li>El análisis del SIN como red tiene <strong>siete pasos</strong>: cargar y verificar, visualizar, centralidades, grado y modelos, salidas de subestaciones y de líneas, cascada, y azar frente a ataque.</li>
 <li>Para Primavera, <strong>tres respuestas compatibles</strong>: el 96 % sigue unido; su salida se lleva 40 MW propios y aísla 60 MW de demanda y 740 MW de generación; con <span class="math inline">\alpha = 0{,}5</span> la cascada deja <span class="math inline">G = 0{,}48</span> y parte la red en dos mitades, la mayor con 6 760 MW de demanda y solo 6 034 MW de generación.</li>
 <li>Con cada herramienta, la <strong>subestación más dañina es otra</strong>: la salida más severa es la de Sabanalarga y el peor disparador de cascada, Porce III (<span class="math inline">G = 0{,}28</span>). El informe responde por la subestación que pregunta el decisor y por la que más daño hace con cada herramienta.</li>
 <li>Que una salida <strong>no aísle a nadie no descarta</strong> una cascada: Norte, en ocho subestaciones, y San Carlos, en el sistema, lo muestran.</li>
@@ -1509,7 +1509,7 @@ Tras la salida [MW]: [  0.   0. 150. 150. 150.]</code></pre>
 <li>La topología prioriza dónde mirar; los megavatios para decidir exigen <strong>flujos de carga</strong> y datos reales.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «El SIN como red» de las notas de la semana 2 trae el código de cada paso del laboratorio y la figura de la cascada y de la eólica guajira. La semana 3 pasa de la estructura de la red a lo que se difunde por ella.</p>
+<p><strong>Para profundizar.</strong> La sección «El SIN como red» de las notas de la semana 2 trae el código de cada paso del análisis y la figura de la cascada y de la eólica guajira. La semana 3 pasa de la estructura de la red a lo que se difunde por ella.</p>
 
 
 </section>

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla del Laboratorio 4 con seis estrategias, los cuatro mundos de la matriz y la sequía de diseño contra la que asegura el Cargo por Confiabilidad.">
+<meta name="description" content="Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla de robustez de la semana con seis estrategias, los cuatro mundos de la matriz y la sequía de diseño contra la que asegura el Cargo por Confiabilidad.">
 
 <title>Robustez y arrepentimiento máximo – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<meta name="guias-mise:fecha" content="2 de octubre de 2026">
+<meta name="guias-mise:fecha" content="9 de noviembre de 2026">
 
   <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -342,7 +342,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana2/10-sin-como-red.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">El SIN como red: el Laboratorio 1</span></a>
+ <span class="menu-text">El SIN como red</span></a>
   </div>
 </li>
       </ul>
@@ -555,7 +555,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">El arco del Laboratorio 4</span></a>
+ <span class="menu-text">El arco completo: del modelo a la recomendación</span></a>
   </div>
 </li>
       </ul>
@@ -678,7 +678,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../recursos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+ <span class="menu-text">Recursos: notas y Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -727,7 +727,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla del Laboratorio 4 con seis estrategias, los cuatro mundos de la matriz y la sequía de diseño contra la que asegura el Cargo por Confiabilidad.
+    Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla de robustez de la semana con seis estrategias, los cuatro mundos de la matriz y la sequía de diseño contra la que asegura el Cargo por Confiabilidad.
   </div>
 </div>
 
@@ -766,7 +766,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 90 a 95 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la idea clave, la intuición, la definición y el protocolo, el ejemplo ●○○, el ejemplo ●●● hasta la tabla de cinco mundos verificada, que es el centro del Laboratorio 4, el error «Calcular el arrepentimiento por fila», las tres primeras preguntas y el resumen, unos 40 min; amplían: el ejemplo ●●○ con su simulador, la segunda predicción del ●●● con la lectura de por qué la sequía no voltea la tabla, la lectura de consultor, los otros cinco errores, las preguntas 4 a 6, el código y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana5/06-incertidumbre-profunda.html">incertidumbre profunda</a> y <a href="../semana5/07-escenarios.html">diseño de escenarios</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 4 y en el informe final</span></p>
+<p><span class="dato">⏱ 90 a 95 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la idea clave, la intuición, la definición y el protocolo, el ejemplo ●○○, el ejemplo ●●● hasta la tabla de cinco mundos verificada, el error «Calcular el arrepentimiento por fila», las tres primeras preguntas y el resumen, unos 40 min; amplían: el ejemplo ●●○ con su simulador, la segunda predicción del ●●● con la lectura de por qué la sequía no voltea la tabla, la lectura de consultor, los otros cinco errores, las preguntas 4 a 6 y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana5/06-incertidumbre-profunda.html">incertidumbre profunda</a> y <a href="../semana5/07-escenarios.html">diseño de escenarios</a></span> <span class="dato">🧪 Se aplica en el informe final</span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -786,7 +786,7 @@ window.Quarto = {
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>El informe final del curso exige una tabla de robustez con al menos cuatro escenarios y tres estrategias, y recomendaciones con condiciones de validez. En el Laboratorio 4, seis estrategias de política se enfrentan a los cuatro mundos de la matriz de la página anterior y a un quinto, la <strong>sequía de diseño</strong>: la hidrología crítica con que se calcula la energía firme del Cargo por Confiabilidad, el mecanismo que Colombia paga desde 2006 para que haya energía suficiente en condiciones críticas de abastecimiento (Res. CREG 071 de 2006). No hay probabilidades para esos mundos; por eso son escenarios. <strong>¿Qué estrategia recomendar si no sabemos qué mundo llegará, y qué le pasa a la recomendación cuando la tabla deja por fuera el mundo contra el que asegura una de las políticas?</strong></p>
+<p>El informe final del curso exige una tabla de robustez con al menos cuatro escenarios y tres estrategias, y recomendaciones con condiciones de validez. En esta página, seis estrategias de política se enfrentan a los cuatro mundos de la matriz de la página anterior y a un quinto, la <strong>sequía de diseño</strong>: la hidrología crítica con que se calcula la energía firme del Cargo por Confiabilidad, el mecanismo que Colombia paga desde 2006 para que haya energía suficiente en condiciones críticas de abastecimiento (Res. CREG 071 de 2006). No hay probabilidades para esos mundos; por eso son escenarios. <strong>¿Qué estrategia recomendar si no sabemos qué mundo llegará, y qué le pasa a la recomendación cuando la tabla deja por fuera el mundo contra el que asegura una de las políticas?</strong></p>
 </section>
 <section id="la-intuición-el-paraguas-con-números" class="level2">
 <h2 class="anchored" data-anchor-id="la-intuición-el-paraguas-con-números">2. La intuición: el paraguas, con números</h2>
@@ -816,8 +816,8 @@ window.Quarto = {
 <p><strong>Compare con el peor caso.</strong> El criterio <strong>maximin</strong> mira el costo absoluto: el peor caso de llevarlo es 2 y el de no llevarlo, 8. También elige llevarlo. Con una asimetría tan grande, los dos criterios coinciden.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s5-08-arrepentimiento-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-08-arrepentimiento-6.svg" class="img-fluid" loading="lazy" alt="En el Laboratorio 4, seis estrategias frente a los cuatro mundos de la matriz y una sequía de diseño, con los mismos pasos; queda abierta la pregunta de qué cambia al agregar la sequía."></a></p>
-<p><strong>Pase al sistema eléctrico.</strong> La tabla del Laboratorio 4 tiene seis filas, las cuatro columnas de la matriz y una quinta, la sequía de diseño, y se resuelve con los mismos pasos. Qué cambia al agregar esa columna es la pregunta del ejemplo avanzado.</p>
+<p><a href="../diagramas/svg/s5-08-arrepentimiento-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-08-arrepentimiento-6.svg" class="img-fluid" loading="lazy" alt="En el sistema eléctrico, seis estrategias frente a los cuatro mundos de la matriz y una sequía de diseño, con los mismos pasos; queda abierta la pregunta de qué cambia al agregar la sequía."></a></p>
+<p><strong>Pase al sistema eléctrico.</strong> La tabla de robustez de la semana tiene seis filas, las cuatro columnas de la matriz y una quinta, la sequía de diseño, y se resuelve con los mismos pasos. Qué cambia al agregar esa columna es la pregunta del ejemplo avanzado.</p>
 </div>
 </div>
 </section>
@@ -832,7 +832,7 @@ window.Quarto = {
 <p>El criterio <strong>maximin</strong> elige la estrategia con el mejor peor caso, <span class="math inline">\arg\min_e \max_s C(e, s)</span>. El criterio <strong>minimax regret</strong> elige la de menor arrepentimiento máximo, <span class="math inline">\arg\min_e \max_s R(e, s)</span>. Ninguno usa probabilidades; el primero mira el desempeño absoluto y el segundo, el relativo a lo alcanzable en cada mundo.</p>
 </div>
 <p>Por construcción, todo arrepentimiento es mayor o igual que cero: si una tabla muestra uno negativo, se restó el mínimo equivocado. El peor caso de una estrategia depende solo de su fila. El arrepentimiento, en cambio, depende de las demás filas, porque el campeón de cada columna sale del <strong>menú</strong> de estrategias evaluadas; agregar una estrategia que gane en algún mundo puede cambiar el veredicto del minimax regret. Y los dos criterios dependen de las <strong>columnas</strong>: una estrategia que es un seguro solo muestra su valor si alguna columna trae el siniestro contra el que asegura.</p>
-<p>El protocolo del curso, que el Laboratorio 4 ejecuta y el informe final replica, tiene seis pasos:</p>
+<p>El protocolo del curso, que el ejemplo avanzado ejecuta y el informe final replica, tiene seis pasos:</p>
 <ol type="1">
 <li><strong>Métrica</strong>: una sola cifra por celda, con unidades y componentes a la vista.</li>
 <li><strong>Escenarios completos</strong>: la matriz de incertidumbres profundas y, si alguna estrategia es un seguro, la cola contra la que asegura.</li>
@@ -1126,7 +1126,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Función <code>mise_sd.modelos.criterios_robustez</code>; costos ilustrativos. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Un empate se resuelve a favor de la fila de arriba.</p>
+<p>Criterios de robustez calculados en el navegador; costos ilustrativos. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Un empate se resuelve a favor de la fila de arriba.</p>
 </div>
 </div>
 <div class="pasos caja">
@@ -1147,13 +1147,13 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="la-tabla-del-laboratorio-4" class="level3">
-<h3 class="anchored" data-anchor-id="la-tabla-del-laboratorio-4">La tabla del Laboratorio 4</h3>
+<section id="la-tabla-de-robustez-de-la-semana" class="level3">
+<h3 class="anchored" data-anchor-id="la-tabla-de-robustez-de-la-semana">La tabla de robustez de la semana</h3>
 <div class="ejemplo caja" data-nivel="avanzado">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Seis estrategias, cuatro mundos y una sequía de diseño</span>
 </div>
-<p><strong>Planteamiento.</strong> Enfrente las seis estrategias del Laboratorio 4 a los mundos de la página anterior con el modelo de la semana y 40 años de horizonte (año 0 ≈ 2015). Cada estrategia es un paquete de política sostenido los 40 años:</p>
+<p><strong>Planteamiento.</strong> Enfrente las seis estrategias de la semana a los mundos de la página anterior con el modelo de la semana y 40 años de horizonte (año 0 ≈ 2015). Cada estrategia es un paquete de política sostenido los 40 años:</p>
 <ul>
 <li><strong>mercado solo</strong>: mercado de solo energía, sin Cargo por Confiabilidad ni subastas;</li>
 <li><strong>seguro CxC</strong>: Cargo por Confiabilidad como opción, con un cargo administrado de 35 COP/kWh del modelo, 0,23 del precio de referencia, unos 16,5 USD/MWh de 2019 (calibrado con el cargo de la subasta de 2019 [POR VERIFICAR]);</li>
@@ -1299,7 +1299,7 @@ window.Quarto = {
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tabla de robustez del Laboratorio 4</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tabla de robustez de la semana</span>
 </div>
 <p>Con los valores iniciales, compare las tablas con su primera predicción. Después: (1) pase a los cuatro mundos y vuelva a los cinco, mirando qué columna cambia el veredicto y cuál solo agrega información; (2) suba el valor de la energía no servida hasta que cambie la estrategia más barata en la sequía, luego hasta que cambie minimax regret y, al final, hasta que cambie maximin, y anote los tres umbrales; (3) vuelva a 2 100 y active la exigencia de confiabilidad, primero con cinco mundos y después con cuatro.</p>
 <div class="cell">
@@ -1415,7 +1415,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Modelo estilizado <code>mise_sd.modelos.mercado_con_politicas</code> con los mundos, las estrategias y la métrica del Laboratorio 4 (módulo <code>escenarios_lab4</code> del curso). El navegador corre las 30 celdas con RK4 y paso de 0,05 años; Python, con RK45 y salida cada 0,05 años; las dos tablas coinciden a una centésima. Precios en la escala del modelo (150 COP/kWh es la bolsa con hidrología media); datos sintéticos con fines didácticos. Verde: el campeón de cada mundo. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Rojo: racionamiento por encima del 0,1 % de la demanda. El valor de la energía no servida está por verificar con la UPME.</p>
+<p>Modelo estilizado del mercado con políticas, con los cinco mundos, las seis estrategias y la métrica de costo para la demanda. El navegador corre las 30 celdas con RK4 y paso de 0,05 años; una integración de referencia con RK45 y salida cada 0,05 años da la misma tabla a una centésima. Precios en la escala del modelo (150 COP/kWh es la bolsa con hidrología media); datos sintéticos con fines didácticos. Verde: el campeón de cada mundo. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Rojo: racionamiento por encima del 0,1 % de la demanda. El valor de la energía no servida está por verificar con la UPME.</p>
 </div>
 </div>
 <div class="pasos caja">
@@ -1662,54 +1662,6 @@ window.Quarto = {
 <p><strong>Redacte la recomendación.</strong> «Contrate FNCER por subasta, 300 MW al año: es la estrategia más barata en los cinco mundos explorados, incluida la sequía de diseño. Si el país no acepta racionar en una sequía como la que define la energía firme, acompáñela de un mecanismo de firmeza, porque sola raciona hasta el 2,8 % de la demanda en esa sequía. Hay dos opciones que cuestan entre 1,8 y 4,7 COP/kWh más según el mundo: agregar la subasta de energía firme (el paquete, con el mejor peor caso) o un cargo bajo de unos 7 USD/MWh (con el menor arrepentimiento). Revise la decisión si cambian la frecuencia y la severidad de El Niño, el margen de energía firme proyectado (ENFICC sobre demanda) o el valor que el país asigna a la energía no servida. Estas conclusiones valen dentro de los límites del modelo: precios sin intervención, inversionistas neutrales al riesgo, segmento firme agregado y El Niño periódico.»</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="La tabla en Python">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>La tabla en Python
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div id="4156e973" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd.modelos <span class="im">import</span> criterios_robustez</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># lab4 es el módulo escenarios_lab4 del curso: mundos, estrategias y métrica</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>estrategias, mundos <span class="op">=</span> <span class="bu">list</span>(lab4.ESTRATEGIAS), <span class="bu">list</span>(lab4.MUNDOS)   <span class="co"># 6 estrategias, 5 mundos</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>corridas <span class="op">=</span> {(e, m): lab4.correr(m, e) <span class="cf">for</span> e <span class="kw">in</span> estrategias <span class="cf">for</span> m <span class="kw">in</span> mundos}</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>costos <span class="op">=</span> np.array([[lab4.costo_para_demanda(corridas[e, m]) <span class="cf">for</span> m <span class="kw">in</span> mundos] <span class="cf">for</span> e <span class="kw">in</span> estrategias])</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>deficit <span class="op">=</span> np.array([lab4.deficit_maximo(corridas[e, lab4.SEQUIA_DE_DISENO]) <span class="cf">for</span> e <span class="kw">in</span> estrategias])</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> veredicto(filas, columnas, titulo):</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> criterios_robustez(costos[np.ix_(filas, columnas)])</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>titulo<span class="sc">}</span><span class="ss">: maximin → </span><span class="sc">{</span>estrategias[filas[c[<span class="st">'maximin'</span>]]]<span class="sc">}</span><span class="ss">; "</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"minimax regret → </span><span class="sc">{</span>estrategias[filas[c[<span class="st">'minimax_regret'</span>]]]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>todas, admisibles <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">6</span>)), [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6</span>) <span class="cf">if</span> deficit[i] <span class="op">&lt;=</span> <span class="fl">0.001</span>]</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>veredicto(todas, [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], <span class="st">"cuatro mundos"</span>)</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>veredicto(todas, [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>], <span class="st">"cinco mundos"</span>)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>veredicto(admisibles, [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>], <span class="st">"cinco mundos, sin racionar en la sequía"</span>)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e, fila, d <span class="kw">in</span> <span class="bu">zip</span>(estrategias, costos, deficit):</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>e<span class="sc">:22s}</span><span class="ss">"</span>, <span class="st">" "</span>.join(<span class="ss">f"</span><span class="sc">{</span>c<span class="sc">:7.2f}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> fila), <span class="ss">f"| raciona </span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> d<span class="sc">:.2f}</span><span class="ss"> %"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>cuatro mundos: maximin → impulso FNCER; minimax regret → impulso FNCER
-cinco mundos: maximin → impulso FNCER; minimax regret → impulso FNCER
-cinco mundos, sin racionar en la sequía: maximin → paquete; minimax regret → cargo 15 + FNCER 300
-mercado solo            151.29  163.28  151.39  163.29  148.68 | raciona 3.73 %
-seguro CxC              162.34  175.01  162.54  175.17  156.76 | raciona 0.00 %
-CxC por subasta         154.18  165.32  154.18  165.26  152.11 | raciona 0.84 %
-impulso FNCER           148.57  161.91  148.97  162.08  147.47 | raciona 2.82 %
-paquete                 153.17  164.75  153.31  164.79  151.87 | raciona 0.05 %
-cargo 15 + FNCER 300    152.74  166.50  153.21  166.75  149.24 | raciona 0.06 %</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="errores-comunes" class="level2">
@@ -1894,7 +1846,7 @@ cargo 15 + FNCER 300    152.74  166.50  153.21  166.75  149.24 | raciona 0.06 %<
 <h4 class="anchored" data-anchor-id="ejercicio-1-un-año-extremo">Ejercicio 1 ●○○ · Un año extremo</h4>
 <p>Agregue a la tabla del comercializador una cuarta hidrología, extrema, donde la bolsa cuesta 500 y el contrato sigue en 180 (la mezcla paga 340). Recalcule los dos criterios. ¿Cambió algún veredicto? ¿Qué enseña sobre agregar escenarios severos?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1903,19 +1855,19 @@ cargo 15 + FNCER 300    152.74  166.50  153.21  166.75  149.24 | raciona 0.06 %<
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>En la columna extrema el campeón es C (180); los arrepentimientos son 0 para C, 320 para B y 160 para M. Los máximos quedan en 60 para C (por la columna húmeda), 320 para B y 160 para M: minimax regret elige C con más ventaja. Maximin también elige C (180 contra 500 y 340).</p>
-<p>El campeón se mantuvo, pero las brechas crecieron mucho. Agregar escenarios severos favorece a las estrategias de seguro, y por eso la selección de escenarios es parte del argumento: quien quiera vender contratos solo necesita imaginar sequías suficientemente catastróficas. El antídoto es el criterio de plausibilidad y declarar quién propuso cada mundo. En el Laboratorio 4 la sequía de diseño tiene un origen defendible, la hidrología crítica de la energía firme, y aun así no cambia el campeón, porque la métrica promedia 40 años: la severidad del escenario y la métrica actúan juntas.</p>
+<p>El campeón se mantuvo, pero las brechas crecieron mucho. Agregar escenarios severos favorece a las estrategias de seguro, y por eso la selección de escenarios es parte del argumento: quien quiera vender contratos solo necesita imaginar sequías suficientemente catastróficas. El antídoto es el criterio de plausibilidad y declarar quién propuso cada mundo. Aquí la sequía de diseño tiene un origen defendible, la hidrología crítica de la energía firme, y aun así no cambia el campeón, porque la métrica promedia 40 años: la severidad del escenario y la métrica actúan juntas.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="ejercicio-2-una-séptima-estrategia" class="level4">
 <h4 class="anchored" data-anchor-id="ejercicio-2-una-séptima-estrategia">Ejercicio 2 ●●○ · Una séptima estrategia</h4>
-<p>Evalúe en Python el «paquete con 300» (subasta de energía firme con meta de 5 % más 300 MW/año de subasta FNCER) agregándolo como séptima fila de la tabla de cinco mundos. (a) ¿Cambia algún criterio sin la exigencia de confiabilidad? (b) ¿Y con ella? (c) ¿Qué enseña sobre cómo presentar una tabla de robustez?</p>
+<p>El «paquete con 300» (subasta de energía firme con meta de 5 % más 300 MW/año de subasta FNCER) cuesta 152,68; 164,28; 153,00; 164,44 y 152,00 COP/kWh en Viento a favor, Contrarreloj, Siesta, Tormenta y la sequía de diseño, en la que no raciona. Agréguelo como séptima fila de la tabla de cinco mundos. (a) ¿Cambia algún criterio sin la exigencia de confiabilidad? (b) ¿Y con ella? (c) ¿Qué enseña sobre cómo presentar una tabla de robustez?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Pista">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1924,14 +1876,14 @@ cargo 15 + FNCER 300    152.74  166.50  153.21  166.75  149.24 | raciona 0.06 %<
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Revise primero si la estrategia nueva raciona en la sequía. Después, antes de restar, recalcule el mínimo de cada columna entre las estrategias admisibles con la fila nueva.</p>
+<p>Separe primero las estrategias admisibles, las que no racionan en la sequía. Después, antes de restar, recalcule el mínimo de cada columna entre las estrategias admisibles con la fila nueva.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1940,21 +1892,13 @@ cargo 15 + FNCER 300    152.74  166.50  153.21  166.75  149.24 | raciona 0.06 %<
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li><p>El paquete con 300 cuesta 152,68; 164,28; 153,00; 164,44 y 152,00 COP/kWh en Viento a favor, Contrarreloj, Siesta, Tormenta y la sequía, y no raciona en la sequía. Sin la exigencia, el impulso FNCER sigue siendo el campeón de cada columna: la fila nueva tiene arrepentimientos de 4,11; 2,37; 4,03; 2,36 y 4,53, y nada cambia.</p></li>
+<li><p>Sin la exigencia, el impulso FNCER sigue siendo el campeón de cada columna: la fila nueva tiene arrepentimientos de 4,11; 2,37; 4,03; 2,36 y 4,53, y nada cambia.</p></li>
 <li><p>Con la exigencia quedan cuatro admisibles. El paquete con 300 es el más barato en los cuatro mundos de la matriz y tiene el mejor peor caso (164,44, frente a 164,79 del paquete): maximin pasa a la estrategia nueva. En la sequía el campeón sigue siendo «cargo 15 + FNCER 300» (149,24), y el paquete con 300 queda a 2,76. Los arrepentimientos máximos quedan en 2,30 para «cargo 15 + FNCER 300» (en Tormenta, ahora frente al paquete con 300), 2,62 para el paquete, 2,76 para el paquete con 300 y 10,73 para el seguro CxC: minimax regret sigue con «cargo 15 + FNCER 300», pero su máximo sube de 1,95 a 2,30.</p></li>
 <li><p>Una estrategia nueva cambió el veredicto de un criterio y los arrepentimientos de las demás. El informe declara cómo se construyó el menú y prueba si una estrategia diseñada para cubrir las vulnerabilidades de las finalistas cambia la conclusión, que es el paso iterativo del RDM de la página siguiente.</p></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lab4.ESTRATEGIAS[<span class="st">"paquete con 300"</span>] <span class="op">=</span> {<span class="st">"meta_subasta_firme"</span>: <span class="fl">0.05</span>, <span class="st">"subasta_fncer"</span>: <span class="fl">300.0</span>}</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>estrategias, mundos <span class="op">=</span> <span class="bu">list</span>(lab4.ESTRATEGIAS), <span class="bu">list</span>(lab4.MUNDOS)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>corridas <span class="op">=</span> {(e, m): lab4.correr(m, e) <span class="cf">for</span> e <span class="kw">in</span> estrategias <span class="cf">for</span> m <span class="kw">in</span> mundos}</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>costos <span class="op">=</span> np.array([[lab4.costo_para_demanda(corridas[e, m]) <span class="cf">for</span> m <span class="kw">in</span> mundos] <span class="cf">for</span> e <span class="kw">in</span> estrategias])</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>admisibles <span class="op">=</span> [i <span class="cf">for</span> i, e <span class="kw">in</span> <span class="bu">enumerate</span>(estrategias)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> lab4.deficit_maximo(corridas[e, lab4.SEQUIA_DE_DISENO]) <span class="op">&lt;=</span> <span class="fl">0.001</span>]</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> criterios_robustez(costos[admisibles])</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>([estrategias[i] <span class="cf">for</span> i <span class="kw">in</span> admisibles], np.<span class="bu">round</span>(c[<span class="st">"arrepentimiento_maximo"</span>], <span class="dv">2</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1977,7 +1921,7 @@ cargo 15 + FNCER 300    152.74  166.50  153.21  166.75  149.24 | raciona 0.06 %<
 <li>La recomendación lleva <strong>decisión, juicio de valor explícito, condiciones de validez y señal de cambio</strong>, y declara lo que el modelo no tiene.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Robustez sobre optimalidad» de las notas de la semana 5 trae la tabla de cinco mundos con su desglose, las variantes de estabilidad y el ejercicio de sensibilidad de la métrica. En el Laboratorio 4 usted construye la tabla completa y defiende su recomendación, y la <a href="../semana5/09-rdm.html">página siguiente</a> explora con RDM la cola que esta tabla prueba con una sola sequía.</p>
+<p><strong>Para profundizar.</strong> La sección «Robustez sobre optimalidad» de las notas de la semana 5 trae la tabla de cinco mundos con su desglose, las variantes de estabilidad y el ejercicio de sensibilidad de la métrica. La <a href="../semana5/09-rdm.html">página siguiente</a> explora con RDM la cola que esta tabla prueba con una sola sequía.</p>
 
 
 </section>

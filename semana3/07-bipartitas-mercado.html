@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<meta name="guias-mise:fecha" content="2 de octubre de 2026">
+<meta name="guias-mise:fecha" content="9 de noviembre de 2026">
 
   <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -342,7 +342,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana2/10-sin-como-red.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">El SIN como red: el Laboratorio 1</span></a>
+ <span class="menu-text">El SIN como red</span></a>
   </div>
 </li>
       </ul>
@@ -555,7 +555,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana5/11-arco-laboratorio.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">El arco del Laboratorio 4</span></a>
+ <span class="menu-text">El arco completo: del modelo a la recomendación</span></a>
   </div>
 </li>
       </ul>
@@ -678,7 +678,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../recursos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Recursos: notas, laboratorios y Python</span></a>
+ <span class="menu-text">Recursos: notas y Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -817,7 +817,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la intuición, del dibujo a la ecuación, los ejemplos ●○○ y ●●○, el ejemplo ●●● de la red estilizada (es el paso 4 del Laboratorio 2), los errores comunes, las preguntas y el resumen, unos 40 min; amplían: la exploración libre de los simuladores, el código plegado y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana3/06-redes-actores.html">redes de actores y comunidades</a> y <a href="../semana2/02-grado-densidad.html">grado y densidad</a></span> <span class="dato">🧪 Se aplica en el Laboratorio 2 (paso 4)</span></p>
+<p><span class="dato">⏱ 60 a 70 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la intuición, del dibujo a la ecuación, los ejemplos ●○○ y ●●○, el ejemplo ●●● de la red estilizada, los errores comunes, las preguntas y el resumen, unos 40 min; amplían: la exploración libre de los simuladores, el código plegado y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana3/06-redes-actores.html">redes de actores y comunidades</a> y <a href="../semana2/02-grado-densidad.html">grado y densidad</a></span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -1033,21 +1033,20 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="5f4dcd08" class="cell" data-execution_count="2">
+<div id="3bebebd9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> actores</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>]])</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(B <span class="op">@</span> B.T)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>estudiantes, cursos <span class="op">=</span> [<span class="st">"Ana"</span>, <span class="st">"Beto"</span>, <span class="st">"Carla"</span>, <span class="st">"Dani"</span>, <span class="st">"Eva"</span>], [<span class="st">"Redes"</span>, <span class="st">"Dinámica"</span>, <span class="st">"Gobernanza"</span>]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>red <span class="op">=</span> nx.Graph()</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>red.add_nodes_from(estudiantes, tipo<span class="op">=</span><span class="st">"estudiante"</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>red.add_nodes_from(cursos, tipo<span class="op">=</span><span class="st">"curso"</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>red.add_edges_from((e, c) <span class="cf">for</span> i, e <span class="kw">in</span> <span class="bu">enumerate</span>(estudiantes) <span class="cf">for</span> j, c <span class="kw">in</span> <span class="bu">enumerate</span>(cursos) <span class="cf">if</span> B[i, j])</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>proyeccion <span class="op">=</span> actores.proyectar(red, <span class="st">"estudiante"</span>, metodo<span class="op">=</span><span class="st">"conteo"</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(proyeccion.number_of_edges(), <span class="st">"aristas; densidad"</span>, nx.density(proyeccion))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>]])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(B <span class="op">@</span> B.T)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>estudiantes, cursos <span class="op">=</span> [<span class="st">"Ana"</span>, <span class="st">"Beto"</span>, <span class="st">"Carla"</span>, <span class="st">"Dani"</span>, <span class="st">"Eva"</span>], [<span class="st">"Redes"</span>, <span class="st">"Dinámica"</span>, <span class="st">"Gobernanza"</span>]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>red <span class="op">=</span> nx.Graph()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>red.add_nodes_from(estudiantes, tipo<span class="op">=</span><span class="st">"estudiante"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>red.add_nodes_from(cursos, tipo<span class="op">=</span><span class="st">"curso"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>red.add_edges_from((e, c) <span class="cf">for</span> i, e <span class="kw">in</span> <span class="bu">enumerate</span>(estudiantes) <span class="cf">for</span> j, c <span class="kw">in</span> <span class="bu">enumerate</span>(cursos) <span class="cf">if</span> B[i, j])</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>proyeccion <span class="op">=</span> nx.bipartite.weighted_projected_graph(red, estudiantes)   <span class="co"># peso = cursos compartidos</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(proyeccion.number_of_edges(), <span class="st">"aristas; densidad"</span>, nx.density(proyeccion))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[2 1 2 0 1]
  [1 1 1 0 0]
@@ -1116,7 +1115,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="309" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 308;"><span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>viewof saleJ <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"C1"</span><span class="op">,</span> <span class="st">"C2"</span><span class="op">,</span> <span class="st">"C3"</span><span class="op">,</span> <span class="st">"C4"</span><span class="op">,</span> <span class="st">"C5"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"C2"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Sale el comercializador"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="308" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 307;"><span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>viewof saleJ <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"C1"</span><span class="op">,</span> <span class="st">"C2"</span><span class="op">,</span> <span class="st">"C3"</span><span class="op">,</span> <span class="st">"C4"</span><span class="op">,</span> <span class="st">"C5"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"C2"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Sale el comercializador"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
@@ -1127,7 +1126,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="314" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 313;"><span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a>salidaJ <span class="op">=</span> <span class="fu">leerSalida</span>(JUGUETE<span class="op">,</span> saleJ)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="313" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 312;"><span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a>salidaJ <span class="op">=</span> <span class="fu">leerSalida</span>(JUGUETE<span class="op">,</span> saleJ)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
@@ -1138,16 +1137,16 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="319" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 318;"><span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">240</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
-<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Generador"</span>}<span class="op">,</span></span>
-<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Exposición a la salida"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
-<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>(salidaJ<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">rojo</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>})<span class="op">,</span></span>
-<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(salidaJ<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">.</span><span class="at">exposicion</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span>})<span class="op">,</span></span>
-<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
-<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="318" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 317;"><span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">240</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Generador"</span>}<span class="op">,</span></span>
+<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Exposición a la salida"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>(salidaJ<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">rojo</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>})<span class="op">,</span></span>
+<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(salidaJ<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">.</span><span class="at">exposicion</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span>})<span class="op">,</span></span>
+<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="expression">
@@ -1158,13 +1157,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="333" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 332;"><span id="cb9-333"><a href="#cb9-333" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb9-334"><a href="#cb9-334" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Volumen perdido&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">volumen_perdido</span>)<span class="sc">}</span><span class="vs"> GWh/año (</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaJ<span class="op">.</span><span class="at">fraccion_volumen_perdido</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">)&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb9-335"><a href="#cb9-335" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Mayor exposición&lt;b&gt;</span><span class="sc">${</span>salidaJ<span class="op">.</span><span class="at">mayor</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaJ<span class="op">.</span><span class="at">valorMayor</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb9-336"><a href="#cb9-336" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de generación&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb9-337"><a href="#cb9-337" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de comercialización&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb9-338"><a href="#cb9-338" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Componentes conexos después&lt;b&gt;</span><span class="sc">${</span>salidaJ<span class="op">.</span><span class="at">componentesDespues</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb9-339"><a href="#cb9-339" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="332" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 331;"><span id="cb9-332"><a href="#cb9-332" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb9-333"><a href="#cb9-333" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Volumen perdido&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">volumen_perdido</span>)<span class="sc">}</span><span class="vs"> GWh/año (</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaJ<span class="op">.</span><span class="at">fraccion_volumen_perdido</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">)&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-334"><a href="#cb9-334" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Mayor exposición&lt;b&gt;</span><span class="sc">${</span>salidaJ<span class="op">.</span><span class="at">mayor</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaJ<span class="op">.</span><span class="at">valorMayor</span><span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-335"><a href="#cb9-335" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de generación&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-336"><a href="#cb9-336" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de comercialización&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaJ<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-337"><a href="#cb9-337" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Componentes conexos después&lt;b&gt;</span><span class="sc">${</span>salidaJ<span class="op">.</span><span class="at">componentesDespues</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb9-338"><a href="#cb9-338" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="expression">
@@ -1173,7 +1172,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Mercado de juguete con datos sintéticos con fines didácticos. La salida se calcula en el navegador con <code>salidaDeNodo</code> de <code>simuladores/difusion.js</code>, que las pruebas del curso comparan con <code>mise_sd.actores.salida_de_nodo</code>.</p>
+<p>Mercado de juguete con datos sintéticos con fines didácticos. La salida se calcula en el navegador.</p>
 </div>
 </div>
 <p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s3-07-c4">(la opción que eligió arriba)</span>. La salida de C4 sube el HHI de generación de 2 650 a 3 047, casi 400 puntos, contra 61 de la salida de C2: sube más. C4 castiga a los dos generadores medianos (G4 pierde el 50 % y G2 el 40 %) y deja a G1 con el 44 % del volumen que sigue en pie. La salida de C1 muestra el caso contrario: el HHI de generación <em>baja</em> a 2 622, porque el golpe cae sobre G1, el mayor generador.</p>
@@ -1184,7 +1183,7 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">La salida de un comercializador grande en una red de contratos estilizada</span>
 </div>
-<p><strong>Planteamiento.</strong> La función <code>actores.red_mercado_mayorista_estilizada()</code> construye una red de ocho generadores y diez comercializadores con 60 000 GWh/año de contratos. Los nodos son roles genéricos (G1 a G8, C1 a C10) y los volúmenes se inventaron para respetar órdenes de magnitud públicos: las participaciones de los generadores (24, 21, 18, 7, 6, 5 y 4 % más un 15 % agregado de generadores menores en G8) siguen el orden de las que publicó XM para la generación de 2021. C3 representa un distribuidor-comercializador de la costa Caribe con el 16 % de las compras. La red no reproduce contratos de ningún agente y exagera a propósito la integración vertical: los tres pares integrados compran a su propio generador entre el 66 y el 83 % de su volumen, más de lo que la regulación ha permitido para atender usuarios regulados (60 % con la Resolución CREG 020 de 1996, derogada por la 130 de 2019, que baja el tope por etapas hasta el 10 % desde 2027). ¿Qué indicador revela mejor el riesgo de la salida de un comercializador?</p>
+<p><strong>Planteamiento.</strong> La red estilizada de este ejemplo une ocho generadores y diez comercializadores con 60 000 GWh/año de contratos. Los nodos son roles genéricos (G1 a G8, C1 a C10) y los volúmenes se inventaron para respetar órdenes de magnitud públicos: las participaciones de los generadores (24, 21, 18, 7, 6, 5 y 4 % más un 15 % agregado de generadores menores en G8) siguen el orden de las que publicó XM para la generación de 2021. C3 representa un distribuidor-comercializador de la costa Caribe con el 16 % de las compras. La red no reproduce contratos de ningún agente y exagera a propósito la integración vertical: los tres pares integrados compran a su propio generador entre el 66 y el 83 % de su volumen, más de lo que la regulación ha permitido para atender usuarios regulados (60 % con la Resolución CREG 020 de 1996, derogada por la 130 de 2019, que baja el tope por etapas hasta el 10 % desde 2027). ¿Qué indicador revela mejor el riesgo de la salida de un comercializador?</p>
 </div>
 <section id="acto-1.-predecir" class="level4">
 <h4 class="anchored" data-anchor-id="acto-1.-predecir">Acto 1. Predecir</h4>
@@ -1215,7 +1214,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="382" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 381;"><span id="cb10-382"><a href="#cb10-382" aria-hidden="true" tabindex="-1"></a>mercadoE <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s3-07-mercado.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="381" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 380;"><span id="cb10-381"><a href="#cb10-381" aria-hidden="true" tabindex="-1"></a>mercadoE <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s3-07-mercado.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
@@ -1226,7 +1225,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="387" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 386;"><span id="cb11-387"><a href="#cb11-387" aria-hidden="true" tabindex="-1"></a>viewof saleE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(<span class="fu">participaciones</span>(mercadoE<span class="op">,</span> <span class="st">"comercializador"</span>))<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"C3"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Sale el comercializador"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="386" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 385;"><span id="cb11-386"><a href="#cb11-386" aria-hidden="true" tabindex="-1"></a>viewof saleE <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(<span class="fu">participaciones</span>(mercadoE<span class="op">,</span> <span class="st">"comercializador"</span>))<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"C3"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Sale el comercializador"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="declaration">
@@ -1237,7 +1236,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="392" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 391;"><span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a>salidaE <span class="op">=</span> <span class="fu">leerSalida</span>(mercadoE<span class="op">,</span> saleE)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="391" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 390;"><span id="cb12-391"><a href="#cb12-391" aria-hidden="true" tabindex="-1"></a>salidaE <span class="op">=</span> <span class="fu">leerSalida</span>(mercadoE<span class="op">,</span> saleE)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="declaration">
@@ -1248,16 +1247,16 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="397" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 396;"><span id="cb13-397"><a href="#cb13-397" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
-<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Generador"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> salidaE<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">generador</span>)}<span class="op">,</span></span>
-<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Exposición a la salida"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
-<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb13-402"><a href="#cb13-402" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>(salidaE<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;=</span> <span class="fl">0.3</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">rojo</span> <span class="op">:</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">ambar</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>})<span class="op">,</span></span>
-<span id="cb13-403"><a href="#cb13-403" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(salidaE<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;</span> <span class="dv">0</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">.</span><span class="at">exposicion</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span>})<span class="op">,</span></span>
-<span id="cb13-404"><a href="#cb13-404" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
-<span id="cb13-405"><a href="#cb13-405" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb13-406"><a href="#cb13-406" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="396" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 395;"><span id="cb13-396"><a href="#cb13-396" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb13-397"><a href="#cb13-397" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Generador"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> salidaE<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">generador</span>)}<span class="op">,</span></span>
+<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Exposición a la salida"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d)}<span class="op">,</span></span>
+<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>(salidaE<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;=</span> <span class="fl">0.3</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">rojo</span> <span class="op">:</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> COLORES<span class="op">.</span><span class="at">ambar</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>})<span class="op">,</span></span>
+<span id="cb13-402"><a href="#cb13-402" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(salidaE<span class="op">.</span><span class="at">exposicionTabla</span><span class="op">.</span><span class="fu">filter</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">exposicion</span> <span class="op">&gt;</span> <span class="dv">0</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"generador"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"exposicion"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">.</span><span class="at">exposicion</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span>})<span class="op">,</span></span>
+<span id="cb13-403"><a href="#cb13-403" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb13-404"><a href="#cb13-404" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb13-405"><a href="#cb13-405" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-11" data-nodetype="expression">
@@ -1268,13 +1267,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="411" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 410;"><span id="cb14-411"><a href="#cb14-411" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb14-412"><a href="#cb14-412" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Volumen perdido&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaE<span class="op">.</span><span class="at">fraccion_volumen_perdido</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs"> del total&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb14-413"><a href="#cb14-413" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Mayor exposición&lt;b&gt;</span><span class="sc">${</span>salidaE<span class="op">.</span><span class="at">mayor</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaE<span class="op">.</span><span class="at">valorMayor</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb14-414"><a href="#cb14-414" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de generación&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb14-415"><a href="#cb14-415" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de comercialización&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb14-416"><a href="#cb14-416" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Componentes conexos después&lt;b&gt;</span><span class="sc">${</span>salidaE<span class="op">.</span><span class="at">componentesDespues</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb14-417"><a href="#cb14-417" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="410" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 409;"><span id="cb14-410"><a href="#cb14-410" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb14-411"><a href="#cb14-411" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Volumen perdido&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaE<span class="op">.</span><span class="at">fraccion_volumen_perdido</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs"> del total&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-412"><a href="#cb14-412" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Mayor exposición&lt;b&gt;</span><span class="sc">${</span>salidaE<span class="op">.</span><span class="at">mayor</span><span class="sc">}</span><span class="vs">: </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(salidaE<span class="op">.</span><span class="at">valorMayor</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-413"><a href="#cb14-413" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de generación&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">generador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-414"><a href="#cb14-414" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;HHI de comercialización&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_antes</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(salidaE<span class="op">.</span><span class="at">hhi_despues</span><span class="op">.</span><span class="at">comercializador</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-415"><a href="#cb14-415" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Componentes conexos después&lt;b&gt;</span><span class="sc">${</span>salidaE<span class="op">.</span><span class="at">componentesDespues</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-416"><a href="#cb14-416" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-12" data-nodetype="expression">
@@ -1283,7 +1282,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="nota-datos">
-<p>Red estilizada <code>mise_sd.actores.red_mercado_mayorista_estilizada()</code>, con roles genéricos y volúmenes inventados con órdenes de magnitud de XM y la CREG, con fines didácticos. Las barras rojas marcan exposiciones de 30 % o más.</p>
+<p>Red estilizada del mercado mayorista, con roles genéricos y volúmenes inventados con órdenes de magnitud de XM y la CREG, con fines didácticos. Las barras rojas marcan exposiciones de 30 % o más.</p>
 </div>
 </div>
 </section>
@@ -1312,46 +1311,6 @@ window.Quarto = {
 <p><strong>Declare lo que el modelo omite.</strong> Tras la toma de posesión de Electricaribe el servicio siguió prestándose bajo la administración de la Superintendencia, y el volumen «perdido» se reacomodó en contratos y bolsa. Por eso la exposición de esta página mide dependencia comercial y no energía que se deja de vender: para un generador, el riesgo real de la salida de un comercializador es sobre todo de crédito, la cartera que no se paga y las garantías que hay que ejecutar, porque la energía encuentra otro comprador, a otro precio. Además, la integración vertical de la red es mayor que la permitida para la demanda regulada. Cómo se repartió el golpe entre generadores en 2016 no se reconstruye aquí [POR VERIFICAR]. La red estilizada indica dónde mirar primero, en las contrapartes con mayor exposición, que en una red real suelen ser las de la misma región.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="El mismo análisis en Python, como en el Laboratorio 2">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>El mismo análisis en Python, como en el Laboratorio 2
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div id="4d55dcd0" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mise_sd <span class="im">import</span> actores</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>red <span class="op">=</span> actores.red_mercado_mayorista_estilizada()</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>generadores <span class="op">=</span> actores.participaciones(red, <span class="st">"generador"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>comercializadores <span class="op">=</span> actores.participaciones(red, <span class="st">"comercializador"</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HHI generación </span><span class="sc">{</span>actores<span class="sc">.</span>hhi(generadores)<span class="sc">:.0f}</span><span class="ss">, comercialización </span><span class="sc">{</span>actores<span class="sc">.</span>hhi(comercializadores)<span class="sc">:.0f}</span><span class="ss">"</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>proyeccion <span class="op">=</span> actores.proyectar(red, <span class="st">"generador"</span>)          <span class="co"># volumen compartido</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Proyección sobre generadores: densidad </span><span class="sc">{</span>nx<span class="sc">.</span>density(proyeccion)<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nodo <span class="kw">in</span> [<span class="st">"C3"</span>, <span class="st">"C1"</span>, <span class="st">"C4"</span>]:</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    salida <span class="op">=</span> actores.salida_de_nodo(red, nodo)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(nodo, <span class="ss">f"pierde </span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> salida<span class="sc">.</span>fraccion_volumen_perdido<span class="sc">:.0f}</span><span class="ss"> %;"</span>,</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"HHI gen </span><span class="sc">{</span>salida<span class="sc">.</span>hhi_antes[<span class="st">'generador'</span>]<span class="sc">:.0f}</span><span class="ss"> -&gt; </span><span class="sc">{</span>salida<span class="sc">.</span>hhi_despues[<span class="st">'generador'</span>]<span class="sc">:.0f}</span><span class="ss">;"</span>,</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>          <span class="st">"exposición"</span>, (<span class="dv">100</span> <span class="op">*</span> salida.exposicion).<span class="bu">round</span>(<span class="dv">0</span>).to_dict())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>HHI generación 1692, comercialización 1468
-Proyección sobre generadores: densidad 1.00
-C3 pierde 16 %; HHI gen 1692 -&gt; 1737; exposición {'G6': 67.0, 'G7': 38.0, 'G2': 24.0, 'G1': 17.0, 'G3': 12.0}
-C1 pierde 20 %; HHI gen 1692 -&gt; 1619; exposición {'G1': 56.0, 'G5': 28.0, 'G2': 16.0, 'G8': 11.0}
-C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 </section>
 </section>
@@ -1375,11 +1334,11 @@ C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</cod
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Medir el riesgo de una salida solo con el HHI</span>
 </div>
 <p>El HHI promedia sobre todo el mercado. La figura muestra la salida de cada comercializador de la red estilizada: el cambio del HHI de generación y la mayor exposición de un generador no ordenan a los comercializadores de la misma manera. Reprodúzcalo en el simulador del acto 2 con C3 y C4.</p>
-<div id="c4ab948a" class="cell" data-execution_count="4">
+<div id="f7b5b244" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="07-bipartitas-mercado_files/figure-html/cell-5-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Salida de cada comercializador de la red estilizada: cambio del HHI de generación contra la mayor exposición de un generador. Red estilizada con fines didácticos."><img src="07-bipartitas-mercado_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Salida de cada comercializador de la red estilizada: cambio del HHI de generación contra la mayor exposición de un generador. Red estilizada con fines didácticos."></a></p>
+<p><a href="07-bipartitas-mercado_files/figure-html/cell-4-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Salida de cada comercializador de la red estilizada: cambio del HHI de generación contra la mayor exposición de un generador. Red estilizada con fines didácticos."><img src="07-bipartitas-mercado_files/figure-html/cell-4-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Salida de cada comercializador de la red estilizada: cambio del HHI de generación contra la mayor exposición de un generador. Red estilizada con fines didácticos."></a></p>
 <figcaption>Salida de cada comercializador de la red estilizada: cambio del HHI de generación contra la mayor exposición de un generador. Red estilizada con fines didácticos.</figcaption>
 </figure>
 </div>
@@ -1512,7 +1471,7 @@ C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</cod
 <h4 class="anchored" data-anchor-id="ejercicio-1-el-hhi-de-una-fusión">Ejercicio 1 ●○○ · El HHI de una fusión</h4>
 <p>Un mercado tiene cuatro agentes con participaciones de 40, 30, 20 y 10 %. (a) Calcule el HHI. (b) Si se fusionan los dos menores, ¿cuánto sube? (c) ¿Cómo clasifican ese mercado las guías de 2023?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1521,7 +1480,7 @@ C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</cod
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li><p><span class="math inline">\mathrm{HHI} = 40^2 + 30^2 + 20^2 + 10^2 = 1\,600 + 900 + 400 + 100 = 3\,000</span>.</p></li>
@@ -1536,7 +1495,7 @@ C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</cod
 <h4 class="anchored" data-anchor-id="ejercicio-2-la-salida-de-c3-en-el-mercado-de-juguete">Ejercicio 2 ●●○ · La salida de C3 en el mercado de juguete</h4>
 <p>En el mercado de juguete de la sección 3, calcule a mano la salida de C3: volumen perdido, exposición de cada generador, HHI de ambos lados después y conectividad. Verifique con el simulador del ejemplo intermedio y diga qué generador queda más golpeado.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Pista">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1545,14 +1504,14 @@ C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</cod
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>C3 compra 100 GWh/año a G1 y 200 a G3. Después de la salida quedan 1 700 GWh/año; recalcule las participaciones con ese total.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1561,7 +1520,7 @@ C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</cod
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Volumen.</strong> Salen 300 de 2 000 GWh/año, el 15 %.</p>
 <p><strong>Exposiciones.</strong> <span class="math inline">e_{G3} = 200/400 = 50</span> % y <span class="math inline">e_{G1} = 100/700 = 14{,}3</span> %.</p>
@@ -1623,7 +1582,7 @@ C4 pierde 6 %; HHI gen 1692 -&gt; 1831; exposición {'G4': 71.0, 'G8': 7.0}</cod
 </tbody>
 </table>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Redes bipartitas y el mercado mayorista como grafo» de las notas de la semana 3 trae la formalización completa, los cuatro ejercicios con sus soluciones y un ejercicio avanzado sobre reglas de reacomodo del volumen perdido. El Laboratorio 2 cierra con esta red: comunidades de la red de contratos y salida de un hub, que la <a href="../semana3/09-adopcion-solar-red.html">página integradora</a> desarrolla. La <a href="../semana3/08-limites-redes.html">siguiente página</a> pregunta qué deja por fuera el enfoque de redes.</p>
+<p><strong>Para profundizar.</strong> La sección «Redes bipartitas y el mercado mayorista como grafo» de las notas de la semana 3 trae la formalización completa, los cuatro ejercicios con sus soluciones y un ejercicio avanzado sobre reglas de reacomodo del volumen perdido. La <a href="../semana3/09-adopcion-solar-red.html">página integradora</a> vuelve a esta red para buscar las comunidades de la red de contratos y simular la salida de un hub. La <a href="../semana3/08-limites-redes.html">siguiente página</a> pregunta qué deja por fuera el enfoque de redes.</p>
 
 
 </section>
