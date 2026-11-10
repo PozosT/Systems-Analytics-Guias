@@ -395,7 +395,7 @@
     else if (!/\.[a-z0-9]+$/i.test(ruta)) ruta += ".html";
     return ruta;
   }
-  const esPaginaDeConcepto = (ruta) => /^(semana\d+|caso-guia)\/\d\d-[^/]+\.html$/.test(ruta ?? "");
+  const esPaginaDeConcepto = (ruta) => /^semana\d+\/\d\d-[^/]+\.html$/.test(ruta ?? "");
   const estaEstudiada = (ruta) => leer(PREFIJO_ESTUDIADA + ruta) === "1";
 
   function marcarEnlaces() {
