@@ -744,7 +744,7 @@
   }
   function revisarSimuladores() {
     if (document.querySelector("main .observablehq--error")) {
-      avisar("simuladores", "<strong>Uno o más simuladores no cargaron.</strong> Usan bibliotecas que se descargan de cdn.jsdelivr.net; revise su conexión o si su red bloquea ese sitio, y recargue la página. El texto, los pasos y las preguntas funcionan sin ellos. Si el problema sigue, cuéntelo en el foro del curso.");
+      avisar("simuladores", "<strong>Uno o más simuladores no cargaron.</strong> Usan bibliotecas que se descargan de cdn.jsdelivr.net; revise su conexión o si su red bloquea ese sitio, y recargue la página. El texto, los pasos y las preguntas funcionan sin ellos. Si el problema sigue, cuéntelo en el canal de Teams del grupo.");
     }
   }
 
