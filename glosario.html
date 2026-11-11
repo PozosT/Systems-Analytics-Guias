@@ -642,7 +642,7 @@ window.Quarto = {
 <div class="glosario-letras" aria-label="Letras del glosario" role="navigation">
 <a href="#letra-a">A</a> <a href="#letra-b">B</a> <a href="#letra-c">C</a> <a href="#letra-d">D</a> <a href="#letra-e">E</a> <a href="#letra-f">F</a> <a href="#letra-g">G</a> <a href="#letra-i">I</a> <a href="#letra-l">L</a> <a href="#letra-m">M</a> <a href="#letra-o">O</a> <a href="#letra-p">P</a> <a href="#letra-r">R</a> <a href="#letra-s">S</a> <a href="#letra-t">T</a> <a href="#letra-v">V</a> <a href="#letra-w">W</a>
 </div>
-<p>114 términos definidos en las guías.</p>
+<p>126 términos definidos en las guías.</p>
 <section id="letra-a" class="level2">
 <h2 class="anchored" data-anchor-id="letra-a">A</h2>
 <dl>
@@ -748,18 +748,11 @@ window.Quarto = {
 <dd>
 <p><span class="glosario-fuente">Se define en <a href="semana4/01-del-cld-al-modelo.html#definicion-convenciones-del-diagrama-de-stocks-y-flujos">Semana 4 · Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</a></span></p>
 </dd>
-<dt>Costo medio para la demanda</dt>
-<dd>
-<p>El <strong>costo medio para la demanda</strong> de una estrategia en un mundo es la media en 40 años de lo que paga la demanda por kilovatio hora, <span class="math inline">p_{dem}</span>, más el valor de la energía no servida:</p>
-<p><span class="math display">\bar c = \frac{1}{40}\int_0^{40}\Big[p_{dem}(t) + V\,\frac{\text{déficit}(t)}{D(t)}\Big]\,dt \quad [\text{COP/kWh}]</span></p>
-<p>con el déficit y la demanda <span class="math inline">D</span> en GWh/año y <span class="math inline">V</span> [COP/kWh], el valor de cada kilovatio hora racionado. Es la métrica de la tabla de robustez: menor es mejor.</p>
-<p><span class="glosario-fuente">Se define en <a href="semana5/11-arco-laboratorio.html#definicion-costo-medio-para-la-demanda">Semana 5 · El arco completo: del modelo a la recomendación</a></span></p>
-</dd>
 <dt>Crecimiento exponencial, tasa fraccional y tiempo de duplicación</dt>
 <dd>
-<p>Un stock cuyo flujo neto es proporcional a su propio nivel, <span class="math inline">dS/dt = r\,S</span> con <span class="math inline">r &gt; 0</span> [1/año], crece como <span class="math inline">S(t) = S_0\,e^{rt}</span>. Su <strong>tasa de crecimiento fraccional</strong>, <span class="math inline">(dS/dt)/S</span> [1/año], es constante e igual a <span class="math inline">r</span>. La de una rampa, <span class="math inline">dS/dt = a</span>, vale <span class="math inline">a/S</span> y cae a medida que el stock crece. El <strong>tiempo de duplicación</strong> del refuerzo es</p>
-<p><span class="math display">T_d = \frac{\ln 2}{r} \approx \frac{70}{100\,r} \quad [\text{años}],</span></p>
-<p>la <strong>regla del 70</strong>. En escala semilogarítmica la trayectoria exponencial es una recta de pendiente <span class="math inline">r</span>.</p>
+<p>Un stock <span class="math inline">S(t)</span> cuyo flujo neto es proporcional a su propio nivel,</p>
+<p><span class="math display">\frac{dS}{dt} = r\,S, \qquad r &gt; 0 \quad [1/\text{año}],</span></p>
+<p>crece como <span class="math inline">S(t) = S_0\,e^{rt}</span>. Su <strong>tasa de crecimiento fraccional</strong>, <span class="math inline">(dS/dt)/S</span> [1/año], es constante e igual a <span class="math inline">r</span>. La constante <span class="math inline">r</span> es la <strong>ganancia</strong> <span class="math inline">\gamma</span> del lazo de refuerzo que forman el stock y su entrada, la de la <a href="semana4/05-polaridad-lazos.html">página de polaridad</a>: al derivar <span class="math inline">r\,S</span> respecto de <span class="math inline">S</span> queda <span class="math inline">\gamma = r</span>. Por la regla 1 de esa página, el <strong>tiempo de duplicación</strong> es</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/01-refuerzo-exponencial.html#definicion-crecimiento-exponencial-tasa-fraccional-y-tiempo-de-duplicacion">Semana 5 · Lazos de refuerzo y crecimiento exponencial</a></span></p>
 </dd>
 <dt>Criterio N-1 y su cribado topológico</dt>
@@ -773,8 +766,9 @@ window.Quarto = {
 </dd>
 <dt>Curva de aprendizaje de Wright</dt>
 <dd>
-<p>El costo unitario de una tecnología cae un porcentaje fijo, la <strong>tasa de aprendizaje</strong> <span class="math inline">LR</span>, con cada duplicación de la capacidad acumulada construida <span class="math inline">Q</span>:</p>
-<p><span class="math display">c(Q) = c_0\left(\frac{Q}{Q_0}\right)^{-b}, \qquad b = \log_2\frac{1}{1 - LR}.</span></p>
+<p>El costo unitario <span class="math inline">c</span> [COP/kWh] de una tecnología cae un porcentaje fijo, la <strong>tasa de aprendizaje</strong> <span class="math inline">LR</span> [fracción por duplicación], cada vez que se duplica la capacidad acumulada construida <span class="math inline">Q</span> [MW]:</p>
+<p><span class="math display">c(Q) = c_0\left(\frac{Q}{Q_0}\right)^{-b}, \qquad b = \log_2\frac{1}{1 - LR} \quad [\text{adimensional}],</span></p>
+<p>donde <span class="math inline">c_0</span> es el costo cuando el acumulado vale <span class="math inline">Q_0</span>. El exponente es la elasticidad del costo frente al acumulado: 1 % más de <span class="math inline">Q</span> baja el costo <span class="math inline">b</span> %. Con <span class="math inline">LR = 10</span> %, <span class="math inline">b = \log_2(1/0{,}9) = 0{,}152</span>:</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/01-refuerzo-exponencial.html#definicion-curva-de-aprendizaje-de-wright">Semana 5 · Lazos de refuerzo y crecimiento exponencial</a></span></p>
 </dd>
 <dt>Curva e índice de robustez</dt>
@@ -805,11 +799,22 @@ window.Quarto = {
 <p>Un sistema tiene <strong>dependencia de la trayectoria</strong> cuando el orden y el momento de los eventos pasados, y no solo las condiciones actuales, determinan su estado. Hay <strong>lock-in</strong> cuando el sistema queda en un estado del que no sale aunque existan alternativas mejores.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/05-trayectoria.html#definicion-dependencia-de-la-trayectoria-y-lock-in">Semana 1 · Retardos, memoria y dependencia de la trayectoria</a></span></p>
 </dd>
+<dt>Desglose del costo para la demanda</dt>
+<dd>
+<p>La <a href="semana5/08-robustez-regret.html">página de robustez</a> definió la métrica de la semana. El <strong>costo medio para la demanda</strong> de una estrategia en un mundo es la media de 40 años de lo que paga la demanda por kilovatio hora, <span class="math inline">p_{dem}</span>, más el valor de la energía no servida:</p>
+<p><span class="math display">\bar c = \frac{1}{40}\int_0^{40}\Bigl[p_{dem}(t) + V\,\frac{\text{déficit}(t)}{D(t)}\Bigr]\,dt \quad [\text{COP/kWh}]</span></p>
+<p>con el déficit y la demanda <span class="math inline">D</span> en GWh/año y <span class="math inline">V</span> = 2 100 COP/kWh del modelo, el valor de cada kilovatio hora racionado [POR VERIFICAR]. El precio que paga la demanda tiene cuatro términos, en COP/kWh:</p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/11-arco-laboratorio.html#definicion-desglose-del-costo-para-la-demanda">Semana 5 · El arco completo: del modelo a la recomendación</a></span></p>
+</dd>
 <dt>Desigualdad de Jensen</dt>
 <dd>
 <p>Si <span class="math inline">f</span> es <strong>convexa</strong> (su pendiente crece), entonces para cualquier variable aleatoria <span class="math inline">X</span>:</p>
 <p><span class="math display">\mathbb{E}[f(X)] \geq f(\mathbb{E}[X]).</span></p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/04-no-linealidad.html#definicion-desigualdad-de-jensen">Semana 1 · No linealidad</a></span></p>
+</dd>
+<dt>Diagnóstico de servilleta de una oscilación</dt>
+<dd>
+<p><span class="glosario-fuente">Se define en <a href="semana5/03-balance-retardo-oscilacion.html#definicion-diagnostico-de-servilleta-de-una-oscilacion">Semana 5 · Balance más retardo: oscilación</a></span></p>
 </dd>
 <dt>Dinámica sobre una red</dt>
 <dd>
@@ -830,19 +835,8 @@ window.Quarto = {
 <dl>
 <dt>Ejes de incertidumbre y matriz de escenarios</dt>
 <dd>
-<p>Un <strong>eje de incertidumbre</strong> es una cantidad, o un paquete coherente de cantidades, que cumple tres condiciones: <strong>alto impacto</strong> sobre la decisión (lo dice el tornado o, mejor, un análisis global), <strong>incertidumbre profunda</strong> (lo dice la clasificación de la página anterior) y <strong>exogeneidad</strong>, es decir, que el decisor no la controla. La <strong>matriz de escenarios</strong> cruza los dos ejes dominantes en sus valores extremos plausibles y produce cuatro mundos, cada uno con una narrativa causal, parámetros para el modelo y un nombre memorable.</p>
+<p>Un <strong>eje de incertidumbre</strong> es una cantidad, o un paquete coherente de cantidades, que cumple tres condiciones: <strong>alto impacto</strong> sobre la métrica del decisor (lo dice el tornado o, mejor, un análisis global), <strong>incertidumbre profunda</strong> (lo dice la clasificación de la página anterior) y <strong>exogeneidad</strong>, es decir, que el decisor no la controla. La <strong>matriz de escenarios</strong> cruza los dos ejes dominantes en sus valores extremos plausibles y produce cuatro mundos, cada uno con una narrativa causal, parámetros para el modelo y un nombre memorable.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/07-escenarios.html#definicion-ejes-de-incertidumbre-y-matriz-de-escenarios">Semana 5 · Diseño de escenarios</a></span></p>
-</dd>
-<dt>El costo de las FNCER en el modelo del curso</dt>
-<dd>
-<p>En el modelo de la semana, el costo nivelado de las FNCER, <span class="math inline">C_R</span> [COP/kWh en la escala del modelo, donde 150 es la bolsa con hidrología media], suma dos partes:</p>
-<p><span class="math display">\begin{aligned}
-C_R &amp;= C_{\text{global}}(t) + C_{\text{local}}(A),\\
-C_{\text{global}}(t) &amp;= 50 + 31{,}25\;e^{-0{,}15\,t},\\
-C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
-\end{aligned}</span></p>
-<p>La <strong>parte global</strong>, el 65 % del costo inicial de 125 COP/kWh (año 0 ≈ 2015), cae 15 % al año hacia un piso porque la decide el despliegue mundial, que Colombia no controla. La <strong>parte local</strong>, el 35 % restante (balance de planta, permisos, conexión, financiación), sigue la curva de Wright con <span class="math inline">LR = 10\,\%</span> sobre la capacidad FNCER acumulada en el país, <span class="math inline">A</span> [MW], con <span class="math inline">A_0 = 100</span> MW [POR VERIFICAR la fracción local y las tasas]. Sin ninguna subasta el modelo da 101,1 COP/kWh en el año 4 (≈ 2019), y con una subasta de 300 MW/año, 96,7, cerca de los 95,65 adjudicados en la subasta de 2019.</p>
-<p><span class="glosario-fuente">Se define en <a href="semana5/01-refuerzo-exponencial.html#definicion-el-costo-de-las-fncer-en-el-modelo-del-curso">Semana 5 · Lazos de refuerzo y crecimiento exponencial</a></span></p>
 </dd>
 <dt>El iceberg</dt>
 <dd>
@@ -860,6 +854,12 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p><span class="math display">\text{VPN} = -I_0 + \sum_{t=1}^{T} \frac{FC_t}{(1+r)^t} \quad [\text{MUSD}].</span></p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/01-complicado-complejo.html#definicion-el-valor-presente-neto-y-sus-supuestos">Semana 1 · Complicado frente a complejo</a></span></p>
 </dd>
+<dt>Elasticidad y ganancia de un lazo de refuerzo</dt>
+<dd>
+<p>Si la entrada de un stock depende del propio stock por el camino de un lazo, la <strong>elasticidad del lazo</strong> es el porcentaje en que sube la entrada cuando el stock sube 1 %:</p>
+<p><span class="math display">\eta = \frac{\partial\,\text{entrada}}{\partial S}\,\frac{S}{\text{entrada}} \quad [\text{adimensional}].</span></p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/01-refuerzo-exponencial.html#definicion-elasticidad-y-ganancia-de-un-lazo-de-refuerzo">Semana 5 · Lazos de refuerzo y crecimiento exponencial</a></span></p>
+</dd>
 <dt>Emergencia y auto-organización</dt>
 <dd>
 <p>Una propiedad es <strong>emergente</strong> cuando aparece en el nivel colectivo sin estar en ningún agente individual y sin que alguien la haya diseñado. La <strong>auto-organización</strong> es el proceso por el que ese orden surge de reglas locales (Mitchell, 2009). Bedau (1997) llama <strong>emergencia débil</strong> a la que se puede reproducir simulando las reglas de los componentes, aunque no se pueda deducir sin simular, y la distingue de una emergencia fuerte que no se reduciría a esas reglas. La débil es la que interesa en ingeniería: si se entienden las reglas locales, se puede anticipar el patrón.</p>
@@ -867,8 +867,8 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 </dd>
 <dt>Energía firme y margen de energía firme</dt>
 <dd>
-<p>La <strong>energía firme</strong> (ENFICC, energía firme para el Cargo por Confiabilidad) de una planta es la energía que puede entregar de forma continua en hidrología crítica. En el modelo, cada megavatio firme aporta <span class="math inline">e_F = 4{,}68</span> GWh/año y cada megavatio FNCER la mitad de su energía media, <span class="math inline">0{,}5 \cdot c\,fp = 1{,}05</span> GWh/año, con <span class="math inline">c = 8{,}76</span> GWh/(MW·año) y factor de planta <span class="math inline">fp = 0{,}24</span>. El <strong>margen de energía firme</strong> compara la energía firme total con la demanda:</p>
-<p><span class="math display">m_F(t) = \frac{e_F\,K(t) + 0{,}5\,c\,fp\,K_R(t) - D(t)}{D(t)} \quad [\text{adimensional}]</span></p>
+<p>La <strong>energía firme</strong> (ENFICC, energía firme para el Cargo por Confiabilidad) de una planta es la energía que puede entregar de forma continua en hidrología crítica. En el modelo, cada megavatio firme aporta <span class="math inline">e_F = 4{,}68</span> GWh/año (el cuadro 3 del visor la descompone) y cada megavatio FNCER la mitad de su energía media, <span class="math inline">f_R\,c\,fp = 0{,}5 \times 8{,}76 \times 0{,}24 = 1{,}05</span> GWh/año, con <span class="math inline">c = 8{,}76</span> GWh/(MW·año) la energía de un megavatio durante un año, <span class="math inline">fp = 0{,}24</span> el factor de planta FNCER y <span class="math inline">f_R = 0{,}5</span> la <strong>firmeza</strong> que se le reconoce [POR VERIFICAR con la Res. CREG 167 de 2017]. El <strong>margen de energía firme</strong> compara la energía firme total con la demanda:</p>
+<p><span class="math display">m_F(t) = \frac{e_F\,K(t) + f_R\,c\,fp\,K_R(t) - D(t)}{D(t)} \quad [\text{adimensional}]</span></p>
 <p>donde <span class="math inline">K</span> y <span class="math inline">K_R</span> son las capacidades firme y FNCER [MW] y <span class="math inline">D</span> la demanda [GWh/año]. Es el indicador de seguridad de la semana. El margen de capacidad de la semana 4 se sigue calculando, pero no anuncia la escasez.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/10-modelo-politicas.html#definicion-energia-firme-y-margen-de-energia-firme">Semana 5 · El modelo con Cargo por Confiabilidad y FNCER</a></span></p>
 </dd>
@@ -893,6 +893,11 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p>El error de ajuste del curso es la raíz del error cuadrático medio, en las unidades de la variable comparada:</p>
 <p><span class="math display">\text{RMSE} = \sqrt{\frac{1}{n}\sum_{k=1}^{n}\big(y_k^{\text{modelo}} - y_k^{\text{observado}}\big)^2}.</span></p>
 <p><span class="glosario-fuente">Se define en <a href="semana4/08-calibracion.html#definicion-error-de-ajuste-e-identificabilidad">Semana 4 · Calibración: afinar el modelo clavija por clavija</a></span></p>
+</dd>
+<dt>Escenario, corrida, métrica y lectura de una matriz 2 × 2</dt>
+<dd>
+<p>Escriba el modelo como <span class="math inline">\dfrac{d\mathbf{S}}{dt} = f(\mathbf{S}, \boldsymbol{\theta}, \mathbf{u})</span>, donde <span class="math inline">\mathbf{S}(t)</span> son los stocks, <span class="math inline">\boldsymbol{\theta}</span> los parámetros inciertos y <span class="math inline">\mathbf{u}</span> las decisiones. La <strong>situación actual</strong> <span class="math inline">\mathbf{u}_0</span> son las reglas y decisiones vigentes, sin estrategias nuevas.</p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/07-escenarios.html#definicion-escenario-corrida-metrica-y-lectura-de-una-matriz-2-2">Semana 5 · Diseño de escenarios</a></span></p>
 </dd>
 <dt>Estimador de máxima verosimilitud</dt>
 <dd>
@@ -922,15 +927,17 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p>Hay <strong>falacia de composición</strong> cuando se supone que lo que es cierto para cada parte es cierto para el todo. En un mercado, la decisión que conviene a un inversionista con los precios de hoy puede destruir esos precios si todos la toman a la vez.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/07-emergencia.html#definicion-falacia-de-composicion">Semana 1 · Emergencia y falacia de composición</a></span></p>
 </dd>
+<dt>Falla, caja, cobertura y densidad</dt>
+<dd>
+<p>Un <strong>futuro</strong> <span class="math inline">f</span> es una combinación de valores de las incertidumbres X. Sea <span class="math inline">R(e, f)</span> el arrepentimiento de la estrategia <span class="math inline">e</span> en ese futuro, definido en la <a href="semana5/08-robustez-regret.html">página 8</a>: su distancia a la mejor estrategia de <span class="math inline">f</span>, en las unidades de la métrica (no confundir con la R de XLRM, que es el modelo). Con un umbral <span class="math inline">u</span> en las mismas unidades, la estrategia <strong>falla</strong> en <span class="math inline">f</span> cuando</p>
+<p><span class="math display">\phi_e(f) = \mathbf{1}\bigl[R(e, f) &gt; u\bigr] = 1,</span></p>
+<p>donde <span class="math inline">\mathbf{1}[\cdot]</span> vale 1 si la condición se cumple y 0 si no. Sea <span class="math inline">F</span> el conjunto de futuros explorados donde <span class="math inline">e</span> falla. Una <strong>caja</strong> <span class="math inline">B</span> es el conjunto de futuros que cumplen uno o más límites sobre las incertidumbres, como «precio por encima de <span class="math inline">a</span> y cortes de más de <span class="math inline">b</span> días». La caja se juzga con dos fracciones, donde <span class="math inline">|\cdot|</span> cuenta futuros:</p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/09-rdm.html#definicion-falla-caja-cobertura-y-densidad">Semana 5 · Introducción a la toma de decisiones robusta (RDM)</a></span></p>
+</dd>
 <dt>Fragilidad, robustez y antifragilidad</dt>
 <dd>
 <p>Un sistema es <strong>frágil</strong> cuando su respuesta a los choques es cóncava: pierde más con un choque grande que lo que gana con uno pequeño. Es <strong>robusto</strong> cuando los choques casi no lo afectan y <strong>antifrágil</strong> cuando su respuesta es convexa y gana con la variabilidad. Una térmica que vende a precio regulado por debajo de su costo en escasez es frágil ante la sequía.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/08-eventos-extremos.html#definicion-fragilidad-robustez-y-antifragilidad">Semana 1 · Eventos extremos y colas pesadas</a></span></p>
-</dd>
-<dt>Fuerza de un lazo de refuerzo</dt>
-<dd>
-<p>Si la entrada a un stock crece con el propio stock como <span class="math inline">S^{\eta}</span>, la <strong>elasticidad del lazo</strong> <span class="math inline">\eta</span> mide cuánto refuerza: con <span class="math inline">\eta = 1</span> el refuerzo es pleno y la tasa fraccional es constante; con <span class="math inline">0 &lt; \eta &lt; 1</span> el lazo refuerza, pero la tasa fraccional cae a medida que el stock crece; con <span class="math inline">\eta = 0</span> la entrada no depende del stock y el crecimiento es una rampa. Un lazo de refuerzo débil existe y empuja, pero no produce una exponencial.</p>
-<p><span class="glosario-fuente">Se define en <a href="semana5/01-refuerzo-exponencial.html#definicion-fuerza-de-un-lazo-de-refuerzo">Semana 5 · Lazos de refuerzo y crecimiento exponencial</a></span></p>
 </dd>
 <dt>Función de tabla y no linealidad</dt>
 <dd>
@@ -1069,6 +1076,19 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p>En <strong>Mediocristán</strong> las observaciones tienen <strong>colas delgadas</strong>: los valores extremos son raros y ninguno pesa mucho en el total, como en una distribución normal. En <strong>Extremistán</strong> las colas son <strong>pesadas</strong>: los valores extremos son frecuentes y una sola observación puede dominar la suma (Taleb, 2007). La prueba práctica es preguntar si el mayor valor posible cambiaría el promedio de mil observaciones.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/08-eventos-extremos.html#definicion-mediocristan-y-extremistan">Semana 1 · Eventos extremos y colas pesadas</a></span></p>
 </dd>
+<dt>Meta efectiva</dt>
+<dd>
+<p>Si <span class="math inline">n</span> lazos de balance actúan sobre el mismo stock <span class="math inline">S</span>, cada uno hacia su meta <span class="math inline">S_i^*</span> con tiempo de ajuste <span class="math inline">\tau_i</span>,</p>
+<p><span class="math display">\frac{dS}{dt} = \sum_{i=1}^{n} \frac{S_i^* - S}{\tau_i} \quad [\text{unidades de } S \text{ por tiempo}].</span></p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/02-busqueda-de-meta.html#definicion-meta-efectiva">Semana 5 · Lazos de balance: búsqueda de meta</a></span></p>
+</dd>
+<dt>Meta oculta</dt>
+<dd>
+<p>La <strong>meta oculta</strong> de un lazo de balance es el valor <span class="math inline">S^\circ</span> del stock que anula su flujo neto,</p>
+<p><span class="math display">\left.\frac{dS}{dt}\right|_{S = S^\circ} = 0, \qquad \left.\frac{\partial}{\partial S}\left(\frac{dS}{dt}\right)\right|_{S = S^\circ} &lt; 0,</span></p>
+<p>cuando ningún documento la declara. La segunda condición dice que el lazo empuja de vuelta hacia <span class="math inline">S^\circ</span> cuando el stock se aparta. Se encuentra con las ecuaciones o con una simulación, nunca leyendo las normas: sale de las reglas con que deciden los actores.</p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/02-busqueda-de-meta.html#definicion-meta-oculta">Semana 5 · Lazos de balance: búsqueda de meta</a></span></p>
+</dd>
 <dt>Modelo de Bass</dt>
 <dd>
 <p>Sea <span class="math inline">N(t)</span> el número acumulado de adoptantes [techos] de un mercado potencial <span class="math inline">m</span> [techos]. Bass (1969) supone que la probabilidad de adoptar por unidad de tiempo de quien todavía no ha adoptado crece linealmente con la fracción que ya adoptó:</p>
@@ -1126,9 +1146,9 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 </dd>
 <dt>Oscilación por retardo en un lazo de balance</dt>
 <dd>
-<p>Un lazo de búsqueda de meta con tiempo de ajuste <span class="math inline">\tau_a</span> cuya corrección atraviesa un retardo de tiempo medio <span class="math inline">\tau_r</span> se pasa de largo cuando el retardo es comparable con el tiempo de ajuste o mayor. Su periodo es del orden de</p>
+<p>Un lazo de búsqueda de meta con tiempo de ajuste <span class="math inline">\tau_a</span> [tiempo] cuya corrección atraviesa un retardo de tiempo medio <span class="math inline">\tau_r</span> [tiempo] se pasa de largo cuando el retardo es comparable con el tiempo de ajuste o mayor. Su periodo es del orden de</p>
 <p><span class="math display">T \approx 2\pi\sqrt{\tau_a\,\tau_r} \quad [\text{tiempo}],</span></p>
-<p>y dos rasgos deciden si el vaivén se apaga pronto, se apaga despacio o persiste: el cociente <span class="math inline">\tau_r/\tau_a</span> y el <strong>orden del retardo</strong>, es decir, cuántas etapas en fila tiene (semana 4).</p>
+<p>y dos rasgos deciden si el vaivén se apaga pronto, se apaga despacio o persiste: el cociente <span class="math inline">\tau_r/\tau_a</span> [adimensional] y el <strong>orden del retardo</strong>, es decir, cuántas etapas en fila tiene (semana 4).</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/03-balance-retardo-oscilacion.html#definicion-oscilacion-por-retardo-en-un-lazo-de-balance">Semana 5 · Balance más retardo: oscilación</a></span></p>
 </dd>
 </dl>
@@ -1145,6 +1165,13 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <dd>
 <p>La <strong>pirámide de Minto</strong>, propuesta por la consultora Barbara Minto (Minto, 2009), ordena la comunicación de un análisis en tres niveles:</p>
 <p><span class="glosario-fuente">Se define en <a href="semana6/07-comunicar-complejidad.html#definicion-piramide-de-minto-y-resumen-ejecutivo">Semana 6 · Comunicar complejidad a audiencias no técnicas</a></span></p>
+</dd>
+<dt>Plantilla de un lazo de balance con regla de decisión</dt>
+<dd>
+<p>Un stock <span class="math inline">S(t)</span> [unidades] pierde una salida <span class="math inline">S/L</span> y recibe una entrada que pasa antes por una cartera <span class="math inline">C(t)</span> [unidades]:</p>
+<p><span class="math display">\frac{dC}{dt} = d(t) - \frac{C}{\tau}, \qquad \frac{dS}{dt} = \frac{C}{\tau} - \frac{S}{L} \quad [\text{unidades/año}],</span></p>
+<p>con <span class="math inline">\tau</span> el retardo de la cartera [años] y <span class="math inline">L</span> la vida media del stock [años]. Las decisiones siguen una regla</p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/04-politicas-apalancamiento.html#definicion-plantilla-de-un-lazo-de-balance-con-regla-de-decision">Semana 5 · Políticas y puntos de apalancamiento</a></span></p>
 </dd>
 <dt>Polaridad de un enlace</dt>
 <dd>
@@ -1167,10 +1194,37 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p><span class="math display">P(\text{al menos una falla}) = 1 - (1 - p)^n.</span></p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/08-eventos-extremos.html#definicion-probabilidad-de-al-menos-una-falla-y-causa-comun">Semana 1 · Eventos extremos y colas pesadas</a></span></p>
 </dd>
+<dt>Procedimiento de análisis de sensibilidad</dt>
+<dd>
+<p><span class="glosario-fuente">Se define en <a href="semana5/05-sensibilidad.html#definicion-procedimiento-de-analisis-de-sensibilidad">Semana 5 · Análisis de sensibilidad</a></span></p>
+</dd>
+<dt>Procedimiento para construir y leer escenarios</dt>
+<dd>
+<p><span class="glosario-fuente">Se define en <a href="semana5/07-escenarios.html#definicion-procedimiento-para-construir-y-leer-escenarios">Semana 5 · Diseño de escenarios</a></span></p>
+</dd>
+<dt>Procedimiento para decidir con una cantidad incierta</dt>
+<dd>
+<p><span class="glosario-fuente">Se define en <a href="semana5/06-incertidumbre-profunda.html#definicion-procedimiento-para-decidir-con-una-cantidad-incierta">Semana 5 · Riesgo contra incertidumbre profunda</a></span></p>
+</dd>
+<dt>Procedimiento para decidir con una tabla de robustez</dt>
+<dd>
+<p><span class="glosario-fuente">Se define en <a href="semana5/08-robustez-regret.html#definicion-procedimiento-para-decidir-con-una-tabla-de-robustez">Semana 5 · Robustez y arrepentimiento máximo</a></span></p>
+</dd>
+<dt>Procedimiento para diagnosticar un crecimiento</dt>
+<dd>
+<p><span class="glosario-fuente">Se define en <a href="semana5/01-refuerzo-exponencial.html#definicion-procedimiento-para-diagnosticar-un-crecimiento">Semana 5 · Lazos de refuerzo y crecimiento exponencial</a></span></p>
+</dd>
 <dt>Protocolo de calibración por partes</dt>
 <dd>
 <p>Calibrar por partes es estimar cada parte del modelo con su propia serie antes de cerrar los lazos (Sterman, 2000, cap. 21). La herramienta es el <strong>modelo parcial</strong>, que corre las ecuaciones de una parte y toma de los datos todo lo que le llega de las demás. El protocolo del curso tiene siete pasos, y los tres ejemplos de esta página los recorren con los mismos nombres:</p>
 <p><span class="glosario-fuente">Se define en <a href="semana4/08-calibracion.html#definicion-protocolo-de-calibracion-por-partes">Semana 4 · Calibración: afinar el modelo clavija por clavija</a></span></p>
+</dd>
+<dt>Prueba de compatibilidad</dt>
+<dd>
+<p>Sea <span class="math inline">x_{base}(t)</span> cualquier variable del modelo validado y <span class="math inline">x_{ext}(t)</span> la misma variable en el modelo extendido, configurado con las <strong>piezas nuevas apagadas</strong> (sus parámetros en el valor que las anula y sus stocks en cero) y con los parámetros y los stocks iniciales de la base. La extensión es <strong>compatible</strong> con la base si, con el mismo integrador y el mismo paso,</p>
+<p><span class="math display">\Delta_x = \max_t\,\bigl|x_{ext}(t) - x_{base}(t)\bigr| = 0 \quad [\text{unidades de } x]</span></p>
+<p>para toda variable de la base. Con un integrador de paso fijo, como Euler, las dos corridas hacen las mismas operaciones en el mismo orden y la diferencia es cero exacto; cualquier otra cifra delata un cambio en la base, como una condición inicial, una unidad o un término que no se apaga. Al encender después una pieza a la vez, <span class="math inline">\Delta_x</span> mide lo que esa pieza agrega.</p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/11-arco-laboratorio.html#definicion-prueba-de-compatibilidad">Semana 5 · El arco completo: del modelo a la recomendación</a></span></p>
 </dd>
 <dt>Prueba de condiciones extremas</dt>
 <dd>
@@ -1207,6 +1261,11 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <section id="letra-r" class="level2">
 <h2 class="anchored" data-anchor-id="letra-r">R</h2>
 <dl>
+<dt>Recomendación</dt>
+<dd>
+<p>Una <strong>recomendación</strong> tiene tres partes: la <strong>decisión</strong>, qué hacer y con qué cifra; la <strong>condición</strong>, el juicio de valor o el umbral de un parámetro bajo el que la decisión cambiaría, con el valor del umbral; y la <strong>señal</strong>, el indicador observable que obliga a revisarla y en qué dirección. Una frase que solo nombra la estrategia más barata es un veredicto; la recomendación le agrega la condición y la señal.</p>
+<p><span class="glosario-fuente">Se define en <a href="semana5/11-arco-laboratorio.html#definicion-recomendacion-bajo-incertidumbre-profunda">Semana 5 · El arco completo: del modelo a la recomendación</a></span></p>
+</dd>
 <dt>Red bipartita y proyección</dt>
 <dd>
 <p>Una red es <strong>bipartita</strong> si sus nodos se dividen en dos conjuntos <span class="math inline">U</span> y <span class="math inline">W</span> y toda arista une un nodo de <span class="math inline">U</span> con uno de <span class="math inline">W</span>. Se representa con la <strong>matriz de incidencia</strong> <span class="math inline">B</span> de tamaño <span class="math inline">|U| \times |W|</span>, con <span class="math inline">B_{uw} = w_{uw}</span>, el peso de la arista [GWh/año contratados], o 1 si no hay pesos.</p>
@@ -1264,7 +1323,7 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 </dd>
 <dt>Sensibilidad local, univariada y global</dt>
 <dd>
-<p>Sea <span class="math inline">M(\theta_1, \dots, \theta_k)</span> una métrica escalar del modelo y <span class="math inline">\theta^0</span> el caso base.</p>
+<p>Sea <span class="math inline">M(\theta_1, \dots, \theta_k)</span> una métrica escalar del modelo, en las unidades de la decisión, y <span class="math inline">\theta^0</span> el caso base.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/05-sensibilidad.html#definicion-sensibilidad-local-univariada-y-global">Semana 5 · Análisis de sensibilidad</a></span></p>
 </dd>
 <dt>Simulación con el método de Euler</dt>

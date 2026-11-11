@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla de robustez de la semana con seis estrategias, los cuatro mundos de la matriz y la sequía de diseño contra la que asegura el Cargo por Confiabilidad.">
+<meta name="description" content="Cómo decidir sin probabilidades en siete pasos: la métrica, la tabla de desempeño, el criterio maximin, el arrepentimiento por columna, el criterio minimax regret, la prueba de la tabla y la conclusión. Aplicados a un hospital, a un comercializador y a la tabla de la semana, con seis estrategias, los cinco mundos de la página anterior, el valor de la energía no servida y un criterio de confiabilidad.">
 
 <title>Robustez y arrepentimiento máximo – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -680,7 +680,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Cómo decidir sin probabilidades: la tabla de robustez, el arrepentimiento por columna, los criterios maximin y minimax regret, y la tabla de robustez de la semana con seis estrategias, los cuatro mundos de la matriz y la sequía de diseño contra la que asegura el Cargo por Confiabilidad.
+    Cómo decidir sin probabilidades en siete pasos: la métrica, la tabla de desempeño, el criterio maximin, el arrepentimiento por columna, el criterio minimax regret, la prueba de la tabla y la conclusión. Aplicados a un hospital, a un comercializador y a la tabla de la semana, con seis estrategias, los cinco mundos de la página anterior, el valor de la energía no servida y un criterio de confiabilidad.
   </div>
 </div>
 
@@ -700,8 +700,8 @@ window.Quarto = {
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="20" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 19;"><span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {tablaLab4<span class="op">,</span> costoParaDemanda<span class="op">,</span> criteriosRobustez<span class="op">,</span> SEQUIA_DE_DISENO<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="9" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 8;"><span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {tablaLab4<span class="op">,</span> costoParaDemanda<span class="op">,</span> criteriosRobustez<span class="op">,</span> SEQUIA_DE_DISENO<span class="op">,</span> formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
 <div>
@@ -719,7 +719,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 90 a 95 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la idea clave, la intuición, la definición y el protocolo, el ejemplo ●○○, el ejemplo ●●● hasta la tabla de cinco mundos verificada, el error «Calcular el arrepentimiento por fila», las tres primeras preguntas y el resumen, unos 40 min; amplían: el ejemplo ●●○ con su simulador, la segunda predicción del ●●● con la lectura de por qué la sequía no voltea la tabla, la lectura de consultor, los otros cinco errores, las preguntas 4 a 6 y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana5/06-incertidumbre-profunda.html">incertidumbre profunda</a> y <a href="../semana5/07-escenarios.html">diseño de escenarios</a></span></p>
+<p><span class="dato">⏱ 75 a 90 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la idea clave, la intuición, la definición y el procedimiento de siete pasos, el ejemplo ●○○, el ●●○ hasta su conclusión, el ●●● hasta la columna de la sequía y su comparación con la predicción, el error «Calcular el arrepentimiento por fila», las tres primeras preguntas y el resumen, unos 45 min; amplían: los dos simuladores, el umbral del valor de la energía no servida, el criterio de confiabilidad, los demás errores, las preguntas 4 a 6 y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana5/06-incertidumbre-profunda.html">incertidumbre profunda</a> y <a href="../semana5/07-escenarios.html">diseño de escenarios</a></span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -727,8 +727,8 @@ window.Quarto = {
 </div>
 <ul>
 <li>Construir la tabla de desempeño y la de arrepentimiento de un conjunto de estrategias frente a varios escenarios, y aplicar los criterios maximin y minimax regret.</li>
-<li>Explicar por qué un conjunto de escenarios que omite la cola contra la que asegura una política la subvalora, y qué cambia al agregarla.</li>
-<li>Redactar una recomendación honesta, sin fabricar un ganador: con el juicio de valor explícito, condiciones de validez y señales de cambio.</li>
+<li>Explicar por qué un conjunto de escenarios que omite la cola contra la que asegura una política la subvalora, y calcular cuánto tendría que valer el racionamiento para que esa cola cambie el veredicto.</li>
+<li>Aplicar un criterio de confiabilidad como restricción sobre las filas y leer una discrepancia entre criterios como una elección de prudencia que se declara.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
@@ -776,6 +776,7 @@ window.Quarto = {
 </section>
 <section id="del-dibujo-a-la-ecuación" class="level2">
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<p>El paraguas usó tres operaciones: anotar el peor caso de cada fila, restar el campeón de cada columna y tomar el máximo de cada fila. La definición les da nombre y notación.</p>
 <div id="definicion-tabla-de-robustez-maximin-y-minimax-regret" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Tabla de robustez, maximin y minimax regret</span>
@@ -785,39 +786,81 @@ window.Quarto = {
 <p>El criterio <strong>maximin</strong> elige la estrategia con el mejor peor caso, <span class="math inline">\arg\min_e \max_s C(e, s)</span>. El criterio <strong>minimax regret</strong> elige la de menor arrepentimiento máximo, <span class="math inline">\arg\min_e \max_s R(e, s)</span>. Ninguno usa probabilidades; el primero mira el desempeño absoluto y el segundo, el relativo a lo alcanzable en cada mundo.</p>
 </div>
 <p>Por construcción, todo arrepentimiento es mayor o igual que cero: si una tabla muestra uno negativo, se restó el mínimo equivocado. El peor caso de una estrategia depende solo de su fila. El arrepentimiento, en cambio, depende de las demás filas, porque el campeón de cada columna sale del <strong>menú</strong> de estrategias evaluadas; agregar una estrategia que gane en algún mundo puede cambiar el veredicto del minimax regret. Y los dos criterios dependen de las <strong>columnas</strong>: una estrategia que es un seguro solo muestra su valor si alguna columna trae el siniestro contra el que asegura.</p>
-<p>El protocolo, que el ejemplo avanzado ejecuta, tiene seis pasos:</p>
+<p>La definición se aplica siempre en el mismo orden. Los tres ejemplos de la página recorren estos siete pasos con los mismos nombres.</p>
+<div id="definicion-procedimiento-para-decidir-con-una-tabla-de-robustez" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Procedimiento para decidir con una tabla de robustez</span>
+</div>
 <ol type="1">
-<li><strong>Métrica</strong>: una sola cifra por celda, con unidades y componentes a la vista.</li>
-<li><strong>Escenarios completos</strong>: la matriz de incertidumbres profundas y, si alguna estrategia es un seguro, la cola contra la que asegura.</li>
-<li><strong>Celdas</strong>: simular todas las combinaciones de estrategia y escenario con el mismo horizonte.</li>
-<li><strong>Tabla de desempeño</strong>, leída por filas (¿qué estrategia es frágil?) y por columnas (¿qué mundo es duro?).</li>
-<li><strong>Tabla de arrepentimiento</strong> y los dos criterios, con la métrica sometida a estrés.</li>
-<li><strong>Recomendación redactada</strong>: decisión, juicio de valor explícito, condiciones de validez y señal que la haría cambiar.</li>
+<li><strong>Fije la métrica.</strong> Una sola cifra por celda, con su unidad y su sentido (menor es mejor), y con sus componentes a la vista.</li>
+<li><strong>Escriba la tabla de desempeño.</strong> Una fila por estrategia y una columna por escenario; si alguna estrategia es un seguro, una columna con el siniestro contra el que asegura. Cada celda es una corrida, todas con el mismo horizonte.</li>
+<li><strong>Aplique maximin.</strong> Anote el peor caso de cada fila y elija la fila con el menor.</li>
+<li><strong>Calcule el arrepentimiento.</strong> Reste a cada celda el campeón de su columna.</li>
+<li><strong>Aplique minimax regret.</strong> Anote el máximo de cada fila de arrepentimiento y elija la fila con el menor.</li>
+<li><strong>Pruebe la tabla.</strong> Tape o agregue una columna, mueva la celda de la que depende el veredicto o un componente de la métrica, y anote el umbral en que cambia cada criterio.</li>
+<li><strong>Concluya.</strong> Diga qué elige cada criterio, si coinciden, de qué celda o de qué umbral depende el veredicto y qué juicio de valor le queda al decisor.</li>
 </ol>
+</div>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
+<p>Los tres ejemplos recorren los siete pasos y cada uno agrega una dificultad. El básico, con dos estrategias y dos mundos, muestra que un seguro solo se justifica en la columna del siniestro. El intermedio agrega una tercera estrategia y una tercera hidrología, y con ellas la posibilidad de que los dos criterios discrepen: al mover una sola celda, cada criterio cambia de opinión en un umbral distinto. El avanzado lleva el procedimiento a la decisión de la semana, con el modelo, y prueba la tabla de dos maneras nuevas: agregando la cola que falta y restringiendo las filas con un criterio de confiabilidad. Los tres son tablas de decisión; el avanzado es el único que sale de un modelo de stocks y flujos, y por eso es el único con diagrama de Forrester.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ejemplo</th>
+<th style="text-align: left;">Sistema</th>
+<th style="text-align: left;">Qué muestra</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">●○○</td>
+<td style="text-align: left;">la planta de respaldo de un hospital</td>
+<td style="text-align: left;">2 × 2 a mano: los criterios coinciden y el seguro se justifica en la columna del siniestro</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">●●○</td>
+<td style="text-align: left;">la compra de energía de un comercializador</td>
+<td style="text-align: left;">3 × 3: los dos criterios cambian de opinión en umbrales distintos de una misma celda</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">●●●</td>
+<td style="text-align: left;">la política de suficiencia y transición, con el modelo de la semana</td>
+<td style="text-align: left;">6 × 5: qué cambia al agregar la cola, cuánto pesa su valoración y qué pasa al exigir confiabilidad</td>
+</tr>
+</tbody>
+</table>
 <section id="la-planta-de-respaldo-de-un-hospital" class="level3">
 <h3 class="anchored" data-anchor-id="la-planta-de-respaldo-de-un-hospital">La planta de respaldo de un hospital</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Dos estrategias, dos mundos, a mano</span>
 </div>
+<p><strong>Objetivo.</strong> Recorrer los siete pasos en la tabla más pequeña posible y ver que un seguro se juzga en la columna del siniestro.</p>
 <p><strong>Planteamiento.</strong> Un hospital rural decide entre instalar una planta diésel de respaldo o depender solo de la red. Costos anuales en millones de pesos (ilustrativos): con la planta, 40 si la red es confiable (mantenimiento de un equipo que casi no se usa) y 55 si hay cortes frecuentes (combustible); sin planta, 10 con red confiable y 120 con cortes frecuentes (servicios suspendidos y medicamentos perdidos). ¿Qué recomiendan los dos criterios?</p>
 </div>
+<p>El visor aplica los siete pasos uno por uno.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver la tabla</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver la tabla del hospital</span>
 </div>
 <div class="paso">
-<p><strong>Escriba la tabla de costos.</strong></p>
+<p><strong>Fije la métrica.</strong> El costo anual del hospital [millones de COP/año], menor es mejor: mantenimiento y combustible si tiene la planta, servicios suspendidos y medicamentos perdidos si no la tiene.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba la tabla de desempeño.</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th></th>
 <th style="text-align: center;">Red confiable</th>
 <th style="text-align: center;">Cortes frecuentes</th>
-<th style="text-align: center;">Peor caso</th>
 </tr>
 </thead>
 <tbody>
@@ -825,12 +868,10 @@ window.Quarto = {
 <td>Planta diésel</td>
 <td style="text-align: center;">40</td>
 <td style="text-align: center;">55</td>
-<td style="text-align: center;">55</td>
 </tr>
 <tr class="even">
 <td>Solo red</td>
 <td style="text-align: center;">10</td>
-<td style="text-align: center;">120</td>
 <td style="text-align: center;">120</td>
 </tr>
 </tbody>
@@ -840,7 +881,7 @@ window.Quarto = {
 <p><strong>Aplique maximin.</strong> El peor caso de la planta es 55 y el de la red, 120: maximin elige la planta.</p>
 </div>
 <div class="paso">
-<p><strong>Construya el arrepentimiento.</strong> Campeones: 10 con red confiable (solo red) y 55 con cortes (planta).</p>
+<p><strong>Calcule el arrepentimiento.</strong> Campeones: 10 con red confiable (solo red) y 55 con cortes (planta).</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -870,7 +911,10 @@ window.Quarto = {
 <p><strong>Aplique minimax regret.</strong> El arrepentimiento máximo de la planta es 30 y el de la red, 65: también elige la planta. Los dos criterios coinciden porque el castigo de quedarse sin respaldo es mucho mayor que el costo de tenerlo.</p>
 </div>
 <div class="paso">
-<p><strong>Tape una columna.</strong> Si la tabla tuviera solo la columna de red confiable, la planta sería un gasto de 30 millones sin beneficio. Lo que la justifica es la columna de cortes frecuentes: un seguro se evalúa en el mundo del siniestro, y el ejemplo avanzado lo aplica al Cargo por Confiabilidad.</p>
+<p><strong>Pruebe la tabla.</strong> Tape la columna de cortes frecuentes. Con solo la red confiable, la planta sería un gasto de 30 millones al año sin beneficio. Lo que la justifica es la otra columna: un seguro se evalúa en el mundo del siniestro, y el ejemplo avanzado aplica esa prueba al Cargo por Confiabilidad.</p>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «Instale la planta. Su peor año cuesta 55 millones, frente a 120 sin ella. Si la red resulta confiable, la planta habrá costado 30 millones al año de más; si hay cortes frecuentes, quedarse sin ella habría costado 65 de más. La recomendación descansa en la columna de cortes frecuentes: si el operador de red garantizara la continuidad, la planta dejaría de pagarse.»</p>
 </div>
 </div>
 </section>
@@ -880,14 +924,19 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Tres estrategias, tres hidrologías</span>
 </div>
-<p><strong>Planteamiento.</strong> Un comercializador compra la energía del año entrante con tres estrategias: todo en contratos (C), todo en bolsa (B) o mitad y mitad (M). El contrato cuesta 180 COP/kWh en cualquier hidrología. La bolsa cuesta 120 en un año húmedo, 160 en uno normal y 320 en uno seco. La mezcla paga el promedio de las dos. Resuelva la tabla y pruebe qué pasa si la bolsa en año seco fuera menos extrema. Precios ilustrativos.</p>
+<p><strong>Objetivo.</strong> Recorrer los siete pasos con tres estrategias, ver que los dos criterios pueden discrepar y ubicar, moviendo una sola celda, los umbrales en que cambia cada uno.</p>
+<p><strong>Planteamiento.</strong> Un comercializador compra la energía del año entrante con tres estrategias: todo en contratos (C), todo en bolsa (B) o mitad y mitad (M). El contrato cuesta 180 COP/kWh en cualquier hidrología. La bolsa cuesta 120 en un año húmedo, 160 en uno normal y 320 en uno seco. La mezcla paga el promedio de las dos. Precios ilustrativos. ¿Qué estrategia recomiendan los criterios, y qué tan firme es esa recomendación?</p>
 </div>
+<p>Los pasos 1 a 5 resuelven la tabla con los precios del planteamiento.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver y probar la tabla</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 1 a 5: resolver la tabla del comercializador</span>
 </div>
 <div class="paso">
-<p><strong>Complete los costos.</strong> M paga <span class="math inline">(180 + 120)/2 = 150</span>, <span class="math inline">(180 + 160)/2 = 170</span> y <span class="math inline">(180 + 320)/2 = 250</span>.</p>
+<p><strong>Fije la métrica.</strong> El costo medio de la energía comprada en el año [COP/kWh], menor es mejor. Tiene un solo componente, el precio que paga cada estrategia en cada hidrología.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba la tabla de desempeño.</strong> M paga <span class="math inline">(180 + 120)/2 = 150</span>, <span class="math inline">(180 + 160)/2 = 170</span> y <span class="math inline">(180 + 320)/2 = 250</span>.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -993,12 +1042,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Minimax regret también elige C, por poco frente a M.</p>
 </div>
 <div class="paso">
-<p><strong>Lea la cercanía.</strong> C y M quedan a 10 COP/kWh de arrepentimiento máximo. Un veredicto tan estrecho pide revisar de qué celda depende: el arrepentimiento de M viene del año seco.</p>
+<p><strong>Aplique minimax regret.</strong> Los máximos son 60, 140 y 70: minimax regret también elige C, por solo 10 COP/kWh frente a M. Un veredicto tan estrecho pide revisar de qué celda depende, y el arrepentimiento de M viene del año seco.</p>
 </div>
 </div>
+<p>El paso 6 prueba la tabla moviendo justamente esa celda, la bolsa en año seco. Antes de mover el simulador, anote qué espera.</p>
 <div id="pred-seca" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
@@ -1018,11 +1067,11 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La tabla del comercializador</span>
 </div>
-<p>Mueva el costo de la bolsa en año seco de punta a punta y anote en qué valores cambia cada criterio.</p>
+<p>Ponga la bolsa en año seco en 240 y compare con su predicción. Después muévala de punta a punta y anote en qué valores cambia cada criterio.</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="217" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 216;"><span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>viewof secaK <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">160</span><span class="op">,</span> <span class="dv">500</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Bolsa en año seco [COP/kWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="239" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 238;"><span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>viewof secaK <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">160</span><span class="op">,</span> <span class="dv">500</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">320</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Bolsa en año seco [COP/kWh]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
@@ -1033,13 +1082,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="222" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 221;"><span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>comercializadorK <span class="op">=</span> {</span>
-<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> contratos <span class="op">=</span> [<span class="dv">180</span><span class="op">,</span> <span class="dv">180</span><span class="op">,</span> <span class="dv">180</span>]<span class="op">,</span> bolsa <span class="op">=</span> [<span class="dv">120</span><span class="op">,</span> <span class="dv">160</span><span class="op">,</span> secaK]<span class="op">;</span></span>
-<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mezcla <span class="op">=</span> contratos<span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> j) <span class="kw">=&gt;</span> (c <span class="op">+</span> bolsa[j]) <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
-<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nombres <span class="op">=</span> [<span class="st">"Contratos (C)"</span><span class="op">,</span> <span class="st">"Bolsa (B)"</span><span class="op">,</span> <span class="st">"Mezcla (M)"</span>]<span class="op">;</span></span>
-<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> matriz <span class="op">=</span> [contratos<span class="op">,</span> bolsa<span class="op">,</span> mezcla]<span class="op">;</span></span>
-<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {nombres<span class="op">,</span> matriz<span class="op">,</span> <span class="op">...</span><span class="fu">criteriosRobustez</span>(matriz)}<span class="op">;</span></span>
-<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="244" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 243;"><span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a>comercializadorK <span class="op">=</span> {</span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> contratos <span class="op">=</span> [<span class="dv">180</span><span class="op">,</span> <span class="dv">180</span><span class="op">,</span> <span class="dv">180</span>]<span class="op">,</span> bolsa <span class="op">=</span> [<span class="dv">120</span><span class="op">,</span> <span class="dv">160</span><span class="op">,</span> secaK]<span class="op">;</span></span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mezcla <span class="op">=</span> contratos<span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> j) <span class="kw">=&gt;</span> (c <span class="op">+</span> bolsa[j]) <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nombres <span class="op">=</span> [<span class="st">"Contratos (C)"</span><span class="op">,</span> <span class="st">"Bolsa (B)"</span><span class="op">,</span> <span class="st">"Mezcla (M)"</span>]<span class="op">;</span></span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> matriz <span class="op">=</span> [contratos<span class="op">,</span> bolsa<span class="op">,</span> mezcla]<span class="op">;</span></span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {nombres<span class="op">,</span> matriz<span class="op">,</span> <span class="op">...</span><span class="fu">criteriosRobustez</span>(matriz)}<span class="op">;</span></span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -1050,13 +1099,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="233" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 232;"><span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="max-width:40rem; font-size:0.9rem"&gt;</span></span>
-<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Húmeda&lt;/th&gt;&lt;th&gt;Normal&lt;/th&gt;&lt;th&gt;Seca&lt;/th&gt;&lt;th&gt;Peor caso&lt;/th&gt;&lt;th&gt;Arrepentimiento máximo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
-<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span><span class="op">.</span><span class="fu">map</span>((n<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;</span></span>
-<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>n<span class="sc">}</span><span class="vs">&lt;/td&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">matriz</span>[i]<span class="op">.</span><span class="fu">map</span>((c) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(c)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
-<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> comercializadorK<span class="op">.</span><span class="at">maximin</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#945A00"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(comercializadorK<span class="op">.</span><span class="at">peorCaso</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> comercializadorK<span class="op">.</span><span class="at">minimaxRegret</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#5434A0"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(comercializadorK<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
-<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="255" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 254;"><span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="max-width:40rem; font-size:0.9rem"&gt;</span></span>
+<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Húmeda&lt;/th&gt;&lt;th&gt;Normal&lt;/th&gt;&lt;th&gt;Seca&lt;/th&gt;&lt;th&gt;Peor caso&lt;/th&gt;&lt;th&gt;Arrepentimiento máximo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span><span class="op">.</span><span class="fu">map</span>((n<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;</span></span>
+<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>n<span class="sc">}</span><span class="vs">&lt;/td&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">matriz</span>[i]<span class="op">.</span><span class="fu">map</span>((c) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(c)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> comercializadorK<span class="op">.</span><span class="at">maximin</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#945A00"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(comercializadorK<span class="op">.</span><span class="at">peorCaso</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> comercializadorK<span class="op">.</span><span class="at">minimaxRegret</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#5434A0"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(comercializadorK<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="expression">
@@ -1067,10 +1116,10 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="244" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 243;"><span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Maximin elige&lt;b&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span>[comercializadorK<span class="op">.</span><span class="at">maximin</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Minimax regret elige&lt;b&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span>[comercializadorK<span class="op">.</span><span class="at">minimaxRegret</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="266" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 265;"><span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Maximin elige&lt;b&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span>[comercializadorK<span class="op">.</span><span class="at">maximin</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Minimax regret elige&lt;b&gt;</span><span class="sc">${</span>comercializadorK<span class="op">.</span><span class="at">nombres</span>[comercializadorK<span class="op">.</span><span class="at">minimaxRegret</span>]<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
@@ -1082,9 +1131,10 @@ window.Quarto = {
 <p>Criterios de robustez calculados en el navegador; costos ilustrativos. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Un empate se resuelve a favor de la fila de arriba.</p>
 </div>
 </div>
+<p>El visor compara el simulador con su predicción, ubica los umbrales de cada criterio y concluye.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el cambio</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 6 y 7: probar la tabla y concluir</span>
 </div>
 <div class="paso">
 <p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-seca">(la opción que eligió arriba)</span>. Con la bolsa seca en 240, la mezcla paga 210 en ese año y su arrepentimiento máximo baja a 30, frente a 60 de los contratos y 60 de la bolsa: minimax regret elige la mezcla. Maximin sigue con los contratos, porque su peor caso (180) es menor que el de la mezcla (210) y el de la bolsa (240). La respuesta esperada era «maximin con los contratos y minimax regret con la mezcla».</p>
@@ -1096,9 +1146,75 @@ window.Quarto = {
 <p><strong>Ubique los dos umbrales del minimax regret.</strong> Hasta 210 elige la bolsa: su arrepentimiento en año seco, la bolsa seca menos 180 (o cero, si la bolsa seca es más barata que el contrato), no pasa de 30, el máximo que la mezcla acumula en año húmedo; en 210 empatan y gana la fila de arriba. Entre 210 y 300 elige la mezcla, cuyo arrepentimiento en año seco es la mitad del de la bolsa. Desde 300 elige los contratos, porque ese arrepentimiento de la mezcla alcanza los 60 de los contratos.</p>
 </div>
 <div class="paso">
-<p><strong>Saque la lección.</strong> El regret perdona una apuesta mientras ningún mundo la castigue demasiado; el maximin solo mira el peor mundo. Los dos criterios cambian de opinión en lugares distintos, y elegir uno es elegir qué clase de prudencia se le debe al cliente. Esa elección se declara.</p>
+<p><strong>Concluya.</strong> «Con los precios de hoy, compre todo en contratos: es la única estrategia cuyo peor año cuesta 180 COP/kWh, y su arrepentimiento máximo (60, si el año sale húmedo) queda por debajo del de la mezcla (70, si sale seco). La ventaja es estrecha y depende de una sola celda, el precio de bolsa en un año seco: si quedara entre 210 y 300, la mezcla dejaría menos arrepentimiento, aunque su peor año costaría más. Vigile la bolsa de los años secos recientes y la oferta de contratos, y elija con el cliente la clase de prudencia: maximin protege el peor año; minimax regret, la distancia a lo mejor que se podía hacer.» Los dos criterios cambian de opinión en lugares distintos, y elegir uno es un juicio de valor que se declara.</p>
 </div>
 </div>
+</section>
+<section id="las-variables-del-modelo-que-usa-esta-página" class="level3">
+<h3 class="anchored" data-anchor-id="las-variables-del-modelo-que-usa-esta-página">Las variables del modelo que usa esta página</h3>
+<p>El ejemplo avanzado usa el modelo de la semana. Estas son las variables que aparecen, para tenerlas a mano:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Símbolo</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Unidad</th>
+<th style="text-align: left;">Qué mide</th>
+<th style="text-align: left;">Dónde se presentó</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">p</span></td>
+<td style="text-align: left;">precio de bolsa</td>
+<td style="text-align: left;">COP/kWh del modelo</td>
+<td style="text-align: left;">el precio que fija el mercado; 150 con hidrología media</td>
+<td style="text-align: left;"><a href="../semana4/04-auxiliares-no-linealidad.html">semana 4, auxiliares</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">D</span></td>
+<td style="text-align: left;">demanda</td>
+<td style="text-align: left;">GWh/año</td>
+<td style="text-align: left;">la energía que pide el país</td>
+<td style="text-align: left;"><a href="../semana4/09-modelo-completo.html">semana 4, modelo completo</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">déficit</td>
+<td style="text-align: left;">energía no servida</td>
+<td style="text-align: left;">GWh/año</td>
+<td style="text-align: left;">la demanda que el embalse y la térmica no alcanzan a cubrir</td>
+<td style="text-align: left;"><a href="../semana4/09-modelo-completo.html">semana 4, modelo completo</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">m_F</span></td>
+<td style="text-align: left;">margen de energía firme</td>
+<td style="text-align: left;">adimensional</td>
+<td style="text-align: left;">la energía firme del parque sobre la demanda, menos 1</td>
+<td style="text-align: left;"><a href="../semana5/04-politicas-apalancamiento.html">palancas de política</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cargo</td>
+<td style="text-align: left;">Cargo por Confiabilidad</td>
+<td style="text-align: left;">COP/kWh del modelo</td>
+<td style="text-align: left;">la prima que paga la demanda por las obligaciones de energía firme</td>
+<td style="text-align: left;"><a href="../semana5/04-politicas-apalancamiento.html">palancas de política</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">opción</td>
+<td style="text-align: left;">pago de la opción</td>
+<td style="text-align: left;">COP/kWh del modelo</td>
+<td style="text-align: left;">lo que la demanda deja de pagar cuando la bolsa supera el precio de escasez, 400</td>
+<td style="text-align: left;"><a href="../semana5/04-politicas-apalancamiento.html">palancas de política</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">contratos</td>
+<td style="text-align: left;">costo neto de los contratos FNCER</td>
+<td style="text-align: left;">COP/kWh del modelo</td>
+<td style="text-align: left;">el precio pactado en la subasta FNCER menos lo que captura esa energía en bolsa</td>
+<td style="text-align: left;"><a href="../semana5/04-politicas-apalancamiento.html">palancas de política</a></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="la-tabla-de-robustez-de-la-semana" class="level3">
 <h3 class="anchored" data-anchor-id="la-tabla-de-robustez-de-la-semana">La tabla de robustez de la semana</h3>
@@ -1106,27 +1222,245 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Seis estrategias, cuatro mundos y una sequía de diseño</span>
 </div>
-<p><strong>Planteamiento.</strong> Enfrente las seis estrategias de la semana a los mundos de la página anterior con el modelo de la semana y 40 años de horizonte (año 0 ≈ 2015). Cada estrategia es un paquete de política sostenido los 40 años:</p>
-<ul>
-<li><strong>mercado solo</strong>: mercado de solo energía, sin Cargo por Confiabilidad ni subastas;</li>
-<li><strong>seguro CxC</strong>: Cargo por Confiabilidad como opción, con un cargo administrado de 35 COP/kWh del modelo, 0,23 del precio de referencia, unos 16,5 USD/MWh de 2019 (calibrado con el cargo de la subasta de 2019 [POR VERIFICAR]);</li>
-<li><strong>CxC por subasta</strong>: una subasta compra energía firme cuando la proyectada no cubre la demanda con un 5 % de margen, y su cargo sigue una curva de demanda;</li>
-<li><strong>impulso FNCER</strong>: subasta de contratos de largo plazo de 300 MW/año, contratos por diferencias de 20 años al costo de cada cosecha;</li>
-<li><strong>paquete</strong>: CxC por subasta más 150 MW/año de subasta FNCER;</li>
-<li><strong>cargo 15 + FNCER 300</strong>: cargo administrado de 15 COP/kWh del modelo, unos 7 USD/MWh de 2019, menos de la mitad del cargo real (los 15 USD/MWh de la subasta de 2019 serían 32 en la escala del modelo), más 300 MW/año de subasta FNCER.</li>
-</ul>
-<p>La métrica es el <strong>costo medio para la demanda</strong> de los 40 años [COP/kWh del modelo]:</p>
-<p><span class="math display">p_{\text{demanda}} = p_{\text{bolsa}} - \text{opción} + \text{cargo} + \text{contratos}</span></p>
-<p><span class="math display">\text{costo} = \overline{\,p_{\text{demanda}} + V\,\frac{\text{déficit}}{\text{demanda}}\,}</span></p>
-<p>La barra es la media temporal de los 40 años. La opción descuenta lo que la demanda cubierta deja de pagar cuando la bolsa supera el precio de escasez (400 en la escala del modelo); el cargo es el pago por las obligaciones de energía firme; los contratos, la diferencia entre el precio pactado y el que captura la energía FNCER. El déficit es la energía que el despacho no alcanza a servir [GWh/año], y <span class="math inline">V</span> la valora a 2 100 COP/kWh del modelo, unas 14 veces el precio de referencia: es el costo del primer escalón de racionamiento que usaba la UPME, 0,503 USD/kWh (UPME, 2010), que con la TRM de 2006 equivalía a 5,28 veces el precio de escasez de ese año; 5,28 × 400 ≈ 2 100 [POR VERIFICAR con el costo de racionamiento vigente de la UPME].</p>
-<p>Los mundos son los cuatro de la matriz (Viento a favor, Contrarreloj, Siesta y Tormenta) y la <strong>sequía de diseño</strong>: aportes al 45 % de la media durante dos años desde el año 20, que es la hidrología crítica con que se calcula la energía firme, con demanda que crece 4,5 % al año, transición tecnológica lenta y sin El Niño recurrente.</p>
+<p><strong>Objetivo.</strong> Aplicar los siete pasos a la decisión de la semana con el modelo, ver qué cambia cuando la tabla agrega la cola contra la que asegura el Cargo por Confiabilidad y medir cuánto tendría que valer el racionamiento para que esa cola mande.</p>
+<p><strong>Planteamiento.</strong> El regulador elige la política de suficiencia y transición de los próximos 40 años (año 0 ≈ 2015). Tiene las seis estrategias y los cinco mundos que presentó la <a href="../semana5/07-escenarios.html">página anterior</a>; cada estrategia es un paquete de política que se sostiene los 40 años y cada mundo, un futuro fijo. No hay probabilidades para los mundos. ¿Qué estrategia es robusta, y qué cambia cuando la tabla incluye la sequía contra la que asegura el Cargo?</p>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../diagramas/svg/s5-08-forrester-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Forrester del modelo de la semana, comprimido como en la página anterior. En gris, lo que mueven los mundos, que forman las columnas. En ámbar, lo nuevo de esta página: las palancas del regulador, que forman las filas y entran por los inicios de las dos tuberías y por el cargo y los contratos que paga la demanda, y el término de racionamiento de la métrica, el déficit valorado a V. Stocks: carteras y capacidades firme y FNCER, demanda y energía embalsada; auxiliares: precio esperado, costo FNCER, precio de bolsa, déficit y costo medio para la demanda; constante: V."><img src="../diagramas/svg/s5-08-forrester-1.svg" class="img-fluid figure-img" loading="lazy" alt="Forrester comprimido del modelo de la semana. Arriba, la tubería firme: inicios, cartera firme P, capacidad firme K y retiros; a los inicios llegan el precio esperado y, en ámbar, el Cargo por Confiabilidad o la subasta de energía firme. Debajo, la tubería FNCER con su cartera y su capacidad; a los inicios llegan, en ámbar, la subasta FNCER y el costo FNCER, al que apunta en gris la caída de la parte global del costo, 0,08 o 0,20 por año. Más abajo, la demanda con su crecimiento y la energía embalsada con aportes y turbinamiento; a los dos apuntan en gris los valores de los mundos: g de 2 o 4,5 % por año, El Niño cada 7 o 4 años con aportes al 70 o 60 %, y la sequía de diseño al 45 %. A la derecha, el precio de bolsa alimenta el precio esperado y el costo medio para la demanda; en ámbar llegan a ese costo el cargo y los contratos de las palancas, el déficit, que depende del turbinamiento y de la demanda, y V igual a 2 100 COP/kWh, el valor de la energía no servida."></a></p>
+<figcaption>Forrester del modelo de la semana, comprimido como en la página anterior. En gris, lo que mueven los mundos, que forman las columnas. En ámbar, lo nuevo de esta página: las palancas del regulador, que forman las filas y entran por los inicios de las dos tuberías y por el cargo y los contratos que paga la demanda, y el término de racionamiento de la métrica, el déficit valorado a <span class="math inline">V</span>. Stocks: carteras y capacidades firme y FNCER, demanda y energía embalsada; auxiliares: precio esperado, costo FNCER, precio de bolsa, déficit y costo medio para la demanda; constante: <span class="math inline">V</span>.</figcaption>
+</figure>
+</div>
+<p><strong>Los mundos de la semana</strong> son los cinco de la <a href="../semana5/07-escenarios.html">página anterior</a>, en el mismo orden y con los mismos valores; cada episodio de El Niño dura año y medio. Forman las columnas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mundo</th>
+<th style="text-align: center;">Caída de la parte global [1/año]</th>
+<th style="text-align: center;">Demanda [%/año]</th>
+<th style="text-align: center;">El Niño</th>
+<th style="text-align: center;">Aportes en El Niño</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Viento a favor</td>
+<td style="text-align: center;">0,20</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">cada 7 años</td>
+<td style="text-align: center;">70 %</td>
+</tr>
+<tr class="even">
+<td>Contrarreloj</td>
+<td style="text-align: center;">0,20</td>
+<td style="text-align: center;">4,5</td>
+<td style="text-align: center;">cada 4 años</td>
+<td style="text-align: center;">60 %</td>
+</tr>
+<tr class="odd">
+<td>Siesta</td>
+<td style="text-align: center;">0,08</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">cada 7 años</td>
+<td style="text-align: center;">70 %</td>
+</tr>
+<tr class="even">
+<td>Tormenta</td>
+<td style="text-align: center;">0,08</td>
+<td style="text-align: center;">4,5</td>
+<td style="text-align: center;">cada 4 años</td>
+<td style="text-align: center;">60 %</td>
+</tr>
+<tr class="odd">
+<td>Sequía de diseño</td>
+<td style="text-align: center;">0,08</td>
+<td style="text-align: center;">4,5</td>
+<td style="text-align: center;">una sequía de 2 años desde el año 20</td>
+<td style="text-align: center;">45 %</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Las estrategias de la semana</strong> forman las filas. Son las seis que presentó la página anterior, con los mismos nombres y valores; la tabla dice además qué palanca usa cada una y qué cambia en el modelo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Estrategia</th>
+<th style="text-align: left;">Palanca</th>
+<th style="text-align: left;">Qué cambia en el modelo</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">mercado solo</td>
+<td style="text-align: left;">ninguna</td>
+<td style="text-align: left;">los firmes invierten con el precio esperado de la bolsa y las FNCER con su costo; no hay cargo ni subastas</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">seguro CxC</td>
+<td style="text-align: left;">cargo administrado</td>
+<td style="text-align: left;">la capacidad firme recibe un cargo fijo por su energía firme comprometida, y la demanda recibe la opción</td>
+<td style="text-align: left;">35 COP/kWh del modelo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CxC por subasta</td>
+<td style="text-align: left;">subasta de energía firme con meta</td>
+<td style="text-align: left;">compra energía firme cuando la proyectada no cubre la demanda con el margen meta; el cargo sigue una curva de demanda</td>
+<td style="text-align: left;">5 % de margen</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">impulso FNCER</td>
+<td style="text-align: left;">subasta FNCER</td>
+<td style="text-align: left;">suma inicios FNCER con contratos por diferencias de 20 años al costo de cada cosecha</td>
+<td style="text-align: left;">300 MW/año</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">paquete</td>
+<td style="text-align: left;">subasta de energía firme y subasta FNCER</td>
+<td style="text-align: left;">las dos anteriores a la vez</td>
+<td style="text-align: left;">5 % de margen y 150 MW/año</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cargo 15 + FNCER 300</td>
+<td style="text-align: left;">cargo bajo y subasta FNCER</td>
+<td style="text-align: left;">un cargo administrado bajo más la subasta FNCER</td>
+<td style="text-align: left;">15 COP/kWh del modelo y 300 MW/año</td>
+</tr>
+</tbody>
+</table>
+<p>Los dos cargos se traducen a dólares con la conversión de la <a href="../semana5/04-politicas-apalancamiento.html">página de palancas</a>: el cargo de la subasta de 2019, unos 15,1 USD/MWh, era el 21 % de la bolsa media de ese año, lo que en la escala del modelo son 32 COP/kWh. El seguro CxC lo redondea a 35, el 23 % del precio de referencia, y equivale a unos 16,5 USD/MWh de 2019; con la misma conversión, el cargo bajo de 15 son unos 7 USD/MWh, menos de la mitad del cargo real [POR VERIFICAR la tasa de cambio con el Banco de la República].</p>
+<p>Falta el paso 1, la métrica. La tabla usa el <strong>costo medio para la demanda</strong> de los 40 años [COP/kWh del modelo], la misma cifra de las páginas de <a href="../semana5/02-busqueda-de-meta.html">búsqueda de meta</a> y de <a href="../semana5/04-politicas-apalancamiento.html">palancas</a>: lo que la demanda paga por cada kWh, que es la bolsa, menos lo que le devuelve la opción, más el cargo y el costo neto de los contratos. Aquí se le suma un término de racionamiento, porque en la sequía de diseño el despacho no alcanza a servir toda la demanda:</p>
+<p><span class="math display">\text{costo} = \underbrace{\overline{p - \text{opción} + \text{cargo} + \text{contratos}}}_{\text{costo sin racionamiento}} \;+\; V\,\underbrace{\overline{\left(\frac{\text{déficit}}{D}\right)}}_{\text{energía no servida media}} \quad [\text{COP/kWh}].</span></p>
+<p>La barra es la media de los 40 años. El segundo factor del término nuevo es la <strong>energía no servida media</strong>: la fracción de la demanda que quedó sin servir, promediada en los 40 años [adimensional]. <span class="math inline">V</span> es el <strong>valor de la energía no servida</strong>, lo que pierde la sociedad por cada kWh racionado; el análisis lo fija en <strong>2 100 COP/kWh del modelo</strong>, unas 14 veces el precio de referencia de la bolsa y 5,3 veces el precio de escasez del modelo (400). Las unidades cierran: COP/kWh por una fracción da COP/kWh.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="De dónde sale V = 2 100 COP/kWh del modelo">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>De dónde sale V = 2 100 COP/kWh del modelo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La UPME valoraba el primer escalón de racionamiento (hasta el 1,5 % de la demanda) en 0,503 USD/kWh (UPME, 2010, <em>Actualización de los costos de racionamiento de electricidad y gas natural en Colombia</em>). Con la tasa de cambio media de 2006, 2 359 COP/USD, son 1 187 COP/kWh, 5,28 veces el precio de escasez de ese año (224,67 COP/kWh, XM). El modelo conserva esa proporción con su propio precio de escasez: <span class="math inline">5{,}28 \times 400 \approx 2\,100</span> COP/kWh del modelo. El escalón de racionamientos profundos (del 5 al 90 % de la demanda), 0,88 USD/kWh, daría unos 3 700 con la misma cuenta. [POR VERIFICAR con el costo incremental operativo de racionamiento vigente de la UPME.]</p>
+</div>
+</div>
+</div>
+<p>Con la métrica fija, los pasos 2 a 5 se hacen primero con tres estrategias, una por idea: el mercado sin ayuda, el seguro de firmeza y el impulso a las FNCER. Se resuelven como la tabla del comercializador; después se agregan las otras tres filas.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Primero, la tabla de cuatro mundos</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 2 a 6: la tabla de los cuatro mundos</span>
 </div>
 <div class="paso">
-<p><strong>Lea la tabla de los cuatro mundos de la matriz.</strong> Costo medio para la demanda [COP/kWh del modelo], calculado con Python (RK45):</p>
+<p><strong>Escriba la tabla de desempeño.</strong> Costo medio para la demanda [COP/kWh del modelo] en los cuatro mundos de la matriz, calculado con el modelo:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th style="text-align: center;">Viento a favor</th>
+<th style="text-align: center;">Contrarreloj</th>
+<th style="text-align: center;">Siesta</th>
+<th style="text-align: center;">Tormenta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mercado solo</td>
+<td style="text-align: center;">151,29</td>
+<td style="text-align: center;">163,28</td>
+<td style="text-align: center;">151,39</td>
+<td style="text-align: center;">163,29</td>
+</tr>
+<tr class="even">
+<td>seguro CxC</td>
+<td style="text-align: center;">162,34</td>
+<td style="text-align: center;">175,01</td>
+<td style="text-align: center;">162,54</td>
+<td style="text-align: center;">175,17</td>
+</tr>
+<tr class="odd">
+<td>impulso FNCER</td>
+<td style="text-align: center;">148,57</td>
+<td style="text-align: center;">161,91</td>
+<td style="text-align: center;">148,97</td>
+<td style="text-align: center;">162,08</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Aplique maximin.</strong> Los peores casos son 163,29 (mercado solo, en Tormenta), 175,17 (seguro CxC, en Tormenta) y 162,08 (impulso FNCER, en Tormenta). Maximin elige el impulso FNCER.</p>
+</div>
+<div class="paso">
+<p><strong>Calcule el arrepentimiento.</strong> El impulso FNCER es el campeón de las cuatro columnas (148,57; 161,91; 148,97 y 162,08), así que su fila es toda cero. Restando esos campeones:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th style="text-align: center;">Viento a favor</th>
+<th style="text-align: center;">Contrarreloj</th>
+<th style="text-align: center;">Siesta</th>
+<th style="text-align: center;">Tormenta</th>
+<th style="text-align: center;">Máximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mercado solo</td>
+<td style="text-align: center;">2,72</td>
+<td style="text-align: center;">1,37</td>
+<td style="text-align: center;">2,42</td>
+<td style="text-align: center;">1,21</td>
+<td style="text-align: center;">2,72</td>
+</tr>
+<tr class="even">
+<td>seguro CxC</td>
+<td style="text-align: center;">13,77</td>
+<td style="text-align: center;">13,10</td>
+<td style="text-align: center;">13,57</td>
+<td style="text-align: center;">13,09</td>
+<td style="text-align: center;">13,77</td>
+</tr>
+<tr class="odd">
+<td>impulso FNCER</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Aplique minimax regret.</strong> Los máximos son 2,72; 13,77 y 0: minimax regret también elige el impulso FNCER. Cuando una estrategia es la más barata en todas las columnas, <strong>domina</strong>, y los dos criterios coinciden sin discusión.</p>
+</div>
+<div class="paso">
+<p><strong>Agregue las otras tres filas.</strong> Ninguna le quita al impulso FNCER el primer lugar en alguna columna, de modo que los campeones no cambian y los veredictos tampoco.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -1165,7 +1499,7 @@ window.Quarto = {
 <td style="text-align: center;">162,54</td>
 <td style="text-align: center;">175,17</td>
 <td style="text-align: center;">175,17</td>
-<td style="text-align: center;">13,78</td>
+<td style="text-align: center;">13,77</td>
 </tr>
 <tr class="odd">
 <td>CxC por subasta</td>
@@ -1183,7 +1517,7 @@ window.Quarto = {
 <td style="text-align: center;"><strong>148,97</strong></td>
 <td style="text-align: center;"><strong>162,08</strong></td>
 <td style="text-align: center;">162,08</td>
-<td style="text-align: center;">0,00</td>
+<td style="text-align: center;">0</td>
 </tr>
 <tr class="odd">
 <td>paquete</td>
@@ -1192,7 +1526,7 @@ window.Quarto = {
 <td style="text-align: center;">153,31</td>
 <td style="text-align: center;">164,79</td>
 <td style="text-align: center;">164,79</td>
-<td style="text-align: center;">4,61</td>
+<td style="text-align: center;">4,60</td>
 </tr>
 <tr class="even">
 <td>cargo 15 + FNCER 300</td>
@@ -1201,22 +1535,20 @@ window.Quarto = {
 <td style="text-align: center;">153,21</td>
 <td style="text-align: center;">166,75</td>
 <td style="text-align: center;">166,75</td>
-<td style="text-align: center;">4,66</td>
+<td style="text-align: center;">4,67</td>
 </tr>
 </tbody>
 </table>
+<p>Las restas se hacen con la tabla redondeada; el simulador, que resta sin redondear, puede diferir en una centésima.</p>
 </div>
 <div class="paso">
-<p><strong>Aplique los dos criterios.</strong> El impulso FNCER es el más barato en las cuatro columnas: su fila de arrepentimiento es toda cero y su peor caso (162,08, en Tormenta) es el menor. Maximin y minimax regret lo eligen. Cuando una estrategia domina, los criterios coinciden, y la pregunta útil pasa a ser dónde dejaría de dominar.</p>
+<p><strong>Mire el seguro.</strong> El seguro CxC queda entre 13,1 y 13,8 COP/kWh por encima del impulso FNCER y entre 11,1 y 11,9 por encima del mercado solo. Compra mucho margen de energía firme (su <span class="math inline">m_F</span> mínimo queda en 11 o 12 %, frente a 2 a 4 % del mercado solo) y abarata la bolsa 23 o 24 COP/kWh, pero la demanda paga 35 de cargo. En ninguno de los cuatro mundos se raciona, y la opción que el seguro compra casi no vale: en el mercado solo, lo que la bolsa pasa por encima del precio de escasez suma de 0 a 1,3 COP/kWh en promedio. Leída sola, la tabla dice que el Cargo por Confiabilidad es dinero perdido.</p>
 </div>
 <div class="paso">
-<p><strong>Mire el seguro.</strong> El seguro CxC queda entre 13,1 y 13,8 COP/kWh por encima del impulso FNCER y entre 11,1 y 11,9 por encima del mercado solo. Compra mucho margen de energía firme (su mínimo queda en 11–12 %, frente a 2–4 % del mercado solo) y abarata la bolsa 23 o 24 COP/kWh, pero la demanda paga 35 de cargo. En ninguno de los cuatro mundos se raciona, y la opción que el seguro compra casi no vale: en el mercado solo, lo que la bolsa pasa por encima del precio de escasez suma de 0 a 1,3 COP/kWh en promedio. Leída sola, la tabla dice que el Cargo por Confiabilidad es dinero perdido.</p>
-</div>
-<div class="paso">
-<p><strong>Diagnostique el conjunto de escenarios.</strong> El Cargo por Confiabilidad es un seguro contra una sequía que deje al sistema sin energía, y su energía firme se calcula con una hidrología crítica: aportes al 45 % de la media durante dos años. El mundo más duro de la matriz, Tormenta, trae El Niño de año y medio con aportes al 60 %, y la térmica y el embalse lo cubren. La tabla omite el siniestro contra el que asegura la póliza. <strong>Un análisis de robustez que omite la cola contra la que asegura una política la subvalora por diseño</strong>: el conjunto de escenarios decide si un seguro parece valioso. El remedio es agregar la sequía de diseño como quinta columna.</p>
+<p><strong>Pruebe las columnas.</strong> El Cargo por Confiabilidad es un seguro contra una sequía que deje al sistema sin energía, y su energía firme se calcula con una hidrología crítica: aportes al 45 % de la media durante dos años. El mundo más duro de la matriz, Tormenta, trae episodios de El Niño de año y medio con aportes al 60 %, y la térmica y el embalse los cubren. La tabla omite el siniestro contra el que asegura la póliza. <strong>Un análisis de robustez que omite la cola contra la que asegura una política la subvalora por diseño.</strong> El remedio es el paso 6 del procedimiento: agregar la sequía de diseño como quinta columna.</p>
 </div>
 </div>
-<p>Antes de agregar la columna, anote dos predicciones.</p>
+<p>Antes de agregar la columna, anote una predicción.</p>
 <div id="pred-quinto-mundo" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
@@ -1235,148 +1567,16 @@ window.Quarto = {
 <p>Minimax regret pasa a «cargo 15 + FNCER 300» y maximin sigue igual.</p>
 </div>
 </div>
-<div id="pred-racionamiento-doble" class="prediccion caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Prediga antes de seguir</span>
-</div>
-<p>Si la energía no servida se valorara al doble, 4 200 COP/kWh del modelo, ¿cambiaría alguno de los dos veredictos de la tabla de cinco mundos?</p>
-<div class="opcion">
-<p>Sí: los dos pasarían a una estrategia con mecanismo de firmeza.</p>
-</div>
-<div class="opcion">
-<p>No: ninguno de los dos cambiaría.</p>
-</div>
-<div class="opcion">
-<p>Sí: solo minimax regret pasaría a una estrategia con firmeza.</p>
-</div>
-</div>
-<div class="simulador caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tabla de robustez de la semana</span>
-</div>
-<p>Con los valores iniciales, compare las tablas con su primera predicción. Después: (1) pase a los cuatro mundos y vuelva a los cinco, mirando qué columna cambia el veredicto y cuál solo agrega información; (2) suba el valor de la energía no servida hasta que cambie la estrategia más barata en la sequía, luego hasta que cambie minimax regret y, al final, hasta que cambie maximin, y anote los tres umbrales; (3) vuelva a 2 100 y active la exigencia de confiabilidad, primero con cinco mundos y después con cuatro.</p>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="370" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 369;"><span id="cb6-370"><a href="#cb6-370" aria-hidden="true" tabindex="-1"></a>viewof mundosL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"cinco mundos, con la sequía de diseño"</span><span class="op">,</span> <span class="st">"cuatro mundos de la matriz"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"cinco mundos, con la sequía de diseño"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tabla"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-6" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="375" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 374;"><span id="cb7-375"><a href="#cb7-375" aria-hidden="true" tabindex="-1"></a>viewof racionamientoL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">500</span><span class="op">,</span> <span class="dv">40000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2100</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Valor de la energía no servida V [COP/kWh del modelo]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-7" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="380" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 379;"><span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a>viewof confiableL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">toggle</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Exigir no racionar más del 0,1 % de la demanda en la sequía de diseño"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="kw">false</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-8" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="385" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 384;"><span id="cb9-385"><a href="#cb9-385" aria-hidden="true" tabindex="-1"></a>baseL <span class="op">=</span> <span class="fu">tablaLab4</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-9" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="390" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 389;"><span id="cb10-390"><a href="#cb10-390" aria-hidden="true" tabindex="-1"></a>tablaL <span class="op">=</span> {</span>
-<span id="cb10-391"><a href="#cb10-391" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cinco <span class="op">=</span> mundosL<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"cinco"</span>)<span class="op">;</span></span>
-<span id="cb10-392"><a href="#cb10-392" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> columnas <span class="op">=</span> cinco <span class="op">?</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>] <span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">;</span></span>
-<span id="cb10-393"><a href="#cb10-393" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> iSequia <span class="op">=</span> baseL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">indexOf</span>(SEQUIA_DE_DISENO)<span class="op">;</span></span>
-<span id="cb10-394"><a href="#cb10-394" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> deficitSequia <span class="op">=</span> baseL<span class="op">.</span><span class="at">deficit</span><span class="op">.</span><span class="fu">map</span>((fila) <span class="kw">=&gt;</span> fila[iSequia])<span class="op">;</span></span>
-<span id="cb10-395"><a href="#cb10-395" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> admisible <span class="op">=</span> deficitSequia<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> <span class="op">!</span>confiableL <span class="op">||</span> d <span class="op">&lt;=</span> <span class="fl">0.001</span>)<span class="op">;</span></span>
-<span id="cb10-396"><a href="#cb10-396" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((_<span class="op">,</span> i) <span class="kw">=&gt;</span> i)<span class="op">.</span><span class="fu">filter</span>((i) <span class="kw">=&gt;</span> admisible[i])<span class="op">;</span></span>
-<span id="cb10-397"><a href="#cb10-397" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> costos <span class="op">=</span> baseL<span class="op">.</span><span class="at">corridas</span><span class="op">.</span><span class="fu">map</span>((fila) <span class="kw">=&gt;</span> columnas<span class="op">.</span><span class="fu">map</span>((j) <span class="kw">=&gt;</span> <span class="fu">costoParaDemanda</span>(fila[j]<span class="op">,</span> {<span class="dt">costo_racionamiento</span><span class="op">:</span> racionamientoL})))<span class="op">;</span></span>
-<span id="cb10-398"><a href="#cb10-398" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> criterios <span class="op">=</span> <span class="fu">criteriosRobustez</span>(filas<span class="op">.</span><span class="fu">map</span>((i) <span class="kw">=&gt;</span> costos[i]))<span class="op">;</span></span>
-<span id="cb10-399"><a href="#cb10-399" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> arrepentimiento <span class="op">=</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((_<span class="op">,</span> i) <span class="kw">=&gt;</span> (admisible[i] <span class="op">?</span> criterios<span class="op">.</span><span class="at">arrepentimiento</span>[filas<span class="op">.</span><span class="fu">indexOf</span>(i)] <span class="op">:</span> <span class="kw">null</span>))<span class="op">;</span></span>
-<span id="cb10-400"><a href="#cb10-400" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> peorCaso <span class="op">=</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((_<span class="op">,</span> i) <span class="kw">=&gt;</span> (admisible[i] <span class="op">?</span> criterios<span class="op">.</span><span class="at">peorCaso</span>[filas<span class="op">.</span><span class="fu">indexOf</span>(i)] <span class="op">:</span> <span class="kw">null</span>))<span class="op">;</span></span>
-<span id="cb10-401"><a href="#cb10-401" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> arrepentimientoMaximo <span class="op">=</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((_<span class="op">,</span> i) <span class="kw">=&gt;</span> (admisible[i] <span class="op">?</span> criterios<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[filas<span class="op">.</span><span class="fu">indexOf</span>(i)] <span class="op">:</span> <span class="kw">null</span>))<span class="op">;</span></span>
-<span id="cb10-402"><a href="#cb10-402" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> sequia <span class="op">=</span> baseL<span class="op">.</span><span class="at">corridas</span><span class="op">.</span><span class="fu">map</span>((fila) <span class="kw">=&gt;</span> <span class="fu">costoParaDemanda</span>(fila[iSequia]<span class="op">,</span> {<span class="dt">costo_racionamiento</span><span class="op">:</span> racionamientoL}))<span class="op">;</span></span>
-<span id="cb10-403"><a href="#cb10-403" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> masBarataSequia <span class="op">=</span> filas<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> i) <span class="kw">=&gt;</span> (sequia[i] <span class="op">&lt;</span> sequia[a] <span class="op">?</span> i <span class="op">:</span> a)<span class="op">,</span> filas[<span class="dv">0</span>])<span class="op">;</span></span>
-<span id="cb10-404"><a href="#cb10-404" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {cinco<span class="op">,</span> <span class="dt">mundos</span><span class="op">:</span> columnas<span class="op">.</span><span class="fu">map</span>((j) <span class="kw">=&gt;</span> baseL<span class="op">.</span><span class="at">mundos</span>[j])<span class="op">,</span> <span class="dt">estrategias</span><span class="op">:</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">,</span> costos<span class="op">,</span> admisible<span class="op">,</span></span>
-<span id="cb10-405"><a href="#cb10-405" aria-hidden="true" tabindex="-1"></a>    arrepentimiento<span class="op">,</span> peorCaso<span class="op">,</span> arrepentimientoMaximo<span class="op">,</span> deficitSequia<span class="op">,</span> sequia<span class="op">,</span> masBarataSequia<span class="op">,</span></span>
-<span id="cb10-406"><a href="#cb10-406" aria-hidden="true" tabindex="-1"></a>    <span class="dt">maximin</span><span class="op">:</span> filas[criterios<span class="op">.</span><span class="at">maximin</span>]<span class="op">,</span> <span class="dt">minimaxRegret</span><span class="op">:</span> filas[criterios<span class="op">.</span><span class="at">minimaxRegret</span>]}<span class="op">;</span></span>
-<span id="cb10-407"><a href="#cb10-407" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-10" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="412" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 411;"><span id="cb11-412"><a href="#cb11-412" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="font-size:0.85rem"&gt;</span></span>
-<span id="cb11-413"><a href="#cb11-413" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Costo [COP/kWh]&lt;/th&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;th&gt;</span><span class="sc">${</span>m<span class="sc">}</span><span class="vs">&lt;/th&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;th&gt;Peor caso&lt;/th&gt;&lt;th&gt;Raciona en la sequía&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
-<span id="cb11-414"><a href="#cb11-414" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr style="</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">admisible</span>[i] <span class="op">?</span> <span class="st">""</span> <span class="op">:</span> <span class="st">"color:#9E9E9E"</span><span class="sc">}</span><span class="vs">"&gt;&lt;td&gt;</span><span class="sc">${</span>e<span class="sc">}${</span>tablaL<span class="op">.</span><span class="at">admisible</span>[i] <span class="op">?</span> <span class="st">""</span> <span class="op">:</span> <span class="st">" (excluida)"</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb11-415"><a href="#cb11-415" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">costos</span>[i]<span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> j) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td style="</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">admisible</span>[i] <span class="op">&amp;&amp;</span> tablaL<span class="op">.</span><span class="at">arrepentimiento</span>[i][j] <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#00693E"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(c)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
-<span id="cb11-416"><a href="#cb11-416" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> tablaL<span class="op">.</span><span class="at">maximin</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#945A00"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">admisible</span>[i] <span class="op">?</span> <span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">peorCaso</span>[i]) <span class="op">:</span> <span class="st">"—"</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb11-417"><a href="#cb11-417" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">deficitSequia</span>[i] <span class="op">&gt;</span> <span class="fl">0.001</span> <span class="op">?</span> <span class="st">"color:#CE1126"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tablaL<span class="op">.</span><span class="at">deficitSequia</span>[i]<span class="op">,</span> <span class="dv">2</span>)<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
-<span id="cb11-418"><a href="#cb11-418" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</span></span>
-<span id="cb11-419"><a href="#cb11-419" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="font-size:0.85rem"&gt;</span></span>
-<span id="cb11-420"><a href="#cb11-420" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Arrepentimiento&lt;/th&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;th&gt;</span><span class="sc">${</span>m<span class="sc">}</span><span class="vs">&lt;/th&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;th&gt;Máximo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
-<span id="cb11-421"><a href="#cb11-421" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">filter</span>((_<span class="op">,</span> i) <span class="kw">=&gt;</span> tablaL<span class="op">.</span><span class="at">admisible</span>[i])<span class="op">.</span><span class="fu">map</span>((e) <span class="kw">=&gt;</span> {</span>
-<span id="cb11-422"><a href="#cb11-422" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> i <span class="op">=</span> tablaL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">indexOf</span>(e)<span class="op">;</span></span>
-<span id="cb11-423"><a href="#cb11-423" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;&lt;td&gt;</span><span class="sc">${</span>e<span class="sc">}</span><span class="vs">&lt;/td&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">arrepentimiento</span>[i]<span class="op">.</span><span class="fu">map</span>((r) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(r)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
-<span id="cb11-424"><a href="#cb11-424" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> tablaL<span class="op">.</span><span class="at">minimaxRegret</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#5434A0"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(tablaL<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span><span class="op">;</span>})<span class="sc">}</span></span>
-<span id="cb11-425"><a href="#cb11-425" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-11" data-nodetype="expression">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="430" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 429;"><span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Maximin elige&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">maximin</span>]<span class="sc">}</span><span class="vs">, peor caso de </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">peorCaso</span>[tablaL<span class="op">.</span><span class="at">maximin</span>])<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Minimax regret elige&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">minimaxRegret</span>]<span class="sc">}</span><span class="vs">, arrepentimiento máximo de </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(tablaL<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[tablaL<span class="op">.</span><span class="at">minimaxRegret</span>])<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Más barata en la sequía de diseño</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">cinco</span> <span class="op">?</span> <span class="st">""</span> <span class="op">:</span> <span class="st">" (fuera de la tabla)"</span><span class="sc">}</span><span class="vs">&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">masBarataSequia</span>]<span class="sc">}</span><span class="vs">, </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">sequia</span>[tablaL<span class="op">.</span><span class="at">masBarataSequia</span>])<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb12-434"><a href="#cb12-434" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Racionamiento máximo en la sequía: impulso FNCER y mercado solo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tablaL<span class="op">.</span><span class="at">deficitSequia</span>[<span class="dv">3</span>]<span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tablaL<span class="op">.</span><span class="at">deficitSequia</span>[<span class="dv">0</span>]<span class="op">,</span> <span class="dv">1</span>)<span class="sc">}</span><span class="vs"> de la demanda&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb12-435"><a href="#cb12-435" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-12" data-nodetype="expression">
-
-</div>
-</div>
-</div>
-<div class="nota-datos">
-<p>Modelo estilizado del mercado con políticas, con los cinco mundos, las seis estrategias y la métrica de costo para la demanda. El navegador corre las 30 celdas con RK4 y paso de 0,05 años; una integración de referencia con RK45 y salida cada 0,05 años da la misma tabla a una centésima. Precios en la escala del modelo (150 COP/kWh es la bolsa con hidrología media); datos sintéticos con fines didácticos. Verde: el campeón de cada mundo. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Rojo: racionamiento por encima del 0,1 % de la demanda. El valor de la energía no servida está por verificar con la UPME.</p>
-</div>
-</div>
+<p>El visor agrega la columna, rehace los dos criterios y compara el resultado con su predicción.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La tabla de cinco mundos, verificada paso a paso</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Paso 6: la sequía de diseño como quinta columna</span>
 </div>
 <div class="paso">
-<p><strong>Agregue la columna.</strong> Con Python, la sequía de diseño cuesta 148,68 en el mercado solo; 156,76 con el seguro CxC; 152,11 con el CxC por subasta; 147,47 con el impulso FNCER; 151,87 con el paquete y 149,24 con «cargo 15 + FNCER 300». En cada fila es el costo más bajo de los cinco mundos: la sequía de diseño no trae El Niño recurrente, y fuera de sus dos años secos la hidrología es la media.</p>
+<p><strong>Agregue la columna.</strong> Con el modelo, la sequía de diseño cuesta 148,68 en el mercado solo; 156,76 con el seguro CxC; 152,11 con el CxC por subasta; 147,47 con el impulso FNCER; 151,87 con el paquete y 149,24 con «cargo 15 + FNCER 300». En cada fila es el costo más bajo de los cinco mundos: la sequía de diseño no trae El Niño recurrente, y fuera de sus dos años secos la hidrología es la media.</p>
+</div>
+<div class="paso">
+<p><strong>Mire el racionamiento.</strong> La columna de costo esconde una diferencia que la tabla debe mostrar aparte. La última columna es el <strong>racionamiento pico</strong>, la mayor fracción de la demanda que queda sin servir en algún momento de la sequía.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -1395,7 +1595,7 @@ window.Quarto = {
 <th style="text-align: center;">Siesta</th>
 <th style="text-align: center;">Tormenta</th>
 <th style="text-align: center;">Sequía</th>
-<th style="text-align: center;">Raciona en la sequía</th>
+<th style="text-align: center;">Racionamiento pico</th>
 </tr>
 </thead>
 <tbody>
@@ -1457,95 +1657,123 @@ window.Quarto = {
 </table>
 </div>
 <div class="paso">
-<p><strong>Calcule los peores casos.</strong> El máximo de cada fila queda en Tormenta o en Contrarreloj, nunca en la sequía: 163,29; 175,17; 165,32; 162,08; 164,79 y 166,75. El menor es el del impulso FNCER (162,08; el simulador, con una decimal, muestra 162,1): maximin lo elige, como con cuatro mundos.</p>
+<p><strong>Rehaga los dos criterios.</strong> Los peores casos siguen en Tormenta o en Contrarreloj, nunca en la sequía, y el menor sigue siendo el del impulso FNCER (162,08): maximin lo elige. El campeón de la columna nueva también es el impulso FNCER (147,47), y los arrepentimientos de esa columna (1,21; 9,29; 4,64; 0; 4,40 y 1,77) no superan el máximo que cada fila ya tenía: minimax regret lo elige.</p>
 </div>
 <div class="paso">
-<p><strong>Marque los mínimos de cada columna.</strong> Son 148,57; 161,91; 148,97; 162,08 y 147,47, todos del impulso FNCER. Su fila de arrepentimiento es cero en las cinco columnas, así que minimax regret lo elige sin más cálculo: domina.</p>
-</div>
-<div class="paso">
-<p><strong>Calcule el arrepentimiento de la columna nueva.</strong> Reste 147,47 a cada celda de la sequía: 1,21 (mercado solo); 9,29 (seguro CxC); 4,64 (CxC por subasta); 0 (impulso FNCER); 4,40 (paquete) y 1,77 («cargo 15 + FNCER 300»). Ninguno supera el máximo que cada fila ya tenía en los cuatro mundos, de modo que los arrepentimientos máximos quedan iguales: 2,72; 13,78; 5,61; 0; 4,61 y 4,66.</p>
-</div>
-<div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-quinto-mundo">(la opción que eligió arriba)</span>. La respuesta esperada era que los dos criterios siguen con el impulso FNCER, aunque raciona en la sequía. La columna nueva no voltea los costos, pero muestra lo que la tabla de cuatro mundos escondía: en la sequía de diseño el impulso FNCER raciona hasta el 2,82 % de la demanda y el mercado solo hasta el 3,73 %; el CxC por subasta, el 0,84 %; el paquete y «cargo 15 + FNCER 300», el 0,05 y el 0,06 %; el seguro CxC no raciona.</p>
-</div>
-<div class="paso">
-<p><strong>Mire quién paga qué en la sequía.</strong> Con el seguro CxC la demanda paga 34,9 COP/kWh de cargo, pero la bolsa media baja a 128,6 y la opción le devuelve 6,7: el seguro paga cuando llega el siniestro. Con el impulso FNCER la bolsa media es 147,3, los contratos devuelven 0,9 y el racionamiento, valorado a 2 100, suma 1,1. La sequía dura dos años, pero el racionamiento dura algo más de uno (entre los años 20,45 y 21,50; con el mercado solo, entre 20,40 y 21,60), y un año pesa poco en una media de 40.</p>
-</div>
-<div class="paso">
-<p><strong>Lea la tabla con honestidad.</strong> El impulso FNCER es la estrategia más barata en los cinco mundos, incluida la sequía, y los dos criterios la eligen. Subir <span class="math inline">V</span> o cambiar la métrica hasta que gane un seguro sería fabricar un ganador. Lo honesto es reportar las dos cosas juntas: es la más barata y, sola, raciona cerca del 3 % de la demanda en una sequía como la que define la energía firme.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-quinto-mundo">(la opción que eligió arriba)</span>. La respuesta esperada era que los dos criterios siguen con el impulso FNCER, aunque raciona en la sequía. La columna nueva deja igual el veredicto y muestra lo que la tabla de cuatro mundos escondía: en la sequía de diseño el impulso FNCER llega a racionar el 2,82 % de la demanda y el mercado solo el 3,73 %; el CxC por subasta, el 0,84 %; el paquete y «cargo 15 + FNCER 300», el 0,05 y el 0,06 %, y el seguro CxC no raciona.</p>
 </div>
 </div>
+<p>El simulador corre la misma tabla en el navegador y deja mover dos cosas: las columnas, con o sin la sequía de diseño, y el valor <span class="math inline">V</span> de la energía no servida.</p>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Tabla de robustez de la semana</span>
+</div>
+<p>Con los valores iniciales, compruebe la tabla de cinco mundos. Pase a cuatro mundos y vuelva a cinco: mire qué cambia en los veredictos y qué cambia en la columna del racionamiento. Después suba <span class="math inline">V</span> desde 2 100 y anote el valor en que cambia la estrategia más barata en la sequía y el valor en que cambia minimax regret.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="473" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 472;"><span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a>viewof mundosL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"cinco mundos, con la sequía de diseño"</span><span class="op">,</span> <span class="st">"cuatro mundos de la matriz"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"cinco mundos, con la sequía de diseño"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Columnas"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="478" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 477;"><span id="cb7-478"><a href="#cb7-478" aria-hidden="true" tabindex="-1"></a>viewof racionamientoL <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">500</span><span class="op">,</span> <span class="dv">40000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2100</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Valor de la energía no servida V [COP/kWh del modelo]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="483" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 482;"><span id="cb8-483"><a href="#cb8-483" aria-hidden="true" tabindex="-1"></a>baseL <span class="op">=</span> <span class="fu">tablaLab4</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="488" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 487;"><span id="cb9-488"><a href="#cb9-488" aria-hidden="true" tabindex="-1"></a>tablaL <span class="op">=</span> {</span>
+<span id="cb9-489"><a href="#cb9-489" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cinco <span class="op">=</span> mundosL<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"cinco"</span>)<span class="op">;</span></span>
+<span id="cb9-490"><a href="#cb9-490" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> columnas <span class="op">=</span> cinco <span class="op">?</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>] <span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">;</span></span>
+<span id="cb9-491"><a href="#cb9-491" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> iSequia <span class="op">=</span> baseL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">indexOf</span>(SEQUIA_DE_DISENO)<span class="op">;</span></span>
+<span id="cb9-492"><a href="#cb9-492" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> deficitSequia <span class="op">=</span> baseL<span class="op">.</span><span class="at">deficit</span><span class="op">.</span><span class="fu">map</span>((fila) <span class="kw">=&gt;</span> fila[iSequia])<span class="op">;</span></span>
+<span id="cb9-493"><a href="#cb9-493" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> costos <span class="op">=</span> baseL<span class="op">.</span><span class="at">corridas</span><span class="op">.</span><span class="fu">map</span>((fila) <span class="kw">=&gt;</span> columnas<span class="op">.</span><span class="fu">map</span>((j) <span class="kw">=&gt;</span> <span class="fu">costoParaDemanda</span>(fila[j]<span class="op">,</span> {<span class="dt">costo_racionamiento</span><span class="op">:</span> racionamientoL})))<span class="op">;</span></span>
+<span id="cb9-494"><a href="#cb9-494" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> criterios <span class="op">=</span> <span class="fu">criteriosRobustez</span>(costos)<span class="op">;</span></span>
+<span id="cb9-495"><a href="#cb9-495" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> sequia <span class="op">=</span> baseL<span class="op">.</span><span class="at">corridas</span><span class="op">.</span><span class="fu">map</span>((fila) <span class="kw">=&gt;</span> <span class="fu">costoParaDemanda</span>(fila[iSequia]<span class="op">,</span> {<span class="dt">costo_racionamiento</span><span class="op">:</span> racionamientoL}))<span class="op">;</span></span>
+<span id="cb9-496"><a href="#cb9-496" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {cinco<span class="op">,</span> <span class="dt">mundos</span><span class="op">:</span> columnas<span class="op">.</span><span class="fu">map</span>((j) <span class="kw">=&gt;</span> baseL<span class="op">.</span><span class="at">mundos</span>[j])<span class="op">,</span> <span class="dt">estrategias</span><span class="op">:</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">,</span> costos<span class="op">,</span> deficitSequia<span class="op">,</span></span>
+<span id="cb9-497"><a href="#cb9-497" aria-hidden="true" tabindex="-1"></a>    sequia<span class="op">,</span> <span class="dt">masBarataSequia</span><span class="op">:</span> sequia<span class="op">.</span><span class="fu">indexOf</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>sequia))<span class="op">,</span> <span class="op">...</span>criterios<span class="op">,</span></span>
+<span id="cb9-498"><a href="#cb9-498" aria-hidden="true" tabindex="-1"></a>    <span class="dt">iImpulso</span><span class="op">:</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">indexOf</span>(<span class="st">"impulso FNCER"</span>)<span class="op">,</span> <span class="dt">iMercado</span><span class="op">:</span> baseL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">indexOf</span>(<span class="st">"mercado solo"</span>)}<span class="op">;</span></span>
+<span id="cb9-499"><a href="#cb9-499" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="504" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 503;"><span id="cb10-504"><a href="#cb10-504" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="font-size:0.85rem"&gt;</span></span>
+<span id="cb10-505"><a href="#cb10-505" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Costo [COP/kWh]&lt;/th&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;th&gt;</span><span class="sc">${</span>m<span class="sc">}</span><span class="vs">&lt;/th&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;th&gt;Peor caso&lt;/th&gt;&lt;th&gt;Racionamiento pico en la sequía&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb10-506"><a href="#cb10-506" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;&lt;td&gt;</span><span class="sc">${</span>e<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb10-507"><a href="#cb10-507" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">costos</span>[i]<span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> j) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td style="</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">arrepentimiento</span>[i][j] <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#00693E"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(c)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb10-508"><a href="#cb10-508" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> tablaL<span class="op">.</span><span class="at">maximin</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#945A00"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">peorCaso</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb10-509"><a href="#cb10-509" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">deficitSequia</span>[i] <span class="op">&gt;</span> <span class="fl">0.001</span> <span class="op">?</span> <span class="st">"color:#CE1126"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tablaL<span class="op">.</span><span class="at">deficitSequia</span>[i]<span class="op">,</span> <span class="dv">2</span>)<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb10-510"><a href="#cb10-510" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</span></span>
+<span id="cb10-511"><a href="#cb10-511" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm" style="font-size:0.85rem"&gt;</span></span>
+<span id="cb10-512"><a href="#cb10-512" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Arrepentimiento&lt;/th&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">mundos</span><span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;th&gt;</span><span class="sc">${</span>m<span class="sc">}</span><span class="vs">&lt;/th&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;th&gt;Máximo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb10-513"><a href="#cb10-513" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">map</span>((e<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;&lt;td&gt;</span><span class="sc">${</span>e<span class="sc">}</span><span class="vs">&lt;/td&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">arrepentimiento</span>[i]<span class="op">.</span><span class="fu">map</span>((r) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(r)<span class="sc">}</span><span class="vs">&lt;/td&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb10-514"><a href="#cb10-514" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="</span><span class="sc">${</span>i <span class="op">===</span> tablaL<span class="op">.</span><span class="at">minimaxRegret</span> <span class="op">?</span> <span class="st">"font-weight:700;color:#5434A0"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(tablaL<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[i])<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span></span>
+<span id="cb10-515"><a href="#cb10-515" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="520" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 519;"><span id="cb11-520"><a href="#cb11-520" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb11-521"><a href="#cb11-521" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Maximin elige&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">maximin</span>]<span class="sc">}</span><span class="vs">, peor caso de </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">peorCaso</span>[tablaL<span class="op">.</span><span class="at">maximin</span>])<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-522"><a href="#cb11-522" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Minimax regret elige&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">minimaxRegret</span>]<span class="sc">}</span><span class="vs">, arrepentimiento máximo de </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(tablaL<span class="op">.</span><span class="at">arrepentimientoMaximo</span>[tablaL<span class="op">.</span><span class="at">minimaxRegret</span>])<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-523"><a href="#cb11-523" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Más barata en la sequía de diseño</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">cinco</span> <span class="op">?</span> <span class="st">""</span> <span class="op">:</span> <span class="st">" (fuera de la tabla)"</span><span class="sc">}</span><span class="vs">&lt;b&gt;</span><span class="sc">${</span>tablaL<span class="op">.</span><span class="at">estrategias</span>[tablaL<span class="op">.</span><span class="at">masBarataSequia</span>]<span class="sc">}</span><span class="vs">, </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tablaL<span class="op">.</span><span class="at">sequia</span>[tablaL<span class="op">.</span><span class="at">masBarataSequia</span>])<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-524"><a href="#cb11-524" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Racionamiento pico en la sequía: impulso FNCER y mercado solo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tablaL<span class="op">.</span><span class="at">deficitSequia</span>[tablaL<span class="op">.</span><span class="at">iImpulso</span>]<span class="op">,</span> <span class="dv">2</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(tablaL<span class="op">.</span><span class="at">deficitSequia</span>[tablaL<span class="op">.</span><span class="at">iMercado</span>]<span class="op">,</span> <span class="dv">2</span>)<span class="sc">}</span><span class="vs"> de la demanda&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-525"><a href="#cb11-525" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Modelo estilizado del mercado con políticas, con los cinco mundos, las seis estrategias y la métrica de costo medio para la demanda. El navegador corre las 30 celdas con RK4 y paso de 0,05 años; una integración de referencia con RK45 y salida cada 0,05 años da la misma tabla a una centésima. Precios en la escala del modelo (150 COP/kWh es la bolsa con hidrología media); datos sintéticos con fines didácticos. Verde: el campeón de cada mundo. Ámbar: el mejor peor caso. Violeta: el menor arrepentimiento máximo. Rojo: racionamiento pico por encima del 0,1 % de la demanda. El valor de la energía no servida está por verificar con la UPME.</p>
+</div>
+</div>
+<p>Al pasar de cuatro a cinco mundos, el ganador sigue siendo el mismo y el racionamiento queda a la vista. El umbral que el simulador deja buscar tiene una explicación de una línea: <span class="math inline">V</span> multiplica una energía no servida media muy pequeña. El impulso FNCER raciona algo más de un año (del año 20,45 al 21,50) dentro de una media de 40, así que su energía no servida media es <span class="math inline">5{,}26 \cdot 10^{-4}</span> de la demanda, y su costo en la sequía es <span class="math inline">146{,}37 + 5{,}26 \cdot 10^{-4}\,V</span>; el de «cargo 15 + FNCER 300», que casi no raciona, es <span class="math inline">149{,}24 + 0{,}02 \cdot 10^{-4}\,V</span>. Con <span class="math inline">V = 2\,100</span> el racionamiento le suma al impulso FNCER solo 1,10 COP/kWh. Las dos rectas se cruzan en <span class="math inline">V \approx 5\,500</span> COP/kWh del modelo (5 482 sin redondear), 2,6 veces el primer escalón de la UPME: desde allí la más barata en la sequía es el cargo bajo. Minimax regret cambia más tarde, porque el arrepentimiento del impulso FNCER en esa columna, <span class="math inline">5{,}24 \cdot 10^{-4}\,V - 2{,}87</span>, tiene que superar el máximo del paquete, unos 4,6: eso pasa con <span class="math inline">V \approx 14\,300</span>, 6,8 veces el escalón, y entonces elige el paquete; maximin cambia mucho después, hacia 35 000.</p>
+<p>La tabla deja entonces al decisor frente a un juicio de valor. O acepta racionar cerca del 3 % de la demanda en una sequía de diseño a cambio de pagar entre 2,7 y 4,7 COP/kWh menos en los mundos de la matriz, o fija un criterio de confiabilidad. El Cargo por Confiabilidad es la forma que tomó en Colombia, desde 2006, la segunda opción. El último visor la aplica como una restricción sobre las filas y vuelve a correr los pasos 3 a 7.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Por qué la sequía no voltea la tabla</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 3 a 7 con un criterio de confiabilidad</span>
 </div>
 <div class="paso">
-<p><strong>Separe el racionamiento.</strong> En la sequía, el costo de cada estrategia es su costo sin racionamiento más <span class="math inline">V</span> por la energía no servida media de los 40 años, en fracción de la demanda:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Estrategia</th>
-<th style="text-align: center;">Costo sin racionamiento</th>
-<th style="text-align: center;">Energía no servida media</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>mercado solo</td>
-<td style="text-align: center;">147,08</td>
-<td style="text-align: center;">7,64 · 10⁻⁴</td>
-</tr>
-<tr class="even">
-<td>seguro CxC</td>
-<td style="text-align: center;">156,76</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td>CxC por subasta</td>
-<td style="text-align: center;">151,90</td>
-<td style="text-align: center;">0,99 · 10⁻⁴</td>
-</tr>
-<tr class="even">
-<td>impulso FNCER</td>
-<td style="text-align: center;">146,37</td>
-<td style="text-align: center;">5,26 · 10⁻⁴</td>
-</tr>
-<tr class="odd">
-<td>paquete</td>
-<td style="text-align: center;">151,86</td>
-<td style="text-align: center;">0,02 · 10⁻⁴</td>
-</tr>
-<tr class="even">
-<td>cargo 15 + FNCER 300</td>
-<td style="text-align: center;">149,24</td>
-<td style="text-align: center;">0,02 · 10⁻⁴</td>
-</tr>
-</tbody>
-</table>
-<p>Con <span class="math inline">V</span> = 2 100, el racionamiento suma <span class="math inline">2\,100 \times 5{,}26 \cdot 10^{-4} = 1{,}10</span> COP/kWh a la media del impulso FNCER. La media de 40 años diluye algo más de un año de racionamiento.</p>
-</div>
-<div class="paso">
-<p><strong>Encuentre el umbral de la columna.</strong> «cargo 15 + FNCER 300» pasa a ser el más barato en la sequía cuando <span class="math inline">146{,}37 + 5{,}26 \cdot 10^{-4}\,V</span> supera <span class="math inline">149{,}24 + 0{,}02 \cdot 10^{-4}\,V</span>, es decir, con <span class="math inline">V</span> por encima de unos 5 500 COP/kWh del modelo (5 482 con las cifras sin redondear): 2,6 veces el primer escalón de la UPME y unas 37 veces el precio de referencia. El paquete lo haría por encima de unos 10 500.</p>
-</div>
-<div class="paso">
-<p><strong>Encuentre el umbral del minimax regret.</strong> Que cambie el ganador de la sequía no basta: el arrepentimiento del impulso FNCER en esa columna, <span class="math inline">5{,}24 \cdot 10^{-4}\,V - 2{,}87</span>, tiene que superar el máximo de otra estrategia. Alcanza el 4,61 del paquete con <span class="math inline">V</span> ≈ 14 300 COP/kWh del modelo, unas 6,8 veces el escalón de la UPME y unas 95 veces el precio de referencia. Maximin cambia mucho más tarde: el peor caso del impulso FNCER sigue en Tormenta hasta que su costo en la sequía supera el peor caso del paquete (164,79), con <span class="math inline">V</span> por encima de unos 35 000, unas 17 veces el primer escalón de la UPME. Entonces maximin también pasa al paquete.</p>
-</div>
-<div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-racionamiento-doble">(la opción que eligió arriba)</span>. La respuesta esperada era que ninguno de los dos veredictos cambia: con <span class="math inline">V</span> = 4 200 el impulso FNCER sigue siendo el más barato en la sequía, y los umbrales quedan lejos. Con 1 500, con 3 700 (el escalón de racionamientos profundos de la UPME, 0,88 USD/kWh, reescalado igual) o con 5 000, la tabla de cinco mundos da el mismo veredicto.</p>
-</div>
-<div class="paso">
-<p><strong>Cambie la métrica de la columna.</strong> Si la sequía se mide con el costo medio de la década que empieza con ella (años 20 a 30) en lugar de la media de 40 años, la columna cambia mucho: mercado solo 166,07; seguro CxC 153,60; CxC por subasta 143,43; impulso FNCER 162,15; paquete 143,70 y «cargo 15 + FNCER 300» 139,74. Minimax regret pasa al paquete (4,61) y el arrepentimiento máximo del impulso FNCER sube a 22,4; maximin sigue con el impulso FNCER (162,15 frente a 164,79 del paquete). <strong>La métrica también decide.</strong> Es una variante; la tabla principal sigue siendo la de 40 años, y el informe declara las dos lecturas.</p>
-</div>
-</div>
-<div class="pasos caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La lectura de consultor</span>
-</div>
-<div class="paso">
-<p><strong>Haga explícito el juicio de valor.</strong> La tabla deja la decisión en manos de un juicio de valor. O el decisor acepta racionar cerca del 3 % de la demanda en una sequía de diseño a cambio de pagar entre 2,7 y 4,7 COP/kWh menos en los mundos de la matriz, o fija un criterio de confiabilidad. El Cargo por Confiabilidad es la forma que tomó en Colombia, desde 2006, la segunda opción.</p>
-</div>
-<div class="paso">
-<p><strong>Aplique el criterio de confiabilidad.</strong> Exija no racionar más del 0,1 % de la demanda en la sequía de diseño, que es lo que el Cargo por Confiabilidad se propone garantizar. Quedan tres estrategias admisibles:</p>
+<p><strong>Restrinja las filas.</strong> Exija un racionamiento pico de 0,1 % de la demanda o menos en la sequía de diseño, que es lo que el Cargo por Confiabilidad se propone garantizar. Quedan tres estrategias <strong>admisibles</strong>; las otras tres salen de la tabla, por baratas que sean. Con los mínimos de cada columna en negrilla:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -1597,24 +1825,58 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Maximin elige el paquete, con el mejor peor caso (164,79).</p>
 </div>
 <div class="paso">
-<p><strong>Calcule los arrepentimientos entre las admisibles.</strong> Los mínimos de cada columna, en negrilla, se reparten entre el paquete y «cargo 15 + FNCER 300». Arrepentimientos del paquete: 0,43; 0; 0,10; 0 y 2,63, con el máximo en la sequía; de «cargo 15 + FNCER 300»: 0; 1,75; 0; 1,96 y 0, con el máximo en Tormenta; del seguro CxC, hasta 10,37. Sin redondear, los máximos son 2,62 y 1,95, como muestra el simulador. Minimax regret elige «cargo 15 + FNCER 300». <strong>Los criterios discrepan.</strong> Con cuatro mundos, el paquete ganaba los dos (arrepentimiento máximo de 0,43): la sequía cambia la lectura dentro de las admisibles.</p>
+<p><strong>Aplique maximin.</strong> El mejor peor caso es el del paquete, 164,79 COP/kWh, en Tormenta: maximin elige el paquete.</p>
 </div>
 <div class="paso">
-<p><strong>Mida el precio de la seguridad.</strong> Frente al impulso FNCER, el paquete cuesta 4,61; 2,84; 4,33; 2,71 y 4,40 COP/kWh más en Viento a favor, Contrarreloj, Siesta, Tormenta y la sequía; «cargo 15 + FNCER 300», 4,17; 4,60; 4,23; 4,66 y 1,77. La firmeza cuesta entre 1,8 y 4,7 COP/kWh según el mundo. Las dos opciones admisibles quedan cerca: sus peores casos difieren en menos de 2 COP/kWh y sus arrepentimientos máximos, en 0,67.</p>
+<p><strong>Calcule el arrepentimiento y aplique minimax regret.</strong> Los campeones se reparten entre el paquete y «cargo 15 + FNCER 300». Arrepentimientos del paquete: 0,43; 0; 0,10; 0 y 2,63, con el máximo en la sequía; de «cargo 15 + FNCER 300»: 0; 1,75; 0; 1,96 y 0, con el máximo en Tormenta; del seguro CxC, hasta 10,38. Minimax regret elige «cargo 15 + FNCER 300». <strong>Los criterios discrepan.</strong> Con cuatro mundos, el paquete ganaba los dos (arrepentimiento máximo de 0,43): la sequía cambia la lectura dentro de las admisibles.</p>
 </div>
 <div class="paso">
-<p><strong>Pruebe la estabilidad.</strong> En 19 de 20 variantes del modelo y de la sequía (elasticidades, expectativas, gas escaso, firmeza y factor de planta de las FNCER, vida útil, sequía en el año 10 o en el 30, sequía más severa), los dos criterios eligen el impulso FNCER en la tabla de cinco mundos. La excepción es una sequía de diseño que cae sobre el mundo Tormenta: cuando coincide con un El Niño, los aportes llegan al 27 % de la media (0,60 × 0,45), una hidrología más dura que la de la energía firme. Allí todos racionan (el mercado solo, el 7,45 %; el impulso FNCER, el 6,40 %; el seguro CxC, el 2,14 %) y el paquete gana con los dos criterios (4,61, seguido de «cargo 15 + FNCER 300» con 4,66 y del impulso FNCER con 4,88). El veredicto resiste los parámetros; lo mueven la severidad de la cola, su valoración y la métrica, que es lo que explora la <a href="../semana5/09-rdm.html">página siguiente</a>.</p>
+<p><strong>Lea la discrepancia como en el comercializador.</strong> Allí, con la bolsa seca en 240, maximin se quedaba con los contratos, que protegían el peor año, y minimax regret pasaba a la mezcla, que quedaba más cerca de lo mejor en cada año. Aquí ocurre lo mismo: el paquete protege mejor el peor mundo y el cargo bajo queda más cerca del campeón en cada mundo. Las dos opciones están cerca (sus peores casos difieren en menos de 2 COP/kWh y sus arrepentimientos máximos, en 0,67), y las dos cuestan más que el impulso FNCER solo: la firmeza vale entre 1,8 y 4,7 COP/kWh según el mundo.</p>
 </div>
 <div class="paso">
-<p><strong>Declare lo que el modelo no captura del Cargo por Confiabilidad.</strong> (a) En 2015–16 y en 2024 el regulador intervino precios y reglas en plena crisis; en el modelo los picos de El Niño llegan completos y pagan la capacidad, así que no falta dinero y el cargo que empataría con el mercado solo es casi cero (0 en los mundos tranquilos, unos 0,3 COP/kWh en los exigentes). (b) Quien financia una planta es averso al riesgo: una obligación de energía firme de 10 a 20 años para una planta nueva es un flujo estable que un banco presta, y en el modelo los inversionistas son neutrales al riesgo. (c) Las hidráulicas grandes tardan más que los 4 años de retardo constructor del modelo. (d) Hay un solo precio de escasez, sin el precio marginal de escasez de la Res. CREG 140 de 2017. (e) Las FNCER no reciben obligaciones de energía firme. (f) La subasta es continua y su curva de demanda, lineal. Por eso el Cargo por Confiabilidad real se justifica también por razones que esta tabla no mide.</p>
-</div>
-<div class="paso">
-<p><strong>Redacte la recomendación.</strong> «Contrate FNCER por subasta, 300 MW al año: es la estrategia más barata en los cinco mundos explorados, incluida la sequía de diseño. Si el país no acepta racionar en una sequía como la que define la energía firme, acompáñela de un mecanismo de firmeza, porque sola raciona hasta el 2,8 % de la demanda en esa sequía. Hay dos opciones que cuestan entre 1,8 y 4,7 COP/kWh más según el mundo: agregar la subasta de energía firme (el paquete, con el mejor peor caso) o un cargo bajo de unos 7 USD/MWh (con el menor arrepentimiento). Revise la decisión si cambian la frecuencia y la severidad de El Niño, el margen de energía firme proyectado (ENFICC sobre demanda) o el valor que el país asigna a la energía no servida. Estas conclusiones valen dentro de los límites del modelo: precios sin intervención, inversionistas neutrales al riesgo, segmento firme agregado y El Niño periódico.»</p>
+<p><strong>Concluya.</strong> «En los cinco mundos explorados, incluida la sequía de diseño, la subasta FNCER de 300 MW/año es la estrategia más barata para la demanda, y la eligen los dos criterios. Sola, en una sequía como la que define la energía firme, llega a racionar el 2,8 % de la demanda; la sequía no cambia el veredicto porque el racionamiento dura algo más de un año en 40, y lo cambiaría solo si la energía no servida valiera unas 7 veces el primer escalón de la UPME. Si se exige no racionar más del 0,1 %, quedan tres estrategias: el paquete tiene el mejor peor caso y el cargo bajo con FNCER el menor arrepentimiento, a menos de 2 COP/kWh uno del otro. Elegir entre ellas es elegir una clase de prudencia, y esa elección le corresponde al regulador.»</p>
 </div>
 </div>
+</section>
+<section id="cierre-lo-que-esta-tabla-deja-abierto" class="level3">
+<h3 class="anchored" data-anchor-id="cierre-lo-que-esta-tabla-deja-abierto">Cierre: lo que esta tabla deja abierto</h3>
+<p>El ejemplo terminó con un veredicto y un juicio de valor. Antes de convertirlos en una recomendación quedan preguntas que esta página deja abiertas; la <a href="../semana5/11-arco-laboratorio.html">página 11</a> las responde con la misma tabla.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pregunta</th>
+<th style="text-align: left;">Qué revisa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">¿Quién paga qué en la sequía?</td>
+<td style="text-align: left;">cuánto aportan la bolsa, el cargo, la opción, los contratos y el racionamiento al costo de cada estrategia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">¿Cambia el veredicto con otra métrica?</td>
+<td style="text-align: left;">la misma columna medida en la década de la sequía en lugar de los 40 años</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">¿Resiste el veredicto otras versiones del modelo y de la sequía?</td>
+<td style="text-align: left;">elasticidades, expectativas, gas, firmeza de las FNCER, fecha y severidad de la sequía</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">¿Qué deja por fuera el modelo del Cargo real?</td>
+<td style="text-align: left;">intervenciones de precios en las crisis, aversión al riesgo de quien financia, precio marginal de escasez</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">¿Qué se recomienda, y con qué condiciones?</td>
+<td style="text-align: left;">la recomendación redactada, con condiciones de validez y señales de cambio</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="errores-comunes" class="level2">
@@ -1641,7 +1903,7 @@ window.Quarto = {
 <p>«El Cargo por Confiabilidad es dinero perdido: en los cuatro mundos cuesta unos 13 COP/kWh más que el impulso FNCER y ningún mundo raciona.»</p>
 </div>
 <div class="bien">
-<p>«Los cuatro mundos de la matriz no traen la sequía contra la que asegura el cargo. Con la sequía de diseño, el impulso FNCER raciona hasta el 2,8 % de la demanda y el seguro CxC nada; la decisión depende del valor de la energía no servida o de un criterio de confiabilidad.»</p>
+<p>«Los cuatro mundos de la matriz no traen la sequía contra la que asegura el cargo. Con la sequía de diseño, el impulso FNCER llega a racionar el 2,8 % de la demanda y el seguro CxC nada; la decisión depende del valor de la energía no servida o de un criterio de confiabilidad.»</p>
 </div>
 </div>
 <p>Para verlo, cambie el simulador entre cuatro y cinco mundos y mire la columna del racionamiento.</p>
@@ -1650,7 +1912,7 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Esconder la métrica o ajustarla hasta fabricar un ganador</span>
 </div>
-<p>El veredicto depende de qué suma la métrica y de cómo la promedia. Con la media de 40 años y <span class="math inline">V</span> = 2 100 gana el impulso FNCER; con <span class="math inline">V</span> por encima de unos 14 300, o con la década de la sequía como métrica de esa columna, minimax regret pasa al paquete. Ninguna de esas variantes es «la verdadera», y subir <span class="math inline">V</span> hasta que gane la estrategia preferida es fabricar el resultado. La métrica se declara componente a componente, se somete a estrés, y el informe dice qué lectura es estable y en qué umbral cambia.</p>
+<p>El veredicto depende de qué suma la métrica y de cómo la promedia. Con <span class="math inline">V</span> = 2 100 gana el impulso FNCER; con <span class="math inline">V</span> por encima de unos 14 300, minimax regret pasa al paquete. Ninguno de esos valores es «el verdadero», y subir <span class="math inline">V</span> hasta que gane la estrategia preferida es fabricar el resultado. La métrica se declara componente a componente, se somete a estrés, y el análisis dice qué lectura es estable y en qué umbral cambia.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
@@ -1662,13 +1924,13 @@ window.Quarto = {
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir robusto con tibio, o con audaz</span>
 </div>
-<p>La estrategia robusta puede ser una mezcla o una apuesta decidida: depende de la tabla. La subasta FNCER de 150 MW/año sola cuesta 149,68; 162,52; 149,93; 162,61 y 148,02 COP/kWh en los cinco mundos: queda dominada por la de 300 MW/año en todos y raciona más que ella en la sequía (3,27 % frente a 2,82 %). La mitad de la apuesta tampoco es robusta. Toda mezcla se evalúa agregándola como fila.</p>
+<p>La estrategia robusta puede ser una mezcla o una apuesta decidida: depende de la tabla. La subasta FNCER de 150 MW/año sola, la estrategia con que la <a href="../semana5/07-escenarios.html">página anterior</a> comparó los mundos, cuesta 149,68; 162,52; 149,93; 162,61 y 148,02 COP/kWh en los cinco mundos: queda por detrás de la de 300 MW/año en todos y raciona más que ella en la sequía (3,27 % frente a 2,82 %). La mitad de la apuesta tampoco es robusta. Toda mezcla se evalúa agregándola como fila.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Olvidar que el arrepentimiento depende del menú</span>
 </div>
-<p>Con la exigencia de confiabilidad y solo dos admisibles, el seguro CxC y el paquete, el paquete es el campeón de cada columna y su arrepentimiento máximo es cero. Al agregar «cargo 15 + FNCER 300», el del paquete sube a 2,62 y minimax regret pasa a la estrategia nueva, mientras maximin sigue con el paquete. El minimax regret no cumple la llamada independencia de las alternativas irrelevantes; el maximin sí. El informe declara el menú completo y prueba si una estrategia diseñada para cubrir las vulnerabilidades cambia la conclusión.</p>
+<p>Con la exigencia de confiabilidad y solo dos admisibles, el seguro CxC y el paquete, el paquete es el campeón de cada columna y su arrepentimiento máximo es cero. Al agregar «cargo 15 + FNCER 300», el del paquete sube a 2,63 y minimax regret pasa a la estrategia nueva, mientras maximin sigue con el paquete. El minimax regret no cumple la llamada independencia de las alternativas irrelevantes; el maximin sí. El análisis declara el menú completo y prueba si una estrategia diseñada para cubrir las vulnerabilidades cambia la conclusión.</p>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -1716,7 +1978,7 @@ window.Quarto = {
 <p>En la tabla de cuatro mundos, el seguro CxC queda unos 13 COP/kWh por encima del campeón en cada mundo y ningún mundo raciona. ¿Qué conclusión se sostiene?</p>
 <div class="opcion">
 <p>Que el Cargo por Confiabilidad es dinero perdido y conviene eliminarlo.</p>
-<p><span class="porque">La tabla no contiene el siniestro contra el que asegura el cargo. Revise el diagnóstico del conjunto de escenarios.</span></p>
+<p><span class="porque">La tabla no contiene el siniestro contra el que asegura el cargo. Revise el paso «Pruebe las columnas» del ejemplo avanzado.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
 <p>Que esos mundos no traen el siniestro contra el que asegura el cargo.</p>
@@ -1724,7 +1986,7 @@ window.Quarto = {
 </div>
 <div class="opcion">
 <p>Que el cargo de 35 COP/kWh está mal calibrado y debería bajar a 13.</p>
-<p><span class="porque">La calibración sale del cargo de la subasta de 2019; lo que falla son las columnas. Revise el tercer paso de la tabla de cuatro mundos.</span></p>
+<p><span class="porque">La calibración sale del cargo de la subasta de 2019; lo que falla son las columnas. Revise el paso «Pruebe las columnas» del ejemplo avanzado.</span></p>
 </div>
 <div class="opcion">
 <p>Que el seguro saldría ganando si se promediaran los cuatro mundos.</p>
@@ -1742,7 +2004,7 @@ window.Quarto = {
 </div>
 <div class="opcion">
 <p>Minimax regret pasa al paquete y maximin sigue con el impulso FNCER.</p>
-<p><span class="porque">Eso ocurre con un valor cercano a 14 300. Revise los umbrales del valor del racionamiento.</span></p>
+<p><span class="porque">Eso ocurre con un valor cercano a 14 300. Revise por qué la sequía no voltea la tabla.</span></p>
 </div>
 <div class="opcion">
 <p>En la sequía, la más barata pasa a ser «cargo 15 + FNCER 300».</p>
@@ -1772,7 +2034,7 @@ window.Quarto = {
 </div>
 <div class="opcion">
 <p>Que vuelva al impulso FNCER, el más barato en los cinco mundos.</p>
-<p><span class="porque">El impulso FNCER incumple la exigencia: raciona hasta el 2,8 % en la sequía. Revise el criterio de confiabilidad.</span></p>
+<p><span class="porque">El impulso FNCER incumple la exigencia: su racionamiento pico en la sequía es 2,8 %. Revise el criterio de confiabilidad.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1799,7 +2061,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="ejercicio-1-un-año-extremo">Ejercicio 1 ●○○ · Un año extremo</h4>
 <p>Agregue a la tabla del comercializador una cuarta hidrología, extrema, donde la bolsa cuesta 500 y el contrato sigue en 180 (la mezcla paga 340). Recalcule los dos criterios. ¿Cambió algún veredicto? ¿Qué enseña sobre agregar escenarios severos?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1808,10 +2070,10 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>En la columna extrema el campeón es C (180); los arrepentimientos son 0 para C, 320 para B y 160 para M. Los máximos quedan en 60 para C (por la columna húmeda), 320 para B y 160 para M: minimax regret elige C con más ventaja. Maximin también elige C (180 contra 500 y 340).</p>
-<p>El campeón se mantuvo, pero las brechas crecieron mucho. Agregar escenarios severos favorece a las estrategias de seguro, y por eso la selección de escenarios es parte del argumento: quien quiera vender contratos solo necesita imaginar sequías suficientemente catastróficas. El antídoto es el criterio de plausibilidad y declarar quién propuso cada mundo. Aquí la sequía de diseño tiene un origen defendible, la hidrología crítica de la energía firme, y aun así no cambia el campeón, porque la métrica promedia 40 años: la severidad del escenario y la métrica actúan juntas.</p>
+<p>El campeón se mantuvo, pero las brechas crecieron mucho. Agregar escenarios severos favorece a las estrategias de seguro, y por eso la selección de escenarios es parte del argumento: quien quiera vender contratos solo necesita imaginar sequías suficientemente catastróficas. El antídoto es el criterio de plausibilidad y declarar quién propuso cada mundo. En la tabla de la semana la sequía de diseño tiene un origen defendible, la hidrología crítica de la energía firme, y aun así no cambia el campeón, porque la métrica promedia 40 años: la severidad del escenario y la métrica actúan juntas.</p>
 </div>
 </div>
 </div>
@@ -1820,7 +2082,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="ejercicio-2-una-séptima-estrategia">Ejercicio 2 ●●○ · Una séptima estrategia</h4>
 <p>El «paquete con 300» (subasta de energía firme con meta de 5 % más 300 MW/año de subasta FNCER) cuesta 152,68; 164,28; 153,00; 164,44 y 152,00 COP/kWh en Viento a favor, Contrarreloj, Siesta, Tormenta y la sequía de diseño, en la que no raciona. Agréguelo como séptima fila de la tabla de cinco mundos. (a) ¿Cambia algún criterio sin la exigencia de confiabilidad? (b) ¿Y con ella? (c) ¿Qué enseña sobre cómo presentar una tabla de robustez?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Pista">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1829,14 +2091,14 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Separe primero las estrategias admisibles, las que no racionan en la sequía. Después, antes de restar, recalcule el mínimo de cada columna entre las estrategias admisibles con la fila nueva.</p>
+<p>Separe primero las estrategias admisibles, las que no racionan más del 0,1 % en la sequía. Después, antes de restar, recalcule el mínimo de cada columna entre las estrategias admisibles con la fila nueva.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1845,12 +2107,12 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
 <li><p>Sin la exigencia, el impulso FNCER sigue siendo el campeón de cada columna: la fila nueva tiene arrepentimientos de 4,11; 2,37; 4,03; 2,36 y 4,53, y nada cambia.</p></li>
-<li><p>Con la exigencia quedan cuatro admisibles. El paquete con 300 es el más barato en los cuatro mundos de la matriz y tiene el mejor peor caso (164,44, frente a 164,79 del paquete): maximin pasa a la estrategia nueva. En la sequía el campeón sigue siendo «cargo 15 + FNCER 300» (149,24), y el paquete con 300 queda a 2,76. Los arrepentimientos máximos quedan en 2,30 para «cargo 15 + FNCER 300» (en Tormenta, ahora frente al paquete con 300), 2,62 para el paquete, 2,76 para el paquete con 300 y 10,73 para el seguro CxC: minimax regret sigue con «cargo 15 + FNCER 300», pero su máximo sube de 1,95 a 2,30.</p></li>
-<li><p>Una estrategia nueva cambió el veredicto de un criterio y los arrepentimientos de las demás. El informe declara cómo se construyó el menú y prueba si una estrategia diseñada para cubrir las vulnerabilidades de las finalistas cambia la conclusión, que es el paso iterativo del RDM de la página siguiente.</p></li>
+<li><p>Con la exigencia quedan cuatro admisibles. El paquete con 300 es el más barato en los cuatro mundos de la matriz y tiene el mejor peor caso (164,44, frente a 164,79 del paquete): maximin pasa a la estrategia nueva. En la sequía el campeón sigue siendo «cargo 15 + FNCER 300» (149,24), y el paquete con 300 queda a 2,76. Los arrepentimientos máximos quedan en 2,31 para «cargo 15 + FNCER 300» (en Tormenta, ahora frente al paquete con 300), 2,63 para el paquete, 2,76 para el paquete con 300 y 10,73 para el seguro CxC: minimax regret sigue con «cargo 15 + FNCER 300», pero su máximo sube de 1,96 a 2,31.</p></li>
+<li><p>Una estrategia nueva cambió el veredicto de un criterio y los arrepentimientos de las demás. El análisis declara cómo se construyó el menú y prueba si una estrategia diseñada para cubrir las vulnerabilidades de las finalistas cambia la conclusión; ese paso iterativo es el punto de partida de la página siguiente.</p></li>
 </ol>
 </div>
 </div>
@@ -1867,21 +2129,21 @@ window.Quarto = {
 <ul>
 <li>Sin probabilidades para los mundos, se busca <strong>robustez</strong>: una estrategia aceptable en todos, en lugar de óptima en uno.</li>
 <li><strong>Arrepentimiento</strong> = costo menos el campeón <strong>de la columna</strong>, siempre mayor o igual que cero. <strong>Maximin</strong> elige el mejor peor caso; <strong>minimax regret</strong>, el menor arrepentimiento máximo.</li>
-<li>Un conjunto de escenarios que omite la cola contra la que asegura una política la <strong>subvalora por diseño</strong>. En los cuatro mundos de la matriz nadie raciona y el Cargo por Confiabilidad parece inútil.</li>
-<li>Con la <strong>sequía de diseño</strong> como quinto mundo, el impulso FNCER sigue siendo el más barato en todos y lo eligen los dos criterios, pero raciona hasta el 2,8 % de la demanda en la sequía (el mercado solo, el 3,7 %).</li>
-<li>La sequía no voltea la tabla porque la métrica promedia 40 años y el racionamiento vale 2 100 COP/kWh del modelo: harían falta unos 5 500 para cambiar el ganador de la sequía, unos 14 300 para cambiar minimax regret y unos 35 000 para cambiar maximin. <strong>La métrica también decide.</strong></li>
-<li>Con un <strong>criterio de confiabilidad</strong> quedan el seguro CxC, el paquete y «cargo 15 + FNCER 300» (cargo de unos 7 USD/MWh): maximin elige el paquete y minimax regret el cargo bajo. La firmeza cuesta entre 1,8 y 4,7 COP/kWh más que el impulso FNCER.</li>
-<li>La recomendación lleva <strong>decisión, juicio de valor explícito, condiciones de validez y señal de cambio</strong>, y declara lo que el modelo no tiene.</li>
+<li><strong>Siete pasos</strong>: fije la métrica, escriba la tabla de desempeño, aplique maximin, calcule el arrepentimiento, aplique minimax regret, pruebe la tabla y concluya.</li>
+<li>Un conjunto de escenarios que omite la cola contra la que asegura una política la <strong>subvalora por diseño</strong>. En los cuatro mundos de la matriz nadie raciona y el Cargo por Confiabilidad parece dinero perdido.</li>
+<li>Con la <strong>sequía de diseño</strong> como quinto mundo, el impulso FNCER sigue siendo el más barato en todos y lo eligen los dos criterios, pero su <strong>racionamiento pico</strong> en la sequía es el 2,82 % de la demanda (el del mercado solo, el 3,73 %).</li>
+<li>La sequía no voltea la tabla porque <span class="math inline">V</span> = 2 100 COP/kWh del modelo multiplica una <strong>energía no servida media</strong> pequeña: harían falta unos 5 500 para cambiar el ganador de la sequía y unos 14 300 para cambiar minimax regret.</li>
+<li>Con un <strong>criterio de confiabilidad</strong> quedan el seguro CxC, el paquete y «cargo 15 + FNCER 300»: maximin elige el paquete y minimax regret el cargo bajo. La firmeza cuesta entre 1,8 y 4,7 COP/kWh más que el impulso FNCER, y elegir el criterio es un juicio de valor que se declara.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Robustez sobre optimalidad» de las notas de la semana 5 trae la tabla de cinco mundos con su desglose, las variantes de estabilidad y el ejercicio de sensibilidad de la métrica. La <a href="../semana5/09-rdm.html">página siguiente</a> explora con RDM la cola que esta tabla prueba con una sola sequía.</p>
+<p><strong>Para profundizar.</strong> La sección «Robustez sobre optimalidad» de las notas de la semana 5 trae la tabla de cinco mundos con su desglose y el ejercicio de sensibilidad de la métrica. La <a href="../semana5/09-rdm.html">página siguiente</a> explora con muchos futuros la cola que esta tabla prueba con una sola sequía, y la <a href="../semana5/11-arco-laboratorio.html">página 11</a> lleva la tabla hasta la recomendación.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7dGFibGFMYWI0LCBjb3N0b1BhcmFEZW1hbmRhLCBjcml0ZXJpb3NSb2J1c3RleiwgU0VRVUlBX0RFX0RJU0VOTywgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2Ygc2VjYUsgPSBJbnB1dHMucmFuZ2UoWzE2MCwgNTAwXSwge3ZhbHVlOiAzMjAsIHN0ZXA6IDEwLCBsYWJlbDogXCJCb2xzYSBlbiBhw7FvIHNlY28gW0NPUC9rV2hdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY29tZXJjaWFsaXphZG9ySyA9IHtcbiAgY29uc3QgY29udHJhdG9zID0gWzE4MCwgMTgwLCAxODBdLCBib2xzYSA9IFsxMjAsIDE2MCwgc2VjYUtdO1xuICBjb25zdCBtZXpjbGEgPSBjb250cmF0b3MubWFwKChjLCBqKSA9PiAoYyArIGJvbHNhW2pdKSAvIDIpO1xuICBjb25zdCBub21icmVzID0gW1wiQ29udHJhdG9zIChDKVwiLCBcIkJvbHNhIChCKVwiLCBcIk1lemNsYSAoTSlcIl07XG4gIGNvbnN0IG1hdHJpeiA9IFtjb250cmF0b3MsIGJvbHNhLCBtZXpjbGFdO1xuICByZXR1cm4ge25vbWJyZXMsIG1hdHJpeiwgLi4uY3JpdGVyaW9zUm9idXN0ZXoobWF0cml6KX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgc3R5bGU9XCJvdmVyZmxvdy14OmF1dG9cIj48dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwibWF4LXdpZHRoOjQwcmVtOyBmb250LXNpemU6MC45cmVtXCI+XG4gIDx0aGVhZD48dHI+PHRoPjwvdGg+PHRoPkjDum1lZGE8L3RoPjx0aD5Ob3JtYWw8L3RoPjx0aD5TZWNhPC90aD48dGg+UGVvciBjYXNvPC90aD48dGg+QXJyZXBlbnRpbWllbnRvIG3DoXhpbW88L3RoPjwvdHI+PC90aGVhZD5cbiAgPHRib2R5PiR7Y29tZXJjaWFsaXphZG9ySy5ub21icmVzLm1hcCgobiwgaSkgPT4gaHRtbGA8dHI+XG4gICAgPHRkPiR7bn08L3RkPiR7Y29tZXJjaWFsaXphZG9ySy5tYXRyaXpbaV0ubWFwKChjKSA9PiBodG1sYDx0ZD4ke2Zvcm1hdG9OdW1lcm8oMCkoYyl9PC90ZD5gKX1cbiAgICA8dGQgc3R5bGU9XCIke2kgPT09IGNvbWVyY2lhbGl6YWRvcksubWF4aW1pbiA/IFwiZm9udC13ZWlnaHQ6NzAwO2NvbG9yOiM5NDVBMDBcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvTnVtZXJvKDApKGNvbWVyY2lhbGl6YWRvcksucGVvckNhc29baV0pfTwvdGQ+XG4gICAgPHRkIHN0eWxlPVwiJHtpID09PSBjb21lcmNpYWxpemFkb3JLLm1pbmltYXhSZWdyZXQgPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojNTQzNEEwXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygwKShjb21lcmNpYWxpemFkb3JLLmFycmVwZW50aW1pZW50b01heGltb1tpXSl9PC90ZD48L3RyPmApfVxuICA8L3Rib2R5PjwvdGFibGU+PC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5NYXhpbWluIGVsaWdlPGI+JHtjb21lcmNpYWxpemFkb3JLLm5vbWJyZXNbY29tZXJjaWFsaXphZG9ySy5tYXhpbWluXX08L2I+PC9kaXY+XG4gIDxkaXY+TWluaW1heCByZWdyZXQgZWxpZ2U8Yj4ke2NvbWVyY2lhbGl6YWRvcksubm9tYnJlc1tjb21lcmNpYWxpemFkb3JLLm1pbmltYXhSZWdyZXRdfTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtdW5kb3NMID0gSW5wdXRzLnJhZGlvKFtcImNpbmNvIG11bmRvcywgY29uIGxhIHNlcXXDrWEgZGUgZGlzZcOxb1wiLCBcImN1YXRybyBtdW5kb3MgZGUgbGEgbWF0cml6XCJdLCB7dmFsdWU6IFwiY2luY28gbXVuZG9zLCBjb24gbGEgc2VxdcOtYSBkZSBkaXNlw7FvXCIsIGxhYmVsOiBcIlRhYmxhXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHJhY2lvbmFtaWVudG9MID0gSW5wdXRzLnJhbmdlKFs1MDAsIDQwMDAwXSwge3ZhbHVlOiAyMTAwLCBzdGVwOiAxMDAsIGxhYmVsOiBcIlZhbG9yIGRlIGxhIGVuZXJnw61hIG5vIHNlcnZpZGEgViBbQ09QL2tXaCBkZWwgbW9kZWxvXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBjb25maWFibGVMID0gSW5wdXRzLnRvZ2dsZSh7bGFiZWw6IFwiRXhpZ2lyIG5vIHJhY2lvbmFyIG3DoXMgZGVsIDAsMSAlIGRlIGxhIGRlbWFuZGEgZW4gbGEgc2VxdcOtYSBkZSBkaXNlw7FvXCIsIHZhbHVlOiBmYWxzZX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTkiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJiYXNlTCA9IHRhYmxhTGFiNCgpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidGFibGFMID0ge1xuICBjb25zdCBjaW5jbyA9IG11bmRvc0wuc3RhcnRzV2l0aChcImNpbmNvXCIpO1xuICBjb25zdCBjb2x1bW5hcyA9IGNpbmNvID8gWzAsIDEsIDIsIDMsIDRdIDogWzAsIDEsIDIsIDNdO1xuICBjb25zdCBpU2VxdWlhID0gYmFzZUwubXVuZG9zLmluZGV4T2YoU0VRVUlBX0RFX0RJU0VOTyk7XG4gIGNvbnN0IGRlZmljaXRTZXF1aWEgPSBiYXNlTC5kZWZpY2l0Lm1hcCgoZmlsYSkgPT4gZmlsYVtpU2VxdWlhXSk7XG4gIGNvbnN0IGFkbWlzaWJsZSA9IGRlZmljaXRTZXF1aWEubWFwKChkKSA9PiAhY29uZmlhYmxlTCB8fCBkIDw9IDAuMDAxKTtcbiAgY29uc3QgZmlsYXMgPSBiYXNlTC5lc3RyYXRlZ2lhcy5tYXAoKF8sIGkpID0+IGkpLmZpbHRlcigoaSkgPT4gYWRtaXNpYmxlW2ldKTtcbiAgY29uc3QgY29zdG9zID0gYmFzZUwuY29ycmlkYXMubWFwKChmaWxhKSA9PiBjb2x1bW5hcy5tYXAoKGopID0+IGNvc3RvUGFyYURlbWFuZGEoZmlsYVtqXSwge2Nvc3RvX3JhY2lvbmFtaWVudG86IHJhY2lvbmFtaWVudG9MfSkpKTtcbiAgY29uc3QgY3JpdGVyaW9zID0gY3JpdGVyaW9zUm9idXN0ZXooZmlsYXMubWFwKChpKSA9PiBjb3N0b3NbaV0pKTtcbiAgY29uc3QgYXJyZXBlbnRpbWllbnRvID0gYmFzZUwuZXN0cmF0ZWdpYXMubWFwKChfLCBpKSA9PiAoYWRtaXNpYmxlW2ldID8gY3JpdGVyaW9zLmFycmVwZW50aW1pZW50b1tmaWxhcy5pbmRleE9mKGkpXSA6IG51bGwpKTtcbiAgY29uc3QgcGVvckNhc28gPSBiYXNlTC5lc3RyYXRlZ2lhcy5tYXAoKF8sIGkpID0+IChhZG1pc2libGVbaV0gPyBjcml0ZXJpb3MucGVvckNhc29bZmlsYXMuaW5kZXhPZihpKV0gOiBudWxsKSk7XG4gIGNvbnN0IGFycmVwZW50aW1pZW50b01heGltbyA9IGJhc2VMLmVzdHJhdGVnaWFzLm1hcCgoXywgaSkgPT4gKGFkbWlzaWJsZVtpXSA/IGNyaXRlcmlvcy5hcnJlcGVudGltaWVudG9NYXhpbW9bZmlsYXMuaW5kZXhPZihpKV0gOiBudWxsKSk7XG4gIGNvbnN0IHNlcXVpYSA9IGJhc2VMLmNvcnJpZGFzLm1hcCgoZmlsYSkgPT4gY29zdG9QYXJhRGVtYW5kYShmaWxhW2lTZXF1aWFdLCB7Y29zdG9fcmFjaW9uYW1pZW50bzogcmFjaW9uYW1pZW50b0x9KSk7XG4gIGNvbnN0IG1hc0JhcmF0YVNlcXVpYSA9IGZpbGFzLnJlZHVjZSgoYSwgaSkgPT4gKHNlcXVpYVtpXSA8IHNlcXVpYVthXSA/IGkgOiBhKSwgZmlsYXNbMF0pO1xuICByZXR1cm4ge2NpbmNvLCBtdW5kb3M6IGNvbHVtbmFzLm1hcCgoaikgPT4gYmFzZUwubXVuZG9zW2pdKSwgZXN0cmF0ZWdpYXM6IGJhc2VMLmVzdHJhdGVnaWFzLCBjb3N0b3MsIGFkbWlzaWJsZSxcbiAgICBhcnJlcGVudGltaWVudG8sIHBlb3JDYXNvLCBhcnJlcGVudGltaWVudG9NYXhpbW8sIGRlZmljaXRTZXF1aWEsIHNlcXVpYSwgbWFzQmFyYXRhU2VxdWlhLFxuICAgIG1heGltaW46IGZpbGFzW2NyaXRlcmlvcy5tYXhpbWluXSwgbWluaW1heFJlZ3JldDogZmlsYXNbY3JpdGVyaW9zLm1pbmltYXhSZWdyZXRdfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTEiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgc3R5bGU9XCJvdmVyZmxvdy14OmF1dG9cIj48dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwiZm9udC1zaXplOjAuODVyZW1cIj5cbiAgPHRoZWFkPjx0cj48dGg+Q29zdG8gW0NPUC9rV2hdPC90aD4ke3RhYmxhTC5tdW5kb3MubWFwKChtKSA9PiBodG1sYDx0aD4ke219PC90aD5gKX08dGg+UGVvciBjYXNvPC90aD48dGg+UmFjaW9uYSBlbiBsYSBzZXF1w61hPC90aD48L3RyPjwvdGhlYWQ+XG4gIDx0Ym9keT4ke3RhYmxhTC5lc3RyYXRlZ2lhcy5tYXAoKGUsIGkpID0+IGh0bWxgPHRyIHN0eWxlPVwiJHt0YWJsYUwuYWRtaXNpYmxlW2ldID8gXCJcIiA6IFwiY29sb3I6IzlFOUU5RVwifVwiPjx0ZD4ke2V9JHt0YWJsYUwuYWRtaXNpYmxlW2ldID8gXCJcIiA6IFwiIChleGNsdWlkYSlcIn08L3RkPlxuICAgICR7dGFibGFMLmNvc3Rvc1tpXS5tYXAoKGMsIGopID0+IGh0bWxgPHRkIHN0eWxlPVwiJHt0YWJsYUwuYWRtaXNpYmxlW2ldICYmIHRhYmxhTC5hcnJlcGVudGltaWVudG9baV1bal0gPT09IDAgPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojMDA2OTNFXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygxKShjKX08L3RkPmApfVxuICAgIDx0ZCBzdHlsZT1cIiR7aSA9PT0gdGFibGFMLm1heGltaW4gPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojOTQ1QTAwXCIgOiBcIlwifVwiPiR7dGFibGFMLmFkbWlzaWJsZVtpXSA/IGZvcm1hdG9OdW1lcm8oMSkodGFibGFMLnBlb3JDYXNvW2ldKSA6IFwi4oCUXCJ9PC90ZD5cbiAgICA8dGQgc3R5bGU9XCIke3RhYmxhTC5kZWZpY2l0U2VxdWlhW2ldID4gMC4wMDEgPyBcImNvbG9yOiNDRTExMjZcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvUG9yY2VudGFqZSh0YWJsYUwuZGVmaWNpdFNlcXVpYVtpXSwgMil9PC90ZD48L3RyPmApfVxuICA8L3Rib2R5PjwvdGFibGU+PC9kaXY+XG4gIDxkaXYgc3R5bGU9XCJvdmVyZmxvdy14OmF1dG9cIj48dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwiZm9udC1zaXplOjAuODVyZW1cIj5cbiAgPHRoZWFkPjx0cj48dGg+QXJyZXBlbnRpbWllbnRvPC90aD4ke3RhYmxhTC5tdW5kb3MubWFwKChtKSA9PiBodG1sYDx0aD4ke219PC90aD5gKX08dGg+TcOheGltbzwvdGg+PC90cj48L3RoZWFkPlxuICA8dGJvZHk+JHt0YWJsYUwuZXN0cmF0ZWdpYXMuZmlsdGVyKChfLCBpKSA9PiB0YWJsYUwuYWRtaXNpYmxlW2ldKS5tYXAoKGUpID0+IHtcbiAgICBjb25zdCBpID0gdGFibGFMLmVzdHJhdGVnaWFzLmluZGV4T2YoZSk7XG4gICAgcmV0dXJuIGh0bWxgPHRyPjx0ZD4ke2V9PC90ZD4ke3RhYmxhTC5hcnJlcGVudGltaWVudG9baV0ubWFwKChyKSA9PiBodG1sYDx0ZD4ke2Zvcm1hdG9OdW1lcm8oMikocil9PC90ZD5gKX1cbiAgICAgIDx0ZCBzdHlsZT1cIiR7aSA9PT0gdGFibGFMLm1pbmltYXhSZWdyZXQgPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojNTQzNEEwXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygyKSh0YWJsYUwuYXJyZXBlbnRpbWllbnRvTWF4aW1vW2ldKX08L3RkPjwvdHI+YDt9KX1cbiAgPC90Ym9keT48L3RhYmxlPjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2Pk1heGltaW4gZWxpZ2U8Yj4ke3RhYmxhTC5lc3RyYXRlZ2lhc1t0YWJsYUwubWF4aW1pbl19LCBwZW9yIGNhc28gZGUgJHtmb3JtYXRvTnVtZXJvKDEpKHRhYmxhTC5wZW9yQ2Fzb1t0YWJsYUwubWF4aW1pbl0pfSBDT1Ava1doPC9iPjwvZGl2PlxuICA8ZGl2Pk1pbmltYXggcmVncmV0IGVsaWdlPGI+JHt0YWJsYUwuZXN0cmF0ZWdpYXNbdGFibGFMLm1pbmltYXhSZWdyZXRdfSwgYXJyZXBlbnRpbWllbnRvIG3DoXhpbW8gZGUgJHtmb3JtYXRvTnVtZXJvKDIpKHRhYmxhTC5hcnJlcGVudGltaWVudG9NYXhpbW9bdGFibGFMLm1pbmltYXhSZWdyZXRdKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5Nw6FzIGJhcmF0YSBlbiBsYSBzZXF1w61hIGRlIGRpc2XDsW8ke3RhYmxhTC5jaW5jbyA/IFwiXCIgOiBcIiAoZnVlcmEgZGUgbGEgdGFibGEpXCJ9PGI+JHt0YWJsYUwuZXN0cmF0ZWdpYXNbdGFibGFMLm1hc0JhcmF0YVNlcXVpYV19LCAke2Zvcm1hdG9OdW1lcm8oMSkodGFibGFMLnNlcXVpYVt0YWJsYUwubWFzQmFyYXRhU2VxdWlhXSl9IENPUC9rV2g8L2I+PC9kaXY+XG4gIDxkaXY+UmFjaW9uYW1pZW50byBtw6F4aW1vIGVuIGxhIHNlcXXDrWE6IGltcHVsc28gRk5DRVIgeSBtZXJjYWRvIHNvbG88Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKHRhYmxhTC5kZWZpY2l0U2VxdWlhWzNdLCAxKX0geSAke2Zvcm1hdG9Qb3JjZW50YWplKHRhYmxhTC5kZWZpY2l0U2VxdWlhWzBdLCAxKX0gZGUgbGEgZGVtYW5kYTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2VjYUsnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbXVuZG9zTCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdyYWNpb25hbWllbnRvTCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdjb25maWFibGVMJykifV19
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7dGFibGFMYWI0LCBjb3N0b1BhcmFEZW1hbmRhLCBjcml0ZXJpb3NSb2J1c3RleiwgU0VRVUlBX0RFX0RJU0VOTywgZm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2Ygc2VjYUsgPSBJbnB1dHMucmFuZ2UoWzE2MCwgNTAwXSwge3ZhbHVlOiAzMjAsIHN0ZXA6IDEwLCBsYWJlbDogXCJCb2xzYSBlbiBhw7FvIHNlY28gW0NPUC9rV2hdXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY29tZXJjaWFsaXphZG9ySyA9IHtcbiAgY29uc3QgY29udHJhdG9zID0gWzE4MCwgMTgwLCAxODBdLCBib2xzYSA9IFsxMjAsIDE2MCwgc2VjYUtdO1xuICBjb25zdCBtZXpjbGEgPSBjb250cmF0b3MubWFwKChjLCBqKSA9PiAoYyArIGJvbHNhW2pdKSAvIDIpO1xuICBjb25zdCBub21icmVzID0gW1wiQ29udHJhdG9zIChDKVwiLCBcIkJvbHNhIChCKVwiLCBcIk1lemNsYSAoTSlcIl07XG4gIGNvbnN0IG1hdHJpeiA9IFtjb250cmF0b3MsIGJvbHNhLCBtZXpjbGFdO1xuICByZXR1cm4ge25vbWJyZXMsIG1hdHJpeiwgLi4uY3JpdGVyaW9zUm9idXN0ZXoobWF0cml6KX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgc3R5bGU9XCJvdmVyZmxvdy14OmF1dG9cIj48dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwibWF4LXdpZHRoOjQwcmVtOyBmb250LXNpemU6MC45cmVtXCI+XG4gIDx0aGVhZD48dHI+PHRoPjwvdGg+PHRoPkjDum1lZGE8L3RoPjx0aD5Ob3JtYWw8L3RoPjx0aD5TZWNhPC90aD48dGg+UGVvciBjYXNvPC90aD48dGg+QXJyZXBlbnRpbWllbnRvIG3DoXhpbW88L3RoPjwvdHI+PC90aGVhZD5cbiAgPHRib2R5PiR7Y29tZXJjaWFsaXphZG9ySy5ub21icmVzLm1hcCgobiwgaSkgPT4gaHRtbGA8dHI+XG4gICAgPHRkPiR7bn08L3RkPiR7Y29tZXJjaWFsaXphZG9ySy5tYXRyaXpbaV0ubWFwKChjKSA9PiBodG1sYDx0ZD4ke2Zvcm1hdG9OdW1lcm8oMCkoYyl9PC90ZD5gKX1cbiAgICA8dGQgc3R5bGU9XCIke2kgPT09IGNvbWVyY2lhbGl6YWRvcksubWF4aW1pbiA/IFwiZm9udC13ZWlnaHQ6NzAwO2NvbG9yOiM5NDVBMDBcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvTnVtZXJvKDApKGNvbWVyY2lhbGl6YWRvcksucGVvckNhc29baV0pfTwvdGQ+XG4gICAgPHRkIHN0eWxlPVwiJHtpID09PSBjb21lcmNpYWxpemFkb3JLLm1pbmltYXhSZWdyZXQgPyBcImZvbnQtd2VpZ2h0OjcwMDtjb2xvcjojNTQzNEEwXCIgOiBcIlwifVwiPiR7Zm9ybWF0b051bWVybygwKShjb21lcmNpYWxpemFkb3JLLmFycmVwZW50aW1pZW50b01heGltb1tpXSl9PC90ZD48L3RyPmApfVxuICA8L3Rib2R5PjwvdGFibGU+PC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5NYXhpbWluIGVsaWdlPGI+JHtjb21lcmNpYWxpemFkb3JLLm5vbWJyZXNbY29tZXJjaWFsaXphZG9ySy5tYXhpbWluXX08L2I+PC9kaXY+XG4gIDxkaXY+TWluaW1heCByZWdyZXQgZWxpZ2U8Yj4ke2NvbWVyY2lhbGl6YWRvcksubm9tYnJlc1tjb21lcmNpYWxpemFkb3JLLm1pbmltYXhSZWdyZXRdfTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtdW5kb3NMID0gSW5wdXRzLnJhZGlvKFtcImNpbmNvIG11bmRvcywgY29uIGxhIHNlcXXDrWEgZGUgZGlzZcOxb1wiLCBcImN1YXRybyBtdW5kb3MgZGUgbGEgbWF0cml6XCJdLCB7dmFsdWU6IFwiY2luY28gbXVuZG9zLCBjb24gbGEgc2VxdcOtYSBkZSBkaXNlw7FvXCIsIGxhYmVsOiBcIkNvbHVtbmFzXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHJhY2lvbmFtaWVudG9MID0gSW5wdXRzLnJhbmdlKFs1MDAsIDQwMDAwXSwge3ZhbHVlOiAyMTAwLCBzdGVwOiAxMDAsIGxhYmVsOiBcIlZhbG9yIGRlIGxhIGVuZXJnw61hIG5vIHNlcnZpZGEgViBbQ09QL2tXaCBkZWwgbW9kZWxvXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImJhc2VMID0gdGFibGFMYWI0KClcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InRhYmxhTCA9IHtcbiAgY29uc3QgY2luY28gPSBtdW5kb3NMLnN0YXJ0c1dpdGgoXCJjaW5jb1wiKTtcbiAgY29uc3QgY29sdW1uYXMgPSBjaW5jbyA/IFswLCAxLCAyLCAzLCA0XSA6IFswLCAxLCAyLCAzXTtcbiAgY29uc3QgaVNlcXVpYSA9IGJhc2VMLm11bmRvcy5pbmRleE9mKFNFUVVJQV9ERV9ESVNFTk8pO1xuICBjb25zdCBkZWZpY2l0U2VxdWlhID0gYmFzZUwuZGVmaWNpdC5tYXAoKGZpbGEpID0+IGZpbGFbaVNlcXVpYV0pO1xuICBjb25zdCBjb3N0b3MgPSBiYXNlTC5jb3JyaWRhcy5tYXAoKGZpbGEpID0+IGNvbHVtbmFzLm1hcCgoaikgPT4gY29zdG9QYXJhRGVtYW5kYShmaWxhW2pdLCB7Y29zdG9fcmFjaW9uYW1pZW50bzogcmFjaW9uYW1pZW50b0x9KSkpO1xuICBjb25zdCBjcml0ZXJpb3MgPSBjcml0ZXJpb3NSb2J1c3Rleihjb3N0b3MpO1xuICBjb25zdCBzZXF1aWEgPSBiYXNlTC5jb3JyaWRhcy5tYXAoKGZpbGEpID0+IGNvc3RvUGFyYURlbWFuZGEoZmlsYVtpU2VxdWlhXSwge2Nvc3RvX3JhY2lvbmFtaWVudG86IHJhY2lvbmFtaWVudG9MfSkpO1xuICByZXR1cm4ge2NpbmNvLCBtdW5kb3M6IGNvbHVtbmFzLm1hcCgoaikgPT4gYmFzZUwubXVuZG9zW2pdKSwgZXN0cmF0ZWdpYXM6IGJhc2VMLmVzdHJhdGVnaWFzLCBjb3N0b3MsIGRlZmljaXRTZXF1aWEsXG4gICAgc2VxdWlhLCBtYXNCYXJhdGFTZXF1aWE6IHNlcXVpYS5pbmRleE9mKE1hdGgubWluKC4uLnNlcXVpYSkpLCAuLi5jcml0ZXJpb3MsXG4gICAgaUltcHVsc286IGJhc2VMLmVzdHJhdGVnaWFzLmluZGV4T2YoXCJpbXB1bHNvIEZOQ0VSXCIpLCBpTWVyY2FkbzogYmFzZUwuZXN0cmF0ZWdpYXMuaW5kZXhPZihcIm1lcmNhZG8gc29sb1wiKX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IHN0eWxlPVwib3ZlcmZsb3cteDphdXRvXCI+PHRhYmxlIGNsYXNzPVwidGFibGUgdGFibGUtc21cIiBzdHlsZT1cImZvbnQtc2l6ZTowLjg1cmVtXCI+XG4gIDx0aGVhZD48dHI+PHRoPkNvc3RvIFtDT1Ava1doXTwvdGg+JHt0YWJsYUwubXVuZG9zLm1hcCgobSkgPT4gaHRtbGA8dGg+JHttfTwvdGg+YCl9PHRoPlBlb3IgY2FzbzwvdGg+PHRoPlJhY2lvbmFtaWVudG8gcGljbyBlbiBsYSBzZXF1w61hPC90aD48L3RyPjwvdGhlYWQ+XG4gIDx0Ym9keT4ke3RhYmxhTC5lc3RyYXRlZ2lhcy5tYXAoKGUsIGkpID0+IGh0bWxgPHRyPjx0ZD4ke2V9PC90ZD5cbiAgICAke3RhYmxhTC5jb3N0b3NbaV0ubWFwKChjLCBqKSA9PiBodG1sYDx0ZCBzdHlsZT1cIiR7dGFibGFMLmFycmVwZW50aW1pZW50b1tpXVtqXSA9PT0gMCA/IFwiZm9udC13ZWlnaHQ6NzAwO2NvbG9yOiMwMDY5M0VcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvTnVtZXJvKDEpKGMpfTwvdGQ+YCl9XG4gICAgPHRkIHN0eWxlPVwiJHtpID09PSB0YWJsYUwubWF4aW1pbiA/IFwiZm9udC13ZWlnaHQ6NzAwO2NvbG9yOiM5NDVBMDBcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvTnVtZXJvKDEpKHRhYmxhTC5wZW9yQ2Fzb1tpXSl9PC90ZD5cbiAgICA8dGQgc3R5bGU9XCIke3RhYmxhTC5kZWZpY2l0U2VxdWlhW2ldID4gMC4wMDEgPyBcImNvbG9yOiNDRTExMjZcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvUG9yY2VudGFqZSh0YWJsYUwuZGVmaWNpdFNlcXVpYVtpXSwgMil9PC90ZD48L3RyPmApfVxuICA8L3Rib2R5PjwvdGFibGU+PC9kaXY+XG4gIDxkaXYgc3R5bGU9XCJvdmVyZmxvdy14OmF1dG9cIj48dGFibGUgY2xhc3M9XCJ0YWJsZSB0YWJsZS1zbVwiIHN0eWxlPVwiZm9udC1zaXplOjAuODVyZW1cIj5cbiAgPHRoZWFkPjx0cj48dGg+QXJyZXBlbnRpbWllbnRvPC90aD4ke3RhYmxhTC5tdW5kb3MubWFwKChtKSA9PiBodG1sYDx0aD4ke219PC90aD5gKX08dGg+TcOheGltbzwvdGg+PC90cj48L3RoZWFkPlxuICA8dGJvZHk+JHt0YWJsYUwuZXN0cmF0ZWdpYXMubWFwKChlLCBpKSA9PiBodG1sYDx0cj48dGQ+JHtlfTwvdGQ+JHt0YWJsYUwuYXJyZXBlbnRpbWllbnRvW2ldLm1hcCgocikgPT4gaHRtbGA8dGQ+JHtmb3JtYXRvTnVtZXJvKDIpKHIpfTwvdGQ+YCl9XG4gICAgPHRkIHN0eWxlPVwiJHtpID09PSB0YWJsYUwubWluaW1heFJlZ3JldCA/IFwiZm9udC13ZWlnaHQ6NzAwO2NvbG9yOiM1NDM0QTBcIiA6IFwiXCJ9XCI+JHtmb3JtYXRvTnVtZXJvKDIpKHRhYmxhTC5hcnJlcGVudGltaWVudG9NYXhpbW9baV0pfTwvdGQ+PC90cj5gKX1cbiAgPC90Ym9keT48L3RhYmxlPjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTEiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2Pk1heGltaW4gZWxpZ2U8Yj4ke3RhYmxhTC5lc3RyYXRlZ2lhc1t0YWJsYUwubWF4aW1pbl19LCBwZW9yIGNhc28gZGUgJHtmb3JtYXRvTnVtZXJvKDEpKHRhYmxhTC5wZW9yQ2Fzb1t0YWJsYUwubWF4aW1pbl0pfSBDT1Ava1doPC9iPjwvZGl2PlxuICA8ZGl2Pk1pbmltYXggcmVncmV0IGVsaWdlPGI+JHt0YWJsYUwuZXN0cmF0ZWdpYXNbdGFibGFMLm1pbmltYXhSZWdyZXRdfSwgYXJyZXBlbnRpbWllbnRvIG3DoXhpbW8gZGUgJHtmb3JtYXRvTnVtZXJvKDIpKHRhYmxhTC5hcnJlcGVudGltaWVudG9NYXhpbW9bdGFibGFMLm1pbmltYXhSZWdyZXRdKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5Nw6FzIGJhcmF0YSBlbiBsYSBzZXF1w61hIGRlIGRpc2XDsW8ke3RhYmxhTC5jaW5jbyA/IFwiXCIgOiBcIiAoZnVlcmEgZGUgbGEgdGFibGEpXCJ9PGI+JHt0YWJsYUwuZXN0cmF0ZWdpYXNbdGFibGFMLm1hc0JhcmF0YVNlcXVpYV19LCAke2Zvcm1hdG9OdW1lcm8oMSkodGFibGFMLnNlcXVpYVt0YWJsYUwubWFzQmFyYXRhU2VxdWlhXSl9IENPUC9rV2g8L2I+PC9kaXY+XG4gIDxkaXY+UmFjaW9uYW1pZW50byBwaWNvIGVuIGxhIHNlcXXDrWE6IGltcHVsc28gRk5DRVIgeSBtZXJjYWRvIHNvbG88Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKHRhYmxhTC5kZWZpY2l0U2VxdWlhW3RhYmxhTC5pSW1wdWxzb10sIDIpfSB5ICR7Zm9ybWF0b1BvcmNlbnRhamUodGFibGFMLmRlZmljaXRTZXF1aWFbdGFibGFMLmlNZXJjYWRvXSwgMil9IGRlIGxhIGRlbWFuZGE8L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3NlY2FLJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ211bmRvc0wnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncmFjaW9uYW1pZW50b0wnKSJ9XX0=
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }

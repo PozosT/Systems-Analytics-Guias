@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Del «predecir y actuar» al «explorar y adaptar»: el RDM como método de la familia de decisiones bajo incertidumbre profunda, sus cinco pasos, el análisis de vulnerabilidad hecho a mano sobre 100 futuros con una sequía crítica incierta, por qué el rango de la exploración también decide y el plan adaptativo con señales y contingencias.">
+<meta name="description" content="Del «predecir y actuar» al «explorar y adaptar»: el RDM como método de la familia de decisiones bajo incertidumbre profunda, sus cinco pasos, la falla, la caja, la cobertura y la densidad, el análisis de vulnerabilidad hecho a mano con 20 futuros de una microrred y con 100 futuros del modelo de la semana, la prueba del mecanismo, el artefacto del horizonte y el plan adaptativo con señales y contingencias.">
 
 <title>Introducción a la toma de decisiones robusta (RDM) – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -119,6 +119,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <meta name="guias-mise:fecha" content="11 de noviembre de 2026">
 
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -637,7 +680,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Del «predecir y actuar» al «explorar y adaptar»: el RDM como método de la familia de decisiones bajo incertidumbre profunda, sus cinco pasos, el análisis de vulnerabilidad hecho a mano sobre 100 futuros con una sequía crítica incierta, por qué el rango de la exploración también decide y el plan adaptativo con señales y contingencias.
+    Del «predecir y actuar» al «explorar y adaptar»: el RDM como método de la familia de decisiones bajo incertidumbre profunda, sus cinco pasos, la falla, la caja, la cobertura y la densidad, el análisis de vulnerabilidad hecho a mano con 20 futuros de una microrred y con 100 futuros del modelo de la semana, la prueba del mecanismo, el artefacto del horizonte y el plan adaptativo con señales y contingencias.
   </div>
 </div>
 
@@ -657,26 +700,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="18" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 17;"><span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="21" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 20;"><span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero<span class="op">,</span> formatoPorcentaje} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
-<div>
-<div id="ojs-cell-1-1" data-nodetype="declaration">
+<div id="ojs-cell-1" data-nodetype="declaration">
 
 </div>
 </div>
 </div>
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="26" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 25;"><span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-display hidden">
-<div>
-<div id="ojs-cell-1-2" data-nodetype="declaration">
+<div id="ojs-cell-2" data-nodetype="declaration">
 
-</div>
 </div>
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 60 a 65 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la idea clave, la intuición, la definición con el ciclo, el ejemplo ●○○, el error «Plan adaptativo sin señales observables o con señales tardías», las tres primeras preguntas y el resumen, unos 20 min; amplían: los ejemplos ●●○ y ●●● con su simulador, los otros cinco errores, las preguntas 4 a 6 y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana5/07-escenarios.html">escenarios</a> y <a href="../semana5/08-robustez-regret.html">robustez</a></span></p>
+<p><span class="dato">⏱ 80 a 90 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la intuición, las dos definiciones con el visor del ciclo, el ejemplo ●○○, el ejemplo ●●○ completo, el error «Presentar el RDM como una predicción», las tres primeras preguntas y el resumen, unos 35 min; amplían: el ejemplo ●●● con los 100 futuros del modelo de la semana, su caja, su mecanismo y su plan adaptativo, el código de la microrred, los demás errores, las preguntas 4 a 6 y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana5/07-escenarios.html">escenarios</a> y <a href="../semana5/08-robustez-regret.html">robustez</a></span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -684,8 +728,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <ul>
 <li>Ubicar el RDM dentro de la familia de métodos para decidir bajo incertidumbre profunda y describir sus cinco pasos.</li>
-<li>Explorar muchos futuros, delimitar la región donde falla una estrategia con su cobertura y su densidad, y explicar por qué los rangos explorados deciden qué vulnerabilidades pueden aparecer.</li>
-<li>Convertir las vulnerabilidades en una estrategia nueva y en un plan adaptativo con acción inmediata, señales que miren hacia adelante y contingencias.</li>
+<li>Explorar muchos futuros, contar las fallas de una estrategia, trazar una caja y calcular su cobertura y su densidad, y poner a prueba la caja con el mecanismo que la produce.</li>
+<li>Convertir la vulnerabilidad que sobrevive en una estrategia nueva y en un plan adaptativo con acción inmediata, señales que miren hacia adelante y contingencias.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
@@ -729,6 +773,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="del-dibujo-a-la-ecuación" class="level2">
 <h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<p>La intuición dejó dos ideas: preparar la respuesta antes de saber qué pasará y atarla a una señal que se pueda leer. El RDM las convierte en un método de cinco pasos, y la segunda definición da las cuentas del paso que más trabaja, el de descubrir dónde falla una estrategia.</p>
 <div id="definicion-toma-de-decisiones-robusta-rdm" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Toma de decisiones robusta (RDM)</span>
@@ -737,118 +782,556 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><strong>Estructurar la decisión con XLRM</strong>: incertidumbres exógenas (X), palancas del decisor (L), relaciones o modelo (R) y métricas (M).</li>
 <li><strong>Explorar</strong>: evaluar las estrategias en un conjunto amplio de futuros, cientos o miles de combinaciones muestreadas de X.</li>
-<li><strong>Descubrir escenarios</strong>: encontrar, a partir de los resultados, las regiones del espacio de incertidumbre donde cada estrategia falla. Un algoritmo como PRIM propone cajas, y cada una se juzga por su <strong>cobertura</strong> (qué fracción de todas las fallas contiene) y su <strong>densidad</strong> (qué fracción de los futuros de la caja son fallas).</li>
+<li><strong>Descubrir escenarios</strong>: encontrar, a partir de los resultados, las regiones del espacio de incertidumbre donde cada estrategia falla, y juzgar cada región por su cobertura y su densidad. Un algoritmo como PRIM propone esas regiones.</li>
 <li><strong>Comparar compromisos</strong>: medir cuánto cuesta, en los demás futuros, cubrir cada vulnerabilidad.</li>
 <li><strong>Diseñar estrategias nuevas e iterar</strong>: combinar palancas o volver adaptativa una estrategia (acción inmediata, señales observables y contingencias) para cubrir las vulnerabilidades, y volver al paso 2.</li>
 </ol>
 </div>
+<div id="definicion-falla-caja-cobertura-y-densidad" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Falla, caja, cobertura y densidad</span>
+</div>
+<p>Un <strong>futuro</strong> <span class="math inline">f</span> es una combinación de valores de las incertidumbres X. Sea <span class="math inline">R(e, f)</span> el arrepentimiento de la estrategia <span class="math inline">e</span> en ese futuro, definido en la <a href="../semana5/08-robustez-regret.html">página 8</a>: su distancia a la mejor estrategia de <span class="math inline">f</span>, en las unidades de la métrica (no confundir con la R de XLRM, que es el modelo). Con un umbral <span class="math inline">u</span> en las mismas unidades, la estrategia <strong>falla</strong> en <span class="math inline">f</span> cuando</p>
+<p><span class="math display">\phi_e(f) = \mathbf{1}\bigl[R(e, f) &gt; u\bigr] = 1,</span></p>
+<p>donde <span class="math inline">\mathbf{1}[\cdot]</span> vale 1 si la condición se cumple y 0 si no. Sea <span class="math inline">F</span> el conjunto de futuros explorados donde <span class="math inline">e</span> falla. Una <strong>caja</strong> <span class="math inline">B</span> es el conjunto de futuros que cumplen uno o más límites sobre las incertidumbres, como «precio por encima de <span class="math inline">a</span> y cortes de más de <span class="math inline">b</span> días». La caja se juzga con dos fracciones, donde <span class="math inline">|\cdot|</span> cuenta futuros:</p>
+<p><span class="math display">\text{cobertura} = \frac{|F \cap B|}{|F|}, \qquad \text{densidad} = \frac{|F \cap B|}{|B|}.</span></p>
+<p>La <strong>cobertura</strong> dice qué parte de las fallas atrapa la caja; la <strong>densidad</strong>, qué parte de los futuros de la caja fallan. Agrandar la caja sube la cobertura y suele bajar la densidad. Una buena caja tiene las dos altas y pocos límites, porque cada límite se convierte en una señal que alguien debe vigilar.</p>
+</div>
 <p>La matriz 2 × 2 y la tabla de robustez de las páginas 7 y 8 son herramientas de escenarios: el analista elige los mundos. El RDM invierte esa dirección, porque los escenarios que importan salen de explorar muchos futuros. Lo que el analista sigue eligiendo son las incertidumbres que entran a X y sus rangos, y esa elección también decide qué fallas pueden aparecer. El curso hace una versión conceptual de los cinco pasos, a mano y con pocos futuros.</p>
+<p>El visor recorre el ciclo con el barco de la intuición, un sistema que no necesita modelo. Las cifras son ilustrativas y sirven para ver cada definición en acción.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El ciclo, paso a paso</span>
 </div>
 <div class="paso">
 <p><a href="../diagramas/svg/s5-09-ciclo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s5-09-ciclo-1.svg" class="img-fluid" loading="lazy" alt="Paso 1: estructurar la decisión con XLRM."></a></p>
-<p><strong>Estructure con XLRM.</strong> En el caso ancla, X son el ritmo mundial de abaratamiento de las FNCER, el aprendizaje local, la canibalización, el crecimiento de la demanda, la frecuencia e intensidad de El Niño y la severidad y el año de una sequía crítica; el valor de la energía no servida es en rigor un juicio de valor, pero se explora como incertidumbre para ver cuánto pesa. L son el Cargo por Confiabilidad (administrado o por subasta), la subasta FNCER, el impuesto al carbono, la firmeza que la regulación reconoce a las FNCER y la publicación de la cartera; R, <code>mercado_con_politicas</code>; M, el costo medio para la demanda, con el racionamiento valorado, y el racionamiento máximo.</p>
+<p><strong>Estructure con XLRM.</strong> Para el capitán, X son las tormentas que puede encontrar (el día en que cruzan la ruta y la fuerza del viento) y el precio del combustible; L, la ruta, el punto de decisión y la reserva de combustible; R, la carta náutica con la velocidad y el consumo del barco; M, los días de viaje y el riesgo para la carga.</p>
 </div>
 <div class="paso">
 <p><a href="../diagramas/svg/s5-09-ciclo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s5-09-ciclo-2.svg" class="img-fluid" loading="lazy" alt="Paso 2: explorar las estrategias en muchos futuros."></a></p>
-<p><strong>Explore.</strong> Corra las estrategias en muchos futuros. La tabla de robustez de la semana, con cinco mundos, es la versión mínima; aquí usará 100 futuros muestreados.</p>
+<p><strong>Explore.</strong> Corra cada ruta candidata en 50 tormentas posibles, sorteadas en los rangos de X. La ruta corta falla cuando llega más de dos días después que la mejor ruta de esa tormenta: le pasa en 8 de las 50.</p>
 </div>
 <div class="paso">
 <p><a href="../diagramas/svg/s5-09-ciclo-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s5-09-ciclo-3.svg" class="img-fluid" loading="lazy" alt="Paso 3: descubrir dónde falla cada estrategia."></a></p>
-<p><strong>Descubra los escenarios.</strong> Sobre los resultados, pregunte en qué región de los futuros el arrepentimiento de cada estrategia supera un umbral. La dirección del análisis se invierte: los futuros problemáticos salen de los datos y no de la imaginación del analista.</p>
+<p><strong>Descubra los escenarios.</strong> La caja «tormenta que cruza entre los días 3 y 5 con viento de más de 40 nudos» contiene 10 de las 50 tormentas, y 7 de ellas son fallas: cobertura <span class="math inline">7/8 = 88</span> %, densidad <span class="math inline">7/10 = 70</span> %. La región problemática salió de los datos y no de la imaginación del capitán.</p>
 </div>
 <div class="paso">
 <p><a href="../diagramas/svg/s5-09-ciclo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s5-09-ciclo-4.svg" class="img-fluid" loading="lazy" alt="Paso 4: comparar compromisos entre estrategias."></a></p>
-<p><strong>Compare los compromisos.</strong> Cada vulnerabilidad se puede cubrir, pero no gratis: la estrategia que protege en las sequías paga su seguro en los años tranquilos. Mida ese precio antes de decidir.</p>
+<p><strong>Compare los compromisos.</strong> La ruta norte nunca falla, pero cuesta un día más en las 42 tormentas en que la corta llega bien. Cubrir la vulnerabilidad tiene un precio, y se mide antes de decidir.</p>
 </div>
 <div class="paso">
 <p><a href="../diagramas/svg/s5-09-ciclo-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s5-09-ciclo-5.svg" class="img-fluid" loading="lazy" alt="Paso 5: diseñar estrategias nuevas, a menudo adaptativas."></a></p>
-<p><strong>Diseñe estrategias nuevas.</strong> Con las vulnerabilidades a la vista, combine palancas o vuelva adaptativa una estrategia: acción hoy, señales que se pueden medir y contingencias que se activan con ellas.</p>
+<p><strong>Diseñe estrategias nuevas.</strong> Con la caja a la vista, el capitán diseña una ruta adaptativa: la corta, con un punto de decisión en el día 2 y la regla «si el barómetro baja de 1 000 hPa, tomar la ruta norte». El barómetro es la señal, y está atado a la vulnerabilidad que reveló la caja.</p>
 </div>
 <div class="paso">
 <p><a href="../diagramas/svg/s5-09-ciclo-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s5-09-ciclo-6.svg" class="img-fluid" loading="lazy" alt="Cierre del ciclo: iterar; Rhodium y EMA Workbench automatizan los pasos 2 y 3."></a></p>
-<p><strong>Itere y ubique la frontera.</strong> Las estrategias nuevas vuelven a explorarse, y el plan se revisa cuando llegan datos. El RDM formal automatiza la exploración y el descubrimiento de escenarios con algoritmos como PRIM y plataformas como Rhodium o EMA Workbench; el curso hace esos pasos a mano.</p>
+<p><strong>Itere y ubique la frontera.</strong> La ruta adaptativa vuelve a explorarse en las 50 tormentas, y el plan se revisa cuando llegan datos. El RDM formal automatiza la exploración y el descubrimiento de escenarios con algoritmos como PRIM y plataformas como Rhodium o EMA Workbench; el curso hace esos pasos a mano.</p>
 </div>
 </div>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
-<section id="xlrm-de-una-microrred-para-un-hospital" class="level3">
-<h3 class="anchored" data-anchor-id="xlrm-de-una-microrred-para-un-hospital">XLRM de una microrred para un hospital</h3>
+<p>Los tres ejemplos aplican los cinco pasos y cada uno agrega una dificultad. El básico solo estructura una decisión: separa lo que el decisor no controla de lo que decide. El intermedio es el más completo: estructura otra decisión y recorre los cinco pasos a mano con 20 futuros, desde contar las fallas hasta diseñar la estrategia que las cubre. El avanzado repite el procedimiento con 100 futuros del modelo de la semana y agrega lo que trae un modelo dinámico: la prueba del mecanismo, el artefacto del horizonte y el plan adaptativo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ejemplo</th>
+<th>Sistema</th>
+<th>Lo que agrega</th>
+<th style="text-align: center;">Pasos que más trabaja</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>●○○</td>
+<td>Cuarto frío de una cooperativa lechera</td>
+<td>Separar lo que no se controla de lo que se decide</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td>●●○</td>
+<td>Microrred del hospital de un municipio no interconectado, con 20 futuros</td>
+<td>Explorar y descubrir a mano: fallas, caja, cobertura y densidad, y una estrategia nueva</td>
+<td style="text-align: center;">1 a 5</td>
+</tr>
+<tr class="odd">
+<td>●●●</td>
+<td>Modelo de la semana con 100 futuros</td>
+<td>La prueba del mecanismo, el artefacto del horizonte y el plan adaptativo</td>
+<td style="text-align: center;">2 a 5</td>
+</tr>
+</tbody>
+</table>
+<section id="xlrm-del-cuarto-frío-de-una-cooperativa" class="level3">
+<h3 class="anchored" data-anchor-id="xlrm-del-cuarto-frío-de-una-cooperativa">XLRM del cuarto frío de una cooperativa</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Estructurar antes de modelar</span>
 </div>
-<p><strong>Planteamiento.</strong> Un municipio de una zona no interconectada decide cómo abastecer su hospital durante los próximos 20 años: seguir con la planta diésel, instalar una microrred solar con baterías o una combinación. Estructure el problema en XLRM.</p>
+<p><strong>Objetivo.</strong> Separar lo que el decisor no controla de lo que decide, antes de calcular nada. Trabaja el paso 1.</p>
+<p><strong>Planteamiento.</strong> Una cooperativa lechera del altiplano enfría cada día la leche de sus socios en un cuarto frío conectado a la red. Los cortes del circuito rural le han hecho perder tandas completas, y la junta decide cómo asegurar el frío durante los próximos 10 años: comprar una planta diésel de respaldo, instalar baterías o pagarle al operador de red por un refuerzo del circuito. Estructure el problema en XLRM.</p>
 </div>
+<p>El ejemplo estructura y no calcula, así que el visor llena las cuatro casillas en orden.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Llenar las cuatro casillas</span>
 </div>
 <div class="paso">
-<p><strong>Liste las incertidumbres (X).</strong> Precio del diésel puesto en el municipio, costo de las baterías en 2030, frecuencia de fallas del transporte de combustible y crecimiento de la demanda del hospital. Márquelas: el diésel del próximo año es riesgo; las baterías en 2030, incertidumbre profunda.</p>
+<p><strong>Liste las incertidumbres (X).</strong> Número y duración de los cortes del circuito al año, tarifa de la energía, costo de las baterías en 2030 y litros que entregarán los socios. Márquelas: la tarifa del próximo año es riesgo; las baterías en 2030, incertidumbre profunda.</p>
 </div>
 <div class="paso">
-<p><strong>Liste las palancas (L).</strong> Tamaño de la planta solar, capacidad de baterías, reserva de combustible y tipo de contrato de mantenimiento. Son lo que el municipio controla.</p>
+<p><strong>Liste las palancas (L).</strong> Tamaño de la planta de respaldo, capacidad de las baterías, el contrato de refuerzo con el operador de red y una regla de operación, por ejemplo enfriar antes de la hora de más cortes. Son lo que la junta controla.</p>
 </div>
 <div class="paso">
-<p><strong>Describa el modelo (R).</strong> Un balance horario de energía con la generación solar, el estado de carga de las baterías, el despacho del diésel y un stock de combustible que se repone con retardo.</p>
+<p><strong>Describa el modelo (R).</strong> La temperatura del cuarto frío como stock, que sube durante un corte y baja cuando vuelve la energía, y la leche perdida cuando pasa del umbral sanitario; el estado de carga de las baterías es un segundo stock.</p>
 </div>
 <div class="paso">
-<p><strong>Elija las métricas (M).</strong> Horas sin servicio al año (lo que le importa al hospital) y costo anual total (lo que le importa al municipio). Dos métricas porque hay dos interesados.</p>
+<p><strong>Elija las métricas (M).</strong> Litros perdidos al año (lo que le importa a cada socio) y costo anual del frío (lo que le importa a la junta). Dos métricas porque hay dos interesados.</p>
 </div>
 <div class="paso">
-<p><strong>Revise la separación.</strong> Cada X queda fuera del control del municipio y cada L, dentro. Si una casilla mezcla las dos, el análisis de vulnerabilidad confundirá decisiones con suerte.</p>
+<p><strong>Revise la separación.</strong> Cada X queda fuera del control de la cooperativa y cada L, dentro. Si una casilla mezcla las dos, el análisis de vulnerabilidad confundirá decisiones con suerte. Los cortes del circuito, por ejemplo, son una X para la cooperativa, aunque para el operador de red serían una palanca.</p>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «La decisión tiene cuatro incertidumbres que la cooperativa no controla (cortes, tarifa, costo de las baterías y litros entregados) y cuatro palancas que sí controla (planta de respaldo, baterías, contrato de refuerzo y regla de operación). Se juzgará con dos métricas, litros perdidos y costo anual, porque los socios y la junta miran cosas distintas.»</p>
 </div>
 </div>
 </section>
-<section id="del-veredicto-de-la-tabla-a-un-plan-adaptativo" class="level3">
-<h3 class="anchored" data-anchor-id="del-veredicto-de-la-tabla-a-un-plan-adaptativo">Del veredicto de la tabla a un plan adaptativo</h3>
+<section id="veinte-futuros-para-la-microrred" class="level3">
+<h3 class="anchored" data-anchor-id="veinte-futuros-para-la-microrred">Veinte futuros para la microrred</h3>
+<p>El ejemplo intermedio recorre los cinco pasos con otra decisión y pocos futuros, para que cada cuenta se pueda hacer a mano.</p>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">El plan adaptativo del caso ancla</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">¿Dónde falla la planta solo diésel?</span>
 </div>
-<p><strong>Planteamiento.</strong> La tabla de cinco mundos de la página anterior dejó un resultado claro y un juicio de valor abierto. El impulso FNCER (300 MW/año de subasta FNCER) es el más barato en los cinco mundos, pero sin un mecanismo de firmeza raciona hasta el 2,8 % de la demanda en la sequía de diseño; si el país exige no racionar en esa sequía, quedan el paquete (mejor peor caso) y «cargo 15 + FNCER 300» (menor arrepentimiento; un cargo de 15 COP/kWh del modelo, unos 7 USD/MWh de 2019, con la misma subasta FNCER), que cuestan entre 1,8 y 4,7 COP/kWh más según el mundo. Convierta ese resultado en un plan con acción inmediata, señales y contingencias.</p>
+<p><strong>Objetivo.</strong> Recorrer los cinco pasos del RDM a mano: explorar 20 futuros de dos incertidumbres, contar las fallas de una estrategia, trazar una caja, calcular su cobertura y su densidad, explicar el mecanismo y diseñar la estrategia que cubre la vulnerabilidad.</p>
+<p><strong>Planteamiento.</strong> Un municipio de una zona no interconectada decide cómo abastecer su hospital durante los próximos 20 años. Su XLRM tiene cuatro incertidumbres (precio del diésel puesto en el municipio, costo de las baterías, días de corte del transporte de combustible y demanda del hospital), varias palancas (planta, paneles, baterías y tamaño del tanque) y una métrica, el costo anual. El municipio compara dos estrategias:</p>
+<ul>
+<li><strong>solo diésel</strong>: la planta actual, que quema 30 galones al día, con un tanque de 300 galones, es decir, una reserva de 10 días;</li>
+<li><strong>híbrida</strong>: paneles solares y baterías que cubren el 60 % de la energía, con la misma planta de respaldo, que quema 12 galones al día; el mismo tanque dura 25 días.</li>
+</ul>
+<p>La exploración mueve dos de las cuatro incertidumbres: el <strong>precio del diésel</strong> puesto en el municipio, <span class="math inline">p</span> [miles de COP por galón], entre 10 y 24, y los <strong>días de corte</strong> del transporte de combustible al año, <span class="math inline">k</span>, entre 0 y 60, en un solo episodio (un río que se seca o una vía que se cae). Cuando el corte dura más que la reserva <span class="math inline">r_e</span>, el combustible de los días que faltan llega por una ruta de emergencia, en lancha expresa o avioneta, que cuesta cuatro veces el precio normal; el hospital no se queda sin servicio, y lo que cambia es el costo. El modelo es una regla de costo anual:</p>
+<p><span class="math display">C_e = F_e + Q_e\,p\,\Bigl[1 + 3\,\frac{(k - r_e)^+}{365}\Bigr] \quad [\text{millones de COP/año}],</span></p>
+<p>donde <span class="math inline">(x)^+ = \max(0, x)</span>, <span class="math inline">F_e</span> es el costo fijo anual (anualidad de los equipos más operación y mantenimiento) y <span class="math inline">Q_e</span> el consumo de diésel [miles de galones/año]. Para «solo diésel», <span class="math inline">F = 40</span>, <span class="math inline">Q = 10{,}95</span> y <span class="math inline">r = 10</span> días; para la «híbrida», <span class="math inline">F = 190</span>, <span class="math inline">Q = 4{,}38</span> y <span class="math inline">r = 25</span> días. El municipio tolera hasta 15 millones de COP al año de sobrecosto frente a la mejor opción de cada futuro: ese es el umbral <span class="math inline">u</span>. Las cifras son estilizadas, con fines didácticos [POR VERIFICAR con los costos del IPSE para zonas no interconectadas].</p>
 </div>
+<p>El modelo no tiene stocks: es una regla que se evalúa una vez en cada futuro. Los 20 futuros se sortearon con <span class="math inline">p</span> y <span class="math inline">k</span> uniformes en sus rangos (<span class="math inline">p</span> redondeado a medio millar, <span class="math inline">k</span> a días enteros). La tabla trae el costo de cada estrategia y el arrepentimiento de «solo diésel», <span class="math inline">R_D = C_D - \min(C_D, C_H)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Futuro</th>
+<th style="text-align: center;"><span class="math inline">p</span></th>
+<th style="text-align: center;"><span class="math inline">k</span></th>
+<th style="text-align: center;"><span class="math inline">C_D</span></th>
+<th style="text-align: center;"><span class="math inline">C_H</span></th>
+<th style="text-align: center;"><span class="math inline">R_D</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">17,0</td>
+<td style="text-align: center;">51</td>
+<td style="text-align: center;">288,9</td>
+<td style="text-align: center;">280,4</td>
+<td style="text-align: center;">8,5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">17,5</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">242,7</td>
+<td style="text-align: center;">266,6</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">12,0</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">176,8</td>
+<td style="text-align: center;">242,6</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">14,5</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">218,3</td>
+<td style="text-align: center;">253,5</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">18,0</td>
+<td style="text-align: center;">47</td>
+<td style="text-align: center;">297,0</td>
+<td style="text-align: center;">283,1</td>
+<td style="text-align: center;">13,9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">21,0</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">341,8</td>
+<td style="text-align: center;">299,4</td>
+<td style="text-align: center;">42,4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">12,0</td>
+<td style="text-align: center;">46</td>
+<td style="text-align: center;">210,3</td>
+<td style="text-align: center;">251,6</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">13,0</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">206,9</td>
+<td style="text-align: center;">249,7</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">23,0</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">291,9</td>
+<td style="text-align: center;">290,7</td>
+<td style="text-align: center;">1,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">19,5</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">276,3</td>
+<td style="text-align: center;">275,4</td>
+<td style="text-align: center;">0,9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">20,5</td>
+<td style="text-align: center;">36</td>
+<td style="text-align: center;">312,4</td>
+<td style="text-align: center;">287,9</td>
+<td style="text-align: center;">24,5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">19,0</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">268,6</td>
+<td style="text-align: center;">273,2</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">13,0</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">187,0</td>
+<td style="text-align: center;">246,9</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">13,0</td>
+<td style="text-align: center;">49</td>
+<td style="text-align: center;">228,0</td>
+<td style="text-align: center;">258,2</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">13,0</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">182,3</td>
+<td style="text-align: center;">246,9</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">16,5</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">254,8</td>
+<td style="text-align: center;">267,0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">18,0</td>
+<td style="text-align: center;">58</td>
+<td style="text-align: center;">314,9</td>
+<td style="text-align: center;">290,2</td>
+<td style="text-align: center;">24,6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">23,5</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">335,4</td>
+<td style="text-align: center;">295,5</td>
+<td style="text-align: center;">39,9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">21,0</td>
+<td style="text-align: center;">46</td>
+<td style="text-align: center;">338,0</td>
+<td style="text-align: center;">297,9</td>
+<td style="text-align: center;">40,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">11,5</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">170,1</td>
+<td style="text-align: center;">240,4</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Con la tabla a mano, el visor recorre los cinco pasos y termina en la conclusión que el municipio puede usar.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Construir el plan</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Los cinco pasos con veinte futuros</span>
 </div>
 <div class="paso">
-<p><strong>Nombre las vulnerabilidades conocidas.</strong> Sin un mecanismo de firmeza, el impulso FNCER raciona en una sequía como la que define la energía firme (2,8 % de la demanda) y más si esa sequía coincide con un El Niño (6,4 % en la variante de la sequía sobre Tormenta). Las opciones de firmeza pagan su seguro en todos los mundos. El mercado solo y el seguro CxC no ganan en ninguno.</p>
+<p><strong>Paso 1. Estructure con XLRM.</strong> X: el precio del diésel <span class="math inline">p</span> (10 a 24 mil COP/galón) y los días de corte <span class="math inline">k</span> (0 a 60). L: «solo diésel» o «híbrida». R: la regla de costo. M: el costo anual [millones de COP/año], con falla cuando el arrepentimiento supera <span class="math inline">u = 15</span>. Compruebe una fila, el futuro 6 (<span class="math inline">p = 21</span>, <span class="math inline">k = 48</span>): <span class="math inline">C_D = 40 + 10{,}95 \times 21 \times (1 + 3 \times 38/365) = 341{,}8</span> y <span class="math inline">C_H = 190 + 4{,}38 \times 21 \times (1 + 3 \times 23/365) = 299{,}4</span>, así que <span class="math inline">R_D = 42{,}4</span>.</p>
 </div>
 <div class="paso">
-<p><strong>Decida lo que no puede esperar.</strong> Subaste FNCER, 300 MW al año: la subasta de 150 MW/año sola queda dominada por la de 300 en los cinco mundos. Fije el criterio de confiabilidad, es decir, cuánto racionamiento acepta el país en una sequía de diseño, porque de él depende todo lo demás. Deje diseñado el mecanismo de firmeza (reglas, demanda objetivo y calendario) para activarlo sin perder un año de diseño, y publique cada trimestre la cartera en construcción, una palanca de información barata.</p>
+<p><strong>Paso 2. Explore y cuente las fallas.</strong> «Solo diésel» es la más barata en 11 de los 20 futuros. Su arrepentimiento supera 15 en cinco: los futuros 6, 11, 17, 18 y 19. El futuro 5 queda cerca (<span class="math inline">R_D = 13{,}9</span>): el umbral es una decisión del municipio, y conviene revisar qué pasa si cambia.</p>
 </div>
 <div class="paso">
-<p><strong>Ate una señal a cada vulnerabilidad.</strong> Firmeza: el margen de energía firme proyectado a cinco años (la energía firme del parque más la de la cartera publicada, sobre la demanda proyectada), con datos de XM y la UPME. Severidad hidrológica: los aportes hídricos de XM frente a la media histórica y el índice ONI de la NOAA, que miden la frecuencia e intensidad de El Niño. Valor del racionamiento: el costo de racionamiento que actualiza la UPME, que es una decisión de política.</p>
+<p><strong>Paso 3. Trace la caja.</strong> Pruebe tres cajas y cuente:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Caja</th>
+<th style="text-align: center;">Futuros en la caja</th>
+<th style="text-align: center;">Fallas dentro</th>
+<th style="text-align: center;">Cobertura</th>
+<th style="text-align: center;">Densidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A: cortes de más de 25 días</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5/5 = 100 %</td>
+<td style="text-align: center;">5/11 = 45 %</td>
+</tr>
+<tr class="even">
+<td>B: precio de más de 17,5 y cortes de más de 25 días</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5/5 = 100 %</td>
+<td style="text-align: center;">5/6 = 83 %</td>
+</tr>
+<tr class="odd">
+<td>C: precio de más de 20</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4/5 = 80 %</td>
+<td style="text-align: center;">4/5 = 80 %</td>
+</tr>
+</tbody>
+</table>
+<p>La caja B atrapa todas las fallas y solo un futuro que no falla, el 5. Con un solo límite no basta: los cortes solos meten seis futuros sin falla, y el precio solo deja fuera el futuro 17.</p>
+<div id="0853593e" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="09-rdm_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Los 20 futuros de la microrred. Rojo: fallas de «solo diésel» (arrepentimiento de más de 15 millones de COP/año); gris: el resto. Recuadro ámbar: la caja B, precio de más de 17,5 mil COP/galón y cortes de más de 25 días. Datos sintéticos con fines didácticos."><img src="09-rdm_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Los 20 futuros de la microrred. Rojo: fallas de «solo diésel» (arrepentimiento de más de 15 millones de COP/año); gris: el resto. Recuadro ámbar: la caja B, precio de más de 17,5 mil COP/galón y cortes de más de 25 días. Datos sintéticos con fines didácticos."></a></p>
+<figcaption>Los 20 futuros de la microrred. Rojo: fallas de «solo diésel» (arrepentimiento de más de 15 millones de COP/año); gris: el resto. Recuadro ámbar: la caja B, precio de más de 17,5 mil COP/galón y cortes de más de 25 días. Datos sintéticos con fines didácticos.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </div>
 <div class="paso">
-<p><strong>Escriba las contingencias, con anticipación.</strong> Si el margen firme proyectado cae bajo la meta, active la subasta de energía firme o el cargo bajo. La señal tiene que mirar hacia adelante: una planta firme tarda unos 4 años en construirse, de modo que una contingencia que se active cuando la sequía ya llegó entrega la energía tarde. Si El Niño se vuelve más frecuente o más intenso, revise la hidrología de diseño de la energía firme. Si el país decide valorar más la energía no servida, pase de la contingencia a una firmeza permanente.</p>
+<p><strong>Explique el mecanismo.</strong> La caja necesita los dos límites porque el sobrecosto de «solo diésel» es un producto: los días de corte por encima de la reserva multiplican el precio, y la ruta de emergencia cobra tres veces más por cada galón de esos días. Sin cortes largos, la planta solo falla con el diésel por encima de 25 mil COP/galón, fuera del rango explorado; con 40 días de corte, desde 18,9. Un corte largo solo duele si el diésel es caro, y un diésel caro pesa del todo cuando se compra por la ruta de emergencia.</p>
 </div>
 <div class="paso">
-<p><strong>Pruebe cada señal contra la historia.</strong> Una señal tentadora, «el costo adjudicado no cae al menos 15 % en dos subastas», se habría disparado en falso: la subasta de contratos de largo plazo de 2019 adjudicó a 95,65 COP/kWh en promedio (UPME) y la de 2021 a cerca de 156 COP/kWh [POR VERIFICAR], por un choque mundial transitorio de cadenas de suministro y tasa de cambio. En el modelo, además, ese costo depende sobre todo del componente mundial, que ninguna subasta colombiana controla. Una buena señal distingue choques transitorios de tendencias: se confirma con un segundo indicador o con la media de varias rondas.</p>
+<p><strong>Paso 4. Compare los compromisos.</strong> Cambiar a la híbrida cubre las cinco fallas, pero en los futuros de diésel barato paga hasta 70,3 millones al año de más (futuro 20), y ella misma falla en 9 de los 20 futuros. Arrepentimiento medio: 9,8 millones con «solo diésel» y 22,5 con la híbrida; máximo: 42,4 y 70,3. Ninguna de las dos es robusta.</p>
 </div>
 <div class="paso">
-<p><strong>Revise los umbrales.</strong> Los porcentajes y plazos de las señales son propuestas de diseño que se calibran con el modelo y con datos. El plan es robusto porque cada contingencia está atada a una señal medible y cada señal, a una vulnerabilidad demostrada.</p>
+<p><strong>Paso 5. Diseñe una estrategia nueva e itere.</strong> La caja señala la reserva, no la planta: las fallas vienen de comprar diésel por la ruta de emergencia. Una tercera estrategia, «tanque grande», amplía el tanque a 1 200 galones (40 días de reserva) por 10 millones más al año: <span class="math inline">F = 50</span>, <span class="math inline">Q = 10{,}95</span>, <span class="math inline">r = 40</span>. Repita la exploración con las tres:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th style="text-align: center;">Mejor en</th>
+<th style="text-align: center;">Arrepentimiento medio</th>
+<th style="text-align: center;">Arrepentimiento máximo</th>
+<th style="text-align: center;">Fallas (<span class="math inline">R &gt; 15</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>solo diésel</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">20,3</td>
+<td style="text-align: center;">46,7</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td>híbrida</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">33,0</td>
+<td style="text-align: center;">70,3</td>
+<td style="text-align: center;">13</td>
+</tr>
+<tr class="odd">
+<td>tanque grande</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">2,4</td>
+<td style="text-align: center;">11,9</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<p>El tanque grande nunca falla. La híbrida gana en los dos futuros de diésel más caro (9 y 18): sin cortes largos, supera al tanque grande cuando <span class="math inline">p</span> pasa de <span class="math inline">140/6{,}57 = 21{,}3</span> mil COP/galón. Note además que «solo diésel» pasó de 5 a 10 fallas sin que cambiara su costo: el arrepentimiento depende del menú de estrategias.</p>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «Con el diésel entre 10 y 24 mil COP/galón y cortes de hasta 60 días, la planta solo diésel falla, con más de 15 millones al año de sobrecosto, cuando el diésel pasa de 17 500 COP/galón y los cortes duran más de 25 días: esa caja contiene las 5 fallas y un solo futuro que no falla. La falla viene de comprar combustible por la ruta de emergencia. Un tanque de 40 días, por 10 millones más al año, es la mejor opción en 14 de los 20 futuros y nunca queda a más de 11,9 millones de la mejor. Amplíe el tanque hoy y vigile el precio del diésel puesto en el municipio: si se sostiene por encima de unos 21 mil COP/galón, la híbrida pasa a ser la mejor.»</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Los veinte futuros en Python">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Los veinte futuros en Python
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="b4e27a08" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> costo_microrred(p, k, fijo, consumo, reserva):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Costo anual [millones de COP/año]; p en miles de COP/galón, k y reserva en días."""</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fijo <span class="op">+</span> consumo <span class="op">*</span> p <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> np.maximum(<span class="dv">0</span>, k <span class="op">-</span> reserva) <span class="op">/</span> <span class="dv">365</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>sorteo <span class="op">=</span> np.random.default_rng(<span class="dv">39</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>precio <span class="op">=</span> np.<span class="bu">round</span>(sorteo.uniform(<span class="dv">10</span>, <span class="dv">24</span>, <span class="dv">20</span>) <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> <span class="dv">2</span>   <span class="co"># miles de COP/galón</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>cortes <span class="op">=</span> np.<span class="bu">round</span>(sorteo.uniform(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">20</span>))            <span class="co"># días de corte al año</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>costos <span class="op">=</span> np.column_stack([costo_microrred(precio, cortes, <span class="dv">40</span>, <span class="fl">10.95</span>, <span class="dv">10</span>),    <span class="co"># solo diésel</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                          costo_microrred(precio, cortes, <span class="dv">190</span>, <span class="fl">4.38</span>, <span class="dv">25</span>),    <span class="co"># híbrida</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                          costo_microrred(precio, cortes, <span class="dv">50</span>, <span class="fl">10.95</span>, <span class="dv">40</span>)])   <span class="co"># tanque grande</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> menu, nombres <span class="kw">in</span> (([<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">"solo diésel e híbrida"</span>), ([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>], <span class="st">"con tanque grande"</span>)):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> costos[:, menu]</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    arrepentimiento <span class="op">=</span> c <span class="op">-</span> c.<span class="bu">min</span>(axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(nombres, <span class="st">"| mejor en:"</span>, np.bincount(c.argmin(axis<span class="op">=</span><span class="dv">1</span>), minlength<span class="op">=</span><span class="bu">len</span>(menu)),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>          <span class="st">"| medio:"</span>, arrepentimiento.mean(axis<span class="op">=</span><span class="dv">0</span>).<span class="bu">round</span>(<span class="dv">1</span>), <span class="st">"| máximo:"</span>, arrepentimiento.<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">0</span>).<span class="bu">round</span>(<span class="dv">1</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>          <span class="st">"| fallas:"</span>, (arrepentimiento <span class="op">&gt;</span> <span class="dv">15</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>falla <span class="op">=</span> costos[:, <span class="dv">0</span>] <span class="op">-</span> np.minimum(costos[:, <span class="dv">0</span>], costos[:, <span class="dv">1</span>]) <span class="op">&gt;</span> <span class="dv">15</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>caja <span class="op">=</span> (precio <span class="op">&gt;</span> <span class="fl">17.5</span>) <span class="op">&amp;</span> (cortes <span class="op">&gt;</span> <span class="dv">25</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"caja B: </span><span class="sc">{</span>caja<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> futuros, cobertura </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(caja <span class="op">&amp;</span> falla) <span class="op">/</span> falla<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.0%}</span><span class="ss">, "</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"densidad </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">sum</span>(caja <span class="op">&amp;</span> falla) <span class="op">/</span> caja<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.0%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>solo diésel e híbrida | mejor en: [11  9] | medio: [ 9.8 22.5] | máximo: [42.4 70.3] | fallas: [5 9]
+con tanque grande | mejor en: [ 4  2 14] | medio: [20.3 33.   2.4] | máximo: [46.7 70.3 11.9] | fallas: [10 13  0]
+caja B: 6 futuros, cobertura 100%, densidad 83%</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section id="cien-futuros-y-una-caja-de-falla" class="level3">
-<h3 class="anchored" data-anchor-id="cien-futuros-y-una-caja-de-falla">Cien futuros y una caja de falla</h3>
+<section id="cien-futuros-del-modelo-de-la-semana" class="level3">
+<h3 class="anchored" data-anchor-id="cien-futuros-del-modelo-de-la-semana">Cien futuros del modelo de la semana</h3>
+<p>El ejemplo avanzado aplica el mismo procedimiento al caso de la semana. Cambian la escala, cien futuros y siete incertidumbres, y el modelo, que ahora tiene stocks y retardos y obliga a preguntarse si una caja refleja la física del sistema o la forma de medir.</p>
 <div class="ejemplo caja" data-nivel="avanzado">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Análisis de vulnerabilidad a mano</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">¿Dónde falla el impulso FNCER?</span>
 </div>
-<p><strong>Planteamiento.</strong> Se muestrearon 100 futuros al azar sobre siete incertidumbres: el ritmo mundial de abaratamiento de las FNCER (0,05 a 0,25 por año), el crecimiento de la demanda (1,5 a 5 % anual), El Niño (aportes reducidos entre 20 y 45 % durante año y medio, cada 3 a 8 años), una sequía crítica de dos años con aportes entre el 40 y el 100 % de la media que empieza entre el año 10 y el 35, y el valor de la energía no servida (1 500 a 10 000 COP/kWh del modelo). En cada futuro se corrieron las seis estrategias de la semana con su métrica de costo. Una estrategia <strong>falla</strong> en un futuro cuando su arrepentimiento supera un umbral, 1 COP/kWh por defecto. ¿Dónde falla el impulso FNCER, la estrategia que domina la tabla de cinco mundos?</p>
+<p><strong>Objetivo.</strong> Repetir los pasos 2 a 5 con el modelo de la semana y agregar tres ideas: la exploración con un modelo dinámico, la prueba del mecanismo y el artefacto del horizonte. Termina en el plan adaptativo.</p>
+<p><strong>Planteamiento.</strong> La <a href="../semana5/08-robustez-regret.html">página 8</a> comparó seis estrategias en cinco mundos. Este ejemplo sigue a tres de ellas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th>Qué es</th>
+<th style="text-align: center;">Sobrecosto frente al impulso FNCER en los cinco mundos</th>
+<th style="text-align: center;">Racionamiento en la sequía de diseño</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>impulso FNCER</td>
+<td>subasta de contratos FNCER de 300 MW/año, sin mecanismo de firmeza</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">2,82 %</td>
+</tr>
+<tr class="even">
+<td>paquete</td>
+<td>CxC por subasta (compra energía firme cuando la proyectada no cubre la demanda con 5 % de margen) más 150 MW/año de FNCER</td>
+<td style="text-align: center;">2,7 a 4,6 COP/kWh</td>
+<td style="text-align: center;">0,05 %</td>
+</tr>
+<tr class="odd">
+<td>cargo 15 + FNCER 300</td>
+<td>un cargo bajo, de unos 7 USD/MWh de 2019, más 300 MW/año de FNCER</td>
+<td style="text-align: center;">1,8 a 4,7 COP/kWh</td>
+<td style="text-align: center;">0,06 %</td>
+</tr>
+</tbody>
+</table>
+<p>El impulso FNCER es el más barato en los cinco mundos, pero la tabla lo probó con una sola sequía. Aquí se sortean 100 futuros, uniformes en sus rangos (semilla 2026), sobre siete incertidumbres:</p>
+<ol type="1">
+<li>la caída de la parte global del costo FNCER, de 0,05 a 0,25 por año;</li>
+<li>el crecimiento de la demanda, de 1,5 a 5 % anual;</li>
+<li>la intensidad de El Niño, que reduce los aportes entre 20 y 45 % durante año y medio;</li>
+<li>el periodo de El Niño, un episodio cada 3 a 8 años;</li>
+<li>los aportes de una sequía crítica de dos años, entre el 40 y el 100 % de la media;</li>
+<li>el año en que empieza esa sequía, entre el 10 y el 35;</li>
+<li>el valor de la energía no servida <span class="math inline">V</span>, de 1 500 a 10 000 COP/kWh del modelo, que en rigor es un juicio de valor y se explora para ver cuánto pesa.</li>
+</ol>
+<p>Quedan en su valor base el aprendizaje local (10 %), la canibalización (2,5, de la <a href="../semana5/01-refuerzo-exponencial.html">página 1</a>), la firmeza que se reconoce a las FNCER (la mitad de su energía) y los parámetros del segmento firme de la semana 4. En cada futuro se corren las seis estrategias de la página 8 durante 40 años. La métrica es el costo medio para la demanda [COP/kWh del modelo], con el racionamiento valorado a <span class="math inline">V</span>, y el arrepentimiento se mide contra las seis. Una estrategia falla cuando su arrepentimiento supera <span class="math inline">u = 1</span> COP/kWh. ¿Dónde falla el impulso FNCER?</p>
 </div>
+<p>El diagrama comprime el modelo para mostrar dónde entra cada una de las siete incertidumbres. Cuatro de ellas mueven los aportes al embalse, y una sola, <span class="math inline">V</span>, entra directamente en la métrica.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../diagramas/svg/s5-09-modelo-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Dónde entran las siete X en el modelo de la semana. Stocks: carteras y capacidades firme y FNCER, demanda y energía embalsada; auxiliares: precio esperado, costo FNCER, precio de bolsa y costo para la demanda. En ámbar, las siete incertidumbres con su rango; en violeta, las palancas de las estrategias; en gris, lo que queda en su valor base."><img src="../diagramas/svg/s5-09-modelo-1.svg" class="img-fluid figure-img" loading="lazy" alt="Forrester comprimido del modelo de la semana. Arriba, la tubería firme: inicios, cartera firme P, capacidad firme K y retiros; a los inicios llegan el precio esperado y, en violeta, el Cargo por Confiabilidad y la subasta de energía firme. Debajo, la tubería FNCER: inicios, cartera P R y capacidad K R; a los inicios llegan, en violeta, la subasta FNCER y el costo FNCER, al que apunta en ámbar la incertidumbre 1, la caída de la parte global del costo, de 0,05 a 0,25 por año. Nota gris: en su valor base, aprendizaje local, canibalización, firmeza FNCER y segmento firme. Más abajo, la demanda con su crecimiento g D, al que apunta en ámbar la incertidumbre 2, g de 1,5 a 5 por ciento al año, y la energía embalsada con aportes y turbinamiento; a los aportes apuntan en ámbar las incertidumbres 3 y 4, El Niño con aportes de menos 20 a menos 45 por ciento cada 3 a 8 años, y 5 y 6, la sequía crítica de 2 años con aportes al 40 a 100 por ciento de la media desde el año 10 a 35. A la derecha, el precio de bolsa recibe flechas de las capacidades, la demanda y el embalse, alimenta el precio esperado y el costo medio para la demanda, al que apunta en ámbar la incertidumbre 7, el valor de la energía no servida V, de 1 500 a 10 000."></a></p>
+<figcaption>Dónde entran las siete X en el modelo de la semana. Stocks: carteras y capacidades firme y FNCER, demanda y energía embalsada; auxiliares: precio esperado, costo FNCER, precio de bolsa y costo para la demanda. En ámbar, las siete incertidumbres con su rango; en violeta, las palancas de las estrategias; en gris, lo que queda en su valor base.</figcaption>
+</figure>
+</div>
+<p>Antes de explorar, anote dónde cree que está la vulnerabilidad. La tabla de la página 8 ya insinuaba una respuesta, porque el impulso FNCER raciona en la sequía de diseño.</p>
 <div id="pred-falla-impulso" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>Antes de explorar, ¿dónde espera que falle el impulso FNCER?</p>
+<p>¿Dónde espera que falle el impulso FNCER?</p>
 <div class="opcion">
 <p>Donde El Niño es intenso y frecuente, aunque no haya una sequía crítica.</p>
 </div>
@@ -859,26 +1342,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Donde la sequía crítica es severa y tardía, y la energía no servida vale mucho.</p>
 </div>
 </div>
+<p>El simulador ubica cada futuro por la severidad y el año de su sequía crítica, que son dos de las siete X, y deja trazar una caja sobre esas dos.</p>
 <div class="simulador caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Buscar la caja de falla</span>
 </div>
-<p>Cada punto es un futuro, ubicado por la severidad y el año de su sequía crítica; su tamaño crece con el valor de la energía no servida, y los rojos son fallas del impulso FNCER. Ajuste la caja con los dos últimos controles y busque una caja pequeña que contenga casi todas las fallas. Pruebe primero con el umbral de 1 y después con el de 3.</p>
+<p>Cada punto es un futuro; su tamaño crece con el valor de la energía no servida, y los rojos son las fallas del impulso FNCER (arrepentimiento de más de 1 COP/kWh). Baje primero el límite de los aportes hasta que la caja contenga solo sequías severas y anote la cobertura y la densidad. Después suba el año y busque la caja más pequeña que conserve casi todas las fallas.</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="283" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 282;"><span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a>futurosV <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s5-09-futuros.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-2" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="288" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 287;"><span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a>viewof umbralV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.5</span><span class="op">,</span> <span class="dv">6</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Umbral de falla [COP/kWh de arrepentimiento]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="453" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 452;"><span id="cb5-453"><a href="#cb5-453" aria-hidden="true" tabindex="-1"></a>futurosV <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"datos/s5-09-futuros.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -889,7 +1362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="293" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 292;"><span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a>viewof aportesV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.40</span><span class="op">,</span> <span class="fl">1.00</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">1.00</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caja: aportes de la sequía por debajo de [fracción de la media]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="458" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 457;"><span id="cb6-458"><a href="#cb6-458" aria-hidden="true" tabindex="-1"></a>viewof aportesV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.40</span><span class="op">,</span> <span class="fl">1.00</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">1.00</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caja: aportes de la sequía por debajo de [fracción de la media]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
@@ -900,7 +1373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="298" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 297;"><span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a>viewof anioV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">10</span><span class="op">,</span> <span class="dv">35</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caja: la sequía empieza después del año"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="463" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 462;"><span id="cb7-463"><a href="#cb7-463" aria-hidden="true" tabindex="-1"></a>viewof anioV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">10</span><span class="op">,</span> <span class="dv">35</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caja: la sequía empieza después del año"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
@@ -911,26 +1384,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="303" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 302;"><span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a>vulnerabilidadV <span class="op">=</span> {</span>
-<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> f <span class="op">=</span> futurosV<span class="op">.</span><span class="at">futuros</span><span class="op">;</span></span>
-<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> impulso <span class="op">=</span> futurosV<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">indexOf</span>(<span class="st">"impulso FNCER"</span>)<span class="op">,</span> cargo15 <span class="op">=</span> futurosV<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">indexOf</span>(<span class="st">"cargo 15 + FNCER 300"</span>)<span class="op">;</span></span>
-<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> futurosV<span class="op">.</span><span class="at">costos</span><span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
-<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> minimo <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>c)<span class="op">;</span></span>
-<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> arrepentimiento <span class="op">=</span> c[impulso] <span class="op">-</span> minimo<span class="op">;</span></span>
-<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="dt">aportes</span><span class="op">:</span> f<span class="op">.</span><span class="at">aportes_sequia</span>[i]<span class="op">,</span> <span class="dt">anio</span><span class="op">:</span> f<span class="op">.</span><span class="at">anio_sequia</span>[i]<span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> f<span class="op">.</span><span class="at">costo_racionamiento</span>[i]<span class="op">,</span> arrepentimiento<span class="op">,</span></span>
-<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>      <span class="dt">falla</span><span class="op">:</span> arrepentimiento <span class="op">&gt;</span> umbralV<span class="op">,</span> <span class="dt">ganaCargo15</span><span class="op">:</span> c[cargo15] <span class="op">-</span> minimo <span class="op">&lt;</span> <span class="fl">1e-9</span><span class="op">,</span></span>
-<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>      <span class="dt">enCaja</span><span class="op">:</span> f<span class="op">.</span><span class="at">aportes_sequia</span>[i] <span class="op">&lt;</span> aportesV <span class="op">&amp;&amp;</span> f<span class="op">.</span><span class="at">anio_sequia</span>[i] <span class="op">&gt;</span> anioV}<span class="op">;</span></span>
-<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> media <span class="op">=</span> (lista) <span class="kw">=&gt;</span> lista<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b<span class="op">,</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(lista<span class="op">.</span><span class="at">length</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fallas <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span>)<span class="op">;</span></span>
-<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> enCaja <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">enCaja</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
-<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fallasEnCaja <span class="op">=</span> fallas<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">enCaja</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
-<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {puntos<span class="op">,</span> <span class="dt">fallas</span><span class="op">:</span> fallas<span class="op">.</span><span class="at">length</span><span class="op">,</span> enCaja<span class="op">,</span> fallasEnCaja<span class="op">,</span> <span class="dt">total</span><span class="op">:</span> puntos<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
-<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cargo15EnFallas</span><span class="op">:</span> fallas<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">ganaCargo15</span>)<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
-<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a>    <span class="dt">valorFallas</span><span class="op">:</span> <span class="fu">media</span>(fallas<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">valor</span>))<span class="op">,</span> <span class="dt">valorResto</span><span class="op">:</span> <span class="fu">media</span>(puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> <span class="op">!</span>p<span class="op">.</span><span class="at">falla</span>)<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">valor</span>))<span class="op">,</span></span>
-<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a>    <span class="dt">peor</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>puntos<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">arrepentimiento</span>))<span class="op">,</span></span>
-<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cobertura</span><span class="op">:</span> fallas<span class="op">.</span><span class="at">length</span> <span class="op">?</span> fallasEnCaja <span class="op">/</span> fallas<span class="op">.</span><span class="at">length</span> <span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">densidad</span><span class="op">:</span> enCaja <span class="op">?</span> fallasEnCaja <span class="op">/</span> enCaja <span class="op">:</span> <span class="dv">0</span>}<span class="op">;</span></span>
-<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="468" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 467;"><span id="cb8-468"><a href="#cb8-468" aria-hidden="true" tabindex="-1"></a>vulnerabilidadV <span class="op">=</span> {</span>
+<span id="cb8-469"><a href="#cb8-469" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> f <span class="op">=</span> futurosV<span class="op">.</span><span class="at">futuros</span><span class="op">;</span></span>
+<span id="cb8-470"><a href="#cb8-470" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> impulso <span class="op">=</span> futurosV<span class="op">.</span><span class="at">estrategias</span><span class="op">.</span><span class="fu">indexOf</span>(<span class="st">"impulso FNCER"</span>)<span class="op">;</span></span>
+<span id="cb8-471"><a href="#cb8-471" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> puntos <span class="op">=</span> futurosV<span class="op">.</span><span class="at">costos</span><span class="op">.</span><span class="fu">map</span>((c<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb8-472"><a href="#cb8-472" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> arrepentimiento <span class="op">=</span> c[impulso] <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>c)<span class="op">;</span></span>
+<span id="cb8-473"><a href="#cb8-473" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="dt">aportes</span><span class="op">:</span> f<span class="op">.</span><span class="at">aportes_sequia</span>[i]<span class="op">,</span> <span class="dt">anio</span><span class="op">:</span> f<span class="op">.</span><span class="at">anio_sequia</span>[i]<span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> f<span class="op">.</span><span class="at">costo_racionamiento</span>[i]<span class="op">,</span></span>
+<span id="cb8-474"><a href="#cb8-474" aria-hidden="true" tabindex="-1"></a>      <span class="dt">falla</span><span class="op">:</span> arrepentimiento <span class="op">&gt;</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">enCaja</span><span class="op">:</span> f<span class="op">.</span><span class="at">aportes_sequia</span>[i] <span class="op">&lt;</span> aportesV <span class="op">&amp;&amp;</span> f<span class="op">.</span><span class="at">anio_sequia</span>[i] <span class="op">&gt;</span> anioV}<span class="op">;</span></span>
+<span id="cb8-475"><a href="#cb8-475" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb8-476"><a href="#cb8-476" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fallas <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb8-477"><a href="#cb8-477" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> enCaja <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">enCaja</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb8-478"><a href="#cb8-478" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> fallasEnCaja <span class="op">=</span> puntos<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span> <span class="op">&amp;&amp;</span> p<span class="op">.</span><span class="at">enCaja</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb8-479"><a href="#cb8-479" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {puntos<span class="op">,</span> fallas<span class="op">,</span> enCaja<span class="op">,</span> <span class="dt">total</span><span class="op">:</span> puntos<span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb8-480"><a href="#cb8-480" aria-hidden="true" tabindex="-1"></a>    <span class="dt">cobertura</span><span class="op">:</span> fallas <span class="op">?</span> fallasEnCaja <span class="op">/</span> fallas <span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">densidad</span><span class="op">:</span> enCaja <span class="op">?</span> fallasEnCaja <span class="op">/</span> enCaja <span class="op">:</span> <span class="dv">0</span>}<span class="op">;</span></span>
+<span id="cb8-481"><a href="#cb8-481" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
@@ -941,17 +1408,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="327" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 326;"><span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">640</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">340</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
-<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Aportes durante la sequía [fracción de la media]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.38</span><span class="op">,</span> <span class="fl">1.0</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">0</span>)}<span class="op">,</span></span>
-<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Año en que empieza la sequía"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">9</span><span class="op">,</span> <span class="dv">36</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a>  <span class="dt">r</span><span class="op">:</span> {<span class="dt">range</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">7</span>]<span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">1500</span><span class="op">,</span> <span class="dv">10000</span>]}<span class="op">,</span></span>
-<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rect</span>([{<span class="dt">x1</span><span class="op">:</span> <span class="fl">0.38</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> aportesV<span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> anioV<span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="dv">36</span>}]<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y2"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.12</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span>})<span class="op">,</span></span>
-<span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vulnerabilidadV<span class="op">.</span><span class="at">puntos</span><span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> <span class="op">!</span>p<span class="op">.</span><span class="at">falla</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"aportes"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.6</span>})<span class="op">,</span></span>
-<span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vulnerabilidadV<span class="op">.</span><span class="at">puntos</span><span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"aportes"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span>})<span class="op">,</span></span>
-<span id="cb7-336"><a href="#cb7-336" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb7-337"><a href="#cb7-337" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="486" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 485;"><span id="cb9-486"><a href="#cb9-486" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb9-487"><a href="#cb9-487" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">640</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">340</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">55</span><span class="op">,</span></span>
+<span id="cb9-488"><a href="#cb9-488" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Aportes durante la sequía [fracción de la media]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="fl">0.38</span><span class="op">,</span> <span class="fl">1.0</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoPorcentaje</span>(d<span class="op">,</span> <span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb9-489"><a href="#cb9-489" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Año en que empieza la sequía"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">9</span><span class="op">,</span> <span class="dv">36</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb9-490"><a href="#cb9-490" aria-hidden="true" tabindex="-1"></a>  <span class="dt">r</span><span class="op">:</span> {<span class="dt">range</span><span class="op">:</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">7</span>]<span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">1500</span><span class="op">,</span> <span class="dv">10000</span>]}<span class="op">,</span></span>
+<span id="cb9-491"><a href="#cb9-491" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb9-492"><a href="#cb9-492" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">rect</span>([{<span class="dt">x1</span><span class="op">:</span> <span class="fl">0.38</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> aportesV<span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> anioV<span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="dv">36</span>}]<span class="op">,</span> {<span class="dt">x1</span><span class="op">:</span> <span class="st">"x1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"x2"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> <span class="st">"y1"</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> <span class="st">"y2"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.12</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span>})<span class="op">,</span></span>
+<span id="cb9-493"><a href="#cb9-493" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vulnerabilidadV<span class="op">.</span><span class="at">puntos</span><span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> <span class="op">!</span>p<span class="op">.</span><span class="at">falla</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"aportes"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.6</span>})<span class="op">,</span></span>
+<span id="cb9-494"><a href="#cb9-494" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(vulnerabilidadV<span class="op">.</span><span class="at">puntos</span><span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">falla</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"aportes"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"anio"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span>})<span class="op">,</span></span>
+<span id="cb9-495"><a href="#cb9-495" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb9-496"><a href="#cb9-496" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="expression">
@@ -962,15 +1429,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="342" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 341;"><span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Fallas del impulso FNCER&lt;b&gt;</span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">fallas</span><span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">total</span><span class="sc">}</span><span class="vs"> futuros&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Futuros en la caja&lt;b&gt;</span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">enCaja</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cobertura: fallas dentro de la caja&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(vulnerabilidadV<span class="op">.</span><span class="at">cobertura</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Densidad: futuros de la caja que fallan&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(vulnerabilidadV<span class="op">.</span><span class="at">densidad</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Valor medio de la energía no servida, fallas y resto&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(vulnerabilidadV<span class="op">.</span><span class="at">valorFallas</span>)<span class="sc">}</span><span class="vs"> y </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(vulnerabilidadV<span class="op">.</span><span class="at">valorResto</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Fallas donde «cargo 15 + FNCER 300» es la mejor&lt;b&gt;</span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">cargo15EnFallas</span><span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">fallas</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Arrepentimiento máximo del impulso FNCER&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(vulnerabilidadV<span class="op">.</span><span class="at">peor</span>)<span class="sc">}</span><span class="vs"> COP/kWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="501" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 500;"><span id="cb10-501"><a href="#cb10-501" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb10-502"><a href="#cb10-502" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Fallas del impulso FNCER&lt;b&gt;</span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">fallas</span><span class="sc">}</span><span class="vs"> de </span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">total</span><span class="sc">}</span><span class="vs"> futuros&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-503"><a href="#cb10-503" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Futuros en la caja&lt;b&gt;</span><span class="sc">${</span>vulnerabilidadV<span class="op">.</span><span class="at">enCaja</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-504"><a href="#cb10-504" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cobertura: fallas dentro de la caja&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(vulnerabilidadV<span class="op">.</span><span class="at">cobertura</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-505"><a href="#cb10-505" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Densidad: futuros de la caja que fallan&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoPorcentaje</span>(vulnerabilidadV<span class="op">.</span><span class="at">densidad</span><span class="op">,</span> <span class="dv">0</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-506"><a href="#cb10-506" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="expression">
@@ -979,39 +1443,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="nota-datos">
-<p>100 futuros muestreados de manera uniforme (semilla 2026) sobre el modelo estilizado del mercado con políticas, con las seis estrategias de la semana y la métrica de costo para la demanda; cálculo hecho en Python al construir la página (RK45 con salida cada 0,05 años). El arrepentimiento se mide contra esas seis estrategias. Precios en la escala del modelo; datos sintéticos con fines didácticos.</p>
+<p>100 futuros muestreados de manera uniforme (semilla 2026) sobre el modelo estilizado del mercado con políticas, con las seis estrategias de la página 8 y la métrica de costo para la demanda; cálculo hecho en Python al construir la página (RK45 con salida cada 0,05 años). El arrepentimiento se mide contra esas seis estrategias. Precios en la escala del modelo; datos sintéticos con fines didácticos.</p>
 </div>
 </div>
+<p>La caja que usted encontró es una correlación en una muestra. El visor la compara con su predicción y después la somete a dos pruebas: una del mecanismo físico y otra de la forma de medir.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer la exploración</span>
 </div>
 <div class="paso">
-<p><strong>Cuente los ganadores.</strong> El impulso FNCER es el mejor en 94 de los 100 futuros y su arrepentimiento medio es de solo 0,28 COP/kWh, pero su arrepentimiento máximo llega a 15,4: gana casi siempre y tiene una cola. «Cargo 15 + FNCER 300» es el mejor en el 3 % de los futuros, con un arrepentimiento medio de 4,16 y el menor máximo de las seis (6,40). El paquete gana en otro 3 % (medio 4,28 y máximo 12,51). El mercado solo no gana en ninguno y su máximo llega a 18,26; el CxC por subasta y el seguro CxC tampoco ganan.</p>
+<p><strong>Paso 2. Cuente los ganadores.</strong> El impulso FNCER es el mejor en 94 de los 100 futuros, con un arrepentimiento medio de 0,28 COP/kWh, pero su arrepentimiento máximo llega a 15,36: gana casi siempre y tiene una cola. «Cargo 15 + FNCER 300» gana en 3 futuros y el paquete en otros 3.</p>
 </div>
 <div class="paso">
-<p><strong>Contraste con la primera exploración.</strong> Con los seis factores de una exploración anterior (ritmo mundial, aprendizaje local, canibalización, demanda e intensidad y periodo de El Niño, sin sequía crítica), el impulso FNCER es el mejor en los 100 futuros, con arrepentimiento cero en todos: en esos rangos no hay vulnerabilidad que descubrir. <strong>El rango de la exploración también decide.</strong> El RDM descubre las fallas que caben en lo que el analista puso en X; si la cola queda por fuera, repite a otra escala el error de la tabla de cuatro mundos.</p>
+<p><strong>Mida si basta un índice global.</strong> Con los coeficientes de regresión estandarizados de la <a href="../semana5/05-sensibilidad.html">página 5</a>, el arrepentimiento del impulso FNCER se explica mal: el R² es 0,14. Cuatro futuros concentran el 97 % de su varianza, y una regresión aditiva promedia esa esquina con el resto. Por eso el RDM busca cajas en lugar de coeficientes.</p>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-falla-impulso">(la opción que eligió arriba)</span>. La respuesta esperada era la sequía severa y tardía con energía no servida cara. Con el umbral de 1 COP/kWh, el impulso FNCER falla en 4 futuros; en ellos los aportes de la sequía promedian 0,45 de la media, frente a 0,69 en los demás; la sequía empieza en el año 30 en promedio, frente al 23; y la energía no servida vale 7 918 COP/kWh del modelo, frente a 6 437. La caja «aportes por debajo de 0,50 y sequía después del año 28» contiene 6 futuros y 3 de las 4 fallas: cobertura de 75 % y densidad de 50 %. Los pasos siguientes ponen a prueba esa caja.</p>
+<p><strong>Paso 3. Compare con su predicción y trace la caja.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-falla-impulso">(la opción que eligió arriba)</span>. La respuesta esperada era la sequía severa y tardía con energía no servida cara. Con <span class="math inline">u = 1</span>, el impulso FNCER falla en 4 futuros; en ellos los aportes de la sequía promedian 0,45 de la media, frente a 0,69 en los demás; la sequía empieza en el año 30 en promedio, frente al 23, y la energía no servida vale 7 918 COP/kWh del modelo, frente a 6 437. La caja «aportes por debajo de 0,50» contiene 21 futuros y las 4 fallas: cobertura de 100 %, densidad de 19 %. Si se agrega «sequía después del año 28», contiene 6 futuros y 3 fallas: cobertura de 75 %, densidad de 50 %. La falla que queda fuera es una sequía casi igual de severa (0,48) en el año 19, con la energía no servida más cara de las cuatro.</p>
 </div>
 <div class="paso">
-<p><strong>Busque lo que la caja no atrapa.</strong> La cuarta falla es una sequía casi igual de severa (aportes de 0,48) que empieza antes, en el año 19, con la energía no servida más cara de las cuatro (9 331); su arrepentimiento apenas pasa el umbral (1,03) y allí el mejor es el paquete. Con el umbral de 3, las fallas son 3 y la misma caja las contiene todas: cobertura de 100 %, densidad de 50 %. Los tres futuros de la caja que no fallan tienen otra combinación de El Niño, demanda o valor de la energía no servida: PRIM busca en todas las dimensiones a la vez y puede proponer una caja más fina.</p>
+<p><strong>Ponga a prueba el mecanismo.</strong> Antes de convertir una caja en señal, busque por qué el sistema falla allí y pruebe la explicación con una corrida que la pueda refutar. La explicación física: sin mecanismo de firmeza el margen de energía firme queda delgado, porque la FNCER cuenta como firme solo la mitad de su energía. En el peor futuro (aportes de 0,44 desde el año 34,5, con El Niño intenso), el impulso FNCER entra a la sequía con un margen firme de 17,5 %, frente a 20,1 % con el cargo bajo, y raciona hasta el 6,9 % de la demanda, frente a 5,3 %. La corrida de prueba quita El Niño de ese futuro: el impulso FNCER sigue racionando el 3,2 % y el cargo bajo, el 0,7 %. La severidad de la sequía explica la falla; El Niño la agrava.</p>
 </div>
 <div class="paso">
-<p><strong>Explique la severidad.</strong> Antes de convertir una caja en señal, busque el mecanismo. Que la sequía severa perjudique al impulso FNCER tiene una explicación física: sin mecanismo de firmeza el margen de energía firme es delgado, porque la FNCER aporta a la energía firme solo la mitad de su energía media, y en una sequía severa el sistema raciona. En el peor futuro (aportes de 0,44 desde el año 34,5, con El Niño intenso), el impulso FNCER raciona hasta el 6,9 % de la demanda.</p>
+<p><strong>Ponga a prueba la palabra «tardía».</strong> Una sequía que empieza en el año 34 termina cerca del final del horizonte de 40 años, y la métrica no registra los años siguientes, en los que la inversión que dispararon los precios altos abarata la bolsa. Alargue el horizonte a 50 años sin cambiar nada más: el arrepentimiento del peor futuro baja de 15,36 a 3,24, y el de las sequías de los años 34,7 y 33,2 pasa de 7,57 y 3,44 a cero. Buena parte de «tardía» es un artefacto de la ventana de la métrica; la severidad sobrevive.</p>
 </div>
 <div class="paso">
-<p><strong>Ponga a prueba la palabra «tardía».</strong> Una sequía que empieza en el año 34 termina cerca del final del horizonte de 40 años, y la métrica no alcanza a registrar los años siguientes, en los que la inversión que dispararon los precios altos abarata la bolsa. Alargue el horizonte sin cambiar nada más: el futuro del año 34,5 pasa de un arrepentimiento de 15,36 con 40 años a 8,32 con 45 y 3,24 con 50, y los de los años 34,7 y 33,2 pasan de 7,57 y 3,44 a cero con 50 años, porque el impulso FNCER vuelve a ser el mejor. Buena parte de la condición «tardía» es un artefacto de la ventana de la métrica; la severidad sobrevive a la prueba.</p>
+<p><strong>Paso 4. Compare los compromisos.</strong> En 3 de las 4 fallas la mejor estrategia es «cargo 15 + FNCER 300». Recorta la cola (arrepentimiento máximo de 6,40, frente a 15,36) a cambio de unos 4 COP/kWh en los futuros normales (arrepentimiento medio de 4,16, frente a 0,28). La elección depende de si el decisor mira el arrepentimiento medio, donde gana el impulso FNCER, o el máximo, donde gana el cargo bajo: es el juicio de valor de la página 8, ahora con la cola explorada.</p>
+</div>
+</div>
+<p>La vulnerabilidad que sobrevivió a las dos pruebas es la severidad de la sequía crítica, con la energía no servida cara. El paso 5 la convierte en un plan: lo que se decide hoy, las señales que la vigilan y las contingencias que se activan con ellas.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Paso 5: el plan adaptativo</span>
 </div>
 <div class="paso">
-<p><strong>Compare los compromisos.</strong> En 3 de las 4 fallas el mejor es «cargo 15 + FNCER 300», el cargo bajo de unos 7 USD/MWh con la misma subasta FNCER. Recorta la cola (arrepentimiento máximo de 6,4, frente a 15,4 con la ventana de 40 años) a cambio de unos 4 COP/kWh en los futuros normales (arrepentimiento medio de 4,16). La decisión depende de si el decisor mira el arrepentimiento medio, donde gana el impulso FNCER, o el máximo, donde gana el cargo bajo: es el mismo juicio de valor de la página 8, ahora con la cola explorada.</p>
+<p><strong>Decida lo que no puede esperar.</strong> Subaste FNCER, 300 MW al año: es la estrategia más barata en 94 de los 100 futuros. Fije el criterio de confiabilidad, es decir, cuánto racionamiento acepta el país en una sequía como la de diseño, porque de él depende todo lo demás. Deje diseñado el mecanismo de firmeza (reglas, demanda objetivo y calendario) para activarlo sin perder un año de diseño, y publique cada trimestre la cartera en construcción, una palanca de información barata.</p>
 </div>
 <div class="paso">
-<p><strong>Diseñe una estrategia e itere.</strong> Una candidata adaptativa por construcción es el «paquete con 300»: los 300 MW/año de subasta FNCER más una subasta de energía firme que solo compra cuando el margen firme proyectado cae bajo la meta de 5 %. En los 100 futuros, medida contra las siete estrategias, es la mejor en el 5 %, pero su arrepentimiento máximo es de 12,6 y en el peor futuro raciona hasta el 7,4 % de la demanda. Su señal mira la energía firme calculada con la hidrología de diseño, y los futuros vulnerables combinan una sequía así con El Niño. La iteración muestra que una estrategia diseñada para una vulnerabilidad se prueba, y aquí la firmeza permanente del cargo bajo cubre mejor la cola que la contingencia.</p>
+<p><strong>Ate una señal a la vulnerabilidad.</strong> Firmeza: el margen de energía firme proyectado a cinco años, es decir, la energía firme del parque más la de la cartera publicada, sobre la demanda proyectada, con datos de XM y la UPME. Severidad de la sequía: los aportes hídricos de XM frente a la media histórica y el índice ONI de la NOAA, que mide la intensidad de El Niño. Valor del racionamiento: el costo de racionamiento que actualiza la UPME, que es una decisión de política.</p>
+</div>
+<div class="paso">
+<p><strong>Escriba las contingencias con anticipación.</strong> Si el margen firme proyectado cae bajo la meta, active la subasta de energía firme o el cargo bajo. La señal tiene que mirar hacia adelante: una planta firme tarda unos 4 años en construirse, de modo que una contingencia que se active cuando la sequía ya llegó entrega la energía tarde. Si el país decide valorar más la energía no servida, pase de la contingencia a una firmeza permanente, el cargo bajo.</p>
+</div>
+<div class="paso">
+<p><strong>Pruebe cada señal contra la historia.</strong> Una señal tentadora, «el costo adjudicado no cae al menos 15 % en dos subastas», se habría disparado en falso: la subasta de contratos de largo plazo de 2019 adjudicó a 95,65 COP/kWh en promedio (UPME) y la de 2021 a cerca de 156 COP/kWh [POR VERIFICAR], por un choque mundial transitorio de cadenas de suministro y tasa de cambio. Una buena señal distingue choques transitorios de tendencias: se confirma con un segundo indicador o con la media de varias rondas.</p>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «Contrate FNCER por subasta, 300 MW al año: es la estrategia más barata en 94 de 100 futuros. Su vulnerabilidad es una sequía crítica severa, con aportes por debajo de la mitad de la media, cuando la energía no servida se valora alto; allí su arrepentimiento llega a 15,4 COP/kWh, y un cargo bajo de unos 7 USD/MWh lo reduce a 6,4 a cambio de unos 4 COP/kWh en los demás futuros. Deje diseñado el mecanismo de firmeza y actívelo si el margen de energía firme proyectado a cinco años cae bajo la meta; pase a la firmeza permanente si el país decide valorar más la energía no servida. Vigile los aportes de XM y el índice ONI. Los umbrales de estas señales son propuestas de diseño que se calibran con el modelo y con datos.»</p>
 </div>
 </div>
-<p>La vulnerabilidad que sobrevive pide vigilar el margen de energía firme proyectado, la severidad de las sequías (aportes de XM e índice ONI) y el valor que el país asigna a la energía no servida. PRIM hace la búsqueda de cajas en todas las dimensiones a la vez y reporta la cobertura y la densidad de cada candidata; Rhodium y EMA Workbench automatizan la exploración, el descubrimiento de escenarios y la comparación de estrategias. El curso hace esos pasos a mano, en dos dimensiones, para entender qué calcula el algoritmo.</p>
+<p>El paso 5 devuelve al 2: el plan adaptativo es una estrategia nueva y se explora igual que las demás, como hizo la microrred con el tanque grande. Si se deja fuera la sequía crítica y se exploran en su lugar seis factores, entre ellos el aprendizaje local y la canibalización, el impulso FNCER es el mejor en los 100 futuros y no hay vulnerabilidad que descubrir: <strong>el rango de la exploración también decide</strong>. PRIM hace la búsqueda de cajas en todas las dimensiones a la vez; Rhodium y EMA Workbench automatizan la exploración, el descubrimiento de escenarios y la comparación de estrategias. El curso hace esos pasos a mano, en dos dimensiones, para entender qué calcula el algoritmo.</p>
 </section>
 </section>
 <section id="errores-comunes" class="level2">
@@ -1022,7 +1502,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>«Según el RDM, el impulso FNCER falla en el 4 % de los futuros: esa es su probabilidad de falla.» Los 100 futuros se muestrearon de rangos elegidos por el analista; con los rangos de la primera exploración, la misma frecuencia era 0 %.</p>
+<p>«Según el RDM, el impulso FNCER falla en el 4 % de los futuros: esa es su probabilidad de falla.» Los 100 futuros se muestrearon de rangos elegidos por el analista; si se deja fuera la sequía crítica, la misma frecuencia es 0 %.</p>
 </div>
 <div class="bien">
 <p>«El impulso FNCER falla cuando una sequía de dos años deja los aportes por debajo de la mitad de la media y la energía no servida se valora alto; vigilaremos el margen de energía firme proyectado y los aportes de XM para saber si nos acercamos a esa región.» El RDM describe condiciones de falla, y deja las frecuencias por fuera.</p>
@@ -1033,7 +1513,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Creer que muchos futuros cubren todo</span>
 </div>
-<p>Cien futuros no garantizan cubrir lo que importa: las incertidumbres que entran y sus rangos deciden qué vulnerabilidades pueden aparecer. Con los seis factores de la primera exploración, el impulso FNCER no falla nunca; con la sequía crítica y el valor de la energía no servida, falla en las sequías severas con energía no servida cara. El informe declara qué incertidumbres exploró, con qué rangos y por qué, y revisa si dejó por fuera la cola contra la que asegura alguna estrategia.</p>
+<p>Cien futuros no garantizan cubrir lo que importa: las incertidumbres que entran y sus rangos deciden qué vulnerabilidades pueden aparecer. Sin la sequía crítica, el impulso FNCER no falla nunca; con ella y con el valor de la energía no servida, falla en las sequías severas con energía no servida cara. El análisis declara qué incertidumbres exploró, con qué rangos y por qué, y revisa si dejó por fuera la cola contra la que asegura alguna estrategia.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
@@ -1045,7 +1525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Llamar RDM a cualquier matriz de escenarios</span>
 </div>
-<p>«Hicimos RDM: cruzamos dos ejes y corrimos cuatro mundos.» Eso es análisis de escenarios, y es valioso, pero el analista eligió los mundos. El RDM explora cientos o miles de futuros, descubre las regiones de falla a partir de los datos, compara compromisos entre estrategias e itera con estrategias nuevas. Diga en el informe qué pasos hizo y cuáles quedan por fuera.</p>
+<p>«Hicimos RDM: cruzamos dos ejes y corrimos cuatro mundos.» Eso es análisis de escenarios, y es valioso, pero el analista eligió los mundos. El RDM explora cientos o miles de futuros, descubre las regiones de falla a partir de los datos, compara compromisos entre estrategias e itera con estrategias nuevas. Diga en el análisis qué pasos hizo y cuáles quedan por fuera.</p>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
@@ -1084,40 +1564,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Qué agrega la exploración de 100 futuros a la tabla de cinco mundos?</p>
-<div class="opcion">
-<p>Probabilidades para cada uno de los cinco mundos.</p>
-<p><span class="porque">Los futuros se muestrearon de rangos elegidos; no dan probabilidades. Revise el primer error común.</span></p>
-</div>
+<p>En la microrred, la caja «cortes de más de 25 días» contiene 11 futuros y las 5 fallas de «solo diésel». ¿Cómo la describe?</p>
 <div class="opcion" data-correcta="si">
-<p>Las condiciones en que falla el impulso FNCER, que la tabla probaba con una sola sequía.</p>
-<p><span class="porque">Correcto: sequía severa con energía no servida cara, una región que salió de los datos y que se puso a prueba.</span></p>
+<p>Cobertura de 100 % y densidad de 45 %: atrapa todas las fallas, con muchas falsas alarmas.</p>
+<p><span class="porque">Correcto: 5 de 5 fallas y 5 de 11 futuros. Agregar el límite del precio sube la densidad a 83 %.</span></p>
 </div>
 <div class="opcion">
-<p>La certeza de que el impulso FNCER es la mejor estrategia.</p>
-<p><span class="porque">Gana en el 94 % de los futuros, pero su arrepentimiento llega a 15,4 en algunos. Revise el primer paso de la lectura.</span></p>
+<p>Cobertura de 45 % y densidad de 100 %: es precisa, pero atrapa pocas fallas.</p>
+<p><span class="porque">Intercambió las definiciones. La cobertura mira qué fracción de todas las fallas contiene la caja.</span></p>
 </div>
 <div class="opcion">
-<p>Una estrategia que domina a todas las demás en cada futuro.</p>
-<p><span class="porque">Ninguna de las seis gana en todos los futuros. Revise el primer paso de la lectura.</span></p>
-</div>
-</div>
-<div class="quiz caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Compruebe</span>
-</div>
-<p>¿Cuál de estas es una señal útil para el plan adaptativo del caso ancla?</p>
-<div class="opcion">
-<p>«La evolución de la transición energética en el país y en el mundo entero.»</p>
-<p><span class="porque">No se puede medir ni tiene umbral. Revise el error común de las señales.</span></p>
-</div>
-<div class="opcion">
-<p>«El costo adjudicado en la próxima subasta FNCER, si sube frente a la anterior.»</p>
-<p><span class="porque">En 2021 se habría disparado por un choque mundial transitorio. Revise el quinto paso del ejemplo intermedio.</span></p>
-</div>
-<div class="opcion" data-correcta="si">
-<p>«El margen de energía firme proyectado a cinco años cae bajo la meta, con la cartera publicada.»</p>
-<p><span class="porque">Correcto: indicador publicado, umbral explícito, mira hacia adelante y está ligado a la vulnerabilidad demostrada.</span></p>
+<p>Cobertura y densidad de 100 %: es una caja perfecta.</p>
+<p><span class="porque">Seis de sus futuros no fallan. Revise la definición de densidad.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1146,10 +1604,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
+<p>¿Cuál de estas es una señal útil para el plan adaptativo del caso de la semana?</p>
+<div class="opcion">
+<p>«La evolución de la transición energética en el país y en el mundo entero.»</p>
+<p><span class="porque">No se puede medir ni tiene umbral. Revise el error común de las señales.</span></p>
+</div>
+<div class="opcion">
+<p>«El costo adjudicado en la próxima subasta FNCER, si sube frente a la anterior.»</p>
+<p><span class="porque">En 2021 se habría disparado por un choque mundial transitorio. Revise el paso «Pruebe cada señal contra la historia» del plan adaptativo.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>«El margen de energía firme proyectado a cinco años cae bajo la meta, con la cartera publicada.»</p>
+<p><span class="porque">Correcto: indicador publicado, umbral explícito, mira hacia adelante y está ligado a la vulnerabilidad demostrada.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
 <p>En una exploración con seis factores y sin sequía crítica, el impulso FNCER es el mejor en los 100 futuros. ¿Qué conviene concluir?</p>
 <div class="opcion">
 <p>Que es robusto en cualquier futuro y no hace falta explorar más.</p>
-<p><span class="porque">La conclusión vale solo para lo que se exploró. Revise el contraste con la primera exploración.</span></p>
+<p><span class="porque">La conclusión vale solo para lo que se exploró. Revise el párrafo que cierra el ejemplo avanzado.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
 <p>Que en esos rangos no falla, y que conviene revisar qué incertidumbres quedaron fuera.</p>
@@ -1175,11 +1651,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="opcion">
 <p>Ninguno: como las FNCER se abaratan en el mundo, esperar siempre sale más barato.</p>
-<p><span class="porque">La parte mundial del costo cae sin Colombia, pero el mercado solo, lo más parecido a esperar, no ganó en ninguno de los 100 futuros.</span></p>
+<p><span class="porque">La parte global del costo cae sin Colombia, pero el mercado solo, lo más parecido a esperar, no ganó en ninguno de los 100 futuros.</span></p>
 </div>
 <div class="opcion">
 <p>Ninguno, porque esperar es la estrategia de menor arrepentimiento.</p>
-<p><span class="porque">Esperar es una estrategia más y se evalúa como las demás. Revise el primer paso de la lectura.</span></p>
+<p><span class="porque">Esperar es una estrategia más y se evalúa como las demás. Revise el paso 2 de la lectura de la exploración.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
@@ -1188,7 +1664,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="ejercicio-1-xlrm-de-una-decisión-del-sector">Ejercicio 1 ●○○ · XLRM de una decisión del sector</h4>
 <p>Elija una decisión del sector eléctrico colombiano que conozca, por ejemplo la ampliación de una línea de transmisión, la compra de baterías por un operador de red o el diseño de una subasta, y estructúrela en XLRM: al menos tres incertidumbres profundas (X), tres palancas del decisor (L), el modelo que relacionaría unas con otras (R) y dos métricas que el decisor reconocería (M).</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1197,9 +1673,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Plantilla con el caso ancla. <strong>X</strong>: ritmo mundial de abaratamiento de las FNCER, aprendizaje local, canibalización, crecimiento de la demanda, frecuencia e intensidad de El Niño y severidad y año de una sequía crítica; el valor de la energía no servida se explora como incertidumbre, aunque en rigor es un juicio de valor. <strong>L</strong>: Cargo por Confiabilidad (cargo administrado o subasta de energía firme con meta), tamaño y calendario de las subastas FNCER, impuesto al carbono, firmeza que la regulación reconoce a las FNCER y publicación de la cartera. <strong>R</strong>: el modelo del SIN con políticas, con el embalse y el despacho de la semana 4, dos cadenas de capacidad (firme y FNCER), expectativas de precio con retardo y la contabilidad de los contratos. <strong>M</strong>: costo medio para la demanda [COP/kWh], con el racionamiento valorado, racionamiento máximo [fracción de la demanda] y margen de energía firme mínimo.</p>
+<p>Plantilla con el caso de la semana. <strong>X</strong>: caída de la parte global del costo FNCER, aprendizaje local, canibalización, crecimiento de la demanda, frecuencia e intensidad de El Niño y severidad y año de una sequía crítica; el valor de la energía no servida se explora como incertidumbre, aunque en rigor es un juicio de valor. <strong>L</strong>: Cargo por Confiabilidad (cargo administrado o subasta de energía firme con meta), tamaño y calendario de las subastas FNCER, impuesto al carbono, firmeza que la regulación reconoce a las FNCER y publicación de la cartera. <strong>R</strong>: el modelo del SIN con políticas, con el embalse y el despacho de la semana 4, dos cadenas de capacidad (firme y FNCER), expectativas de precio con retardo y la contabilidad de los contratos. <strong>M</strong>: costo medio para la demanda [COP/kWh], con el racionamiento valorado, racionamiento máximo [fracción de la demanda] y margen de energía firme mínimo.</p>
 <p>Para la decisión que eligió, llene las cuatro casillas con la misma concreción: cada X con su clasificación de riesgo o incertidumbre profunda, cada L con su peldaño en la jerarquía de Meadows y cada M con sus unidades.</p>
 </div>
 </div>
@@ -1207,9 +1683,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="ejercicio-2-señales-en-pares" class="level4">
 <h4 class="anchored" data-anchor-id="ejercicio-2-señales-en-pares">Ejercicio 2 ●●○ · Señales en pares</h4>
-<p>Para cada vulnerabilidad del plan adaptativo (firmeza, severidad hidrológica y valor del racionamiento), proponga un segundo indicador distinto del sugerido, con fuente colombiana o internacional concreta y un umbral tentativo. Critique uno de los indicadores originales: ¿qué lo podría volver engañoso?</p>
+<p>Para cada vulnerabilidad del plan adaptativo (firmeza, severidad de la sequía y valor del racionamiento), proponga un segundo indicador distinto del sugerido, con fuente colombiana o internacional concreta y un umbral tentativo. Critique uno de los indicadores originales: ¿qué lo podría volver engañoso?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Pista">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1218,14 +1694,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Piense en qué otras causas, además de la tendencia que se quiere vigilar, pueden mover el indicador durante uno o dos años, y en cuánto tiempo antes del problema se enciende.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1234,10 +1710,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Firmeza: además del margen de energía firme proyectado, las obligaciones de energía firme ya asignadas para los próximos años frente a la demanda objetivo, y la cartera de proyectos con licencia y conexión aprobadas (UPME y ANLA). Severidad hidrológica: además de los aportes de XM y el índice ONI, el nivel de los embalses al inicio de la temporada seca frente al de años anteriores (XM). Valor del racionamiento: además del costo del primer escalón de racionamiento de la UPME, el de los escalones más profundos (0,88 USD/kWh frente a 0,503 en la actualización de 2010), que muestra cuánto sube el valor con la severidad del racionamiento [POR VERIFICAR con la actualización vigente].</p>
+<p>Firmeza: además del margen de energía firme proyectado, las obligaciones de energía firme ya asignadas para los próximos años frente a la demanda objetivo, y la cartera de proyectos con licencia y conexión aprobadas (UPME y ANLA). Severidad de la sequía: además de los aportes de XM y el índice ONI, el nivel de los embalses al inicio de la temporada seca frente al de años anteriores (XM). Valor del racionamiento: además del costo del primer escalón de racionamiento de la UPME, el de los escalones más profundos (0,88 USD/kWh frente a 0,503 en la actualización de 2010), que muestra cuánto sube el valor con la severidad del racionamiento [POR VERIFICAR con la actualización vigente].</p>
 <p>El margen firme proyectado puede engañar porque depende de la cartera declarada: si los proyectos se atrasan o se abandonan, el margen proyectado se ve sano hasta muy tarde. Por eso conviene acompañarlo de un indicador de avance físico de las obras. El costo adjudicado en las subastas también es una señal ruidosa: entre 2019 y 2021 subió de 95,65 a cerca de 156 COP/kWh [POR VERIFICAR] por un choque mundial transitorio. Las señales van en pares y el plan exige confirmación cruzada antes de activar una contingencia.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-3-iterar-con-una-estrategia-nueva" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-3-iterar-con-una-estrategia-nueva">Ejercicio 3 ●●○ · Iterar con una estrategia nueva</h4>
+<p>Una candidata para cubrir la vulnerabilidad del caso de la semana es el «paquete con 300»: los 300 MW/año de subasta FNCER del impulso más una subasta de energía firme que solo compra cuando el margen firme proyectado cae bajo la meta de 5 %. Explorada en los mismos 100 futuros, con el arrepentimiento medido ahora contra siete estrategias, es la mejor en 5 futuros, tiene un arrepentimiento medio de 3,91 y uno máximo de 12,6 COP/kWh, y en el peor futuro raciona el 7,4 % de la demanda. (a) Compárela con «cargo 15 + FNCER 300» (arrepentimiento máximo de 6,4) y con el impulso FNCER (15,4). (b) Su señal mira la energía firme calculada con la hidrología de diseño, aportes al 45 % durante dos años. ¿Por qué esa señal no la protege en el peor futuro, donde una sequía de aportes de 0,44 coincide con un El Niño intenso? (c) ¿Qué concluye sobre las contingencias frente a la firmeza permanente?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Compare la hidrología con que la subasta calcula la energía firme con la que de verdad llega en ese futuro, y recuerde cuánto tarda en construirse una planta firme.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>El paquete con 300 recorta la cola del impulso FNCER (12,6 frente a 15,4) pero queda lejos del cargo bajo (6,4), y su arrepentimiento medio, 3,91, es parecido al del cargo bajo (4,16 con seis estrategias). No domina a ninguna de las dos.</p></li>
+<li><p>La subasta compra energía firme para que el sistema aguante la sequía de diseño. En el peor futuro, la sequía llega con aportes de 0,44 y un El Niño intenso encima: una hidrología más dura que la de diseño. El margen firme proyectado se veía sano, la subasta no compró lo suficiente y el sistema raciona el 7,4 %, más que el impulso FNCER solo (6,9 %). Además, cuando la señal se enciende, la planta firme tarda unos 4 años en llegar.</p></li>
+<li><p>Una contingencia protege contra la vulnerabilidad que su señal mira. Si la cola es más dura que la hidrología de diseño, una firmeza permanente, como el cargo bajo, la cubre mejor que una contingencia atada a la energía firme de diseño. La iteración no siempre produce una estrategia mejor; a veces muestra por qué una idea razonable no alcanza.</p></li>
+</ol>
 </div>
 </div>
 </div>
@@ -1253,21 +1769,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>El RDM cambia <strong>predecir y actuar</strong> por <strong>explorar y adaptar</strong>: pregunta bajo qué condiciones falla una estrategia. Es un método de la familia <strong>DMDU</strong>, junto con las vías adaptativas, el análisis exploratorio e <em>info-gap</em>.</li>
 <li>Cinco pasos en ciclo: <strong>XLRM</strong>, <strong>exploración</strong>, <strong>descubrimiento de escenarios</strong>, <strong>comparación de compromisos</strong> y <strong>diseño de estrategias nuevas</strong>. Una matriz 2 × 2 es análisis de escenarios, no RDM.</li>
-<li>Una región de falla se juzga por su <strong>cobertura</strong> y su <strong>densidad</strong>. En 100 futuros con una sequía crítica incierta, el impulso FNCER es el mejor en el 94 %, pero falla en las sequías severas con energía no servida cara (la condición «tardía» es en buena parte un artefacto del horizonte de 40 años); «cargo 15 + FNCER 300» tiene el menor arrepentimiento máximo (6,4, frente a 15,4).</li>
-<li><strong>El rango de la exploración también decide</strong>: sin la sequía crítica, el impulso FNCER no falla en ninguno de los 100 futuros.</li>
-<li>El paso iterativo diseña y prueba estrategias para la vulnerabilidad; una contingencia que depende de la señal equivocada, como el paquete con 300, cubre peor la cola que una firmeza permanente.</li>
+<li>Una estrategia <strong>falla</strong> en un futuro cuando su arrepentimiento supera un umbral, <span class="math inline">\mathbf{1}[R &gt; u]</span>. Una caja se juzga por su <strong>cobertura</strong>, <span class="math inline">|F \cap B|/|F|</span>, y su <strong>densidad</strong>, <span class="math inline">|F \cap B|/|B|</span>.</li>
+<li>En la microrred, la planta solo diésel falla con diésel caro <strong>y</strong> cortes largos (caja de cobertura 100 % y densidad 83 %); la caja señaló la reserva, y un tanque grande resultó la mejor estrategia en 14 de 20 futuros.</li>
+<li>En 100 futuros del modelo de la semana, el impulso FNCER es el mejor en el 94 %, pero falla en las sequías severas con energía no servida cara; la condición «tardía» es en buena parte un artefacto del horizonte de 40 años. «Cargo 15 + FNCER 300» tiene el menor arrepentimiento máximo (6,4, frente a 15,4).</li>
+<li>Una caja se pone a prueba con el <strong>mecanismo</strong> y con la <strong>forma de medir</strong> antes de convertirla en señal. <strong>El rango de la exploración también decide</strong>: sin la sequía crítica, el impulso FNCER no falla en ninguno de los 100 futuros.</li>
 <li>El plan adaptativo decide <strong>hoy</strong> lo que no puede esperar y ata cada <strong>contingencia</strong> a una <strong>señal</strong> medible, con fuente y umbral, que mire hacia adelante y distinga choques transitorios de tendencias.</li>
 <li>La versión formal (PRIM, Rhodium, EMA Workbench) automatiza la búsqueda; el curso la hace a mano.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Del predecir y actuar al explorar y adaptar» de las notas de la semana 5 trae el plan adaptativo completo y el ejercicio de PRIM a mano sobre una malla. Un informe de recomendaciones bajo incertidumbre profunda acompaña cada recomendación con sus condiciones de validez, sus señales y sus contingencias, y declara qué incertidumbres se exploraron y con qué rangos. La <a href="../semana5/10-modelo-politicas.html">página siguiente</a> integra la semana en el modelo con Cargo por Confiabilidad y FNCER.</p>
+<p><strong>Para profundizar.</strong> La sección «Del predecir y actuar al explorar y adaptar» de las notas de la semana 5 trae el plan adaptativo completo y el ejercicio de PRIM a mano sobre una malla. Un análisis de recomendaciones bajo incertidumbre profunda acompaña cada recomendación con sus condiciones de validez, sus señales y sus contingencias, y declara qué incertidumbres se exploraron y con qué rangos. La <a href="../semana5/10-modelo-politicas.html">página siguiente</a> integra la semana en el modelo con Cargo por Confiabilidad y FNCER.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJmdXR1cm9zViA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczUtMDktZnV0dXJvcy5qc29uXCIpLmpzb24oKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHVtYnJhbFYgPSBJbnB1dHMucmFuZ2UoWzAuNSwgNl0sIHt2YWx1ZTogMSwgc3RlcDogMC41LCBsYWJlbDogXCJVbWJyYWwgZGUgZmFsbGEgW0NPUC9rV2ggZGUgYXJyZXBlbnRpbWllbnRvXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBhcG9ydGVzViA9IElucHV0cy5yYW5nZShbMC40MCwgMS4wMF0sIHt2YWx1ZTogMS4wMCwgc3RlcDogMC4wMSwgbGFiZWw6IFwiQ2FqYTogYXBvcnRlcyBkZSBsYSBzZXF1w61hIHBvciBkZWJham8gZGUgW2ZyYWNjacOzbiBkZSBsYSBtZWRpYV1cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgYW5pb1YgPSBJbnB1dHMucmFuZ2UoWzEwLCAzNV0sIHt2YWx1ZTogMTAsIHN0ZXA6IDEsIGxhYmVsOiBcIkNhamE6IGxhIHNlcXXDrWEgZW1waWV6YSBkZXNwdcOpcyBkZWwgYcOxb1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZ1bG5lcmFiaWxpZGFkViA9IHtcbiAgY29uc3QgZiA9IGZ1dHVyb3NWLmZ1dHVyb3M7XG4gIGNvbnN0IGltcHVsc28gPSBmdXR1cm9zVi5lc3RyYXRlZ2lhcy5pbmRleE9mKFwiaW1wdWxzbyBGTkNFUlwiKSwgY2FyZ28xNSA9IGZ1dHVyb3NWLmVzdHJhdGVnaWFzLmluZGV4T2YoXCJjYXJnbyAxNSArIEZOQ0VSIDMwMFwiKTtcbiAgY29uc3QgcHVudG9zID0gZnV0dXJvc1YuY29zdG9zLm1hcCgoYywgaSkgPT4ge1xuICAgIGNvbnN0IG1pbmltbyA9IE1hdGgubWluKC4uLmMpO1xuICAgIGNvbnN0IGFycmVwZW50aW1pZW50byA9IGNbaW1wdWxzb10gLSBtaW5pbW87XG4gICAgcmV0dXJuIHthcG9ydGVzOiBmLmFwb3J0ZXNfc2VxdWlhW2ldLCBhbmlvOiBmLmFuaW9fc2VxdWlhW2ldLCB2YWxvcjogZi5jb3N0b19yYWNpb25hbWllbnRvW2ldLCBhcnJlcGVudGltaWVudG8sXG4gICAgICBmYWxsYTogYXJyZXBlbnRpbWllbnRvID4gdW1icmFsViwgZ2FuYUNhcmdvMTU6IGNbY2FyZ28xNV0gLSBtaW5pbW8gPCAxZS05LFxuICAgICAgZW5DYWphOiBmLmFwb3J0ZXNfc2VxdWlhW2ldIDwgYXBvcnRlc1YgJiYgZi5hbmlvX3NlcXVpYVtpXSA+IGFuaW9WfTtcbiAgfSk7XG4gIGNvbnN0IG1lZGlhID0gKGxpc3RhKSA9PiBsaXN0YS5yZWR1Y2UoKGEsIGIpID0+IGEgKyBiLCAwKSAvIE1hdGgubWF4KGxpc3RhLmxlbmd0aCwgMSk7XG4gIGNvbnN0IGZhbGxhcyA9IHB1bnRvcy5maWx0ZXIoKHApID0+IHAuZmFsbGEpO1xuICBjb25zdCBlbkNhamEgPSBwdW50b3MuZmlsdGVyKChwKSA9PiBwLmVuQ2FqYSkubGVuZ3RoO1xuICBjb25zdCBmYWxsYXNFbkNhamEgPSBmYWxsYXMuZmlsdGVyKChwKSA9PiBwLmVuQ2FqYSkubGVuZ3RoO1xuICByZXR1cm4ge3B1bnRvcywgZmFsbGFzOiBmYWxsYXMubGVuZ3RoLCBlbkNhamEsIGZhbGxhc0VuQ2FqYSwgdG90YWw6IHB1bnRvcy5sZW5ndGgsXG4gICAgY2FyZ28xNUVuRmFsbGFzOiBmYWxsYXMuZmlsdGVyKChwKSA9PiBwLmdhbmFDYXJnbzE1KS5sZW5ndGgsXG4gICAgdmFsb3JGYWxsYXM6IG1lZGlhKGZhbGxhcy5tYXAoKHApID0+IHAudmFsb3IpKSwgdmFsb3JSZXN0bzogbWVkaWEocHVudG9zLmZpbHRlcigocCkgPT4gIXAuZmFsbGEpLm1hcCgocCkgPT4gcC52YWxvcikpLFxuICAgIHBlb3I6IE1hdGgubWF4KC4uLnB1bnRvcy5tYXAoKHApID0+IHAuYXJyZXBlbnRpbWllbnRvKSksXG4gICAgY29iZXJ0dXJhOiBmYWxsYXMubGVuZ3RoID8gZmFsbGFzRW5DYWphIC8gZmFsbGFzLmxlbmd0aCA6IDAsIGRlbnNpZGFkOiBlbkNhamEgPyBmYWxsYXNFbkNhamEgLyBlbkNhamEgOiAwfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNjQwKSwgaGVpZ2h0OiAzNDAsIG1hcmdpbkxlZnQ6IDU1LFxuICB4OiB7bGFiZWw6IFwiQXBvcnRlcyBkdXJhbnRlIGxhIHNlcXXDrWEgW2ZyYWNjacOzbiBkZSBsYSBtZWRpYV1cIiwgZG9tYWluOiBbMC4zOCwgMS4wXSwgdGlja0Zvcm1hdDogKGQpID0+IGZvcm1hdG9Qb3JjZW50YWplKGQsIDApfSxcbiAgeToge2xhYmVsOiBcIkHDsW8gZW4gcXVlIGVtcGllemEgbGEgc2VxdcOtYVwiLCBkb21haW46IFs5LCAzNl0sIGdyaWQ6IHRydWV9LFxuICByOiB7cmFuZ2U6IFsyLCA3XSwgZG9tYWluOiBbMTUwMCwgMTAwMDBdfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJlY3QoW3t4MTogMC4zOCwgeDI6IGFwb3J0ZXNWLCB5MTogYW5pb1YsIHkyOiAzNn1dLCB7eDE6IFwieDFcIiwgeDI6IFwieDJcIiwgeTE6IFwieTFcIiwgeTI6IFwieTJcIiwgZmlsbDogQ09MT1JFUy5hbWJhciwgZmlsbE9wYWNpdHk6IDAuMTIsIHN0cm9rZTogQ09MT1JFUy5hbWJhcn0pLFxuICAgIFBsb3QuZG90KHZ1bG5lcmFiaWxpZGFkVi5wdW50b3MuZmlsdGVyKChwKSA9PiAhcC5mYWxsYSksIHt4OiBcImFwb3J0ZXNcIiwgeTogXCJhbmlvXCIsIHI6IFwidmFsb3JcIiwgZmlsbDogXCIjOUU5RTlFXCIsIGZpbGxPcGFjaXR5OiAwLjZ9KSxcbiAgICBQbG90LmRvdCh2dWxuZXJhYmlsaWRhZFYucHVudG9zLmZpbHRlcigocCkgPT4gcC5mYWxsYSksIHt4OiBcImFwb3J0ZXNcIiwgeTogXCJhbmlvXCIsIHI6IFwidmFsb3JcIiwgZmlsbDogQ09MT1JFUy5yb2pvfSksXG4gIF0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5GYWxsYXMgZGVsIGltcHVsc28gRk5DRVI8Yj4ke3Z1bG5lcmFiaWxpZGFkVi5mYWxsYXN9IGRlICR7dnVsbmVyYWJpbGlkYWRWLnRvdGFsfSBmdXR1cm9zPC9iPjwvZGl2PlxuICA8ZGl2PkZ1dHVyb3MgZW4gbGEgY2FqYTxiPiR7dnVsbmVyYWJpbGlkYWRWLmVuQ2FqYX08L2I+PC9kaXY+XG4gIDxkaXY+Q29iZXJ0dXJhOiBmYWxsYXMgZGVudHJvIGRlIGxhIGNhamE8Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKHZ1bG5lcmFiaWxpZGFkVi5jb2JlcnR1cmEsIDApfTwvYj48L2Rpdj5cbiAgPGRpdj5EZW5zaWRhZDogZnV0dXJvcyBkZSBsYSBjYWphIHF1ZSBmYWxsYW48Yj4ke2Zvcm1hdG9Qb3JjZW50YWplKHZ1bG5lcmFiaWxpZGFkVi5kZW5zaWRhZCwgMCl9PC9iPjwvZGl2PlxuICA8ZGl2PlZhbG9yIG1lZGlvIGRlIGxhIGVuZXJnw61hIG5vIHNlcnZpZGEsIGZhbGxhcyB5IHJlc3RvPGI+JHtmb3JtYXRvTnVtZXJvKDApKHZ1bG5lcmFiaWxpZGFkVi52YWxvckZhbGxhcyl9IHkgJHtmb3JtYXRvTnVtZXJvKDApKHZ1bG5lcmFiaWxpZGFkVi52YWxvclJlc3RvKX0gQ09QL2tXaDwvYj48L2Rpdj5cbiAgPGRpdj5GYWxsYXMgZG9uZGUgwqtjYXJnbyAxNSArIEZOQ0VSIDMwMMK7IGVzIGxhIG1lam9yPGI+JHt2dWxuZXJhYmlsaWRhZFYuY2FyZ28xNUVuRmFsbGFzfSBkZSAke3Z1bG5lcmFiaWxpZGFkVi5mYWxsYXN9PC9iPjwvZGl2PlxuICA8ZGl2PkFycmVwZW50aW1pZW50byBtw6F4aW1vIGRlbCBpbXB1bHNvIEZOQ0VSPGI+JHtmb3JtYXRvTnVtZXJvKDEpKHZ1bG5lcmFiaWxpZGFkVi5wZW9yKX0gQ09QL2tXaDwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgndW1icmFsVicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhcG9ydGVzVicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhbmlvVicpIn1dfQ==
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVybywgZm9ybWF0b1BvcmNlbnRhamV9IGZyb20gXCIuLi9zaW11bGFkb3Jlcy9taXNlX3NkLmpzXCJcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJmdXR1cm9zViA9IEZpbGVBdHRhY2htZW50KFwiZGF0b3MvczUtMDktZnV0dXJvcy5qc29uXCIpLmpzb24oKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGFwb3J0ZXNWID0gSW5wdXRzLnJhbmdlKFswLjQwLCAxLjAwXSwge3ZhbHVlOiAxLjAwLCBzdGVwOiAwLjAxLCBsYWJlbDogXCJDYWphOiBhcG9ydGVzIGRlIGxhIHNlcXXDrWEgcG9yIGRlYmFqbyBkZSBbZnJhY2Npw7NuIGRlIGxhIG1lZGlhXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBhbmlvViA9IElucHV0cy5yYW5nZShbMTAsIDM1XSwge3ZhbHVlOiAxMCwgc3RlcDogMSwgbGFiZWw6IFwiQ2FqYTogbGEgc2VxdcOtYSBlbXBpZXphIGRlc3B1w6lzIGRlbCBhw7FvXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidnVsbmVyYWJpbGlkYWRWID0ge1xuICBjb25zdCBmID0gZnV0dXJvc1YuZnV0dXJvcztcbiAgY29uc3QgaW1wdWxzbyA9IGZ1dHVyb3NWLmVzdHJhdGVnaWFzLmluZGV4T2YoXCJpbXB1bHNvIEZOQ0VSXCIpO1xuICBjb25zdCBwdW50b3MgPSBmdXR1cm9zVi5jb3N0b3MubWFwKChjLCBpKSA9PiB7XG4gICAgY29uc3QgYXJyZXBlbnRpbWllbnRvID0gY1tpbXB1bHNvXSAtIE1hdGgubWluKC4uLmMpO1xuICAgIHJldHVybiB7YXBvcnRlczogZi5hcG9ydGVzX3NlcXVpYVtpXSwgYW5pbzogZi5hbmlvX3NlcXVpYVtpXSwgdmFsb3I6IGYuY29zdG9fcmFjaW9uYW1pZW50b1tpXSxcbiAgICAgIGZhbGxhOiBhcnJlcGVudGltaWVudG8gPiAxLCBlbkNhamE6IGYuYXBvcnRlc19zZXF1aWFbaV0gPCBhcG9ydGVzViAmJiBmLmFuaW9fc2VxdWlhW2ldID4gYW5pb1Z9O1xuICB9KTtcbiAgY29uc3QgZmFsbGFzID0gcHVudG9zLmZpbHRlcigocCkgPT4gcC5mYWxsYSkubGVuZ3RoO1xuICBjb25zdCBlbkNhamEgPSBwdW50b3MuZmlsdGVyKChwKSA9PiBwLmVuQ2FqYSkubGVuZ3RoO1xuICBjb25zdCBmYWxsYXNFbkNhamEgPSBwdW50b3MuZmlsdGVyKChwKSA9PiBwLmZhbGxhICYmIHAuZW5DYWphKS5sZW5ndGg7XG4gIHJldHVybiB7cHVudG9zLCBmYWxsYXMsIGVuQ2FqYSwgdG90YWw6IHB1bnRvcy5sZW5ndGgsXG4gICAgY29iZXJ0dXJhOiBmYWxsYXMgPyBmYWxsYXNFbkNhamEgLyBmYWxsYXMgOiAwLCBkZW5zaWRhZDogZW5DYWphID8gZmFsbGFzRW5DYWphIC8gZW5DYWphIDogMH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJQbG90LnBsb3Qoe1xuICB3aWR0aDogTWF0aC5taW4od2lkdGgsIDY0MCksIGhlaWdodDogMzQwLCBtYXJnaW5MZWZ0OiA1NSxcbiAgeDoge2xhYmVsOiBcIkFwb3J0ZXMgZHVyYW50ZSBsYSBzZXF1w61hIFtmcmFjY2nDs24gZGUgbGEgbWVkaWFdXCIsIGRvbWFpbjogWzAuMzgsIDEuMF0sIHRpY2tGb3JtYXQ6IChkKSA9PiBmb3JtYXRvUG9yY2VudGFqZShkLCAwKX0sXG4gIHk6IHtsYWJlbDogXCJBw7FvIGVuIHF1ZSBlbXBpZXphIGxhIHNlcXXDrWFcIiwgZG9tYWluOiBbOSwgMzZdLCBncmlkOiB0cnVlfSxcbiAgcjoge3JhbmdlOiBbMiwgN10sIGRvbWFpbjogWzE1MDAsIDEwMDAwXX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5yZWN0KFt7eDE6IDAuMzgsIHgyOiBhcG9ydGVzViwgeTE6IGFuaW9WLCB5MjogMzZ9XSwge3gxOiBcIngxXCIsIHgyOiBcIngyXCIsIHkxOiBcInkxXCIsIHkyOiBcInkyXCIsIGZpbGw6IENPTE9SRVMuYW1iYXIsIGZpbGxPcGFjaXR5OiAwLjEyLCBzdHJva2U6IENPTE9SRVMuYW1iYXJ9KSxcbiAgICBQbG90LmRvdCh2dWxuZXJhYmlsaWRhZFYucHVudG9zLmZpbHRlcigocCkgPT4gIXAuZmFsbGEpLCB7eDogXCJhcG9ydGVzXCIsIHk6IFwiYW5pb1wiLCByOiBcInZhbG9yXCIsIGZpbGw6IFwiIzlFOUU5RVwiLCBmaWxsT3BhY2l0eTogMC42fSksXG4gICAgUGxvdC5kb3QodnVsbmVyYWJpbGlkYWRWLnB1bnRvcy5maWx0ZXIoKHApID0+IHAuZmFsbGEpLCB7eDogXCJhcG9ydGVzXCIsIHk6IFwiYW5pb1wiLCByOiBcInZhbG9yXCIsIGZpbGw6IENPTE9SRVMucm9qb30pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+RmFsbGFzIGRlbCBpbXB1bHNvIEZOQ0VSPGI+JHt2dWxuZXJhYmlsaWRhZFYuZmFsbGFzfSBkZSAke3Z1bG5lcmFiaWxpZGFkVi50b3RhbH0gZnV0dXJvczwvYj48L2Rpdj5cbiAgPGRpdj5GdXR1cm9zIGVuIGxhIGNhamE8Yj4ke3Z1bG5lcmFiaWxpZGFkVi5lbkNhamF9PC9iPjwvZGl2PlxuICA8ZGl2PkNvYmVydHVyYTogZmFsbGFzIGRlbnRybyBkZSBsYSBjYWphPGI+JHtmb3JtYXRvUG9yY2VudGFqZSh2dWxuZXJhYmlsaWRhZFYuY29iZXJ0dXJhLCAwKX08L2I+PC9kaXY+XG4gIDxkaXY+RGVuc2lkYWQ6IGZ1dHVyb3MgZGUgbGEgY2FqYSBxdWUgZmFsbGFuPGI+JHtmb3JtYXRvUG9yY2VudGFqZSh2dWxuZXJhYmlsaWRhZFYuZGVuc2lkYWQsIDApfTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYXBvcnRlc1YnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnYW5pb1YnKSJ9XX0=
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }

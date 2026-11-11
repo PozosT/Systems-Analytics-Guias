@@ -1019,6 +1019,63 @@ export function cadenaConstruccion({inicios = 900, inicios_previos = 600, retard
   };
 }
 
+/**
+ * Cartera de obras, capacidad y demanda de potencia [MW, años] (réplica de mise_sd.modelos.cartera_y_demanda).
+ * Plan de inicios fijo, cartera inicial medida y demanda que crece a tasa constante; margen = K/D − 1.
+ */
+export function carteraYDemanda({inicios = 1200, proyectos_iniciales = 2400, capacidad_inicial = 18000, demanda_inicial = 15000,
+  crecimiento_demanda = 0.025, retardo_constructor = 4, vida_util = 30} = {}) {
+  if (!(retardo_constructor > 0) || !(vida_util > 0) || !(demanda_inicial > 0))
+    throw new Error("El retardo constructor, la vida útil y la demanda inicial deben ser positivos.");
+  return {
+    nombre: "cartera_y_demanda",
+    constantes: {inicios_plan: inicios, crecimiento_demanda, retardo_constructor, vida_util},
+    stocks: [
+      {nombre: "proyectos_en_construccion", inicial: proyectos_iniciales, entradas: ["inicio_proyectos"], salidas: ["puesta_en_servicio"]},
+      {nombre: "capacidad_instalada", inicial: capacidad_inicial, entradas: ["puesta_en_servicio"], salidas: ["retiros"]},
+      {nombre: "demanda", inicial: demanda_inicial, entradas: ["crecimiento"], salidas: []},
+    ],
+    auxiliares: [["margen_capacidad", (t, e) => e.capacidad_instalada / e.demanda - 1]],
+    flujos: [
+      ["inicio_proyectos", (t, e) => e.inicios_plan],
+      ["puesta_en_servicio", (t, e) => e.proyectos_en_construccion / e.retardo_constructor],
+      ["retiros", (t, e) => e.capacidad_instalada / e.vida_util],
+      ["crecimiento", (t, e) => e.crecimiento_demanda * e.demanda],
+    ],
+  };
+}
+
+/**
+ * Reservas de gas, producción, importación y déficit [Gpc, años] (réplica de mise_sd.modelos.reservas_gas).
+ * El hallazgo se incorpora durante un año desde anio_hallazgo y cada El Niño suma demanda térmica durante un año;
+ * los dos pulsos usan pulsoNino con bordes de coseno.
+ */
+export function reservasGas({reservas_iniciales = 2400, relacion_reservas_produccion = 7, incorporacion_base = 80, hallazgo = 0,
+  anio_hallazgo = 5, demanda_inicial = 400, crecimiento_demanda = 0.005, capacidad_importacion = 150, demanda_nino = 70,
+  periodo_nino = 5, fase_nino = 3, rampa = 0.2} = {}) {
+  if (!(relacion_reservas_produccion > 0) || !(demanda_inicial > 0))
+    throw new Error("La relación reservas/producción y la demanda inicial deben ser positivas.");
+  return {
+    nombre: "reservas_gas",
+    constantes: {relacion_reservas_produccion, incorporacion_base, hallazgo, crecimiento_demanda, capacidad_importacion, demanda_nino},
+    stocks: [
+      {nombre: "reservas", inicial: reservas_iniciales, entradas: ["incorporacion"], salidas: ["produccion"]},
+      {nombre: "demanda_tendencial", inicial: demanda_inicial, entradas: ["crecimiento"], salidas: []},
+    ],
+    auxiliares: [
+      ["produccion_posible", (t, e) => e.reservas / e.relacion_reservas_produccion],
+      ["demanda_gas", (t, e) => e.demanda_tendencial + e.demanda_nino * pulsoNino(t, periodo_nino, 1, fase_nino, rampa)],
+      ["importacion", (t, e) => Math.min(e.capacidad_importacion, Math.max(0, e.demanda_gas - e.produccion_posible))],
+      ["deficit", (t, e) => Math.max(0, e.demanda_gas - e.produccion_posible - e.capacidad_importacion)],
+    ],
+    flujos: [
+      ["incorporacion", (t, e) => e.incorporacion_base + e.hallazgo * pulsoNino(t, 1000, 1, anio_hallazgo, rampa)],
+      ["produccion", (t, e) => e.produccion_posible],
+      ["crecimiento", (t, e) => e.crecimiento_demanda * e.demanda_tendencial],
+    ],
+  };
+}
+
 /** Termostato con banda muerta [°C, h] (réplica de mise_sd.modelos.termostato). */
 export function termostato({temperatura_inicial = 20, temperatura_exterior = 10, consigna = 20, media_banda = 1,
   calentamiento_maximo = 6, coeficiente_perdidas = 0.4, velocidad_conmutacion = 60} = {}) {
