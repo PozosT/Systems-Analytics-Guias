@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<meta name="guias-mise:fecha" content="9 de noviembre de 2026">
+<meta name="guias-mise:fecha" content="11 de noviembre de 2026">
 
   <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -436,7 +436,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+ <span class="menu-text">La ecuación del stock y la integración numérica: del modelo a la gráfica y a sus medidas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -659,11 +659,12 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
-  <li><a href="#la-intuición-la-bañera-de-sterman" id="toc-la-intuición-la-bañera-de-sterman" class="nav-link" data-scroll-target="#la-intuición-la-bañera-de-sterman">2. La intuición: la bañera de Sterman</a></li>
-  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
-  <li><a href="#ejemplos-con-el-sistema-eléctrico" id="toc-ejemplos-con-el-sistema-eléctrico" class="nav-link" data-scroll-target="#ejemplos-con-el-sistema-eléctrico">4. Ejemplos con el sistema eléctrico</a></li>
-  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
-  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
+  <li><a href="#las-convenciones-de-los-diagramas" id="toc-las-convenciones-de-los-diagramas" class="nav-link" data-scroll-target="#las-convenciones-de-los-diagramas">2. Las convenciones de los diagramas</a></li>
+  <li><a href="#la-intuición-la-bañera-de-sterman" id="toc-la-intuición-la-bañera-de-sterman" class="nav-link" data-scroll-target="#la-intuición-la-bañera-de-sterman">3. La intuición: la bañera de Sterman</a></li>
+  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">4. Del dibujo a la ecuación</a></li>
+  <li><a href="#del-diagrama-al-modelo-en-el-sistema-eléctrico" id="toc-del-diagrama-al-modelo-en-el-sistema-eléctrico" class="nav-link" data-scroll-target="#del-diagrama-al-modelo-en-el-sistema-eléctrico">5. Del diagrama al modelo en el sistema eléctrico</a></li>
+  <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">6. Errores comunes</a></li>
+  <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">7. Compruebe lo aprendido</a></li>
   <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen">En resumen</a></li>
   </ul>
 </nav>
@@ -719,7 +720,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 65 a 75 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la intuición, del dibujo a la ecuación, el ejemplo ●●○ de la cobertura de contratos con su predicción y una corrida del simulador, el error común de pedirle al diagrama lo que no puede dar, las dos primeras preguntas y el resumen, unos 25 min; amplían: el ejemplo ●○○ de la tina, el ●●● del esqueleto del modelo, la exploración libre de los simuladores, los demás errores y preguntas y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana1/03-retroalimentacion.html">retroalimentación y diagramas causales</a> y <a href="../semana1/10-mapa-causal.html">el mapa causal de la crisis</a></span></p>
+<p><span class="dato">⏱ 75 a 90 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, las convenciones de los diagramas, la intuición, del dibujo a la ecuación, el ejemplo ●●○ de la cobertura de contratos con sus diagramas, su predicción y una corrida del simulador, el error común de pedirle al diagrama lo que no puede dar, las dos primeras preguntas y el resumen, unos 35 min; amplían: el ejemplo ●○○ de la tina con su simulador, el ●●● del esqueleto del modelo, la exploración libre de los simuladores, los demás errores y preguntas y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana1/03-retroalimentacion.html">retroalimentación y diagramas causales</a> y <a href="../semana1/10-mapa-causal.html">el mapa causal de la crisis</a></span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
@@ -727,7 +728,7 @@ window.Quarto = {
 </div>
 <ul>
 <li>Explicar las tres cosas que un diagrama causal no registra: magnitud, tiempo y acumulación.</li>
-<li>Convertir un diagrama causal en un esqueleto de stocks, flujos y auxiliares con unidades, y encontrar los stocks que el diagrama escondía.</li>
+<li>Leer y dibujar diagramas causales y de stocks y flujos con las convenciones del curso, y convertir un diagrama causal en un esqueleto de stocks, flujos y auxiliares con unidades, encontrando los stocks que el diagrama escondía.</li>
 <li>Mostrar con un simulador que un mismo diagrama produce comportamientos distintos según los valores de sus parámetros.</li>
 </ul>
 </div>
@@ -742,41 +743,108 @@ window.Quarto = {
 <p>El 2 de marzo de 1992 Colombia empezó un racionamiento eléctrico que duró, con intensidad variable, hasta el 7 de febrero de 1993, con cortes de hasta nueve horas diarias en Bogotá. En la semana 1 usted dibujó el diagrama causal de esa crisis: lluvias, embalses, precio, inversión, capacidad.</p>
 <p>Imagine ahora a dos analistas frente al mismo diagrama del mercado eléctrico actual. Ambos aceptan que el precio estimula la inversión, que la inversión agrega capacidad y que la capacidad abarata el precio. Uno concluye que el sistema se autorregula; el otro, que el país va hacia un apagón. <strong>¿Cómo se decide quién tiene razón, si los dos leen el mismo diagrama?</strong></p>
 </section>
+<section id="las-convenciones-de-los-diagramas" class="level2">
+<h2 class="anchored" data-anchor-id="las-convenciones-de-los-diagramas">2. Las convenciones de los diagramas</h2>
+<p>Para responder esa pregunta, esta página trabaja con los dos diagramas que acompañan el resto del curso. El <strong>diagrama causal</strong> muestra hacia dónde empuja cada variable a las demás y qué lazos de retroalimentación se forman. El <strong>diagrama de stocks y flujos</strong>, o diagrama de Forrester, muestra qué se acumula, qué flujos llenan y vacían cada acumulación y de qué información depende cada flujo. Los dos se dibujan con reglas fijas, y gracias a ellas dos personas leen lo mismo en un mismo diagrama.</p>
+<div id="definicion-convenciones-del-diagrama-causal" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Convenciones del diagrama causal</span>
+</div>
+<p><a href="../diagramas/svg/s4-01-convenciones-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s4-01-convenciones-1.svg" class="img-fluid" loading="lazy" alt="Leyenda del diagrama causal: una variable escrita sin recuadro; una flecha curva con signo más junto a la punta, enlace positivo; una flecha con signo menos, enlace negativo; una flecha con doble raya, retardo; y dos etiquetas de lazo, R1 y B1, con flechas circulares."></a></p>
+<ul>
+<li>Las <strong>variables</strong> son cantidades que pueden subir o bajar (nivel de embalses, precio de bolsa) y se escriben sin recuadro. Una acción o un evento se reescribe como cantidad: «invertir» pasa a ser «inversión en plantas».</li>
+<li>Cada <strong>flecha</strong> va de la causa al efecto y lleva su <strong>polaridad</strong> junto a la punta, sin excepción. Es <strong>positiva</strong> (+) si, con todo lo demás igual, un aumento de la causa deja al efecto por encima de lo que habría sido, y <strong>negativa</strong> (−) si lo deja por debajo.</li>
+<li>Un <strong>retardo</strong> apreciable frente al horizonte del análisis se marca con una doble raya sobre la flecha.</li>
+<li>Cada <strong>lazo</strong> lleva una etiqueta, <span class="math inline">R_1, R_2, \dots</span> para los de refuerzo y <span class="math inline">B_1, B_2, \dots</span> para los de balance, con una flecha circular en el sentido del recorrido. El tipo se decide contando los enlaces negativos del recorrido: si son pares (0, 2, 4…), el lazo es de refuerzo, y si son impares, de balance.</li>
+</ul>
+<p>Son las reglas de <a href="../semana1/03-retroalimentacion.html">retroalimentación y diagramas causales</a>, de la semana 1.</p>
+</div>
+<div id="definicion-convenciones-del-diagrama-de-stocks-y-flujos" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Convenciones del diagrama de stocks y flujos</span>
+</div>
+<p><a href="../diagramas/svg/s4-01-convenciones-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s4-01-convenciones-2.svg" class="img-fluid" loading="lazy" alt="Leyenda del diagrama de stocks y flujos: un rectángulo de borde grueso, el stock; una tubería doble con una válvula en forma de reloj de arena y una punta de flecha, el flujo; una nube, fuente o sumidero; un texto en cursiva sin recuadro, el auxiliar; un texto con su valor, la constante; y una flecha delgada curva, el conector de información."></a></p>
+<ul>
+<li>Un <strong>stock</strong> es un rectángulo con su nombre, su símbolo y sus unidades de cantidad, como <span class="math inline">N(t)</span> [L] o <span class="math inline">K(t)</span> [MW]. Matemáticamente es una acumulación, <span class="math inline">\dfrac{dS}{dt} = \text{entradas}(t) - \text{salidas}(t)</span>, y por eso necesita un valor inicial <span class="math inline">S(0)</span>.</li>
+<li>Un <strong>flujo</strong> es una tubería doble que entra a un stock o sale de él; la punta indica el sentido. La <strong>válvula</strong> marca dónde se escribe la ecuación del flujo, que se mide en las unidades del stock por unidad de tiempo, como [L/min] o [MW/año].</li>
+<li>Una <strong>nube</strong> marca el límite del modelo, es decir, una fuente o un sumidero cuyo contenido el modelo no sigue.</li>
+<li>Un <strong>auxiliar</strong> es una variable escrita sin recuadro que se calcula en cada instante con el estado presente. Su ecuación es algebraica, sin derivada, y por eso no guarda memoria.</li>
+<li>Una <strong>constante</strong> o parámetro es un valor que no cambia durante la simulación y se escribe con su valor, como <span class="math inline">\tau = 40</span> min.</li>
+<li>Un <strong>conector de información</strong> es una flecha delgada que dice que la variable de origen entra en la ecuación del destino. No transporta material; cuando llega a una válvula, indica de qué depende ese flujo.</li>
+</ul>
+</div>
+<p>Los dos diagramas describen el mismo sistema con distinto detalle, y cada pieza de uno tiene su equivalente en el otro.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>En el diagrama de stocks y flujos</th>
+<th>En el diagrama causal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>un flujo de entrada a un stock</td>
+<td>una flecha positiva (+) del flujo al stock</td>
+</tr>
+<tr class="even">
+<td>un flujo de salida de un stock</td>
+<td>una flecha negativa (−) del flujo al stock</td>
+</tr>
+<tr class="odd">
+<td>un conector de información</td>
+<td>una flecha causal, con la polaridad que dicta la ecuación del destino</td>
+</tr>
+<tr class="even">
+<td>una cadena de stocks en tránsito</td>
+<td>una sola flecha con doble raya de retardo</td>
+</tr>
+<tr class="odd">
+<td>stocks, auxiliares y constantes</td>
+<td>variables dibujadas todas igual, sin distinguir qué acumula</td>
+</tr>
+</tbody>
+</table>
+<p>La última fila explica por qué hace falta el segundo diagrama: en el diagrama causal, la capacidad instalada y el precio de bolsa se ven iguales, aunque la primera guarda memoria y el segundo se recalcula en cada instante. En los cuadros paso a paso de esta guía, además, lo que se agrega en cada cuadro aparece en ámbar.</p>
+</section>
 <section id="la-intuición-la-bañera-de-sterman" class="level2">
-<h2 class="anchored" data-anchor-id="la-intuición-la-bañera-de-sterman">2. La intuición: la bañera de Sterman</h2>
+<h2 class="anchored" data-anchor-id="la-intuición-la-bañera-de-sterman">3. La intuición: la bañera de Sterman</h2>
 <p>Sterman propone mirar cualquier sistema como un conjunto de bañeras (acumulaciones) conectadas por tuberías con llaves (tasas que llenan y vacían). Avance cuadro a cuadro y compare lo que dice el diagrama con lo que dice el modelo.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Lo que dice el diagrama y lo que dice el modelo</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-banera-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s4-01-banera-1.svg" class="img-fluid" loading="lazy" alt="Una tina con grifo y desagüe; a la derecha, el diagrama causal: caudal del grifo aumenta el nivel y caudal del desagüe lo disminuye."></a></p>
+<p><a href="../diagramas/svg/s4-01-banera-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s4-01-banera-1.svg" class="img-fluid" loading="lazy" alt="Una tina con grifo y desagüe; a la derecha, el diagrama causal: caudal del grifo aumenta el nivel y caudal del desagüe lo disminuye."></a></p>
 <p>El diagrama causal de la tina tiene dos flechas: el grifo sube el nivel (+) y el desagüe lo baja (−). Es correcto, pero no sirve para saber <strong>cuándo</strong> se rebosa la tina.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-banera-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s4-01-banera-2.svg" class="img-fluid" loading="lazy" alt="La tina con 80 litros en el minuto cero; a la derecha aparece una gráfica vacía del nivel contra el tiempo con el primer punto."></a></p>
+<p><a href="../diagramas/svg/s4-01-banera-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s4-01-banera-2.svg" class="img-fluid" loading="lazy" alt="La tina con 80 litros en el minuto cero; a la derecha aparece una gráfica vacía del nivel contra el tiempo con el primer punto."></a></p>
 <p>El modelo agrega números. La tina tiene 80 litros, el grifo entrega 5 litros por minuto y el desagüe saca 3. Con esos tres datos ya se puede dibujar el primer punto de la trayectoria.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-banera-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s4-01-banera-3.svg" class="img-fluid" loading="lazy" alt="A los 20 minutos la tina tiene 120 litros y la gráfica muestra un segundo punto."></a></p>
+<p><a href="../diagramas/svg/s4-01-banera-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s4-01-banera-3.svg" class="img-fluid" loading="lazy" alt="A los 20 minutos la tina tiene 120 litros y la gráfica muestra un segundo punto."></a></p>
 <p>Cada minuto entran 5 litros y salen 3, así que el nivel sube 2 litros. A los 20 minutos hay 120 litros.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-banera-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s4-01-banera-4.svg" class="img-fluid" loading="lazy" alt="A los 40 minutos la tina tiene 160 litros; los puntos de la gráfica forman una recta."></a></p>
+<p><a href="../diagramas/svg/s4-01-banera-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s4-01-banera-4.svg" class="img-fluid" loading="lazy" alt="A los 40 minutos la tina tiene 160 litros; los puntos de la gráfica forman una recta."></a></p>
 <p>A los 40 minutos hay 160 litros. Los puntos forman una recta, porque la diferencia entre entrada y salida es constante.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-banera-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s4-01-banera-5.svg" class="img-fluid" loading="lazy" alt="A los 60 minutos el agua llega al borde de 200 litros y la gráfica alcanza la línea roja del borde."></a></p>
+<p><a href="../diagramas/svg/s4-01-banera-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s4-01-banera-5.svg" class="img-fluid" loading="lazy" alt="A los 60 minutos el agua llega al borde de 200 litros y la gráfica alcanza la línea roja del borde."></a></p>
 <p>A los 60 minutos el agua llega al borde de 200 litros. La pregunta que el diagrama no podía responder se resuelve con una cuenta: <span class="math inline">80 + 2t = 200</span> da <span class="math inline">t = 60</span> minutos.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-banera-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s4-01-banera-6.svg" class="img-fluid" loading="lazy" alt="La misma tina con etiquetas del sistema eléctrico: embalse agregado del SIN, aportes hídricos y generación hidráulica."></a></p>
+<p><a href="../diagramas/svg/s4-01-banera-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s4-01-banera-6.svg" class="img-fluid" loading="lazy" alt="La misma tina con etiquetas del sistema eléctrico: embalse agregado del SIN, aportes hídricos y generación hidráulica."></a></p>
 <p>Cambie las etiquetas. La tina es el <strong>embalse agregado del SIN</strong> [GWh], el grifo son los <strong>aportes hídricos</strong> [GWh/día] y el desagüe es la <strong>generación hidráulica</strong> [GWh/día]. La pregunta de 1992 era exactamente la de la tina: ¿cuándo se vacía el embalse si sale más de lo que entra?</p>
 </div>
 </div>
 </section>
 <section id="del-dibujo-a-la-ecuación" class="level2">
-<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
+<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">4. Del dibujo a la ecuación</h2>
 <div id="definicion-modelo-de-simulacion-dinamica" class="definicion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Modelo de simulación dinámica</span>
@@ -800,20 +868,20 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El modelo de la tina en cuatro decisiones</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-forrester-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s4-01-forrester-1.svg" class="img-fluid" loading="lazy" alt="Un stock rectangular llamado nivel N(t) en litros, con valor inicial de 80 litros."></a></p>
+<p><a href="../diagramas/svg/s4-01-forrester-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s4-01-forrester-1.svg" class="img-fluid" loading="lazy" alt="Un stock rectangular llamado nivel N(t) en litros, con valor inicial de 80 litros."></a></p>
 <p><strong>Identifique los stocks.</strong> La única acumulación es el nivel <span class="math inline">N(t)</span> [L]. Declare de una vez su valor inicial, <span class="math inline">N(0) = 80</span> L.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-forrester-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s4-01-forrester-2.svg" class="img-fluid" loading="lazy" alt="Se agrega un flujo de entrada desde una nube hacia el nivel."></a></p>
+<p><a href="../diagramas/svg/s4-01-forrester-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s4-01-forrester-2.svg" class="img-fluid" loading="lazy" alt="Se agrega un flujo de entrada desde una nube hacia el nivel."></a></p>
 <p><strong>Dibuje los flujos de entrada.</strong> El agua entra por un flujo, <span class="math inline">\text{entrada}(t)</span> [L/min]. La nube dice que el modelo no sigue de dónde viene el agua.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-forrester-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s4-01-forrester-3.svg" class="img-fluid" loading="lazy" alt="Se agrega un flujo de salida desde el nivel hacia una nube."></a></p>
+<p><a href="../diagramas/svg/s4-01-forrester-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s4-01-forrester-3.svg" class="img-fluid" loading="lazy" alt="Se agrega un flujo de salida desde el nivel hacia una nube."></a></p>
 <p><strong>Dibuje los flujos de salida y escriba la ecuación del stock.</strong> Lo que entra suma y lo que sale resta:</p>
 <p><span class="math display">\frac{dN}{dt} = \text{entrada}(t) - \text{salida}(t) \qquad \left[\frac{\text{L}}{\text{min}}\right].</span></p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-forrester-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s4-01-forrester-4.svg" class="img-fluid" loading="lazy" alt="Se agregan las constantes caudal del grifo de 5 litros por minuto y caudal del desagüe de 3 litros por minuto, conectadas a las válvulas."></a></p>
+<p><a href="../diagramas/svg/s4-01-forrester-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s4-01-forrester-4.svg" class="img-fluid" loading="lazy" alt="Se agregan las constantes caudal del grifo de 5 litros por minuto y caudal del desagüe de 3 litros por minuto, conectadas a las válvulas."></a></p>
 <p><strong>Dé valor a cada flecha y resuelva.</strong> Con entrada de 5 L/min y salida de 3 L/min,</p>
 <p><span class="math display">\frac{dN}{dt} = 5 - 3 = 2 \ \text{L/min} \quad\Rightarrow\quad N(t) = 80 + 2t \ \text{[L]}.</span></p>
 <p>Las unidades cierran: litros por minuto multiplicados por minutos dan litros.</p>
@@ -832,7 +900,7 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Resolver la tina con desagüe proporcional</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-forrester-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s4-01-forrester-5.svg" class="img-fluid" loading="lazy" alt="El diagrama de la tina con un conector del nivel hacia la válvula de salida y la constante tau del desagüe de 40 minutos."></a></p>
+<p><a href="../diagramas/svg/s4-01-forrester-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s4-01-forrester-5.svg" class="img-fluid" loading="lazy" alt="El diagrama de la tina con un conector del nivel hacia la válvula de salida y la constante tau del desagüe de 40 minutos."></a></p>
 <p><strong>Cambie la ecuación de la salida.</strong> Ahora el nivel informa a la válvula de salida (conector delgado):</p>
 <p><span class="math display">\frac{dN}{dt} = 5 - \frac{N}{40} \qquad \left[\frac{\text{L}}{\text{min}}\right].</span></p>
 </div>
@@ -849,15 +917,23 @@ window.Quarto = {
 <p><strong>Concluya.</strong> La tina <strong>nunca</strong> se rebosa: se acerca a 200 L sin llegar. Con el desagüe constante se rebosaba a los 60 minutos. El diagrama causal de las dos tinas es casi el mismo; la conclusión cambió por un supuesto cuantitativo.</p>
 </div>
 </div>
+</section>
+<section id="la-tina-en-un-simulador" class="level3">
+<h3 class="anchored" data-anchor-id="la-tina-en-un-simulador">La tina en un simulador</h3>
+<p>Las dos trayectorias anteriores se calcularon a mano. Un simulador hace esa cuenta instante a instante, y con él se puede observar el comportamiento del stock a lo largo del tiempo y ver qué le pasa cuando cambian los caudales o la regla del desagüe, sin resolver la ecuación cada vez. El de esta sección integra el modelo de la tina, <span class="math inline">dN/dt = \text{entrada} - \text{salida}</span> con <span class="math inline">N(0) = 80</span> L, durante cuatro horas. Usted elige el caudal del grifo y uno de los dos desagües de esta página, el constante de 3 L/min o el proporcional al nivel con <span class="math inline">\tau = 40</span> min. En la gráfica, la curva azul es el nivel <span class="math inline">N(t)</span> y la línea roja punteada, el borde de 200 L; debajo aparecen tres lecturas, el nivel a los 60 minutos, el minuto en que la tina rebosa y el nivel a las cuatro horas.</p>
 <div class="simulador caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La tina: caudal del grifo y tipo de desagüe</span>
 </div>
-<p>Compare los dos desagües con el grifo en 5 L/min. Después busque, con el desagüe proporcional, el caudal mínimo del grifo que hace rebosar la tina.</p>
+<ol type="1">
+<li>Con el grifo en 5 L/min, compare los dos desagües y compruebe las cuentas del ejemplo: el constante rebosa a los 60 minutos y el proporcional llega a 173,2 L en ese mismo momento.</li>
+<li>Con el desagüe constante, ponga el grifo en 3 L/min y después en 2 L/min. ¿Qué hace el nivel cuando entra lo mismo que sale, y qué hace cuando sale más?</li>
+<li>Con el desagüe proporcional, busque el caudal mínimo del grifo que hace rebosar la tina y explíquelo con el equilibrio <span class="math inline">N^*</span> del ejemplo.</li>
+</ol>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="174" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 173;"><span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>viewof grifoA <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caudal del grifo [L/min]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="218" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 217;"><span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a>viewof grifoA <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Caudal del grifo [L/min]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
@@ -868,7 +944,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="179" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 178;"><span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>viewof desagueA <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>(<span class="kw">new</span> <span class="bu">Map</span>([[<span class="st">"constante, 3 L/min"</span><span class="op">,</span> <span class="st">"constante"</span>]<span class="op">,</span> [<span class="st">"proporcional al nivel, τ = 40 min"</span><span class="op">,</span> <span class="st">"proporcional"</span>]])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"constante"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Desagüe"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="223" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 222;"><span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>viewof desagueA <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>(<span class="kw">new</span> <span class="bu">Map</span>([[<span class="st">"constante, 3 L/min"</span><span class="op">,</span> <span class="st">"constante"</span>]<span class="op">,</span> [<span class="st">"proporcional al nivel, τ = 40 min"</span><span class="op">,</span> <span class="st">"proporcional"</span>]])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"constante"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Desagüe"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -879,14 +955,14 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="184" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 183;"><span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a>tinaA <span class="op">=</span> {</span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">banera</span>({<span class="dt">caudal_grifo</span><span class="op">:</span> grifoA<span class="op">,</span> <span class="dt">tau_desague</span><span class="op">:</span> desagueA <span class="op">===</span> <span class="st">"proporcional"</span> <span class="op">?</span> <span class="dv">40</span> <span class="op">:</span> <span class="kw">null</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">240</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.1</span>})<span class="op">;</span></span>
-<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nivel <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">nivel</span><span class="op">;</span></span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> nivel<span class="op">.</span><span class="fu">findIndex</span>((v) <span class="kw">=&gt;</span> v <span class="op">&gt;=</span> <span class="dv">200</span> <span class="op">-</span> <span class="fl">1e-9</span>)<span class="op">;</span></span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k60 <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">findIndex</span>((t) <span class="kw">=&gt;</span> t <span class="op">&gt;=</span> <span class="dv">60</span> <span class="op">-</span> <span class="fl">1e-9</span>)<span class="op">;</span></span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> i) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(nivel[i]<span class="op">,</span> <span class="dv">230</span>))}))<span class="op">;</span></span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {filas<span class="op">,</span> <span class="dt">rebose</span><span class="op">:</span> k <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> r<span class="op">.</span><span class="at">tiempo</span>[k] <span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">nivel60</span><span class="op">:</span> nivel[k60]<span class="op">,</span> <span class="dt">final</span><span class="op">:</span> nivel[nivel<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>]}<span class="op">;</span></span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="228" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 227;"><span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>tinaA <span class="op">=</span> {</span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">banera</span>({<span class="dt">caudal_grifo</span><span class="op">:</span> grifoA<span class="op">,</span> <span class="dt">tau_desague</span><span class="op">:</span> desagueA <span class="op">===</span> <span class="st">"proporcional"</span> <span class="op">?</span> <span class="dv">40</span> <span class="op">:</span> <span class="kw">null</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">240</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.1</span>})<span class="op">;</span></span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nivel <span class="op">=</span> r<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">nivel</span><span class="op">;</span></span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> nivel<span class="op">.</span><span class="fu">findIndex</span>((v) <span class="kw">=&gt;</span> v <span class="op">&gt;=</span> <span class="dv">200</span> <span class="op">-</span> <span class="fl">1e-9</span>)<span class="op">;</span></span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k60 <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">findIndex</span>((t) <span class="kw">=&gt;</span> t <span class="op">&gt;=</span> <span class="dv">60</span> <span class="op">-</span> <span class="fl">1e-9</span>)<span class="op">;</span></span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> filas <span class="op">=</span> r<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> i) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(nivel[i]<span class="op">,</span> <span class="dv">230</span>))}))<span class="op">;</span></span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {filas<span class="op">,</span> <span class="dt">rebose</span><span class="op">:</span> k <span class="op">&gt;=</span> <span class="dv">0</span> <span class="op">?</span> r<span class="op">.</span><span class="at">tiempo</span>[k] <span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">nivel60</span><span class="op">:</span> nivel[k60]<span class="op">,</span> <span class="dt">final</span><span class="op">:</span> nivel[nivel<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>]}<span class="op">;</span></span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
@@ -897,16 +973,16 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="196" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 195;"><span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [min]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">240</span>]}<span class="op">,</span></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Nivel [L]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">230</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">200</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span>})<span class="op">,</span></span>
-<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="dv">236</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="dv">200</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"nivel"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"borde, 200 L"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"end"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">9</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span>})<span class="op">,</span></span>
-<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tinaA<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"nivel"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
-<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="240" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 239;"><span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [min]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">240</span>]}<span class="op">,</span></span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Nivel [L]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">230</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">200</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span>})<span class="op">,</span></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="dv">236</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="dv">200</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"nivel"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"borde, 200 L"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"end"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">9</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span>})<span class="op">,</span></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(tinaA<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"nivel"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
@@ -917,11 +993,11 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="210" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 209;"><span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Nivel a los 60 minutos&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(tinaA<span class="op">.</span><span class="at">nivel60</span><span class="op">,</span> <span class="dv">200</span>))<span class="sc">}</span><span class="vs"> L</span><span class="sc">${</span>tinaA<span class="op">.</span><span class="at">nivel60</span> <span class="op">&gt;=</span> <span class="dv">200</span> <span class="op">?</span> <span class="st">" (rebosó)"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Rebose&lt;b&gt;</span><span class="sc">${</span>tinaA<span class="op">.</span><span class="at">rebose</span> <span class="op">===</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">"no rebosa en 4 horas"</span> <span class="op">:</span> <span class="vs">`a los </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tinaA<span class="op">.</span><span class="at">rebose</span>)<span class="sc">}</span><span class="vs"> min`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Nivel a las 4 horas&lt;b&gt;</span><span class="sc">${</span>tinaA<span class="op">.</span><span class="at">final</span> <span class="op">&gt;=</span> <span class="dv">200</span> <span class="op">?</span> <span class="st">"desbordada"</span> <span class="op">:</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tinaA<span class="op">.</span><span class="at">final</span>)<span class="sc">}</span><span class="vs"> L`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="254" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 253;"><span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Nivel a los 60 minutos&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(tinaA<span class="op">.</span><span class="at">nivel60</span><span class="op">,</span> <span class="dv">200</span>))<span class="sc">}</span><span class="vs"> L</span><span class="sc">${</span>tinaA<span class="op">.</span><span class="at">nivel60</span> <span class="op">&gt;=</span> <span class="dv">200</span> <span class="op">?</span> <span class="st">" (rebosó)"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Rebose&lt;b&gt;</span><span class="sc">${</span>tinaA<span class="op">.</span><span class="at">rebose</span> <span class="op">===</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">"no rebosa en 4 horas"</span> <span class="op">:</span> <span class="vs">`a los </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tinaA<span class="op">.</span><span class="at">rebose</span>)<span class="sc">}</span><span class="vs"> min`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Nivel a las 4 horas&lt;b&gt;</span><span class="sc">${</span>tinaA<span class="op">.</span><span class="at">final</span> <span class="op">&gt;=</span> <span class="dv">200</span> <span class="op">?</span> <span class="st">"desbordada"</span> <span class="op">:</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(tinaA<span class="op">.</span><span class="at">final</span>)<span class="sc">}</span><span class="vs"> L`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="expression">
@@ -933,37 +1009,111 @@ window.Quarto = {
 <p>Modelo de la bañera. La gráfica se detiene en el borde cuando la tina rebosa. Con el desagüe constante y un grifo de menos de 3 L/min, la tina se vacía y el desagüe ya no puede sacar más de lo que entra: el nivel se queda en una fracción de litro y nunca baja de cero.</p>
 </div>
 </div>
+<p>Con la misma tina aparecen comportamientos distintos: una recta que sube hasta el rebose, un nivel quieto cuando entra lo mismo que sale, un vaciado cuando sale más de lo que entra y un acercamiento gradual al equilibrio con el desagüe proporcional. En todos los casos el nivel responde a la diferencia entre la entrada y la salida, nunca a uno de los caudales por separado.</p>
 </section>
 </section>
-<section id="ejemplos-con-el-sistema-eléctrico" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplos-con-el-sistema-eléctrico">4. Ejemplos con el sistema eléctrico</h2>
+<section id="del-diagrama-al-modelo-en-el-sistema-eléctrico" class="level2">
+<h2 class="anchored" data-anchor-id="del-diagrama-al-modelo-en-el-sistema-eléctrico">5. Del diagrama al modelo en el sistema eléctrico</h2>
+<p>Los dos ejemplos de esta sección siguen modelando, ahora con sistemas del sector eléctrico, y recorren el mismo camino que la tina: primero el diagrama causal, después el diagrama de stocks y flujos y al final las ecuaciones con unidades. En cada paso conviene preguntarse qué cambió respecto de la tina.</p>
 <section id="ejemplo-intermedio-el-mismo-diagrama-dos-comportamientos" class="level3">
 <h3 class="anchored" data-anchor-id="ejemplo-intermedio-el-mismo-diagrama-dos-comportamientos">Ejemplo intermedio: el mismo diagrama, dos comportamientos</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">La cobertura de contratos de una comercializadora</span>
 </div>
-<p><strong>Planteamiento.</strong> Una comercializadora mantiene contratos de largo plazo como cobertura. Su meta es de 100 GWh y hoy tiene 60 GWh. Cuando la cobertura está por debajo de la meta compra contratos, y cuando sobra deja vencer algunos. El diagrama causal es un lazo de balance: cobertura baja → compras suben (−), compras suben → cobertura sube (+). ¿Qué trayectoria sigue la cobertura?</p>
+<p><strong>Planteamiento.</strong> Una comercializadora mantiene contratos de largo plazo como cobertura. Su meta es de 100 GWh y hoy tiene 60 GWh. Cuando la cobertura está por debajo de la meta compra contratos, y cuando sobra deja vencer algunos; en los dos casos busca cerrar la diferencia en medio año. ¿Cómo se modela esta situación y qué trayectoria sigue la cobertura?</p>
 </div>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos modelos del mismo diagrama</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del diagrama causal al modelo de la cobertura</span>
 </div>
 <div class="paso">
-<p><strong>Lea el diagrama.</strong> Un lazo de balance busca su meta. Cualquier lectura cualitativa concluye que la cobertura subirá hacia 100 GWh. El diagrama no dice nada más.</p>
+<p><a href="../diagramas/svg/s4-01-cobertura-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s4-01-cobertura-1.svg" class="img-fluid" loading="lazy" alt="Diagrama causal de la cobertura de contratos: la cobertura reduce la brecha, la meta la aumenta; la brecha aumenta las compras y reduce los vencimientos; las compras aumentan la cobertura y los vencimientos la reducen. Dos lazos de balance, B1 por las compras y B2 por los vencimientos."></a></p>
+<p><strong>Dibuje el diagrama causal.</strong> La comercializadora compara la cobertura con la meta, y la diferencia es la <strong>brecha</strong>. Más cobertura reduce la brecha (−), una brecha mayor aumenta las compras (+) y las compras aumentan la cobertura (+): un solo enlace negativo, así que B1 es un lazo de balance. Por el otro lado, una brecha mayor reduce los vencimientos (−) y los vencimientos reducen la cobertura (−); con tres enlaces negativos, B2 también es de balance. Cualquier lectura cualitativa concluye que la cobertura irá hacia la meta, y el diagrama no dice nada más. En la tina, en cambio, las flechas iban de los caudales al nivel y ninguna volvía: aquí la cobertura actúa sobre sus propios flujos.</p>
 </div>
 <div class="paso">
-<p><strong>Escriba la regla de compras.</strong> La comercializadora quiere cerrar la brecha en medio año, <span class="math inline">T = 0{,}5</span> años:</p>
-<p><span class="math display">\text{compras} = \frac{100 - C}{T} \qquad \left[\frac{\text{GWh}}{\text{año}}\right].</span></p>
-<p>Al inicio la brecha es de 40 GWh y las compras son de 80 GWh/año.</p>
+<p><a href="../diagramas/svg/s4-01-cobertura-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s4-01-cobertura-2.svg" class="img-fluid" loading="lazy" alt="Diagrama de stocks y flujos con el stock cobertura C(t) en GWh y valor inicial de 60, un flujo de entrada, compras, desde una nube y un flujo de salida, vencimientos, hacia una nube, ambos en GWh por año."></a></p>
+<p><strong>Identifique el stock y sus flujos.</strong> Con la pregunta de la fotografía, la cobertura <span class="math inline">C(t)</span> [GWh] es el único stock: se puede medir en cualquier instante y solo cambia con las <strong>compras</strong>, que la llenan, y con los <strong>vencimientos</strong>, que la vacían, ambos en GWh/año. Las nubes dicen que el modelo no sigue de dónde vienen los contratos ni a dónde van los que vencen. Es el mismo esqueleto de la tina, un stock con una entrada y una salida:</p>
+<p><span class="math display">\frac{dC}{dt} = \text{compras}(t) - \text{vencimientos}(t) \qquad \left[\frac{\text{GWh}}{\text{año}}\right],</span></p>
+<p>con <span class="math inline">C(0) = 60</span> GWh.</p>
 </div>
 <div class="paso">
-<p><strong>Versión A, contratos inmediatos.</strong> Cada contrato suma cobertura el mismo día en que se compra: <span class="math inline">dC/dt = \text{compras}</span>. La cobertura sube cada vez más despacio y queda a menos de 1 GWh de la meta a los 1,85 años, sin pasarse nunca.</p>
+<p><a href="../diagramas/svg/s4-01-cobertura-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s4-01-cobertura-3.svg" class="img-fluid" loading="lazy" alt="Al diagrama se agregan la meta de 100 GWh, la brecha, el ajuste y el tiempo de ajuste T de 0,5 años, con conectores de información de la cobertura y la meta a la brecha, de la brecha y T al ajuste, y del ajuste a las válvulas de compras y de vencimientos."></a></p>
+<p><strong>Agregue la regla de decisión.</strong> Aquí está la diferencia con la tina. Allá los caudales eran constantes o, con el desagüe proporcional, dependían solo del nivel; aquí la comercializadora compara la cobertura con una meta y reparte la diferencia en un tiempo de ajuste <span class="math inline">T = 0{,}5</span> años. Los conectores llevan la cobertura y la meta a la brecha, la brecha y <span class="math inline">T</span> al <strong>ajuste</strong>, y el ajuste a las dos válvulas:</p>
+<p><span class="math display">\begin{aligned}
+\text{brecha} &amp;= 100 - C \quad [\text{GWh}],\\
+\text{ajuste} &amp;= \frac{\text{brecha}}{T} \quad \left[\frac{\text{GWh}}{\text{año}}\right],\\
+\text{compras} &amp;= \max(0,\ \text{ajuste}),\\
+\text{vencimientos} &amp;= \max(0,\ -\text{ajuste}).
+\end{aligned}</span></p>
+<p>Las unidades cierran, porque los GWh divididos por años dan GWh/año, las unidades de los flujos. Al inicio la brecha es de 40 GWh y las compras, de 80 GWh/año.</p>
 </div>
 <div class="paso">
-<p><strong>Versión B, contratos que tardan en firmarse.</strong> Cada contrato pasa por tres etapas (oferta, negociación y firma) que suman seis meses en promedio. La regla de compras es la misma y mira solo la cobertura firmada, sin contar lo que está en negociación. En el diagrama causal solo aparece una doble raya de retardo sobre la flecha compras → cobertura, y esa marca no dice si el retardo dura una semana o un año; el modelo, en cambio, tiene tres stocks nuevos en tránsito.</p>
+<p><strong>Resuelva la versión A, contratos inmediatos.</strong> Cada contrato suma cobertura el mismo día en que se compra. Mientras la cobertura esté por debajo de la meta, la ecuación tiene la misma forma que la de la tina con desagüe proporcional, con la meta en el papel del equilibrio:</p>
+<p><span class="math display">\frac{dC}{dt} = \frac{100 - C}{0{,}5} \quad \left[\frac{\text{GWh}}{\text{año}}\right],</span></p>
+<p>cuya solución es</p>
+<p><span class="math display">C(t) = 100 - 40\,e^{-t/0{,}5} \quad [\text{GWh}].</span></p>
+<p>La cobertura sube cada vez más despacio y queda a menos de 1 GWh de la meta hacia el año 1,85, sin pasarse nunca.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-01-cobertura-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../diagramas/svg/s4-01-cobertura-4.svg" class="img-fluid" loading="lazy" alt="El mismo diagrama causal de la cobertura, ahora con una doble raya de retardo sobre la flecha de compras a cobertura, resaltada en ámbar, y la nota retardo de negociación de seis meses en promedio."></a></p>
+<p><strong>Agregue el retardo de negociación (versión B).</strong> Ahora cada contrato pasa por tres etapas, oferta, negociación y firma, que suman seis meses en promedio. La regla de compras es la misma y mira solo la cobertura firmada, sin contar lo que está en negociación. En el diagrama causal todo el cambio cabe en una doble raya sobre la flecha compras → cobertura, y esa marca no dice si el retardo dura una semana o un año.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s4-01-cobertura-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../diagramas/svg/s4-01-cobertura-5.svg" class="img-fluid" loading="lazy" alt="Diagrama de stocks y flujos de la versión B: entre la válvula de compras y la cobertura aparecen tres stocks en serie, oferta, negociación y firma, unidos por los flujos avance 1, avance 2 y firma, que dependen de cada stock y del retardo tau de 0,5 años. La regla de compras sigue conectada solo a la cobertura."></a></p>
+<p><strong>Abra el retardo en el diagrama de stocks y flujos.</strong> La doble raya esconde tres stocks en serie: los contratos en oferta <span class="math inline">X_1</span>, en negociación <span class="math inline">X_2</span> y en firma <span class="math inline">X_3</span>, todos en GWh. Cada etapa entrega lo que tiene en un tercio del retardo total <span class="math inline">\tau = 0{,}5</span> años, es decir, en dos meses en promedio:</p>
+<p><span class="math display">\begin{aligned}
+\frac{dX_1}{dt} &amp;= \text{compras} - \frac{3X_1}{\tau},\\[4pt]
+\frac{dX_2}{dt} &amp;= \frac{3X_1}{\tau} - \frac{3X_2}{\tau},\\[4pt]
+\frac{dX_3}{dt} &amp;= \frac{3X_2}{\tau} - \frac{3X_3}{\tau},\\[4pt]
+\frac{dC}{dt} &amp;= \frac{3X_3}{\tau} - \text{vencimientos},
+\end{aligned}</span></p>
+<p>todas en GWh/año. Los conectores de la regla no cambian, y la brecha sigue calculándose solo con <span class="math inline">C</span>. El modelo pasó de uno a cuatro stocks, mientras el diagrama causal ganó una doble raya.</p>
 </div>
 </div>
+<p>La tabla resume qué cambió respecto de la tina en cada versión.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Tina</th>
+<th>Cobertura, versión A</th>
+<th>Cobertura, versión B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Stocks</td>
+<td>el nivel <span class="math inline">N</span> [L]</td>
+<td>la cobertura <span class="math inline">C</span> [GWh]</td>
+<td><span class="math inline">C</span> y tres stocks en tránsito [GWh]</td>
+</tr>
+<tr class="even">
+<td>Qué fija los flujos</td>
+<td>constantes, o el nivel en el desagüe proporcional</td>
+<td>una regla que compara <span class="math inline">C</span> con la meta</td>
+<td>la misma regla, que no mira los contratos en tránsito</td>
+</tr>
+<tr class="odd">
+<td>Lazos</td>
+<td>ninguno con el desagüe constante; uno de balance con el proporcional</td>
+<td>B1 y B2, de balance</td>
+<td>B1 y B2, con retardo</td>
+</tr>
+<tr class="even">
+<td>Comportamiento</td>
+<td>recta hasta el rebose, o acercamiento al equilibrio</td>
+<td>acercamiento a la meta sin pasarse</td>
+<td>lo dirá la simulación</td>
+</tr>
+</tbody>
+</table>
 <p>Antes de simular la versión B, comprometa una predicción.</p>
 <div id="pred-cobertura" class="prediccion caja">
 <div class="caja-titulo">
@@ -988,7 +1138,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="277" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 276;"><span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a>viewof retardoB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Retardo de negociación [años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="379" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 378;"><span id="cb7-379"><a href="#cb7-379" aria-hidden="true" tabindex="-1"></a>viewof retardoB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Retardo de negociación [años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
@@ -999,7 +1149,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="282" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 281;"><span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a>viewof ajusteB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.25</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo de ajuste T [años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="384" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 383;"><span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a>viewof ajusteB <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.25</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo de ajuste T [años]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
@@ -1010,18 +1160,18 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="287" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 286;"><span id="cb9-287"><a href="#cb9-287" aria-hidden="true" tabindex="-1"></a>coberturaB <span class="op">=</span> {</span>
-<span id="cb9-288"><a href="#cb9-288" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> opciones <span class="op">=</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">8</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.01</span>}<span class="op">;</span></span>
-<span id="cb9-289"><a href="#cb9-289" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> conRetardo <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">coberturaContratos</span>({<span class="dt">retardo_negociacion</span><span class="op">:</span> retardoB<span class="op">,</span> <span class="dt">tiempo_ajuste</span><span class="op">:</span> ajusteB})<span class="op">,</span> opciones)<span class="op">;</span></span>
-<span id="cb9-290"><a href="#cb9-290" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> versionA <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">coberturaContratos</span>({<span class="dt">retardo_negociacion</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">tiempo_ajuste</span><span class="op">:</span> ajusteB})<span class="op">,</span> opciones)<span class="op">;</span></span>
-<span id="cb9-291"><a href="#cb9-291" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> c <span class="op">=</span> conRetardo<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">cobertura</span><span class="op">;</span></span>
-<span id="cb9-292"><a href="#cb9-292" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
-<span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> conRetardo<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">cobertura</span><span class="op">:</span> c[k]}))<span class="op">,</span></span>
-<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> versionA<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">cobertura</span><span class="op">:</span> versionA<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">cobertura</span>[k]}))<span class="op">,</span></span>
-<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a>    <span class="dt">maxima</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>c)<span class="op">,</span></span>
-<span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a>    <span class="dt">asentamiento</span><span class="op">:</span> <span class="fu">tiempoAsentamiento</span>(conRetardo<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> c<span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span></span>
-<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
-<span id="cb9-298"><a href="#cb9-298" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="389" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 388;"><span id="cb9-389"><a href="#cb9-389" aria-hidden="true" tabindex="-1"></a>coberturaB <span class="op">=</span> {</span>
+<span id="cb9-390"><a href="#cb9-390" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> opciones <span class="op">=</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">8</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.01</span>}<span class="op">;</span></span>
+<span id="cb9-391"><a href="#cb9-391" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> conRetardo <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">coberturaContratos</span>({<span class="dt">retardo_negociacion</span><span class="op">:</span> retardoB<span class="op">,</span> <span class="dt">tiempo_ajuste</span><span class="op">:</span> ajusteB})<span class="op">,</span> opciones)<span class="op">;</span></span>
+<span id="cb9-392"><a href="#cb9-392" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> versionA <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">coberturaContratos</span>({<span class="dt">retardo_negociacion</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">tiempo_ajuste</span><span class="op">:</span> ajusteB})<span class="op">,</span> opciones)<span class="op">;</span></span>
+<span id="cb9-393"><a href="#cb9-393" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> c <span class="op">=</span> conRetardo<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">cobertura</span><span class="op">;</span></span>
+<span id="cb9-394"><a href="#cb9-394" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb9-395"><a href="#cb9-395" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filas</span><span class="op">:</span> conRetardo<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">cobertura</span><span class="op">:</span> c[k]}))<span class="op">,</span></span>
+<span id="cb9-396"><a href="#cb9-396" aria-hidden="true" tabindex="-1"></a>    <span class="dt">base</span><span class="op">:</span> versionA<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">cobertura</span><span class="op">:</span> versionA<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">cobertura</span>[k]}))<span class="op">,</span></span>
+<span id="cb9-397"><a href="#cb9-397" aria-hidden="true" tabindex="-1"></a>    <span class="dt">maxima</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>c)<span class="op">,</span></span>
+<span id="cb9-398"><a href="#cb9-398" aria-hidden="true" tabindex="-1"></a>    <span class="dt">asentamiento</span><span class="op">:</span> <span class="fu">tiempoAsentamiento</span>(conRetardo<span class="op">.</span><span class="at">tiempo</span><span class="op">,</span> c<span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb9-399"><a href="#cb9-399" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb9-400"><a href="#cb9-400" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="declaration">
@@ -1032,17 +1182,17 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="303" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 302;"><span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
-<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span>}<span class="op">,</span></span>
-<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Cobertura [GWh]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">55</span><span class="op">,</span> <span class="dv">135</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">100</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
-<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="fl">7.9</span><span class="op">,</span> <span class="dt">cobertura</span><span class="op">:</span> <span class="dv">100</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cobertura"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"meta"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"end"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">9</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span>})<span class="op">,</span></span>
-<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(coberturaB<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cobertura"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.6</span>})<span class="op">,</span></span>
-<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(coberturaB<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cobertura"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
-<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
-<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="405" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 404;"><span id="cb10-405"><a href="#cb10-405" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb10-406"><a href="#cb10-406" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb10-407"><a href="#cb10-407" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo [años]"</span>}<span class="op">,</span></span>
+<span id="cb10-408"><a href="#cb10-408" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Cobertura [GWh]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">55</span><span class="op">,</span> <span class="dv">135</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb10-409"><a href="#cb10-409" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb10-410"><a href="#cb10-410" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">100</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb10-411"><a href="#cb10-411" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="fl">7.9</span><span class="op">,</span> <span class="dt">cobertura</span><span class="op">:</span> <span class="dv">100</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cobertura"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="st">"meta"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"end"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">9</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span>})<span class="op">,</span></span>
+<span id="cb10-412"><a href="#cb10-412" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(coberturaB<span class="op">.</span><span class="at">base</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cobertura"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#9E9E9E"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"5 4"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.6</span>})<span class="op">,</span></span>
+<span id="cb10-413"><a href="#cb10-413" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(coberturaB<span class="op">.</span><span class="at">filas</span><span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cobertura"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb10-414"><a href="#cb10-414" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb10-415"><a href="#cb10-415" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="expression">
@@ -1053,11 +1203,11 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="318" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 317;"><span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cobertura máxima&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(coberturaB<span class="op">.</span><span class="at">maxima</span>)<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Sobrepaso de la meta&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> coberturaB<span class="op">.</span><span class="at">maxima</span> <span class="op">-</span> <span class="dv">100</span>))<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Queda a ±1 GWh de la meta&lt;b&gt;</span><span class="sc">${</span>coberturaB<span class="op">.</span><span class="at">asentamiento</span> <span class="op">===</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">"después de 8 años"</span> <span class="op">:</span> <span class="vs">`desde el año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(coberturaB<span class="op">.</span><span class="at">asentamiento</span>)<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="420" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 419;"><span id="cb11-420"><a href="#cb11-420" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb11-421"><a href="#cb11-421" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cobertura máxima&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(coberturaB<span class="op">.</span><span class="at">maxima</span>)<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-422"><a href="#cb11-422" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Sobrepaso de la meta&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(<span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> coberturaB<span class="op">.</span><span class="at">maxima</span> <span class="op">-</span> <span class="dv">100</span>))<span class="sc">}</span><span class="vs"> GWh&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-423"><a href="#cb11-423" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Queda a ±1 GWh de la meta&lt;b&gt;</span><span class="sc">${</span>coberturaB<span class="op">.</span><span class="at">asentamiento</span> <span class="op">===</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">"después de 8 años"</span> <span class="op">:</span> <span class="vs">`desde el año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(coberturaB<span class="op">.</span><span class="at">asentamiento</span>)<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-424"><a href="#cb11-424" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-11" data-nodetype="expression">
@@ -1105,11 +1255,11 @@ window.Quarto = {
 <span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del diagrama causal al esqueleto</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-nino-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s4-01-nino-1.svg" class="img-fluid" loading="lazy" alt="Diagrama causal de El Niño con ocho variables y polaridad en todas las flechas: lluvias, nivel de embalses, generación hidráulica, generación térmica, demanda, precio de bolsa, inversión en plantas y capacidad instalada. Dos lazos de balance: B4, entre el nivel y la generación hidráulica, y B1, del precio a la inversión, la capacidad y de vuelta al precio, con un retardo entre inversión y capacidad."></a></p>
+<p><a href="../diagramas/svg/s4-01-nino-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="../diagramas/svg/s4-01-nino-1.svg" class="img-fluid" loading="lazy" alt="Diagrama causal de El Niño con ocho variables y polaridad en todas las flechas: lluvias, nivel de embalses, generación hidráulica, generación térmica, demanda, precio de bolsa, inversión en plantas y capacidad instalada. Dos lazos de balance: B4, entre el nivel y la generación hidráulica, y B1, del precio a la inversión, la capacidad y de vuelta al precio, con un retardo entre inversión y capacidad."></a></p>
 <p><strong>Parta del diagrama.</strong> Ocho variables, dos lazos de balance y un retardo entre la inversión y la capacidad. Los lazos llevan los nombres que usa el modelo de la semana: B4 es la regla de operación del embalse y B1, la inversión por precio. Para cada nodo, haga la pregunta de la fotografía: si congelo el tiempo, ¿puedo medirlo?</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-nino-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s4-01-nino-2.svg" class="img-fluid" loading="lazy" alt="La energía embalsada como stock, con aportes de entrada y dos salidas: turbinamiento y vertimiento, todos en GWh por año."></a></p>
+<p><a href="../diagramas/svg/s4-01-nino-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="../diagramas/svg/s4-01-nino-2.svg" class="img-fluid" loading="lazy" alt="La energía embalsada como stock, con aportes de entrada y dos salidas: turbinamiento y vertimiento, todos en GWh por año."></a></p>
 <p><strong>Clasifique el embalse.</strong> Una fotografía muestra la energía guardada en los embalses, <span class="math inline">E(t)</span> [GWh]: es un <strong>stock</strong>. Las lluvias llegan como <strong>aportes</strong>, y salen dos flujos, el <strong>turbinamiento</strong>, que genera electricidad, y el <strong>vertimiento</strong>, el agua que el embalse ya no alcanza a guardar. El nodo «nivel de embalses» del diagrama se parte en dos: la energía, que es el stock, y el nivel como fracción de la capacidad, que se calcula con ella (paso 6).</p>
 <table class="caption-top table">
 <thead>
@@ -1144,11 +1294,11 @@ window.Quarto = {
 </table>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-nino-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s4-01-nino-3.svg" class="img-fluid" loading="lazy" alt="La capacidad instalada como stock alimentada directamente por un flujo de inversión y vaciada por los retiros."></a></p>
+<p><a href="../diagramas/svg/s4-01-nino-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="../diagramas/svg/s4-01-nino-3.svg" class="img-fluid" loading="lazy" alt="La capacidad instalada como stock alimentada directamente por un flujo de inversión y vaciada por los retiros."></a></p>
 <p><strong>Clasifique la capacidad.</strong> La capacidad instalada <span class="math inline">K(t)</span> [MW] es un <strong>stock</strong>: crece con lo que entra en servicio y baja con los <strong>retiros</strong> [MW/año]. Un primer intento conecta la inversión directo a la capacidad. Pero el diagrama tenía una doble raya en esa flecha: ¿dónde espera la inversión mientras se construye?</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-nino-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s4-01-nino-4.svg" class="img-fluid" loading="lazy" alt="Entre la inversión y la capacidad aparece el stock proyectos en construcción, con los flujos inicios y puesta en servicio."></a></p>
+<p><a href="../diagramas/svg/s4-01-nino-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="../diagramas/svg/s4-01-nino-4.svg" class="img-fluid" loading="lazy" alt="Entre la inversión y la capacidad aparece el stock proyectos en construcción, con los flujos inicios y puesta en servicio."></a></p>
 <p><strong>Dibuje el stock que escondía el retardo.</strong> La doble raya esconde una acumulación, los <strong>proyectos en construcción</strong> <span class="math inline">P(t)</span> [MW]. La inversión se convierte en el flujo de <strong>inicios</strong> [MW/año] y la capacidad crece con la <strong>puesta en servicio</strong> [MW/año].</p>
 <table class="caption-top table">
 <thead>
@@ -1188,7 +1338,7 @@ window.Quarto = {
 </table>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-nino-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s4-01-nino-5.svg" class="img-fluid" loading="lazy" alt="La demanda aparece como stock en GWh por año, alimentada por el flujo de crecimiento en GWh por año al cuadrado."></a></p>
+<p><a href="../diagramas/svg/s4-01-nino-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="../diagramas/svg/s4-01-nino-5.svg" class="img-fluid" loading="lazy" alt="La demanda aparece como stock en GWh por año, alimentada por el flujo de crecimiento en GWh por año al cuadrado."></a></p>
 <p><strong>Clasifique la demanda.</strong> En el diagrama, la demanda era una causa que llegaba de afuera. En el modelo es el consumo anual de energía, <span class="math inline">D(t)</span> [GWh/año], y es un <strong>stock</strong>: solo cambia por su <strong>crecimiento</strong> y, si el crecimiento se detiene, conserva su valor. Su flujo se mide en GWh/año por año, es decir, GWh/año². Las unidades de <span class="math inline">D</span> parecen de flujo; decide la fotografía, igual que con los megavatios de la capacidad.</p>
 <table class="caption-top table">
 <thead>
@@ -1213,7 +1363,7 @@ window.Quarto = {
 </table>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-nino-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../diagramas/svg/s4-01-nino-6.svg" class="img-fluid" loading="lazy" alt="Se agregan las auxiliares nivel del embalse, margen de energía y precio de bolsa, y las tasas sin stock generación térmica y déficit, con conectores de información."></a></p>
+<p><a href="../diagramas/svg/s4-01-nino-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="../diagramas/svg/s4-01-nino-6.svg" class="img-fluid" loading="lazy" alt="Se agregan las auxiliares nivel del embalse, margen de energía y precio de bolsa, y las tasas sin stock generación térmica y déficit, con conectores de información."></a></p>
 <p><strong>Ubique lo que se recalcula en cada instante.</strong> El <strong>nivel</strong> <span class="math inline">x = E/E_{\max}</span> divide la energía guardada por la capacidad del embalse, que crece con la capacidad hidráulica. El <strong>margen de energía</strong> <span class="math inline">m_E</span> mide cuánta energía sobra con los aportes del momento y toda la térmica disponible. El <strong>precio de bolsa</strong> depende de los dos. Ninguno guarda memoria: son <strong>auxiliares</strong>. La <strong>generación térmica</strong> y el <strong>déficit</strong> son tasas que no llenan ni vacían ningún stock del modelo: la térmica cubre lo que el turbinamiento no alcanza, hasta su disponibilidad, y el déficit es la demanda que queda sin atender.</p>
 <table class="caption-top table">
 <thead>
@@ -1253,7 +1403,7 @@ window.Quarto = {
 </table>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s4-01-nino-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../diagramas/svg/s4-01-nino-7.svg" class="img-fluid" loading="lazy" alt="Entre el precio de bolsa y los inicios de proyectos aparece el stock precio esperado, con un flujo de ajuste que puede entrar o salir."></a></p>
+<p><a href="../diagramas/svg/s4-01-nino-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="../diagramas/svg/s4-01-nino-7.svg" class="img-fluid" loading="lazy" alt="Entre el precio de bolsa y los inicios de proyectos aparece el stock precio esperado, con un flujo de ajuste que puede entrar o salir."></a></p>
 <p><strong>Busque la segunda acumulación escondida.</strong> Los inversionistas deciden con lo que creen que valdrá la energía, y esa creencia se forma con atraso: un año de precios altos la sube poco a poco. Una creencia con memoria es un stock, el <strong>precio esperado</strong> <span class="math inline">p_e(t)</span> [COP/kWh], que se mueve hacia el precio de bolsa con un flujo de <strong>ajuste</strong> [COP/kWh por año] que sube o baja según el precio quede arriba o abajo de lo esperado. La flecha precio → inversión del diagrama escondía este retardo de información.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1286,10 +1436,11 @@ window.Quarto = {
 <p><strong>Lea el resultado.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-stocks-escondidos">(la opción que eligió arriba)</span>. El esqueleto tiene <strong>cinco stocks</strong>: energía embalsada, capacidad, proyectos en construcción, demanda y precio esperado. Dos de ellos no aparecían en el diagrama, porque se escondían detrás de un retardo, y un tercero, la demanda, pasó de causa externa a acumulación; la respuesta esperada era la de los stocks que aparecen. Además, dos nodos que en el diagrama se veían iguales resultaron opuestos: la energía embalsada es memoria física del sistema y el precio de bolsa no guarda memoria. Las unidades orientan la clasificación, porque cada flujo se mide en las unidades de su stock divididas por tiempo (GWh y GWh/año, MW y MW/año), pero decide la fotografía: la demanda en GWh/año y la capacidad en MW tienen unidades de ritmo y aun así son stocks.</p>
 </div>
 </div>
+<p><strong>Qué cambia respecto de la tina.</strong> La tina tenía un stock y dos flujos fijados desde afuera. El esqueleto de El Niño tiene cinco stocks acoplados, y casi todos sus flujos dependen del estado de otro stock: el turbinamiento depende del nivel del embalse, el precio de bolsa depende del embalse y del margen de energía, los inicios de proyectos dependen del precio esperado y la puesta en servicio vacía un stock para llenar otro. De esos acoples salen los lazos B1 y B4 del diagrama causal, y con ellos comportamientos que la tina no puede tener, como el ciclo de inversión que estudian las páginas siguientes.</p>
 </section>
 </section>
 <section id="errores-comunes" class="level2">
-<h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
+<h2 class="anchored" data-anchor-id="errores-comunes">6. Errores comunes</h2>
 <div class="error-comun caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Pedirle al diagrama lo que no puede dar</span>
@@ -1321,11 +1472,11 @@ window.Quarto = {
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir polaridad con magnitud</span>
 </div>
 <p>La flecha «precio → inversión» con signo + dice que un precio más alto empuja la inversión hacia arriba respecto de lo que habría ocurrido sin ese aumento. No dice que la capacidad vaya a subir enseguida. En el modelo del curso, entre los años 1,80 y 8,55 el precio sube todo el tiempo y aun así la capacidad instalada baja, de 12 608 a 11 593 MW, porque los retiros superan a las obras que terminan: los inversionistas tardan en creer que el precio alto llegó para quedarse y las obras que sí inician tardan años en entrar.</p>
-<div id="b217cc95" class="cell" data-execution_count="2">
+<div id="9f4ac71e" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="01-del-cld-al-modelo_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19" title="Precio de bolsa y capacidad instalada en los primeros 14 años del modelo del ciclo inversión-capacidad. Franja ámbar: el precio sube y la capacidad baja. Datos sintéticos con fines didácticos, calibrados a órdenes de magnitud de XM."><img src="01-del-cld-al-modelo_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Precio de bolsa y capacidad instalada en los primeros 14 años del modelo del ciclo inversión-capacidad. Franja ámbar: el precio sube y la capacidad baja. Datos sintéticos con fines didácticos, calibrados a órdenes de magnitud de XM."></a></p>
+<p><a href="01-del-cld-al-modelo_files/figure-html/cell-3-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-26" title="Precio de bolsa y capacidad instalada en los primeros 14 años del modelo del ciclo inversión-capacidad. Franja ámbar: el precio sube y la capacidad baja. Datos sintéticos con fines didácticos, calibrados a órdenes de magnitud de XM."><img src="01-del-cld-al-modelo_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" loading="lazy" alt="Precio de bolsa y capacidad instalada en los primeros 14 años del modelo del ciclo inversión-capacidad. Franja ámbar: el precio sube y la capacidad baja. Datos sintéticos con fines didácticos, calibrados a órdenes de magnitud de XM."></a></p>
 <figcaption>Precio de bolsa y capacidad instalada en los primeros 14 años del modelo del ciclo inversión-capacidad. Franja ámbar: el precio sube y la capacidad baja. Datos sintéticos con fines didácticos, calibrados a órdenes de magnitud de XM.</figcaption>
 </figure>
 </div>
@@ -1334,7 +1485,7 @@ window.Quarto = {
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
-<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">6. Compruebe lo aprendido</h2>
+<h2 class="anchored" data-anchor-id="compruebe-lo-aprendido">7. Compruebe lo aprendido</h2>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
@@ -1369,6 +1520,24 @@ window.Quarto = {
 <div class="opcion">
 <p>¿Existe un lazo de balance entre el precio y la inversión?</p>
 <p><span class="porque">La existencia de un lazo y su signo se leen en la estructura.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En el diagrama de stocks y flujos de la cobertura de contratos, una flecha delgada va de la cobertura a la brecha. ¿Qué indica?</p>
+<div class="opcion">
+<p>Que una parte de la cobertura pasa a la brecha y la cobertura se vacía.</p>
+<p><span class="porque">El material viaja por las tuberías dobles; revise las convenciones del diagrama de stocks y flujos.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Que la cobertura entra en la ecuación de la brecha.</p>
+<p><span class="porque">Correcto: es un conector de información; la brecha se calcula como <span class="math inline">100 - C</span> y la cobertura no pierde nada.</span></p>
+</div>
+<div class="opcion">
+<p>Que hay un retardo entre la cobertura y la brecha.</p>
+<p><span class="porque">Un retardo se marca con doble raya en el diagrama causal o con stocks en tránsito en el de stocks y flujos.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1551,6 +1720,7 @@ window.Quarto = {
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
+<li>El curso dibuja los sistemas con dos diagramas de convenciones fijas. El <strong>causal</strong> usa variables sin recuadro, flechas con polaridad junto a la punta, doble raya para los retardos y lazos etiquetados R o B. El de <strong>stocks y flujos</strong> usa rectángulos para los stocks, tuberías con válvula para los flujos, nubes en el límite del modelo, auxiliares y constantes sin recuadro y conectores delgados para la información.</li>
 <li>Un <strong>diagrama causal</strong> muestra la dirección de las influencias; un <strong>modelo de simulación</strong> agrega magnitudes, tiempos y acumulaciones, y produce trayectorias comparables con datos.</li>
 <li>La ruta del diagrama al modelo tiene cuatro decisiones: identificar los stocks, dibujar los flujos, dar valor a cada flecha con unidades y fijar condiciones iniciales antes de simular.</li>
 <li>Clasificar los nodos puede revelar stocks que el diagrama escondía: los proyectos en construcción detrás de la doble raya del retardo y el precio esperado detrás de la flecha precio → inversión. El esqueleto del modelo de la semana tiene cinco stocks: energía embalsada [GWh], capacidad y proyectos [MW], demanda [GWh/año] y precio esperado [COP/kWh].</li>

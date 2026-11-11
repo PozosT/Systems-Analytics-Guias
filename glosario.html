@@ -76,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<meta name="guias-mise:fecha" content="9 de noviembre de 2026">
+<meta name="guias-mise:fecha" content="11 de noviembre de 2026">
 
   <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -395,7 +395,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+ <span class="menu-text">La ecuación del stock y la integración numérica: del modelo a la gráfica y a sus medidas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -642,7 +642,7 @@ window.Quarto = {
 <div class="glosario-letras" aria-label="Letras del glosario" role="navigation">
 <a href="#letra-a">A</a> <a href="#letra-b">B</a> <a href="#letra-c">C</a> <a href="#letra-d">D</a> <a href="#letra-e">E</a> <a href="#letra-f">F</a> <a href="#letra-g">G</a> <a href="#letra-i">I</a> <a href="#letra-l">L</a> <a href="#letra-m">M</a> <a href="#letra-o">O</a> <a href="#letra-p">P</a> <a href="#letra-r">R</a> <a href="#letra-s">S</a> <a href="#letra-t">T</a> <a href="#letra-v">V</a> <a href="#letra-w">W</a>
 </div>
-<p>107 términos definidos en las guías.</p>
+<p>114 términos definidos en las guías.</p>
 <section id="letra-a" class="level2">
 <h2 class="anchored" data-anchor-id="letra-a">A</h2>
 <dl>
@@ -738,6 +738,15 @@ window.Quarto = {
 <p><span class="math display">1 - (1 - \beta)^{m_i},</span></p>
 <p>y cada infectado deja de estarlo con probabilidad <span class="math inline">\gamma</span> [por paso]. Los tres modelos difieren en lo que pasa después:</p>
 <p><span class="glosario-fuente">Se define en <a href="semana3/03-contagio-simple.html#definicion-contagio-simple-en-tiempo-discreto">Semana 3 · Contagio simple: SI, SIS y SIR sobre redes</a></span></p>
+</dd>
+<dt>Convenciones del diagrama causal</dt>
+<dd>
+<p>Son las reglas de <a href="semana1/03-retroalimentacion.html">retroalimentación y diagramas causales</a>, de la semana 1.</p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/01-del-cld-al-modelo.html#definicion-convenciones-del-diagrama-causal">Semana 4 · Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</a></span></p>
+</dd>
+<dt>Convenciones del diagrama de stocks y flujos</dt>
+<dd>
+<p><span class="glosario-fuente">Se define en <a href="semana4/01-del-cld-al-modelo.html#definicion-convenciones-del-diagrama-de-stocks-y-flujos">Semana 4 · Del diagrama causal al modelo: cuánto, cuándo y por cuánto tiempo</a></span></p>
 </dd>
 <dt>Costo medio para la demanda</dt>
 <dd>
@@ -923,16 +932,24 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p>Si la entrada a un stock crece con el propio stock como <span class="math inline">S^{\eta}</span>, la <strong>elasticidad del lazo</strong> <span class="math inline">\eta</span> mide cuánto refuerza: con <span class="math inline">\eta = 1</span> el refuerzo es pleno y la tasa fraccional es constante; con <span class="math inline">0 &lt; \eta &lt; 1</span> el lazo refuerza, pero la tasa fraccional cae a medida que el stock crece; con <span class="math inline">\eta = 0</span> la entrada no depende del stock y el crecimiento es una rampa. Un lazo de refuerzo débil existe y empuja, pero no produce una exponencial.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/01-refuerzo-exponencial.html#definicion-fuerza-de-un-lazo-de-refuerzo">Semana 5 · Lazos de refuerzo y crecimiento exponencial</a></span></p>
 </dd>
-<dt>Función de tabla</dt>
+<dt>Función de tabla y no linealidad</dt>
 <dd>
-<p>Una <strong>función de tabla</strong> define una relación no lineal con una lista de puntos <span class="math inline">(x_1, y_1), \dots, (x_m, y_m)</span> unidos por rectas. Se usa cuando se conoce mejor la forma de la relación que su fórmula. Tres reglas de buena práctica (Sterman, 2000): <strong>anclar los extremos</strong> con valores defendibles, <strong>justificar la pendiente</strong> en el punto de operación y <strong>normalizar los ejes</strong> respecto de valores de referencia.</p>
-<p><span class="glosario-fuente">Se define en <a href="semana4/04-auxiliares-no-linealidad.html#definicion-funcion-de-tabla">Semana 4 · Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</a></span></p>
+<p>Una <strong>función de tabla</strong> define una relación <span class="math inline">y = f(x)</span> con una lista de puntos <span class="math inline">(x_1, y_1), \dots, (x_m, y_m)</span> unidos por rectas. Se usa cuando se conoce mejor la forma de la relación que su fórmula. Entre dos puntos vecinos la tabla es una recta con <strong>pendiente</strong></p>
+<p><span class="math display">s_i = \frac{y_{i+1} - y_i}{x_{i+1} - x_i} \qquad \left[\frac{\text{unidades de } y}{\text{unidades de } x}\right],</span></p>
+<p>que dice cuánto cambia la salida por cada unidad que cambia la entrada en ese tramo. La relación es <strong>lineal</strong> si todos los tramos tienen la misma pendiente y <strong>no lineal</strong> si la pendiente cambia de un tramo a otro; el tramo donde trabaja el sistema se llama <strong>punto de operación</strong>. Tres reglas de buena práctica (Sterman, 2000): <strong>anclar los extremos</strong> con valores defendibles, <strong>justificar la pendiente</strong> en el punto de operación y <strong>normalizar los ejes</strong> respecto de valores de referencia.</p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/04-auxiliares-no-linealidad.html#definicion-funcion-de-tabla-y-no-linealidad">Semana 4 · Auxiliares, constantes y funciones de tabla: dónde se dobla el sistema</a></span></p>
 </dd>
 </dl>
 </section>
 <section id="letra-g" class="level2">
 <h2 class="anchored" data-anchor-id="letra-g">G</h2>
 <dl>
+<dt>Ganancia de un lazo y lazo dominante</dt>
+<dd>
+<p>Sea <span class="math inline">S</span> un stock por el que pasa un lazo. La <strong>ganancia</strong> del lazo, <span class="math inline">\gamma</span> [1/año], es el cambio que una unidad adicional de <span class="math inline">S</span> produce en el flujo neto de <span class="math inline">S</span> después de recorrer el lazo completo:</p>
+<p><span class="math display">\gamma = \frac{\partial}{\partial S}\left(\frac{dS}{dt}\right)\bigg|_{\text{por el camino del lazo}} \quad [1/\text{año}].</span></p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/05-polaridad-lazos.html#definicion-ganancia-de-un-lazo-y-lazo-dominante">Semana 4 · Polaridad y lazos: deducir el comportamiento sin simular</a></span></p>
+</dd>
 <dt>Grado y cercanía</dt>
 <dd>
 <p>La <strong>centralidad de grado</strong> normaliza el grado por el máximo posible: <span class="math inline">C^G_i = k_i / (n-1)</span>.</p>
@@ -1042,6 +1059,11 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p>Propuesta en la gestión estratégica (Mendelow, 1991; Eden y Ackermann, 1998), clasifica a cada actor frente a una decisión concreta por su <strong>poder</strong> (capacidad de afectar el resultado: jurídica, económica, de movilización, de información) y su <strong>interés</strong> (cuánto lo afecta y cuán activamente lo persigue). Alto poder y alto interés: gestionar de cerca. Alto poder y bajo interés: mantener satisfecho, porque despierta. Bajo poder y alto interés: proteger y dar voz, porque ahí vive la legitimidad y ahí nacen las coaliciones. Bajo y bajo: monitorear.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana6/06-redes-actores.html#definicion-matriz-poder-interes">Semana 6 · Redes de actores con poder e intereses</a></span></p>
 </dd>
+<dt>Medida del comportamiento</dt>
+<dd>
+<p>Una <strong>medida del comportamiento</strong> es un número, con unidades, que se calcula con la trayectoria simulada y resume un rasgo del comportamiento que importa para una decisión. Las de uso más frecuente son estas:</p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/03-formalismo-integracion.html#definicion-medida-del-comportamiento">Semana 4 · La ecuación del stock y la integración numérica: del modelo a la gráfica y a sus medidas</a></span></p>
+</dd>
 <dt>Mediocristán y Extremistán</dt>
 <dd>
 <p>En <strong>Mediocristán</strong> las observaciones tienen <strong>colas delgadas</strong>: los valores extremos son raros y ninguno pesa mucho en el total, como en una distribución normal. En <strong>Extremistán</strong> las colas son <strong>pesadas</strong>: los valores extremos son frecuentes y una sola observación puede dominar la suma (Taleb, 2007). La prueba práctica es preguntar si el mayor valor posible cambiaría el promedio de mil observaciones.</p>
@@ -1095,6 +1117,13 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <section id="letra-o" class="level2">
 <h2 class="anchored" data-anchor-id="letra-o">O</h2>
 <dl>
+<dt>Orden de un retardo y orden de un sistema</dt>
+<dd>
+<p>El <strong>orden</strong> de un retardo material es el número <span class="math inline">n</span> de stocks en serie con que se representa lo que está en tránsito. Cada stock retiene en promedio <span class="math inline">\tau/n</span>, así que la demora media total es <span class="math inline">\tau</span> para cualquier <span class="math inline">n</span>:</p>
+<p><span class="math display">\frac{dS_1}{dt} = \text{entrada} - \frac{S_1}{\tau/n}, \qquad \frac{dS_k}{dt} = \frac{S_{k-1} - S_k}{\tau/n},</span></p>
+<p><span class="math display">\text{salida} = \frac{S_n}{\tau/n}.</span></p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/06-retardos.html#definicion-orden-de-un-retardo-y-orden-de-un-sistema">Semana 4 · Retardos: por qué el sistema llega tarde</a></span></p>
+</dd>
 <dt>Oscilación por retardo en un lazo de balance</dt>
 <dd>
 <p>Un lazo de búsqueda de meta con tiempo de ajuste <span class="math inline">\tau_a</span> cuya corrección atraviesa un retardo de tiempo medio <span class="math inline">\tau_r</span> se pasa de largo cuando el retardo es comparable con el tiempo de ajuste o mayor. Su periodo es del orden de</p>
@@ -1107,6 +1136,11 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <section id="letra-p" class="level2">
 <h2 class="anchored" data-anchor-id="letra-p">P</h2>
 <dl>
+<dt>Parámetro, variable y entrada exógena</dt>
+<dd>
+<p>En un modelo ya escrito, cada símbolo de las ecuaciones pertenece a una de cuatro clases:</p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/08-calibracion.html#definicion-parametro-variable-y-entrada-exogena">Semana 4 · Calibración: afinar el modelo clavija por clavija</a></span></p>
+</dd>
 <dt>Pirámide de Minto y resumen ejecutivo</dt>
 <dd>
 <p>La <strong>pirámide de Minto</strong>, propuesta por la consultora Barbara Minto (Minto, 2009), ordena la comunicación de un análisis en tres niveles:</p>
@@ -1114,7 +1148,7 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 </dd>
 <dt>Polaridad de un enlace</dt>
 <dd>
-<p>Un enlace <span class="math inline">X \to Y</span> es <strong>positivo</strong> si, con todo lo demás constante, un aumento de <span class="math inline">X</span> hace que <span class="math inline">Y</span> sea mayor de lo que habría sido sin ese aumento. Es <strong>negativo</strong> si el efecto va en dirección contraria. La polaridad es una propiedad de la estructura; una correlación observada en los datos puede engañar.</p>
+<p>Un enlace <span class="math inline">X \to Y</span> es <strong>positivo</strong> si, con todo lo demás constante, un aumento de <span class="math inline">X</span> hace que <span class="math inline">Y</span> sea mayor de lo que habría sido sin ese aumento. Es <strong>negativo</strong> si el efecto va en dirección contraria. En una ecuación, la polaridad es el signo de la derivada parcial <span class="math inline">\partial Y/\partial X</span>. La polaridad es una propiedad de la estructura; una correlación observada en los datos puede engañar.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana4/05-polaridad-lazos.html#definicion-polaridad-de-un-enlace">Semana 4 · Polaridad y lazos: deducir el comportamiento sin simular</a></span></p>
 </dd>
 <dt>Polaridad de un lazo</dt>
@@ -1132,6 +1166,11 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p>Con <span class="math inline">n</span> elementos que fallan de forma independiente con probabilidad <span class="math inline">p</span> cada uno,</p>
 <p><span class="math display">P(\text{al menos una falla}) = 1 - (1 - p)^n.</span></p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/08-eventos-extremos.html#definicion-probabilidad-de-al-menos-una-falla-y-causa-comun">Semana 1 · Eventos extremos y colas pesadas</a></span></p>
+</dd>
+<dt>Protocolo de calibración por partes</dt>
+<dd>
+<p>Calibrar por partes es estimar cada parte del modelo con su propia serie antes de cerrar los lazos (Sterman, 2000, cap. 21). La herramienta es el <strong>modelo parcial</strong>, que corre las ecuaciones de una parte y toma de los datos todo lo que le llega de las demás. El protocolo del curso tiene siete pasos, y los tres ejemplos de esta página los recorren con los mismos nombres:</p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/08-calibracion.html#definicion-protocolo-de-calibracion-por-partes">Semana 4 · Calibración: afinar el modelo clavija por clavija</a></span></p>
 </dd>
 <dt>Prueba de condiciones extremas</dt>
 <dd>
@@ -1228,6 +1267,13 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <p>Sea <span class="math inline">M(\theta_1, \dots, \theta_k)</span> una métrica escalar del modelo y <span class="math inline">\theta^0</span> el caso base.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana5/05-sensibilidad.html#definicion-sensibilidad-local-univariada-y-global">Semana 5 · Análisis de sensibilidad</a></span></p>
 </dd>
+<dt>Simulación con el método de Euler</dt>
+<dd>
+<p>Un modelo de stocks y flujos con stocks <span class="math inline">S_1, \dots, S_n</span> tiene, para cada stock, la ecuación que se lee en su diagrama de Forrester:</p>
+<p><span class="math display">\frac{dS_i}{dt} = \sum \text{entradas}_i(t) - \sum \text{salidas}_i(t),</span></p>
+<p>con valor inicial <span class="math inline">S_i(t_0) = S_{i,0}</span>, donde cada flujo se calcula con los stocks, las auxiliares y las constantes del mismo instante. <strong>Simular</strong> es calcular la trayectoria de cada stock en los instantes <span class="math inline">t_k = t_0 + k\,\Delta t</span> hasta el horizonte. El <strong>método de Euler explícito</strong>, con paso <span class="math inline">\Delta t</span>, la aproxima con</p>
+<p><span class="glosario-fuente">Se define en <a href="semana4/03-formalismo-integracion.html#definicion-simulacion-con-el-metodo-de-euler">Semana 4 · La ecuación del stock y la integración numérica: del modelo a la gráfica y a sus medidas</a></span></p>
+</dd>
 <dt>Sistema</dt>
 <dd>
 <p>Un <strong>sistema</strong> es un conjunto de <strong>elementos</strong> interconectados, organizados de manera que producen un <strong>propósito</strong> o una función característica (Meadows, 2008). La jerarquía de palanca es clara: los elementos son lo más visible y lo menos determinante; las interconexiones mandan sobre el comportamiento; el propósito manda sobre todo lo demás.</p>
@@ -1242,13 +1288,6 @@ C_{\text{local}}(A) &amp;= 43{,}75\,\left(A/A_0\right)^{-0{,}152}.
 <dd>
 <p>Un sistema es <strong>complicado</strong> cuando se puede descomponer: el comportamiento del todo se deduce del de sus partes y de cómo están ensambladas. Un avión tiene millones de piezas y sigue siendo complicado.</p>
 <p><span class="glosario-fuente">Se define en <a href="semana1/01-complicado-complejo.html#definicion-sistema-complicado-y-sistema-complejo">Semana 1 · Complicado frente a complejo</a></span></p>
-</dd>
-<dt>Sistema dinámico y método de Euler</dt>
-<dd>
-<p>Un modelo con <span class="math inline">n</span> stocks es el sistema</p>
-<p><span class="math display">\frac{dS_i}{dt} = f_i(S_1, \dots, S_n, t), \qquad S_i(t_0) = S_{i,0},</span></p>
-<p>donde cada <span class="math inline">f_i</span> suma las entradas y resta las salidas del stock <span class="math inline">i</span>. El <strong>método de Euler explícito</strong>, con paso <span class="math inline">\Delta t</span>, aproxima la trayectoria con</p>
-<p><span class="glosario-fuente">Se define en <a href="semana4/03-formalismo-integracion.html#definicion-sistema-dinamico-y-metodo-de-euler">Semana 4 · La ecuación del stock y la integración numérica: la contabilidad paso a paso</a></span></p>
 </dd>
 <dt>Sistema socio-técnico-ambiental</dt>
 <dd>

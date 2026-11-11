@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<meta name="guias-mise:fecha" content="9 de noviembre de 2026">
+<meta name="guias-mise:fecha" content="11 de noviembre de 2026">
 
   <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -436,7 +436,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../semana4/03-formalismo-integracion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">La ecuación del stock y la integración numérica: la contabilidad paso a paso</span></a>
+ <span class="menu-text">La ecuación del stock y la integración numérica: del modelo a la gráfica y a sus medidas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1030,7 +1030,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Con un retardo de primer orden el lazo es un sistema de segundo orden con amortiguamiento <span class="math inline">\zeta = \tfrac{1}{2}\sqrt{\tau_a/\tau_r}</span>, siempre positivo: oscila desde un cociente de 0,25 y, cuanto mayor el cociente, menos amortiguado, pero siempre se apaga. En el simulador, con orden 1 y cociente 4, la segunda oscilación conserva el 20 % de la primera y al final no queda vaivén. Cuantas más etapas tiene el retardo, más se parece a un tubo que lo entrega todo de golpe, y más pronto deja de apagarse.</p>
+<p>Con un retardo de primer orden el lazo tiene dos stocks, el que se corrige y el del retardo, y por eso es un <strong>sistema de segundo orden</strong> (el orden de un sistema es su número de stocks; vea <a href="../semana4/06-retardos.html#orden-retardo">el orden de un retardo</a>). Su razón de amortiguamiento, <span class="math inline">\zeta = \tfrac{1}{2}\sqrt{\tau_a/\tau_r}</span>, mide qué tan rápido se apaga el vaivén: cuanto menor, más dura. Es siempre positiva, de modo que el lazo oscila desde un cociente de 0,25 y, cuanto mayor el cociente, menos amortiguado, pero siempre se apaga. En el simulador, con orden 1 y cociente 4, la segunda oscilación conserva el 20 % de la primera y al final no queda vaivén. Cuantas más etapas tiene el retardo, más se parece a un tubo que lo entrega todo de golpe, y más pronto deja de apagarse.</p>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
@@ -1459,7 +1459,7 @@ window.Quarto = {
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Buscar un culpable externo para cada pico</span>
 </div>
 <p>Ante una serie que sube y baja, el reflejo es buscar el choque de cada pico: El Niño, la tasa de cambio, una resolución. Los choques existen y vuelven a excitar el ciclo, pero la estructura oscila sin ellos.</p>
-<div id="187b4083" class="cell" data-execution_count="2">
+<div id="0e094390" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1476,7 +1476,7 @@ window.Quarto = {
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Combatir la oscilación con más agresividad</span>
 </div>
 <p>Si el sistema oscila por retardo, corregir más rápido sube el cociente <span class="math inline">\tau_r/\tau_a</span> y agranda el vaivén.</p>
-<div id="2c577b30" class="cell" data-execution_count="3">
+<div id="7a4310d7" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">

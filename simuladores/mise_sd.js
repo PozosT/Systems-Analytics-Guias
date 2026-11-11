@@ -995,6 +995,30 @@ export function ajustePrimerOrden({valor_inicial = 100, meta = 0, tau = 4} = {})
   };
 }
 
+/** Cartera de proyectos y capacidad instalada en cadena [MW, años] (réplica de
+ *  mise_sd.modelos.cadena_construccion). Arranca en el equilibrio de inicios_previos;
+ *  capacidad_inicial fija K(0) como dato, independiente de la vida útil (concepto 8). */
+export function cadenaConstruccion({inicios = 900, inicios_previos = 600, retardo_constructor = 4, vida_util = 30,
+  capacidad_inicial = null} = {}) {
+  if (!(retardo_constructor > 0) || !(vida_util > 0)) throw new Error("El retardo constructor y la vida útil deben ser positivos.");
+  return {
+    nombre: "cadena_construccion",
+    constantes: {inicios_constantes: inicios, retardo_constructor, vida_util},
+    stocks: [
+      {nombre: "proyectos_en_construccion", inicial: inicios_previos * retardo_constructor,
+        entradas: ["inicio_proyectos"], salidas: ["puesta_en_servicio"]},
+      {nombre: "capacidad_instalada", inicial: capacidad_inicial ?? inicios_previos * vida_util,
+        entradas: ["puesta_en_servicio"], salidas: ["retiros"]},
+    ],
+    auxiliares: [],
+    flujos: [
+      ["inicio_proyectos", (t, e) => e.inicios_constantes],
+      ["puesta_en_servicio", (t, e) => e.proyectos_en_construccion / e.retardo_constructor],
+      ["retiros", (t, e) => e.capacidad_instalada / e.vida_util],
+    ],
+  };
+}
+
 /** Termostato con banda muerta [°C, h] (réplica de mise_sd.modelos.termostato). */
 export function termostato({temperatura_inicial = 20, temperatura_exterior = 10, consigna = 20, media_banda = 1,
   calentamiento_maximo = 6, coeficiente_perdidas = 0.4, velocidad_conmutacion = 60} = {}) {
