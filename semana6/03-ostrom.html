@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Los ocho principios de diseño de Elinor Ostrom como lista de diagnóstico de la capa de gobernanza: el acueducto veredal, la microrred comunitaria y el arreglo multinivel de un parque eólico en territorio étnico.">
+<meta name="description" content="Cómo se audita la capa de gobernanza de un proyecto en seis pasos: el recurso común con su límite, los niveles de decisión y los ocho principios de Elinor Ostrom convertidos en preguntas con su evidencia, aplicados a un conjunto residencial, a una microrred comunitaria y al arreglo alrededor de los parques eólicos de La Guajira.">
 
 <title>Gobernanza policéntrica (Ostrom) – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -117,8 +117,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<meta name="guias-mise:fecha" content="11 de noviembre de 2026">
+<meta name="guias-mise:fecha" content="16 de noviembre de 2026">
 
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -617,7 +660,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
   <li><a href="#la-intuición-el-acueducto-veredal" id="toc-la-intuición-el-acueducto-veredal" class="nav-link" data-scroll-target="#la-intuición-el-acueducto-veredal">2. La intuición: el acueducto veredal</a></li>
-  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#del-dibujo-al-procedimiento" id="toc-del-dibujo-al-procedimiento" class="nav-link" data-scroll-target="#del-dibujo-al-procedimiento">3. Del dibujo al procedimiento</a></li>
   <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
   <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
   <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
@@ -637,7 +680,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Los ocho principios de diseño de Elinor Ostrom como lista de diagnóstico de la capa de gobernanza: el acueducto veredal, la microrred comunitaria y el arreglo multinivel de un parque eólico en territorio étnico.
+    Cómo se audita la capa de gobernanza de un proyecto en seis pasos: el recurso común con su límite, los niveles de decisión y los ocho principios de Elinor Ostrom convertidos en preguntas con su evidencia, aplicados a un conjunto residencial, a una microrred comunitaria y al arreglo alrededor de los parques eólicos de La Guajira.
   </div>
 </div>
 
@@ -657,7 +700,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="8" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 7;"><span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="8" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 7;"><span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
 <div id="ojs-cell-1" data-nodetype="declaration">
@@ -665,200 +708,887 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="13" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 12;"><span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="18" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 17;"><span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>conSigno <span class="op">=</span> (decimales) <span class="kw">=&gt;</span> (x) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(decimales)(x)<span class="op">.</span><span class="fu">replace</span>(<span class="st">"-"</span><span class="op">,</span> <span class="st">"−"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 45 a 55 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, el acueducto, la definición y las dos microrredes, el ejemplo ●●● con la lista de verificación, las preguntas y el resumen, unos 35 min; amplían: los ejemplos ●○○ y ●●○ y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana6/01-marco-multicapa.html">el marco multicapa</a> y <a href="../semana6/02-sistema-sociotecnico.html">el sistema socio-técnico</a></span></p>
+<p><span class="dato">⏱ 70 a 80 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, el acueducto, las tres definiciones con el visor del recurso común, el ejemplo ●●○ de la microrred con su simulador, el ejemplo ●●● hasta la ficha de Windpeshi, el error «Calificar sin evidencia», las tres primeras preguntas y el resumen, unos 50 min; amplían: el conjunto residencial, los demás errores y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana6/01-marco-multicapa.html">el marco multicapa</a>, <a href="../semana6/02-sistema-sociotecnico.html">el sistema socio-técnico</a> y <a href="../semana4/02-stocks-flujos.html">stocks y flujos</a></span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Al terminar esta página</span>
 </div>
 <ul>
-<li>Nombrar el bien común de un caso, sus usuarios y su límite de apropiación.</li>
-<li>Diagnosticar una institución con los ocho principios de diseño y predecir dónde fallará.</li>
-<li>Distinguir un arreglo policéntrico, con niveles anidados y reglas de articulación, de uno fragmentado.</li>
+<li>Nombrar el recurso común de un caso, sus usuarios y su límite de apropiación, con una cifra.</li>
+<li>Auditar un arreglo institucional con los ocho principios de diseño, cada uno convertido en una pregunta que se responde con evidencia, y decir qué falla anuncia cada principio ausente.</li>
+<li>Proponer la regla o la instancia que falta y el nivel de decisión al que corresponde, y distinguir un arreglo policéntrico de uno fragmentado.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Los bienes comunes no están condenados a la tragedia ni necesitan siempre privatizarse o estatizarse. Las instituciones que los gobiernan con éxito repiten ocho principios de diseño; su ausencia predice el fracaso con bastante precisión.</p>
+<p>Un recurso que varios usan, y que se agota si entre todos toman más de lo que se renueva, se puede gobernar con reglas hechas por sus propios usuarios. Las instituciones que lo logran repiten ocho principios de diseño. Convertidos en ocho preguntas con su evidencia, esos principios sirven para auditar la capa de gobernanza de cualquier proyecto y decir qué regla falta y en qué nivel.</p>
+</div>
+<p><strong>El hilo de la semana.</strong> Esta página desarrolla el paso 3 del <a href="../semana6/01-marco-multicapa.html">análisis de cuatro capas</a> para la capa de gobernanza, cuya pregunta es qué reglas rigen, quién las fija y quién puede cambiarlas. La primera pasada de Windpeshi respondió esa pregunta con una frase, «consultas separadas, sin reglas comunes», y una fuente. Aquí la frase se convierte en una auditoría del arreglo institucional completo, y lo que queda en la ficha del caso es qué principios faltan y en qué nivel.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../diagramas/svg/s6-00-hilo-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="El análisis de cuatro capas y la página que desarrolla cada paso. En ámbar, lo que cubre esta página: el paso 3, las respuestas con evidencia, para la capa de gobernanza."><img src="../diagramas/svg/s6-00-hilo-4.svg" class="img-fluid figure-img" alt="A la izquierda, los seis pasos del análisis de cuatro capas; a la derecha, las ocho páginas de la semana. En ámbar, esta página y el paso 3, las respuestas con evidencia, para la capa de gobernanza."></a></p>
+<figcaption>El análisis de cuatro capas y la página que desarrolla cada paso. En ámbar, lo que cubre esta página: el paso 3, las respuestas con evidencia, para la capa de gobernanza.</figcaption>
+</figure>
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>Durante décadas se enseñó que un recurso compartido termina agotado salvo que se privatice o lo controle el Estado. Elinor Ostrom recibió el Nobel de Economía en 2009 por mostrar, con cientos de casos, que comunidades de regantes, pescadores y pastores gobiernan recursos comunes durante siglos con instituciones que ellas mismas diseñan (Ostrom, 1990). El sector energético colombiano está lleno de bienes comunes: el embalse multipropósito, la capacidad de la red, el territorio con viento y la confianza. <strong>¿Qué tienen las instituciones que funcionan, y qué le faltó al arreglo alrededor de los parques de La Guajira?</strong></p>
+<p>Durante décadas se enseñó que un recurso compartido termina agotado salvo que se privatice o lo administre el Estado. Elinor Ostrom recibió el Nobel de Economía en 2009 por mostrar, con cientos de casos, que comunidades de regantes, pescadores y pastores gobiernan recursos comunes durante siglos con instituciones que ellas mismas diseñan (Ostrom, 1990). El sector energético colombiano tiene muchos recursos de ese tipo: el embalse que sirve a la vez para riego, acueducto y generación, la capacidad de una red, el territorio con viento y la confianza en un proceso de consulta.</p>
+<p>Decir que un arreglo «tiene débil institucionalidad» o que le «falta diálogo» deja al decisor donde estaba. <strong>¿Con qué preguntas se revisa un arreglo institucional, con qué evidencia se responde cada una y cómo se llega de ahí a la regla que falta?</strong></p>
 </section>
 <section id="la-intuición-el-acueducto-veredal" class="level2">
 <h2 class="anchored" data-anchor-id="la-intuición-el-acueducto-veredal">2. La intuición: el acueducto veredal</h2>
-<p>Colombia tiene cerca de 12 000 acueductos comunitarios que abastecen a unos 9 millones de personas, según MinVivienda y la Red Nacional de Acueductos Comunitarios. Muchos funcionan hace décadas con poco apoyo estatal.</p>
+<p>Colombia tiene cerca de 12 000 acueductos comunitarios, que abastecen a unos 9 millones de personas según MinVivienda y la Red Nacional de Acueductos Comunitarios. Muchos funcionan hace décadas con poco apoyo estatal. El visor recorre uno de ellos, con cifras de ejemplo, y a cada parte del dibujo le hace una pregunta.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Un bien común bien gobernado</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Un recurso común bien gobernado</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-acueducto-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s6-03-acueducto-1.svg" class="img-fluid" loading="lazy" alt="Una quebrada llena un tanque que abastece cuatro casas: el común es el agua."></a></p>
-<p><strong>Nombre el común.</strong> El agua de la quebrada y la capacidad del tanque. Los usuarios son las familias de la vereda, y el límite es lo que da la quebrada en verano.</p>
+<p><a href="../diagramas/svg/s6-03-acueducto-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s6-03-acueducto-1.svg" class="img-fluid" loading="lazy" alt="Una quebrada llena un tanque que abastece cuatro casas por una tubería. Texto: el común es el agua de la quebrada y la capacidad del tanque; usuarios, las familias de la vereda; límite, lo que da la quebrada en verano."></a></p>
+<p><strong>Pregunte qué se comparte y cuánto hay.</strong> Se comparte el agua de la quebrada, que llega al tanque. En verano la quebrada trae 2 litros por segundo, es decir, <span class="math inline">2 \times 86\,400 = 172\,800</span> litros al día. Para las 150 familias de la vereda son 1 152 litros por familia y día. Esa cifra es el límite: si entre todas toman más, el tanque se vacía.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-acueducto-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s6-03-acueducto-2.svg" class="img-fluid" loading="lazy" alt="La asamblea define quién es usuario, los turnos de verano y la tarifa según uso."></a></p>
-<p><strong>Reglas propias.</strong> La asamblea decide quién es usuario, los turnos en verano y la tarifa según el uso: límites claros, reglas ajustadas al lugar y participación de quienes las cumplen.</p>
+<p><a href="../diagramas/svg/s6-03-acueducto-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s6-03-acueducto-2.svg" class="img-fluid" loading="lazy" alt="Aparece un recuadro verde: asamblea, que decide quién es usuario, los turnos de verano y la tarifa según el uso."></a></p>
+<p><strong>Pregunte quién fija las reglas de uso.</strong> El recuadro verde es la asamblea de usuarios. Ella decide quién se conecta, qué turnos rigen en verano y cuánto paga cada familia según lo que gasta. Las reglas las escriben quienes las cumplen, y por eso se ajustan a la quebrada que conocen.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-acueducto-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s6-03-acueducto-3.svg" class="img-fluid" loading="lazy" alt="Un fontanero vecino vigila y las sanciones escalan de la llamada de atención a la multa y al corte."></a></p>
-<p><strong>Vigilancia y sanciones.</strong> El fontanero es vecino y le rinde cuentas a la junta. Las sanciones escalan: llamada de atención, multa y, al final, corte.</p>
+<p><a href="../diagramas/svg/s6-03-acueducto-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s6-03-acueducto-3.svg" class="img-fluid" loading="lazy" alt="Aparecen un punto ámbar sobre la tubería, el fontanero vecino, y un recuadro ámbar con tres sanciones: llamada de atención, multa y corte."></a></p>
+<p><strong>Pregunte quién vigila y qué pasa cuando alguien se excede.</strong> El punto ámbar es el fontanero, que es vecino y le rinde cuentas a la junta. El recuadro ámbar muestra que las sanciones tienen escalones: primero la llamada de atención, después la multa y solo al final el corte.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-acueducto-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s6-03-acueducto-4.svg" class="img-fluid" loading="lazy" alt="La junta media los conflictos y la Ley 142 de 1994 reconoce a la organización."></a></p>
-<p><strong>Conflictos y reconocimiento.</strong> La junta media antes que el juzgado, y la Ley 142 de 1994 habilita a estas organizaciones para prestar el servicio. La vereda no necesita santos: tiene diseño.</p>
+<p><a href="../diagramas/svg/s6-03-acueducto-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s6-03-acueducto-4.svg" class="img-fluid" loading="lazy" alt="Aparece un recuadro azul: la junta media antes que el juzgado, y la Ley 142 de 1994 autoriza a la organización."></a></p>
+<p><strong>Pregunte quién resuelve las disputas y quién reconoce a la organización.</strong> El recuadro azul agrega dos piezas. La junta media entre vecinos antes de que el asunto llegue a un juzgado, y la Ley 142 de 1994 habilita a estas organizaciones para prestar el servicio, de modo que el Estado respeta las reglas que la vereda se dio.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-acueducto-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s6-03-acueducto-5.svg" class="img-fluid" loading="lazy" alt="En un parque eólico el común es triple: territorio, corredor de evacuación y legitimidad del proceso."></a></p>
-<p><strong>El sector eléctrico.</strong> Alrededor de un parque eólico hay tres comunes superpuestos: el territorio, el corredor de evacuación que comparten varios parques y la legitimidad del proceso de consulta. Las mismas preguntas aplican a los tres.</p>
+<p><a href="../diagramas/svg/s6-03-acueducto-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s6-03-acueducto-5.svg" class="img-fluid" loading="lazy" alt="El mismo dibujo con un texto violeta: en un parque eólico el común es triple, el territorio, el corredor de evacuación y la legitimidad del proceso; las mismas preguntas aplican."></a></p>
+<p><strong>Pase al sector eléctrico.</strong> Alrededor de un parque eólico se comparten tres cosas: el territorio, el corredor por donde sale la energía de varios parques y la confianza en el proceso de consulta. A cada una se le hacen las mismas preguntas: cuánto hay, quién fija las reglas, quién vigila, qué pasa cuando alguien se excede, quién resuelve las disputas y quién reconoce el arreglo.</p>
 </div>
 </div>
 </section>
-<section id="del-dibujo-a-la-ecuación" class="level2">
-<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
-<div id="definicion-principios-de-diseno-institucional-ostrom-1990" class="definicion caja">
+<section id="del-dibujo-al-procedimiento" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-al-procedimiento">3. Del dibujo al procedimiento</h2>
+<p>La intuición dejó tres piezas: un recurso con un límite que se puede contar, unas reglas que actúan sobre lo que cada usuario toma y alguien que escribe y cambia esas reglas. La primera definición precisa qué es un recurso común y escribe su límite con la notación de la <a href="../semana4/02-stocks-flujos.html">semana 4</a>. La segunda presenta los ocho principios de Ostrom como preguntas de auditoría, cada una con la evidencia que la responde. La tercera los ordena en el procedimiento que recorren los tres ejemplos.</p>
+<div id="definicion-recurso-comun-y-limite-de-apropiacion" class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Principios de diseño institucional (Ostrom, 1990)</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Recurso común y límite de apropiación</span>
 </div>
-<p>Las instituciones duraderas de gobierno de bienes comunes cumplen, en la formulación operativa del curso:</p>
-<ol type="1">
-<li><strong>Límites claros</strong>: quién tiene derecho al recurso y cuál es el límite del recurso.</li>
-<li><strong>Congruencia local</strong>: reglas ajustadas al lugar y proporcionalidad entre lo que cada quien aporta y recibe.</li>
-<li><strong>Participación</strong>: quienes viven bajo las reglas participan en cambiarlas.</li>
-<li><strong>Monitoreo</strong>: vigilantes que rinden cuentas a los usuarios, o que son los usuarios.</li>
-<li><strong>Sanciones graduales</strong>: castigos proporcionales y crecientes.</li>
-<li><strong>Resolución de conflictos</strong>: mecanismos locales, rápidos y baratos.</li>
-<li><strong>Reconocimiento externo</strong>: las autoridades superiores respetan el derecho a autoorganizarse.</li>
-<li><strong>Anidamiento policéntrico</strong>: en sistemas grandes, niveles de gobierno anidados, cada uno decidiendo lo suyo, sin centro único.</li>
-</ol>
-<p>El principio 8 es la expresión, dentro de la lista, de una idea más amplia que Ostrom desarrolló después, la <strong>gobernanza policéntrica</strong> (Ostrom, 2010): varios centros de decisión semiautónomos (comunidad, municipio, autoridad tradicional, nación, empresa) con reglas de articulación explícitas.</p>
+<p>Un <strong>recurso común</strong> es un recurso de uso compartido en el que lo que toma un usuario deja de estar disponible para los demás, y del que resulta difícil excluir a alguien. Sus <strong>usuarios</strong> son quienes lo toman. Si el recurso es un stock <span class="math inline">R(t)</span> que se renueva a un ritmo <span class="math inline">g</span> y del que el usuario <span class="math inline">i</span> toma <span class="math inline">a_i</span>, entonces</p>
+<p><span class="math display">\frac{dR}{dt} = g - \sum_{i=1}^{n} a_i,</span></p>
+<p>con <span class="math inline">R</span> en las unidades del recurso (litros, kWh, cupos) y <span class="math inline">g</span> y <span class="math inline">a_i</span> en esas unidades por unidad de tiempo. El <strong>límite de apropiación</strong> es la condición para que el stock se sostenga:</p>
+<p><span class="math display">\sum_{i=1}^{n} a_i \le g.</span></p>
+<p>El límite es un flujo: se mide por día, por temporada o por año. El stock dice cuánto aguanta el recurso mientras el límite se incumple.</p>
 </div>
-<p>Los principios son una <strong>lista de diagnóstico</strong>, no un manual: ante una institución que falla, se pregunta qué principio está roto; ante un diseño nuevo, cuál falta. El visor contrasta dos diseños ilustrativos de la misma microrred solar-diésel en una zona no interconectada, con el mismo equipo y distinta institución.</p>
+<p>Cada usuario recibe completo el beneficio de lo que toma y comparte con los demás el costo de que el stock baje. Por eso un recurso común necesita reglas, y la pregunta de Ostrom fue qué tienen en común las reglas que funcionan.</p>
+<div id="definicion-los-ocho-principios-de-diseno-ostrom-1990-como-preguntas-de-auditoria" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Los ocho principios de diseño (Ostrom, 1990), como preguntas de auditoría</span>
+</div>
+<p>Las instituciones que gobiernan recursos comunes durante mucho tiempo cumplen ocho principios. Cada uno se revisa con una pregunta que se responde con evidencia, y su ausencia anuncia una falla reconocible.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Pregunta de auditoría</th>
+<th>Evidencia que la responde</th>
+<th>Falla que anuncia si falta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Límites claros</td>
+<td>¿Existe una lista de quién tiene derecho al recurso y una cifra de su límite?</td>
+<td>registro de usuarios, censo o acto de acreditación; medición del recurso</td>
+<td>sobreuso; disputas sobre quién representa a quién</td>
+</tr>
+<tr class="even">
+<td>2. Congruencia</td>
+<td>¿Lo que cada usuario aporta o soporta guarda proporción con lo que recibe, y la regla se ajusta al lugar?</td>
+<td>fórmula de la tarifa o del reparto; quién la fijó y dónde</td>
+<td>quien más toma paga igual; reglas que nadie cumple</td>
+</tr>
+<tr class="odd">
+<td>3. Participación</td>
+<td>¿Quienes cumplen las reglas pueden cambiarlas?</td>
+<td>estatutos; actas con votaciones</td>
+<td>reglas ajenas y cumplimiento bajo</td>
+</tr>
+<tr class="even">
+<td>4. Monitoreo</td>
+<td>¿Quien vigila responde ante los usuarios?</td>
+<td>quién nombra y paga al vigilante; a quién entrega sus informes</td>
+<td>incumplimientos que nadie ve; desconfianza</td>
+</tr>
+<tr class="odd">
+<td>5. Sanciones graduales</td>
+<td>¿Hay al menos dos escalones antes de la sanción máxima?</td>
+<td>reglamento; historial de sanciones</td>
+<td>usuarios expulsados al primer error, o impunidad</td>
+</tr>
+<tr class="even">
+<td>6. Resolución de conflictos</td>
+<td>¿Hay una instancia cercana, con plazo y de bajo costo?</td>
+<td>reglamento; tiempo de respuesta a las quejas</td>
+<td>disputas que saltan al juzgado o a las vías de hecho</td>
+</tr>
+<tr class="odd">
+<td>7. Reconocimiento externo</td>
+<td>¿La autoridad superior acepta las reglas locales?</td>
+<td>norma o acto que las reconoce</td>
+<td>reglas anuladas desde afuera; captura</td>
+</tr>
+<tr class="even">
+<td>8. Anidamiento</td>
+<td>¿Cada decisión tiene un nivel que la toma, y hay reglas que conectan los niveles?</td>
+<td>tabla de niveles con sus competencias; norma que los articula</td>
+<td>decisiones que nadie toma, o que se toman dos veces</td>
+</tr>
+</tbody>
+</table>
+<p>Cada principio se califica <strong>cumple</strong>, <strong>a medias</strong> o <strong>falta</strong>. «A medias» significa que la regla existe y la evidencia muestra que cubre solo una parte o que no opera.</p>
+<p>El principio 8 aplica a sistemas grandes y expresa una idea que Ostrom desarrolló después, la <strong>gobernanza policéntrica</strong> (Ostrom, 2010): varios centros de decisión con autonomía propia (comunidad, municipio, autoridad tradicional, nación, empresa), conectados por reglas de articulación explícitas.</p>
+</div>
+<p>El visor ubica los ocho principios sobre el recurso común dibujado como un stock con sus flujos. Es un sistema genérico, sin cifras; en el acueducto, <span class="math inline">R</span> es el agua del tanque, <span class="math inline">g</span> lo que trae la quebrada y <span class="math inline">a_i</span> lo que toma cada familia.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Dos microrredes, principio por principio</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El recurso común como stock y los principios como reglas sobre sus flujos</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s6-03-principios-1.svg" class="img-fluid" loading="lazy" alt="Principio 1, límites claros: medidor por casa contra conexiones sin registro."></a></p>
-<p><strong>Límites claros.</strong> La microrred A mide cada casa y la asamblea aprueba a los usuarios. En la B nadie sabe quién está conectado, y la batería se descarga sin responsable.</p>
+<p><a href="../diagramas/svg/s6-03-comun-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s6-03-comun-1.svg" class="img-fluid" loading="lazy" alt="Diagrama de Forrester: una nube alimenta, por el flujo renovación g, el stock recurso común R(t)."></a></p>
+<p><strong>Dibuje el stock y su renovación.</strong> El recurso común <span class="math inline">R(t)</span> es el rectángulo, y la renovación <span class="math inline">g</span> es el flujo que lo llena. En el acueducto son el agua del tanque y los 172 800 litros diarios de la quebrada en verano.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s6-03-principios-2.svg" class="img-fluid" loading="lazy" alt="Principio 2, congruencia: cupos según temporada contra tarifa fijada en otra ciudad."></a></p>
-<p><strong>Congruencia.</strong> En A el cupo cambia con la temporada de sol y quien más consume más aporta al mantenimiento. En B la tarifa se fijó en otra ciudad.</p>
+<p><a href="../diagramas/svg/s6-03-comun-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s6-03-comun-2.svg" class="img-fluid" loading="lazy" alt="Aparece en ámbar el flujo de salida: apropiación de los usuarios, la suma de las a_i, hacia una nube."></a></p>
+<p><strong>Agregue la apropiación.</strong> El flujo de salida, en ámbar, suma lo que toman todos los usuarios, <span class="math inline">\sum_i a_i</span>. Es un solo tubo con muchas llaves: cada usuario abre la suya.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s6-03-principios-3.svg" class="img-fluid" loading="lazy" alt="Principio 3, participación."></a></p>
-<p><strong>Participación.</strong> En A el comité local propone y la asamblea decide. En B las reglas las escribió el donante.</p>
+<p><a href="../diagramas/svg/s6-03-comun-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s6-03-comun-3.svg" class="img-fluid" loading="lazy" alt="Aparece en ámbar, bajo el stock, el límite de apropiación: la suma de las a_i menor o igual que g."></a></p>
+<p><strong>Escriba el límite.</strong> Bajo el stock aparece la condición <span class="math inline">\sum_i a_i \le g</span>. Mientras se cumpla, el stock se sostiene. Con ella, la primera parte del principio 1 deja de ser una frase y se vuelve una cifra que se puede medir.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s6-03-principios-4.svg" class="img-fluid" loading="lazy" alt="Principio 4, monitoreo."></a></p>
-<p><strong>Monitoreo.</strong> En A un operador local reporta cada mes el estado de carga. En B un técnico externo visita cada tres meses.</p>
+<p><a href="../diagramas/svg/s6-03-comun-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s6-03-comun-4.svg" class="img-fluid" loading="lazy" alt="Aparecen en ámbar tres textos con flechas: reglas de uso (1 límites, 2 congruencia), que llega a la apropiación; vigilancia (4 monitoreo), que sale de la válvula; y sanción (5 gradual), que recibe de la vigilancia y regresa a la válvula."></a></p>
+<p><strong>Ubique las reglas que actúan sobre la válvula.</strong> Cuatro principios describen lo que gobierna la apropiación. Las reglas de uso dicen quién puede tomar y cuánto aporta a cambio (principios 1 y 2). La vigilancia lee lo que cada uno toma (principio 4) y la sanción lo corrige (principio 5). Vigilancia y sanción forman un lazo de balance sobre la apropiación.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s6-03-principios-5.svg" class="img-fluid" loading="lazy" alt="Principio 5, sanciones graduales."></a></p>
-<p><strong>Sanciones graduales.</strong> En A se avisa, luego se cobra recargo y al final se restringe el horario. En B se corta al primer atraso, y el corte produce el siguiente atraso.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s6-03-principios-6.svg" class="img-fluid" loading="lazy" alt="Principio 6, resolución de conflictos."></a></p>
-<p><strong>Resolución de conflictos.</strong> En A el comité media en quince días. En B las quejas no tienen a quién ir.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-7.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s6-03-principios-7.svg" class="img-fluid" loading="lazy" alt="Principio 7, reconocimiento externo."></a></p>
-<p><strong>Reconocimiento externo.</strong> En A el operador de red acepta el reglamento local. En B el municipio lo desconoce.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-03-principios-8.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s6-03-principios-8.svg" class="img-fluid" loading="lazy" alt="Principio 8, anidamiento."></a></p>
-<p><strong>Anidamiento.</strong> En A municipio y ministerio apoyan sin suplantar. En B cada nivel actúa por su cuenta. Mismo hardware, instituciones opuestas: la lista predice cuál tendrá la batería muerta al segundo año.</p>
+<p><a href="../diagramas/svg/s6-03-comun-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s6-03-comun-5.svg" class="img-fluid" loading="lazy" alt="Aparece en ámbar, arriba a la izquierda: quién fija y cambia las reglas (3 participación, 6 conflictos, 7 reconocimiento, 8 anidamiento), con una flecha hacia las reglas de uso."></a></p>
+<p><strong>Ubique a quien escribe las reglas.</strong> Los otros cuatro principios describen el origen de las reglas de uso: si los usuarios pueden cambiarlas (3), cómo se resuelven las disputas (6), si la autoridad superior las respeta (7) y, en sistemas grandes, qué nivel decide cada cosa (8). Una auditoría revisa las dos mitades del dibujo.</p>
 </div>
 </div>
+<p>Las dos definiciones se usan siempre en el mismo orden.</p>
+<div id="definicion-la-auditoria-de-un-arreglo-institucional-en-seis-pasos" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">La auditoría de un arreglo institucional, en seis pasos</span>
+</div>
+<ol type="1">
+<li><strong>Nombre el recurso común, sus usuarios y su límite.</strong> El recurso con sus unidades, la lista de quienes lo toman y el límite de apropiación como una cifra por unidad de tiempo, comparada con lo que hoy se toma.</li>
+<li><strong>Liste los niveles de decisión.</strong> Quién decide qué hoy, de lo más local a lo más general, y qué decisiones no las toma nadie.</li>
+<li><strong>Recorra los ocho principios.</strong> Para cada uno, la pregunta de auditoría, la evidencia con su fuente y la calificación: cumple, a medias o falta. Cada respuesta se marca como dato, cálculo o hipótesis, igual que en el <a href="../semana6/01-marco-multicapa.html">análisis de cuatro capas</a>.</li>
+<li><strong>Marque lo que falta y prediga la falla.</strong> Con la última columna de la tabla de principios, diga qué falla anuncia cada ausencia y compárela con el síntoma del caso, si se puede con una cuenta.</li>
+<li><strong>Proponga la regla y su nivel.</strong> Una regla o una instancia por cada principio ausente, con el nivel de decisión que debe adoptarla.</li>
+<li><strong>Concluya.</strong> Qué principios faltan, en qué nivel, qué regla se propone, con qué cifras y qué señal permite seguirla.</li>
+</ol>
+</div>
+<p>En un proyecto energético colombiano, la evidencia del paso 3 tiene fuentes conocidas. La tabla dice dónde buscar cada una.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Dónde se consigue la evidencia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Límites claros</td>
+<td>registro de usuarios del prestador del servicio; certificación de comunidades del Ministerio del Interior; área de influencia del estudio de impacto ambiental y de la licencia de la ANLA</td>
+</tr>
+<tr class="even">
+<td>2. Congruencia</td>
+<td>fórmula de reparto o de tarifa en la ley o en la resolución de la CREG; acuerdos protocolizados de consulta previa</td>
+</tr>
+<tr class="odd">
+<td>3. Participación</td>
+<td>estatutos y actas de asamblea; actas de consulta previa</td>
+</tr>
+<tr class="even">
+<td>4. Monitoreo</td>
+<td>contrato del interventor o del vigilante: quién lo paga y a quién le informa; informes publicados</td>
+</tr>
+<tr class="odd">
+<td>5. Sanciones graduales</td>
+<td>reglamento interno; contrato de condiciones uniformes del servicio; historial de cortes y multas</td>
+</tr>
+<tr class="even">
+<td>6. Resolución de conflictos</td>
+<td>reglamento; registro de peticiones y quejas con sus tiempos de respuesta; tutelas</td>
+</tr>
+<tr class="odd">
+<td>7. Reconocimiento externo</td>
+<td>Constitución, leyes y decretos que reconocen a la organización; personería jurídica</td>
+</tr>
+<tr class="even">
+<td>8. Anidamiento</td>
+<td>decretos que reparten competencias entre niveles; convenios entre entidades</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
-<section id="el-conjunto-residencial" class="level3">
-<h3 class="anchored" data-anchor-id="el-conjunto-residencial">El conjunto residencial</h3>
+<p>Los tres ejemplos recorren los seis pasos con los mismos nombres, sobre sistemas distintos, y cada uno agrega una dificultad. El básico se resuelve con cuentas a mano sobre un recurso que todos conocen y deja ver de dónde sale cada calificación. El intermedio tiene energía, dinero y un balance mensual que se calcula con cada combinación de reglas, y muestra que los principios dependen unos de otros. El avanzado es un caso real con varios niveles de gobierno, donde la evidencia viene de normas e informes y varias calificaciones quedan como hipótesis.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ejemplo</th>
+<th>Sistema</th>
+<th>De dónde salen las respuestas</th>
+<th>Lo que agrega</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>●○○</td>
+<td>El salón comunal de un conjunto residencial</td>
+<td>registro de reservas, reglamento y actas</td>
+<td>los seis pasos completos, con el límite contado en turnos</td>
+</tr>
+<tr class="even">
+<td>●●○</td>
+<td>Una microrred solar con respaldo diésel</td>
+<td>balance de energía y de dinero de la microrred</td>
+<td>la falla anunciada con una cuenta, y principios que solo funcionan juntos</td>
+</tr>
+<tr class="odd">
+<td>●●●</td>
+<td>El arreglo alrededor de los parques eólicos de La Guajira</td>
+<td>leyes, decretos e informes de control</td>
+<td>varios niveles de decisión, uno de ellos vacío; calificaciones marcadas como dato o hipótesis</td>
+</tr>
+</tbody>
+</table>
+<section id="el-salón-comunal-de-un-conjunto-residencial" class="level3">
+<h3 class="anchored" data-anchor-id="el-salón-comunal-de-un-conjunto-residencial">El salón comunal de un conjunto residencial</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Por qué un conjunto funciona y otro vive en guerra</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Catorce querellas por un salón</span>
 </div>
-<p><strong>Planteamiento.</strong> Dos conjuntos residenciales vecinos comparten el mismo diseño arquitectónico. En uno el salón comunal se usa sin peleas; en el otro hay denuncias cada mes. Diagnostique con la lista.</p>
+<p><strong>Objetivo.</strong> Recorrer los seis pasos a mano en un recurso común cotidiano, para ver de dónde sale cada calificación y cómo se pasa de la lista de principios a una regla concreta.</p>
+<p><strong>Planteamiento.</strong> Un conjunto residencial de 120 apartamentos tiene un salón comunal que se presta los sábados y los domingos, un turno por día. El año pasado hubo 180 solicitudes de reserva; un solo apartamento usó el salón 22 veces, y el conjunto acumuló 14 querellas ante la inspección de policía por el uso del salón. El reglamento lo dejó el constructor y la asamblea nunca lo votó. Dice que el salón se asigna a quien lo pida primero, sin tope; todos pagan la misma cuota de administración, usen o no el salón; el administrador le reporta solo al presidente del consejo; y la única sanción prevista es una multa de dos cuotas de administración.</p>
+<p>El consejo de administración que acaba de posesionarse tiene una propuesta sobre la mesa, contratar un vigilante para el salón los fines de semana, y quiere saber si con eso se acaban las querellas. Las cifras son de ejemplo.</p>
 </div>
+<p>El primer visor recorre los pasos 1 a 3 y termina con la tabla de la auditoría.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Recorrer la lista</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 1 a 3: el recurso, los niveles y los ocho principios</span>
 </div>
 <div class="paso">
-<p><strong>Nombre el común.</strong> El salón comunal, las zonas verdes y el presupuesto de mantenimiento. Usuarios: los residentes. Límite: el salón se usa por turnos.</p>
+<p><strong>Nombre el recurso común, sus usuarios y su límite.</strong> El recurso son los turnos del salón. Los usuarios son los 120 apartamentos. El límite sale de una cuenta: <span class="math inline">2 \text{ turnos por semana} \times 52 \text{ semanas} = 104</span> turnos al año (cálculo). Hubo 180 solicitudes, así que 76 quedaron sin atender, y un apartamento se llevó <span class="math inline">22/104 = 21\ \%</span> de los turnos (cálculo, con el registro de reservas).</p>
 </div>
 <div class="paso">
-<p><strong>Revise el conjunto que funciona.</strong> Todos saben quién puede reservar el salón y con qué reglas (1); las reglas las votó la asamblea (3); el administrador vigila y el consejo lo vigila a él (4); las multas empiezan pequeñas (5); los conflictos se resuelven en asamblea antes que en el juzgado (6).</p>
+<p><strong>Liste los niveles de decisión.</strong> Son tres. La asamblea de propietarios puede aprobar y cambiar el reglamento, y hoy no lo ha hecho. El consejo y el administrador aplican el reglamento que hay. Por encima está la ley de propiedad horizontal, la Ley 675 de 2001, que reconoce a la asamblea y prevé un comité de convivencia [POR VERIFICAR el artículo]. La decisión sobre cuántos turnos puede tomar cada apartamento no la ha tomado nadie.</p>
 </div>
 <div class="paso">
-<p><strong>Revise el conjunto en guerra.</strong> El constructor dejó un reglamento genérico que nadie votó (3 roto), el administrador responde a una sola familia (4 roto) y del primer ruido se pasa a la querella policiva (5 y 6 rotos).</p>
+<p><strong>Recorra los ocho principios: las reglas sobre el uso.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Evidencia</th>
+<th>Calificación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Límites claros</td>
+<td>Se sabe quiénes son los residentes; el reglamento no pone tope de turnos y un apartamento usó 22 de 104 (dato)</td>
+<td>a medias</td>
+</tr>
+<tr class="even">
+<td>2. Congruencia</td>
+<td>Quien usa 22 turnos paga la misma cuota que quien no usa ninguno (dato)</td>
+<td>falta</td>
+</tr>
+<tr class="odd">
+<td>4. Monitoreo</td>
+<td>El administrador vigila, pero le reporta a una sola persona (dato)</td>
+<td>a medias</td>
+</tr>
+<tr class="even">
+<td>5. Sanciones graduales</td>
+<td>Una sola sanción, de dos cuotas de administración (dato)</td>
+<td>falta</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="paso">
-<p><strong>Saque la lección.</strong> Ninguno de los dos conjuntos tiene vecinos más virtuosos. La diferencia está en el diseño institucional, y la lista lo detecta antes de la primera pelea.</p>
+<p><strong>Recorra los ocho principios: quién escribe las reglas.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Evidencia</th>
+<th>Calificación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3. Participación</td>
+<td>El reglamento es del constructor; no hay acta de votación (dato)</td>
+<td>falta</td>
+</tr>
+<tr class="even">
+<td>6. Resolución de conflictos</td>
+<td>14 querellas en la inspección de policía en un año; el comité de convivencia no se ha conformado (dato)</td>
+<td>falta</td>
+</tr>
+<tr class="odd">
+<td>7. Reconocimiento externo</td>
+<td>La ley reconoce a la asamblea y a su reglamento (dato)</td>
+<td>cumple</td>
+</tr>
+<tr class="even">
+<td>8. Anidamiento</td>
+<td>Sistema pequeño, con un solo nivel de usuarios</td>
+<td>no aplica</td>
+</tr>
+</tbody>
+</table>
+<p>El principio 8 se nombra y queda vacío, porque Ostrom lo reserva para sistemas con varios niveles.</p>
+</div>
+</div>
+<p>El segundo visor lee la tabla: compara las fallas que anuncian los principios ausentes con lo que ocurre en el conjunto y llega a las reglas.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 4 a 6: la falla anunciada, las reglas y la conclusión</span>
+</div>
+<div class="paso">
+<p><strong>Marque lo que falta y prediga la falla.</strong> Faltan cuatro principios: 2, 3, 5 y 6. La tabla de la definición anuncia, en ese orden, que quien más toma paga igual, que las reglas ajenas se cumplen poco, que del primer problema se pasa a la sanción máxima y que las disputas saltan a una instancia externa. Las cuatro fallas están en el planteamiento: un apartamento con el 21 % de los turnos, un reglamento que nadie siente propio y 14 querellas.</p>
+</div>
+<div class="paso">
+<p><strong>Marque lo que falta y prediga la falla: la propuesta del consejo.</strong> Un vigilante atiende el principio 4, que ya estaba a medias, y deja los cuatro ausentes como estaban. Con vigilante, el apartamento de los 22 turnos sigue cumpliendo el reglamento, porque el reglamento se lo permite.</p>
+</div>
+<div class="paso">
+<p><strong>Proponga la regla y su nivel.</strong> Las cuatro reglas le corresponden a la asamblea, que es el nivel que puede cambiar el reglamento.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Regla propuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 y 2</td>
+<td>Un turno por apartamento hasta que todos los que lo pidan hayan tenido uno; los turnos restantes pagan una tarifa que va al mantenimiento del salón</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>El reglamento del salón se vota en asamblea y se revisa cada año</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Tres escalones: aviso escrito, multa menor y suspensión del derecho a reservar por seis meses</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Comité de convivencia que responde en quince días, antes de cualquier querella</td>
+</tr>
+</tbody>
+</table>
+<p>Con el tope, los 104 turnos alcanzan para un turno por cada apartamento que lo pida, hasta 104 apartamentos.</p>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «El vigilante no resuelve las querellas, porque el problema está en el reglamento y no en la vigilancia. El salón tiene 104 turnos al año para 120 apartamentos, hubo 180 solicitudes y el reglamento del constructor permite que un apartamento use 22. Faltan cuatro principios: congruencia, participación, sanciones graduales y resolución de conflictos, todos en el nivel de la asamblea. El consejo debe llevar a la asamblea un reglamento con tope de un turno por apartamento, tarifa para los turnos adicionales, tres escalones de sanción y un comité de convivencia con quince días de plazo. Señal para seguirlo: el número de querellas y el porcentaje de turnos del apartamento que más usa el salón.»</p>
 </div>
 </div>
 </section>
-<section id="el-reglamento-fundacional-de-una-microrred" class="level3">
-<h3 class="anchored" data-anchor-id="el-reglamento-fundacional-de-una-microrred">El reglamento fundacional de una microrred</h3>
+<section id="una-microrred-solar-con-respaldo-diésel" class="level3">
+<h3 class="anchored" data-anchor-id="una-microrred-solar-con-respaldo-diésel">Una microrred solar con respaldo diésel</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Convertir la lista en reglas y estresarlas</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">La batería nueva que no arregla nada</span>
 </div>
-<p><strong>Planteamiento.</strong> Una comunidad va a recibir una microrred solar-diésel. Redacte un reglamento con al menos una regla por principio y pruébelo frente a dos situaciones: la mitad de la población es flotante y el alcalde quiere controlar el comité.</p>
+<p><strong>Objetivo.</strong> Recorrer los seis pasos en un recurso común de energía, calcular con un balance mensual la falla que anuncia cada principio ausente y ver que algunos principios solo funcionan cuando se cumplen otros.</p>
+<p><strong>Planteamiento.</strong> Una comunidad de una zona no interconectada recibió hace dos años una microrred donada: paneles solares de 60 kWp, una batería de 240 kWh útiles y una planta diésel de respaldo. El donante fijó las reglas: una lista de 80 hogares, una tarifa de 30 000 COP al mes por hogar, sin medidores, y corte del servicio al primer atraso en el pago. Un técnico externo visita la microrred cada tres meses y le informa al donante.</p>
+<p>Hoy la batería llega a su mínimo todas las noches y la planta diésel, que era respaldo, funciona a diario y gasta 20 litros. Hay 15 conexiones que no están en la lista y solo paga el 60 % de los hogares. El donante, que cubre el combustible, se retira en seis meses y ofrece como despedida cambiar la batería por una de mayor capacidad. La asamblea de la comunidad debe decidir si acepta la batería y sigue igual o si cambia antes las reglas, y cuáles. Las cifras son sintéticas, con fines didácticos.</p>
 </div>
+<p>El recurso común es la energía que entregan los paneles. El diagrama lo muestra como un stock, la energía de la batería, con dos entradas y una salida. En ámbar está lo que el planteamiento dice sobre la salida: quiénes consumen y qué pagan.</p>
+<div id="fig-microrred" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagrama de Forrester. Una nube alimenta el flujo generación solar S, 192 kWh/día, hacia el stock energía en la batería E(t). Desde abajo, otra nube alimenta el flujo respaldo diésel D, 58 kWh/día. Del stock sale el flujo consumo C, 250 kWh/día, hacia una nube. En ámbar: 95 conexiones, 80 en lista y 15 sin registro, sin medidores, con flecha al consumo; y tarifa plana de 30 000 COP al mes, que no depende del consumo, con flecha discontinua. A la izquierda, el límite de apropiación sin diésel: C menor o igual que S. Abajo, la ecuación dE/dt = S + D − C.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-microrred-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="../diagramas/svg/s6-03-microrred-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figura&nbsp;1: Forrester de la microrred. Stock: la energía de la batería E(t) [kWh]; flujos: la generación solar S, el respaldo diésel D y el consumo C [kWh/día]. En ámbar, las 95 conexiones sin medidor, que fijan el consumo, y la tarifa plana, que no depende de él (flecha discontinua)."><img src="../diagramas/svg/s6-03-microrred-1.svg" class="img-fluid figure-img" loading="lazy" alt="Diagrama de Forrester. Una nube alimenta el flujo generación solar S, 192 kWh/día, hacia el stock energía en la batería E(t). Desde abajo, otra nube alimenta el flujo respaldo diésel D, 58 kWh/día. Del stock sale el flujo consumo C, 250 kWh/día, hacia una nube. En ámbar: 95 conexiones, 80 en lista y 15 sin registro, sin medidores, con flecha al consumo; y tarifa plana de 30 000 COP al mes, que no depende del consumo, con flecha discontinua. A la izquierda, el límite de apropiación sin diésel: C menor o igual que S. Abajo, la ecuación dE/dt = S + D − C."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-microrred-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Forrester de la microrred. Stock: la energía de la batería <span class="math inline">E(t)</span> [kWh]; flujos: la generación solar <span class="math inline">S</span>, el respaldo diésel <span class="math inline">D</span> y el consumo <span class="math inline">C</span> [kWh/día]. En ámbar, las 95 conexiones sin medidor, que fijan el consumo, y la tarifa plana, que no depende de él (flecha discontinua).
+</figcaption>
+</figure>
+</div>
+<p>La ecuación del stock es</p>
+<p><span class="math display">\frac{dE}{dt} = S + D - C \quad [\text{kWh/día}],</span></p>
+<p>y, cuando la batería está en su mínimo, la planta diésel pone lo que falta: <span class="math inline">D = C - S</span>. La tabla presenta cada dato con su valor y el lugar donde se consigue en un caso real.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dato</th>
+<th>Valor</th>
+<th>Dónde se consigue en un caso real</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Generación solar media <span class="math inline">S</span></td>
+<td>192 kWh/día, que son <span class="math inline">60 \text{ kWp} \times 4 \text{ horas de sol pico} \times 0{,}8</span></td>
+<td>telemetría de la microrred; el IPSE monitorea localidades de las zonas no interconectadas [POR VERIFICAR la cobertura]</td>
+</tr>
+<tr class="even">
+<td>Conexiones</td>
+<td>80 en lista y 15 sin registro</td>
+<td>lista del prestador y recorrido casa por casa</td>
+</tr>
+<tr class="odd">
+<td>Consumo <span class="math inline">C</span></td>
+<td>250 kWh/día: 20 conexiones con congelador o negocio a 6,5 kWh/día y 75 a 1,6 kWh/día</td>
+<td>contador general de la microrred y censo de equipos</td>
+</tr>
+<tr class="even">
+<td>Recaudo</td>
+<td>60 % de los 80 hogares en lista</td>
+<td>libro de recaudo del prestador</td>
+</tr>
+<tr class="odd">
+<td>Diésel</td>
+<td>0,35 litros por kWh; 12 000 COP por litro puesto en la comunidad</td>
+<td>ficha de la planta y facturas de combustible</td>
+</tr>
+<tr class="even">
+<td>Costos fijos</td>
+<td>3,9 MCOP al mes: 1,5 del operador local y 2,4 para reponer la batería (288 MCOP en diez años)</td>
+<td>presupuesto del prestador y cotización de la batería</td>
+</tr>
+</tbody>
+</table>
+<p>MCOP son millones de pesos. El primer visor recorre los pasos 1 a 3; en el paso 3, cada cuadro agrega dos filas a la tabla de la auditoría, con lo que se observa hoy.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Redactar y estresar</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 1 a 3: el recurso, los niveles y los ocho principios</span>
 </div>
 <div class="paso">
-<p><strong>Escriba los límites y la congruencia.</strong> «Son usuarios los hogares fundadores y los que apruebe la asamblea con dos tercios (1). La tarifa tiene un cargo fijo igual para todos y un cargo por kilovatio hora que se duplica en temporada de lluvias, cuando hay menos sol (2).»</p>
+<p><strong>Nombre el recurso común, sus usuarios y su límite.</strong> El recurso es la energía solar que la microrred puede entregar. Los usuarios son las 95 conexiones, 80 en lista y 15 sin registro. El límite de apropiación sin diésel es la generación solar, <span class="math inline">C \le S = 192</span> kWh/día (cálculo). Hoy se consumen 250 kWh/día, un 30 % más, y la diferencia la pone la planta: <span class="math inline">D = 250 - 192 = 58</span> kWh/día, que son <span class="math inline">58 \times 0{,}35 = 20{,}3</span> litros diarios (cálculo).</p>
 </div>
 <div class="paso">
-<p><strong>Escriba participación, monitoreo y sanciones.</strong> «El comité de energía, tres miembros que rotan cada año, propone cambios que aprueba la asamblea (3). El operador local publica cada mes el estado de carga y las salidas de servicio (4). El exceso de consumo se sanciona con aviso, luego recargo del 20 % y luego restricción horaria; nunca corte total a hogares con niños o pacientes (5).»</p>
+<p><strong>Liste los niveles de decisión.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Nivel</th>
+<th>Qué decide hoy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hogar</td>
+<td>cuánto consume, sin que nadie lo mida</td>
+</tr>
+<tr class="even">
+<td>Asamblea de la comunidad</td>
+<td>nada sobre la microrred</td>
+</tr>
+<tr class="odd">
+<td>Donante y técnico externo</td>
+<td>la tarifa, la lista de usuarios y los cortes</td>
+</tr>
+<tr class="even">
+<td>Alcaldía</td>
+<td>reconoce a la junta comunal; no interviene en la microrred</td>
+</tr>
+<tr class="odd">
+<td>Ministerio de Minas y Energía e IPSE</td>
+<td>la inversión y los subsidios de las zonas no interconectadas</td>
+</tr>
+</tbody>
+</table>
+<p>Quien fija las reglas, el donante, está por irse, y la asamblea, que se queda, no decide nada.</p>
 </div>
 <div class="paso">
-<p><strong>Escriba conflictos y reconocimiento.</strong> «Las disputas las media el comité en quince días; solo después van al personero (6). El operador de red departamental reconoce este reglamento como esquema tarifario local (7).»</p>
+<p><a href="../diagramas/svg/s6-03-principios-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s6-03-principios-2.svg" class="img-fluid" loading="lazy" alt="Tabla de tres columnas: principio, hoy y reglamento propuesto. Fila 1, límites claros: a medias, 80 hogares en lista, 15 conexiones sin registro y sin medidores; propuesto, medidor por conexión y aprobación de la asamblea. Fila 2, congruencia: falta, 30 000 COP al mes se consuman 1,6 o 6,5 kWh al día; propuesto, cargo fijo de 10 000 COP más 650 COP por kWh."></a></p>
+<p><strong>Recorra los ocho principios: límites y congruencia.</strong> Las dos primeras filas. Hay una lista, pero 15 conexiones están por fuera y nadie mide: límites a medias (dato). La tarifa es igual para quien consume 1,6 y para quien consume 6,5 kWh al día. Por cada kWh, el primero paga <span class="math inline">30\,000 / (1{,}6 \times 30) = 625</span> COP y el segundo <span class="math inline">30\,000 / (6{,}5 \times 30) = 154</span> COP: quien más toma paga la cuarta parte por unidad. Congruencia: falta (cálculo). La columna verde adelanta la regla que se propondrá en el paso 5.</p>
 </div>
 <div class="paso">
-<p><strong>Estrese con población flotante.</strong> Si la mitad de los hogares cambia cada año, el principio 1 exige separar «usuario» de «miembro con voto»: derechos de uso temporales sin voto en la asamblea.</p>
+<p><a href="../diagramas/svg/s6-03-principios-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s6-03-principios-4.svg" class="img-fluid" loading="lazy" alt="Se agregan dos filas. Fila 3, participación: falta, la tarifa y las reglas las fijó el donante; propuesto, el comité propone y la asamblea vota. Fila 4, monitoreo: a medias, técnico externo cada tres meses que informa al donante; propuesto, operador local con informe mensual a la asamblea."></a></p>
+<p><strong>Recorra los ocho principios: participación y monitoreo.</strong> Las reglas las escribió el donante y la asamblea nunca las votó: participación, falta (dato). Hay un técnico que revisa, pero viene cada tres meses y le informa al donante, no a los usuarios: monitoreo, a medias (dato).</p>
 </div>
 <div class="paso">
-<p><strong>Estrese con un alcalde que quiere el comité.</strong> El principio 7 bien redactado dice que el reconocimiento externo es del reglamento, no de una persona, y que la asamblea puede revocar al comité. La captura queda bloqueada por diseño.</p>
+<p><a href="../diagramas/svg/s6-03-principios-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s6-03-principios-6.svg" class="img-fluid" loading="lazy" alt="Se agregan dos filas. Fila 5, sanciones graduales: falta, corte total al primer atraso; propuesto, aviso, recargo del 20 % y restricción horaria. Fila 6, resolución de conflictos: falta, las quejas no tienen instancia; propuesto, el comité media en quince días."></a></p>
+<p><strong>Recorra los ocho principios: sanciones y conflictos.</strong> La única sanción es el corte al primer atraso, sin escalones: sanciones graduales, falta (dato). Un hogar cortado no tiene ante quién reclamar: resolución de conflictos, falta (dato). Queda una hipótesis razonable, que se comprobaría cruzando la lista de cortes con las conexiones sin registro: que parte de las 15 conexiones sean hogares cortados que se reconectaron por su cuenta.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-03-principios-8.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s6-03-principios-8.svg" class="img-fluid" loading="lazy" alt="Se agregan dos filas. Fila 7, reconocimiento externo: a medias, la junta tiene personería y el reglamento local no existe; propuesto, prestador y alcaldía aceptan el reglamento por escrito. Fila 8, anidamiento: a medias, alcaldía, prestador y ministerio actúan sin acuerdo entre sí; propuesto, tabla de competencias."></a></p>
+<p><strong>Recorra los ocho principios: reconocimiento y anidamiento.</strong> La alcaldía reconoce a la junta comunal, pero no hay un reglamento local que reconocer: a medias (dato). Los niveles del paso 2 existen y ninguna regla los conecta: a medias (dato). La auditoría queda en cuatro principios que faltan (2, 3, 5 y 6) y cuatro a medias (1, 4, 7 y 8).</p>
+</div>
+</div>
+<p>El paso 4 pide convertir esas ausencias en una falla que se pueda contar. La cuenta es el balance mensual de la microrred, que depende de tres reglas:</p>
+<p><span class="math display">\begin{aligned}
+\text{balance} &amp;= \text{recaudo} - \text{diésel} - \text{costos fijos},\\
+\text{recaudo} &amp;= \rho \times \text{facturación},\\
+\text{diésel} &amp;= 0{,}35 \times 12\,000 \times 30 \times \max(0,\ C - 192).
+\end{aligned}</span></p>
+<p>Todo se mide en pesos al mes. La fracción que paga, <span class="math inline">\rho</span>, es 0,60 con el corte al primer atraso. La facturación es <span class="math inline">80 \times 30\,000</span> COP con la lista y la tarifa de hoy. El diésel cuesta 0,35 litros por kWh, a 12 000 COP el litro, durante 30 días, por cada kWh diario que el consumo <span class="math inline">C</span> pase de 192. Los costos fijos son 3,9 MCOP. El reglamento propuesto cambia tres cosas, y cada una entra por un término:</p>
+<ul>
+<li><strong>Registro y medidores (principio 1).</strong> Las 95 conexiones quedan en la lista y se mide el consumo de cada una.</li>
+<li><strong>Tarifa por consumo (principio 2).</strong> Cargo fijo de 10 000 COP al mes más 650 COP por kWh. Requiere medidores. Se supone que, al pagar cada kWh, las 20 conexiones grandes bajan de 6,5 a 3,0 kWh/día y el consumo total queda en <span class="math inline">20 \times 3{,}0 + 75 \times 1{,}6 = 180</span> kWh/día.</li>
+<li><strong>Sanciones graduales (principio 5).</strong> Aviso, recargo del 20 % y restricción horaria antes de cualquier corte. Se supone que el recaudo sube a 0,90.</li>
+</ul>
+<p>Los dos supuestos, 180 kWh/día y 90 % de recaudo, son hipótesis que la comunidad tendría que vigilar. Antes de calcular, anote qué espera.</p>
+<div id="pred-s603-balance" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>La asamblea solo quiere aprobar un cambio este año. ¿Cuál acerca más el balance mensual a cero?</p>
+<div class="opcion">
+<p>Aceptar la batería de mayor capacidad y dejar las reglas como están.</p>
+</div>
+<div class="opcion">
+<p>Registrar las 95 conexiones y ponerles medidor, con la tarifa plana.</p>
+</div>
+<div class="opcion">
+<p>Pasar del corte al primer atraso a las sanciones graduales.</p>
+</div>
+<div class="opcion">
+<p>Ninguno de los tres por separado mueve el balance más de un 10 %.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">El balance mensual de la microrred, regla por regla</span>
+</div>
+<p>El simulador calcula el balance del planteamiento con la fórmula de arriba. Arranca en la situación de hoy: 80 hogares en lista, tarifa plana y corte al primer atraso. Cada control cambia una de las tres reglas del reglamento propuesto y lleva el número del principio al que responde. Las barras muestran el recaudo frente a los dos costos, y las lecturas dan el consumo frente al límite de 192 kWh/día, el diésel y el balance. La batería nueva no está entre los controles porque no cambia ningún término de la fórmula: los paneles siguen entregando 192 kWh al día. Cambie primero una sola regla y compare con su predicción; después active la tarifa por consumo sin medidores y vea qué ocurre.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="387" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 386;"><span id="cb4-387"><a href="#cb4-387" aria-hidden="true" tabindex="-1"></a>viewof registroM <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"80 en lista, sin medidores"</span><span class="op">,</span> <span class="st">"95 registradas, con medidor"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"80 en lista, sin medidores"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Principio 1 · Registro y medición"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="392" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 391;"><span id="cb5-392"><a href="#cb5-392" aria-hidden="true" tabindex="-1"></a>viewof tarifaM <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"plana: 30 000 COP al mes"</span><span class="op">,</span> <span class="st">"por consumo: 10 000 COP + 650 COP/kWh"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"plana: 30 000 COP al mes"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Principio 2 · Tarifa"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="397" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 396;"><span id="cb6-397"><a href="#cb6-397" aria-hidden="true" tabindex="-1"></a>viewof sancionM <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"corte al primer atraso"</span><span class="op">,</span> <span class="st">"aviso, recargo y restricción"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"corte al primer atraso"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Principio 5 · Sanción"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="402" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 401;"><span id="cb7-402"><a href="#cb7-402" aria-hidden="true" tabindex="-1"></a>balanceM <span class="op">=</span> {</span>
+<span id="cb7-403"><a href="#cb7-403" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> medidores <span class="op">=</span> registroM<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"95"</span>)<span class="op">;</span></span>
+<span id="cb7-404"><a href="#cb7-404" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pideConsumo <span class="op">=</span> tarifaM<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"por consumo"</span>)<span class="op">;</span></span>
+<span id="cb7-405"><a href="#cb7-405" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> porConsumo <span class="op">=</span> pideConsumo <span class="op">&amp;&amp;</span> medidores<span class="op">;</span></span>
+<span id="cb7-406"><a href="#cb7-406" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> hogares <span class="op">=</span> medidores <span class="op">?</span> <span class="dv">95</span> <span class="op">:</span> <span class="dv">80</span><span class="op">;</span></span>
+<span id="cb7-407"><a href="#cb7-407" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> consumo <span class="op">=</span> porConsumo <span class="op">?</span> <span class="dv">180</span> <span class="op">:</span> <span class="dv">250</span><span class="op">;</span></span>
+<span id="cb7-408"><a href="#cb7-408" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> recaudoFraccion <span class="op">=</span> sancionM<span class="op">.</span><span class="fu">startsWith</span>(<span class="st">"aviso"</span>) <span class="op">?</span> <span class="fl">0.90</span> <span class="op">:</span> <span class="fl">0.60</span><span class="op">;</span></span>
+<span id="cb7-409"><a href="#cb7-409" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> facturacion <span class="op">=</span> porConsumo <span class="op">?</span> hogares <span class="op">*</span> <span class="dv">10000</span> <span class="op">+</span> consumo <span class="op">*</span> <span class="dv">30</span> <span class="op">*</span> <span class="dv">650</span> <span class="op">:</span> hogares <span class="op">*</span> <span class="dv">30000</span><span class="op">;</span></span>
+<span id="cb7-410"><a href="#cb7-410" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> recaudo <span class="op">=</span> recaudoFraccion <span class="op">*</span> facturacion <span class="op">/</span> <span class="fl">1e6</span><span class="op">;</span></span>
+<span id="cb7-411"><a href="#cb7-411" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> diesel <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> consumo <span class="op">-</span> <span class="dv">192</span>) <span class="op">*</span> <span class="fl">0.35</span> <span class="op">*</span> <span class="dv">12000</span> <span class="op">*</span> <span class="dv">30</span> <span class="op">/</span> <span class="fl">1e6</span><span class="op">;</span></span>
+<span id="cb7-412"><a href="#cb7-412" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {consumo<span class="op">,</span> <span class="dt">litros</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> consumo <span class="op">-</span> <span class="dv">192</span>) <span class="op">*</span> <span class="fl">0.35</span><span class="op">,</span> recaudo<span class="op">,</span> diesel<span class="op">,</span> <span class="dt">fijos</span><span class="op">:</span> <span class="fl">3.9</span><span class="op">,</span> <span class="dt">balance</span><span class="op">:</span> recaudo <span class="op">-</span> diesel <span class="op">-</span> <span class="fl">3.9</span><span class="op">,</span></span>
+<span id="cb7-413"><a href="#cb7-413" aria-hidden="true" tabindex="-1"></a>    <span class="dt">aviso</span><span class="op">:</span> pideConsumo <span class="op">&amp;&amp;</span> <span class="op">!</span>medidores}<span class="op">;</span></span>
+<span id="cb7-414"><a href="#cb7-414" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="419" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 418;"><span id="cb8-419"><a href="#cb8-419" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb8-420"><a href="#cb8-420" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">190</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">150</span><span class="op">,</span></span>
+<span id="cb8-421"><a href="#cb8-421" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Millones de pesos al mes [MCOP/mes]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb8-422"><a href="#cb8-422" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"Recaudo"</span><span class="op">,</span> <span class="st">"Diésel"</span><span class="op">,</span> <span class="st">"Costos fijos"</span>]}<span class="op">,</span></span>
+<span id="cb8-423"><a href="#cb8-423" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb8-424"><a href="#cb8-424" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barX</span>([{<span class="dt">rubro</span><span class="op">:</span> <span class="st">"Recaudo"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> balanceM<span class="op">.</span><span class="at">recaudo</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"rubro"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span>})<span class="op">,</span></span>
+<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barX</span>([{<span class="dt">rubro</span><span class="op">:</span> <span class="st">"Diésel"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> balanceM<span class="op">.</span><span class="at">diesel</span>}<span class="op">,</span> {<span class="dt">rubro</span><span class="op">:</span> <span class="st">"Costos fijos"</span><span class="op">,</span> <span class="dt">valor</span><span class="op">:</span> balanceM<span class="op">.</span><span class="at">fijos</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"valor"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"rubro"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span>})<span class="op">,</span></span>
+<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="433" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 432;"><span id="cb9-433"><a href="#cb9-433" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span>balanceM<span class="op">.</span><span class="at">aviso</span> <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>COLORES<span class="op">.</span><span class="at">ambar</span><span class="sc">}</span><span class="vs">;padding-left:.6rem"&gt;Sin medidores no hay cómo cobrar por consumo: el cálculo sigue con la tarifa plana. El principio 2 necesita al principio 1.&lt;/p&gt;`</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="438" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 437;"><span id="cb10-438"><a href="#cb10-438" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb10-439"><a href="#cb10-439" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Consumo frente al límite de 192 kWh/día&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(balanceM<span class="op">.</span><span class="at">consumo</span>)<span class="sc">}</span><span class="vs"> kWh/día&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-440"><a href="#cb10-440" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Diésel&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(balanceM<span class="op">.</span><span class="at">litros</span>)<span class="sc">}</span><span class="vs"> litros al día&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-441"><a href="#cb10-441" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Recaudo&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">2</span>)(balanceM<span class="op">.</span><span class="at">recaudo</span>)<span class="sc">}</span><span class="vs"> MCOP/mes&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-442"><a href="#cb10-442" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Balance mensual&lt;b&gt;</span><span class="sc">${</span><span class="fu">conSigno</span>(<span class="dv">2</span>)(balanceM<span class="op">.</span><span class="at">balance</span>)<span class="sc">}</span><span class="vs"> MCOP/mes&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb10-443"><a href="#cb10-443" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Balance aritmético de una microrred solar con respaldo diésel, calculado en el navegador con la fórmula del texto. Verde: el recaudo. Gris: el costo del diésel y los costos fijos (operador local y reposición de la batería). Datos sintéticos con fines didácticos; el consumo de 180 kWh/día y el recaudo del 90 % con el reglamento propuesto son supuestos declarados.</p>
+</div>
+</div>
+<p>El segundo visor lee esas cuentas y llega a la decisión de la asamblea.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 4 a 6: la falla anunciada, las reglas y la conclusión</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-s603-balance">(la opción que eligió arriba)</span>. El balance de hoy es −9,77 MCOP al mes. Con medidores y la tarifa plana queda en −9,50, y con las sanciones graduales solas, en −9,05. La batería nueva lo deja en −9,77. Ningún cambio aislado lo mueve más de un 8 %, porque ninguno toca el término más grande, los 7,31 MCOP mensuales de diésel.</p>
+</div>
+<div class="paso">
+<p><strong>Marque lo que falta y prediga la falla.</strong> La tabla de principios anunciaba, para la congruencia ausente, que quien más toma paga igual, y con eso el consumo pasa del límite: 250 frente a 192 kWh/día. Para las sanciones sin escalones anunciaba usuarios expulsados al primer error: el 40 % no paga. El balance convierte las dos fallas en una cifra, −9,77 MCOP al mes, que hoy cubre el donante. Cuando se vaya, sin diésel faltarán 58 de los 250 kWh de cada día, el 23 %, y en dos años no se ha ahorrado nada para reponer la batería.</p>
+</div>
+<div class="paso">
+<p><strong>Marque lo que falta y prediga la falla: los principios dependen unos de otros.</strong> La tarifa por consumo, que responde al principio 2, es la regla que más pesa: baja el consumo a 180 kWh/día, por debajo del límite, y el diésel queda en cero. Pero sin medidores no se puede cobrar, y el simulador lo dice. Con medidores y tarifa por consumo el balance sube a −1,22 MCOP al mes, y solo con las sanciones graduales, que llevan el recaudo al 90 %, llega a +0,11. Los tres principios cierran la cuenta juntos.</p>
+</div>
+<div class="paso">
+<p><strong>Proponga la regla y su nivel.</strong> El reglamento es la columna verde de la tabla de la auditoría, y el nivel que debe adoptarlo es la asamblea, con el reconocimiento por escrito del prestador y de la alcaldía. Los principios 3 y 4 sostienen los dos supuestos de la cuenta: una tarifa votada por quienes la pagan se cumple más, y un operador local que informa cada mes a la asamblea deja ver a tiempo si el consumo vuelve a pasar de 192 kWh/día. Con la tarifa nueva, un hogar de 1,6 kWh/día pasa de 30 000 a <span class="math inline">10\,000 + 48 \times 650 = 41\,200</span> COP al mes, y una conexión grande que baje a 3,0 kWh/día paga 68 500. Quién debe pagar la batería es una pregunta de reparto, que retoma la <a href="../semana6/04-justicia-energetica.html">página 4</a>.</p>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «La batería nueva no cambia el balance de la microrred, que pierde 9,77 millones de pesos al mes mientras el donante paga el diésel. El recurso común son los 192 kWh diarios de los paneles y hoy se consumen 250, porque la tarifa plana cobra lo mismo a quien usa 1,6 y a quien usa 6,5 kWh al día. Faltan cuatro principios (congruencia, participación, sanciones graduales y resolución de conflictos) y la asamblea no decide nada. La asamblea debe aprobar, antes de que el donante se vaya, un reglamento con medidor por conexión, cargo fijo de 10 000 pesos más 650 por kWh y sanciones en tres escalones; con los tres cambios el balance queda en +0,11 millones al mes y sin diésel, si el consumo baja a 180 kWh diarios y el recaudo sube al 90 %. Señales para seguirlo cada mes: el consumo frente a 192 kWh/día, los litros de diésel y el porcentaje de recaudo.»</p>
 </div>
 </div>
 </section>
-<section id="el-arreglo-multinivel-de-un-parque-eólico-en-territorio-étnico" class="level3">
-<h3 class="anchored" data-anchor-id="el-arreglo-multinivel-de-un-parque-eólico-en-territorio-étnico">El arreglo multinivel de un parque eólico en territorio étnico</h3>
+<section id="el-arreglo-alrededor-de-los-parques-eólicos-de-la-guajira" class="level3">
+<h3 class="anchored" data-anchor-id="el-arreglo-alrededor-de-los-parques-eólicos-de-la-guajira">El arreglo alrededor de los parques eólicos de La Guajira</h3>
 <div class="ejemplo caja" data-nivel="avanzado">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Diagnosticar el arreglo alrededor de los parques de La Guajira</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Reglas en tres niveles y ninguna en el que hacía falta</span>
 </div>
-<p><strong>Planteamiento.</strong> Nombre los comunes del caso, proponga un arreglo policéntrico y diagnostique el arreglo observado con la lista.</p>
+<p><strong>Objetivo.</strong> Aplicar los seis pasos a un arreglo real con varios niveles de gobierno, con evidencia de normas e informes públicos, marcar cada calificación como dato o hipótesis y ubicar cada principio ausente en el nivel donde falta.</p>
+<p><strong>Planteamiento.</strong> Las subastas de 2019 asignaron obligaciones y contratos a una decena de parques eólicos en La Guajira, en territorio wayuu. Cada empresa adelantó sus consultas previas con las comunidades de su área de influencia, una por una. La Contraloría General (2021) documentó el resultado: consultas sin cerrar, comunidades que se retiraron de acuerdos ya protocolizados (cuatro de siete en uno de los parques), conflictos por la representatividad dentro de los clanes y entre ellos, y cambios de propietario en los que el nuevo dueño heredó incumplimientos. En Windpeshi, uno de esos parques, una monografía contratada por la UPME cuenta 33 bloqueos entre 2022 y mayo de 2023, y Enel Colombia suspendió la obra ese mes.</p>
+<p>Las reglas de reparto existen. Desde 2019, los parques de más de 10 MW transfieren el 1 % de sus ventas de energía, y el 60 % de esa suma va en partes iguales a las comunidades étnicas acreditadas del área de influencia (Ley 1955 de 2019, artículo 289). La Ley 2294 de 2023 sube el porcentaje de forma gradual en las zonas de mejor viento, hasta el 4 % para un parque con obligaciones previas como Windpeshi. El Decreto 1540 de 2024 organiza esos recursos en una Mesa de Planeación y Seguimiento por proyecto, con encargo fiduciario e interventoría, y permite que varias mesas se asocien para proyectos regionales.</p>
+<p>El Ministerio de Minas y Energía prepara las reglas para los parques que vienen y quiere saber qué le falta al arreglo institucional y en qué nivel.</p>
 </div>
+<p>El primer visor recorre los pasos 1 a 3. El diagrama de niveles muestra quién decide qué hoy y, después, las decisiones que nadie toma.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Del común al arreglo</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 1 a 3: los recursos comunes, los niveles y la evidencia</span>
 </div>
 <div class="paso">
-<p><strong>Nombre los comunes.</strong> Tres superpuestos: el territorio ancestral wayuu, gobernado por autoridades tradicionales; el corredor de evacuación (la línea Colectora y la subestación Cuestecitas), que comparten y congestionan varios parques; y la legitimidad del proceso de consulta, que cada consulta mal hecha drena para todas las empresas.</p>
+<p><strong>Nombre el recurso común, sus usuarios y su límite.</strong> Hay tres recursos comunes superpuestos.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Recurso común</th>
+<th>Usuarios</th>
+<th>Límite de apropiación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>El territorio ancestral wayuu</td>
+<td>las comunidades, gobernadas por sus autoridades tradicionales, y los proyectos que se instalan en él</td>
+<td>la superficie y los usos que cada comunidad acepta ceder</td>
+</tr>
+<tr class="even">
+<td>El corredor de evacuación</td>
+<td>los parques que comparten la subestación Cuestecitas y sus líneas</td>
+<td>la capacidad de las líneas, en MW</td>
+</tr>
+<tr class="odd">
+<td>La confianza en el proceso de consulta</td>
+<td>todas las empresas y el Estado</td>
+<td>lo que el territorio puede concertar por año sin que los acuerdos se incumplan</td>
+</tr>
+</tbody>
+</table>
+<p>La auditoría de esta página toma el primero y el tercero, que son los que gobierna la relación entre los proyectos y las comunidades. El tercer límite no tiene todavía una cifra: la <a href="../semana6/05-consulta-previa.html">página 5</a> lo mide con el calendario de las consultas.</p>
 </div>
 <div class="paso">
-<p><strong>Proponga los niveles.</strong> Un arreglo policéntrico tendría al menos cuatro: (i) <strong>comunitario</strong>, cada comunidad decide sobre su territorio con sus autoridades; (ii) <strong>territorial</strong>, una instancia supracomunitaria para lo que cruza comunidades, como rutas, líneas, calendario de consultas y reparto regional; (iii) <strong>sectorial</strong>, empresas y Estado coordinando cronogramas y estándares de consulta; (iv) <strong>nacional</strong>, el Ministerio de Minas y Energía, la ANLA, la Dirección de la Autoridad Nacional de Consulta Previa y la CREG reconociendo y financiando los niveles inferiores sin sustituirlos.</p>
+<p><a href="../diagramas/svg/s6-03-niveles-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../diagramas/svg/s6-03-niveles-1.svg" class="img-fluid" loading="lazy" alt="Cuatro bandas. Nacional: Ministerio del Interior, que certifica comunidades y dirige la consulta; ANLA, licencia; Ministerio de Energía, subastas y mesas. Sectorial: cada empresa, su calendario de consultas y sus acuerdos. Territorial, con borde rojo discontinuo: ninguna instancia decide en este nivel. Comunitario: autoridades de cada comunidad, su acuerdo de consulta; mesa de las transferencias, una por proyecto."></a></p>
+<p><strong>Liste los niveles de decisión.</strong> El diagrama tiene cuatro bandas, del nivel comunitario, abajo, al nacional, arriba. En el nivel comunitario, las autoridades de cada comunidad deciden su acuerdo de consulta, y hay una mesa de las transferencias por proyecto. En el sectorial, cada empresa lleva su calendario y sus acuerdos. En el nacional están el Ministerio del Interior, la ANLA y el Ministerio de Minas y Energía. El nivel territorial, con borde rojo, está vacío: ninguna instancia decide lo que abarca a varias comunidades y a varios proyectos.</p>
 </div>
 <div class="paso">
-<p><strong>Contraste con lo documentado.</strong> La Contraloría General (2021) documentó consultas previas sin cerrar, comunidades que se retiraron de acuerdos protocolizados, conflictos por la representatividad dentro de los clanes y entre ellos, y cambios de propietario que heredaron incumplimientos. La regla de reparto sí existe: desde 2019, los parques de más de 10 MW transfieren el 1 % de sus ventas, y el 60 % de esa suma va en partes iguales a las comunidades étnicas acreditadas del área de influencia (Ley 1955 de 2019, artículo 289); la Ley 2294 de 2023 eleva el porcentaje de forma gradual en las zonas de mejor viento, hasta el 4 % para un parque con obligaciones previas como Windpeshi. El Decreto 1540 de 2024 organiza esos recursos en una Mesa de Planeación y Seguimiento por proyecto, con encargo fiduciario e interventoría, y permite que varias mesas se asocien para proyectos regionales. Otras piezas, como la desigualdad de las compensaciones entre comunidades vecinas, siguen siendo hipótesis por verificar.</p>
+<p><a href="../diagramas/svg/s6-03-niveles-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../diagramas/svg/s6-03-niveles-2.svg" class="img-fluid" loading="lazy" alt="En la banda territorial aparecen cuatro cajas en ámbar: rutas y líneas compartidas, calendario de consultas, seguimiento de acuerdos y reparto regional."></a></p>
+<p><strong>Liste los niveles de decisión: lo que nadie decide.</strong> Las cuatro cajas en ámbar son decisiones que cruzan comunidades y proyectos: por dónde pasan las rutas y las líneas compartidas, en qué orden se hacen las consultas, quién sigue el cumplimiento de los acuerdos y cómo se reparte lo regional. Hoy cada una se resuelve por separado en cada negociación entre una empresa y una comunidad, o no se resuelve.</p>
+</div>
+<div class="paso">
+<p><strong>Recorra los ocho principios: la evidencia.</strong> La tabla reúne lo que se sabe de cada principio, con su fuente y su tipo. Las calificaciones se hacen enseguida, en el simulador.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Evidencia</th>
+<th>Fuente</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Límites claros</td>
+<td>Disputas sobre quién representa a cada comunidad; autoridad ancestral y autoridad registrada ante el Estado que no siempre coinciden; comunidades que se retiran de acuerdos</td>
+<td>Contraloría General (2021); SEI (2024)</td>
+<td>dato</td>
+</tr>
+<tr class="even">
+<td>2. Congruencia</td>
+<td>El 60 % de la transferencia va en partes iguales a las comunidades acreditadas, sin ponderar la afectación; las compensaciones de cada consulta se negocian por separado</td>
+<td>Ley 1955 de 2019; Decreto 1540 de 2024</td>
+<td>dato; que las compensaciones sean desiguales entre vecinos es hipótesis</td>
+</tr>
+<tr class="odd">
+<td>3. Participación</td>
+<td>La consulta y las mesas dan voz formal; los cronogramas los fijaron las subastas</td>
+<td>fechas de las subastas de 2019</td>
+<td>dato; su efecto sobre la consulta es hipótesis</td>
+</tr>
+<tr class="even">
+<td>4. Monitoreo</td>
+<td>El cumplimiento de los acuerdos de consulta lo sigue sobre todo la empresa</td>
+<td>se comprobaría con las actas de seguimiento</td>
+<td>hipótesis</td>
+</tr>
+<tr class="odd">
+<td>5. Sanciones graduales</td>
+<td>No se conoce un régimen pactado de respuestas escalonadas al incumplimiento de un acuerdo; del reclamo se pasa a la tutela o al bloqueo</td>
+<td>se comprobaría leyendo los acuerdos protocolizados</td>
+<td>hipótesis</td>
+</tr>
+<tr class="even">
+<td>6. Resolución de conflictos</td>
+<td>El sistema normativo wayuu, que aplica el palabrero, resuelve conflictos entre familias; entre empresa, Estado y comunidades no hay instancia local</td>
+<td>UNESCO (2010); Contraloría General (2021)</td>
+<td>dato</td>
+</tr>
+<tr class="odd">
+<td>7. Reconocimiento externo</td>
+<td>La Constitución y el Convenio 169 reconocen a las autoridades tradicionales; su peso en las decisiones territoriales es poco</td>
+<td>normas; el peso real es lectura de esta página</td>
+<td>dato e hipótesis</td>
+</tr>
+<tr class="even">
+<td>8. Anidamiento</td>
+<td>Consultas bilaterales, empresa por comunidad; mesas de las transferencias, una por proyecto, que la norma permite asociar</td>
+<td>Contraloría General (2021); Decreto 1540 de 2024</td>
+<td>dato</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<p>Antes de calificar, anote su respuesta.</p>
 <div id="pred-principio" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>Antes de calificar: ¿qué principio cree que organiza a los demás en el caso de La Guajira?</p>
+<p>¿Qué principio cree que organiza a los demás en el caso de La Guajira?</p>
 <div class="opcion">
 <p>Sanciones graduales: faltan escalones antes del bloqueo.</p>
 </div>
@@ -871,25 +1601,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Lista de verificación del arreglo observado</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Califique los ocho principios del arreglo</span>
 </div>
-<p>Califique cada principio para el arreglo alrededor de los parques de La Guajira según lo que ha leído. Cada respuesta muestra la lectura del curso y el tipo de evidencia que la respalda.</p>
+<p>Este es el paso 3 hecho por usted. Con la tabla de evidencia a la vista, califique cada principio como «cumple», «a medias» o «falta». Al marcar una calificación aparece la de esta página, con su justificación, el tipo de evidencia y el nivel de decisión donde se observa el problema. Las lecturas cuentan cuántos principios ha calificado, en cuántos coincide y en qué niveles quedan los que usted marcó como ausentes. Donde no coincida, revise si su calificación se apoya en un dato de la tabla o en una impresión.</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="239" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 238;"><span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>principiosV <span class="op">=</span> [</span>
-<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"1. Límites claros"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"El territorio y sus autoridades existen, pero quién representa a cada comunidad se disputó: la autoridad ancestral y la registrada ante el Estado no siempre coinciden, y hubo comunidades que se retiraron de acuerdos."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"documentado (Contraloría, 2021; SEI, 2024)"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"criterios de acreditación públicos y uniformes en el área"</span>}<span class="op">,</span></span>
-<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"2. Congruencia"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"La transferencia de las fuentes no convencionales es una regla legal de reparto, pero entrega el 60 % en partes iguales entre las comunidades acreditadas, sin ponderar la afectación, y las compensaciones de cada consulta se negocian por separado."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"documentado: Ley 1955 de 2019 y Decreto 1540 de 2024; la desigualdad entre compensaciones es hipótesis por verificar"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"ponderar el reparto por afectación y publicar las liquidaciones"</span>}<span class="op">,</span></span>
-<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"3. Participación"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"La consulta previa y las mesas de las transferencias dan voz formal, pero los cronogramas los fijaron las subastas, fuera del territorio."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"análisis del curso"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"cronogramas de subasta que incorporen los tiempos de consulta"</span>}<span class="op">,</span></span>
-<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"4. Monitoreo"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"no se cumple"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"El cumplimiento de los acuerdos de consulta lo sigue principalmente la parte interesada, sin veeduría independiente."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"hipótesis del análisis, por verificar"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"veeduría mixta financiada por una fiducia"</span>}<span class="op">,</span></span>
-<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"5. Sanciones graduales"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"no se cumple"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"No hay un régimen pactado de respuestas escalonadas ante el incumplimiento de un acuerdo, de cualquiera de las partes: del reclamo se pasa a la tutela o a la crisis. Los bloqueos no son sanciones en el sentido de Ostrom; aparecen cuando faltan esos escalones."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"análisis del curso"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"escalones pactados: aviso, mediación, compensación, suspensión parcial"</span>}<span class="op">,</span></span>
-<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"6. Resolución de conflictos"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"El sistema normativo wayuu, que aplica el palabrero, resuelve conflictos entre familias; los conflictos entre empresa, Estado y comunidades no tienen una instancia local y terminan en tutelas o bloqueos."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"documentado en parte (UNESCO, 2010; Contraloría, 2021)"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"instancia de mediación territorial con plazos cortos, articulada con el palabrero"</span>}<span class="op">,</span></span>
-<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"7. Reconocimiento externo"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"La Constitución y el Convenio 169 reconocen a las autoridades tradicionales, pero su papel en las decisiones territoriales es débil."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"análisis del curso"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"reconocer y financiar la instancia territorial sin sustituir a las autoridades"</span>}<span class="op">,</span></span>
-<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"8. Anidamiento"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"no se cumple"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"Las consultas fueron bilaterales, empresa por comunidad, y las mesas de las transferencias son una por proyecto: ningún nivel territorial articula la ola."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"documentado en parte (Contraloría, 2021; Decreto 1540 de 2024)"</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"asociar las mesas de las transferencias en un nivel territorial con reglas de articulación"</span>}<span class="op">,</span></span>
-<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="557" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 556;"><span id="cb11-557"><a href="#cb11-557" aria-hidden="true" tabindex="-1"></a>principiosV <span class="op">=</span> [</span>
+<span id="cb11-558"><a href="#cb11-558" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"1. Límites claros"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"comunitario"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"El territorio y sus autoridades existen, pero quién representa a cada comunidad se disputó y hubo comunidades que se retiraron de acuerdos."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"dato (Contraloría, 2021; SEI, 2024)"</span>}<span class="op">,</span></span>
+<span id="cb11-559"><a href="#cb11-559" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"2. Congruencia"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"comunitario"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"Hay una regla legal de reparto, pero entrega el 60 % en partes iguales entre las comunidades acreditadas, sin ponderar la afectación."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"dato (Ley 1955 de 2019; Decreto 1540 de 2024); la desigualdad entre compensaciones es hipótesis"</span>}<span class="op">,</span></span>
+<span id="cb11-560"><a href="#cb11-560" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"3. Participación"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"sectorial"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"La consulta previa y las mesas de las transferencias dan voz formal, pero los cronogramas los fijaron las subastas, fuera del territorio."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"dato e hipótesis"</span>}<span class="op">,</span></span>
+<span id="cb11-561"><a href="#cb11-561" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"4. Monitoreo"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"falta"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"territorial"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"El cumplimiento de los acuerdos de consulta lo sigue sobre todo la parte interesada, sin una veeduría que responda ante las comunidades."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"hipótesis, por comprobar con las actas de seguimiento"</span>}<span class="op">,</span></span>
+<span id="cb11-562"><a href="#cb11-562" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"5. Sanciones graduales"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"falta"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"territorial"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"No se conoce un régimen pactado de respuestas escalonadas ante el incumplimiento de un acuerdo: del reclamo se pasa a la tutela o al bloqueo. El bloqueo aparece cuando faltan esos escalones."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"hipótesis, por comprobar con los acuerdos protocolizados"</span>}<span class="op">,</span></span>
+<span id="cb11-563"><a href="#cb11-563" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"6. Resolución de conflictos"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"territorial"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"El palabrero resuelve conflictos entre familias wayuu; los conflictos entre empresa, Estado y comunidades no tienen una instancia local."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"dato (UNESCO, 2010; Contraloría, 2021)"</span>}<span class="op">,</span></span>
+<span id="cb11-564"><a href="#cb11-564" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"7. Reconocimiento externo"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"nacional"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"La Constitución y el Convenio 169 reconocen a las autoridades tradicionales, pero su peso en las decisiones territoriales es poco."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"dato (las normas) e hipótesis (su peso real)"</span>}<span class="op">,</span></span>
+<span id="cb11-565"><a href="#cb11-565" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">n</span><span class="op">:</span> <span class="st">"8. Anidamiento"</span><span class="op">,</span> <span class="dt">curso</span><span class="op">:</span> <span class="st">"falta"</span><span class="op">,</span> <span class="dt">nivel</span><span class="op">:</span> <span class="st">"territorial"</span><span class="op">,</span> <span class="dt">porque</span><span class="op">:</span> <span class="st">"Las consultas fueron bilaterales, empresa por comunidad, y las mesas de las transferencias son una por proyecto: ninguna instancia articula lo que cruza comunidades y proyectos."</span><span class="op">,</span> <span class="dt">evidencia</span><span class="op">:</span> <span class="st">"dato (Contraloría, 2021; Decreto 1540 de 2024)"</span>}<span class="op">,</span></span>
+<span id="cb11-566"><a href="#cb11-566" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="ojs-cell-2" data-nodetype="declaration">
+<div id="ojs-cell-11" data-nodetype="declaration">
 
 </div>
 </div>
@@ -897,10 +1627,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="253" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 252;"><span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a>viewof calificacionV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">form</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(principiosV<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> [p<span class="op">.</span><span class="at">n</span><span class="op">,</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"se cumple"</span><span class="op">,</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="st">"no se cumple"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> p<span class="op">.</span><span class="at">n</span>})])))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="571" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 570;"><span id="cb12-571"><a href="#cb12-571" aria-hidden="true" tabindex="-1"></a>viewof calificacionV <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">form</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">fromEntries</span>(principiosV<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> [p<span class="op">.</span><span class="at">n</span><span class="op">,</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="st">"cumple"</span><span class="op">,</span> <span class="st">"a medias"</span><span class="op">,</span> <span class="st">"falta"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> p<span class="op">.</span><span class="at">n</span>})])))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="ojs-cell-3" data-nodetype="declaration">
+<div id="ojs-cell-12" data-nodetype="declaration">
 
 </div>
 </div>
@@ -908,16 +1638,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="258" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 257;"><span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span>principiosV<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> {</span>
-<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> calificacionV[p<span class="op">.</span><span class="at">n</span>]<span class="op">;</span></span>
-<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>r) <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;p style="color:#777"&gt;</span><span class="sc">${</span>p<span class="op">.</span><span class="at">n</span><span class="sc">}</span><span class="vs">: sin calificar.&lt;/p&gt;`</span><span class="op">;</span></span>
-<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> coincide <span class="op">=</span> r <span class="op">===</span> p<span class="op">.</span><span class="at">curso</span><span class="op">;</span></span>
-<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>coincide <span class="op">?</span> COLORES<span class="op">.</span><span class="at">verde</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="sc">}</span><span class="vs">;padding-left:.6rem"&gt;</span></span>
-<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;b&gt;</span><span class="sc">${</span>p<span class="op">.</span><span class="at">n</span><span class="sc">}</span><span class="vs">&lt;/b&gt;: usted dijo «</span><span class="sc">${</span>r<span class="sc">}</span><span class="vs">»; la lectura del curso es «</span><span class="sc">${</span>p<span class="op">.</span><span class="at">curso</span><span class="sc">}</span><span class="vs">». </span><span class="sc">${</span>p<span class="op">.</span><span class="at">porque</span><span class="sc">}</span><span class="vs"> &lt;i&gt;Evidencia: </span><span class="sc">${</span>p<span class="op">.</span><span class="at">evidencia</span><span class="sc">}</span><span class="vs">.&lt;/i&gt;&lt;/p&gt;`</span><span class="op">;</span></span>
-<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>})<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="576" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 575;"><span id="cb13-576"><a href="#cb13-576" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span>principiosV<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> {</span>
+<span id="cb13-577"><a href="#cb13-577" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r <span class="op">=</span> calificacionV[p<span class="op">.</span><span class="at">n</span>]<span class="op">;</span></span>
+<span id="cb13-578"><a href="#cb13-578" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>r) <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;p style="color:#5F5F5F"&gt;</span><span class="sc">${</span>p<span class="op">.</span><span class="at">n</span><span class="sc">}</span><span class="vs">: sin calificar.&lt;/p&gt;`</span><span class="op">;</span></span>
+<span id="cb13-579"><a href="#cb13-579" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> coincide <span class="op">=</span> r <span class="op">===</span> p<span class="op">.</span><span class="at">curso</span><span class="op">;</span></span>
+<span id="cb13-580"><a href="#cb13-580" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>coincide <span class="op">?</span> COLORES<span class="op">.</span><span class="at">verde</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="sc">}</span><span class="vs">;padding-left:.6rem"&gt;</span></span>
+<span id="cb13-581"><a href="#cb13-581" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;b&gt;</span><span class="sc">${</span>p<span class="op">.</span><span class="at">n</span><span class="sc">}</span><span class="vs">&lt;/b&gt;: usted dijo «</span><span class="sc">${</span>r<span class="sc">}</span><span class="vs">»; esta página dice «</span><span class="sc">${</span>p<span class="op">.</span><span class="at">curso</span><span class="sc">}</span><span class="vs">», en el nivel </span><span class="sc">${</span>p<span class="op">.</span><span class="at">nivel</span><span class="sc">}</span><span class="vs">. </span><span class="sc">${</span>p<span class="op">.</span><span class="at">porque</span><span class="sc">}</span><span class="vs"> &lt;i&gt;Evidencia: </span><span class="sc">${</span>p<span class="op">.</span><span class="at">evidencia</span><span class="sc">}</span><span class="vs">.&lt;/i&gt;&lt;/p&gt;`</span><span class="op">;</span></span>
+<span id="cb13-582"><a href="#cb13-582" aria-hidden="true" tabindex="-1"></a>})<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="ojs-cell-4" data-nodetype="expression">
+<div id="ojs-cell-13" data-nodetype="expression">
 
 </div>
 </div>
@@ -925,69 +1655,228 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="269" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 268;"><span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> calificados <span class="op">=</span> principiosV<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> calificacionV[p<span class="op">.</span><span class="at">n</span>])<span class="op">;</span></span>
-<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> coincidencias <span class="op">=</span> calificados<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> calificacionV[p<span class="op">.</span><span class="at">n</span>] <span class="op">===</span> p<span class="op">.</span><span class="at">curso</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
-<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> rotos <span class="op">=</span> principiosV<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> calificacionV[p<span class="op">.</span><span class="at">n</span>] <span class="op">===</span> <span class="st">"no se cumple"</span>)<span class="op">;</span></span>
-<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div&gt;Principios calificados&lt;b&gt;</span><span class="sc">${</span>calificados<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> de 8&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div&gt;Coincidencias con la lectura del curso&lt;b&gt;</span><span class="sc">${</span>coincidencias<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div&gt;Recomendaciones para los principios que usted marcó como rotos&lt;b&gt;</span><span class="sc">${</span>rotos<span class="op">.</span><span class="at">length</span> <span class="op">?</span> rotos<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">recomendacion</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">"; "</span>) <span class="op">:</span> <span class="st">"ninguna todavía"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="587" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 586;"><span id="cb14-587"><a href="#cb14-587" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb14-588"><a href="#cb14-588" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> calificados <span class="op">=</span> principiosV<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> calificacionV[p<span class="op">.</span><span class="at">n</span>])<span class="op">;</span></span>
+<span id="cb14-589"><a href="#cb14-589" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> coincidencias <span class="op">=</span> calificados<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> calificacionV[p<span class="op">.</span><span class="at">n</span>] <span class="op">===</span> p<span class="op">.</span><span class="at">curso</span>)<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb14-590"><a href="#cb14-590" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ausentes <span class="op">=</span> principiosV<span class="op">.</span><span class="fu">filter</span>((p) <span class="kw">=&gt;</span> calificacionV[p<span class="op">.</span><span class="at">n</span>] <span class="op">===</span> <span class="st">"falta"</span>)<span class="op">;</span></span>
+<span id="cb14-591"><a href="#cb14-591" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> niveles <span class="op">=</span> [<span class="op">...</span><span class="kw">new</span> <span class="bu">Set</span>(ausentes<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">nivel</span>))]<span class="op">;</span></span>
+<span id="cb14-592"><a href="#cb14-592" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb14-593"><a href="#cb14-593" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div&gt;Principios calificados&lt;b&gt;</span><span class="sc">${</span>calificados<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> de 8&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-594"><a href="#cb14-594" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div&gt;Coincidencias con esta página&lt;b&gt;</span><span class="sc">${</span>coincidencias<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-595"><a href="#cb14-595" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div&gt;Principios que usted marcó como ausentes&lt;b&gt;</span><span class="sc">${</span>ausentes<span class="op">.</span><span class="at">length</span> <span class="op">?</span> ausentes<span class="op">.</span><span class="fu">map</span>((p) <span class="kw">=&gt;</span> p<span class="op">.</span><span class="at">n</span><span class="op">.</span><span class="fu">split</span>(<span class="st">"."</span>)[<span class="dv">0</span>])<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>) <span class="op">:</span> <span class="st">"ninguno todavía"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-596"><a href="#cb14-596" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div&gt;Niveles donde quedan esos ausentes&lt;b&gt;</span><span class="sc">${</span>niveles<span class="op">.</span><span class="at">length</span> <span class="op">?</span> niveles<span class="op">.</span><span class="fu">join</span>(<span class="st">"; "</span>) <span class="op">:</span> <span class="st">"ninguno todavía"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb14-597"><a href="#cb14-597" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb14-598"><a href="#cb14-598" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="ojs-cell-5" data-nodetype="expression">
+<div id="ojs-cell-14" data-nodetype="expression">
 
 </div>
 </div>
 </div>
 <div class="nota-datos">
-<p>Lectura cualitativa del curso con base en Ostrom (1990), la Contraloría General (2021), el SEI (2024), la UNESCO (2010), la Ley 1955 de 2019, el Decreto 1540 de 2024 y las notas de la semana 6. Donde dice «por verificar», la afirmación es una hipótesis del análisis sin fuente primaria confirmada.</p>
+<p>Tabla de calificación cualitativa; no hay un modelo numérico detrás. Las calificaciones de la página se apoyan en Ostrom (1990), la Contraloría General (2021), el SEI (2024), la UNESCO (2010), la Ley 1955 de 2019 y el Decreto 1540 de 2024. Donde dice «hipótesis», la calificación espera una fuente primaria.</p>
 </div>
 </div>
+<p>El segundo visor ubica los principios en el diagrama de niveles y llega a la recomendación.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el diagnóstico</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 4 a 6: la falla anunciada, la instancia que falta y la conclusión</span>
 </div>
 <div class="paso">
-<p><strong>Cuente los principios rotos.</strong> En la lectura del curso, tres principios no se cumplen y cinco se cumplen a medias. Ninguno se cumple del todo, y dos de los «a medias» (congruencia y resolución de conflictos) tienen reglas o instituciones que ya existen y podrían mejorarse.</p>
+<p><a href="../diagramas/svg/s6-03-niveles-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="../diagramas/svg/s6-03-niveles-3.svg" class="img-fluid" loading="lazy" alt="El diagrama de niveles con rótulos: nacional, 7 reconocimiento a medias; sectorial, 3 participación a medias; territorial, en rojo, 8 anidamiento, 4 monitoreo y 5 sanciones faltan, y 6 conflictos a medias; comunitario, 1 límites y 2 congruencia a medias."></a></p>
+<p><strong>Marque lo que falta y prediga la falla.</strong> En la calificación de esta página faltan tres principios (4, 5 y 8) y cinco quedan a medias. El diagrama pone cada uno en el nivel donde se observa, y los tres que faltan caen en el nivel territorial, el que está vacío. La tabla de la definición anunciaba para ellos incumplimientos que nadie ve, saltos del reclamo a la sanción máxima y decisiones que nadie toma. Coincide con lo documentado: acuerdos protocolizados de los que las comunidades se retiran, y 33 bloqueos en Windpeshi.</p>
 </div>
 <div class="paso">
-<p><strong>Ubique el más grave.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-principio">(la opción que eligió arriba)</span>. En la lectura del curso, el anidamiento organiza a los demás: sin un nivel territorial, la congruencia, el monitoreo y la resolución de conflictos quedan en manos de negociaciones bilaterales, y cada empresa compite con las demás por la misma confianza. Es una lectura que se argumenta, no un dato: poner la congruencia en el centro, porque el reparto legal no pondera la afectación, también es defendible si se sostiene con evidencia.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-principio">(la opción que eligió arriba)</span>. En esta página, el anidamiento organiza a los demás: sin un nivel territorial, el monitoreo, las sanciones y la resolución de conflictos quedan en manos de negociaciones entre una empresa y una comunidad, y cada empresa gasta la misma confianza que necesitan las otras. Es una lectura que se argumenta. Poner la congruencia en el centro, porque el reparto legal no pondera la afectación, también se sostiene si se apoya en la evidencia.</p>
 </div>
 <div class="paso">
-<p><strong>Formule la recomendación.</strong> El diagnóstico apunta a la arquitectura institucional, más que al dinero o a la buena voluntad. «Asociar las mesas de las transferencias en una instancia territorial de articulación, reconocida por el Estado y sin sustituir a las autoridades tradicionales, con un reparto que pondere la afectación, liquidaciones públicas y veeduría mixta.» Es una recomendación accionable para la sección 5 de un informe, y construye sobre la regla que ya existe.</p>
+<p><strong>Proponga la regla y su nivel.</strong> La instancia que falta se arma con una pieza que ya existe.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Regla o instancia propuesta</th>
+<th>Nivel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>8. Anidamiento</td>
+<td>asociar las mesas de las transferencias, como permite el Decreto 1540 de 2024, en una instancia que decida rutas compartidas y calendario de consultas</td>
+<td>territorial</td>
+</tr>
+<tr class="even">
+<td>4. Monitoreo</td>
+<td>veeduría mixta de los acuerdos, que responda ante las comunidades</td>
+<td>territorial</td>
+</tr>
+<tr class="odd">
+<td>5 y 6. Sanciones y conflictos</td>
+<td>escalones pactados (aviso, mediación, compensación, suspensión parcial) y una instancia de mediación con plazos cortos, articulada con el palabrero</td>
+<td>territorial</td>
+</tr>
+<tr class="even">
+<td>2. Congruencia</td>
+<td>reparto que pondere la afectación y liquidaciones públicas</td>
+<td>nacional, porque el reparto lo fija la ley</td>
+</tr>
+<tr class="odd">
+<td>1 y 7. Límites y reconocimiento</td>
+<td>criterios de acreditación públicos y uniformes; reconocer y financiar la instancia territorial sin sustituir a las autoridades tradicionales</td>
+<td>nacional</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «Al arreglo alrededor de los parques de La Guajira le faltan tres principios, anidamiento, monitoreo y sanciones graduales, y los tres faltan en el mismo lugar: el nivel territorial, donde hoy ninguna instancia decide las rutas compartidas, el calendario de las consultas ni el seguimiento de los acuerdos. Las reglas de reparto existen y están a medias, porque entregan el 60 % de la transferencia en partes iguales y proyecto por proyecto. El Ministerio no necesita crear una institución desde cero: el Decreto 1540 de 2024 ya permite asociar las mesas de las transferencias. La recomendación es convertir esa asociación en una instancia territorial reconocida por el Estado, con veeduría mixta, escalones pactados ante el incumplimiento y un reparto que pondere la afectación. Señales para seguirla: el número de acuerdos protocolizados que se cumplen y el número de comunidades que se retiran de un acuerdo. Dos de las tres ausencias, monitoreo y sanciones, son hipótesis hasta leer las actas y los acuerdos.»</p>
 </div>
 </div>
+</section>
+<section id="lo-que-queda-en-la-ficha-de-windpeshi" class="level3">
+<h3 class="anchored" data-anchor-id="lo-que-queda-en-la-ficha-de-windpeshi">Lo que queda en la ficha de Windpeshi</h3>
+<p>La primera pasada de la <a href="../semana6/01-marco-multicapa.html">página 1</a> dejó en la capa de gobernanza una sola variable, «consultas separadas, sin reglas comunes», con una flecha hacia el agravio. Esta página la reemplaza por un diagnóstico con ocho filas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principio</th>
+<th>Estado</th>
+<th>Nivel donde se observa</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Límites claros</td>
+<td>a medias</td>
+<td>comunitario</td>
+<td>dato</td>
+</tr>
+<tr class="even">
+<td>2. Congruencia</td>
+<td>a medias</td>
+<td>comunitario; la regla la fija la nación</td>
+<td>dato</td>
+</tr>
+<tr class="odd">
+<td>3. Participación</td>
+<td>a medias</td>
+<td>sectorial</td>
+<td>dato e hipótesis</td>
+</tr>
+<tr class="even">
+<td>4. Monitoreo</td>
+<td>falta</td>
+<td>territorial</td>
+<td>hipótesis</td>
+</tr>
+<tr class="odd">
+<td>5. Sanciones graduales</td>
+<td>falta</td>
+<td>territorial</td>
+<td>hipótesis</td>
+</tr>
+<tr class="even">
+<td>6. Resolución de conflictos</td>
+<td>a medias</td>
+<td>territorial</td>
+<td>dato</td>
+</tr>
+<tr class="odd">
+<td>7. Reconocimiento externo</td>
+<td>a medias</td>
+<td>nacional</td>
+<td>dato e hipótesis</td>
+</tr>
+<tr class="even">
+<td>8. Anidamiento</td>
+<td>falta</td>
+<td>territorial</td>
+<td>dato</td>
+</tr>
+</tbody>
+</table>
+<p>La variable de la página 1 corresponde al principio 8, y ahora tiene nombre, nivel y una regla vigente sobre la que se puede construir. La evidencia es del conjunto de parques de La Guajira; para Windpeshi en particular hay que leer sus acuerdos y sus actas. Quedan dos piezas para las páginas siguientes: quién gana y quién paga con el reparto en partes iguales, que mide la <a href="../semana6/04-justicia-energetica.html">página 4</a>, y cuántas consultas caben en el territorio por año, que calcula la <a href="../semana6/05-consulta-previa.html">página 5</a>.</p>
 </section>
 </section>
 <section id="errores-comunes" class="level2">
 <h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer a Ostrom como «lo comunitario siempre funciona»</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Calificar sin evidencia</span>
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>«Dejemos que la comunidad decida y todo se resolverá.»</p>
+<p>«El monitoreo es débil y falta participación.» Son dos adjetivos. Nadie puede comprobarlos ni sabe qué cambiar.</p>
 </div>
 <div class="bien">
-<p>Lo comunitario funciona cuando los principios se cumplen y fracasa cuando no. Suponer una comunidad homogénea y sin conflictos internos es tan pobre como ignorarla.</p>
+<p>«Monitoreo, a medias: el técnico lo nombra y lo paga el donante, visita cada tres meses y no informa a la asamblea.» La calificación sale de la pregunta de auditoría y de un documento que otro puede leer.</p>
 </div>
 </div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Diagnosticar sin nombrar el común</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Auditar sin nombrar el recurso común</span>
 </div>
-<p>Los principios aplican a recursos compartidos concretos. Sin nombrar el común, sus usuarios y su límite, el análisis termina en recomendaciones de «participación» y «diálogo» sin objeto, el relleno clásico de un análisis de gobernanza débil.</p>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Recomendamos fortalecer la participación y el diálogo en la zona.» Sin recurso, usuarios ni límite, la recomendación no tiene objeto.</p>
+</div>
+<div class="bien">
+<p>«El recurso son los 192 kWh diarios de los paneles, los usuarios son 95 conexiones y hoy se consumen 250.» Con el límite escrito, cada principio tiene algo que gobernar.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Reponer el equipo y dejar las reglas</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>La asamblea acepta la batería de mayor capacidad y no cambia nada más. En el simulador de la microrred, deje los tres controles como están: el balance sigue en −9,77 MCOP al mes.</p>
+</div>
+<div class="bien">
+<p>La asamblea recorre los ocho principios antes de aceptar equipos. La batería sirve cuando el consumo ya está por debajo del límite y hay con qué reponerla.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Leer a Ostrom como «lo comunitario siempre funciona»</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Dejemos que la comunidad decida y todo se resolverá.» Supone una comunidad homogénea y sin conflictos internos.</p>
+</div>
+<div class="bien">
+<p>Lo comunitario funciona cuando los principios se cumplen y fracasa cuando faltan. En La Guajira, la representación de cada comunidad se disputa: el principio 1 está a medias.</p>
+</div>
+</div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Confundir policéntrico con fragmentado</span>
 </div>
-<p>Muchos centros de decisión sin reglas de articulación no son policentrismo: son desorden. El principio 8 exige decir qué decide cada nivel y cómo se conectan, no multiplicar mesas.</p>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«Hay veinte mesas de diálogo: la gobernanza es policéntrica.» Muchos centros sin reglas que los conecten son el nivel territorial vacío del ejemplo.</p>
+</div>
+<div class="bien">
+<p>El principio 8 pide una tabla: qué decide cada nivel y con qué regla se conecta con los demás. Asociar las mesas en una instancia con competencias definidas es anidamiento.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -996,54 +1885,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>En un embalse multipropósito (riego, acueducto y generación), ¿cuál es el límite de apropiación?</p>
+<p>En un embalse que sirve para riego, acueducto y generación, ¿cuál es el límite de apropiación?</p>
 <div class="opcion">
 <p>El volumen útil del embalse, que fija cuánto pueden usar todos.</p>
-<p><span class="porque">El volumen útil es un stock: acota lo que se puede extraer, pero el límite de apropiación es un flujo por periodo. Revise el error de stock y flujo de la semana 4.</span></p>
+<p><span class="porque">El volumen útil es un stock. Revise la definición: el límite se mide por unidad de tiempo.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>El volumen extraíble por temporada sin bajar de las cotas mínimas.</p>
-<p><span class="porque">Correcto: es un flujo, acotado por el stock y por el caudal ambiental aguas abajo.</span></p>
+<p>El volumen que se puede extraer por temporada sin bajar de las cotas mínimas.</p>
+<p><span class="porque">Es un flujo, <span class="math inline">\sum a_i \le g</span>, acotado por lo que entra al embalse y por el caudal que debe seguir aguas abajo.</span></p>
 </div>
 <div class="opcion">
 <p>La capacidad instalada de la central, que fija cuánta agua se turbina.</p>
-<p><span class="porque">Esa limita solo a uno de los usuarios. Busque el recurso que comparten todos.</span></p>
+<p><span class="porque">Esa cifra limita a uno solo de los usuarios. Busque el recurso que comparten los tres.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>En una microrred, se corta el servicio al primer atraso en el pago. ¿Qué principio se viola?</p>
+<p>Un informe dice: «en el proyecto, el monitoreo de los acuerdos es deficiente». ¿Qué le falta para ser una calificación de auditoría?</p>
+<div class="opcion">
+<p>Un adjetivo más preciso, como «muy deficiente» o «inexistente».</p>
+<p><span class="porque">Sigue siendo una impresión. Revise qué columnas tiene la tabla de los ocho principios.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Decir quién nombra y paga a quien vigila, y a quién le entrega sus informes.</p>
+<p><span class="porque">Esa es la evidencia que responde la pregunta del principio 4, y con ella otro lector puede comprobar la calificación.</span></p>
+</div>
+<div class="opcion">
+<p>Una encuesta de percepción entre los habitantes de la zona.</p>
+<p><span class="porque">La percepción ayuda, pero la pregunta del principio es ante quién responde el vigilante, y eso está en un contrato.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En la microrred del ejemplo, la asamblea instala medidores en las 95 conexiones y conserva la tarifa plana. ¿Qué pasa con el diésel?</p>
+<div class="opcion">
+<p>Baja a cero, porque ahora se sabe cuánto consume cada conexión.</p>
+<p><span class="porque">Saber el consumo no lo cambia. Pruebe esa combinación en el simulador y lea los litros.</span></p>
+</div>
+<div class="opcion" data-correcta="si">
+<p>Sigue en 20,3 litros al día: el medidor da el dato y la tarifa no lo usa.</p>
+<p><span class="porque">El principio 1 es condición del principio 2, y por sí solo deja el consumo en 250 kWh/día.</span></p>
+</div>
+<div class="opcion">
+<p>Sube, porque 15 conexiones nuevas entran a la lista.</p>
+<p><span class="porque">Esas conexiones ya consumían. Lo que cambia con el registro es que empiezan a pagar.</span></p>
+</div>
+</div>
+<div class="quiz caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Compruebe</span>
+</div>
+<p>En una microrred se corta el servicio al primer atraso en el pago. ¿Qué principio falta?</p>
 <div class="opcion">
 <p>Límites claros: no se sabe quién es usuario.</p>
-<p><span class="porque">Los usuarios pueden estar bien definidos. Revise la forma del castigo.</span></p>
+<p><span class="porque">Los usuarios pueden estar bien definidos. Mire la forma de la respuesta al atraso.</span></p>
 </div>
 <div class="opcion">
 <p>Monitoreo: nadie vigila el consumo.</p>
-<p><span class="porque">Alguien detectó el atraso, así que hay vigilancia. El problema es la respuesta.</span></p>
+<p><span class="porque">Alguien detectó el atraso, así que hay vigilancia. El problema está en lo que sigue.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Sanciones graduales: el castigo no escala.</p>
-<p><span class="porque">Correcto.</span></p>
-</div>
-</div>
-<div class="quiz caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Compruebe</span>
-</div>
-<p>Los acuerdos de un proyecto con la comunidad los vigila solo la empresa. ¿Qué principio falta?</p>
-<div class="opcion" data-correcta="si">
-<p>Monitoreo por vigilantes que rinden cuentas a los usuarios.</p>
-<p><span class="porque">Correcto.</span></p>
-</div>
-<div class="opcion">
-<p>Participación de los usuarios en el diseño de las reglas del acuerdo.</p>
-<p><span class="porque">La comunidad pudo participar en el acuerdo; lo que falta es quién vigila su cumplimiento.</span></p>
-</div>
-<div class="opcion">
-<p>Reconocimiento externo de la organización de la comunidad.</p>
-<p><span class="porque">El acuerdo existe y la comunidad lo firmó; el hueco está en la vigilancia.</span></p>
+<p>Sanciones graduales: no hay escalones antes de la sanción máxima.</p>
+<p><span class="porque">Y la falla que anuncia es la del ejemplo: usuarios expulsados al primer error, que dejan de pagar o se reconectan sin registro.</span></p>
 </div>
 </div>
 <div class="quiz caja">
@@ -1052,41 +1959,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Una región tiene veinte mesas de diálogo entre empresas y comunidades, sin reglas que las conecten. ¿Es gobernanza policéntrica?</p>
 <div class="opcion">
-<p>Sí, porque hay muchos centros de decisión semiautónomos.</p>
-<p><span class="porque">Muchos centros sin articulación son fragmentación. Revise el tercer error común.</span></p>
+<p>Sí, porque hay muchos centros de decisión con autonomía.</p>
+<p><span class="porque">Falta la otra mitad de la definición. Revise el último error común.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>No: faltan las reglas que articulan los niveles entre sí.</p>
-<p><span class="porque">Correcto.</span></p>
+<p>Todavía no: faltan las reglas que articulan los niveles entre sí.</p>
+<p><span class="porque">El principio 8 pide decir qué decide cada nivel y cómo se conecta con los demás.</span></p>
 </div>
 <div class="opcion">
-<p>No, porque la policentricidad exige una autoridad central.</p>
-<p><span class="porque">Al contrario: la policentricidad prescinde del centro único, pero exige reglas de articulación.</span></p>
+<p>No, porque la gobernanza policéntrica exige una autoridad central fuerte.</p>
+<p><span class="porque">Es al revés: prescinde del centro único y exige reglas de articulación.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>La transferencia de las fuentes no convencionales reparte el 60 % en partes iguales entre las comunidades acreditadas. ¿Qué principio cumple solo a medias?</p>
+<p>La transferencia de los parques eólicos reparte el 60 % en partes iguales entre las comunidades acreditadas. ¿Qué principio queda a medias?</p>
 <div class="opcion">
 <p>Límites claros, porque la ley no dice qué parques deben pagar.</p>
-<p><span class="porque">La ley fija quién paga: plantas de fuentes no convencionales de más de 10 MW.</span></p>
+<p><span class="porque">La ley lo dice: los de fuentes no convencionales de más de 10 MW.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Congruencia: el reparto no se ajusta a la afectación de cada una.</p>
-<p><span class="porque">Correcto: hay regla, pero no es proporcional a lo que cada comunidad aporta o soporta.</span></p>
+<p>Congruencia: el reparto no se ajusta a lo que cada comunidad soporta.</p>
+<p><span class="porque">Hay regla, y por eso no es «falta»; es «a medias» porque no guarda proporción con la afectación.</span></p>
 </div>
 <div class="opcion">
 <p>Monitoreo, porque nadie audita los proyectos que se financian.</p>
-<p><span class="porque">El Decreto 1540 de 2024 exige interventoría y encargo fiduciario.</span></p>
+<p><span class="porque">El Decreto 1540 de 2024 exige interventoría y encargo fiduciario para esos recursos.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
 <h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
-<section id="ejercicio-1-nombrar-comunes-del-sector" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-1-nombrar-comunes-del-sector">Ejercicio 1 ●○○ · Nombrar comunes del sector</h4>
-<p>Nombre el común, los usuarios y el límite de apropiación en: (i) el embalse multipropósito; (ii) la capacidad de la red de distribución para autogeneradores; (iii) el viento de un corredor con varios parques; (iv) la legitimidad de la consulta previa.</p>
+<section id="ejercicio-1-nombrar-recursos-comunes-del-sector" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-nombrar-recursos-comunes-del-sector">Ejercicio 1 ●○○ · Nombrar recursos comunes del sector</h4>
+<p>Aplique el paso 1 a cuatro casos: diga el recurso común, los usuarios y el límite de apropiación de (i) un embalse que sirve para riego, acueducto y generación; (ii) la capacidad de un transformador de distribución para los hogares con paneles; (iii) el viento de un corredor con varios parques; (iv) la confianza en la consulta previa.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1100,18 +2007,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="i">
-<li><p>El agua embalsada, que es un stock; usuarios de riego, acueducto y generación; el límite es un flujo: el volumen que se puede extraer por temporada sin bajar de las cotas mínimas ni del caudal ambiental aguas abajo. El volumen útil es el stock que acota ese flujo.</p></li>
-<li><p>La capacidad térmica y de tensión del circuito; los hogares y empresas que autogeneran; límite: la penetración técnica que admite el circuito.</p></li>
-<li><p>El recurso eólico aguas abajo; los parques vecinos; límite: la pérdida por efecto estela de un parque sobre otro.</p></li>
-<li><p>La disposición social a creer en el mecanismo; todas las empresas y el Estado; se agota con cada proceso hecho de mala fe.</p></li>
+<li><p>El agua embalsada, que es un stock. Usuarios: regantes, acueducto y generador. Límite: un flujo, el volumen que se puede extraer por temporada sin bajar de las cotas mínimas ni del caudal que debe seguir aguas abajo.</p></li>
+<li><p>La capacidad del transformador. Usuarios: los hogares que entregan energía a la red. Límite: la potencia que la regla deja conectar; en el barrio de la <a href="../semana6/01-marco-multicapa.html">página 1</a> eran 12 sistemas de 3 kW por transformador de 75 kVA.</p></li>
+<li><p>El viento aguas abajo de cada parque. Usuarios: los parques vecinos. Límite: la pérdida de producción que un parque le causa a otro por el efecto de estela.</p></li>
+<li><p>La disposición de las comunidades a creer en el mecanismo. Usuarios: todas las empresas y el Estado. Límite: lo que el territorio puede concertar por año sin que los acuerdos se incumplan; cada proceso mal hecho lo reduce para todos.</p></li>
 </ol>
 </div>
 </div>
 </div>
 </section>
-<section id="ejercicio-2-la-instancia-territorial-que-falta" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-2-la-instancia-territorial-que-falta">Ejercicio 2 ●●○ · La instancia territorial que falta</h4>
-<p>Diseñe en media página la instancia territorial del arreglo multinivel a partir de la regla vigente: cómo se conforma sin sustituir a las autoridades tradicionales, qué decisiones le corresponden y cuáles no, de dónde sale su financiación sin que la capturen, y qué señales indicarían que se volvió un cuello de botella o una élite nueva. Escríbala como recomendación, con condiciones de validez.</p>
+<section id="ejercicio-2-estrese-el-reglamento-de-la-microrred" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-estrese-el-reglamento-de-la-microrred">Ejercicio 2 ●●○ · Estrese el reglamento de la microrred</h4>
+<p>Con el reglamento propuesto para la microrred del ejemplo: (a) calcule el balance mensual si, con la tarifa por consumo, el consumo baja solo a 210 kWh/día y el recaudo es del 90 %; (b) la mitad de los hogares es población flotante que cambia cada año: ¿qué principio se resiente y qué regla lo arregla?; (c) el alcalde quiere nombrar a los miembros del comité de energía: ¿qué principio lo impide y cómo debe estar redactado?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Pista">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1124,7 +2031,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Mire las asociaciones de cabildos y autoridades tradicionales que regula el Decreto 1088 de 1993, las mesas de las transferencias, que el Decreto 1540 de 2024 permite asociar, y los esquemas de asignación regional de regalías, con sus lecciones de captura.</p>
+<p>Para (a), use la fórmula del balance con las 95 conexiones registradas; el diésel se paga solo por lo que pase de 192 kWh/día. Para (b) y (c), vuelva a la tabla de los ocho principios y a la mitad del visor que trata de quién escribe las reglas.</p>
 </div>
 </div>
 </div>
@@ -1140,9 +2047,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Decisión.</strong> Crear una instancia territorial wayuu a partir de las Mesas de Planeación y Seguimiento de las transferencias, que la norma ya permite asociar para proyectos regionales. La conforman delegados de las autoridades de las mesas, con un reglamento de representación aprobado por ellas, mandato revocable y rotación de la vocería. El Estado la reconoce y la acompaña; ninguna empresa participa en su integración. Así se cumple el principio 7: el reconocimiento recae sobre el reglamento, no sobre personas.</p>
-<p><strong>Qué decide y qué no.</strong> Decide trazados y servidumbres que comparten varios proyectos, el calendario territorial de consultas, los estándares de información y asesoría, los proyectos regionales financiados con las transferencias y la veeduría de los acuerdos. No decide el uso del suelo de cada ranchería ni el contenido de cada acuerdo, y no reemplaza la consulta de ninguna comunidad: produce el marco, no sustituye ni abrevia la consulta.</p>
-<p><strong>Financiación sin captura.</strong> Las transferencias ya llegan por encargo fiduciario, con interventoría y un tope del 10 % para gastos administrativos de cada mesa. La instancia se financia con aportes de las mesas dentro de ese tope y con un aporte público para la asesoría independiente, con desembolsos automáticos y gastos publicados cada mes. La lección de las regalías es que donde el desembolso depende de una firma discrecional, aparece un peaje.</p>
+<ol type="a">
+<li><p>Facturación: <span class="math inline">95 \times 10\,000 + 210 \times 30 \times 650 = 950\,000 + 4\,095\,000 = 5\,045\,000</span> COP; recaudo: <span class="math inline">0{,}90 \times 5{,}05 = 4{,}54</span> MCOP. Diésel: <span class="math inline">(210 - 192) \times 0{,}35 \times 12\,000 \times 30 = 2{,}27</span> MCOP. Balance: <span class="math inline">4{,}54 - 2{,}27 - 3{,}90 = -1{,}63</span> MCOP al mes. El reglamento ya no cierra: el supuesto de 180 kWh/día sostiene la cuenta, y por eso el consumo frente al límite es la primera señal que el operador local debe informar cada mes.</p></li>
+<li><p>Se resiente el principio 1, porque la lista de usuarios cambia cada año, y con él el principio 3. La regla separa dos categorías: usuario, con derecho de uso temporal y medidor, y miembro con voto en la asamblea, que exige permanencia. Los flotantes pagan lo que consumen y no deciden la tarifa de quienes se quedan.</p></li>
+<li><p>Lo impide el principio 7 bien redactado: el reconocimiento externo recae sobre el reglamento, no sobre personas, y el reglamento dice que al comité lo elige y lo revoca la asamblea. El alcalde puede aceptar o rechazar el reglamento; no puede escoger a quienes lo aplican.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-3-la-instancia-territorial-que-falta" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-3-la-instancia-territorial-que-falta">Ejercicio 3 ●●● · La instancia territorial que falta</h4>
+<p>Diseñe en media página la instancia territorial del arreglo de La Guajira a partir de la regla vigente: cómo se conforma sin sustituir a las autoridades tradicionales, qué decisiones le corresponden y cuáles no, de dónde sale su financiación sin que alguien la capture y qué señales indicarían que se volvió un cuello de botella o una élite nueva. Escríbala como recomendación, con condiciones de validez.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pista">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pista
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Mire las asociaciones de cabildos y autoridades tradicionales que regula el Decreto 1088 de 1993, las mesas de las transferencias, que el Decreto 1540 de 2024 permite asociar, y los esquemas de asignación regional de regalías, con sus lecciones de captura.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución completa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Decisión.</strong> Crear una instancia territorial wayuu a partir de las Mesas de Planeación y Seguimiento de las transferencias, que la norma ya permite asociar para proyectos regionales. La conforman delegados de las autoridades de las mesas, con un reglamento de representación aprobado por ellas, mandato revocable y rotación de la vocería. El Estado la reconoce y la acompaña; ninguna empresa participa en su integración. Así se cumple el principio 7: el reconocimiento recae sobre el reglamento y no sobre personas.</p>
+<p><strong>Qué decide y qué no.</strong> Decide trazados y servidumbres que comparten varios proyectos, el calendario territorial de consultas, los estándares de información y asesoría, los proyectos regionales financiados con las transferencias y la veeduría de los acuerdos. Quedan fuera el uso del suelo de cada ranchería y el contenido de cada acuerdo, y la instancia no reemplaza ni abrevia la consulta de ninguna comunidad: produce el marco.</p>
+<p><strong>Financiación sin captura.</strong> Las transferencias ya llegan por encargo fiduciario, con interventoría y un tope del 10 % para gastos administrativos de cada mesa. La instancia se financia con aportes de las mesas dentro de ese tope y con un aporte público para la asesoría independiente, con desembolsos automáticos y gastos publicados cada mes. La lección de las regalías es que, donde el desembolso depende de una firma discrecional, aparece un peaje.</p>
 <p><strong>Validez y señales.</strong> Vale mientras las autoridades de las mesas ratifiquen el reglamento y la instancia conserve competencias acotadas. Señales de alerta: la misma vocería por más de dos periodos; un presupuesto que crece más rápido que las decisiones; un número de comunidades acreditadas que crece sin que cambie la afectación, señal de que el reparto en partes iguales premia la división y hay que revisar la regla; y quejas de exclusión de mujeres, jóvenes o familias dispersas.</p>
 </div>
 </div>
@@ -1157,22 +2104,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Los bienes comunes se pueden gobernar sin tragedia cuando la institución cumple los <strong>ocho principios</strong> de Ostrom.</li>
-<li>El primer paso siempre es <strong>nombrar el común</strong>, sus usuarios y su límite.</li>
-<li>Los principios son una <strong>lista de diagnóstico</strong>: su violación predice el fracaso.</li>
-<li>La <strong>gobernanza policéntrica</strong> tiene niveles anidados con reglas de articulación; muchos centros sin reglas es fragmentación.</li>
-<li>La regla legal de reparto de las fuentes no convencionales existe, pero reparte en partes iguales y proyecto por proyecto: cumple a medias la <strong>congruencia</strong>.</li>
-<li>Alrededor de los parques de La Guajira faltó sobre todo <strong>anidamiento</strong>: un nivel territorial que articule consultas, rutas y vigilancia.</li>
+<li>Un <strong>recurso común</strong> es un stock compartido, y su <strong>límite de apropiación</strong> es un flujo: <span class="math inline">\sum a_i \le g</span>. La auditoría empieza por escribir esa cifra.</li>
+<li>Los <strong>ocho principios</strong> de Ostrom se revisan con ocho preguntas. Cada una se responde con evidencia (un registro, una fórmula de reparto, un acta, un contrato) y se califica cumple, a medias o falta.</li>
+<li>La auditoría tiene <strong>seis pasos</strong>: el recurso con su límite; los niveles de decisión; los ocho principios; la falla que anuncia lo que falta; la regla y su nivel; la conclusión.</li>
+<li>Los principios <strong>dependen unos de otros</strong>: en la microrred, la tarifa por consumo necesita medidores, y solo con las sanciones graduales el balance pasa de −9,77 a +0,11 MCOP al mes.</li>
+<li>La <strong>gobernanza policéntrica</strong> tiene niveles anidados con reglas que los conectan. En La Guajira faltan tres principios y los tres están en el nivel territorial, que hoy está vacío.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «Gobernanza policéntrica» de las notas de la semana 6 trae el reglamento modelo de la microrred y el ejercicio de diagnóstico de un común propio. La misma lista sirve para evaluar los acuerdos que propongan las partes de una negociación.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>El salón comunal</th>
+<th>La microrred</th>
+<th>Los parques de La Guajira</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recurso y límite</td>
+<td>104 turnos al año</td>
+<td>192 kWh al día</td>
+<td>territorio y confianza; límite sin cifra todavía</td>
+</tr>
+<tr class="even">
+<td>Síntoma</td>
+<td>14 querellas; un apartamento con 22 turnos</td>
+<td>250 kWh/día y 20 litros de diésel</td>
+<td>acuerdos de los que las comunidades se retiran; 33 bloqueos en Windpeshi</td>
+</tr>
+<tr class="odd">
+<td>Principios que faltan</td>
+<td>2, 3, 5 y 6</td>
+<td>2, 3, 5 y 6</td>
+<td>4, 5 y 8</td>
+</tr>
+<tr class="even">
+<td>Nivel que debe actuar</td>
+<td>la asamblea</td>
+<td>la asamblea, con el prestador y la alcaldía</td>
+<td>el territorial, que hay que crear</td>
+</tr>
+<tr class="odd">
+<td>Intervención visible que no cambia nada</td>
+<td>un vigilante</td>
+<td>una batería más grande</td>
+<td>más mesas, una por proyecto</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Para profundizar.</strong> La sección «Gobernanza policéntrica» de las notas de la semana 6 desarrolla el acueducto veredal principio por principio, trae el recuadro sobre la regla vigente de las transferencias y propone auditar un recurso común que usted conozca de primera mano. La <a href="../semana6/04-justicia-energetica.html">página 4</a> toma el reparto que aquí quedó a medias y pregunta quién gana y quién paga.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJwcmluY2lwaW9zViA9IFtcbiAge246IFwiMS4gTMOtbWl0ZXMgY2xhcm9zXCIsIGN1cnNvOiBcImEgbWVkaWFzXCIsIHBvcnF1ZTogXCJFbCB0ZXJyaXRvcmlvIHkgc3VzIGF1dG9yaWRhZGVzIGV4aXN0ZW4sIHBlcm8gcXVpw6luIHJlcHJlc2VudGEgYSBjYWRhIGNvbXVuaWRhZCBzZSBkaXNwdXTDszogbGEgYXV0b3JpZGFkIGFuY2VzdHJhbCB5IGxhIHJlZ2lzdHJhZGEgYW50ZSBlbCBFc3RhZG8gbm8gc2llbXByZSBjb2luY2lkZW4sIHkgaHVibyBjb211bmlkYWRlcyBxdWUgc2UgcmV0aXJhcm9uIGRlIGFjdWVyZG9zLlwiLCBldmlkZW5jaWE6IFwiZG9jdW1lbnRhZG8gKENvbnRyYWxvcsOtYSwgMjAyMTsgU0VJLCAyMDI0KVwiLCByZWNvbWVuZGFjaW9uOiBcImNyaXRlcmlvcyBkZSBhY3JlZGl0YWNpw7NuIHDDumJsaWNvcyB5IHVuaWZvcm1lcyBlbiBlbCDDoXJlYVwifSxcbiAge246IFwiMi4gQ29uZ3J1ZW5jaWFcIiwgY3Vyc286IFwiYSBtZWRpYXNcIiwgcG9ycXVlOiBcIkxhIHRyYW5zZmVyZW5jaWEgZGUgbGFzIGZ1ZW50ZXMgbm8gY29udmVuY2lvbmFsZXMgZXMgdW5hIHJlZ2xhIGxlZ2FsIGRlIHJlcGFydG8sIHBlcm8gZW50cmVnYSBlbCA2MCAlIGVuIHBhcnRlcyBpZ3VhbGVzIGVudHJlIGxhcyBjb211bmlkYWRlcyBhY3JlZGl0YWRhcywgc2luIHBvbmRlcmFyIGxhIGFmZWN0YWNpw7NuLCB5IGxhcyBjb21wZW5zYWNpb25lcyBkZSBjYWRhIGNvbnN1bHRhIHNlIG5lZ29jaWFuIHBvciBzZXBhcmFkby5cIiwgZXZpZGVuY2lhOiBcImRvY3VtZW50YWRvOiBMZXkgMTk1NSBkZSAyMDE5IHkgRGVjcmV0byAxNTQwIGRlIDIwMjQ7IGxhIGRlc2lndWFsZGFkIGVudHJlIGNvbXBlbnNhY2lvbmVzIGVzIGhpcMOzdGVzaXMgcG9yIHZlcmlmaWNhclwiLCByZWNvbWVuZGFjaW9uOiBcInBvbmRlcmFyIGVsIHJlcGFydG8gcG9yIGFmZWN0YWNpw7NuIHkgcHVibGljYXIgbGFzIGxpcXVpZGFjaW9uZXNcIn0sXG4gIHtuOiBcIjMuIFBhcnRpY2lwYWNpw7NuXCIsIGN1cnNvOiBcImEgbWVkaWFzXCIsIHBvcnF1ZTogXCJMYSBjb25zdWx0YSBwcmV2aWEgeSBsYXMgbWVzYXMgZGUgbGFzIHRyYW5zZmVyZW5jaWFzIGRhbiB2b3ogZm9ybWFsLCBwZXJvIGxvcyBjcm9ub2dyYW1hcyBsb3MgZmlqYXJvbiBsYXMgc3ViYXN0YXMsIGZ1ZXJhIGRlbCB0ZXJyaXRvcmlvLlwiLCBldmlkZW5jaWE6IFwiYW7DoWxpc2lzIGRlbCBjdXJzb1wiLCByZWNvbWVuZGFjaW9uOiBcImNyb25vZ3JhbWFzIGRlIHN1YmFzdGEgcXVlIGluY29ycG9yZW4gbG9zIHRpZW1wb3MgZGUgY29uc3VsdGFcIn0sXG4gIHtuOiBcIjQuIE1vbml0b3Jlb1wiLCBjdXJzbzogXCJubyBzZSBjdW1wbGVcIiwgcG9ycXVlOiBcIkVsIGN1bXBsaW1pZW50byBkZSBsb3MgYWN1ZXJkb3MgZGUgY29uc3VsdGEgbG8gc2lndWUgcHJpbmNpcGFsbWVudGUgbGEgcGFydGUgaW50ZXJlc2FkYSwgc2luIHZlZWR1csOtYSBpbmRlcGVuZGllbnRlLlwiLCBldmlkZW5jaWE6IFwiaGlww7N0ZXNpcyBkZWwgYW7DoWxpc2lzLCBwb3IgdmVyaWZpY2FyXCIsIHJlY29tZW5kYWNpb246IFwidmVlZHVyw61hIG1peHRhIGZpbmFuY2lhZGEgcG9yIHVuYSBmaWR1Y2lhXCJ9LFxuICB7bjogXCI1LiBTYW5jaW9uZXMgZ3JhZHVhbGVzXCIsIGN1cnNvOiBcIm5vIHNlIGN1bXBsZVwiLCBwb3JxdWU6IFwiTm8gaGF5IHVuIHLDqWdpbWVuIHBhY3RhZG8gZGUgcmVzcHVlc3RhcyBlc2NhbG9uYWRhcyBhbnRlIGVsIGluY3VtcGxpbWllbnRvIGRlIHVuIGFjdWVyZG8sIGRlIGN1YWxxdWllcmEgZGUgbGFzIHBhcnRlczogZGVsIHJlY2xhbW8gc2UgcGFzYSBhIGxhIHR1dGVsYSBvIGEgbGEgY3Jpc2lzLiBMb3MgYmxvcXVlb3Mgbm8gc29uIHNhbmNpb25lcyBlbiBlbCBzZW50aWRvIGRlIE9zdHJvbTsgYXBhcmVjZW4gY3VhbmRvIGZhbHRhbiBlc29zIGVzY2Fsb25lcy5cIiwgZXZpZGVuY2lhOiBcImFuw6FsaXNpcyBkZWwgY3Vyc29cIiwgcmVjb21lbmRhY2lvbjogXCJlc2NhbG9uZXMgcGFjdGFkb3M6IGF2aXNvLCBtZWRpYWNpw7NuLCBjb21wZW5zYWNpw7NuLCBzdXNwZW5zacOzbiBwYXJjaWFsXCJ9LFxuICB7bjogXCI2LiBSZXNvbHVjacOzbiBkZSBjb25mbGljdG9zXCIsIGN1cnNvOiBcImEgbWVkaWFzXCIsIHBvcnF1ZTogXCJFbCBzaXN0ZW1hIG5vcm1hdGl2byB3YXl1dSwgcXVlIGFwbGljYSBlbCBwYWxhYnJlcm8sIHJlc3VlbHZlIGNvbmZsaWN0b3MgZW50cmUgZmFtaWxpYXM7IGxvcyBjb25mbGljdG9zIGVudHJlIGVtcHJlc2EsIEVzdGFkbyB5IGNvbXVuaWRhZGVzIG5vIHRpZW5lbiB1bmEgaW5zdGFuY2lhIGxvY2FsIHkgdGVybWluYW4gZW4gdHV0ZWxhcyBvIGJsb3F1ZW9zLlwiLCBldmlkZW5jaWE6IFwiZG9jdW1lbnRhZG8gZW4gcGFydGUgKFVORVNDTywgMjAxMDsgQ29udHJhbG9yw61hLCAyMDIxKVwiLCByZWNvbWVuZGFjaW9uOiBcImluc3RhbmNpYSBkZSBtZWRpYWNpw7NuIHRlcnJpdG9yaWFsIGNvbiBwbGF6b3MgY29ydG9zLCBhcnRpY3VsYWRhIGNvbiBlbCBwYWxhYnJlcm9cIn0sXG4gIHtuOiBcIjcuIFJlY29ub2NpbWllbnRvIGV4dGVybm9cIiwgY3Vyc286IFwiYSBtZWRpYXNcIiwgcG9ycXVlOiBcIkxhIENvbnN0aXR1Y2nDs24geSBlbCBDb252ZW5pbyAxNjkgcmVjb25vY2VuIGEgbGFzIGF1dG9yaWRhZGVzIHRyYWRpY2lvbmFsZXMsIHBlcm8gc3UgcGFwZWwgZW4gbGFzIGRlY2lzaW9uZXMgdGVycml0b3JpYWxlcyBlcyBkw6liaWwuXCIsIGV2aWRlbmNpYTogXCJhbsOhbGlzaXMgZGVsIGN1cnNvXCIsIHJlY29tZW5kYWNpb246IFwicmVjb25vY2VyIHkgZmluYW5jaWFyIGxhIGluc3RhbmNpYSB0ZXJyaXRvcmlhbCBzaW4gc3VzdGl0dWlyIGEgbGFzIGF1dG9yaWRhZGVzXCJ9LFxuICB7bjogXCI4LiBBbmlkYW1pZW50b1wiLCBjdXJzbzogXCJubyBzZSBjdW1wbGVcIiwgcG9ycXVlOiBcIkxhcyBjb25zdWx0YXMgZnVlcm9uIGJpbGF0ZXJhbGVzLCBlbXByZXNhIHBvciBjb211bmlkYWQsIHkgbGFzIG1lc2FzIGRlIGxhcyB0cmFuc2ZlcmVuY2lhcyBzb24gdW5hIHBvciBwcm95ZWN0bzogbmluZ8O6biBuaXZlbCB0ZXJyaXRvcmlhbCBhcnRpY3VsYSBsYSBvbGEuXCIsIGV2aWRlbmNpYTogXCJkb2N1bWVudGFkbyBlbiBwYXJ0ZSAoQ29udHJhbG9yw61hLCAyMDIxOyBEZWNyZXRvIDE1NDAgZGUgMjAyNClcIiwgcmVjb21lbmRhY2lvbjogXCJhc29jaWFyIGxhcyBtZXNhcyBkZSBsYXMgdHJhbnNmZXJlbmNpYXMgZW4gdW4gbml2ZWwgdGVycml0b3JpYWwgY29uIHJlZ2xhcyBkZSBhcnRpY3VsYWNpw7NuXCJ9LFxuXVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGNhbGlmaWNhY2lvblYgPSBJbnB1dHMuZm9ybShPYmplY3QuZnJvbUVudHJpZXMocHJpbmNpcGlvc1YubWFwKChwKSA9PiBbcC5uLCBJbnB1dHMucmFkaW8oW1wic2UgY3VtcGxlXCIsIFwiYSBtZWRpYXNcIiwgXCJubyBzZSBjdW1wbGVcIl0sIHtsYWJlbDogcC5ufSldKSkpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXY+JHtwcmluY2lwaW9zVi5tYXAoKHApID0+IHtcbiAgY29uc3QgciA9IGNhbGlmaWNhY2lvblZbcC5uXTtcbiAgaWYgKCFyKSByZXR1cm4gaHRtbGA8cCBzdHlsZT1cImNvbG9yOiM3NzdcIj4ke3Aubn06IHNpbiBjYWxpZmljYXIuPC9wPmA7XG4gIGNvbnN0IGNvaW5jaWRlID0gciA9PT0gcC5jdXJzbztcbiAgcmV0dXJuIGh0bWxgPHAgc3R5bGU9XCJib3JkZXItbGVmdDo0cHggc29saWQgJHtjb2luY2lkZSA/IENPTE9SRVMudmVyZGUgOiBDT0xPUkVTLmFtYmFyfTtwYWRkaW5nLWxlZnQ6LjZyZW1cIj5cbiAgICA8Yj4ke3Aubn08L2I+OiB1c3RlZCBkaWpvIMKrJHtyfcK7OyBsYSBsZWN0dXJhIGRlbCBjdXJzbyBlcyDCqyR7cC5jdXJzb33Cuy4gJHtwLnBvcnF1ZX0gPGk+RXZpZGVuY2lhOiAke3AuZXZpZGVuY2lhfS48L2k+PC9wPmA7XG59KX08L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IGNhbGlmaWNhZG9zID0gcHJpbmNpcGlvc1YuZmlsdGVyKChwKSA9PiBjYWxpZmljYWNpb25WW3Aubl0pO1xuICBjb25zdCBjb2luY2lkZW5jaWFzID0gY2FsaWZpY2Fkb3MuZmlsdGVyKChwKSA9PiBjYWxpZmljYWNpb25WW3Aubl0gPT09IHAuY3Vyc28pLmxlbmd0aDtcbiAgY29uc3Qgcm90b3MgPSBwcmluY2lwaW9zVi5maWx0ZXIoKHApID0+IGNhbGlmaWNhY2lvblZbcC5uXSA9PT0gXCJubyBzZSBjdW1wbGVcIik7XG4gIHJldHVybiBodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICAgIDxkaXY+UHJpbmNpcGlvcyBjYWxpZmljYWRvczxiPiR7Y2FsaWZpY2Fkb3MubGVuZ3RofSBkZSA4PC9iPjwvZGl2PlxuICAgIDxkaXY+Q29pbmNpZGVuY2lhcyBjb24gbGEgbGVjdHVyYSBkZWwgY3Vyc288Yj4ke2NvaW5jaWRlbmNpYXN9PC9iPjwvZGl2PlxuICAgIDxkaXY+UmVjb21lbmRhY2lvbmVzIHBhcmEgbG9zIHByaW5jaXBpb3MgcXVlIHVzdGVkIG1hcmPDsyBjb21vIHJvdG9zPGI+JHtyb3Rvcy5sZW5ndGggPyByb3Rvcy5tYXAoKHApID0+IHAucmVjb21lbmRhY2lvbikuam9pbihcIjsgXCIpIDogXCJuaW5ndW5hIHRvZGF2w61hXCJ9PC9iPjwvZGl2PlxuICA8L2Rpdj5gO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdjYWxpZmljYWNpb25WJykifV19
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7Zm9ybWF0b051bWVyb30gZnJvbSBcIi4uL3NpbXVsYWRvcmVzL21pc2Vfc2QuanNcIlxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiQ09MT1JFUyA9ICh7YXp1bDogXCIjMDAzMzY2XCIsIHZlcmRlOiBcIiMwMDY5M0VcIiwgYW1iYXI6IFwiI0IyNkMwMFwiLCB2aW9sZXRhOiBcIiM1NDM0QTBcIiwgZ3JpczogXCIjNUY1RjVGXCIsIHJvam86IFwiI0NFMTEyNlwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImNvblNpZ25vID0gKGRlY2ltYWxlcykgPT4gKHgpID0+IGZvcm1hdG9OdW1lcm8oZGVjaW1hbGVzKSh4KS5yZXBsYWNlKFwiLVwiLCBcIuKIklwiKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHJlZ2lzdHJvTSA9IElucHV0cy5yYWRpbyhbXCI4MCBlbiBsaXN0YSwgc2luIG1lZGlkb3Jlc1wiLCBcIjk1IHJlZ2lzdHJhZGFzLCBjb24gbWVkaWRvclwiXSwge3ZhbHVlOiBcIjgwIGVuIGxpc3RhLCBzaW4gbWVkaWRvcmVzXCIsIGxhYmVsOiBcIlByaW5jaXBpbyAxIMK3IFJlZ2lzdHJvIHkgbWVkaWNpw7NuXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHRhcmlmYU0gPSBJbnB1dHMucmFkaW8oW1wicGxhbmE6IDMwIDAwMCBDT1AgYWwgbWVzXCIsIFwicG9yIGNvbnN1bW86IDEwIDAwMCBDT1AgKyA2NTAgQ09QL2tXaFwiXSwge3ZhbHVlOiBcInBsYW5hOiAzMCAwMDAgQ09QIGFsIG1lc1wiLCBsYWJlbDogXCJQcmluY2lwaW8gMiDCtyBUYXJpZmFcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2Ygc2FuY2lvbk0gPSBJbnB1dHMucmFkaW8oW1wiY29ydGUgYWwgcHJpbWVyIGF0cmFzb1wiLCBcImF2aXNvLCByZWNhcmdvIHkgcmVzdHJpY2Npw7NuXCJdLCB7dmFsdWU6IFwiY29ydGUgYWwgcHJpbWVyIGF0cmFzb1wiLCBsYWJlbDogXCJQcmluY2lwaW8gNSDCtyBTYW5jacOzblwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImJhbGFuY2VNID0ge1xuICBjb25zdCBtZWRpZG9yZXMgPSByZWdpc3Ryb00uc3RhcnRzV2l0aChcIjk1XCIpO1xuICBjb25zdCBwaWRlQ29uc3VtbyA9IHRhcmlmYU0uc3RhcnRzV2l0aChcInBvciBjb25zdW1vXCIpO1xuICBjb25zdCBwb3JDb25zdW1vID0gcGlkZUNvbnN1bW8gJiYgbWVkaWRvcmVzO1xuICBjb25zdCBob2dhcmVzID0gbWVkaWRvcmVzID8gOTUgOiA4MDtcbiAgY29uc3QgY29uc3VtbyA9IHBvckNvbnN1bW8gPyAxODAgOiAyNTA7XG4gIGNvbnN0IHJlY2F1ZG9GcmFjY2lvbiA9IHNhbmNpb25NLnN0YXJ0c1dpdGgoXCJhdmlzb1wiKSA/IDAuOTAgOiAwLjYwO1xuICBjb25zdCBmYWN0dXJhY2lvbiA9IHBvckNvbnN1bW8gPyBob2dhcmVzICogMTAwMDAgKyBjb25zdW1vICogMzAgKiA2NTAgOiBob2dhcmVzICogMzAwMDA7XG4gIGNvbnN0IHJlY2F1ZG8gPSByZWNhdWRvRnJhY2Npb24gKiBmYWN0dXJhY2lvbiAvIDFlNjtcbiAgY29uc3QgZGllc2VsID0gTWF0aC5tYXgoMCwgY29uc3VtbyAtIDE5MikgKiAwLjM1ICogMTIwMDAgKiAzMCAvIDFlNjtcbiAgcmV0dXJuIHtjb25zdW1vLCBsaXRyb3M6IE1hdGgubWF4KDAsIGNvbnN1bW8gLSAxOTIpICogMC4zNSwgcmVjYXVkbywgZGllc2VsLCBmaWpvczogMy45LCBiYWxhbmNlOiByZWNhdWRvIC0gZGllc2VsIC0gMy45LFxuICAgIGF2aXNvOiBwaWRlQ29uc3VtbyAmJiAhbWVkaWRvcmVzfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlBsb3QucGxvdCh7XG4gIHdpZHRoOiBNYXRoLm1pbih3aWR0aCwgNzYwKSwgaGVpZ2h0OiAxOTAsIG1hcmdpbkxlZnQ6IDE1MCxcbiAgeDoge2xhYmVsOiBcIk1pbGxvbmVzIGRlIHBlc29zIGFsIG1lcyBbTUNPUC9tZXNdXCIsIGRvbWFpbjogWzAsIDhdLCBncmlkOiB0cnVlLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgeToge2xhYmVsOiBudWxsLCBkb21haW46IFtcIlJlY2F1ZG9cIiwgXCJEacOpc2VsXCIsIFwiQ29zdG9zIGZpam9zXCJdfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmJhclgoW3tydWJybzogXCJSZWNhdWRvXCIsIHZhbG9yOiBiYWxhbmNlTS5yZWNhdWRvfV0sIHt4OiBcInZhbG9yXCIsIHk6IFwicnVicm9cIiwgZmlsbDogQ09MT1JFUy52ZXJkZX0pLFxuICAgIFBsb3QuYmFyWChbe3J1YnJvOiBcIkRpw6lzZWxcIiwgdmFsb3I6IGJhbGFuY2VNLmRpZXNlbH0sIHtydWJybzogXCJDb3N0b3MgZmlqb3NcIiwgdmFsb3I6IGJhbGFuY2VNLmZpam9zfV0sIHt4OiBcInZhbG9yXCIsIHk6IFwicnVicm9cIiwgZmlsbDogQ09MT1JFUy5ncmlzfSksXG4gICAgUGxvdC5ydWxlWChbMF0pLFxuICBdLFxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdj4ke2JhbGFuY2VNLmF2aXNvID8gaHRtbGA8cCBzdHlsZT1cImJvcmRlci1sZWZ0OjRweCBzb2xpZCAke0NPTE9SRVMuYW1iYXJ9O3BhZGRpbmctbGVmdDouNnJlbVwiPlNpbiBtZWRpZG9yZXMgbm8gaGF5IGPDs21vIGNvYnJhciBwb3IgY29uc3VtbzogZWwgY8OhbGN1bG8gc2lndWUgY29uIGxhIHRhcmlmYSBwbGFuYS4gRWwgcHJpbmNpcGlvIDIgbmVjZXNpdGEgYWwgcHJpbmNpcGlvIDEuPC9wPmAgOiBcIlwifTwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTAiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkNvbnN1bW8gZnJlbnRlIGFsIGzDrW1pdGUgZGUgMTkyIGtXaC9kw61hPGI+JHtmb3JtYXRvTnVtZXJvKDApKGJhbGFuY2VNLmNvbnN1bW8pfSBrV2gvZMOtYTwvYj48L2Rpdj5cbiAgPGRpdj5EacOpc2VsPGI+JHtmb3JtYXRvTnVtZXJvKDEpKGJhbGFuY2VNLmxpdHJvcyl9IGxpdHJvcyBhbCBkw61hPC9iPjwvZGl2PlxuICA8ZGl2PlJlY2F1ZG88Yj4ke2Zvcm1hdG9OdW1lcm8oMikoYmFsYW5jZU0ucmVjYXVkbyl9IE1DT1AvbWVzPC9iPjwvZGl2PlxuICA8ZGl2PkJhbGFuY2UgbWVuc3VhbDxiPiR7Y29uU2lnbm8oMikoYmFsYW5jZU0uYmFsYW5jZSl9IE1DT1AvbWVzPC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InByaW5jaXBpb3NWID0gW1xuICB7bjogXCIxLiBMw61taXRlcyBjbGFyb3NcIiwgY3Vyc286IFwiYSBtZWRpYXNcIiwgbml2ZWw6IFwiY29tdW5pdGFyaW9cIiwgcG9ycXVlOiBcIkVsIHRlcnJpdG9yaW8geSBzdXMgYXV0b3JpZGFkZXMgZXhpc3RlbiwgcGVybyBxdWnDqW4gcmVwcmVzZW50YSBhIGNhZGEgY29tdW5pZGFkIHNlIGRpc3B1dMOzIHkgaHVibyBjb211bmlkYWRlcyBxdWUgc2UgcmV0aXJhcm9uIGRlIGFjdWVyZG9zLlwiLCBldmlkZW5jaWE6IFwiZGF0byAoQ29udHJhbG9yw61hLCAyMDIxOyBTRUksIDIwMjQpXCJ9LFxuICB7bjogXCIyLiBDb25ncnVlbmNpYVwiLCBjdXJzbzogXCJhIG1lZGlhc1wiLCBuaXZlbDogXCJjb211bml0YXJpb1wiLCBwb3JxdWU6IFwiSGF5IHVuYSByZWdsYSBsZWdhbCBkZSByZXBhcnRvLCBwZXJvIGVudHJlZ2EgZWwgNjAgJSBlbiBwYXJ0ZXMgaWd1YWxlcyBlbnRyZSBsYXMgY29tdW5pZGFkZXMgYWNyZWRpdGFkYXMsIHNpbiBwb25kZXJhciBsYSBhZmVjdGFjacOzbi5cIiwgZXZpZGVuY2lhOiBcImRhdG8gKExleSAxOTU1IGRlIDIwMTk7IERlY3JldG8gMTU0MCBkZSAyMDI0KTsgbGEgZGVzaWd1YWxkYWQgZW50cmUgY29tcGVuc2FjaW9uZXMgZXMgaGlww7N0ZXNpc1wifSxcbiAge246IFwiMy4gUGFydGljaXBhY2nDs25cIiwgY3Vyc286IFwiYSBtZWRpYXNcIiwgbml2ZWw6IFwic2VjdG9yaWFsXCIsIHBvcnF1ZTogXCJMYSBjb25zdWx0YSBwcmV2aWEgeSBsYXMgbWVzYXMgZGUgbGFzIHRyYW5zZmVyZW5jaWFzIGRhbiB2b3ogZm9ybWFsLCBwZXJvIGxvcyBjcm9ub2dyYW1hcyBsb3MgZmlqYXJvbiBsYXMgc3ViYXN0YXMsIGZ1ZXJhIGRlbCB0ZXJyaXRvcmlvLlwiLCBldmlkZW5jaWE6IFwiZGF0byBlIGhpcMOzdGVzaXNcIn0sXG4gIHtuOiBcIjQuIE1vbml0b3Jlb1wiLCBjdXJzbzogXCJmYWx0YVwiLCBuaXZlbDogXCJ0ZXJyaXRvcmlhbFwiLCBwb3JxdWU6IFwiRWwgY3VtcGxpbWllbnRvIGRlIGxvcyBhY3VlcmRvcyBkZSBjb25zdWx0YSBsbyBzaWd1ZSBzb2JyZSB0b2RvIGxhIHBhcnRlIGludGVyZXNhZGEsIHNpbiB1bmEgdmVlZHVyw61hIHF1ZSByZXNwb25kYSBhbnRlIGxhcyBjb211bmlkYWRlcy5cIiwgZXZpZGVuY2lhOiBcImhpcMOzdGVzaXMsIHBvciBjb21wcm9iYXIgY29uIGxhcyBhY3RhcyBkZSBzZWd1aW1pZW50b1wifSxcbiAge246IFwiNS4gU2FuY2lvbmVzIGdyYWR1YWxlc1wiLCBjdXJzbzogXCJmYWx0YVwiLCBuaXZlbDogXCJ0ZXJyaXRvcmlhbFwiLCBwb3JxdWU6IFwiTm8gc2UgY29ub2NlIHVuIHLDqWdpbWVuIHBhY3RhZG8gZGUgcmVzcHVlc3RhcyBlc2NhbG9uYWRhcyBhbnRlIGVsIGluY3VtcGxpbWllbnRvIGRlIHVuIGFjdWVyZG86IGRlbCByZWNsYW1vIHNlIHBhc2EgYSBsYSB0dXRlbGEgbyBhbCBibG9xdWVvLiBFbCBibG9xdWVvIGFwYXJlY2UgY3VhbmRvIGZhbHRhbiBlc29zIGVzY2Fsb25lcy5cIiwgZXZpZGVuY2lhOiBcImhpcMOzdGVzaXMsIHBvciBjb21wcm9iYXIgY29uIGxvcyBhY3VlcmRvcyBwcm90b2NvbGl6YWRvc1wifSxcbiAge246IFwiNi4gUmVzb2x1Y2nDs24gZGUgY29uZmxpY3Rvc1wiLCBjdXJzbzogXCJhIG1lZGlhc1wiLCBuaXZlbDogXCJ0ZXJyaXRvcmlhbFwiLCBwb3JxdWU6IFwiRWwgcGFsYWJyZXJvIHJlc3VlbHZlIGNvbmZsaWN0b3MgZW50cmUgZmFtaWxpYXMgd2F5dXU7IGxvcyBjb25mbGljdG9zIGVudHJlIGVtcHJlc2EsIEVzdGFkbyB5IGNvbXVuaWRhZGVzIG5vIHRpZW5lbiB1bmEgaW5zdGFuY2lhIGxvY2FsLlwiLCBldmlkZW5jaWE6IFwiZGF0byAoVU5FU0NPLCAyMDEwOyBDb250cmFsb3LDrWEsIDIwMjEpXCJ9LFxuICB7bjogXCI3LiBSZWNvbm9jaW1pZW50byBleHRlcm5vXCIsIGN1cnNvOiBcImEgbWVkaWFzXCIsIG5pdmVsOiBcIm5hY2lvbmFsXCIsIHBvcnF1ZTogXCJMYSBDb25zdGl0dWNpw7NuIHkgZWwgQ29udmVuaW8gMTY5IHJlY29ub2NlbiBhIGxhcyBhdXRvcmlkYWRlcyB0cmFkaWNpb25hbGVzLCBwZXJvIHN1IHBlc28gZW4gbGFzIGRlY2lzaW9uZXMgdGVycml0b3JpYWxlcyBlcyBwb2NvLlwiLCBldmlkZW5jaWE6IFwiZGF0byAobGFzIG5vcm1hcykgZSBoaXDDs3Rlc2lzIChzdSBwZXNvIHJlYWwpXCJ9LFxuICB7bjogXCI4LiBBbmlkYW1pZW50b1wiLCBjdXJzbzogXCJmYWx0YVwiLCBuaXZlbDogXCJ0ZXJyaXRvcmlhbFwiLCBwb3JxdWU6IFwiTGFzIGNvbnN1bHRhcyBmdWVyb24gYmlsYXRlcmFsZXMsIGVtcHJlc2EgcG9yIGNvbXVuaWRhZCwgeSBsYXMgbWVzYXMgZGUgbGFzIHRyYW5zZmVyZW5jaWFzIHNvbiB1bmEgcG9yIHByb3llY3RvOiBuaW5ndW5hIGluc3RhbmNpYSBhcnRpY3VsYSBsbyBxdWUgY3J1emEgY29tdW5pZGFkZXMgeSBwcm95ZWN0b3MuXCIsIGV2aWRlbmNpYTogXCJkYXRvIChDb250cmFsb3LDrWEsIDIwMjE7IERlY3JldG8gMTU0MCBkZSAyMDI0KVwifSxcbl1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgY2FsaWZpY2FjaW9uViA9IElucHV0cy5mb3JtKE9iamVjdC5mcm9tRW50cmllcyhwcmluY2lwaW9zVi5tYXAoKHApID0+IFtwLm4sIElucHV0cy5yYWRpbyhbXCJjdW1wbGVcIiwgXCJhIG1lZGlhc1wiLCBcImZhbHRhXCJdLCB7bGFiZWw6IHAubn0pXSkpKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdj4ke3ByaW5jaXBpb3NWLm1hcCgocCkgPT4ge1xuICBjb25zdCByID0gY2FsaWZpY2FjaW9uVltwLm5dO1xuICBpZiAoIXIpIHJldHVybiBodG1sYDxwIHN0eWxlPVwiY29sb3I6IzVGNUY1RlwiPiR7cC5ufTogc2luIGNhbGlmaWNhci48L3A+YDtcbiAgY29uc3QgY29pbmNpZGUgPSByID09PSBwLmN1cnNvO1xuICByZXR1cm4gaHRtbGA8cCBzdHlsZT1cImJvcmRlci1sZWZ0OjRweCBzb2xpZCAke2NvaW5jaWRlID8gQ09MT1JFUy52ZXJkZSA6IENPTE9SRVMuYW1iYXJ9O3BhZGRpbmctbGVmdDouNnJlbVwiPlxuICAgIDxiPiR7cC5ufTwvYj46IHVzdGVkIGRpam8gwqske3J9wrs7IGVzdGEgcMOhZ2luYSBkaWNlIMKrJHtwLmN1cnNvfcK7LCBlbiBlbCBuaXZlbCAke3Aubml2ZWx9LiAke3AucG9ycXVlfSA8aT5FdmlkZW5jaWE6ICR7cC5ldmlkZW5jaWF9LjwvaT48L3A+YDtcbn0pfTwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IGNhbGlmaWNhZG9zID0gcHJpbmNpcGlvc1YuZmlsdGVyKChwKSA9PiBjYWxpZmljYWNpb25WW3Aubl0pO1xuICBjb25zdCBjb2luY2lkZW5jaWFzID0gY2FsaWZpY2Fkb3MuZmlsdGVyKChwKSA9PiBjYWxpZmljYWNpb25WW3Aubl0gPT09IHAuY3Vyc28pLmxlbmd0aDtcbiAgY29uc3QgYXVzZW50ZXMgPSBwcmluY2lwaW9zVi5maWx0ZXIoKHApID0+IGNhbGlmaWNhY2lvblZbcC5uXSA9PT0gXCJmYWx0YVwiKTtcbiAgY29uc3Qgbml2ZWxlcyA9IFsuLi5uZXcgU2V0KGF1c2VudGVzLm1hcCgocCkgPT4gcC5uaXZlbCkpXTtcbiAgcmV0dXJuIGh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gICAgPGRpdj5QcmluY2lwaW9zIGNhbGlmaWNhZG9zPGI+JHtjYWxpZmljYWRvcy5sZW5ndGh9IGRlIDg8L2I+PC9kaXY+XG4gICAgPGRpdj5Db2luY2lkZW5jaWFzIGNvbiBlc3RhIHDDoWdpbmE8Yj4ke2NvaW5jaWRlbmNpYXN9PC9iPjwvZGl2PlxuICAgIDxkaXY+UHJpbmNpcGlvcyBxdWUgdXN0ZWQgbWFyY8OzIGNvbW8gYXVzZW50ZXM8Yj4ke2F1c2VudGVzLmxlbmd0aCA/IGF1c2VudGVzLm1hcCgocCkgPT4gcC5uLnNwbGl0KFwiLlwiKVswXSkuam9pbihcIiwgXCIpIDogXCJuaW5ndW5vIHRvZGF2w61hXCJ9PC9iPjwvZGl2PlxuICAgIDxkaXY+Tml2ZWxlcyBkb25kZSBxdWVkYW4gZXNvcyBhdXNlbnRlczxiPiR7bml2ZWxlcy5sZW5ndGggPyBuaXZlbGVzLmpvaW4oXCI7IFwiKSA6IFwibmluZ3VubyB0b2RhdsOtYVwifTwvYj48L2Rpdj5cbiAgPC9kaXY+YDtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncmVnaXN0cm9NJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3RhcmlmYU0nKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2FuY2lvbk0nKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnY2FsaWZpY2FjaW9uVicpIn1dfQ==
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }

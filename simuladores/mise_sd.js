@@ -889,6 +889,42 @@ export function adopcionLogistica({techos = 10000, contagio = 0.5, adoptantes_in
   };
 }
 
+/**
+ * Adopción de solar en techos con cupo de la red y trámite de conexión [techos, años]
+ * (réplica de mise_sd.modelos.adopcion_con_cupo). Solicitudes por contagio mientras quede cupo;
+ * conexiones con el tiempo de trámite del operador. Desde anio_intervencion rigen los valores nuevos.
+ */
+export function adopcionConCupo({techos = 10000, contagio = 0.5, adoptantes_iniciales = 20, cupo = null, tiempo_conexion = 0.5,
+  tiempo_minimo = 0.1, anio_intervencion = null, contagio_nuevo = null, cupo_nuevo = null, tiempo_conexion_nuevo = null} = {}) {
+  if (!(techos > 0) || !(tiempo_conexion > 0) || !(tiempo_minimo > 0))
+    throw new Error("Los techos, el tiempo de conexión y el tiempo mínimo deben ser positivos.");
+  const cupoBase = cupo ?? techos;
+  const anio = anio_intervencion ?? Infinity;
+  const antes = {contagio, cupo: cupoBase, tiempo_conexion};
+  const despues = {contagio: contagio_nuevo ?? contagio, cupo: cupo_nuevo ?? cupoBase, tiempo_conexion: tiempo_conexion_nuevo ?? tiempo_conexion};
+  const vigente = (nombre) => (t) => (t < anio ? antes[nombre] : despues[nombre]);
+  return {
+    nombre: "adopcion_con_cupo",
+    constantes: {techos, tiempo_minimo},
+    stocks: [
+      {nombre: "solicitudes_en_tramite", inicial: 0, entradas: ["solicitudes"], salidas: ["conexiones"]},
+      {nombre: "techos_conectados", inicial: adoptantes_iniciales, entradas: ["conexiones"], salidas: []},
+    ],
+    auxiliares: [
+      ["contagio_vigente", vigente("contagio")],
+      ["cupo_vigente", vigente("cupo")],
+      ["tiempo_conexion_vigente", vigente("tiempo_conexion")],
+      ["cupo_disponible", (t, e) => Math.max(0, e.cupo_vigente - e.techos_conectados - e.solicitudes_en_tramite)],
+    ],
+    flujos: [
+      ["solicitudes", (t, e) => Math.min(
+        e.contagio_vigente * e.techos_conectados * Math.max(0, 1 - (e.techos_conectados + e.solicitudes_en_tramite) / e.techos),
+        e.cupo_disponible / e.tiempo_minimo)],
+      ["conexiones", (t, e) => e.solicitudes_en_tramite / e.tiempo_conexion_vigente],
+    ],
+  };
+}
+
 /** La bañera de Sterman [L, min] (réplica de mise_sd.modelos.banera). El desagüe
  *  constante no saca agua que no hay: salida = min(caudal, nivel / tiempo mínimo de vaciado). */
 export function banera({nivel_inicial = 80, caudal_grifo = 5, caudal_desague = 3, tau_desague = null,

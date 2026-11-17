@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Cuatro capas, cuatro preguntas para un solo sistema: estructura física, dinámica de mercado, red de actores y gobernanza, con sus acoples, aplicadas a un apagón, a la solar en techos y a Windpeshi.">
+<meta name="description" content="El análisis de cuatro capas de un proyecto energético en seis pasos: cómo se formula la pregunta de cada capa, con qué evidencia se responde, cómo se registran los acoples entre capas y cómo se localiza el problema con la prueba de la intervención, aplicado al apagón de un municipio, a la solar en techos de un barrio y a Windpeshi.">
 
 <title>El marco multicapa – Systems Analytics · Guías de autoestudio</title>
 <style>
@@ -117,8 +117,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-<meta name="guias-mise:fecha" content="11 de noviembre de 2026">
+<meta name="guias-mise:fecha" content="16 de noviembre de 2026">
 
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -616,8 +659,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">1. La pregunta</a></li>
-  <li><a href="#la-intuición-una-ciudad-con-cuatro-pares-de-gafas" id="toc-la-intuición-una-ciudad-con-cuatro-pares-de-gafas" class="nav-link" data-scroll-target="#la-intuición-una-ciudad-con-cuatro-pares-de-gafas">2. La intuición: una ciudad con cuatro pares de gafas</a></li>
-  <li><a href="#del-dibujo-a-la-ecuación" id="toc-del-dibujo-a-la-ecuación" class="nav-link" data-scroll-target="#del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</a></li>
+  <li><a href="#la-intuición-una-ciudad-vista-cuatro-veces" id="toc-la-intuición-una-ciudad-vista-cuatro-veces" class="nav-link" data-scroll-target="#la-intuición-una-ciudad-vista-cuatro-veces">2. La intuición: una ciudad vista cuatro veces</a></li>
+  <li><a href="#del-dibujo-al-procedimiento" id="toc-del-dibujo-al-procedimiento" class="nav-link" data-scroll-target="#del-dibujo-al-procedimiento">3. Del dibujo al procedimiento</a></li>
   <li><a href="#ejemplos-resueltos" id="toc-ejemplos-resueltos" class="nav-link" data-scroll-target="#ejemplos-resueltos">4. Ejemplos resueltos</a></li>
   <li><a href="#errores-comunes" id="toc-errores-comunes" class="nav-link" data-scroll-target="#errores-comunes">5. Errores comunes</a></li>
   <li><a href="#compruebe-lo-aprendido" id="toc-compruebe-lo-aprendido" class="nav-link" data-scroll-target="#compruebe-lo-aprendido">6. Compruebe lo aprendido</a></li>
@@ -637,7 +680,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Cuatro capas, cuatro preguntas para un solo sistema: estructura física, dinámica de mercado, red de actores y gobernanza, con sus acoples, aplicadas a un apagón, a la solar en techos y a Windpeshi.
+    El análisis de cuatro capas de un proyecto energético en seis pasos: cómo se formula la pregunta de cada capa, con qué evidencia se responde, cómo se registran los acoples entre capas y cómo se localiza el problema con la prueba de la intervención, aplicado al apagón de un municipio, a la solar en techos de un barrio y a Windpeshi.
   </div>
 </div>
 
@@ -657,7 +700,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-include="false">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="8" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 7;"><span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="8" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 7;"><span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {simular<span class="op">,</span> adopcionConCupo<span class="op">,</span> formatoNumero} <span class="im">from</span> <span class="st">"../simuladores/mise_sd.js"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display hidden">
 <div id="ojs-cell-1" data-nodetype="declaration">
@@ -665,181 +708,695 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<div class="cell" data-include="false">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="13" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 12;"><span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>COLORES <span class="op">=</span> ({<span class="dt">azul</span><span class="op">:</span> <span class="st">"#003366"</span><span class="op">,</span> <span class="dt">verde</span><span class="op">:</span> <span class="st">"#00693E"</span><span class="op">,</span> <span class="dt">ambar</span><span class="op">:</span> <span class="st">"#B26C00"</span><span class="op">,</span> <span class="dt">violeta</span><span class="op">:</span> <span class="st">"#5434A0"</span><span class="op">,</span> <span class="dt">gris</span><span class="op">:</span> <span class="st">"#5F5F5F"</span><span class="op">,</span> <span class="dt">rojo</span><span class="op">:</span> <span class="st">"#CE1126"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
 <div class="ficha-pagina">
-<p><span class="dato">⏱ 45 a 55 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la definición con las capas y sus acoples, el ejemplo de Windpeshi, los errores comunes, las preguntas y el resumen, unos 35 min; amplían: el apagón, el selector de la solar en techos y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana1/10-mapa-causal.html">el mapa causal de la semana 1</a>, <a href="../semana2/10-sin-como-red.html">el SIN como red</a>, <a href="../semana3/06-redes-actores.html">redes de actores</a> y <a href="../semana5/10-modelo-politicas.html">el modelo con CxC y FNCER</a></span></p>
+<p><span class="dato">⏱ 80 a 90 minutos</span> <span class="dato">🧭 Ruta mínima: la pregunta, la intuición, las tres definiciones con el visor del acople, el ejemplo ●○○ del apagón completo, el ejemplo ●●○ de los techos con su simulador, el primer error común, las tres primeras preguntas y el resumen, unos 55 min; amplían: Windpeshi, los demás errores y los ejercicios</span> <span class="dato">📚 Requiere <a href="../semana2/10-sin-como-red.html">el SIN como red</a>, <a href="../semana3/06-redes-actores.html">redes de actores</a>, <a href="../semana4/05-polaridad-lazos.html">polaridad y lazos</a> y <a href="../semana5/01-refuerzo-exponencial.html">lazos de refuerzo</a></span></p>
 </div>
 <div class="objetivos caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Al terminar esta página</span>
 </div>
 <ul>
-<li>Formular la pregunta que responde cada una de las cuatro capas de un proyecto o sistema energético.</li>
-<li>Identificar acoples entre capas y localizar el problema en la capa o en la costura donde vive.</li>
-<li>Explicar por qué una recomendación hecha desde una sola capa suele atacar el síntoma.</li>
+<li>Formular, para un caso concreto, la pregunta de cada una de las cuatro capas de modo que apunte a una variable que se puede medir.</li>
+<li>Responder cada pregunta con una herramienta de las semanas anteriores y una fuente identificable, y registrar en una matriz los acoples entre capas con su polaridad.</li>
+<li>Localizar la capa o la costura donde vive el problema con la prueba de la intervención, y redactar la recomendación que sale de ella.</li>
 </ul>
 </div>
 <div class="idea-clave caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Idea clave</span>
 </div>
-<p>Todo proyecto energético se puede mirar con cuatro pares de gafas: la infraestructura, el mercado, los actores y las reglas. Los fracasos caros rara vez ocurren dentro de una capa; ocurren en las costuras, donde una variable de una capa es condición de la otra.</p>
+<p>Un proyecto energético es a la vez una infraestructura, un negocio, una red de actores y un conjunto de reglas. El análisis de cuatro capas hace una pregunta por capa, la responde con evidencia y busca los acoples, que son los puntos donde lo que una capa da por fijo lo decide otra. La recomendación se dirige a la capa cuya intervención cambia esos acoples.</p>
+</div>
+<p><strong>El hilo de la semana.</strong> Toda la semana 6 desarrolla un solo procedimiento, el análisis de cuatro capas en seis pasos, sobre un mismo caso, el parque eólico Windpeshi. Esta página recorre los seis pasos completos en una primera pasada. Cada página siguiente vuelve sobre uno de los pasos con una herramienta propia, y la página 8 arma el análisis completo.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../diagramas/svg/s6-00-hilo-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="El análisis de cuatro capas en seis pasos y la página que desarrolla cada uno. En ámbar, lo que cubre esta página: los seis pasos, en una primera pasada."><img src="../diagramas/svg/s6-00-hilo-2.svg" class="img-fluid figure-img" alt="A la izquierda, los seis pasos del análisis: síntoma, decisor y pregunta; la pregunta de cada capa; respuestas con evidencia; acoples y lazos entre capas; dónde vive el problema; conclusión y recomendación. A la derecha, las ocho páginas de la semana. La página 1, en ámbar, se une a los seis pasos."></a></p>
+<figcaption>El análisis de cuatro capas en seis pasos y la página que desarrolla cada uno. En ámbar, lo que cubre esta página: los seis pasos, en una primera pasada.</figcaption>
+</figure>
 </div>
 <section id="la-pregunta" class="level2">
 <h2 class="anchored" data-anchor-id="la-pregunta">1. La pregunta</h2>
-<p>Windpeshi tenía, en cada capa por separado, razones para avanzar: un recurso eólico excepcional, contratos de largo plazo, tecnología madura y licencias en regla. Aun así, Enel lo suspendió en mayo de 2023 por «vías de hecho y altas expectativas», cuando además la línea de la que dependía su conexión seguía sin construirse, y en 2026, con otro dueño, volvieron los bloqueos. El ingeniero, el economista y el abogado del proyecto tenían razón dentro de su capa. <strong>¿Qué se pierde cuando cada disciplina mira solo su capa, y cómo se ubica el lugar donde de verdad vive el problema?</strong></p>
+<p>Windpeshi es un parque eólico de 205 MW en La Guajira. Tenía viento de sobra, obligaciones de energía firme y un contrato de largo plazo ganados en las subastas de 2019, licencia ambiental y consultas previas protocolizadas. El 25 de mayo de 2023, Enel Colombia suspendió la construcción por «las constantes vías de hecho y altas expectativas que superan el marco de actuación de la organización» (Enel Colombia, 2023). La línea de 500 kV de la que dependía su conexión entró en servicio en octubre de 2025, cinco años después de la fecha prevista. El ingeniero, la financiera y el abogado del proyecto tenían cada uno sus cuentas en orden.</p>
+<p><strong>Cuando cada especialista tiene razón en lo suyo y el proyecto se detiene, ¿cómo se averigua dónde está el problema y qué se le recomienda a quien decide?</strong></p>
 </section>
-<section id="la-intuición-una-ciudad-con-cuatro-pares-de-gafas" class="level2">
-<h2 class="anchored" data-anchor-id="la-intuición-una-ciudad-con-cuatro-pares-de-gafas">2. La intuición: una ciudad con cuatro pares de gafas</h2>
+<section id="la-intuición-una-ciudad-vista-cuatro-veces" class="level2">
+<h2 class="anchored" data-anchor-id="la-intuición-una-ciudad-vista-cuatro-veces">2. La intuición: una ciudad vista cuatro veces</h2>
+<p>Un trancón que se repite todos los días en la misma avenida sirve para ver la idea antes de formalizarla. La avenida es una sola, y se puede mirar de cuatro maneras. Cada mirada hace una pregunta distinta y se responde con información distinta.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">La misma ciudad, cuatro veces</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">El mismo trancón, cuatro preguntas</span>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../diagramas/svg/s6-01-ciudad-1.svg" class="img-fluid" loading="lazy" alt="Un plano con calles, tuberías y cables: la ciudad de concreto."></a></p>
-<p><strong>La ciudad de concreto.</strong> Calles, tuberías y cables. Responde qué se puede mover y por dónde.</p>
+<p><a href="../diagramas/svg/s6-01-ciudad-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s6-01-ciudad-1.svg" class="img-fluid" loading="lazy" alt="Un plano amarillo con calles. A la derecha: la ciudad de concreto, ¿qué se puede mover y por dónde?"></a></p>
+<p><strong>Mire la ciudad de concreto.</strong> Calles, puentes y tuberías. La pregunta es qué se puede mover y por dónde, y se responde con el plano y un conteo: la avenida tiene dos carriles, por los que caben 2 400 vehículos por hora, y en la hora pico llegan 3 000.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../diagramas/svg/s6-01-ciudad-2.svg" class="img-fluid" loading="lazy" alt="Encima, la ciudad de los flujos: empleos, arriendos y precios."></a></p>
-<p><strong>La ciudad de los flujos.</strong> Empleos, arriendos y precios que suben y bajan. Responde qué comportamiento sale de millones de decisiones económicas.</p>
+<p><a href="../diagramas/svg/s6-01-ciudad-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s6-01-ciudad-2.svg" class="img-fluid" loading="lazy" alt="Encima, un plano azul con signos de pesos. A la derecha: la ciudad de los flujos, ¿qué decisiones de hogares y empresas producen lo que se ve?"></a></p>
+<p><strong>Mire la ciudad de los flujos.</strong> Empleos, arriendos y precios. La pregunta es qué decisiones de hogares y empresas producen ese tráfico, y se responde con cifras de vivienda y empleo: el arriendo cerca del trabajo cuesta el doble, así que la gente vive lejos y cruza la avenida.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../diagramas/svg/s6-01-ciudad-3.svg" class="img-fluid" loading="lazy" alt="Encima, la ciudad de la gente: vecinos conectados por relaciones."></a></p>
-<p><strong>La ciudad de la gente.</strong> Vecinos, juntas de acción comunal, gremios: quién conoce a quién y quién puede vetar qué. Responde quién mueve o frena las cosas.</p>
+<p><a href="../diagramas/svg/s6-01-ciudad-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s6-01-ciudad-3.svg" class="img-fluid" loading="lazy" alt="Encima, un plano verde con personas unidas por líneas. A la derecha: la ciudad de la gente, ¿quién gana, quién pierde y quién puede frenar?"></a></p>
+<p><strong>Mire la ciudad de la gente.</strong> Vecinos, comerciantes, transportadores, la alcaldía. La pregunta es quién gana, quién pierde y quién puede frenar una solución, y se responde con actas y entrevistas: los comerciantes de la avenida se oponen a un carril exclusivo para buses.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../diagramas/svg/s6-01-ciudad-4.svg" class="img-fluid" loading="lazy" alt="Arriba, la ciudad de las reglas: plan de ordenamiento, licencias y costumbre."></a></p>
-<p><strong>La ciudad de las reglas.</strong> El plan de ordenamiento, las licencias, la costumbre. Responde quién decide sobre las decisiones.</p>
+<p><a href="../diagramas/svg/s6-01-ciudad-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s6-01-ciudad-4.svg" class="img-fluid" loading="lazy" alt="Arriba, un plano violeta con una norma. A la derecha: la ciudad de las reglas, ¿qué norma lo permite y quién la puede cambiar?"></a></p>
+<p><strong>Mire la ciudad de las reglas.</strong> El plan de ordenamiento, las licencias, las normas de parqueo. La pregunta es qué norma permite lo que pasa y quién la puede cambiar, y se responde leyendo la norma: el plan de ordenamiento autoriza oficinas en el centro y vivienda solo en la periferia.</p>
 </div>
 <div class="paso">
-<p><a href="../diagramas/svg/s6-01-ciudad-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../diagramas/svg/s6-01-ciudad-5.svg" class="img-fluid" loading="lazy" alt="Una flecha roja atraviesa las cuatro capas: un trancón se entiende cruzándolas."></a></p>
-<p><strong>Un problema que las cruza.</strong> Un trancón crónico es a la vez una vía estrecha, un mercado de vivienda que expulsa gente lejos del empleo, vecinos que bloquean una obra y una norma que no se cumple. Nadie diría que la verdadera ciudad es una sola de las cuatro. Regla de oro: antes de declarar irracional algo que ve en una capa, busque en qué otra capa es perfectamente racional.</p>
+<p><a href="../diagramas/svg/s6-01-ciudad-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s6-01-ciudad-5.svg" class="img-fluid" loading="lazy" alt="Una flecha roja atraviesa los cuatro planos de abajo arriba: un trancón de todos los días es vía, vivienda, vecinos y norma a la vez."></a></p>
+<p><strong>Una las cuatro respuestas.</strong> Cada respuesta explica la anterior. La avenida se llena porque la gente vive lejos; vive lejos por el arriendo; el arriendo depende de dónde la norma deja construir. Ampliar la avenida atiende la primera respuesta y deja las otras tres como estaban. La flecha roja recuerda que el problema atraviesa los cuatro planos.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-ciudad-6.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s6-01-ciudad-6.svg" class="img-fluid" loading="lazy" alt="Los mismos cuatro planos con etiquetas violeta del sector eléctrico: estructura física (redes, equipos y recurso), dinámica de mercado (inversiones, precios y contratos), red de actores (empresas, comunidades y entidades) y gobernanza (leyes, licencias, consulta y reparto)."></a></p>
+<p><strong>Pase al sector eléctrico.</strong> El dibujo es el mismo y cambian las etiquetas. La ciudad de concreto es la red y el recurso; la de los flujos, las inversiones, los precios y los contratos; la de la gente, las empresas, las comunidades y las entidades; la de las reglas, las leyes, las licencias y la consulta previa. Un proyecto rentable que no se construye se analiza con las mismas cuatro preguntas.</p>
 </div>
 </div>
 </section>
-<section id="del-dibujo-a-la-ecuación" class="level2">
-<h2 class="anchored" data-anchor-id="del-dibujo-a-la-ecuación">3. Del dibujo a la ecuación</h2>
-<div id="definicion-las-cuatro-capas-del-analisis-sistemico" class="definicion caja">
+<section id="del-dibujo-al-procedimiento" class="level2">
+<h2 class="anchored" data-anchor-id="del-dibujo-al-procedimiento">3. Del dibujo al procedimiento</h2>
+<p>La intuición dejó tres piezas. Hay cuatro planos con una pregunta cada uno; las respuestas se explican unas a otras; y la solución que atiende un solo plano deja el resto igual. La primera definición precisa los planos, que desde aquí se llaman capas. La segunda define la relación entre capas, el acople, con la notación de los modelos de las semanas 4 y 5. La tercera ordena todo en un procedimiento de seis pasos, que es el que recorren los tres ejemplos de la página y el resto de la semana.</p>
+<div id="definicion-las-cuatro-capas-de-un-proyecto-energetico" class="definicion caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Las cuatro capas del análisis sistémico</span>
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Las cuatro capas de un proyecto energético</span>
 </div>
-<p>Todo proyecto o sistema energético se analiza en cuatro capas articuladas, cada una con su pregunta, sus herramientas y su escala temporal:</p>
+<p>Un proyecto o sistema energético se describe en cuatro <strong>capas</strong>. Cada una reúne un tipo de objetos, hace una pregunta propia y se estudia con herramientas que usted ya tiene.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Capa</th>
+<th>Qué contiene</th>
+<th>Pregunta de la capa</th>
+<th>Herramienta</th>
+<th>Escala de tiempo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Estructura física (F)</td>
+<td>redes, equipos, recurso</td>
+<td>¿Qué permite y qué limita la infraestructura?</td>
+<td>grafo de la red, criterio N-1, cuellos de botella (semanas 2 y 3)</td>
+<td>de segundos a décadas</td>
+</tr>
+<tr class="even">
+<td>2. Dinámica de mercado (M)</td>
+<td>inversiones, precios, contratos</td>
+<td>¿Qué decisiones económicas producen lo que se observa?</td>
+<td>stocks, flujos, lazos y retardos (semanas 4 y 5)</td>
+<td>de meses a décadas</td>
+</tr>
+<tr class="odd">
+<td>3. Red de actores (A)</td>
+<td>empresas, comunidades, entidades</td>
+<td>¿Quién gana, quién pierde y quién puede acelerar o frenar?</td>
+<td>red de actores y matriz poder-interés (semana 3 y <a href="../semana6/06-redes-actores.html">página 6</a>)</td>
+<td>de meses a años</td>
+</tr>
+<tr class="even">
+<td>4. Gobernanza (G)</td>
+<td>leyes, licencias, consulta, reparto</td>
+<td>¿Qué reglas rigen, quién las fija y quién puede cambiarlas?</td>
+<td>diseño institucional, justicia y norma (<a href="../semana6/03-ostrom.html">páginas 3</a>, <a href="../semana6/04-justicia-energetica.html">4</a> y <a href="../semana6/05-consulta-previa.html">5</a>)</td>
+<td>de años a generaciones</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Las capas se estudian por separado y funcionan juntas. Para decir con precisión cómo se conectan sirve la forma en que usted escribió los modelos de las semanas 4 y 5: unas variables que cambian y unas constantes que el modelo toma como dadas.</p>
+<div id="definicion-acople-matriz-de-acoples-y-lazo-entre-capas" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">Acople, matriz de acoples y lazo entre capas</span>
+</div>
+<p>Escriba cada capa <span class="math inline">c</span> como un modelo con sus variables <span class="math inline">\mathbf{x}_c(t)</span> y sus <strong>condiciones</strong> <span class="math inline">\mathbf{p}_c</span>, que son lo que esa capa toma como dado (constantes, límites, plazos):</p>
+<p><span class="math display">\frac{d\mathbf{x}_c}{dt} = f_c\bigl(\mathbf{x}_c,\ \mathbf{p}_c\bigr), \qquad c \in \{F, M, A, G\}.</span></p>
+<p>Hay un <strong>acople</strong> de la capa <span class="math inline">i</span> a la capa <span class="math inline">j</span>, que se escribe <span class="math inline">i \to j</span>, cuando una condición de <span class="math inline">j</span> depende de una variable de <span class="math inline">i</span>:</p>
+<p><span class="math display">p_j = h(x_i).</span></p>
+<p>Cada acople se anota con la variable de origen, la condición de destino y la <strong>polaridad</strong>, que se lee como en la semana 4: positiva si las dos se mueven en el mismo sentido y negativa si se mueven en sentidos opuestos.</p>
+<p>La <strong>matriz de acoples</strong> es la tabla de cuatro filas (la capa de origen) por cuatro columnas (la capa de destino) que lista los acoples de cada par. Tiene doce celdas fuera de la diagonal y cada una se revisa con la misma pregunta: ¿qué variable de la capa de la fila fija una condición de la capa de la columna? Una <strong>costura</strong> es un par de capas con al menos un acople.</p>
+<p>Un <strong>lazo entre capas</strong> es una cadena cerrada de acoples. Su tipo se lee como siempre: con un número par de enlaces negativos es de refuerzo (R) y con un número impar es de balance (B).</p>
+</div>
+<p>El visor muestra la segunda definición con una pieza que usted ya construyó. En el modelo de la cadena de obras de la <a href="../semana4/03-formalismo-integracion.html">semana 4</a>, los proyectos en construcción <span class="math inline">P</span> [MW] entran en servicio al ritmo <span class="math inline">P/\tau_c</span> [MW/año], y el retardo constructor <span class="math inline">\tau_c</span> era una constante de 4 años. El visor ubica esa pieza en su capa y busca de dónde sale la constante.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Qué es un acople: el retardo constructor visto desde las otras capas</span>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-acople-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s6-01-acople-1.svg" class="img-fluid" loading="lazy" alt="Cuatro bandas horizontales: abajo la capa física (redes, equipos, recurso), luego el mercado (inversiones, precios, contratos), los actores (empresas, comunidades, entidades) y arriba la gobernanza (leyes, licencias, consulta, reparto)."></a></p>
+<p><strong>Dibuje las cuatro capas.</strong> Son las cuatro bandas de este diagrama, con la capa física abajo y la gobernanza arriba. Todos los diagramas de la página usan este mismo marco: las variables de cada capa se escriben dentro de su banda.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-acople-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s6-01-acople-2.svg" class="img-fluid" loading="lazy" alt="En la banda del mercado aparecen dos cajas: puesta en servicio igual a P sobre tau_c, en MW por año, y retardo tau_c en años, con una flecha negativa del retardo a la puesta en servicio."></a></p>
+<p><strong>Ubique la pieza del modelo en su capa.</strong> La puesta en servicio <span class="math inline">P/\tau_c</span> es una decisión de inversión que se materializa, y pertenece a la capa de mercado. Dentro de esa capa, <span class="math inline">\tau_c = 4</span> años es una condición: el modelo la toma como dada. La flecha es negativa porque, con más retardo, entra menos capacidad por año.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-acople-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s6-01-acople-3.svg" class="img-fluid" loading="lazy" alt="Aparecen en ámbar una caja en la gobernanza, duración de la consulta y de la licencia, y una en los actores, desacuerdos y bloqueos, las dos con flechas positivas hacia el retardo tau_c."></a></p>
+<p><strong>Pregunte de dónde sale la condición.</strong> Los 4 años resultan de sumar lo que tardan la licencia y la consulta, que fija la gobernanza, y lo que agregan los desacuerdos, que ocurren en la capa de actores. Son dos acoples, <span class="math inline">G \to M</span> y <span class="math inline">A \to M</span>, los dos positivos: más duración o más desacuerdos, más retardo. En la notación de la definición, <span class="math inline">\tau_c = h(\text{duración de la consulta},\ \text{desacuerdos})</span>.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-acople-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../diagramas/svg/s6-01-acople-4.svg" class="img-fluid" loading="lazy" alt="Aparece en ámbar una caja en la capa física, línea de conexión en servicio, con una flecha positiva hacia la puesta en servicio."></a></p>
+<p><strong>Revise la capa que falta.</strong> La capa física pone otra condición: un parque terminado sin línea de conexión no entra en servicio. Es el acople <span class="math inline">F \to M</span>. Con este van tres celdas llenas de la matriz, todas en la columna del mercado.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-acople-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../diagramas/svg/s6-01-acople-5.svg" class="img-fluid" loading="lazy" alt="Aparecen en ámbar el retraso frente al contrato, en el mercado, y la prisa por cerrar, en los actores. Flechas positivas del retardo al retraso, del retraso a la prisa, de la prisa a los desacuerdos y de los desacuerdos al retardo forman el lazo R1."></a></p>
+<p><strong>Busque si el efecto regresa.</strong> Un retardo mayor atrasa el proyecto frente a las fechas de su contrato; el atraso apura a la empresa en la negociación; la prisa produce desacuerdos; y los desacuerdos alargan el retardo. Son cuatro enlaces positivos que cruzan dos capas, es decir, un lazo de refuerzo entre capas, R1. La constante de la semana 4 era la parte visible de ese lazo.</p>
+</div>
+</div>
+<p>Con las capas y los acoples definidos, el análisis se hace siempre en el mismo orden.</p>
+<div id="definicion-el-analisis-de-cuatro-capas-en-seis-pasos" class="definicion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Definición</span><span class="caja-texto-titulo">El análisis de cuatro capas, en seis pasos</span>
+</div>
 <ol type="1">
-<li><strong>Estructura física</strong>: ¿qué permite y qué restringe la infraestructura y el recurso? Redes, criterio N-1, cuellos de botella; de milisegundos a décadas.</li>
-<li><strong>Dinámica de mercado</strong>: ¿qué comportamiento emerge de las decisiones económicas acopladas? Stocks, lazos, retardos y políticas; de meses a décadas.</li>
-<li><strong>Red de actores</strong>: ¿quién puede impulsar, bloquear o transformar, y a través de qué relaciones? Redes sociales, matriz poder-interés, coaliciones y vetos; de meses a años.</li>
-<li><strong>Gobernanza</strong>: ¿quién decide sobre las decisiones, con qué legitimidad y con qué reglas de reparto? Diseño institucional, justicia, normas; de años a generaciones.</li>
+<li><strong>Fije el síntoma, el decisor y la pregunta.</strong> El síntoma es un hecho observable, con número, unidad y fecha. El decisor es quien puede actuar. La pregunta dice qué decisión está por tomarse.</li>
+<li><strong>Formule la pregunta de cada capa.</strong> Tome la pregunta de la capa y escriba en ella el síntoma del caso. Queda bien formulada cuando apunta a una variable que se puede medir.</li>
+<li><strong>Responda con evidencia.</strong> Cada respuesta es una frase con una cifra o un hecho, la herramienta o la cuenta con que se obtuvo y su fuente. Se marca como <strong>dato</strong> (se puede citar), <strong>cálculo</strong> (una cuenta propia con datos citados) o <strong>hipótesis</strong> (falta comprobarla, y se dice cómo).</li>
+<li><strong>Registre los acoples.</strong> Pregunte por qué cada respuesta es la que es. Cuando la explicación está en otra capa, hay un acople, y se anota en la matriz con su polaridad. Después se revisan las celdas que quedaron vacías y se encadenan los acoples para ver si forman un lazo.</li>
+<li><strong>Localice el problema.</strong> Liste la intervención que propondría cada capa y aplíquele a cada una la <strong>prueba de la intervención</strong>, que son tres preguntas: qué variable mueve, si cambia algún acople o lazo, y si el síntoma vuelve. El problema vive en la capa o en la costura cuya intervención cambia el lazo.</li>
+<li><strong>Concluya.</strong> Una recomendación que dice en qué capa se actúa, qué necesita de las otras, con qué cifras se sostiene y qué señal permite seguirla.</li>
 </ol>
-<p>El análisis tiene tres pasos: responder la pregunta de cada capa, identificar los <strong>acoples</strong> (dónde una variable de una capa es condición de frontera de otra) y localizar el problema en la capa, o en la costura, donde vive.</p>
 </div>
-<div class="pasos caja">
-<div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Las capas y sus acoples</span>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../diagramas/svg/s6-01-capas-1.svg" class="img-fluid" loading="lazy" alt="Capa 1: estructura física."></a></p>
-<p><strong>Capa 1, estructura física.</strong> La semana 2 y la semana 3 le dieron sus herramientas: la topología del sistema de transmisión, el criterio N-1 y los cuellos de botella.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../diagramas/svg/s6-01-capas-2.svg" class="img-fluid" loading="lazy" alt="Capa 2: dinámica de mercado."></a></p>
-<p><strong>Capa 2, dinámica de mercado.</strong> Las semanas 4 y 5: el ciclo de inversión, el aprendizaje, las palancas y los escenarios.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../diagramas/svg/s6-01-capas-3.svg" class="img-fluid" loading="lazy" alt="Capa 3: red de actores."></a></p>
-<p><strong>Capa 3, red de actores.</strong> Las mismas métricas de red de la semana 3, ahora sobre personas e instituciones: quién está en el centro, quién es puente y quién puede vetar.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../diagramas/svg/s6-01-capas-4.svg" class="img-fluid" loading="lazy" alt="Capa 4: gobernanza."></a></p>
-<p><strong>Capa 4, gobernanza.</strong> Las reglas sobre las reglas: consulta previa, reparto de costos y beneficios, diseño institucional. Es la capa nueva de esta semana.</p>
-</div>
-<div class="paso">
-<p><a href="../diagramas/svg/s6-01-capas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../diagramas/svg/s6-01-capas-5.svg" class="img-fluid" loading="lazy" alt="Flechas de acople entre capas vecinas y una flecha larga de la gobernanza a la física."></a></p>
-<p><strong>Dibuje los acoples.</strong> Cada capa condiciona a sus vecinas, y la gobernanza alcanza directamente a la física: una consulta previa define dónde puede ir una torre. Un análisis multicapa sin flechas entre capas es una lista.</p>
-</div>
-</div>
+<p>El paso 2 tiene una plantilla por capa, y el paso 3 tiene fuentes conocidas en un proyecto energético colombiano. La tabla reúne las dos cosas; en la plantilla, los corchetes se reemplazan por el síntoma del caso.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capa</th>
+<th>Plantilla de la pregunta (paso 2)</th>
+<th>Lo que se mide</th>
+<th>Dónde se consigue la respuesta (paso 3)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Física</td>
+<td>¿Qué equipo, red o recurso limita [el síntoma] y cuánta holgura tiene?</td>
+<td>capacidad, holgura, respaldo N-1</td>
+<td>diagrama unifilar del operador; Paratec de XM (parámetros de plantas, líneas y subestaciones); planes de expansión y conceptos de conexión de la UPME</td>
+</tr>
+<tr class="even">
+<td>Mercado</td>
+<td>¿Qué decisión económica produce [el síntoma], quién la toma y qué ingreso, costo o plazo la guía?</td>
+<td>ingreso, costo, precio, fecha contractual</td>
+<td>Sinergox de XM (precios y transacciones); resoluciones de remuneración de la CREG; resultados de las subastas; informes de gestión de las empresas</td>
+</tr>
+<tr class="odd">
+<td>Actores</td>
+<td>¿Quién gana y quién pierde con [el síntoma], y quién puede acelerarlo, demorarlo o vetarlo?</td>
+<td>interés, poder, vínculos</td>
+<td>expedientes de la ANLA; actas de consulta previa del Ministerio del Interior; comunicados, prensa y entrevistas</td>
+</tr>
+<tr class="even">
+<td>Gobernanza</td>
+<td>¿Qué regla permite o produce [el síntoma], quién la fija y quién puede cambiarla?</td>
+<td>la regla con su artículo, quién decide y cómo reparte costos y beneficios</td>
+<td>leyes y decretos; resoluciones de la CREG; licencias de la ANLA; sentencias de la Corte Constitucional; informes de la Contraloría</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="ejemplos-resueltos" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplos-resueltos">4. Ejemplos resueltos</h2>
-<section id="un-apagón-leído-cuatro-veces" class="level3">
-<h3 class="anchored" data-anchor-id="un-apagón-leído-cuatro-veces">Un apagón, leído cuatro veces</h3>
+<p>Los tres ejemplos recorren los seis pasos con los mismos nombres, sobre sistemas distintos, y cada uno agrega una dificultad. El básico se resuelve con cuentas a mano y deja ver de dónde sale cada pregunta y cada respuesta. El intermedio tiene un modelo de dos stocks que se simula: cada capa resulta ser una pieza del modelo y la prueba de la intervención se hace con números. El avanzado es un caso real, donde las respuestas vienen de documentos públicos y varias quedan como hipótesis.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ejemplo</th>
+<th>Sistema</th>
+<th>De dónde salen las respuestas</th>
+<th>Lo que agrega</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>●○○</td>
+<td>El apagón de un municipio</td>
+<td>cuentas a mano con datos del operador y de la norma</td>
+<td>los seis pasos completos y un lazo de balance que cruza las cuatro capas</td>
+</tr>
+<tr class="even">
+<td>●●○</td>
+<td>La solar en techos de un barrio</td>
+<td>un modelo de dos stocks y una resolución de la CREG</td>
+<td>cada capa como pieza de un modelo; la prueba de la intervención con simulación</td>
+</tr>
+<tr class="odd">
+<td>●●●</td>
+<td>Windpeshi, primera pasada</td>
+<td>hechos documentados del caso</td>
+<td>respuestas marcadas como dato o hipótesis; un lazo de refuerzo con dos entradas</td>
+</tr>
+</tbody>
+</table>
+<section id="el-apagón-de-un-municipio" class="level3">
+<h3 class="anchored" data-anchor-id="el-apagón-de-un-municipio">El apagón de un municipio</h3>
 <div class="ejemplo caja" data-nivel="basico">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Cuatro respuestas verdaderas y ninguna suficiente</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-basico">●○○ básico</span><span class="caja-texto-titulo">Sesenta horas al año sin luz y una poda de árboles</span>
 </div>
-<p><strong>Planteamiento.</strong> Una tormenta tumba una línea y deja sin luz a media ciudad intermedia durante horas. Hágale a ese apagón la pregunta de cada capa y decida dónde está la corrección duradera.</p>
+<p><strong>Objetivo.</strong> Recorrer los seis pasos a mano en un caso pequeño, para ver de dónde sale cada pregunta, con qué cuenta se responde y cómo se llega a la recomendación.</p>
+<p><strong>Planteamiento.</strong> Un operador de red atiende 600 000 usuarios en un departamento. Uno de sus municipios, de 24 000 usuarios, recibe la energía por una sola línea de 34,5 kV y 30 km que lo une con la subestación más cercana. Esa línea sale de servicio varias veces al año por ramas y tormentas, y el municipio acumula 60 horas anuales sin servicio, frente a 14 en el resto del mercado del operador. Después del último apagón, de nueve horas, el operador anunció que podará los árboles del corredor. La alcaldesa quiere saber si con eso basta y, si falta algo, qué debe pedir y a quién.</p>
+<p>El regulador de este ejemplo mide la calidad con una sola cifra, el promedio de horas sin servicio por usuario en todo el mercado del operador, con una meta de 18 horas al año. El operador recibe un ingreso fijo por usuario y solo lo pierde en parte si el promedio pasa de la meta. Es una regla simplificada para ver el mecanismo; las cifras son sintéticas.</p>
 </div>
+<p>El primer visor recorre los pasos 1 a 3 y va llenando el diagrama de capas: primero el síntoma, luego la variable que mira cada capa y por último el dato de cada una.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Recorrer las capas</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 1 a 3: el síntoma, las preguntas y las respuestas</span>
 </div>
 <div class="paso">
-<p><strong>Capa física.</strong> ¿Por qué la salida de un solo activo tumbó el servicio? Porque la subred operaba sin redundancia N-1: había un cuello de botella topológico.</p>
+<p><a href="../diagramas/svg/s6-01-apagon-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../diagramas/svg/s6-01-apagon-1.svg" class="img-fluid" loading="lazy" alt="Las cuatro bandas. En la capa física, una caja en ámbar: horas sin servicio en el municipio, con el dato 60 horas al año en rojo."></a></p>
+<p><strong>Fije el síntoma, el decisor y la pregunta.</strong> Síntoma: el municipio tiene 60 horas al año sin servicio, más de cuatro veces las 14 del resto del mercado. Decisora: la alcaldesa. Pregunta: si la poda basta y, si falta algo, qué pedir y a quién. El síntoma es una variable física y por eso queda en la banda de abajo.</p>
 </div>
 <div class="paso">
-<p><strong>Capa de mercado.</strong> ¿Por qué llevaba años sin refuerzos? Porque la remuneración de la distribución no premiaba invertir en confiabilidad fuera de las zonas densas: una subinversión racional para quien la decide.</p>
+<p><a href="../diagramas/svg/s6-01-apagon-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../diagramas/svg/s6-01-apagon-2.svg" class="img-fluid" loading="lazy" alt="Aparecen en ámbar cuatro cajas: respaldo de la red del municipio, en la capa física; ingreso del operador por reforzar, en el mercado; presión de los afectados, en los actores; exigencia de calidad para cada usuario, en la gobernanza."></a></p>
+<p><strong>Formule la pregunta de cada capa.</strong> Las cuatro plantillas, con el síntoma del caso:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capa</th>
+<th>Pregunta</th>
+<th>Variable a la que apunta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Física</td>
+<td>¿Qué equipo limita el servicio del municipio y cuánta holgura tiene?</td>
+<td>respaldo de la red</td>
+</tr>
+<tr class="even">
+<td>Mercado</td>
+<td>¿Qué decisión mantiene la red así, quién la toma y qué ingreso la guía?</td>
+<td>ingreso del operador por reforzar</td>
+</tr>
+<tr class="odd">
+<td>Actores</td>
+<td>¿Quién pierde con los cortes y cuánta presión puede hacer?</td>
+<td>presión de los afectados</td>
+</tr>
+<tr class="even">
+<td>Gobernanza</td>
+<td>¿Qué regla permite 60 horas al año y quién puede cambiarla?</td>
+<td>exigencia de calidad para cada usuario</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="paso">
-<p><strong>Capa de actores.</strong> ¿Por qué nadie lo forzó? Porque los usuarios afectados están dispersos y sin voz organizada, y el operador local concentra la información técnica.</p>
+<p><a href="../diagramas/svg/s6-01-apagon-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../diagramas/svg/s6-01-apagon-3.svg" class="img-fluid" loading="lazy" alt="Bajo cada caja aparece en ámbar su dato: hoy una sola línea; hoy 0 por una obra de 18 000 millones; son el 4 % de los usuarios; hoy solo el promedio, 15,8 horas frente a 18."></a></p>
+<p><strong>Responda con evidencia: las capas física y de mercado.</strong> En el diagrama unifilar, el municipio cuelga de una sola línea. En el lenguaje de la <a href="../semana2/10-sin-como-red.html">semana 2</a> es una arista puente: si se quita, el municipio queda aislado, así que la red no cumple el criterio N-1 (dato). Una segunda línea costaría <span class="math inline">30 \text{ km} \times 600 \text{ MCOP/km} = 18\,000</span> MCOP, donde MCOP son millones de pesos, y el ingreso del operador seguiría igual porque es fijo por usuario (cálculo).</p>
 </div>
 <div class="paso">
-<p><strong>Capa de gobernanza.</strong> ¿Por qué las reglas lo permitieron? Porque los indicadores de calidad promediaban regiones y el regulador medía lo agregado, no lo local.</p>
+<p><a href="../diagramas/svg/s6-01-apagon-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../diagramas/svg/s6-01-apagon-3.svg" class="img-fluid" loading="lazy" alt="El mismo cuadro, con los cuatro datos bajo sus cajas."></a></p>
+<p><strong>Responda con evidencia: los actores y la gobernanza.</strong> Los afectados son <span class="math inline">24\,000 / 600\,000 = 4\ \%</span> de los usuarios del operador, todos en un mismo municipio (cálculo). La norma exige el promedio del mercado, que vale</p>
+<p><span class="math display">\frac{576\,000 \times 14 + 24\,000 \times 60}{600\,000} = 15{,}84 \text{ horas al año}.</span></p>
+<p>El operador cumple la meta de 18 horas con holgura aunque el municipio tenga 60 (cálculo). Las cuatro respuestas son ciertas, y hasta aquí son una lista.</p>
+</div>
+</div>
+<p>El segundo visor convierte la lista en estructura. El paso 4 pregunta por qué cada respuesta es la que es y dibuja una flecha cada vez que la explicación está en otra capa; el paso 5 prueba cuatro intervenciones, una por capa.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 4 a 6: los acoples, la prueba de la intervención y la conclusión</span>
 </div>
 <div class="paso">
-<p><strong>Localice la corrección.</strong> Las cuatro respuestas son verdaderas. La corrección duradera, cambiar el indicador regulatorio para que la confiabilidad local cuente, vive dos capas por encima del cable que se cayó. Quien solo miró la capa física recomendará podar árboles.</p>
+<p><a href="../diagramas/svg/s6-01-apagon-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../diagramas/svg/s6-01-apagon-4.svg" class="img-fluid" loading="lazy" alt="Aparecen las flechas: de la exigencia de calidad al ingreso por reforzar, positiva; del ingreso al respaldo, positiva; del respaldo a las horas sin servicio, negativa; de las horas a la presión de los afectados, positiva; de la presión a la exigencia, positiva. En el centro, el lazo B1."></a></p>
+<p><strong>Registre los acoples: la cadena de porqués.</strong> ¿Por qué hay 60 horas? Porque falta respaldo, y con más respaldo habría menos horas (enlace negativo, dentro de la capa física). ¿Por qué falta respaldo? Porque reforzar no le da ingreso al operador: acople <span class="math inline">M \to F</span>, positivo. ¿Por qué no le da ingreso? Porque la norma solo exige el promedio: acople <span class="math inline">G \to M</span>, positivo. ¿Por qué la norma sigue así? Porque quienes la sufren presionan poco: acople <span class="math inline">A \to G</span>, positivo. ¿Por qué presionan poco? Porque los cortes recaen en el 4 % de los usuarios: acople <span class="math inline">F \to A</span>, positivo.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-apagon-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../diagramas/svg/s6-01-apagon-4.svg" class="img-fluid" loading="lazy" alt="El mismo cuadro con las cinco flechas y el lazo B1."></a></p>
+<p><strong>Registre los acoples: la matriz y el lazo.</strong> Los cuatro acoples van a su celda. Las ocho celdas restantes se revisaron con la pregunta de la definición y quedan vacías en este caso.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>De ↓ a →</th>
+<th>F</th>
+<th>M</th>
+<th>A</th>
+<th>G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>F</strong></td>
+<td></td>
+<td></td>
+<td>horas sin servicio → presión (+)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>M</strong></td>
+<td>ingreso por reforzar → respaldo (+)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>A</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td>presión → exigencia (+)</td>
+</tr>
+<tr class="even">
+<td><strong>G</strong></td>
+<td></td>
+<td>exigencia → ingreso por reforzar (+)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Encadenados con el enlace físico, forman un lazo con un solo enlace negativo, es decir, de balance: B1. Es el mecanismo que debería corregir el problema, y hoy casi no actúa, porque la presión es poca y la exigencia local es nula.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-apagon-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="../diagramas/svg/s6-01-apagon-5.svg" class="img-fluid" loading="lazy" alt="Dos rótulos nuevos: en rojo, podar, que apunta a las horas sin servicio; en verde, cambiar la regla, que apunta a la exigencia de calidad para cada usuario."></a></p>
+<p><strong>Localice el problema: la prueba de la intervención.</strong> Cada capa propone la suya. Para la de gobernanza se supone un máximo de 30 horas por usuario, con una compensación de 2 000 COP por cada hora de exceso.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Intervención</th>
+<th>Capa</th>
+<th>Qué mueve</th>
+<th>¿Cambia el lazo?</th>
+<th>¿Vuelve el síntoma?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Podar el corredor</td>
+<td>física</td>
+<td>las horas, de 60 a unas 35 si la mitad de las fallas son ramas</td>
+<td>queda igual: reforzar sigue sin dar ingreso</td>
+<td>sí: sigue una sola línea</td>
+</tr>
+<tr class="even">
+<td>Que el municipio pague la línea</td>
+<td>mercado</td>
+<td>el respaldo de este municipio</td>
+<td>queda igual</td>
+<td>aquí no; en el municipio siguiente, sí</td>
+</tr>
+<tr class="odd">
+<td>Organizar a los usuarios</td>
+<td>actores</td>
+<td>la presión</td>
+<td>muy poco: son el 4 %</td>
+<td>es probable</td>
+</tr>
+<tr class="even">
+<td>Máximo de 30 h por usuario</td>
+<td>gobernanza</td>
+<td>el costo de dejar la red como está, de 0 a 1 440 MCOP/año</td>
+<td>sí: activa <span class="math inline">G \to M</span></td>
+<td>no: la obra se paga sola</td>
+</tr>
+</tbody>
+</table>
+<p>La cuenta de la última fila es <span class="math inline">24\,000 \times (60 - 30) \times 2\,000 = 1\,440</span> MCOP al año, y la línea de 18 000 MCOP se paga en <span class="math inline">18\,000 / 1\,440 = 12{,}5</span> años. La poda actúa sobre el síntoma; la regla actúa sobre el lazo.</p>
+</div>
+<div class="paso">
+<p><strong>Concluya.</strong> «La poda es útil y resuelve una parte: baja las horas sin servicio de 60 a unas 35 al año y deja al municipio colgado de una sola línea. El problema vive en la gobernanza. La norma exige un promedio que el operador cumple, 15,84 horas frente a 18, aunque el 4 % de sus usuarios tenga 60, y con esa regla una segunda línea de 18 000 millones de pesos no le reporta ingreso alguno. La alcaldesa puede pedirle al operador la poda como alivio y, junto con los municipios que estén en la misma situación, pedirle al regulador un máximo de horas por usuario con compensación. Con 30 horas y 2 000 pesos por hora de exceso, dejar la red como está costaría 1 440 millones al año y la línea se pagaría en 12,5 años. La señal para seguir el caso son las horas del municipio, que el promedio del mercado esconde.»</p>
 </div>
 </div>
+<p>En Colombia, la Resolución CREG 015 de 2018 combina metas de calidad media con compensaciones a los usuarios peor servidos [POR VERIFICAR el detalle de la regla vigente]. El ejemplo usa una regla más simple para que el mecanismo se vea con una sola cuenta.</p>
 </section>
-<section id="la-solar-en-techos-en-cuatro-capas" class="level3">
-<h3 class="anchored" data-anchor-id="la-solar-en-techos-en-cuatro-capas">La solar en techos, en cuatro capas</h3>
+<section id="la-solar-en-techos-de-un-barrio" class="level3">
+<h3 class="anchored" data-anchor-id="la-solar-en-techos-de-un-barrio">La solar en techos de un barrio</h3>
 <div class="ejemplo caja" data-nivel="intermedio">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Por qué se frena una adopción que el mercado empuja</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-intermedio">●●○ intermedio</span><span class="caja-texto-titulo">Un barrio que dejó de instalar paneles cuando faltaban tres de cada cuatro techos</span>
 </div>
-<p><strong>Planteamiento.</strong> En la primera página de la semana 5, la solar en techos de un barrio crecía como una logística por voz a voz. En la práctica, la adopción urbana se frena antes de lo que esa curva predice. Un equipo debe recomendar qué hacer.</p>
+<p><strong>Objetivo.</strong> Ver que cada capa es una pieza de un mismo modelo que se simula, y aplicar la prueba de la intervención con números, moviendo una pieza a la vez.</p>
+<p><strong>Planteamiento.</strong> Un barrio de Bogotá tiene 10 000 techos aptos para paneles solares. Los primeros 20 se conectaron hace quince años y, desde entonces, la adopción avanzó por voz a voz: cada hogar con paneles convence en promedio a medio vecino por año de pedir los suyos. Con ese solo mecanismo, que es la curva logística de la <a href="../semana5/01-refuerzo-exponencial.html">semana 5</a>, hoy debería haber cerca de 7 800 techos con paneles. Hay 2 400, y hace dos años que no entra una solicitud nueva.</p>
+<p>La secretaría de ambiente de la ciudad se fijó la meta de 4 500 techos en el barrio dentro de cinco años. Tiene sobre la mesa la propuesta de duplicar el subsidio a la instalación y quiere saber si con eso el barrio vuelve a crecer. Hay tres datos más del barrio: lo alimentan 200 transformadores de distribución de 75 kVA, un sistema residencial típico es de 3 kW, y entre la solicitud de conexión y la conexión pasan en promedio seis meses, que es lo que tarda el trámite ante el operador de red.</p>
 </div>
+<p>El modelo es la logística de la semana 5 con dos cambios, en ámbar en el diagrama. Entre el hogar que se decide y el techo conectado hay ahora un stock, las solicitudes en trámite, que se vacía con el tiempo de conexión <span class="math inline">\tau_c</span>. Y las solicitudes solo se reciben mientras quede <strong>cupo</strong>, que es el número de sistemas que caben en los transformadores sin reforzarlos. Cada pieza lleva la etiqueta de la capa que la fija.</p>
+<div id="fig-techos" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagrama de Forrester. Una nube alimenta el flujo de solicitudes s hacia el stock solicitudes en trámite Q(t); de allí sale el flujo de conexiones Q sobre tau_c hacia el stock techos conectados A(t). El contagio beta y los techos aptos N, con la etiqueta capa de mercado, entran a las solicitudes, igual que Q y A. En ámbar: el cupo H igual a n por la parte entera de r S_T sobre p, con las etiquetas capa física (n, S_T, p) y gobernanza (r), entra a las solicitudes; el tiempo de conexión tau_c, con la etiqueta capa de actores, el operador de red, entra a las conexiones. Abajo, las ecuaciones.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-techos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="../diagramas/svg/s6-01-techos-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Figura&nbsp;1: Forrester de la adopción con cupo y trámite. Stocks: las solicitudes en trámite Q(t) y los techos conectados A(t) [techos]; flujos: las solicitudes s y las conexiones Q/\tau_c [techos/año]; constantes: el contagio \beta, los techos aptos N, el cupo H y el tiempo de conexión \tau_c. En ámbar, lo nuevo frente a la semana 5. Las etiquetas de color dicen qué capa fija cada pieza."><img src="../diagramas/svg/s6-01-techos-1.svg" class="img-fluid figure-img" loading="lazy" alt="Diagrama de Forrester. Una nube alimenta el flujo de solicitudes s hacia el stock solicitudes en trámite Q(t); de allí sale el flujo de conexiones Q sobre tau_c hacia el stock techos conectados A(t). El contagio beta y los techos aptos N, con la etiqueta capa de mercado, entran a las solicitudes, igual que Q y A. En ámbar: el cupo H igual a n por la parte entera de r S_T sobre p, con las etiquetas capa física (n, S_T, p) y gobernanza (r), entra a las solicitudes; el tiempo de conexión tau_c, con la etiqueta capa de actores, el operador de red, entra a las conexiones. Abajo, las ecuaciones."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-techos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Forrester de la adopción con cupo y trámite. Stocks: las solicitudes en trámite <span class="math inline">Q(t)</span> y los techos conectados <span class="math inline">A(t)</span> [techos]; flujos: las solicitudes <span class="math inline">s</span> y las conexiones <span class="math inline">Q/\tau_c</span> [techos/año]; constantes: el contagio <span class="math inline">\beta</span>, los techos aptos <span class="math inline">N</span>, el cupo <span class="math inline">H</span> y el tiempo de conexión <span class="math inline">\tau_c</span>. En ámbar, lo nuevo frente a la semana 5. Las etiquetas de color dicen qué capa fija cada pieza.
+</figcaption>
+</figure>
+</div>
+<p>Las ecuaciones son</p>
+<p><span class="math display">\frac{dQ}{dt} = s - \frac{Q}{\tau_c}, \qquad \frac{dA}{dt} = \frac{Q}{\tau_c}, \qquad s = \beta\,A\left(1 - \frac{A + Q}{N}\right) \ \text{mientras}\ A + Q &lt; H,</span></p>
+<p>con <span class="math inline">Q</span> y <span class="math inline">A</span> en techos y los flujos en techos por año. Cuando los techos conectados más las solicitudes en trámite llegan al cupo <span class="math inline">H</span>, las solicitudes nuevas valen cero. La tabla presenta cada constante con su valor, la capa que la fija y su origen.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Símbolo</th>
+<th style="text-align: center;">Valor</th>
+<th>Qué es</th>
+<th>Capa</th>
+<th>De dónde sale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">N</span></td>
+<td style="text-align: center;">10 000 techos</td>
+<td>techos aptos</td>
+<td>mercado</td>
+<td>estudio de potencial del barrio (cifra del ejemplo)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\beta</span></td>
+<td style="text-align: center;">0,5 por año</td>
+<td>contagio</td>
+<td>mercado</td>
+<td>ajustado con los primeros años de adopción, como en la semana 5</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">A(0)</span></td>
+<td style="text-align: center;">20 techos</td>
+<td>primeros adoptantes</td>
+<td>mercado</td>
+<td>registro del operador de red</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">n</span>, <span class="math inline">S_T</span></td>
+<td style="text-align: center;">200 transformadores de 75 kVA</td>
+<td>red de baja tensión del barrio</td>
+<td>física</td>
+<td>inventario del operador, que la norma obliga a publicar</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">p</span></td>
+<td style="text-align: center;">3 kW</td>
+<td>potencia de un sistema residencial</td>
+<td>física</td>
+<td>cifra típica [POR VERIFICAR]</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">r</span></td>
+<td style="text-align: center;">0,50</td>
+<td>fracción del transformador que se puede usar</td>
+<td>gobernanza</td>
+<td>artículo 6 de la Resolución CREG 174 de 2021</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\tau_c</span></td>
+<td style="text-align: center;">0,5 años</td>
+<td>tiempo de conexión</td>
+<td>actores</td>
+<td>registro de solicitudes del operador (cifra del ejemplo)</td>
+</tr>
+</tbody>
+</table>
+<p>El primer visor recorre los pasos 1 a 4. Los cuadros del diagrama de capas agregan una capa por paso, con las variables del modelo dentro de su banda.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 1 a 4: del síntoma a los acoples</span>
+</div>
+<div class="paso">
+<p><strong>Fije el síntoma, el decisor y la pregunta.</strong> Síntoma: 2 400 techos conectados en el año 15, cuando la curva de contagio daba cerca de 7 800, y ninguna solicitud nueva en dos años. Decisora: la secretaría de ambiente. Pregunta: si duplicar el subsidio lleva el barrio a 4 500 techos en el año 20 y, si no alcanza, qué lo haría.</p>
+</div>
+<div class="paso">
+<p><strong>Formule la pregunta de cada capa.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capa</th>
+<th>Pregunta</th>
+<th>Variable a la que apunta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mercado</td>
+<td>¿Qué decisión de los hogares produce la adopción y qué la guía?</td>
+<td>solicitudes nuevas <span class="math inline">s</span></td>
+</tr>
+<tr class="even">
+<td>Física</td>
+<td>¿Qué equipo limita los techos conectados y cuánta holgura tiene?</td>
+<td>cupo de los transformadores <span class="math inline">H</span></td>
+</tr>
+<tr class="odd">
+<td>Actores</td>
+<td>¿Quién puede acelerar o demorar una conexión?</td>
+<td>tiempo de conexión <span class="math inline">\tau_c</span></td>
+</tr>
+<tr class="even">
+<td>Gobernanza</td>
+<td>¿Qué regla fija el cupo y quién paga para ampliarlo?</td>
+<td>fracción <span class="math inline">r</span> y regla de costos</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-techos-capas-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="../diagramas/svg/s6-01-techos-capas-1.svg" class="img-fluid" loading="lazy" alt="En la banda del mercado, dos cajas: solicitudes nuevas y techos conectados, unidas por dos flechas positivas que forman el lazo R1; la flecha de las solicitudes a los techos lleva la doble raya del retardo."></a></p>
+<p><strong>Responda con evidencia: el mercado.</strong> El contagio es un lazo de refuerzo: más techos conectados, más solicitudes, y más solicitudes, más techos. Sin nada más, la solución es la logística</p>
+<p><span class="math display">A(t) = \frac{N}{1 + \left(\dfrac{N}{A(0)} - 1\right)e^{-\beta t}}, \qquad A(15) = \frac{10\,000}{1 + 499\,e^{-7{,}5}} = 7\,837 \text{ techos}.</span></p>
+<p>Esta capa explica por qué el barrio creció y deja sin explicar por qué se detuvo: con 2 400 techos conectados queda libre el 76 % (cálculo).</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-techos-capas-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="../diagramas/svg/s6-01-techos-capas-2.svg" class="img-fluid" loading="lazy" alt="Aparece en ámbar, en la capa física, el cupo disponible en los transformadores. Una flecha negativa va de los techos conectados al cupo y una positiva del cupo a las solicitudes: lazo B1."></a></p>
+<p><strong>Responda con evidencia: la capa física.</strong> La norma limita la potencia de los sistemas que entregan energía a la red a una fracción <span class="math inline">r</span> de la capacidad del transformador, que se toma en kW con factor de potencia 1. En cada transformador caben</p>
+<p><span class="math display">\left\lfloor \frac{r\,S_T}{p} \right\rfloor = \left\lfloor \frac{0{,}50 \times 75}{3} \right\rfloor = \lfloor 12{,}5 \rfloor = 12 \text{ sistemas}, \qquad H = 200 \times 12 = 2\,400 \text{ techos}.</span></p>
+<p>El cupo coincide con el número en que el barrio se detuvo (cálculo). Cada techo conectado gasta cupo y, sin cupo, no se reciben solicitudes: es un lazo de balance, B1. La cuenta supone que los paneles se reparten parejo entre los transformadores.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-techos-capas-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="../diagramas/svg/s6-01-techos-capas-3.svg" class="img-fluid" loading="lazy" alt="Aparece en ámbar, en la capa de actores, el tiempo de conexión del operador de red, con una flecha negativa hacia los techos conectados."></a></p>
+<p><strong>Responda con evidencia: los actores.</strong> El operador de red tramita cada conexión y tarda seis meses. Como el voz a voz depende de los techos ya conectados, la espera frena el lazo de refuerzo. Al comienzo, cuando el cupo sobra, la adopción crece a una tasa <span class="math inline">g</span> que cumple <span class="math inline">g\,(1 + g\,\tau_c) = \beta</span>:</p>
+<p><span class="math display">0{,}5\,g^2 + g - 0{,}5 = 0 \quad\Rightarrow\quad g = 0{,}41 \text{ por año}.</span></p>
+<p>El trámite baja la tasa de 0,50 a 0,41 por año, y la duplicación pasa de 1,4 a 1,7 años (cálculo). Queda una hipótesis por comprobar con el operador: si la demora responde a falta de personal o a que cada autogenerador le compra menos energía a su negocio de comercialización.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-techos-capas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="../diagramas/svg/s6-01-techos-capas-4.svg" class="img-fluid" loading="lazy" alt="Aparecen en ámbar, en la gobernanza, dos cajas: fracción del transformador que la regla deja usar, con flecha positiva al cupo, y refuerzo a cargo de quien lo pide, con flecha negativa al cupo."></a></p>
+<p><strong>Responda con evidencia: la gobernanza.</strong> Dos reglas de la Resolución CREG 174 de 2021 fijan el cupo (dato). El artículo 6 pone la fracción en 50 %; con la norma anterior, la Resolución CREG 030 de 2018, era 15 % y el cupo del barrio habría sido <span class="math inline">200 \times \lfloor 0{,}15 \times 75 / 3 \rfloor = 600</span> techos. El artículo 17 dice que, cuando una solicitud supera el límite, los costos de aumentar la capacidad de la red los cubre el solicitante. El hogar número 13 de un transformador tendría que pagar, además de sus paneles, el cambio del transformador.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-techos-capas-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="../diagramas/svg/s6-01-techos-capas-4.svg" class="img-fluid" loading="lazy" alt="El mismo cuadro, con las cuatro capas completas."></a></p>
+<p><strong>Registre los acoples.</strong> Cada flecha que cruza de una banda a otra va a su celda. Las ocho celdas restantes quedan vacías en este modelo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>De ↓ a →</th>
+<th>F</th>
+<th>M</th>
+<th>A</th>
+<th>G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>F</strong></td>
+<td></td>
+<td>cupo disponible → solicitudes (+)</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>M</strong></td>
+<td>techos conectados → cupo disponible (−)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>A</strong></td>
+<td></td>
+<td>tiempo de conexión → techos conectados (−)</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>G</strong></td>
+<td>fracción <span class="math inline">r</span> → cupo (+); refuerzo a cargo del solicitante → cupo (−)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Hay dos lazos. R1 vive dentro del mercado y lo retarda un acople que viene de los actores. B1 cruza el mercado y la capa física, y su tope lo fijan dos acoples que vienen de la gobernanza.</p>
+</div>
+</div>
+<p>Antes de simular, anote qué espera de cada intervención.</p>
 <div id="pred-capas" class="prediccion caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Prediga antes de seguir</span>
 </div>
-<p>Si el equipo analiza el frenazo solo con la capa de mercado, ¿qué recomendará?</p>
+<p>La secretaría quiere 4 500 techos conectados en el año 20. ¿Cuál de estas intervenciones, aplicada sola desde hoy, lo consigue?</p>
 <div class="opcion">
-<p>Aumentar el subsidio a la instalación.</p>
+<p>Duplicar el subsidio, que sube el contagio de 0,5 a 1,0 por año.</p>
 </div>
 <div class="opcion">
-<p>Reforzar los transformadores de los circuitos saturados.</p>
+<p>Obligar al operador de red a conectar en un mes.</p>
 </div>
 <div class="opcion">
-<p>Cambiar las reglas de conexión y de reparto de los costos de red.</p>
+<p>Cambiar los transformadores de 75 kVA por otros de 150 kVA.</p>
+</div>
+<div class="opcion">
+<p>Ninguna de las tres por separado.</p>
 </div>
 </div>
 <div class="simulador caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">Encienda y apague capas</span>
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La intervención de cada capa, desde hoy</span>
 </div>
-<p>Marque las capas que el equipo analiza y lea qué diagnóstico obtiene, qué hueco queda y qué recomendaría.</p>
+<p>El simulador arranca en la situación del planteamiento: corre el modelo quince años con los valores de la tabla y llega a hoy con 2 400 techos conectados y el cupo copado. Cada control es la intervención de una capa y actúa desde el año 15. El subsidio sube el contagio <span class="math inline">\beta</span> (mercado), un plazo obligatorio baja el tiempo de conexión <span class="math inline">\tau_c</span> (actores) y el cambio de transformadores sube la capacidad <span class="math inline">S_T</span> y, con ella, el cupo <span class="math inline">H</span> (física). La curva azul muestra los techos conectados con la intervención y la gris lo que pasa si nada cambia. Mueva primero un solo control a la vez y compare con su predicción; después combine dos.</p>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="171" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 170;"><span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>viewof capasS <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>([<span class="st">"estructura física"</span><span class="op">,</span> <span class="st">"dinámica de mercado"</span><span class="op">,</span> <span class="st">"red de actores"</span><span class="op">,</span> <span class="st">"gobernanza"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> [<span class="st">"dinámica de mercado"</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Capas analizadas"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-2" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold hidden">
-<summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="176" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 175;"><span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>contenidoS <span class="op">=</span> ({</span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>  <span class="st">"estructura física"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"Cada circuito de distribución admite hasta cierta penetración antes de tener problemas de tensión y protecciones: pasado ese umbral, cada techo nuevo exige refuerzos."</span><span class="op">,</span></span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve el tope técnico por transformador, que satura la adopción antes de que se acaben los techos."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"reforzar los circuitos saturados"</span>}<span class="op">,</span></span>
-<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>  <span class="st">"dinámica de mercado"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"La adopción es una logística: el voz a voz la acelera y la saturación de techos la frena. El subsidio sube la tasa de contagio."</span><span class="op">,</span></span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve por qué la curva se aplana antes de que se acaben los techos ni por qué el voz a voz pierde fuerza."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"aumentar el subsidio"</span>}<span class="op">,</span></span>
-<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>  <span class="st">"red de actores"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"El operador de red controla los tiempos de conexión, y su incentivo es mixto: la regulación ajusta su remuneración, pero su comercializadora vende menos energía con cada autogenerador. Tiene poder de retardo sobre todo el lazo de refuerzo."</span><span class="op">,</span></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve que el retardo en las conexiones lo produce un actor con incentivos propios."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"poner plazos de conexión vigilados"</span>}<span class="op">,</span></span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gobernanza"</span><span class="op">:</span> {<span class="dt">diagnostico</span><span class="op">:</span> <span class="st">"Nadie definió cómo se reparten los costos de la red entre quienes tienen techo y quienes no: la pregunta distributiva decide la legitimidad del esquema."</span><span class="op">,</span></span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>    <span class="dt">hueco</span><span class="op">:</span> <span class="st">"No ve que el conflicto sobre quién paga la red puede frenar todo el sistema."</span><span class="op">,</span> <span class="dt">recomendacion</span><span class="op">:</span> <span class="st">"fijar reglas de conexión y de reparto de costos de red"</span>}<span class="op">,</span></span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="411" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 410;"><span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>viewof betaT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.5</span><span class="op">,</span> <span class="fl">1.0</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Mercado: contagio β con el subsidio [1/año]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -850,12 +1407,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="190" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 189;"><span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(contenidoS)<span class="op">.</span><span class="fu">map</span>(([capa<span class="op">,</span> c]) <span class="kw">=&gt;</span> capasS<span class="op">.</span><span class="fu">includes</span>(capa)</span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>  <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>COLORES<span class="op">.</span><span class="at">verde</span><span class="sc">}</span><span class="vs">;padding-left:.6rem"&gt;&lt;b&gt;</span><span class="sc">${</span>capa<span class="sc">}</span><span class="vs">:&lt;/b&gt; </span><span class="sc">${</span>c<span class="op">.</span><span class="at">diagnostico</span><span class="sc">}</span><span class="vs">&lt;/p&gt;`</span></span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>COLORES<span class="op">.</span><span class="at">rojo</span><span class="sc">}</span><span class="vs">;padding-left:.6rem;color:#555"&gt;&lt;b&gt;hueco en </span><span class="sc">${</span>capa<span class="sc">}</span><span class="vs">:&lt;/b&gt; </span><span class="sc">${</span>c<span class="op">.</span><span class="at">hueco</span><span class="sc">}</span><span class="vs">&lt;/p&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="416" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 415;"><span id="cb4-416"><a href="#cb4-416" aria-hidden="true" tabindex="-1"></a>viewof mesesT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">12</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Actores: tiempo de conexión τc [meses]"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="ojs-cell-4" data-nodetype="expression">
+<div id="ojs-cell-4" data-nodetype="declaration">
 
 </div>
 </div>
@@ -863,99 +1418,670 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Ver el código en Python</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="197" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 196;"><span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Capas analizadas&lt;b&gt;</span><span class="sc">${</span>capasS<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> de 4&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Recomendación del equipo&lt;b&gt;</span><span class="sc">${</span>capasS<span class="op">.</span><span class="at">length</span> <span class="op">?</span> capasS<span class="op">.</span><span class="fu">map</span>((c) <span class="kw">=&gt;</span> contenidoS[c]<span class="op">.</span><span class="at">recomendacion</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">"; "</span>) <span class="op">:</span> <span class="st">"ninguna"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;¿Ve el acople actores-física?&lt;b&gt;</span><span class="sc">${</span>capasS<span class="op">.</span><span class="fu">includes</span>(<span class="st">"red de actores"</span>) <span class="op">&amp;&amp;</span> capasS<span class="op">.</span><span class="fu">includes</span>(<span class="st">"estructura física"</span>) <span class="op">?</span> <span class="st">"sí: el distribuidor usa su control técnico como poder"</span> <span class="op">:</span> <span class="st">"no"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="421" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 420;"><span id="cb5-421"><a href="#cb5-421" aria-hidden="true" tabindex="-1"></a>viewof kvaT <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="dv">75</span><span class="op">,</span> <span class="fl">112.5</span><span class="op">,</span> <span class="dv">150</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">75</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Física: transformador ST [kVA]"</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="fu">formatoNumero</span>(d <span class="op">===</span> <span class="fl">112.5</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span>)(d)})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="ojs-cell-5" data-nodetype="expression">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="426" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 425;"><span id="cb6-426"><a href="#cb6-426" aria-hidden="true" tabindex="-1"></a>cupoBarrio <span class="op">=</span> (kva) <span class="kw">=&gt;</span> <span class="dv">200</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="fl">0.5</span> <span class="op">*</span> kva <span class="op">/</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="431" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 430;"><span id="cb7-431"><a href="#cb7-431" aria-hidden="true" tabindex="-1"></a>baseT <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionConCupo</span>({<span class="dt">cupo</span><span class="op">:</span> <span class="dv">2400</span>})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">25</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">metodo</span><span class="op">:</span> <span class="st">"euler"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="436" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 435;"><span id="cb8-436"><a href="#cb8-436" aria-hidden="true" tabindex="-1"></a>corridaT <span class="op">=</span> <span class="fu">simular</span>(<span class="fu">adopcionConCupo</span>({<span class="dt">cupo</span><span class="op">:</span> <span class="dv">2400</span><span class="op">,</span> <span class="dt">anio_intervencion</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">contagio_nuevo</span><span class="op">:</span> betaT<span class="op">,</span> <span class="dt">tiempo_conexion_nuevo</span><span class="op">:</span> mesesT <span class="op">/</span> <span class="dv">12</span><span class="op">,</span></span>
+<span id="cb8-437"><a href="#cb8-437" aria-hidden="true" tabindex="-1"></a>  <span class="dt">cupo_nuevo</span><span class="op">:</span> <span class="fu">cupoBarrio</span>(kvaT)})<span class="op">,</span> {<span class="dt">tFinal</span><span class="op">:</span> <span class="dv">25</span><span class="op">,</span> <span class="dt">paso</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">metodo</span><span class="op">:</span> <span class="st">"euler"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="442" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 441;"><span id="cb9-442"><a href="#cb9-442" aria-hidden="true" tabindex="-1"></a>lecturaT <span class="op">=</span> {</span>
+<span id="cb9-443"><a href="#cb9-443" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> A <span class="op">=</span> corridaT<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">techos_conectados</span><span class="op">,</span> t <span class="op">=</span> corridaT<span class="op">.</span><span class="at">tiempo</span><span class="op">;</span></span>
+<span id="cb9-444"><a href="#cb9-444" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> k <span class="op">=</span> A<span class="op">.</span><span class="fu">findIndex</span>((a<span class="op">,</span> i) <span class="kw">=&gt;</span> t[i] <span class="op">&gt;=</span> <span class="dv">15</span> <span class="op">&amp;&amp;</span> a <span class="op">&gt;=</span> <span class="dv">4500</span>)<span class="op">;</span></span>
+<span id="cb9-445"><a href="#cb9-445" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {<span class="dt">cupo</span><span class="op">:</span> <span class="fu">cupoBarrio</span>(kvaT)<span class="op">,</span> <span class="dt">anio20</span><span class="op">:</span> A[<span class="dv">2000</span>]<span class="op">,</span> <span class="dt">anio25</span><span class="op">:</span> A[<span class="dv">2500</span>]<span class="op">,</span> <span class="dt">meta</span><span class="op">:</span> k <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="kw">null</span> <span class="op">:</span> t[k]}<span class="op">;</span></span>
+<span id="cb9-446"><a href="#cb9-446" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="451" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 450;"><span id="cb10-451"><a href="#cb10-451" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb10-452"><a href="#cb10-452" aria-hidden="true" tabindex="-1"></a>  <span class="dt">width</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb10-453"><a href="#cb10-453" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo desde el primer techo [años]"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">25</span>]}<span class="op">,</span></span>
+<span id="cb10-454"><a href="#cb10-454" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Techos conectados"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">6000</span>]<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> <span class="fu">formatoNumero</span>(<span class="dv">0</span>)}<span class="op">,</span></span>
+<span id="cb10-455"><a href="#cb10-455" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb10-456"><a href="#cb10-456" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">4500</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 3"</span>})<span class="op">,</span></span>
+<span id="cb10-457"><a href="#cb10-457" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([lecturaT<span class="op">.</span><span class="at">cupo</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">ambar</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"2 3"</span>})<span class="op">,</span></span>
+<span id="cb10-458"><a href="#cb10-458" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">15</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">violeta</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"2 3"</span>})<span class="op">,</span></span>
+<span id="cb10-459"><a href="#cb10-459" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(baseT<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">filter</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> k <span class="op">%</span> <span class="dv">10</span> <span class="op">===</span> <span class="dv">0</span>)<span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">a</span><span class="op">:</span> baseT<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">techos_conectados</span>[<span class="dv">10</span> <span class="op">*</span> k]}))<span class="op">,</span></span>
+<span id="cb10-460"><a href="#cb10-460" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">gris</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.6</span>})<span class="op">,</span></span>
+<span id="cb10-461"><a href="#cb10-461" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(corridaT<span class="op">.</span><span class="at">tiempo</span><span class="op">.</span><span class="fu">filter</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> k <span class="op">%</span> <span class="dv">10</span> <span class="op">===</span> <span class="dv">0</span>)<span class="op">.</span><span class="fu">map</span>((t<span class="op">,</span> k) <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">a</span><span class="op">:</span> corridaT<span class="op">.</span><span class="at">variables</span><span class="op">.</span><span class="at">techos_conectados</span>[<span class="dv">10</span> <span class="op">*</span> k]}))<span class="op">,</span></span>
+<span id="cb10-462"><a href="#cb10-462" aria-hidden="true" tabindex="-1"></a>      {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">azul</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.4</span>})<span class="op">,</span></span>
+<span id="cb10-463"><a href="#cb10-463" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="dv">5800</span><span class="op">,</span> <span class="dt">texto</span><span class="op">:</span> <span class="st">"hoy"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"texto"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">violeta</span><span class="op">,</span> <span class="dt">dx</span><span class="op">:</span> <span class="dv">16</span>})<span class="op">,</span></span>
+<span id="cb10-464"><a href="#cb10-464" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="dv">4500</span><span class="op">,</span> <span class="dt">texto</span><span class="op">:</span> <span class="st">"meta: 4 500"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"texto"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> COLORES<span class="op">.</span><span class="at">verde</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"start"</span>})<span class="op">,</span></span>
+<span id="cb10-465"><a href="#cb10-465" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">t</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> lecturaT<span class="op">.</span><span class="at">cupo</span><span class="op">,</span> <span class="dt">texto</span><span class="op">:</span> <span class="st">"cupo"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"texto"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#945A00"</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"start"</span>})<span class="op">,</span></span>
+<span id="cb10-466"><a href="#cb10-466" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb10-467"><a href="#cb10-467" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="472" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 471;"><span id="cb11-472"><a href="#cb11-472" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb11-473"><a href="#cb11-473" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Cupo del barrio con la intervención&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(lecturaT<span class="op">.</span><span class="at">cupo</span>)<span class="sc">}</span><span class="vs"> techos&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-474"><a href="#cb11-474" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Techos conectados en el año 20&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(lecturaT<span class="op">.</span><span class="at">anio20</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-475"><a href="#cb11-475" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Techos conectados en el año 25&lt;b&gt;</span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">0</span>)(lecturaT<span class="op">.</span><span class="at">anio25</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-476"><a href="#cb11-476" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Meta de 4 500 techos&lt;b&gt;</span><span class="sc">${</span>lecturaT<span class="op">.</span><span class="at">meta</span> <span class="op">===</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">"no se alcanza en 25 años"</span> <span class="op">:</span> <span class="vs">`se alcanza en el año </span><span class="sc">${</span><span class="fu">formatoNumero</span>(<span class="dv">1</span>)(lecturaT<span class="op">.</span><span class="at">meta</span>)<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb11-477"><a href="#cb11-477" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="expression">
 
 </div>
 </div>
 </div>
 <div class="nota-datos">
-<p>Diagnósticos cualitativos con base en el ejemplo de las notas de la semana 6. No hay modelo numérico detrás de este selector.</p>
+<p>Modelo de adopción de solar en techos con cupo de la red y trámite de conexión, integrado en el navegador con Euler y paso de 0,01 años durante 25 años; el último cupo se asigna en 0,1 años. Línea gris: sin intervención. Línea verde: la meta. Línea ámbar: el cupo vigente desde el año 15. Línea violeta: hoy. Datos sintéticos con fines didácticos; la fracción del 50 % y la regla de costos son las de la Resolución CREG 174 de 2021.</p>
 </div>
 </div>
+<p>El segundo visor lee esas corridas con la prueba de la intervención y llega a la recomendación.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Leer el selector</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 5 y 6: la prueba de la intervención y la conclusión</span>
 </div>
 <div class="paso">
-<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-capas">(la opción que eligió arriba)</span>. Desde la capa de mercado sola, la única palanca visible es el subsidio. Es una recomendación razonable dentro de su capa y probablemente inútil si el freno está en otra.</p>
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-capas">(la opción que eligió arriba)</span>. Con el contagio en 1,0 por año, el barrio sigue en 2 400 techos en el año 20 y en el año 25. Con el cupo copado, las solicitudes valen cero sea cual sea el contagio: el subsidio empuja una puerta que está cerrada por otra capa. El cambio de transformadores es la única de las tres que mueve la cifra.</p>
 </div>
 <div class="paso">
-<p><strong>Agregue la capa física.</strong> Aparece un tope técnico por circuito que la logística no tiene. La recomendación se vuelve reforzar la red.</p>
+<p><strong>Localice el problema: la prueba de la intervención.</strong> Las lecturas del simulador, una intervención a la vez:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Intervención</th>
+<th>Capa</th>
+<th>Qué mueve</th>
+<th style="text-align: center;">Techos en el año 20</th>
+<th>¿Cambia el lazo B1?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Subsidio doble (<span class="math inline">\beta = 1{,}0</span>)</td>
+<td>mercado</td>
+<td>el contagio</td>
+<td style="text-align: center;">2 400</td>
+<td>queda igual</td>
+</tr>
+<tr class="even">
+<td>Conexión en un mes</td>
+<td>actores</td>
+<td>el retardo de R1</td>
+<td style="text-align: center;">2 400</td>
+<td>queda igual</td>
+</tr>
+<tr class="odd">
+<td>Transformadores de 112,5 kVA</td>
+<td>física</td>
+<td>el cupo, a 3 600</td>
+<td style="text-align: center;">3 600</td>
+<td>sube su tope</td>
+</tr>
+<tr class="even">
+<td>Transformadores de 150 kVA</td>
+<td>física</td>
+<td>el cupo, a 5 000</td>
+<td style="text-align: center;">4 996</td>
+<td>sube su tope</td>
+</tr>
+</tbody>
+</table>
+<p>Solo la intervención física cambia el resultado, y con 150 kVA la meta se alcanza en el año 17,6.</p>
 </div>
 <div class="paso">
-<p><strong>Agregue la red de actores.</strong> Aparece un actor con poder de retardo, el operador de red, cuya comercializadora vende menos con cada autogenerador aunque la regulación ajuste su remuneración por la red. Con la capa física también encendida, se ve el acople: el control técnico de la conexión funciona como poder.</p>
+<p><a href="../diagramas/svg/s6-01-techos-capas-5.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="../diagramas/svg/s6-01-techos-capas-5.svg" class="img-fluid" loading="lazy" alt="El mismo diagrama con tres cajas y dos flechas resaltadas en ámbar: la fracción que la regla deja usar y el refuerzo a cargo de quien lo pide, en la gobernanza, y el cupo disponible, en la capa física."></a></p>
+<p><strong>Localice el problema: pregunte quién ejecuta la intervención.</strong> El cambio de transformadores es físico, pero quien decide si se hace es una regla. Según el artículo 17, lo paga el hogar que pide la conexión que ya no cabe, y un transformador cuesta más que sus paneles [POR VERIFICAR con precios de mercado]. Por eso la obra que destraba el barrio existe en el papel y nadie la pide. El problema vive en la costura entre la gobernanza y la capa física, que el diagrama resalta: las dos reglas que fijan el cupo.</p>
 </div>
 <div class="paso">
-<p><strong>Agregue la gobernanza.</strong> Aparece la pregunta de fondo: quién paga la red. Una regla de reparto mal resuelta puede frenar todo el sistema aunque los subsidios suban y los transformadores se refuercen.</p>
+<p><strong>Revise qué aportan las otras capas.</strong> Con transformadores de 150 kVA, el subsidio y el plazo de conexión sí cuentan, porque ahora hay cupo que llenar. La meta de 4 500 techos se alcanza en el año 17,6 con el cupo solo; en el 16,7 si además se duplica el subsidio; en el 17,0 si además se conecta en un mes; y en el 16,1 con las tres cosas. Las capas de mercado y de actores fijan el calendario, y la costura entre gobernanza y física fija el destino.</p>
 </div>
 <div class="paso">
-<p><strong>Localice el problema.</strong> El diagnóstico completo anticipa el patrón real: adopción exponencial, fricción creciente de conexión y un debate regulatorio sobre quién paga la red. La recomendación más duradera vive en la gobernanza y se apoya en las otras tres.</p>
+<p><strong>Concluya.</strong> «Duplicar el subsidio deja el barrio en 2 400 techos. El barrio se detuvo porque sus 200 transformadores admiten 12 sistemas cada uno con la regla del 50 %, y la norma carga el costo de ampliarlos al hogar que pide la conexión siguiente. La secretaría debe dirigirse al operador de red y a la CREG con una propuesta sobre quién paga el refuerzo de los transformadores copados, que es una pregunta de reparto: si lo paga la tarifa de todos, lo pagan también los hogares sin techo propio. Con transformadores de 150 kVA el cupo sube a 5 000 techos y la meta de 4 500 se alcanza hacia el año 17,6; el subsidio y un plazo de conexión de un mes la adelantan entre medio año y un año cada uno. La señal para seguir el caso es el número de transformadores en rojo en el mapa de disponibilidad que el operador debe publicar.»</p>
 </div>
 </div>
+<p>El ejemplo deja tres salvedades. El contagio real es local, de modo que unos transformadores se copan antes que otros y el barrio empieza a frenarse antes de llegar al cupo total. Los sistemas que no entregan excedentes a la red quedan por fuera del límite del artículo 6, así que un hogar puede instalar paneles después del cupo si renuncia a vender lo que le sobra. Y las cifras del barrio son sintéticas; lo que viene de la norma son la fracción, la regla de costos y la obligación de publicar la disponibilidad por transformador (artículo 7).</p>
 </section>
 <section id="windpeshi-primera-pasada" class="level3">
 <h3 class="anchored" data-anchor-id="windpeshi-primera-pasada">Windpeshi, primera pasada</h3>
 <div class="ejemplo caja" data-nivel="avanzado">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Un proyecto que no fracasó en ninguna capa</span>
+<span class="caja-etiqueta">Ejemplo</span><span class="caja-nivel nivel-avanzado">●●● avanzado</span><span class="caja-texto-titulo">Un parque con todos los permisos y sin obra</span>
 </div>
-<p><strong>Planteamiento.</strong> Haga una primera pasada de Windpeshi por las cuatro capas. La página 8 de la semana lo desarrolla en detalle.</p>
+<p><strong>Objetivo.</strong> Aplicar los seis pasos a un caso real con información pública, marcar cada respuesta como dato o como hipótesis, y encontrar un lazo de refuerzo entre capas junto con las entradas que lo alimentan.</p>
+<p><strong>Planteamiento.</strong> Windpeshi es un parque eólico de 205 MW y 41 aerogeneradores, entre Uribia y Maicao, en La Guajira. En 2019 obtuvo obligaciones de energía firme en la subasta del Cargo por Confiabilidad y un contrato de largo plazo en la subasta de renovables. La ANLA licenció el parque en febrero de 2020 y su línea de conexión en septiembre de 2021, las dos después de protocolizar las consultas previas con las comunidades wayuu. Durante la construcción, las obras estuvieron detenidas cerca de la mitad de las jornadas en 2021 y 2022 y el 60 % en 2023, y el 25 de mayo de 2023 Enel Colombia suspendió el proyecto. Ecopetrol lo compró en julio de 2025 y aprobó reanudarlo; en 2026 volvieron los bloqueos.</p>
+<p>El Ministerio de Minas y Energía prepara las reglas para los parques que vienen detrás y quiere saber qué debe cambiar para que la historia no se repita. Se discuten tres ideas: más acompañamiento de la fuerza pública, más recursos para las comunidades y más plazo para los proyectos.</p>
 </div>
+<p>El visor recorre los pasos 1 a 4. El diagrama de capas muestra primero las variables que salen de las respuestas y después los acoples que las unen.</p>
 <div class="pasos caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Cuatro capas y sus costuras</span>
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 1 a 4: del síntoma al lazo</span>
 </div>
 <div class="paso">
-<p><strong>Capa física.</strong> El recurso eólico es excepcional, pero la energía no sirve sin evacuación. Windpeshi se conecta a la subestación Cuestecitas por una línea propia de 220 kV que también cruza territorio wayuu, y la UPME condicionó esa conexión a otra obra, la línea Copey–Cuestecitas de 500 kV, que entró en servicio en octubre de 2025, cinco años tarde. La primera ola de parques depende de otro corredor, la línea Colectora de 500 kV (convocatoria UPME 06-2017), con unos 475 km de circuito, de la que dependen siete parques de unos 1 050 MW, con entrada prevista para 2027.</p>
+<p><strong>Fije el síntoma, el decisor y la pregunta.</strong> Síntoma: las obras detenidas el 60 % de las jornadas de 2023 y el proyecto suspendido, con 7 de las 41 cimentaciones construidas (Enel Colombia, 2023; Contraloría de Bogotá, 2026). Decisor: el Ministerio de Minas y Energía. Pregunta: qué regla o qué condición debe cambiar para los parques siguientes.</p>
 </div>
 <div class="paso">
-<p><strong>Capa de mercado.</strong> Los contratos de subasta fijaron cronogramas e ingresos: cada mes de retraso es energía comprometida que hay que comprar en bolsa, lucro cesante y garantías en riesgo. El tiempo del contrato y el tiempo del territorio corren a velocidades incompatibles, un retardo que la <a href="../semana6/02-sistema-sociotecnico.html">página 2</a> modela.</p>
+<p><strong>Formule la pregunta de cada capa.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capa</th>
+<th>Pregunta</th>
+<th>Variable a la que apunta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Física</td>
+<td>¿Qué obra limita la entrada del parque y cuánta holgura tiene?</td>
+<td>avance de la obra; línea de conexión en servicio</td>
+</tr>
+<tr class="even">
+<td>Mercado</td>
+<td>¿Qué compromiso económico corre mientras la obra está detenida?</td>
+<td>retraso frente al contrato</td>
+</tr>
+<tr class="odd">
+<td>Actores</td>
+<td>¿Quién detiene la obra, quién quiere apurarla y con qué fuerza?</td>
+<td>prisa de la empresa; agravio y expectativas; bloqueos</td>
+</tr>
+<tr class="even">
+<td>Gobernanza</td>
+<td>¿Qué regla ordena la relación entre el proyecto y las comunidades?</td>
+<td>forma de la consulta previa</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="paso">
-<p><strong>Capa de actores.</strong> Decenas de comunidades wayuu con autoridades propias y sin representación centralizada, varias empresas compitiendo por las mismas vías y las mismas consultas, y un Estado repartido entre ministerios, la ANLA y autoridades locales con poca presencia.</p>
+<p><a href="../diagramas/svg/s6-01-windpeshi-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="../diagramas/svg/s6-01-windpeshi-1.svg" class="img-fluid" loading="lazy" alt="Las cuatro bandas con siete cajas en ámbar: en la capa física, avance de la obra y línea de 500 kV en servicio; en el mercado, retraso frente al contrato; en los actores, prisa de la empresa por cerrar, agravio y expectativas, y bloqueos; en la gobernanza, consultas separadas, sin reglas comunes."></a></p>
+<p><strong>Responda con evidencia.</strong> Cada respuesta lleva su fuente y su tipo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capa</th>
+<th>Respuesta</th>
+<th>Fuente</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Física</td>
+<td>La conexión dependía de la línea Copey–Cuestecitas de 500 kV, que entró en octubre de 2025, cinco años tarde</td>
+<td>UPME (2025)</td>
+<td>dato</td>
+</tr>
+<tr class="even">
+<td>Mercado</td>
+<td>El parque tenía fechas e ingresos comprometidos en dos subastas; cada mes sin generar obliga a comprar en bolsa la energía vendida</td>
+<td>Contraloría General (2021); UPME (2025)</td>
+<td>dato; el monto, por calcular</td>
+</tr>
+<tr class="odd">
+<td>Actores</td>
+<td>33 bloqueos del parque y de su vía entre 2022 y mayo de 2023; 13 comunidades wayuu en el área de influencia</td>
+<td>monografía contratada por la UPME (2023)</td>
+<td>dato</td>
+</tr>
+<tr class="even">
+<td>Actores</td>
+<td>La empresa negoció con prisa por la presión del cronograma</td>
+<td>se comprobaría con las actas de consulta y sus fechas</td>
+<td>hipótesis</td>
+</tr>
+<tr class="odd">
+<td>Gobernanza</td>
+<td>La consulta se hace proyecto por proyecto y comunidad por comunidad; hubo comunidades con acuerdo protocolizado que no quisieron continuar y disputas de representatividad</td>
+<td>Contraloría General (2021)</td>
+<td>dato</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="paso">
-<p><strong>Capa de gobernanza.</strong> La consulta previa proyecto por proyecto y comunidad por comunidad, pensada para obras puntuales, se aplicó a una transformación territorial completa. La Contraloría General (2021) documentó consultas sin cerrar, comunidades que se retiraron de acuerdos protocolizados y retrasos en licencias y transmisión. La regla legal de reparto de beneficios existe, pero opera proyecto por proyecto.</p>
+<p><a href="../diagramas/svg/s6-01-windpeshi-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="../diagramas/svg/s6-01-windpeshi-2.svg" class="img-fluid" loading="lazy" alt="Aparecen cinco flechas en ámbar: del avance de la obra al retraso, negativa; del retraso a la prisa de la empresa, positiva; de la prisa al agravio, positiva; del agravio a los bloqueos, positiva y con retardo; de los bloqueos al avance, negativa. Forman el lazo R1."></a></p>
+<p><strong>Registre los acoples: la cadena de porqués.</strong> ¿Por qué se detuvo la obra? Por los bloqueos: acople <span class="math inline">A \to F</span>, negativo. ¿Por qué hay bloqueos? Por el agravio y las expectativas acumulados, con retardo (dentro de la capa de actores). ¿Qué los alimenta? La prisa de la empresa por cerrar acuerdos (hipótesis, dentro de la misma capa). ¿Por qué la prisa? Porque el retraso frente al contrato cuesta: acople <span class="math inline">M \to A</span>, positivo. ¿Y el retraso? Crece cuando el avance de la obra cae: acople <span class="math inline">F \to M</span>, negativo. La cadena volvió al punto de partida. Tiene dos enlaces negativos, así que es un lazo de refuerzo, R1: cada bloqueo atrasa la obra y el atraso prepara el bloqueo siguiente.</p>
 </div>
 <div class="paso">
-<p><strong>Localice el problema.</strong> Windpeshi se trabó en las costuras. El retraso presiona a la empresa, la presión choca con el tiempo de las comunidades, el conflicto bloquea la obra y el bloqueo alarga el retraso; mientras tanto, la red que debía evacuar su energía llegaba con años de atraso. Por eso ninguna solución de una sola capa, ni más policía, ni más dinero, ni más abogados, lo habría resuelto.</p>
+<p><a href="../diagramas/svg/s6-01-windpeshi-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="../diagramas/svg/s6-01-windpeshi-3.svg" class="img-fluid" loading="lazy" alt="Aparecen dos flechas en ámbar que entran al lazo: de las consultas separadas, sin reglas comunes, al agravio y las expectativas, positiva; y de la línea de 500 kV en servicio al retraso, negativa."></a></p>
+<p><strong>Registre los acoples: las entradas del lazo.</strong> Dos acoples alimentan el lazo desde afuera. La consulta separada por proyecto y por comunidad deja acuerdos distintos entre vecinos y sin una instancia que los sostenga: <span class="math inline">G \to A</span>, positivo. Y la línea de 500 kV, mientras falta, mantiene el retraso aunque la obra del parque avance: <span class="math inline">F \to M</span>, negativo.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>De ↓ a →</th>
+<th>F</th>
+<th>M</th>
+<th>A</th>
+<th>G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>F</strong></td>
+<td></td>
+<td>avance → retraso (−); línea → retraso (−)</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>M</strong></td>
+<td></td>
+<td></td>
+<td>retraso → prisa (+)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>A</strong></td>
+<td>bloqueos → avance (−)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>G</strong></td>
+<td></td>
+<td></td>
+<td>consultas separadas → agravio (+)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>La fila de la gobernanza solo tiene salidas: en esta primera pasada ninguna capa le devuelve nada a la regla, que es una forma de decir que la regla no aprende del caso.</p>
 </div>
 </div>
+<p>Antes de probar las intervenciones, anote su respuesta.</p>
+<div id="pred-windpeshi" class="prediccion caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Prediga antes de seguir</span>
+</div>
+<p>¿Cuál de estas intervenciones, aplicada sola, abre el lazo R1?</p>
+<div class="opcion">
+<p>Más fuerza pública para levantar los bloqueos.</p>
+</div>
+<div class="opcion">
+<p>Más compensación para cada comunidad, negociada por separado.</p>
+</div>
+<div class="opcion">
+<p>Atar las fechas del contrato a los hitos de la consulta y de la línea.</p>
+</div>
+<div class="opcion">
+<p>Un acuerdo territorial con reglas comunes de consulta y de reparto.</p>
+</div>
+</div>
+<div class="simulador caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Explore</span><span class="caja-texto-titulo">La prueba de la intervención sobre el lazo de Windpeshi</span>
+</div>
+<p>La tabla de abajo es la lista de acoples del paso 4: los cinco del lazo R1 y las dos entradas. Cada casilla es una intervención que alguien ha propuesto, con la capa donde actúa. Al marcarla, la tabla muestra qué acople corta, y las lecturas dicen si el lazo sigue cerrado y qué entradas lo siguen alimentando. Marque primero cada intervención sola y compare con su predicción; después busque la combinación más corta que abre el lazo y cierra las dos entradas.</p>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="617" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 616;"><span id="cb12-617"><a href="#cb12-617" aria-hidden="true" tabindex="-1"></a>ACOPLES_W <span class="op">=</span> [</span>
+<span id="cb12-618"><a href="#cb12-618" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">id</span><span class="op">:</span> <span class="st">"a1"</span><span class="op">,</span> <span class="dt">de</span><span class="op">:</span> <span class="st">"avance de la obra"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="st">"retraso frente al contrato"</span><span class="op">,</span> <span class="dt">pol</span><span class="op">:</span> <span class="st">"−"</span><span class="op">,</span> <span class="dt">capas</span><span class="op">:</span> <span class="st">"F → M"</span><span class="op">,</span> <span class="dt">lazo</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb12-619"><a href="#cb12-619" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">id</span><span class="op">:</span> <span class="st">"a2"</span><span class="op">,</span> <span class="dt">de</span><span class="op">:</span> <span class="st">"retraso frente al contrato"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="st">"prisa de la empresa"</span><span class="op">,</span> <span class="dt">pol</span><span class="op">:</span> <span class="st">"+"</span><span class="op">,</span> <span class="dt">capas</span><span class="op">:</span> <span class="st">"M → A"</span><span class="op">,</span> <span class="dt">lazo</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb12-620"><a href="#cb12-620" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">id</span><span class="op">:</span> <span class="st">"a3"</span><span class="op">,</span> <span class="dt">de</span><span class="op">:</span> <span class="st">"prisa de la empresa"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="st">"agravio y expectativas"</span><span class="op">,</span> <span class="dt">pol</span><span class="op">:</span> <span class="st">"+"</span><span class="op">,</span> <span class="dt">capas</span><span class="op">:</span> <span class="st">"dentro de A"</span><span class="op">,</span> <span class="dt">lazo</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb12-621"><a href="#cb12-621" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">id</span><span class="op">:</span> <span class="st">"a4"</span><span class="op">,</span> <span class="dt">de</span><span class="op">:</span> <span class="st">"agravio y expectativas"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="st">"bloqueos"</span><span class="op">,</span> <span class="dt">pol</span><span class="op">:</span> <span class="st">"+"</span><span class="op">,</span> <span class="dt">capas</span><span class="op">:</span> <span class="st">"dentro de A"</span><span class="op">,</span> <span class="dt">lazo</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb12-622"><a href="#cb12-622" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">id</span><span class="op">:</span> <span class="st">"a5"</span><span class="op">,</span> <span class="dt">de</span><span class="op">:</span> <span class="st">"bloqueos"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="st">"avance de la obra"</span><span class="op">,</span> <span class="dt">pol</span><span class="op">:</span> <span class="st">"−"</span><span class="op">,</span> <span class="dt">capas</span><span class="op">:</span> <span class="st">"A → F"</span><span class="op">,</span> <span class="dt">lazo</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb12-623"><a href="#cb12-623" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">id</span><span class="op">:</span> <span class="st">"e1"</span><span class="op">,</span> <span class="dt">de</span><span class="op">:</span> <span class="st">"consultas separadas, sin reglas comunes"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="st">"agravio y expectativas"</span><span class="op">,</span> <span class="dt">pol</span><span class="op">:</span> <span class="st">"+"</span><span class="op">,</span> <span class="dt">capas</span><span class="op">:</span> <span class="st">"G → A"</span><span class="op">,</span> <span class="dt">lazo</span><span class="op">:</span> <span class="kw">false</span>}<span class="op">,</span></span>
+<span id="cb12-624"><a href="#cb12-624" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">id</span><span class="op">:</span> <span class="st">"e2"</span><span class="op">,</span> <span class="dt">de</span><span class="op">:</span> <span class="st">"línea de 500 kV en servicio"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="st">"retraso frente al contrato"</span><span class="op">,</span> <span class="dt">pol</span><span class="op">:</span> <span class="st">"−"</span><span class="op">,</span> <span class="dt">capas</span><span class="op">:</span> <span class="st">"F → M"</span><span class="op">,</span> <span class="dt">lazo</span><span class="op">:</span> <span class="kw">false</span>}<span class="op">,</span></span>
+<span id="cb12-625"><a href="#cb12-625" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="630" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 629;"><span id="cb13-630"><a href="#cb13-630" aria-hidden="true" tabindex="-1"></a>INTERVENCIONES_W <span class="op">=</span> ({</span>
+<span id="cb13-631"><a href="#cb13-631" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Más fuerza pública (actores)"</span><span class="op">:</span> {<span class="dt">corta</span><span class="op">:</span> []<span class="op">,</span> <span class="dt">nota</span><span class="op">:</span> <span class="st">"Levanta un bloqueo y deja intactos el agravio y la prisa: ningún acople cambia."</span>}<span class="op">,</span></span>
+<span id="cb13-632"><a href="#cb13-632" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Más compensación por comunidad (actores)"</span><span class="op">:</span> {<span class="dt">corta</span><span class="op">:</span> []<span class="op">,</span> <span class="dt">nota</span><span class="op">:</span> <span class="st">"Baja el agravio de una comunidad por un tiempo y deja la regla y la prisa como estaban; el efecto sobre las expectativas de las vecinas es una hipótesis por comprobar."</span>}<span class="op">,</span></span>
+<span id="cb13-633"><a href="#cb13-633" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fechas del contrato atadas a los hitos de consulta y de línea (mercado)"</span><span class="op">:</span> {<span class="dt">corta</span><span class="op">:</span> [<span class="st">"a2"</span>]<span class="op">,</span> <span class="dt">nota</span><span class="op">:</span> <span class="st">"El retraso por consulta o por falta de línea deja de costarle a la empresa, y con eso deja de apurarla."</span>}<span class="op">,</span></span>
+<span id="cb13-634"><a href="#cb13-634" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Acuerdo territorial con reglas comunes (gobernanza)"</span><span class="op">:</span> {<span class="dt">corta</span><span class="op">:</span> [<span class="st">"e1"</span>]<span class="op">,</span> <span class="dt">nota</span><span class="op">:</span> <span class="st">"Las comunidades negocian con las mismas reglas y hay una instancia que hace seguimiento a los acuerdos."</span>}<span class="op">,</span></span>
+<span id="cb13-635"><a href="#cb13-635" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Línea de 500 kV a tiempo (física)"</span><span class="op">:</span> {<span class="dt">corta</span><span class="op">:</span> [<span class="st">"e2"</span>]<span class="op">,</span> <span class="dt">nota</span><span class="op">:</span> <span class="st">"La conexión deja de sumar retraso; el lazo queda como estaba."</span>}<span class="op">,</span></span>
+<span id="cb13-636"><a href="#cb13-636" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="641" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 640;"><span id="cb14-641"><a href="#cb14-641" aria-hidden="true" tabindex="-1"></a>viewof intervW <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(INTERVENCIONES_W)<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Intervenciones"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> []})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb15" data-startfrom="646" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 645;"><span id="cb15-646"><a href="#cb15-646" aria-hidden="true" tabindex="-1"></a>hayLazo <span class="op">=</span> (aristas) <span class="kw">=&gt;</span> {</span>
+<span id="cb15-647"><a href="#cb15-647" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> vecinos <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span>()<span class="op">;</span></span>
+<span id="cb15-648"><a href="#cb15-648" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> {de<span class="op">,</span> a} <span class="kw">of</span> aristas) vecinos<span class="op">.</span><span class="fu">set</span>(de<span class="op">,</span> [<span class="op">...</span>(vecinos<span class="op">.</span><span class="fu">get</span>(de) <span class="op">??</span> [])<span class="op">,</span> a])<span class="op">;</span></span>
+<span id="cb15-649"><a href="#cb15-649" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> estado <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span>()<span class="op">;</span></span>
+<span id="cb15-650"><a href="#cb15-650" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> visitar <span class="op">=</span> (n) <span class="kw">=&gt;</span> {</span>
+<span id="cb15-651"><a href="#cb15-651" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (estado<span class="op">.</span><span class="fu">get</span>(n) <span class="op">===</span> <span class="dv">1</span>) <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb15-652"><a href="#cb15-652" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (estado<span class="op">.</span><span class="fu">get</span>(n) <span class="op">===</span> <span class="dv">2</span>) <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb15-653"><a href="#cb15-653" aria-hidden="true" tabindex="-1"></a>    estado<span class="op">.</span><span class="fu">set</span>(n<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb15-654"><a href="#cb15-654" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> m <span class="kw">of</span> vecinos<span class="op">.</span><span class="fu">get</span>(n) <span class="op">??</span> []) <span class="cf">if</span> (<span class="fu">visitar</span>(m)) <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb15-655"><a href="#cb15-655" aria-hidden="true" tabindex="-1"></a>    estado<span class="op">.</span><span class="fu">set</span>(n<span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb15-656"><a href="#cb15-656" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb15-657"><a href="#cb15-657" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb15-658"><a href="#cb15-658" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [<span class="op">...</span>vecinos<span class="op">.</span><span class="fu">keys</span>()]<span class="op">.</span><span class="fu">some</span>(visitar)<span class="op">;</span></span>
+<span id="cb15-659"><a href="#cb15-659" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-15" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb16" data-startfrom="664" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 663;"><span id="cb16-664"><a href="#cb16-664" aria-hidden="true" tabindex="-1"></a>estadoW <span class="op">=</span> {</span>
+<span id="cb16-665"><a href="#cb16-665" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cortados <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(intervW<span class="op">.</span><span class="fu">flatMap</span>((n) <span class="kw">=&gt;</span> INTERVENCIONES_W[n]<span class="op">.</span><span class="at">corta</span>))<span class="op">;</span></span>
+<span id="cb16-666"><a href="#cb16-666" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> vivos <span class="op">=</span> ACOPLES_W<span class="op">.</span><span class="fu">filter</span>((x) <span class="kw">=&gt;</span> <span class="op">!</span>cortados<span class="op">.</span><span class="fu">has</span>(x<span class="op">.</span><span class="at">id</span>))<span class="op">;</span></span>
+<span id="cb16-667"><a href="#cb16-667" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cerrado <span class="op">=</span> <span class="fu">hayLazo</span>(vivos<span class="op">.</span><span class="fu">filter</span>((x) <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">lazo</span>))<span class="op">;</span></span>
+<span id="cb16-668"><a href="#cb16-668" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> entradas <span class="op">=</span> vivos<span class="op">.</span><span class="fu">filter</span>((x) <span class="kw">=&gt;</span> <span class="op">!</span>x<span class="op">.</span><span class="at">lazo</span>)<span class="op">;</span></span>
+<span id="cb16-669"><a href="#cb16-669" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {cortados<span class="op">,</span> cerrado<span class="op">,</span> entradas}<span class="op">;</span></span>
+<span id="cb16-670"><a href="#cb16-670" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-16" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb17" data-startfrom="675" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 674;"><span id="cb17-675"><a href="#cb17-675" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="table table-sm"&gt;</span></span>
+<span id="cb17-676"><a href="#cb17-676" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Acople&lt;/th&gt;&lt;th&gt;Capas&lt;/th&gt;&lt;th&gt;Estado&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb17-677"><a href="#cb17-677" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;tbody&gt;</span><span class="sc">${</span>ACOPLES_W<span class="op">.</span><span class="fu">map</span>((x) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr style="</span><span class="sc">${</span>estadoW<span class="op">.</span><span class="at">cortados</span><span class="op">.</span><span class="fu">has</span>(x<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> <span class="st">"color:#5F5F5F;text-decoration:line-through"</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">"&gt;</span></span>
+<span id="cb17-678"><a href="#cb17-678" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;td&gt;</span><span class="sc">${</span>x<span class="op">.</span><span class="at">de</span><span class="sc">}</span><span class="vs"> → </span><span class="sc">${</span>x<span class="op">.</span><span class="at">a</span><span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>x<span class="op">.</span><span class="at">pol</span><span class="sc">}</span><span class="vs">)&lt;/td&gt;&lt;td&gt;</span><span class="sc">${</span>x<span class="op">.</span><span class="at">capas</span><span class="sc">}${</span>x<span class="op">.</span><span class="at">lazo</span> <span class="op">?</span> <span class="st">", lazo R1"</span> <span class="op">:</span> <span class="st">", entrada"</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb17-679"><a href="#cb17-679" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;td style="text-decoration:none"&gt;&lt;b style="color:</span><span class="sc">${</span>estadoW<span class="op">.</span><span class="at">cortados</span><span class="op">.</span><span class="fu">has</span>(x<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> COLORES<span class="op">.</span><span class="at">verde</span> <span class="op">:</span> COLORES<span class="op">.</span><span class="at">rojo</span><span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span>estadoW<span class="op">.</span><span class="at">cortados</span><span class="op">.</span><span class="fu">has</span>(x<span class="op">.</span><span class="at">id</span>) <span class="op">?</span> <span class="st">"cortado"</span> <span class="op">:</span> <span class="st">"sigue"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-17" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb18" data-startfrom="684" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 683;"><span id="cb18-684"><a href="#cb18-684" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span>intervW<span class="op">.</span><span class="fu">map</span>((n) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;p style="border-left:4px solid </span><span class="sc">${</span>COLORES<span class="op">.</span><span class="at">violeta</span><span class="sc">}</span><span class="vs">;padding-left:.6rem"&gt;&lt;b&gt;</span><span class="sc">${</span>n<span class="sc">}</span><span class="vs">.&lt;/b&gt; </span><span class="sc">${</span>INTERVENCIONES_W[n]<span class="op">.</span><span class="at">nota</span><span class="sc">}</span><span class="vs">&lt;/p&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-18" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold hidden">
+<summary>Ver el código en Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb19" data-startfrom="689" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 688;"><span id="cb19-689"><a href="#cb19-689" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="lectura-simulador"&gt;</span></span>
+<span id="cb19-690"><a href="#cb19-690" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Acoples cortados&lt;b&gt;</span><span class="sc">${</span>estadoW<span class="op">.</span><span class="at">cortados</span><span class="op">.</span><span class="at">size</span><span class="sc">}</span><span class="vs"> de 7&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-691"><a href="#cb19-691" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Lazo R1&lt;b&gt;</span><span class="sc">${</span>estadoW<span class="op">.</span><span class="at">cerrado</span> <span class="op">?</span> <span class="st">"sigue cerrado"</span> <span class="op">:</span> <span class="st">"abierto"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-692"><a href="#cb19-692" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;Entradas que siguen alimentándolo&lt;b&gt;</span><span class="sc">${</span>estadoW<span class="op">.</span><span class="at">entradas</span><span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"ninguna"</span> <span class="op">:</span> estadoW<span class="op">.</span><span class="at">entradas</span><span class="op">.</span><span class="fu">map</span>((x) <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">de</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">"; "</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-693"><a href="#cb19-693" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;¿Vuelve el síntoma?&lt;b&gt;</span><span class="sc">${</span>estadoW<span class="op">.</span><span class="at">cerrado</span> <span class="op">?</span> <span class="st">"sí: cada bloqueo prepara el siguiente"</span> <span class="op">:</span> estadoW<span class="op">.</span><span class="at">entradas</span><span class="op">.</span><span class="at">length</span> <span class="op">?</span> <span class="st">"puede volver por las entradas que quedan"</span> <span class="op">:</span> <span class="st">"por estas vías, no"</span><span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb19-694"><a href="#cb19-694" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-19" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="nota-datos">
+<p>Tabla lógica construida con los acoples del paso 4; el navegador revisa si los acoples que quedan forman una cadena cerrada. No hay un modelo numérico detrás. Los enlaces dentro de la capa de actores son hipótesis apoyadas en el comunicado de Enel Colombia (2023) y en el estudio de la Contraloría General (2021).</p>
+</div>
+</div>
+<p>El último visor lee la tabla y concluye.</p>
+<div class="pasos caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Paso a paso</span><span class="caja-texto-titulo">Pasos 5 y 6: la prueba de la intervención y la conclusión</span>
+</div>
+<div class="paso">
+<p><strong>Compare con su predicción.</strong> Usted anotó <span class="mi-prediccion" data-para="pred-windpeshi">(la opción que eligió arriba)</span>. De las cuatro opciones, solo las fechas atadas a los hitos abren el lazo, porque cortan el acople entre el retraso y la prisa. La fuerza pública y la compensación por separado actúan sobre un bloqueo o sobre una comunidad y dejan los siete acoples como estaban. El acuerdo territorial cierra una entrada y deja el lazo cerrado.</p>
+</div>
+<div class="paso">
+<p><strong>Localice el problema.</strong> La tabla completa de la prueba:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Intervención</th>
+<th>Capa</th>
+<th>Acople que corta</th>
+<th>Lazo R1</th>
+<th>Entradas que quedan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Más fuerza pública</td>
+<td>actores</td>
+<td>ninguno</td>
+<td>cerrado</td>
+<td>las dos</td>
+</tr>
+<tr class="even">
+<td>Más compensación por comunidad</td>
+<td>actores</td>
+<td>ninguno</td>
+<td>cerrado</td>
+<td>las dos</td>
+</tr>
+<tr class="odd">
+<td>Fechas atadas a hitos</td>
+<td>mercado</td>
+<td>retraso → prisa</td>
+<td>abierto</td>
+<td>las dos</td>
+</tr>
+<tr class="even">
+<td>Acuerdo territorial</td>
+<td>gobernanza</td>
+<td>consultas → agravio</td>
+<td>cerrado</td>
+<td>la línea</td>
+</tr>
+<tr class="odd">
+<td>Línea a tiempo</td>
+<td>física</td>
+<td>línea → retraso</td>
+<td>cerrado</td>
+<td>las consultas</td>
+</tr>
+</tbody>
+</table>
+<p>Ninguna capa resuelve sola. El problema vive en las costuras: en la que une el mercado con los actores, por donde pasa el lazo, y en la que une la gobernanza con los actores, por donde entra el agravio.</p>
+</div>
+<div class="paso">
+<p><a href="../diagramas/svg/s6-01-windpeshi-4.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="../diagramas/svg/s6-01-windpeshi-4.svg" class="img-fluid" loading="lazy" alt="El diagrama completo con el lazo R1 y sus dos entradas. Leyenda: ninguna capa falla sola; el problema vive en el lazo que las cruza y en las dos entradas que lo alimentan."></a></p>
+<p><strong>Concluya.</strong> «Las dos medidas más discutidas, más fuerza pública y más recursos por comunidad, dejan intacto el mecanismo que detuvo a Windpeshi. La obra estuvo detenida el 60 % de las jornadas de 2023 por un lazo de refuerzo entre el retraso, la prisa de la empresa, el agravio y los bloqueos, alimentado por una consulta que se hace por separado con cada comunidad y por una línea de 500 kV que llegó cinco años tarde. Para los parques siguientes, el Ministerio necesita tres cambios juntos: fechas contractuales atadas a los hitos de consulta y de transmisión, un acuerdo territorial con reglas comunes y la línea en servicio antes que el parque. Señales para seguirlo: el porcentaje de jornadas detenidas y el número de acuerdos protocolizados que se cumplen.» Esta conclusión es de primera pasada, y el enlace entre la prisa y el agravio sigue siendo una hipótesis.</p>
+</div>
+</div>
+<p>La primera pasada deja armada la ficha del caso, con piezas firmes y piezas por comprobar. Cada página siguiente toma una de ellas.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Pieza de la ficha de Windpeshi</th>
+<th>Cómo queda en esta página</th>
+<th>Dónde se desarrolla</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>El lazo entre el retraso, la prisa, el agravio y los bloqueos</td>
+<td>dibujado, con un enlace como hipótesis</td>
+<td><a href="../semana6/02-sistema-sociotecnico.html">página 2</a>, que lo lleva a un modelo</td>
+</tr>
+<tr class="even">
+<td>La regla de la consulta y el arreglo institucional</td>
+<td>una frase y una fuente</td>
+<td><a href="../semana6/03-ostrom.html">páginas 3</a> y <a href="../semana6/05-consulta-previa.html">5</a></td>
+</tr>
+<tr class="odd">
+<td>Quién gana y quién paga</td>
+<td>sin responder</td>
+<td><a href="../semana6/04-justicia-energetica.html">página 4</a></td>
+</tr>
+<tr class="even">
+<td>Quién puede vetar y quién puede mediar</td>
+<td>una lista de actores</td>
+<td><a href="../semana6/06-redes-actores.html">página 6</a></td>
+</tr>
+<tr class="odd">
+<td>La recomendación al Ministerio</td>
+<td>un párrafo de primera pasada</td>
+<td><a href="../semana6/07-comunicar-complejidad.html">página 7</a>, que la redacta para tres audiencias</td>
+</tr>
+<tr class="even">
+<td>El análisis completo, con la red de transmisión y el mercado en números</td>
+<td>pendiente</td>
+<td><a href="../semana6/08-windpeshi-cuatro-capas.html">página 8</a></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="errores-comunes" class="level2">
 <h2 class="anchored" data-anchor-id="errores-comunes">5. Errores comunes</h2>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Elegir la capa por comodidad disciplinar</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Elegir la capa por la profesión del analista</span>
 </div>
 <div class="lado-a-lado">
 <div class="mal">
-<p>Los ingenieros entregan flujos de carga, los economistas precios, y la pregunta del caso, que vivía en los actores, queda «para el capítulo social».</p>
+<p>El equipo del barrio es de economistas y recomienda duplicar el subsidio. En el simulador de los techos, mueva solo el contagio: la curva azul queda encima de la gris.</p>
 </div>
 <div class="bien">
-<p>La capa se elige por dónde vive el problema, no por dónde vive el analista. Si la causa está en la gobernanza, ahí va el mayor esfuerzo.</p>
+<p>El equipo aplica la prueba de la intervención a las cuatro capas antes de recomendar, y encuentra que la cifra solo cambia con el cupo. La capa se elige por el lugar donde vive el problema.</p>
 </div>
 </div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Tratar las otras capas como contexto</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Preguntas que no apuntan a una variable</span>
 </div>
-<p>Mirar las cuatro capas pero congelar tres como telón de fondo es el error fino. Las capas se acoplan dinámicamente: el conflicto alarga retardos de mercado, el retraso presiona a los actores, la física redistribuye poder. Si el análisis no tiene flechas entre capas, es una lista.</p>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«¿Hay problemas sociales en la zona?» La respuesta es sí en cualquier proyecto, y con ella no se puede hacer ninguna cuenta ni buscar ninguna fuente.</p>
+</div>
+<div class="bien">
+<p>«¿Cuántas comunidades certificadas hay en el área de influencia, cuántas tienen acuerdo protocolizado y cuántos acuerdos se están cumpliendo?» La respuesta son tres números con fuente.</p>
+</div>
+</div>
 </div>
 <div class="error-comun caja">
 <div class="caja-titulo">
-<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">El reduccionismo invertido</span>
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Cuatro capítulos sin acoples</span>
 </div>
-<p>Tan errado como «todo es ingeniería» es «todo es política». Proyectos con licencia social impecable fracasan por un transformador que no llega o un lazo de mercado mal leído. Ninguna capa, tampoco la de moda, tiene el monopolio de la explicación.</p>
+<div class="lado-a-lado">
+<div class="mal">
+<p>El informe describe las cuatro capas en cuatro capítulos y su matriz de acoples está vacía. Es el paso 3 sin el paso 4: una lista de respuestas ciertas, como la del apagón antes de la cadena de porqués.</p>
+</div>
+<div class="bien">
+<p>Cada capítulo cierra con lo que esa capa les fija a las otras, y el informe tiene una matriz con al menos tres o cuatro celdas llenas y su polaridad.</p>
+</div>
+</div>
+</div>
+<div class="error-comun caja">
+<div class="caja-titulo">
+<span class="caja-etiqueta">Error común</span><span class="caja-texto-titulo">Todo es política</span>
+</div>
+<div class="lado-a-lado">
+<div class="mal">
+<p>«El problema de fondo siempre es de gobernanza.» Con esa idea, el analista de Windpeshi pasa por alto que la línea de 500 kV entró dos años y medio después de la suspensión.</p>
+</div>
+<div class="bien">
+<p>La prueba de la intervención se aplica también a la capa preferida. En el simulador de Windpeshi, el acuerdo territorial solo deja el lazo cerrado.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="compruebe-lo-aprendido" class="level2">
@@ -964,101 +2090,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Qué pregunta responde la capa de gobernanza?</p>
+<p>Un parque solar de 100 MW lleva ocho meses terminado y sin entregar energía. ¿Cuál de estas frases sirve como síntoma en el paso 1?</p>
 <div class="opcion">
-<p>¿Quién tiene más contactos y puede bloquear en la red de actores?</p>
-<p><span class="porque">Esa es la pregunta de la capa de actores.</span></p>
+<p>«El proyecto enfrenta dificultades de conexión y de entorno.»</p>
+<p><span class="porque">Le faltan número, unidad y fecha, y con ella no se puede formular una pregunta por capa. Revise el paso 1.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>¿Quién decide sobre las decisiones y con qué reglas de reparto?</p>
-<p><span class="porque">Correcto.</span></p>
+<p>«El parque está terminado desde hace ocho meses y ha entregado 0 MWh, porque la subestación de conexión no ha entrado en servicio.»</p>
+<p><span class="porque">Es un hecho observable con número, unidad y tiempo.</span></p>
 </div>
 <div class="opcion">
-<p>¿Qué precio de bolsa hace rentable el proyecto en el largo plazo?</p>
-<p><span class="porque">Esa es la pregunta de la capa de mercado.</span></p>
+<p>«La regulación de conexiones es deficiente.»</p>
+<p><span class="porque">Eso es una respuesta posible de la capa de gobernanza, y todavía sin evidencia. El síntoma es lo que se observa.</span></p>
 </div>
 <div class="opcion">
-<p>¿Qué permite y qué restringe la red de transmisión de la región?</p>
-<p><span class="porque">Esa es la pregunta de la capa física.</span></p>
+<p>«El operador de red actúa de mala fe.»</p>
+<p><span class="porque">Es una hipótesis sobre un actor. El síntoma va antes de las explicaciones.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>En el apagón del ejemplo básico, ¿dónde vive la corrección duradera?</p>
+<p>«El precio de escasez lo fija la CREG y entra a la cuenta del ingreso de cada generador.» ¿Qué acople describe?</p>
 <div class="opcion">
-<p>En la capa física: podar árboles y reparar la línea que cayó.</p>
-<p><span class="porque">Eso repara el síntoma. Revise el último paso del ejemplo básico.</span></p>
-</div>
-<div class="opcion">
-<p>En la capa de actores: organizar a los usuarios afectados para que reclamen.</p>
-<p><span class="porque">Ayuda a que alguien reclame, pero la regla que hacía invisible el problema sigue igual.</span></p>
+<p><span class="math inline">M \to G</span>: el mercado le fija una condición a la regla.</p>
+<p><span class="porque">El sentido es el contrario: la variable de origen está en la regla. Revise la definición de acople.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>En la gobernanza: el indicador que ocultaba la confiabilidad local.</p>
-<p><span class="porque">Correcto.</span></p>
+<p><span class="math inline">G \to M</span>: una variable de la gobernanza es condición del mercado.</p>
+<p><span class="porque">La regla fija un valor que el modelo de mercado toma como dado.</span></p>
+</div>
+<div class="opcion">
+<p><span class="math inline">A \to M</span>: un actor cambia el ingreso de otro.</p>
+<p><span class="porque">La CREG es un actor, pero aquí lo que entra al mercado es la regla que expide. La red de relaciones entre actores no aparece en la frase.</span></p>
+</div>
+<div class="opcion">
+<p>Ninguno: es una descripción de la capa de mercado.</p>
+<p><span class="porque">Dentro del mercado el precio de escasez es una condición, y la frase dice quién la fija desde otra capa.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>«El operador de red demora las conexiones de autogeneradores.» ¿Dónde se ubica?</p>
+<p>En el barrio de los techos, la secretaría duplica el subsidio y además logra que el operador conecte en un mes. ¿Cuántos techos conectados habrá en el año 20?</p>
+<div class="opcion">
+<p>Cerca de 4 500, porque las dos medidas se suman.</p>
+<p><span class="porque">Las dos actúan sobre el lazo de refuerzo, y ese lazo ya está detenido por otro. Pruebe la combinación en el simulador.</span></p>
+</div>
 <div class="opcion" data-correcta="si">
-<p>En la costura entre actores y física: usa su control técnico como poder.</p>
-<p><span class="porque">Correcto: el remedio suele ser regulatorio.</span></p>
+<p>2 400, igual que hoy.</p>
+<p><span class="porque">Con el cupo copado las solicitudes valen cero, sea cual sea el contagio o el plazo.</span></p>
 </div>
 <div class="opcion">
-<p>Solo en la capa física, porque la conexión es un trámite técnico.</p>
-<p><span class="porque">El trámite es técnico, pero quien lo controla tiene incentivos. Revise el selector de capas.</span></p>
-</div>
-<div class="opcion">
-<p>Solo en la capa de mercado, porque responde a la tarifa vigente del servicio.</p>
-<p><span class="porque">La tarifa explica parte del incentivo, pero la demora la ejerce un actor sobre un proceso técnico.</span></p>
+<p>Cerca de 7 800, porque el barrio vuelve a la curva logística.</p>
+<p><span class="porque">Esa es la cifra de la capa de mercado sola. Revise qué fija el cupo.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>Un informe describe las cuatro capas de su caso en cuatro capítulos separados, sin referencias cruzadas. ¿Qué le falta?</p>
+<p>En el apagón del municipio, el lazo B1 tiene un solo enlace negativo. ¿Qué significa para la alcaldesa?</p>
 <div class="opcion">
-<p>Una quinta capa que integre y resuma las otras cuatro.</p>
-<p><span class="porque">Cuatro bastan si se conectan. Revise el segundo error común.</span></p>
+<p>Que el problema se agrava solo con el tiempo.</p>
+<p><span class="porque">Eso sería un lazo de refuerzo. Cuente los enlaces negativos.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Los acoples: cómo una variable de una capa condiciona a otra.</p>
-<p><span class="porque">Correcto: sin flechas entre capas es una lista.</span></p>
+<p>Que existe un mecanismo de corrección y que hoy es débil en dos enlaces.</p>
+<p><span class="porque">La presión de los afectados es poca y la norma no exige calidad por usuario; fortalecer uno de los dos activa el lazo.</span></p>
 </div>
 <div class="opcion">
-<p>Más detalle técnico en la capa donde trabaja mejor el analista del equipo.</p>
-<p><span class="porque">Ese es el error de elegir la capa por comodidad disciplinar.</span></p>
+<p>Que la poda basta, porque el sistema se corrige solo.</p>
+<p><span class="porque">Un lazo de balance corrige si sus enlaces actúan. Revise el paso 4 del ejemplo.</span></p>
 </div>
 </div>
 <div class="quiz caja">
 <div class="caja-titulo">
 <span class="caja-etiqueta">Compruebe</span>
 </div>
-<p>¿Por qué no habría bastado «más policía» para destrabar Windpeshi?</p>
+<p>En la prueba de la intervención de Windpeshi, ¿por qué más fuerza pública deja el síntoma igual?</p>
 <div class="opcion">
-<p>Porque la fuerza pública no tiene competencia en el territorio.</p>
-<p><span class="porque">El argumento es estructural, no de competencias. Revise el último paso del ejemplo avanzado.</span></p>
+<p>Porque la fuerza pública carece de competencia en el territorio.</p>
+<p><span class="porque">El argumento es estructural. Revise qué acoples corta esa intervención en el simulador.</span></p>
 </div>
 <div class="opcion">
-<p>Porque el problema era solo físico: faltaba la línea de 500 kV de Copey.</p>
-<p><span class="porque">La red sumó su retraso, pero la causa que citó Enel fueron las vías de hecho. Ese es el reduccionismo invertido.</span></p>
+<p>Porque el problema era solo físico: faltaba la línea de 500 kV.</p>
+<p><span class="porque">La línea es una de las dos entradas, y el lazo pasa por otras capas. Es el error «todo es» aplicado a la capa física.</span></p>
 </div>
 <div class="opcion" data-correcta="si">
-<p>Porque actúa en una capa y deja intacto el lazo de las costuras.</p>
-<p><span class="porque">Correcto: el lazo retraso, presión, agravio y bloqueo sigue intacto.</span></p>
+<p>Porque actúa sobre un bloqueo y deja intactos los siete acoples.</p>
+<p><span class="porque">El agravio y la prisa siguen, y el lazo prepara el bloqueo siguiente.</span></p>
 </div>
 </div>
 <section id="ejercicios" class="level3">
 <h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
-<section id="ejercicio-1-clasifique-afirmaciones-por-capa" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-1-clasifique-afirmaciones-por-capa">Ejercicio 1 ●○○ · Clasifique afirmaciones por capa</h4>
-<p>Ubique cada afirmación en su capa o costura: (i) «la línea Colectora está atrasada varios años»; (ii) «el precio de bolsa superó el precio de escasez en octubre»; (iii) «la gobernación no tiene un interlocutor único para las comunidades»; (iv) «la consulta previa del proyecto X se cerró sin acuerdo»; (v) «el distribuidor demora las conexiones de autogeneradores».</p>
+<section id="ejercicio-1-de-la-afirmación-a-la-capa-la-variable-y-la-fuente" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-1-de-la-afirmación-a-la-capa-la-variable-y-la-fuente">Ejercicio 1 ●○○ · De la afirmación a la capa, la variable y la fuente</h4>
+<p>Para cada afirmación, diga en qué capa o costura se ubica, a qué variable apunta y dónde buscaría el dato: (i) «la línea Colectora está atrasada varios años»; (ii) «el precio de bolsa superó el precio de escasez en octubre»; (iii) «la gobernación no tiene un interlocutor único para las comunidades»; (iv) «la consulta previa del proyecto se cerró sin acuerdo»; (v) «el operador de red demora las conexiones de los autogeneradores».</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución completa">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1072,19 +2202,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="i">
-<li><p>Física en la superficie: el hecho es físico, pero sus causas viven arriba (la consulta de la línea es gobernanza; su financiación, mercado). Se clasifica el problema, no el titular.</p></li>
-<li><p>Mercado: la señal de escasez operando.</p></li>
-<li><p>Gobernanza: es una falla en la arquitectura de interlocución, no de un actor individual.</p></li>
-<li><p>Costura entre gobernanza y actores: el evento es institucional y sus causas usuales, como la representación disputada o la mala fe procedimental, viven en las dos capas.</p></li>
-<li><p>Costura entre actores y física: un actor usa su control sobre un proceso técnico como poder; el remedio es regulatorio.</p></li>
+<li><p>Capa física. Variable: fecha de entrada en servicio de la línea. Fuente: informes de seguimiento de la UPME. La cadena de porqués lleva a otras capas, porque el atraso de una línea suele explicarse por su licencia y sus consultas.</p></li>
+<li><p>Capa de mercado. Variable: precio de bolsa frente al precio de escasez, en COP/kWh. Fuente: Sinergox de XM.</p></li>
+<li><p>Gobernanza. Variable: existencia de una instancia de interlocución con competencias definidas. Fuente: decretos y actos administrativos de la gobernación y del Ministerio del Interior. Es una condición del arreglo institucional y describe más que a un actor.</p></li>
+<li><p>Costura entre gobernanza y actores. Variable: estado de la consulta (acuerdo protocolizado, sin acuerdo). Fuente: actas del Ministerio del Interior. El hecho es institucional y sus causas suelen estar en la red de actores, por ejemplo una representación disputada.</p></li>
+<li><p>Costura entre actores y física. Variable: tiempo de conexión, en meses. Fuente: registro de solicitudes del operador y sistema de trámite en línea. Un actor fija una condición de un proceso técnico, como <span class="math inline">\tau_c</span> en el ejemplo de los techos.</p></li>
 </ol>
 </div>
 </div>
 </div>
 </section>
-<section id="ejercicio-2-el-diagrama-de-acoples-de-la-solar-en-techos" class="level4">
-<h4 class="anchored" data-anchor-id="ejercicio-2-el-diagrama-de-acoples-de-la-solar-en-techos">Ejercicio 2 ●●○ · El diagrama de acoples de la solar en techos</h4>
-<p>Dibuje las cuatro capas como cajas y al menos cinco flechas entre ellas para el caso de la solar en techos, cada una con una frase. ¿Hay algún lazo de retroalimentación que atraviese las cuatro capas?</p>
+<section id="ejercicio-2-el-barrio-con-otra-norma-y-un-acople-más" class="level4">
+<h4 class="anchored" data-anchor-id="ejercicio-2-el-barrio-con-otra-norma-y-un-acople-más">Ejercicio 2 ●●○ · El barrio con otra norma y un acople más</h4>
+<p>Con el modelo de los techos: (a) calcule el cupo del barrio si los transformadores fueran de 112,5 kVA y rigiera la fracción del 15 % de la norma anterior; (b) con la regla vigente y los transformadores de 75 kVA, ¿cuántos techos se conectarían si los sistemas fueran de 2 kW?; (c) agregue a la matriz el acople que el ejemplo dejó como hipótesis, de los techos conectados al tiempo de conexión, y diga qué tipo de lazo forma con los acoples que ya estaban.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Pista">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1097,7 +2227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Empiece por el efecto de la adopción sobre la red y siga el dinero: quién paga los refuerzos y quién revisa esas reglas.</p>
+<p>Para (a) y (b), use <span class="math inline">H = n\,\lfloor r\,S_T/p \rfloor</span>. Para (c), recuerde que el tiempo de conexión ya tiene una flecha hacia los techos conectados.</p>
 </div>
 </div>
 </div>
@@ -1113,9 +2243,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Cinco flechas mínimas: (1) física → mercado: el límite técnico por transformador acota la logística de adopción; (2) mercado → física: la adopción acelerada obliga refuerzos de red; (3) actores → mercado: el operador de red retrasa conexiones y baja la tasa efectiva de adopción; (4) gobernanza → actores: la regla de cargos redefine el interés del operador, que puede volverse aliado si la red se le remunera por alojar autogeneración; (5) mercado → gobernanza: la energía que deja de venderse y el costo de red que se traslada a quienes no autogeneran presionan la revisión tarifaria.</p>
-<p>El lazo que cruza las capas, con la polaridad de cada enlace: adopción →(+) refuerzos requeridos →(+) costo de red por kilovatio hora para quienes no autogeneran →(+) presión por revisar las reglas →(+) cargos de red cobrados a los autogeneradores →(−) rentabilidad de autogenerar →(+) adopción. Un enlace negativo: es un lazo de <strong>balance</strong> que fija el ritmo real de la adopción.</p>
-<p>La lección fina es que la polaridad la decide el diseño de la regla. Si la revisión, en lugar de cobrar a los autogeneradores, remunera al operador por alojar autogeneración, el lazo pasa por la capa de actores: regla →(−) incentivo del operador a demorar conexiones →(−) adopción. Los dos negativos se cancelan y el lazo se vuelve de refuerzo. Nadie lo diseñó así y nadie puede gestionarlo desde una sola capa.</p>
+<ol type="a">
+<li><p><span class="math inline">\lfloor 0{,}15 \times 112{,}5 / 3 \rfloor = \lfloor 5{,}6 \rfloor = 5</span> sistemas por transformador y <span class="math inline">H = 200 \times 5 = 1\,000</span> techos.</p></li>
+<li><p><span class="math inline">\lfloor 0{,}50 \times 75 / 2 \rfloor = \lfloor 18{,}75 \rfloor = 18</span> sistemas y <span class="math inline">H = 3\,600</span> techos. El cupo se mide en potencia, así que sistemas más pequeños dejan entrar más hogares con la misma red.</p></li>
+<li><p>El acople es <span class="math inline">M \to A</span>: si cada autogenerador le compra menos energía al negocio de comercialización del operador, más techos conectados dan más incentivo a demorar, y el tiempo de conexión sube (+). Con el acople que ya estaba, tiempo de conexión → techos conectados (−), se cierra un lazo con un solo enlace negativo: de balance. Frena la adopción desde la capa de actores y se suma a B1. Sigue siendo una hipótesis hasta que se compare el tiempo de conexión con el número de autogeneradores en varios operadores.</p></li>
+</ol>
 </div>
 </div>
 </div>
@@ -1129,20 +2261,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="caja-etiqueta">En resumen</span>
 </div>
 <ul>
-<li>Cuatro capas, cuatro preguntas: <strong>física</strong> (¿qué permite la infraestructura?), <strong>mercado</strong> (¿qué comportamiento emerge?), <strong>actores</strong> (¿quién impulsa o bloquea?) y <strong>gobernanza</strong> (¿quién decide y con qué reglas?).</li>
-<li>El análisis responde cada pregunta, dibuja los <strong>acoples</strong> y localiza el problema en su capa o <strong>costura</strong>.</li>
-<li>Una recomendación hecha desde una sola capa suele atacar el síntoma: podar árboles, subir el subsidio, poner más policía.</li>
-<li>Windpeshi no fracasó en ninguna capa; fracasó en las costuras.</li>
+<li>Un proyecto energético se describe en cuatro capas, cada una con su pregunta: <strong>física</strong> (¿qué permite y qué limita la infraestructura?), <strong>mercado</strong> (¿qué decisiones económicas producen lo que se observa?), <strong>actores</strong> (¿quién gana, quién pierde y quién puede frenar?) y <strong>gobernanza</strong> (¿qué reglas rigen, quién las fija y quién puede cambiarlas?).</li>
+<li>Hay un <strong>acople</strong> <span class="math inline">i \to j</span> cuando una condición de la capa <span class="math inline">j</span> depende de una variable de la capa <span class="math inline">i</span>. Los acoples se anotan en una matriz con su polaridad, y encadenados forman <strong>lazos entre capas</strong>.</li>
+<li>El análisis tiene <strong>seis pasos</strong>: síntoma, decisor y pregunta; la pregunta de cada capa; respuestas con evidencia; acoples; localizar con la prueba de la intervención; concluir.</li>
+<li>La <strong>prueba de la intervención</strong> hace tres preguntas a la propuesta de cada capa: qué variable mueve, si cambia algún acople o lazo y si el síntoma vuelve.</li>
+<li>En los tres ejemplos, la intervención más visible actuaba sobre el síntoma: la poda dejó la norma igual, el subsidio dejó el barrio en 2 400 techos y la fuerza pública dejó cerrado el lazo de Windpeshi.</li>
 </ul>
 </div>
-<p><strong>Para profundizar.</strong> La sección «El marco multicapa» de las notas de la semana 6 trae la figura de las cuatro capas y el ejercicio de defender la capa donde vive la causa raíz de Windpeshi. Cuando un análisis trata las capas por separado, cada parte debería cerrar con un párrafo sobre lo que esa capa impone a las demás.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>El apagón</th>
+<th>Los techos</th>
+<th>Windpeshi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Síntoma</td>
+<td>60 h/año sin servicio</td>
+<td>2 400 techos de 10 000, sin solicitudes</td>
+<td>60 % de jornadas detenidas</td>
+</tr>
+<tr class="even">
+<td>Lazo entre capas</td>
+<td>B1, débil, por las cuatro capas</td>
+<td>B1, entre mercado y física</td>
+<td>R1, entre física, mercado y actores</td>
+</tr>
+<tr class="odd">
+<td>Dónde vive el problema</td>
+<td>gobernanza</td>
+<td>costura gobernanza–física</td>
+<td>costuras mercado–actores y gobernanza–actores</td>
+</tr>
+<tr class="even">
+<td>Intervención que cambia el lazo</td>
+<td>máximo de horas por usuario</td>
+<td>regla sobre quién paga el refuerzo</td>
+<td>fechas atadas a hitos, con acuerdo territorial y línea</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Para profundizar.</strong> La sección «El marco multicapa» de las notas de la semana 6 trae la figura de las cuatro capas y más ejercicios, entre ellos el de defender en una página la capa donde vive la causa de Windpeshi. La <a href="../semana6/02-sistema-sociotecnico.html">página 2</a> retoma el lazo R1 de esta página y lo convierte en un modelo.</p>
 
 
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IkNPTE9SRVMgPSAoe2F6dWw6IFwiIzAwMzM2NlwiLCB2ZXJkZTogXCIjMDA2OTNFXCIsIGFtYmFyOiBcIiNCMjZDMDBcIiwgdmlvbGV0YTogXCIjNTQzNEEwXCIsIGdyaXM6IFwiIzVGNUY1RlwiLCByb2pvOiBcIiNDRTExMjZcIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgY2FwYXNTID0gSW5wdXRzLmNoZWNrYm94KFtcImVzdHJ1Y3R1cmEgZsOtc2ljYVwiLCBcImRpbsOhbWljYSBkZSBtZXJjYWRvXCIsIFwicmVkIGRlIGFjdG9yZXNcIiwgXCJnb2Jlcm5hbnphXCJdLCB7dmFsdWU6IFtcImRpbsOhbWljYSBkZSBtZXJjYWRvXCJdLCBsYWJlbDogXCJDYXBhcyBhbmFsaXphZGFzXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY29udGVuaWRvUyA9ICh7XG4gIFwiZXN0cnVjdHVyYSBmw61zaWNhXCI6IHtkaWFnbm9zdGljbzogXCJDYWRhIGNpcmN1aXRvIGRlIGRpc3RyaWJ1Y2nDs24gYWRtaXRlIGhhc3RhIGNpZXJ0YSBwZW5ldHJhY2nDs24gYW50ZXMgZGUgdGVuZXIgcHJvYmxlbWFzIGRlIHRlbnNpw7NuIHkgcHJvdGVjY2lvbmVzOiBwYXNhZG8gZXNlIHVtYnJhbCwgY2FkYSB0ZWNobyBudWV2byBleGlnZSByZWZ1ZXJ6b3MuXCIsXG4gICAgaHVlY286IFwiTm8gdmUgZWwgdG9wZSB0w6ljbmljbyBwb3IgdHJhbnNmb3JtYWRvciwgcXVlIHNhdHVyYSBsYSBhZG9wY2nDs24gYW50ZXMgZGUgcXVlIHNlIGFjYWJlbiBsb3MgdGVjaG9zLlwiLCByZWNvbWVuZGFjaW9uOiBcInJlZm9yemFyIGxvcyBjaXJjdWl0b3Mgc2F0dXJhZG9zXCJ9LFxuICBcImRpbsOhbWljYSBkZSBtZXJjYWRvXCI6IHtkaWFnbm9zdGljbzogXCJMYSBhZG9wY2nDs24gZXMgdW5hIGxvZ8Otc3RpY2E6IGVsIHZveiBhIHZveiBsYSBhY2VsZXJhIHkgbGEgc2F0dXJhY2nDs24gZGUgdGVjaG9zIGxhIGZyZW5hLiBFbCBzdWJzaWRpbyBzdWJlIGxhIHRhc2EgZGUgY29udGFnaW8uXCIsXG4gICAgaHVlY286IFwiTm8gdmUgcG9yIHF1w6kgbGEgY3VydmEgc2UgYXBsYW5hIGFudGVzIGRlIHF1ZSBzZSBhY2FiZW4gbG9zIHRlY2hvcyBuaSBwb3IgcXXDqSBlbCB2b3ogYSB2b3ogcGllcmRlIGZ1ZXJ6YS5cIiwgcmVjb21lbmRhY2lvbjogXCJhdW1lbnRhciBlbCBzdWJzaWRpb1wifSxcbiAgXCJyZWQgZGUgYWN0b3Jlc1wiOiB7ZGlhZ25vc3RpY286IFwiRWwgb3BlcmFkb3IgZGUgcmVkIGNvbnRyb2xhIGxvcyB0aWVtcG9zIGRlIGNvbmV4acOzbiwgeSBzdSBpbmNlbnRpdm8gZXMgbWl4dG86IGxhIHJlZ3VsYWNpw7NuIGFqdXN0YSBzdSByZW11bmVyYWNpw7NuLCBwZXJvIHN1IGNvbWVyY2lhbGl6YWRvcmEgdmVuZGUgbWVub3MgZW5lcmfDrWEgY29uIGNhZGEgYXV0b2dlbmVyYWRvci4gVGllbmUgcG9kZXIgZGUgcmV0YXJkbyBzb2JyZSB0b2RvIGVsIGxhem8gZGUgcmVmdWVyem8uXCIsXG4gICAgaHVlY286IFwiTm8gdmUgcXVlIGVsIHJldGFyZG8gZW4gbGFzIGNvbmV4aW9uZXMgbG8gcHJvZHVjZSB1biBhY3RvciBjb24gaW5jZW50aXZvcyBwcm9waW9zLlwiLCByZWNvbWVuZGFjaW9uOiBcInBvbmVyIHBsYXpvcyBkZSBjb25leGnDs24gdmlnaWxhZG9zXCJ9LFxuICBcImdvYmVybmFuemFcIjoge2RpYWdub3N0aWNvOiBcIk5hZGllIGRlZmluacOzIGPDs21vIHNlIHJlcGFydGVuIGxvcyBjb3N0b3MgZGUgbGEgcmVkIGVudHJlIHF1aWVuZXMgdGllbmVuIHRlY2hvIHkgcXVpZW5lcyBubzogbGEgcHJlZ3VudGEgZGlzdHJpYnV0aXZhIGRlY2lkZSBsYSBsZWdpdGltaWRhZCBkZWwgZXNxdWVtYS5cIixcbiAgICBodWVjbzogXCJObyB2ZSBxdWUgZWwgY29uZmxpY3RvIHNvYnJlIHF1acOpbiBwYWdhIGxhIHJlZCBwdWVkZSBmcmVuYXIgdG9kbyBlbCBzaXN0ZW1hLlwiLCByZWNvbWVuZGFjaW9uOiBcImZpamFyIHJlZ2xhcyBkZSBjb25leGnDs24geSBkZSByZXBhcnRvIGRlIGNvc3RvcyBkZSByZWRcIn0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2PiR7T2JqZWN0LmVudHJpZXMoY29udGVuaWRvUykubWFwKChbY2FwYSwgY10pID0+IGNhcGFzUy5pbmNsdWRlcyhjYXBhKVxuICA/IGh0bWxgPHAgc3R5bGU9XCJib3JkZXItbGVmdDo0cHggc29saWQgJHtDT0xPUkVTLnZlcmRlfTtwYWRkaW5nLWxlZnQ6LjZyZW1cIj48Yj4ke2NhcGF9OjwvYj4gJHtjLmRpYWdub3N0aWNvfTwvcD5gXG4gIDogaHRtbGA8cCBzdHlsZT1cImJvcmRlci1sZWZ0OjRweCBzb2xpZCAke0NPTE9SRVMucm9qb307cGFkZGluZy1sZWZ0Oi42cmVtO2NvbG9yOiM1NTVcIj48Yj5odWVjbyBlbiAke2NhcGF9OjwvYj4gJHtjLmh1ZWNvfTwvcD5gKX08L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJsZWN0dXJhLXNpbXVsYWRvclwiPlxuICA8ZGl2PkNhcGFzIGFuYWxpemFkYXM8Yj4ke2NhcGFzUy5sZW5ndGh9IGRlIDQ8L2I+PC9kaXY+XG4gIDxkaXY+UmVjb21lbmRhY2nDs24gZGVsIGVxdWlwbzxiPiR7Y2FwYXNTLmxlbmd0aCA/IGNhcGFzUy5tYXAoKGMpID0+IGNvbnRlbmlkb1NbY10ucmVjb21lbmRhY2lvbikuam9pbihcIjsgXCIpIDogXCJuaW5ndW5hXCJ9PC9iPjwvZGl2PlxuICA8ZGl2PsK/VmUgZWwgYWNvcGxlIGFjdG9yZXMtZsOtc2ljYT88Yj4ke2NhcGFzUy5pbmNsdWRlcyhcInJlZCBkZSBhY3RvcmVzXCIpICYmIGNhcGFzUy5pbmNsdWRlcyhcImVzdHJ1Y3R1cmEgZsOtc2ljYVwiKSA/IFwic8OtOiBlbCBkaXN0cmlidWlkb3IgdXNhIHN1IGNvbnRyb2wgdMOpY25pY28gY29tbyBwb2RlclwiIDogXCJub1wifTwvYj48L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnY2FwYXNTJykifV19
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImltcG9ydCB7c2ltdWxhciwgYWRvcGNpb25Db25DdXBvLCBmb3JtYXRvTnVtZXJvfSBmcm9tIFwiLi4vc2ltdWxhZG9yZXMvbWlzZV9zZC5qc1wiXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJDT0xPUkVTID0gKHthenVsOiBcIiMwMDMzNjZcIiwgdmVyZGU6IFwiIzAwNjkzRVwiLCBhbWJhcjogXCIjQjI2QzAwXCIsIHZpb2xldGE6IFwiIzU0MzRBMFwiLCBncmlzOiBcIiM1RjVGNUZcIiwgcm9qbzogXCIjQ0UxMTI2XCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGJldGFUID0gSW5wdXRzLnJhbmdlKFswLjUsIDEuMF0sIHt2YWx1ZTogMC41LCBzdGVwOiAwLjA1LCBsYWJlbDogXCJNZXJjYWRvOiBjb250YWdpbyDOsiBjb24gZWwgc3Vic2lkaW8gWzEvYcOxb11cIn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgbWVzZXNUID0gSW5wdXRzLnJhbmdlKFsxLCAxMl0sIHt2YWx1ZTogNiwgc3RlcDogMSwgbGFiZWw6IFwiQWN0b3JlczogdGllbXBvIGRlIGNvbmV4acOzbiDPhGMgW21lc2VzXVwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBrdmFUID0gSW5wdXRzLnJhZGlvKFs3NSwgMTEyLjUsIDE1MF0sIHt2YWx1ZTogNzUsIGxhYmVsOiBcIkbDrXNpY2E6IHRyYW5zZm9ybWFkb3IgU1QgW2tWQV1cIiwgZm9ybWF0OiAoZCkgPT4gZm9ybWF0b051bWVybyhkID09PSAxMTIuNSA/IDEgOiAwKShkKX0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJjdXBvQmFycmlvID0gKGt2YSkgPT4gMjAwICogTWF0aC5mbG9vcigwLjUgKiBrdmEgLyAzKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiYmFzZVQgPSBzaW11bGFyKGFkb3BjaW9uQ29uQ3Vwbyh7Y3VwbzogMjQwMH0pLCB7dEZpbmFsOiAyNSwgcGFzbzogMC4wMSwgbWV0b2RvOiBcImV1bGVyXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY29ycmlkYVQgPSBzaW11bGFyKGFkb3BjaW9uQ29uQ3Vwbyh7Y3VwbzogMjQwMCwgYW5pb19pbnRlcnZlbmNpb246IDE1LCBjb250YWdpb19udWV2bzogYmV0YVQsIHRpZW1wb19jb25leGlvbl9udWV2bzogbWVzZXNUIC8gMTIsXG4gIGN1cG9fbnVldm86IGN1cG9CYXJyaW8oa3ZhVCl9KSwge3RGaW5hbDogMjUsIHBhc286IDAuMDEsIG1ldG9kbzogXCJldWxlclwifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImxlY3R1cmFUID0ge1xuICBjb25zdCBBID0gY29ycmlkYVQudmFyaWFibGVzLnRlY2hvc19jb25lY3RhZG9zLCB0ID0gY29ycmlkYVQudGllbXBvO1xuICBjb25zdCBrID0gQS5maW5kSW5kZXgoKGEsIGkpID0+IHRbaV0gPj0gMTUgJiYgYSA+PSA0NTAwKTtcbiAgcmV0dXJuIHtjdXBvOiBjdXBvQmFycmlvKGt2YVQpLCBhbmlvMjA6IEFbMjAwMF0sIGFuaW8yNTogQVsyNTAwXSwgbWV0YTogayA8IDAgPyBudWxsIDogdFtrXX07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEwIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiUGxvdC5wbG90KHtcbiAgd2lkdGg6IE1hdGgubWluKHdpZHRoLCA3NjApLCBoZWlnaHQ6IDMwMCwgbWFyZ2luTGVmdDogNjAsXG4gIHg6IHtsYWJlbDogXCJUaWVtcG8gZGVzZGUgZWwgcHJpbWVyIHRlY2hvIFthw7Fvc11cIiwgZG9tYWluOiBbMCwgMjVdfSxcbiAgeToge2xhYmVsOiBcIlRlY2hvcyBjb25lY3RhZG9zXCIsIGdyaWQ6IHRydWUsIGRvbWFpbjogWzAsIDYwMDBdLCB0aWNrRm9ybWF0OiBmb3JtYXRvTnVtZXJvKDApfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LnJ1bGVZKFs0NTAwXSwge3N0cm9rZTogQ09MT1JFUy52ZXJkZSwgc3Ryb2tlRGFzaGFycmF5OiBcIjQgM1wifSksXG4gICAgUGxvdC5ydWxlWShbbGVjdHVyYVQuY3Vwb10sIHtzdHJva2U6IENPTE9SRVMuYW1iYXIsIHN0cm9rZURhc2hhcnJheTogXCIyIDNcIn0pLFxuICAgIFBsb3QucnVsZVgoWzE1XSwge3N0cm9rZTogQ09MT1JFUy52aW9sZXRhLCBzdHJva2VEYXNoYXJyYXk6IFwiMiAzXCJ9KSxcbiAgICBQbG90LmxpbmUoYmFzZVQudGllbXBvLmZpbHRlcigodCwgaykgPT4gayAlIDEwID09PSAwKS5tYXAoKHQsIGspID0+ICh7dCwgYTogYmFzZVQudmFyaWFibGVzLnRlY2hvc19jb25lY3RhZG9zWzEwICoga119KSksXG4gICAgICB7eDogXCJ0XCIsIHk6IFwiYVwiLCBzdHJva2U6IENPTE9SRVMuZ3Jpcywgc3Ryb2tlV2lkdGg6IDEuNn0pLFxuICAgIFBsb3QubGluZShjb3JyaWRhVC50aWVtcG8uZmlsdGVyKCh0LCBrKSA9PiBrICUgMTAgPT09IDApLm1hcCgodCwgaykgPT4gKHt0LCBhOiBjb3JyaWRhVC52YXJpYWJsZXMudGVjaG9zX2NvbmVjdGFkb3NbMTAgKiBrXX0pKSxcbiAgICAgIHt4OiBcInRcIiwgeTogXCJhXCIsIHN0cm9rZTogQ09MT1JFUy5henVsLCBzdHJva2VXaWR0aDogMi40fSksXG4gICAgUGxvdC50ZXh0KFt7dDogMTUsIGE6IDU4MDAsIHRleHRvOiBcImhveVwifV0sIHt4OiBcInRcIiwgeTogXCJhXCIsIHRleHQ6IFwidGV4dG9cIiwgZmlsbDogQ09MT1JFUy52aW9sZXRhLCBkeDogMTZ9KSxcbiAgICBQbG90LnRleHQoW3t0OiAxLCBhOiA0NTAwLCB0ZXh0bzogXCJtZXRhOiA0IDUwMFwifV0sIHt4OiBcInRcIiwgeTogXCJhXCIsIHRleHQ6IFwidGV4dG9cIiwgZmlsbDogQ09MT1JFUy52ZXJkZSwgZHk6IC04LCB0ZXh0QW5jaG9yOiBcInN0YXJ0XCJ9KSxcbiAgICBQbG90LnRleHQoW3t0OiAxLCBhOiBsZWN0dXJhVC5jdXBvLCB0ZXh0bzogXCJjdXBvXCJ9XSwge3g6IFwidFwiLCB5OiBcImFcIiwgdGV4dDogXCJ0ZXh0b1wiLCBmaWxsOiBcIiM5NDVBMDBcIiwgZHk6IC04LCB0ZXh0QW5jaG9yOiBcInN0YXJ0XCJ9KSxcbiAgXSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IGNsYXNzPVwibGVjdHVyYS1zaW11bGFkb3JcIj5cbiAgPGRpdj5DdXBvIGRlbCBiYXJyaW8gY29uIGxhIGludGVydmVuY2nDs248Yj4ke2Zvcm1hdG9OdW1lcm8oMCkobGVjdHVyYVQuY3Vwbyl9IHRlY2hvczwvYj48L2Rpdj5cbiAgPGRpdj5UZWNob3MgY29uZWN0YWRvcyBlbiBlbCBhw7FvIDIwPGI+JHtmb3JtYXRvTnVtZXJvKDApKGxlY3R1cmFULmFuaW8yMCl9PC9iPjwvZGl2PlxuICA8ZGl2PlRlY2hvcyBjb25lY3RhZG9zIGVuIGVsIGHDsW8gMjU8Yj4ke2Zvcm1hdG9OdW1lcm8oMCkobGVjdHVyYVQuYW5pbzI1KX08L2I+PC9kaXY+XG4gIDxkaXY+TWV0YSBkZSA0IDUwMCB0ZWNob3M8Yj4ke2xlY3R1cmFULm1ldGEgPT09IG51bGwgPyBcIm5vIHNlIGFsY2FuemEgZW4gMjUgYcOxb3NcIiA6IGBzZSBhbGNhbnphIGVuIGVsIGHDsW8gJHtmb3JtYXRvTnVtZXJvKDEpKGxlY3R1cmFULm1ldGEpfWB9PC9iPjwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IkFDT1BMRVNfVyA9IFtcbiAge2lkOiBcImExXCIsIGRlOiBcImF2YW5jZSBkZSBsYSBvYnJhXCIsIGE6IFwicmV0cmFzbyBmcmVudGUgYWwgY29udHJhdG9cIiwgcG9sOiBcIuKIklwiLCBjYXBhczogXCJGIOKGkiBNXCIsIGxhem86IHRydWV9LFxuICB7aWQ6IFwiYTJcIiwgZGU6IFwicmV0cmFzbyBmcmVudGUgYWwgY29udHJhdG9cIiwgYTogXCJwcmlzYSBkZSBsYSBlbXByZXNhXCIsIHBvbDogXCIrXCIsIGNhcGFzOiBcIk0g4oaSIEFcIiwgbGF6bzogdHJ1ZX0sXG4gIHtpZDogXCJhM1wiLCBkZTogXCJwcmlzYSBkZSBsYSBlbXByZXNhXCIsIGE6IFwiYWdyYXZpbyB5IGV4cGVjdGF0aXZhc1wiLCBwb2w6IFwiK1wiLCBjYXBhczogXCJkZW50cm8gZGUgQVwiLCBsYXpvOiB0cnVlfSxcbiAge2lkOiBcImE0XCIsIGRlOiBcImFncmF2aW8geSBleHBlY3RhdGl2YXNcIiwgYTogXCJibG9xdWVvc1wiLCBwb2w6IFwiK1wiLCBjYXBhczogXCJkZW50cm8gZGUgQVwiLCBsYXpvOiB0cnVlfSxcbiAge2lkOiBcImE1XCIsIGRlOiBcImJsb3F1ZW9zXCIsIGE6IFwiYXZhbmNlIGRlIGxhIG9icmFcIiwgcG9sOiBcIuKIklwiLCBjYXBhczogXCJBIOKGkiBGXCIsIGxhem86IHRydWV9LFxuICB7aWQ6IFwiZTFcIiwgZGU6IFwiY29uc3VsdGFzIHNlcGFyYWRhcywgc2luIHJlZ2xhcyBjb211bmVzXCIsIGE6IFwiYWdyYXZpbyB5IGV4cGVjdGF0aXZhc1wiLCBwb2w6IFwiK1wiLCBjYXBhczogXCJHIOKGkiBBXCIsIGxhem86IGZhbHNlfSxcbiAge2lkOiBcImUyXCIsIGRlOiBcImzDrW5lYSBkZSA1MDAga1YgZW4gc2VydmljaW9cIiwgYTogXCJyZXRyYXNvIGZyZW50ZSBhbCBjb250cmF0b1wiLCBwb2w6IFwi4oiSXCIsIGNhcGFzOiBcIkYg4oaSIE1cIiwgbGF6bzogZmFsc2V9LFxuXVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IklOVEVSVkVOQ0lPTkVTX1cgPSAoe1xuICBcIk3DoXMgZnVlcnphIHDDumJsaWNhIChhY3RvcmVzKVwiOiB7Y29ydGE6IFtdLCBub3RhOiBcIkxldmFudGEgdW4gYmxvcXVlbyB5IGRlamEgaW50YWN0b3MgZWwgYWdyYXZpbyB5IGxhIHByaXNhOiBuaW5nw7puIGFjb3BsZSBjYW1iaWEuXCJ9LFxuICBcIk3DoXMgY29tcGVuc2FjacOzbiBwb3IgY29tdW5pZGFkIChhY3RvcmVzKVwiOiB7Y29ydGE6IFtdLCBub3RhOiBcIkJhamEgZWwgYWdyYXZpbyBkZSB1bmEgY29tdW5pZGFkIHBvciB1biB0aWVtcG8geSBkZWphIGxhIHJlZ2xhIHkgbGEgcHJpc2EgY29tbyBlc3RhYmFuOyBlbCBlZmVjdG8gc29icmUgbGFzIGV4cGVjdGF0aXZhcyBkZSBsYXMgdmVjaW5hcyBlcyB1bmEgaGlww7N0ZXNpcyBwb3IgY29tcHJvYmFyLlwifSxcbiAgXCJGZWNoYXMgZGVsIGNvbnRyYXRvIGF0YWRhcyBhIGxvcyBoaXRvcyBkZSBjb25zdWx0YSB5IGRlIGzDrW5lYSAobWVyY2FkbylcIjoge2NvcnRhOiBbXCJhMlwiXSwgbm90YTogXCJFbCByZXRyYXNvIHBvciBjb25zdWx0YSBvIHBvciBmYWx0YSBkZSBsw61uZWEgZGVqYSBkZSBjb3N0YXJsZSBhIGxhIGVtcHJlc2EsIHkgY29uIGVzbyBkZWphIGRlIGFwdXJhcmxhLlwifSxcbiAgXCJBY3VlcmRvIHRlcnJpdG9yaWFsIGNvbiByZWdsYXMgY29tdW5lcyAoZ29iZXJuYW56YSlcIjoge2NvcnRhOiBbXCJlMVwiXSwgbm90YTogXCJMYXMgY29tdW5pZGFkZXMgbmVnb2NpYW4gY29uIGxhcyBtaXNtYXMgcmVnbGFzIHkgaGF5IHVuYSBpbnN0YW5jaWEgcXVlIGhhY2Ugc2VndWltaWVudG8gYSBsb3MgYWN1ZXJkb3MuXCJ9LFxuICBcIkzDrW5lYSBkZSA1MDAga1YgYSB0aWVtcG8gKGbDrXNpY2EpXCI6IHtjb3J0YTogW1wiZTJcIl0sIG5vdGE6IFwiTGEgY29uZXhpw7NuIGRlamEgZGUgc3VtYXIgcmV0cmFzbzsgZWwgbGF6byBxdWVkYSBjb21vIGVzdGFiYS5cIn0sXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBpbnRlcnZXID0gSW5wdXRzLmNoZWNrYm94KE9iamVjdC5rZXlzKElOVEVSVkVOQ0lPTkVTX1cpLCB7bGFiZWw6IFwiSW50ZXJ2ZW5jaW9uZXNcIiwgdmFsdWU6IFtdfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJoYXlMYXpvID0gKGFyaXN0YXMpID0+IHtcbiAgY29uc3QgdmVjaW5vcyA9IG5ldyBNYXAoKTtcbiAgZm9yIChjb25zdCB7ZGUsIGF9IG9mIGFyaXN0YXMpIHZlY2lub3Muc2V0KGRlLCBbLi4uKHZlY2lub3MuZ2V0KGRlKSA/PyBbXSksIGFdKTtcbiAgY29uc3QgZXN0YWRvID0gbmV3IE1hcCgpO1xuICBjb25zdCB2aXNpdGFyID0gKG4pID0+IHtcbiAgICBpZiAoZXN0YWRvLmdldChuKSA9PT0gMSkgcmV0dXJuIHRydWU7XG4gICAgaWYgKGVzdGFkby5nZXQobikgPT09IDIpIHJldHVybiBmYWxzZTtcbiAgICBlc3RhZG8uc2V0KG4sIDEpO1xuICAgIGZvciAoY29uc3QgbSBvZiB2ZWNpbm9zLmdldChuKSA/PyBbXSkgaWYgKHZpc2l0YXIobSkpIHJldHVybiB0cnVlO1xuICAgIGVzdGFkby5zZXQobiwgMik7XG4gICAgcmV0dXJuIGZhbHNlO1xuICB9O1xuICByZXR1cm4gWy4uLnZlY2lub3Mua2V5cygpXS5zb21lKHZpc2l0YXIpO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImVzdGFkb1cgPSB7XG4gIGNvbnN0IGNvcnRhZG9zID0gbmV3IFNldChpbnRlcnZXLmZsYXRNYXAoKG4pID0+IElOVEVSVkVOQ0lPTkVTX1dbbl0uY29ydGEpKTtcbiAgY29uc3Qgdml2b3MgPSBBQ09QTEVTX1cuZmlsdGVyKCh4KSA9PiAhY29ydGFkb3MuaGFzKHguaWQpKTtcbiAgY29uc3QgY2VycmFkbyA9IGhheUxhem8odml2b3MuZmlsdGVyKCh4KSA9PiB4Lmxhem8pKTtcbiAgY29uc3QgZW50cmFkYXMgPSB2aXZvcy5maWx0ZXIoKHgpID0+ICF4Lmxhem8pO1xuICByZXR1cm4ge2NvcnRhZG9zLCBjZXJyYWRvLCBlbnRyYWRhc307XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE3IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IHN0eWxlPVwib3ZlcmZsb3cteDphdXRvXCI+PHRhYmxlIGNsYXNzPVwidGFibGUgdGFibGUtc21cIj5cbjx0aGVhZD48dHI+PHRoPkFjb3BsZTwvdGg+PHRoPkNhcGFzPC90aD48dGg+RXN0YWRvPC90aD48L3RyPjwvdGhlYWQ+XG48dGJvZHk+JHtBQ09QTEVTX1cubWFwKCh4KSA9PiBodG1sYDx0ciBzdHlsZT1cIiR7ZXN0YWRvVy5jb3J0YWRvcy5oYXMoeC5pZCkgPyBcImNvbG9yOiM1RjVGNUY7dGV4dC1kZWNvcmF0aW9uOmxpbmUtdGhyb3VnaFwiIDogXCJcIn1cIj5cbiAgPHRkPiR7eC5kZX0g4oaSICR7eC5hfSAoJHt4LnBvbH0pPC90ZD48dGQ+JHt4LmNhcGFzfSR7eC5sYXpvID8gXCIsIGxhem8gUjFcIiA6IFwiLCBlbnRyYWRhXCJ9PC90ZD5cbiAgPHRkIHN0eWxlPVwidGV4dC1kZWNvcmF0aW9uOm5vbmVcIj48YiBzdHlsZT1cImNvbG9yOiR7ZXN0YWRvVy5jb3J0YWRvcy5oYXMoeC5pZCkgPyBDT0xPUkVTLnZlcmRlIDogQ09MT1JFUy5yb2pvfVwiPiR7ZXN0YWRvVy5jb3J0YWRvcy5oYXMoeC5pZCkgPyBcImNvcnRhZG9cIiA6IFwic2lndWVcIn08L2I+PC90ZD48L3RyPmApfTwvdGJvZHk+PC90YWJsZT48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE4IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2PiR7aW50ZXJ2Vy5tYXAoKG4pID0+IGh0bWxgPHAgc3R5bGU9XCJib3JkZXItbGVmdDo0cHggc29saWQgJHtDT0xPUkVTLnZpb2xldGF9O3BhZGRpbmctbGVmdDouNnJlbVwiPjxiPiR7bn0uPC9iPiAke0lOVEVSVkVOQ0lPTkVTX1dbbl0ubm90YX08L3A+YCl9PC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cImxlY3R1cmEtc2ltdWxhZG9yXCI+XG4gIDxkaXY+QWNvcGxlcyBjb3J0YWRvczxiPiR7ZXN0YWRvVy5jb3J0YWRvcy5zaXplfSBkZSA3PC9iPjwvZGl2PlxuICA8ZGl2Pkxhem8gUjE8Yj4ke2VzdGFkb1cuY2VycmFkbyA/IFwic2lndWUgY2VycmFkb1wiIDogXCJhYmllcnRvXCJ9PC9iPjwvZGl2PlxuICA8ZGl2PkVudHJhZGFzIHF1ZSBzaWd1ZW4gYWxpbWVudMOhbmRvbG88Yj4ke2VzdGFkb1cuZW50cmFkYXMubGVuZ3RoID09PSAwID8gXCJuaW5ndW5hXCIgOiBlc3RhZG9XLmVudHJhZGFzLm1hcCgoeCkgPT4geC5kZSkuam9pbihcIjsgXCIpfTwvYj48L2Rpdj5cbiAgPGRpdj7Cv1Z1ZWx2ZSBlbCBzw61udG9tYT88Yj4ke2VzdGFkb1cuY2VycmFkbyA/IFwic8OtOiBjYWRhIGJsb3F1ZW8gcHJlcGFyYSBlbCBzaWd1aWVudGVcIiA6IGVzdGFkb1cuZW50cmFkYXMubGVuZ3RoID8gXCJwdWVkZSB2b2x2ZXIgcG9yIGxhcyBlbnRyYWRhcyBxdWUgcXVlZGFuXCIgOiBcInBvciBlc3RhcyB2w61hcywgbm9cIn08L2I+PC9kaXY+XG48L2Rpdj5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2JldGFUJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ21lc2VzVCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdrdmFUJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2ludGVydlcnKSJ9XX0=
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
